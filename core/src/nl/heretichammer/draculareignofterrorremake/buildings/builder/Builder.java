@@ -1,7 +1,7 @@
-package nl.heretichammer.draculareignofterrorremake.building;
+package nl.heretichammer.draculareignofterrorremake.buildings.builder;
 
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
-import nl.heretichammer.draculareignofterrorremake.building.Building;
+import nl.heretichammer.draculareignofterrorremake.buildings.Building;
 
 public interface Builder {
 	public void constructStart();

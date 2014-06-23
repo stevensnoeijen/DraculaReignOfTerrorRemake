@@ -1,15 +1,15 @@
-package nl.heretichammer.draculareignofterrorremake.building;
+package nl.heretichammer.draculareignofterrorremake.buildings;
 
 import nl.heretichammer.draculareignofterrorremake.items.Closeable;
 import nl.heretichammer.draculareignofterrorremake.items.Key;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
 import nl.heretichammer.draculareignofterrorremake.items.Lockable;
 
-public class Door extends BuildingPiece implements Closeable, Lockable{
+public class DoorPart extends BuildingPart implements Closeable, Lockable{
 	private boolean open;
 	private Lock lock;
 	
-	public Door(Model model) {
+	public DoorPart(Model model) {
 		super(model);
 	}
 
