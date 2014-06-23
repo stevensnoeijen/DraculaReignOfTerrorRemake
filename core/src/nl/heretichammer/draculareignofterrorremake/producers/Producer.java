@@ -3,9 +3,8 @@ package nl.heretichammer.draculareignofterrorremake.producers;
 import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
-import nl.heretichammer.draculareignofterrorremake.team.player.access.Accessible;
+import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
-import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 
 public interface Producer<E> extends Accessible, Teamable {
 	//public String getName();

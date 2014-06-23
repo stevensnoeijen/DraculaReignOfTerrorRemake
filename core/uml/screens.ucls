@@ -102,7 +102,7 @@
   </class>  
   <class id="10" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.WorldScreen" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/screens/WorldScreen.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/team/WorldScreen.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="825" y="184"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

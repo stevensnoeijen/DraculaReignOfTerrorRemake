@@ -1,8 +1,6 @@
-package nl.heretichammer.draculareignofterrorremake.team.player;
+package nl.heretichammer.draculareignofterrorremake.team;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import nl.heretichammer.draculareignofterrorremake.team.Team;
-import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 
 public class Player implements Teamable{
 	private Team team;

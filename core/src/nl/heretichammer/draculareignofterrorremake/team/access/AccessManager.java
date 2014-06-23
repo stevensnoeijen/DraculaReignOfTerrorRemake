@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.team.player.access;
+package nl.heretichammer.draculareignofterrorremake.team.access;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +18,11 @@ public class AccessManager implements Teamable {
 		this.team = team;
 	}
 	
+	/**
+	 * 
+	 * @param name is a constant name to check if its accessable
+	 * @return
+	 */
 	public boolean isAccessable(String name){
 		return accessibilities.get(name);
 	}

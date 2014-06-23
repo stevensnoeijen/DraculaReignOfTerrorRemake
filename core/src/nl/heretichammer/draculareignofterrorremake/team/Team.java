@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.team;
 
-import nl.heretichammer.draculareignofterrorremake.team.player.access.AccessManager;
+import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -10,7 +10,7 @@ public class Team {
 	private String name;
 	private Color color;
 	
-	private final AccessManager accessManager;
+	public final AccessManager accessManager;
 
 	public Team(String name, Color color) {
 		this();
