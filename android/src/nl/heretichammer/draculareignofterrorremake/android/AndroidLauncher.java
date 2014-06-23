@@ -1,10 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.android;
 
+import nl.heretichammer.draculareignofterrorremake.DraculaGame;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import nl.heretichammer.draculareignofterrorremake.DraculaGame;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
