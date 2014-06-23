@@ -47,11 +47,12 @@ public interface Item {
 	}
 	
 	public static interface ItemVisitor {
-		public void visit(BaseItem item);
-		public void visit(Resource resource);
+		public void visit(UnitItem unitItem);
 		public void visit(Key key);
 		public void visit(Consumable consumable);
 		public void visit(ItemContainer<?> itemContainer);
+		public void visit(AbilityItem abilityItem);
+		public void visit(DefaultItem baseItem);
 	}
 	
 	public static class Descriptor {

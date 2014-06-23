@@ -2,7 +2,9 @@ package nl.heretichammer.draculareignofterrorremake.map;
 
 public class WorldMap {
 
-	//areas
-	//players
-	//teams
+	private World world;
+	
+	public WorldMap(World world) {
+		this.world = world;
+	}
 }
