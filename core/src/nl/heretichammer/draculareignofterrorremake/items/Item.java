@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.items;
 
+import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.items.consumables.Consumable;
 import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainer;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
@@ -58,5 +59,9 @@ public interface Item {
 	public static class Descriptor {
 		public String name;
 		public int amount;
+	}
+	
+	public static interface ItemConsumer extends Consumer<Item> {
+		
 	}
 }

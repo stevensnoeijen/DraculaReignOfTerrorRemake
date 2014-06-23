@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.items.DefaultItem;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Key;
@@ -288,4 +289,8 @@ public class Unit {//implements Teamable{
 		public String name;
 	}
 	*/
+	
+	public static interface UnitConsumer extends Consumer<Unit> {
+		
+	}
 }

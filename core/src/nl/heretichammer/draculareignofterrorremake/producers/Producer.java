@@ -1,5 +1,6 @@
-package nl.heretichammer.draculareignofterrorremake.produce;
+package nl.heretichammer.draculareignofterrorremake.producers;
 
+import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.team.player.access.Accessible;
@@ -27,16 +28,4 @@ public interface Producer<E> extends Accessible, Teamable {
 	 * @param consumer to receive the produced object
 	 */
 	public void setConsumer(Consumer<E> consumer);
-	
-	public static interface Consumer<E> {
-		public void consume(E object);
-	}
-	
-	public static interface ItemConsumer extends Consumer<Item> {
-		
-	}
-	
-	public static interface UnitConsumer extends Consumer<Unit> {
-		
-	}
 }

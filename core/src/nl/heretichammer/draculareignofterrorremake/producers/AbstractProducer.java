@@ -1,5 +1,6 @@
-package nl.heretichammer.draculareignofterrorremake.produce;
+package nl.heretichammer.draculareignofterrorremake.producers;
 
+import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
@@ -7,7 +8,7 @@ import nl.heretichammer.draculareignofterrorremake.items.Item;
 public abstract class AbstractProducer<E,M extends AbstractProducer.Model> implements Producer<E> {
 	protected M model;	
 	protected ItemSupplier itemSupplier;
-	protected Producer.Consumer<E> consumer;
+	protected Consumer<E> consumer;
 	protected E produced;
 	protected Team team;
 	
@@ -31,7 +32,7 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	}
 
 	@Override
-	public void setConsumer(Producer.Consumer<E> consumer) {
+	public void setConsumer(Consumer<E> consumer) {
 		this.consumer = consumer;
 	}
 
