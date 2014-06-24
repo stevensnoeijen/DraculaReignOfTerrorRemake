@@ -1,26 +1,24 @@
 package nl.heretichammer.draculareignofterrorremake.rts;
 
-import nl.heretichammer.draculareignofterrorremake.Timer;
+import java.util.LinkedList;
+import java.util.List;
+
+import nl.heretichammer.draculareignofterrorremake.Time;
 
 import com.badlogic.gdx.Gdx;
 
-public final class RTSTimer implements Timer, RTSObject {
+public final class RTSTimer implements Time, RTSObject {
 	private float currentTime;
-	private final float maxTime;
-	private float restTime = 0.0f;
-	
 	private boolean started = false;
-	private boolean done = false;
 	private boolean paused = false;
-	private boolean autoReset = false;
+	private List<RTSTimer.Task> tasks = new LinkedList<RTSTimer.Task>();
 	
-	public RTSTimer(float maxTime, float currentTime) {
-		this.maxTime = maxTime;
+	public RTSTimer(float currentTime) {
 		this.currentTime = currentTime;
 	}
 	
-	public RTSTimer(float maxTime) {
-		this(maxTime, 0);
+	public RTSTimer() {
+		this(0);
 	}
 	
 	@Override
@@ -45,11 +43,7 @@ public final class RTSTimer implements Timer, RTSObject {
 	@Override
 	public void reset() {
 		currentTime = 0.0f;
-		done = false;
-		if(restTime != 0.0f){
-			currentTime += restTime;
-			restTime = 0.0f;
-		}
+		tasks.clear();
 	}
 
 	@Override
@@ -58,31 +52,45 @@ public final class RTSTimer implements Timer, RTSObject {
 	}
 
 	@Override
-	public boolean isDone() {
-		return done;
-	}
-
-	@Override
-	public void setAutoReset(boolean autoReset) {
-		this.autoReset = autoReset;
-	}
-
-	@Override
-	public boolean isAutoReset() {
-		return autoReset;
-	}
-
-	@Override
 	public void update() {
 		if(!paused){
 			float elapsed = Gdx.graphics.getDeltaTime();
-			if(currentTime + elapsed >= maxTime){//if elapsed is more then needed
-				done = true;
-				currentTime = maxTime;
-				if(autoReset){
-					restTime = (currentTime + elapsed)- maxTime;//left over time is taken for the next one
+			currentTime += elapsed;
+			for(Task task : tasks) {
+				task.current += elapsed;
+				if(task.current % task.updateInterval <= elapsed) {//update if interval passed
+					task.update();
+				}
+				if(task.isDone()) {
+					task.done();
+					tasks.remove(task);//may cause problems (if so remove with async colleciton or after for-loop)
 				}
 			}
+		}
+	}
+	
+	public static abstract class Task implements RTSObject {
+		public final float updateInterval;
+		public final float delay;
+		private float current = 0;
+		
+		public Task(float delay, float updateInterval) {
+			this.delay = delay;
+			this.updateInterval = updateInterval;
+		}
+		
+		public Task(float delay) {
+			this(delay, 1f);
+		}
+		
+		public boolean isDone() {
+			return current >= delay;
+		}
+		
+		public abstract void done();
+		
+		public float getCurrent() {
+			return current;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.unit;
 
-public class BuildingUnit {
+public class BuildingUnit extends Unit {
 
 }

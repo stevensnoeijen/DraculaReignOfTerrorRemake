@@ -1,7 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.unit;
 
-import com.badlogic.gdx.Gdx;
+import java.util.List;
 
 public class Troop {
-	//units
+	private List<Unit> units;
 }

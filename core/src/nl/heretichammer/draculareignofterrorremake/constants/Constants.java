@@ -5,7 +5,7 @@ public final class Constants {
 		public static final class categories{
 			public static final String resource = "resource";
 		}
-	}
+	}	
 	public static final class troops {
 		public static final int swordsmen = 5;
 		public static final int crossbowsoldiers = 5;
