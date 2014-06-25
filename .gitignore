@@ -64,3 +64,5 @@ build/
 
 /.gradle
 /bin/
+
+/android/assets

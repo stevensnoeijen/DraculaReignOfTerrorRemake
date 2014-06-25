@@ -78,9 +78,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.AreaScreen" 
+  <class id="8" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.AreaMapScreen" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/screens/AreaScreen.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/screens/AreaMapScreen.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1098" y="181"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -100,9 +100,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.WorldScreen" 
+  <class id="10" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.WorldMapScreen" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/team/WorldScreen.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/screens/WorldMapScreen.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="825" y="184"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

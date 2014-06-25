@@ -122,4 +122,8 @@ public final class Constants {
 			}
 		}
 	}
+	
+	public static final class exceptions{
+		public static final String incorrectformat = "Incorrect format";
+	}
 }
