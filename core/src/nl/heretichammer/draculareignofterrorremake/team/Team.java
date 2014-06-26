@@ -24,7 +24,7 @@ public class Team {
 	public Team(){
 		accessManager = new AccessManager();//this can give problems with the saver?
 		accessManager.setTeam(this);
-		accessManager.load();
+		//accessManager.load();
 	}
 	
 	/**

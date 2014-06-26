@@ -2,7 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.map;
 
 public class WorldMap {
 
-	private World world;
+	public final World world;
 	
 	public WorldMap(World world) {
 		this.world = world;
