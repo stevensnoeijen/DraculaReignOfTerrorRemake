@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.desktop;
 
-import nl.heretichammer.draculareignofterrorremake.DraculaGame;
+import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.width = 640;
 		config.height = 480;
 		config.resizable = false;
-		new LwjglApplication(new DraculaGame(), config);
+		new LwjglApplication(new DRoTRGame(), config);
 	}
 }

@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.android;
 
-import nl.heretichammer.draculareignofterrorremake.DraculaGame;
+import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -11,6 +11,6 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new DraculaGame(), config);
+		initialize(new DRoTRGame(), config);
 	}
 }

@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class DraculaGame extends Game {
+public class DRoTRGame extends Game {
 
 	@Override
 	public void create() {

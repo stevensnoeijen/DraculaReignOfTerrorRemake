@@ -70,16 +70,42 @@ public class WorldMapScreen extends SceneScreen {
 		ui.map.group.setSize(320, 240);
 		
 		//create areas
+		//sibiu
 		ui.map.areas.sibiu = new ImageButton(createStyle(worldMap.world.areas.sibiu));
+		ui.map.areas.sibiu.setPosition(0, 160);
 		ui.map.group.addActor(ui.map.areas.sibiu);
-		
+		//fagaras
 		ui.map.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
-		ui.map.areas.fagaras.moveBy(70, 0);
+		ui.map.areas.fagaras.setPosition(70, 175);
 		ui.map.group.addActor(ui.map.areas.fagaras);
-
+		//curtea
+		ui.map.areas.curtea = new ImageButton(createStyle(worldMap.world.areas.curtea));
+		ui.map.areas.curtea.setPosition(30, 120);
+		ui.map.group.addActor(ui.map.areas.curtea);
+		//brasov
+		ui.map.areas.brasov = new ImageButton(createStyle(worldMap.world.areas.brasov));
+		ui.map.areas.brasov.setPosition(135, 170);
+		ui.map.group.addActor(ui.map.areas.brasov);
+		//pitesti
+		ui.map.areas.pitesti = new ImageButton(createStyle(worldMap.world.areas.pitesti));
+		ui.map.areas.pitesti.setPosition(140, 125);
+		ui.map.group.addActor(ui.map.areas.pitesti);	
+		//tirgo
+		ui.map.areas.tirgo = new ImageButton(createStyle(worldMap.world.areas.tirgo));
+		ui.map.areas.tirgo.setPosition(100, 85);
+		ui.map.group.addActor(ui.map.areas.tirgo);
+		//snagov
+		ui.map.areas.snagov = new ImageButton(createStyle(worldMap.world.areas.snagov));
+		ui.map.areas.snagov.setPosition(195, 110);
+		ui.map.group.addActor(ui.map.areas.snagov);	
+		//giurgiu
+		ui.map.areas.giurgiu = new ImageButton(createStyle(worldMap.world.areas.giurgiu));
+		ui.map.areas.giurgiu.setPosition(135, 40);
+		ui.map.group.addActor(ui.map.areas.giurgiu);
 		
-		ui.map.buttons = new ButtonGroup(ui.map.areas.sibiu, ui.map.areas.fagaras);
-		
+		//add to buttongroup for one selection only
+		ui.map.buttons = new ButtonGroup(ui.map.areas.sibiu, ui.map.areas.fagaras, ui.map.areas.curtea, ui.map.areas.brasov, 
+				ui.map.areas.pitesti, ui.map.areas.tirgo, ui.map.areas.snagov);
 		return ui.map.group;
 	}
 	
@@ -116,7 +142,7 @@ public class WorldMapScreen extends SceneScreen {
 			ButtonGroup buttons;
 			
 			private static final class Areas{
-				ImageButton sibiu, fagaras, curtea, brasov, pitesti, targo, snagov, giurgiu, braila, hirsova, rasova, ostov;
+				ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostov;
 			}
 		}
 	}
