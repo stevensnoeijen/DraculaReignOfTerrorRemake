@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
@@ -48,14 +49,12 @@ public class WorldMapScreen extends SceneScreen {
 		assetManager.finishLoading();
 		
 		ui.background = new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll"));
-		//ui.background.setZIndex(0);
 		stage.addActor(ui.background);
 		
 		ui.mainTable = new Table();
 		//ui.mainTable.debug();
 		ui.mainTable.setFillParent(true);
 		stage.addActor(ui.mainTable);
-		//ui.table.left().top();
 
 		ui.mainTable.add( new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) ) );
 		ui.mainTable.add(ui.rightTable = new Table());
@@ -63,7 +62,19 @@ public class WorldMapScreen extends SceneScreen {
 		
 		ui.rightTable.add(createMap());
 		ui.rightTable.row();
-		ui.rightTable.add(new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-panel-stats") ) ) );
+		
+		ui.rightTable.add(ui.rightBottonTable = new Table()).pad(10);
+		ui.rightBottonTable.add(new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-panel-stats") ) ) );
+		
+		ui.rightBottonTable.add(ui.rightBottomRightTable = new Table()).pad(10);
+		ui.rightBottomRightTable.add( new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-label-annodomini-week") ), Scaling.none ) ).pad(10);
+		ui.rightBottomRightTable.row();
+		
+		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
+		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal") );
+		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal-select") );
+		
+		ui.rightBottomRightTable.add( new ImageButton(waxsealStyle) ).pad(10);
 	}
 	
 	private Actor createMap() {	
@@ -82,6 +93,7 @@ public class WorldMapScreen extends SceneScreen {
 		//fagaras
 		ui.map.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
 		ui.map.areas.fagaras.setPosition(70, 175);
+		ui.map.areas.fagaras.setChecked(true);
 		ui.map.group.addActor(ui.map.areas.fagaras);
 		ui.map.buttons.add(ui.map.areas.fagaras);
 		//curtea
@@ -162,6 +174,8 @@ public class WorldMapScreen extends SceneScreen {
 		Image background;
 		Table mainTable;
 		Table rightTable;
+		Table rightBottonTable;
+		Table rightBottomRightTable;
 		
 		Map map = new Map();
 		
