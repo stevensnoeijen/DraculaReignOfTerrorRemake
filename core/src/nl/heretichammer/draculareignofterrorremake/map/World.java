@@ -33,7 +33,7 @@ public class World {
 		public final Area braila = new Area("Braila", teams.turks);
 		public final Area hirsova = new Area("Hirsova", teams.turks);
 		public final Area rasova = new Area("Rasova", teams.turks);
-		public final Area ostov = new Area("Ostrov", teams.turks);
+		public final Area ostrov = new Area("Ostrov", teams.turks);
 		
 		private Areas() {
 			

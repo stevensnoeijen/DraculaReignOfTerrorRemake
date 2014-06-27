@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -51,14 +52,14 @@ public class WorldMapScreen extends SceneScreen {
 		stage.addActor(ui.background);
 		
 		ui.mainTable = new Table();
-		ui.mainTable.debug();
+		//ui.mainTable.debug();
 		ui.mainTable.setFillParent(true);
 		stage.addActor(ui.mainTable);
 		//ui.table.left().top();
 
 		ui.mainTable.add( new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) ) );
 		ui.mainTable.add(ui.rightTable = new Table());
-		ui.rightTable.debug();
+		//ui.rightTable.debug();
 		
 		ui.rightTable.add(createMap());
 		ui.rightTable.row();
@@ -69,43 +70,71 @@ public class WorldMapScreen extends SceneScreen {
 		ui.map.group = new Group();
 		ui.map.group.setSize(320, 240);
 		
+		//add to buttongroup for one selection only
+		ui.map.buttons = new ButtonGroup();
+		
 		//create areas
 		//sibiu
 		ui.map.areas.sibiu = new ImageButton(createStyle(worldMap.world.areas.sibiu));
 		ui.map.areas.sibiu.setPosition(0, 160);
 		ui.map.group.addActor(ui.map.areas.sibiu);
+		ui.map.buttons.add(ui.map.areas.sibiu);
 		//fagaras
 		ui.map.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
 		ui.map.areas.fagaras.setPosition(70, 175);
 		ui.map.group.addActor(ui.map.areas.fagaras);
+		ui.map.buttons.add(ui.map.areas.fagaras);
 		//curtea
 		ui.map.areas.curtea = new ImageButton(createStyle(worldMap.world.areas.curtea));
 		ui.map.areas.curtea.setPosition(30, 120);
 		ui.map.group.addActor(ui.map.areas.curtea);
+		ui.map.buttons.add(ui.map.areas.curtea);
 		//brasov
 		ui.map.areas.brasov = new ImageButton(createStyle(worldMap.world.areas.brasov));
 		ui.map.areas.brasov.setPosition(135, 170);
 		ui.map.group.addActor(ui.map.areas.brasov);
+		ui.map.buttons.add(ui.map.areas.brasov);
 		//pitesti
 		ui.map.areas.pitesti = new ImageButton(createStyle(worldMap.world.areas.pitesti));
-		ui.map.areas.pitesti.setPosition(140, 125);
-		ui.map.group.addActor(ui.map.areas.pitesti);	
+		ui.map.areas.pitesti.setPosition(130, 125);
+		ui.map.group.addActor(ui.map.areas.pitesti);
+		ui.map.buttons.add(ui.map.areas.pitesti);
 		//tirgo
 		ui.map.areas.tirgo = new ImageButton(createStyle(worldMap.world.areas.tirgo));
 		ui.map.areas.tirgo.setPosition(100, 85);
 		ui.map.group.addActor(ui.map.areas.tirgo);
+		ui.map.buttons.add(ui.map.areas.tirgo);
 		//snagov
 		ui.map.areas.snagov = new ImageButton(createStyle(worldMap.world.areas.snagov));
-		ui.map.areas.snagov.setPosition(195, 110);
-		ui.map.group.addActor(ui.map.areas.snagov);	
+		ui.map.areas.snagov.setPosition(185, 110);
+		ui.map.group.addActor(ui.map.areas.snagov);
+		ui.map.buttons.add(ui.map.areas.snagov);
 		//giurgiu
 		ui.map.areas.giurgiu = new ImageButton(createStyle(worldMap.world.areas.giurgiu));
-		ui.map.areas.giurgiu.setPosition(135, 40);
+		ui.map.areas.giurgiu.setPosition(129, 39);
 		ui.map.group.addActor(ui.map.areas.giurgiu);
+		ui.map.buttons.add(ui.map.areas.giurgiu);
+		//braila
+		ui.map.areas.braila = new ImageButton(createStyle(worldMap.world.areas.braila));
+		ui.map.areas.braila.setPosition(236, 140);
+		ui.map.group.addActor(ui.map.areas.braila);
+		ui.map.buttons.add(ui.map.areas.braila);
+		//hirsova
+		ui.map.areas.hirsova = new ImageButton(createStyle(worldMap.world.areas.hirsova));
+		ui.map.areas.hirsova.setPosition(234, 115);
+		ui.map.group.addActor(ui.map.areas.hirsova);
+		ui.map.buttons.add(ui.map.areas.hirsova);
+		//rasova
+		ui.map.areas.rasova = new ImageButton(createStyle(worldMap.world.areas.rasova));
+		ui.map.areas.rasova.setPosition(229, 93);
+		ui.map.group.addActor(ui.map.areas.rasova);
+		ui.map.buttons.add(ui.map.areas.rasova);
+		//ostrov
+		ui.map.areas.ostrov = new ImageButton(createStyle(worldMap.world.areas.ostrov));
+		ui.map.areas.ostrov.setPosition(219, 69);
+		ui.map.group.addActor(ui.map.areas.ostrov);
+		ui.map.buttons.add(ui.map.areas.ostrov);
 		
-		//add to buttongroup for one selection only
-		ui.map.buttons = new ButtonGroup(ui.map.areas.sibiu, ui.map.areas.fagaras, ui.map.areas.curtea, ui.map.areas.brasov, 
-				ui.map.areas.pitesti, ui.map.areas.tirgo, ui.map.areas.snagov);
 		return ui.map.group;
 	}
 	
@@ -142,7 +171,7 @@ public class WorldMapScreen extends SceneScreen {
 			ButtonGroup buttons;
 			
 			private static final class Areas{
-				ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostov;
+				ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;
 			}
 		}
 	}
