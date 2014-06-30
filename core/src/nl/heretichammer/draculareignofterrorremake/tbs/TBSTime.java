@@ -11,11 +11,11 @@ public final class TBSTime implements Time, TBSObject {
 	private boolean paused = false;
 	private List<TBSTime.Task> tasks = new LinkedList<TBSTime.Task>();
 	
-	public TBSTime(int currentTurns) {
+	private TBSTime(int currentTurns) {
 		this.currentTurn = currentTurns;
 	}
 	
-	public TBSTime() {
+	private TBSTime() {
 		this(0);
 	}
 	
@@ -72,6 +72,10 @@ public final class TBSTime implements Time, TBSObject {
 		return currentTurn;
 	}
 	
+	public void schedule(TBSTime.Task task) {
+		tasks.add(task);
+	}
+	
 	public static abstract class Task implements TBSObject {
 		public final int delay;
 		private int current = 0;
@@ -84,10 +88,15 @@ public final class TBSTime implements Time, TBSObject {
 			return current >= delay;
 		}
 		
+		/**
+		 * Override for done callback.
+		 */
 		public abstract void done();
 		
 		public int getCurrent() {
 			return current;
 		}
 	}
+	
+	public static final TBSTime instance = new TBSTime();
 }

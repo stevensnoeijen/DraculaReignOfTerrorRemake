@@ -1,6 +1,17 @@
 package nl.heretichammer.draculareignofterrorremake.constants;
 
 public final class Constants {
+	public final class Assets {
+		public final class Data {
+			public final class Troops {
+				
+			}
+			public final class Units {
+				
+			}
+		}
+	}
+	
 	public static final class items {
 		public static final class categories{
 			public static final String resource = "resource";

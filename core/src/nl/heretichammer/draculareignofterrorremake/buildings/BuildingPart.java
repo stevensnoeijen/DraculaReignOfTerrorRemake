@@ -7,9 +7,10 @@ public class BuildingPart extends Unit{
 	private Building building;
 	
 	public BuildingPart(Model model) {
+		super(model);
 	}
 
-	public static class Model {
+	public static class Model extends Unit.Model{
 		
 	}
 }

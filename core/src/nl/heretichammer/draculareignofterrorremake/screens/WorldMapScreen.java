@@ -3,18 +3,19 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -22,7 +23,6 @@ import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
 import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
 import nl.heretichammer.draculareignofterrorremake.team.Player;
-import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 public class WorldMapScreen extends SceneScreen {
@@ -56,7 +56,8 @@ public class WorldMapScreen extends SceneScreen {
 		ui.mainTable.setFillParent(true);
 		stage.addActor(ui.mainTable);
 
-		ui.mainTable.add( new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) ) );
+		
+		ui.mainTable.add( createTabs() );
 		ui.mainTable.add(ui.rightTable = new Table());
 		//ui.rightTable.debug();
 		
@@ -147,8 +148,45 @@ public class WorldMapScreen extends SceneScreen {
 		ui.map.group.addActor(ui.map.areas.ostrov);
 		ui.map.buttons.add(ui.map.areas.ostrov);
 		
+		//TODO: add bounds for clickable part for images
 		return ui.map.group;
 	}
+	
+	private Actor createTabs() {
+		ui.tabs.table = new Table();
+		ui.tabs.table.setBackground( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) );
+		ui.tabs.table.add().width(60);
+		ui.tabs.content = new Table();
+		ui.tabs.table.add(ui.tabs.content).padTop(40);
+		
+		ui.tabs.training.table = new Table(); 
+		ui.tabs.content.add(ui.tabs.training.table);
+		
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ANTQUA.TTF"));
+		BitmapFont font = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter());
+		Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
+		
+		//ui.tabs.training.table.add(new Label("test", style));
+		
+		//Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+		//ui.tabs.training.table.add(new ImageButton(skin, "canon"));
+		
+		
+		//content.add(new Label("test", new Label.LabelStyle(new BitmapFont(), Color.WHITE))).top();
+		//Image stat = new Image(new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-level-blue") ) ) ;
+		//content.add(stat);
+		
+		return ui.tabs.table;
+	}
+	
+	
+	/*private Button createImageButton(){
+		//ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+		//style.up =   //"images/council.pack:ui-label-annodomini-week"
+		
+		
+		//return new ImageButton();
+	}*/
 	
 	private ImageButton.ImageButtonStyle createStyle(Area area){
 		boolean enemy = true;
@@ -178,6 +216,7 @@ public class WorldMapScreen extends SceneScreen {
 		Table rightBottomRightTable;
 		
 		Map map = new Map();
+		Tabs tabs = new Tabs();
 		
 		private static final class Map {
 			Group group;
@@ -187,6 +226,32 @@ public class WorldMapScreen extends SceneScreen {
 			private static final class Areas{
 				ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;
 			}
+		}
+		
+		private static final class Tabs {
+			Table table;
+			Table content;
+			
+			//training
+			Training training = new Training();
+			
+			private static final class Training {
+				Table table;
+				Unit swordsmen,	crossbowsoldiers, knight, juggernaut, catapult, cannon, spy;
+				
+				private static final class Unit {
+					ImageButton button;
+					Label gold;
+					Label turns;
+					Image strenght, accurancy, defance, stamina, speed, range;
+				}
+				
+			}
+			
+			//movement
+			//construction
+			//information
+			//administration
 		}
 	}
 }

@@ -19,11 +19,15 @@ import nl.heretichammer.draculareignofterrorremake.unit.effects.Effect;
 
 import com.badlogic.gdx.utils.Array;
 
-public class Unit {//implements Teamable{
-	/*
+public class Unit implements Cloneable {//implements Teamable{
+	
+	public Unit(Model model) {
+		// TODO Auto-generated constructor stub
+	}
+	
 	//model
 	private Model model;
-	
+	/*
 	//visitors
 	private final Unit.ItemVisitor itemVisitor = new Unit.ItemVisitor();
 	
@@ -224,13 +228,13 @@ public class Unit {//implements Teamable{
 			
 		}
 	}
-	
+	*/
 	public static class Model {
 		public String name;
-		public int maxHealth, maxEnergy;
+		public int maxHealth;
 		
-		public GraphicDescriptor graphic;
-		
+		//public GraphicDescriptor graphic;
+		/*
 		public Array<AnimationEvent> animations = new Array<AnimationEvent>();
 		public Array<SoundEvent> sounds = new Array<SoundEvent>();
 		
@@ -271,16 +275,17 @@ public class Unit {//implements Teamable{
 		}
 		
 		public static class SoundEvent extends Event{
-			public Array<SoundDescriptor> sounds = new Array<SoundDescriptor>();
+			public Array<String> sounds = new Array<String>();
 			//public boolean miss;
 			public boolean select;
 		}
 		
 		public static class AnimationEvent extends Event {
-			public Array<AnimationDescriptor> animations = new Array<AnimationDescriptor>();
+			public Array<String> animations = new Array<String>();
 		}
+		*/
 	}
-
+	
 	public enum Attribute {
 		
 	}
@@ -288,9 +293,13 @@ public class Unit {//implements Teamable{
 	public static class Descriptor {
 		public String name;
 	}
-	*/
 	
 	public static interface UnitConsumer extends Consumer<Unit> {
 		
 	}
+	
+	@Override
+		protected Object clone() throws CloneNotSupportedException {
+			return new Unit(model);
+		}
 }

@@ -3,6 +3,7 @@ package nl.heretichammer.draculareignofterrorremake;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public interface ItemSupplier {
+	//TODO: make "supply" methods
 	/**
 	 * @param item to find in the supplier
 	 * @return found item in supplier

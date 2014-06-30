@@ -1,16 +1,25 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
+import com.badlogic.gdx.utils.Json;
+
 import nl.heretichammer.draculareignofterrorremake.Consumer;
+import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
+import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public abstract class AbstractProducer<E,M extends AbstractProducer.Model> implements Producer<E> {
+	protected static final Json json = new Json();
+	
 	protected M model;	
 	protected ItemSupplier itemSupplier;
 	protected Consumer<E> consumer;
 	protected E produced;
 	protected Team team;
+	private boolean started;
+	private boolean done;
 	
 	public AbstractProducer(M model) {
 		this.model = model;
@@ -19,6 +28,11 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	@Override
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+	
+	@Override
+	public Team getTeam() {
+		return team;
 	}
 	
 	@Override
@@ -65,7 +79,54 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	}
 	
 	public static class Model {
+		public String accessName;
 		public boolean stoppable = true;
 		public Item.Descriptor[] cost;
+		public int turnCost;
+	}
+
+	@Override
+	public boolean isAccessable() {
+		if(getTeam() != null) {
+			return getTeam().accessManager.isAccessable(model.accessName);
+		}else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean isStartable() {
+		return isAccessable();
+	}
+	
+	@Override
+	public void start() {
+		started = true;
+		DRoTR.tbs.time.schedule(new TBSTime.Task(model.turnCost) {
+			@Override
+			public void turn() {
+				
+			}
+			
+			@Override
+			public void done() {
+				done = true;
+			}
+		});
+	}
+	
+	@Override
+	public void stop() {
+		started = false;
+	}
+	
+	@Override
+	public boolean isStarted() {
+		return started;
+	}
+	
+	@Override
+	public boolean isDone() {
+		return done;
 	}
 }
