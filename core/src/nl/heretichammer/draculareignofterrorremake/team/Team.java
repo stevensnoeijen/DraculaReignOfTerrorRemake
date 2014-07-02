@@ -3,9 +3,10 @@ package nl.heretichammer.draculareignofterrorremake.team;
 import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Json;
 
-public class Team {
-	public static final Team NEUTRAL = new Team("Neutral", Color.WHITE);
+public class Team {//implements Json.Serializable
+	//public static final Team NEUTRAL = new Team("Neutral", Color.WHITE);
 	
 	private String name;
 	private Color color;

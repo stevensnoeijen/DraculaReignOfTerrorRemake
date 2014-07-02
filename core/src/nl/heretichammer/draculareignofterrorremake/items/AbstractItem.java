@@ -8,8 +8,13 @@ public abstract class AbstractItem<M extends Item.ItemModel> implements Item{
 	private int amount;
 	private Unit owner;
 	
-	public AbstractItem(M model) {
+	public AbstractItem(M model, int amount) {
 		this.model = model;
+		this.amount = amount;
+	}
+	
+	public AbstractItem(M model) {
+		this(model, 1);
 	}
 	
 	@Override

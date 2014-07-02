@@ -231,7 +231,7 @@ public class Unit implements Cloneable {//implements Teamable{
 	*/
 	public static class Model {
 		public String name;
-		public int maxHealth;
+		public EnumMap<Attribute, Integer> attributes = new EnumMap<Unit.Attribute, Integer>(Unit.Attribute.class);
 		
 		//public GraphicDescriptor graphic;
 		/*
@@ -239,7 +239,7 @@ public class Unit implements Cloneable {//implements Teamable{
 		public Array<SoundEvent> sounds = new Array<SoundEvent>();
 		
 		public boolean hasAttributes;
-		public EnumMap<Attribute, Integer> defaultAttributes = new EnumMap<Unit.Attribute, Integer>(Unit.Attribute.class);
+		
 		
 		public boolean canReceiveEffects;
 		
@@ -287,7 +287,7 @@ public class Unit implements Cloneable {//implements Teamable{
 	}
 	
 	public enum Attribute {
-		
+		STRENGHT, ACCURACY, DEFANCE, STAMINA, SPEED, RANGE
 	}
 	
 	public static class Descriptor {

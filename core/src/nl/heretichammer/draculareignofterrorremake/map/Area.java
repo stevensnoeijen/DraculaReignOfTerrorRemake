@@ -5,24 +5,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.Consumer;
-import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
+import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
 import nl.heretichammer.draculareignofterrorremake.items.Item.Descriptor;
 import nl.heretichammer.draculareignofterrorremake.producers.TroopProducerManager;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
-import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 
 public class Area implements Teamable, Consumer<Troop>, ItemSupplier {
 	private String name;
 	private Team team;
 	private List<Troop> troops = new ArrayList<Troop>();
+	private List<Item> items = new LinkedList<Item>();
 	
 	private TroopProducerManager troopProducerManager;
 	
 	//adjacents
+	
+	public Area(AreaData data) {
+		this(data.name, World.Teams.byName(data.teamName));
+		
+		for(Item.Descriptor itemDescriptor : data.items) {
+			items.add( ItemFactory.create(itemDescriptor) );
+		}
+	}
 	
 	public Area(String name, Team team) {
 		this.name = name;
@@ -30,10 +38,6 @@ public class Area implements Teamable, Consumer<Troop>, ItemSupplier {
 		setTeam(team);
 		troopProducerManager.setConsumer(this);
 		troopProducerManager.setItemSupplier(this);
-	}
-	
-	public Area() {
-		
 	}
 	
 	public String getName() {
@@ -51,6 +55,10 @@ public class Area implements Teamable, Consumer<Troop>, ItemSupplier {
 		return team;
 	}
 
+	public List<Item> getItems() {
+		return items;
+	}
+	
 	@Override
 	public Item findItem(Descriptor itemDescriptor) {
 		// TODO Auto-generated method stub
@@ -84,5 +92,11 @@ public class Area implements Teamable, Consumer<Troop>, ItemSupplier {
 	@Override
 	public void consume(Troop troop) {
 		troops.add(troop);
+	}
+	
+	public static class AreaData {
+		public String name;
+		public String teamName;
+		public Item.Descriptor[] items;
 	}
 }
