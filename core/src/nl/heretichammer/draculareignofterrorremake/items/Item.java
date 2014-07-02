@@ -60,8 +60,4 @@ public interface Item {
 		public String name;
 		public int amount;
 	}
-	
-	public static interface ItemConsumer extends Consumer<Item> {
-		
-	}
 }

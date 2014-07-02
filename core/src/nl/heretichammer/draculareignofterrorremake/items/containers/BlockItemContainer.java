@@ -16,7 +16,7 @@ public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockIt
 	}
 	
 	public BlockItemContainer(BlockItemContainer.BlockItemContainerModel model) {
-		super(model);
+		this(model, null);
 	}
 
 	public static class BlockItemContainerModel extends ItemContainer.ItemContainerModel {
@@ -34,7 +34,22 @@ public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockIt
 
 	@Override
 	public void add(Item item) {
-		items.add(item);
+		Item equal = findEqual(item);
+		if(equal != null) {
+			//if there is a equal combine them
+			equal.add(item);
+		}else {
+			items.add(item);
+		}
+	}
+	
+	protected Item findEqual(Item find) {
+		for(Item item : items) {
+			if(item.equalModel(find)){
+				return item;
+			}
+		}
+		return null;
 	}
 
 	@Override

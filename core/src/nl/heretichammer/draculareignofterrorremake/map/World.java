@@ -1,7 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.map;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.Json;
 
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 

@@ -13,9 +13,8 @@ public interface ItemSupplier {
 	 * Removes item from himself and returns it.
 	 * @param itemDescriptor name and amount of item
 	 * @return item with the requested amount or null
-	 * @throws TODO: donthaveitemsException?
 	 */
-	public Item removeItems(Item.Descriptor[] itemDescriptor);
+	public Item[] removeItems(Item.Descriptor[] itemDescriptor);
 	public Item removeItem(Item.Descriptor itemDescriptor);
 	
 	public boolean hadItem(Item.Descriptor itemDescriptor);

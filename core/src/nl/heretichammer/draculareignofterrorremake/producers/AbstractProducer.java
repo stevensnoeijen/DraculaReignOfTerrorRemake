@@ -1,17 +1,19 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
-import com.badlogic.gdx.utils.Json;
+import java.lang.reflect.Array;
+import java.util.Collections;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
-import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public abstract class AbstractProducer<E,M extends AbstractProducer.Model> implements Producer<E> {
-	protected static final Json json = new Json();
 	
 	protected M model;	
 	protected ItemSupplier itemSupplier;
@@ -87,6 +89,10 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 
 	@Override
 	public boolean isAccessable() {
+		if(StringUtils.isEmpty(model.accessName)) {//if no accessName it is accessable
+			return true;
+		}
+		
 		if(getTeam() != null) {
 			return getTeam().accessManager.isAccessable(model.accessName);
 		}else {
@@ -99,25 +105,38 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 		return isAccessable();
 	}
 	
+	/**
+	 * 
+	 * @return if payed
+	 */
+	private boolean pay() {
+		return !ArrayUtils.isEmpty(itemSupplier.removeItems(model.cost));//if all items are removed is the array not empty
+	}
+	
 	@Override
 	public void start() {
-		started = true;
-		DRoTR.tbs.time.schedule(new TBSTime.Task(model.turnCost) {
-			@Override
-			public void turn() {
+		boolean payed = pay();
+		if(payed) {//if paid
+			started = true;
+			DRoTR.tbs.time.schedule(new TBSTime.Task(model.turnCost) {
+				@Override
+				public void turn() {
+					
+				}
 				
-			}
-			
-			@Override
-			public void done() {
-				done = true;
-			}
-		});
+				@Override
+				public void done() {
+					done = true;
+				}
+			});
+		}
 	}
 	
 	@Override
 	public void stop() {
-		started = false;
+		if(isStartable()) {
+			started = false;
+		}
 	}
 	
 	@Override

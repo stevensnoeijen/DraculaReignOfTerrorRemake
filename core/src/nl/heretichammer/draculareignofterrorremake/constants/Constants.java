@@ -124,11 +124,14 @@ public final class Constants {
 	public static final class save {
 		public static final class team {
 			public static final class access {
-				public static final class armament {
-					public static final String bridge = "armament.x";
-				}
-				public static final class architecture {
-					public static final String bridge = "architecture.x";
+				public static final class troopproducers {
+					public static final String swordsmen = "troopproducers.swordsmen";
+					public static final String crossbowsoldiers = "troopproducers.crossbowsoldiers";
+					public static final String knight = "troopproducers.knight";
+					public static final String juggernaut = "troopproducers.juggernaut";
+					public static final String catapult = "troopproducers.catapult";
+					public static final String cannon = "troopproducers.cannon";
+					public static final String spy = "troopproducers.spy";
 				}
 			}
 		}
