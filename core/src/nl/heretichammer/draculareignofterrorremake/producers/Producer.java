@@ -1,10 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
-import nl.heretichammer.draculareignofterrorremake.Consumable;
-import nl.heretichammer.draculareignofterrorremake.Consumer;
-import nl.heretichammer.draculareignofterrorremake.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable {

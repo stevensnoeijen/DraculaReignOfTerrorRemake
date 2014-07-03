@@ -3,7 +3,7 @@ package nl.heretichammer.draculareignofterrorremake.tbs;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.Time;
+import nl.heretichammer.draculareignofterrorremake.utils.Time;
 
 public final class TBSTime implements Time, TBSObject {
 	private int currentTurn;

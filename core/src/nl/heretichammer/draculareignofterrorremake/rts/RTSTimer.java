@@ -3,7 +3,7 @@ package nl.heretichammer.draculareignofterrorremake.rts;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.Time;
+import nl.heretichammer.draculareignofterrorremake.utils.Time;
 
 import com.badlogic.gdx.Gdx;
 

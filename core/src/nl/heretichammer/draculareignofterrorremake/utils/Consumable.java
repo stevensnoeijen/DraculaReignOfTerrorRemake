@@ -1,6 +1,6 @@
-package nl.heretichammer.draculareignofterrorremake;
+package nl.heretichammer.draculareignofterrorremake.utils;
 
-import nl.heretichammer.draculareignofterrorremake.Consumer;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 
 public interface Consumable<E extends Consumer<?>> {
 	/**

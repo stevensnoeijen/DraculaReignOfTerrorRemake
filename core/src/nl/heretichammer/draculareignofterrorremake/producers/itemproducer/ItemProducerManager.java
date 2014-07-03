@@ -1,9 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.producers.itemproducer;
 
-import nl.heretichammer.draculareignofterrorremake.Consumable;
-import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.producers.ProducerManager;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 
 public class ItemProducerManager extends ProducerManager<ItemProducer> implements Consumable<Consumer<Item>> {
 	public final ItemProducer goldProducer;

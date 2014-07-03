@@ -2,8 +2,6 @@ package nl.heretichammer.draculareignofterrorremake.utils;
 
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.ItemSuppliable;
-import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 

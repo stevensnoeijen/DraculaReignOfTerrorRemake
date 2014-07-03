@@ -3,11 +3,11 @@ package nl.heretichammer.draculareignofterrorremake.producers;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
-import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public abstract class AbstractProducer<P,D extends Producer.ProducerData> implements Producer<P> {

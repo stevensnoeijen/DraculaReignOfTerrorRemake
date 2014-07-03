@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake;
+package nl.heretichammer.draculareignofterrorremake.utils;
 
 public interface Time {
 	public void start();

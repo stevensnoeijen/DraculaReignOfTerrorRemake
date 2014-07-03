@@ -3,8 +3,6 @@ package nl.heretichammer.draculareignofterrorremake.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.Consumer;
-import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
 import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
@@ -15,6 +13,8 @@ import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.Troop
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
 public class Area implements Teamable, ItemSupplier {
 	private String name;

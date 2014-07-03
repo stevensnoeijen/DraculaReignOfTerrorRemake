@@ -3,11 +3,11 @@ package nl.heretichammer.draculareignofterrorremake.producers;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.ItemSuppliable;
-import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.utils.DRoTRUtils;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
 public abstract class ProducerManager<P extends Producer<?>> implements Teamable,ItemSuppliable {
 	private Team team;

@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.items.DefaultItem;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Key;
@@ -16,6 +15,7 @@ import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.unit.abilities.Ability;
 import nl.heretichammer.draculareignofterrorremake.unit.effects.Effect;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 
 import com.badlogic.gdx.utils.Array;
 

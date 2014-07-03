@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake;
+package nl.heretichammer.draculareignofterrorremake.utils;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 

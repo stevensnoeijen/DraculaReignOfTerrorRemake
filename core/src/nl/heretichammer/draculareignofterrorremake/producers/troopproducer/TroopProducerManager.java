@@ -1,9 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.producers.troopproducer;
 
-import nl.heretichammer.draculareignofterrorremake.Consumable;
-import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.producers.ProducerManager;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
+import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 
 public class TroopProducerManager extends ProducerManager<TroopProducer> implements Consumable<Consumer<Troop>> {
 	public final TroopProducer swordsmenTroopProducer;
