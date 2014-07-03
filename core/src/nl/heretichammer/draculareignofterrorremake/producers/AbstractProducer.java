@@ -1,8 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
-import java.lang.reflect.Array;
-import java.util.Collections;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,18 +10,18 @@ import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
-public abstract class AbstractProducer<E,M extends AbstractProducer.Model> implements Producer<E> {
+public abstract class AbstractProducer<P,D extends Producer.ProducerData> implements Producer<P> {
 	
-	protected M model;	
+	protected D data;	
 	protected ItemSupplier itemSupplier;
-	protected Consumer<E> consumer;
-	protected E produced;
+	protected Consumer<P> consumer;
+	protected P produced;
 	protected Team team;
 	private boolean started;
 	private boolean done;
 	
-	public AbstractProducer(M model) {
-		this.model = model;
+	public AbstractProducer(D data) {
+		this.data = data;
 	}
 	
 	@Override
@@ -39,7 +36,7 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	
 	@Override
 	public Item.ItemDescriptor[] getCost() {
-		return model.cost;
+		return data.cost;
 	}
 
 	@Override
@@ -48,18 +45,18 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	}
 
 	@Override
-	public void setConsumer(Consumer<E> consumer) {
+	public void setConsumer(Consumer<P> consumer) {
 		this.consumer = consumer;
 	}
 
 	@Override
-	public E remove() {
+	public P remove() {
 		return produced;
 	}
 	
 	@Override
 	public boolean isStoppable() {
-		return model.stoppable;
+		return data.stoppable;
 	}
 
 	/**
@@ -79,22 +76,15 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 			produced = null;
 		}
 	}
-	
-	public static class Model {
-		public String accessName;
-		public boolean stoppable = true;
-		public Item.ItemDescriptor[] cost;
-		public int turnCost;
-	}
 
 	@Override
 	public boolean isAccessable() {
-		if(StringUtils.isEmpty(model.accessName)) {//if no accessName it is accessable
+		if(StringUtils.isEmpty(data.accessName)) {//if no accessName it is accessable
 			return true;
 		}
 		
 		if(getTeam() != null) {
-			return getTeam().accessManager.isAccessable(model.accessName);
+			return getTeam().accessManager.isAccessable(data.accessName);
 		}else {
 			return false;
 		}
@@ -110,7 +100,7 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	 * @return if payed
 	 */
 	private boolean pay() {
-		return !ArrayUtils.isEmpty(itemSupplier.removeItems(model.cost));//if all items are removed is the array not empty
+		return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
 	}
 	
 	@Override
@@ -118,7 +108,7 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 		boolean payed = pay();
 		if(payed) {//if paid
 			started = true;
-			DRoTR.tbs.time.schedule(new TBSTime.Task(model.turnCost) {
+			DRoTR.tbs.time.schedule(new TBSTime.Task(data.turnCost) {
 				@Override
 				public void turn() {
 					

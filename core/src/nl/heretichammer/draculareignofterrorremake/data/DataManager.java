@@ -40,11 +40,11 @@ public class DataManager {
 	}
 	
 	//producers
-	public TroopProducer.Model getTroopProducerData(String name){
+	public TroopProducer.TroopProducerData getTroopProducerData(String name){
 		return TroopProducerDataFactory.instance.fromFile(name);
 	}
 	
-	public ItemProducer.Model getItemProducerData(String name){
+	public ItemProducer.ItemProducerData getItemProducerData(String name){
 		return ItemProducerDataFactory.instance.fromFile(name);
 	}
 	

@@ -11,7 +11,6 @@ public abstract class UpgradeManager {
 	 * Current running upgrade
 	 */
 	protected Upgrade current;
-	protected Upgrade next;
 	
 	public void addUpgrade(Upgrade upgrade){
 		upgrades.add(upgrade);
@@ -21,13 +20,11 @@ public abstract class UpgradeManager {
 		throw new NotImplementedException();
 	}
 	
-	public void startUpgrade(){
-		current = next;
+	public void start(){
 		current.start();
 	}
 	
-	public void stopUpgrade(){
+	public void stop(){
 		current.stop();
-		current = null;
 	}
 }

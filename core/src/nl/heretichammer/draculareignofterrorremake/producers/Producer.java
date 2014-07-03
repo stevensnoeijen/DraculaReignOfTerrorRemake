@@ -3,8 +3,6 @@ package nl.heretichammer.draculareignofterrorremake.producers;
 import nl.heretichammer.draculareignofterrorremake.Consumable;
 import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.ItemSuppliable;
-import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
-import nl.heretichammer.draculareignofterrorremake.tbs.TBSObject;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
@@ -22,4 +20,11 @@ public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E
 	 * @return 
 	 */
 	public E remove();
+	
+	public static class ProducerData {
+		public String accessName;
+		public boolean stoppable = true;
+		public Item.ItemDescriptor[] cost;
+		public int turnCost;
+	}
 }

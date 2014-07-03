@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.upgrade;
 
-import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
+import nl.heretichammer.draculareignofterrorremake.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 /**
@@ -8,9 +8,9 @@ import nl.heretichammer.draculareignofterrorremake.items.Item;
  * @author Steven Snoeijen
  *
  */
-public interface Upgrade {
+public interface Upgrade extends ItemSuppliable {
 	public String getName();
-	public void setItemSupplier(ItemSupplier itemSupplier);
+	public Item.ItemDescriptor[] getCost();
 	public void start();
 	public void stop();
 	public boolean isDone();

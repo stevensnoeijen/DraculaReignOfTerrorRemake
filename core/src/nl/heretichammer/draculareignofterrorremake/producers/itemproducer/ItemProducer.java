@@ -3,19 +3,20 @@ package nl.heretichammer.draculareignofterrorremake.producers.itemproducer;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
 import nl.heretichammer.draculareignofterrorremake.producers.AbstractProducer;
+import nl.heretichammer.draculareignofterrorremake.producers.Producer;
 
-public class ItemProducer extends AbstractProducer<Item, ItemProducer.Model> {
+public class ItemProducer extends AbstractProducer<Item, ItemProducer.ItemProducerData> {
 
-	public ItemProducer(Model model) {
-		super(model);
+	public ItemProducer(ItemProducerData data) {
+		super(data);
 	}
 
-	public static class Model extends AbstractProducer.Model {
+	public static class ItemProducerData extends Producer.ProducerData {
 		public Item.ItemDescriptor produces;
 	}
 
 	@Override
 	protected void produce() {
-		produced = ItemFactory.create(model.produces);
+		produced = ItemFactory.create(data.produces);
 	}
 }
