@@ -3,14 +3,18 @@ package nl.heretichammer.draculareignofterrorremake.upgrade;
 import java.util.LinkedList;
 import java.util.List;
 
+import nl.heretichammer.draculareignofterrorremake.ItemSuppliable;
+import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
+import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.team.Teamable;
+
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public abstract class UpgradeManager {
+public class UpgradeManager implements Teamable, ItemSuppliable {
 	protected List<Upgrade> upgrades = new LinkedList<Upgrade>();
-	/**
-	 * Current running upgrade
-	 */
-	protected Upgrade current;
+	
+	private Team team;
+	
 	
 	public void addUpgrade(Upgrade upgrade){
 		upgrades.add(upgrade);
@@ -19,12 +23,21 @@ public abstract class UpgradeManager {
 		//}
 		throw new NotImplementedException();
 	}
-	
-	public void start(){
-		current.start();
+
+	@Override
+	public void setItemSupplier(ItemSupplier itemSupplier) {
+		
 	}
-	
-	public void stop(){
-		current.stop();
+
+	@Override
+	public void setTeam(Team team) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Team getTeam() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
