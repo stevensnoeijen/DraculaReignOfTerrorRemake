@@ -11,7 +11,7 @@ public class ItemProducer extends AbstractProducer<Item, ItemProducer.Model> {
 	}
 
 	public static class Model extends AbstractProducer.Model {
-		public Item.Descriptor produces;
+		public Item.ItemDescriptor produces;
 	}
 
 	@Override

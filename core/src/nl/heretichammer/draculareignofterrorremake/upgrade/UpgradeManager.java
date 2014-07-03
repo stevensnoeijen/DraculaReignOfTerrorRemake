@@ -23,11 +23,11 @@ public abstract class UpgradeManager {
 	
 	public void startUpgrade(){
 		current = next;
-		current.startUpgrade();
+		current.start();
 	}
 	
 	public void stopUpgrade(){
-		current.stopUpgrade();
+		current.stop();
 		current = null;
 	}
 }

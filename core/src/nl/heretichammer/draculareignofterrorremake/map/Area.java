@@ -7,7 +7,7 @@ import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
-import nl.heretichammer.draculareignofterrorremake.items.Item.Descriptor;
+import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 import nl.heretichammer.draculareignofterrorremake.items.containers.BlockItemContainer;
 import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainerFactory;
 import nl.heretichammer.draculareignofterrorremake.producers.itemproducer.ItemProducerManager;
@@ -30,8 +30,8 @@ public class Area implements Teamable, ItemSupplier {
 	public Area(AreaData data) {
 		this(data.name, World.Teams.byName(data.teamName));
 		
-		for(Item.Descriptor itemDescriptor : data.items) {
-			inventory.add( ItemFactory.create(itemDescriptor) );
+		for(Item.ItemDescriptor itemItemDescriptor : data.items) {
+			inventory.add( ItemFactory.create(itemItemDescriptor) );
 		}
 	}
 	
@@ -76,31 +76,31 @@ public class Area implements Teamable, ItemSupplier {
 	}
 	
 	@Override
-	public Item findItem(Descriptor itemDescriptor) {
+	public Item findItem(ItemDescriptor itemItemDescriptor) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Item[] removeItems(Descriptor[] itemDescriptor) {
+	public Item[] removeItems(ItemDescriptor[] itemItemDescriptor) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Item removeItem(Descriptor itemDescriptor) {
+	public Item removeItem(ItemDescriptor itemItemDescriptor) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean hadItem(Descriptor itemDescriptor) {
+	public boolean hadItem(ItemDescriptor itemItemDescriptor) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean hasItems(Descriptor[] itemDescriptor) {
+	public boolean hasItems(ItemDescriptor[] itemItemDescriptor) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -108,6 +108,6 @@ public class Area implements Teamable, ItemSupplier {
 	public static class AreaData {
 		public String name;
 		public String teamName;
-		public Item.Descriptor[] items;
+		public Item.ItemDescriptor[] items;
 	}
 }

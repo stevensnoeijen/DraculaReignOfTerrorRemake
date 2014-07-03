@@ -55,7 +55,7 @@ public interface Item {
 		public void visit(DefaultItem baseItem);
 	}
 	
-	public static class Descriptor {
+	public static class ItemDescriptor {
 		public String name;
 		public int amount;
 	}

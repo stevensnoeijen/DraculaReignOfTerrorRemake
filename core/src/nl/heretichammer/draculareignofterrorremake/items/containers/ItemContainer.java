@@ -69,6 +69,6 @@ public abstract class ItemContainer<D extends ItemContainer.ItemContainerData> e
 	public abstract Iterable<Item> findByCategory(String category);
 	
 	public static class ItemContainerData extends Item.ItemData{
-		public Item.Descriptor lock;
+		public Item.ItemDescriptor lock;
 	}
 }

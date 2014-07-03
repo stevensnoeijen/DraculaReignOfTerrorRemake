@@ -38,7 +38,7 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	}
 	
 	@Override
-	public Item.Descriptor[] getCost() {
+	public Item.ItemDescriptor[] getCost() {
 		return model.cost;
 	}
 
@@ -83,7 +83,7 @@ public abstract class AbstractProducer<E,M extends AbstractProducer.Model> imple
 	public static class Model {
 		public String accessName;
 		public boolean stoppable = true;
-		public Item.Descriptor[] cost;
+		public Item.ItemDescriptor[] cost;
 		public int turnCost;
 	}
 

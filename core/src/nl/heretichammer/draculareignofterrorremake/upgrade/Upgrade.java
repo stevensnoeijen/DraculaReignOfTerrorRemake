@@ -1,6 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.upgrade;
 
 import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
+import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 /**
  * Strategy pattern.
@@ -10,9 +11,7 @@ import nl.heretichammer.draculareignofterrorremake.ItemSupplier;
 public interface Upgrade {
 	public String getName();
 	public void setItemSupplier(ItemSupplier itemSupplier);
-	public void startUpgrade();
-	public void stopUpgrade();
+	public void start();
+	public void stop();
 	public boolean isDone();
-	public String getPreviousUpgradeName();
-	public String[] getNextUpgradeNames();
 }

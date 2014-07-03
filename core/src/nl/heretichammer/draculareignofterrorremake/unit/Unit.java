@@ -68,13 +68,13 @@ public class Unit implements Cloneable {//implements Teamable{
 		loadGraphic(model.graphic.graphic, model.graphic.animated, model.graphic.reverse, model.graphic.width, model.graphic.height, model.graphic.unique);
 		//add animations
 		for(AnimationEvent animationEvent : model.animations){
-			for(AnimationDescriptor animation : animationEvent.animations){
+			for(AnimationItemDescriptor animation : animationEvent.animations){
 				addAnimation(animation.name, animation.frames, animation.frameRate, animation.looped);
 			}
 		}
 		//load sounds
 		for(SoundEvent soundEvent : model.sounds){
-			for(SoundDescriptor sound : soundEvent.sounds){
+			for(SoundItemDescriptor sound : soundEvent.sounds){
 				sounds.put(sound.embeddedSound, FlxG.loadSound(sound.embeddedSound, sound.volume, sound.looped, sound.autoDestroy, sound.autoPlay));
 			}
 		}
@@ -179,11 +179,11 @@ public class Unit implements Cloneable {//implements Teamable{
 	
 	protected void updateEvent() {
 		Unit.Model.AnimationEvent animationEvent = model.findAnimation(_facing, moving, attacking, dying, alive);
-		AnimationDescriptor animation = animationEvent.animations.random();
+		AnimationItemDescriptor animation = animationEvent.animations.random();
 		play(animation.name);
 		
 		SoundEvent soundEvent = model.findSound(_facing, moving, attacking, dying, alive, false);
-		SoundDescriptor sound = soundEvent.sounds.random();
+		SoundItemDescriptor sound = soundEvent.sounds.random();
 		playSound(sound.embeddedSound);
 		super.updateAnimation();
 	}
@@ -233,7 +233,7 @@ public class Unit implements Cloneable {//implements Teamable{
 		public String name;
 		public EnumMap<Attribute, Integer> attributes = new EnumMap<Unit.Attribute, Integer>(Unit.Attribute.class);
 		
-		//public GraphicDescriptor graphic;
+		//public GraphicItemDescriptor graphic;
 		/*
 		public Array<AnimationEvent> animations = new Array<AnimationEvent>();
 		public Array<SoundEvent> sounds = new Array<SoundEvent>();
@@ -290,7 +290,7 @@ public class Unit implements Cloneable {//implements Teamable{
 		STRENGHT, ACCURACY, DEFANCE, STAMINA, SPEED, RANGE
 	}
 	
-	public static class Descriptor {
+	public static class ItemDescriptor {
 		public String name;
 	}
 	

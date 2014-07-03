@@ -10,7 +10,7 @@ import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable {
-	public Item.Descriptor[] getCost();
+	public Item.ItemDescriptor[] getCost();
 	public boolean isStartable();
 	public void start();
 	public boolean isStarted();
