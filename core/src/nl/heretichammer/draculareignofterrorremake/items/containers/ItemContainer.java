@@ -1,7 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.items.containers;
 
-import java.util.List;
-
 import nl.heretichammer.draculareignofterrorremake.items.AbstractItem;
 import nl.heretichammer.draculareignofterrorremake.items.Closeable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
@@ -9,18 +7,18 @@ import nl.heretichammer.draculareignofterrorremake.items.Key;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
 import nl.heretichammer.draculareignofterrorremake.items.Lockable;
 
-public abstract class ItemContainer<M extends ItemContainer.ItemContainerModel> extends AbstractItem<M> implements Iterable<Item>, Closeable, Lockable {
+public abstract class ItemContainer<D extends ItemContainer.ItemContainerData> extends AbstractItem<D> implements Iterable<Item>, Closeable, Lockable {
 	
 	private Lock lock;
 	private boolean open;
 	
-	public ItemContainer(M model, Lock lock) {
-		this(model);
+	public ItemContainer(D data, Lock lock) {
+		this(data);
 		this.lock = lock;
 	}
 	
-	public ItemContainer(M model) {
-		super(model);
+	public ItemContainer(D data) {
+		super(data);
 	}
 
 	@Override
@@ -64,11 +62,13 @@ public abstract class ItemContainer<M extends ItemContainer.ItemContainerModel> 
 	
 	public abstract boolean remove(Item item);
 	
-	public abstract int size();
+	public abstract int getMaxSize();
+	
+	public abstract int getSize();
 	
 	public abstract Iterable<Item> findByCategory(String category);
 	
-	public static class ItemContainerModel extends Item.ItemModel{
+	public static class ItemContainerData extends Item.ItemData{
 		public Item.Descriptor lock;
 	}
 }

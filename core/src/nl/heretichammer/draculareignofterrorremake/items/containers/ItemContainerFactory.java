@@ -13,10 +13,10 @@ public class ItemContainerFactory {
 	}
 	
 	public static BlockItemContainer createBlockItemContainer(String name) {
-		return new BlockItemContainer( (BlockItemContainer.BlockItemContainerModel)DataManager.instance.getItemContainerData(name, BlockItemContainer.BlockItemContainerModel.class) );
+		return new BlockItemContainer( (BlockItemContainer.BlockItemContainerData)DataManager.instance.getItemContainerData(name, BlockItemContainer.BlockItemContainerData.class) );
 	}
 	
 	public static WeightItemContainer createWeightItemContainer(String name) {
-		return new WeightItemContainer( (WeightItemContainer.WeightItemContainerModel)DataManager.instance.getItemContainerData(name, WeightItemContainer.WeightItemContainerModel.class) );
+		return new WeightItemContainer( (WeightItemContainer.WeightItemContainerData)DataManager.instance.getItemContainerData(name, WeightItemContainer.WeightItemContainerData.class) );
 	}
 }

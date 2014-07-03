@@ -15,7 +15,7 @@ public class AbilityItem extends AbstractItem<AbilityItem.Model> {
 		visitor.visit(this);
 	}
 	
-	public static class Model extends Item.ItemModel {
+	public static class Model extends Item.ItemData {
 		
 	}
 }

@@ -7,16 +7,16 @@ import java.util.List;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
 
-public class WeightItemContainer extends ItemContainer<WeightItemContainer.WeightItemContainerModel> {
+public class WeightItemContainer extends ItemContainer<WeightItemContainer.WeightItemContainerData> {
 	private final List<Item> items;
 	private int itemsWeight;
 	
-	public WeightItemContainer(WeightItemContainer.WeightItemContainerModel model, Lock lock) {
+	public WeightItemContainer(WeightItemContainer.WeightItemContainerData model, Lock lock) {
 		super(model, lock);
 		items = new LinkedList<Item>();
 	}
 	
-	public WeightItemContainer(WeightItemContainer.WeightItemContainerModel model) {
+	public WeightItemContainer(WeightItemContainer.WeightItemContainerData model) {
 		this(model, null);
 	}
 
@@ -26,7 +26,7 @@ public class WeightItemContainer extends ItemContainer<WeightItemContainer.Weigh
 	}
 
 	public int getMaxWeight(){
-		return model.maxWeight;
+		return data.maxWeight;
 	}
 	
 	@Override
@@ -56,7 +56,12 @@ public class WeightItemContainer extends ItemContainer<WeightItemContainer.Weigh
 	}
 
 	@Override
-	public int size() {
+	public int getMaxSize() {
+		return Integer.MAX_VALUE;
+	}
+	
+	@Override
+	public int getSize() {
 		return items.size();
 	}
 
@@ -67,10 +72,10 @@ public class WeightItemContainer extends ItemContainer<WeightItemContainer.Weigh
 	
 	@Override
 	public int getWeight() {
-		return super.getWeight() + model.maxWeight;
+		return super.getWeight() + data.maxWeight;
 	}
 	
-	public static class WeightItemContainerModel extends ItemContainer.ItemContainerModel {
+	public static class WeightItemContainerData extends ItemContainer.ItemContainerData {
 		public int maxWeight;
 	}
 

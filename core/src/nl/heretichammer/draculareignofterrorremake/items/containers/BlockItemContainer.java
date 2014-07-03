@@ -7,29 +7,29 @@ import java.util.List;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
 
-public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockItemContainerModel> {
+public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockItemContainerData> {
 	private List<Item> items;
 	
-	public BlockItemContainer(BlockItemContainer.BlockItemContainerModel model, Lock lock) {
-		super(model, lock);
-		items = new ArrayList<Item>(model.maxBlocks);
+	public BlockItemContainer(BlockItemContainer.BlockItemContainerData data, Lock lock) {
+		super(data, lock);
+		items = new ArrayList<Item>(data.maxBlocks);
 	}
 	
-	public BlockItemContainer(BlockItemContainer.BlockItemContainerModel model) {
-		this(model, null);
+	public BlockItemContainer(BlockItemContainer.BlockItemContainerData data) {
+		this(data, null);
 	}
 
-	public static class BlockItemContainerModel extends ItemContainer.ItemContainerModel {
+	public static class BlockItemContainerData extends ItemContainer.ItemContainerData {
 		public int maxBlocks;
 	}
 	
 	public int getMaxBlocks(){
-		return model.maxBlocks;
+		return data.maxBlocks;
 	}
 
 	@Override
 	public boolean canAdd(Item item) {
-		return size() + 1 <= getMaxBlocks();
+		return getMaxBlocks() + 1 <= getMaxBlocks();
 	}
 
 	@Override
@@ -73,7 +73,12 @@ public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockIt
 	}
 
 	@Override
-	public int size() {
+	public int getMaxSize() {
+		return data.maxBlocks;
+	}
+	
+	@Override
+	public int getSize() {
 		return items.size();
 	}
 

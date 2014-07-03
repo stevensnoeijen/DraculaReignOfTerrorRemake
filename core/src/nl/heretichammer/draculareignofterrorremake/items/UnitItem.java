@@ -15,7 +15,7 @@ public class UnitItem extends AbstractItem<UnitItem.Model> {
 		visitor.visit(this);
 	}
 
-	public static class Model extends Item.ItemModel {
+	public static class Model extends Item.ItemData {
 		
 	}
 }

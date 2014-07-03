@@ -15,7 +15,7 @@ public class Key extends AbstractItem<Key.Model> {
 		return false;
 	}
 	
-	public static class Model extends Item.ItemModel {
+	public static class Model extends Item.ItemData {
 		
 	}
 

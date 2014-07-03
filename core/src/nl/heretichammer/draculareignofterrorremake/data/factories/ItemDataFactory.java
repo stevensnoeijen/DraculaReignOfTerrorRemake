@@ -1,14 +1,14 @@
 package nl.heretichammer.draculareignofterrorremake.data.factories;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
-import nl.heretichammer.draculareignofterrorremake.items.Item.ItemModel;
+import nl.heretichammer.draculareignofterrorremake.items.Item.ItemData;
 
-public class ItemDataFactory extends AbstractDataFactory<Item.ItemModel>
+public class ItemDataFactory extends AbstractDataFactory<Item.ItemData>
 {
 	public static final ItemDataFactory instance = new ItemDataFactory();
 	
 	@Override
-	public ItemModel fromFile(String name) {
-		return get(String.format("data/items/%s.json", name), Item.ItemModel.class);
+	public ItemData fromFile(String name) {
+		return get(String.format("data/items/%s.json", name), Item.ItemData.class);
 	}
 }

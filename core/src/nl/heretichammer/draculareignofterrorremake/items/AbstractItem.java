@@ -3,43 +3,43 @@ package nl.heretichammer.draculareignofterrorremake.items;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 
-public abstract class AbstractItem<M extends Item.ItemModel> implements Item{
-	protected final M model;
+public abstract class AbstractItem<D extends Item.ItemData> implements Item{
+	protected final D data;
 	private int amount;
 	private Unit owner;
 	
-	public AbstractItem(M model, int amount) {
-		this.model = model;
+	public AbstractItem(D data, int amount) {
+		this.data = data;
 		this.amount = amount;
 	}
 	
-	public AbstractItem(M model) {
-		this(model, 1);
+	public AbstractItem(D data) {
+		this(data, 1);
 	}
 	
 	@Override
 	public String getName() {
-		return model.name;
+		return data.name;
 	}
 	
 	@Override
 	public String getDescription() {
-		return model.description;
+		return data.description;
 	}
 	
 	@Override
 	public String getCategory() {
-		return model.category;
+		return data.category;
 	}
 	
 	@Override
 	public int getWeight() {
-		return model.weight * amount;
+		return data.weight * amount;
 	}
 	
 	@Override
 	public String getImage() {
-		return model.image;
+		return data.image;
 	}
 	
 	@Override
@@ -55,14 +55,14 @@ public abstract class AbstractItem<M extends Item.ItemModel> implements Item{
 	@Override
 	public boolean equalModel(Item other) {
 		if(other instanceof AbstractItem<?>){
-			return this.model == ((AbstractItem<?>)other).model;
+			return this.data == ((AbstractItem<?>)other).data;
 		}else
 			return false;
 	}
 	
 	@Override
 	public boolean isStackable(){
-		return model.amountMax > 1;
+		return data.amountMax > 1;
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public abstract class AbstractItem<M extends Item.ItemModel> implements Item{
 
 	@Override
 	public int getAmountMax() {
-		return model.amountMax;
+		return data.amountMax;
 	}
 
 	private int amountLeft(){

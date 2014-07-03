@@ -1,6 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.items;
 
-import nl.heretichammer.draculareignofterrorremake.Consumer;
 import nl.heretichammer.draculareignofterrorremake.items.consumables.Consumable;
 import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainer;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
@@ -37,7 +36,7 @@ public interface Item {
 	
 	public boolean equalModel(Item other);
 	
-	public static class ItemModel {
+	public static class ItemData {
 		public String name;
 		public String description;
 		public String category;

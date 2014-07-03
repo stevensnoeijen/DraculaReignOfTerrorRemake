@@ -11,7 +11,7 @@ public abstract class AbstractConsumable<M extends AbstractConsumable.Model> ext
 	
 	@Override
 	public Ingestion getIngestion() {
-		return model.ingestion;
+		return data.ingestion;
 	}
 	
 	@Override
@@ -19,7 +19,7 @@ public abstract class AbstractConsumable<M extends AbstractConsumable.Model> ext
 		visitor.visit(this);
 	}
 	
-	public static class Model extends Item.ItemModel{
+	public static class Model extends Item.ItemData{
 		public Consumable.Ingestion ingestion;
 		public int amount;
 	}

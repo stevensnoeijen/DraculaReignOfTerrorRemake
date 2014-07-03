@@ -29,7 +29,7 @@ public abstract class Lock extends AbstractItem<Lock.LockModel> implements Locka
 		}
 	}
 
-	public static class LockModel extends Item.ItemModel {
+	public static class LockModel extends Item.ItemData {
 		public String key;
 	}
 }
