@@ -5,16 +5,12 @@ import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
+import nl.heretichammer.draculareignofterrorremake.utils.Startable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
-public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable {
+public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable, Startable {
 	public Item.ItemDescriptor[] getCost();
-	public boolean isStartable();
-	public void start();
-	public boolean isStarted();
-	public boolean isStoppable();
-	public void stop();
-	public boolean isDone();
+	
 	/**
 	 * remove produced object
 	 * @return 
@@ -23,7 +19,6 @@ public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E
 	
 	public static class ProducerData {
 		public String accessName;
-		public boolean stoppable = true;
 		public Item.ItemDescriptor[] cost;
 		public int turnCost;
 	}

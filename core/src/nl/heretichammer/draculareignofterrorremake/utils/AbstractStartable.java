@@ -6,6 +6,10 @@ public abstract class AbstractStartable implements Startable {
 	protected boolean pausable = true;
 	protected boolean stoppable = true;
 	
+	protected boolean started = false;
+	protected boolean paused = false;
+	protected boolean done = false;
+	
 	@Override
 	public boolean isStartable() {
 		return startable;
@@ -19,5 +23,36 @@ public abstract class AbstractStartable implements Startable {
 	@Override
 	public boolean isStoppable() {
 		return stoppable;
+	}
+	
+	@Override
+	public void start() {
+		if(isStartable()) {
+			started = true;
+		}
+	}
+	
+	@Override
+	public void stop() {
+		if(isStoppable()) {
+			started = false;
+		}
+	}
+	
+	@Override
+	public void pause() {
+		if(isPausable()) {
+			paused = true;
+		}
+	}
+	
+	@Override
+	public void unpause() {
+		paused = false;		
+	}
+	
+	@Override
+	public boolean isDone() {
+		return done;
 	}
 }
