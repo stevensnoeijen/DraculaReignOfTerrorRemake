@@ -19,6 +19,11 @@ public class DRoTRUtils {
 		}
 	}
 	
+	/**
+	 * You maybe need to cast the itemSuppliables to List<ItemSuppliable>
+	 * @param itemSupplier
+	 * @param itemSuppliables
+	 */
 	public static void setItemSupplier(ItemSupplier itemSupplier, List<ItemSuppliable> itemSuppliables) {
 		for(ItemSuppliable itemSuppliable : itemSuppliables) {
 			itemSuppliable.setItemSupplier(itemSupplier);

@@ -9,6 +9,6 @@ public class ItemFactory {
 	}
 	
 	private static Item create(Item.ItemData model, int amount) {
-		return new DefaultItem(model, amount);
+		return new BaseItem(model, amount);
 	}
 }

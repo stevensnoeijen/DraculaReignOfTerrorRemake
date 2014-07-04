@@ -52,7 +52,7 @@ public interface Item {
 		public void visit(Consumable consumable);
 		public void visit(ItemContainer<?> itemContainer);
 		public void visit(AbilityItem abilityItem);
-		public void visit(DefaultItem baseItem);
+		public void visit(BaseItem baseItem);
 	}
 	
 	public static class ItemDescriptor {

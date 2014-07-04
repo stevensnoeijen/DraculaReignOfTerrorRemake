@@ -16,6 +16,8 @@ public class AccessUpgrade extends AbstractUpgrade<AccessUpgrade.AccessUpgradeDa
 				team.accessManager.putAccessable(access, true);
 			}
 		}
+		//make itself un-accessable
+		team.accessManager.putAccessable(data.accessName, false);
 	}	
 	
 	public static class AccessUpgradeData extends Upgrade.UpgradeData {

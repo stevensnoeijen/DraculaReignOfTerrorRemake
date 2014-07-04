@@ -1,8 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake.items;
 
-public class DefaultItem extends AbstractItem<Item.ItemData> {
+public class BaseItem extends AbstractItem<Item.ItemData> {
 	
-	public DefaultItem(ItemData model, int amount) {
+	public BaseItem(ItemData model, int amount) {
 		super(model, amount);
 	}
 

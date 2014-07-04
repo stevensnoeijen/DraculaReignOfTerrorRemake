@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.items.DefaultItem;
+import nl.heretichammer.draculareignofterrorremake.items.BaseItem;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Key;
 import nl.heretichammer.draculareignofterrorremake.items.consumables.Consumable;

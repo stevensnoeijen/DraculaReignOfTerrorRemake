@@ -61,15 +61,7 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 
 	@Override
 	public boolean isAccessable() {
-		if(StringUtils.isEmpty(data.accessName)) {//if no accessName it is accessable
-			return true;
-		}
-		
-		if(getTeam() != null) {
-			return getTeam().accessManager.isAccessable(data.accessName);
-		}else {
-			return false;
-		}
+		return isAccessable(data.accessName);
 	}
 	
 	/**

@@ -12,14 +12,14 @@ import nl.heretichammer.draculareignofterrorremake.utils.Startable;
  *
  */
 public interface Upgrade extends ItemSuppliable, Teamable, Accessible, Startable {
-	public String getCodeName();
 	public String getName();
+	public int getLevel();
 	public Item.ItemDescriptor[] getCost();
 	public int getTurnCost();
 	
 	public static class UpgradeData {
-		public String codeName;
 		public String name;
+		public int level;
 		public Item.ItemDescriptor[] cost;
 		public int turnCost;
 		public String accessName;

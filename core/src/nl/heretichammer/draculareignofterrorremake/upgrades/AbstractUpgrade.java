@@ -34,15 +34,15 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 			return false;
 		}
 	}
-
-	@Override
-	public String getCodeName() {
-		return data.codeName;
-	}
 	
 	@Override
 	public String getName() {
 		return data.name;
+	}
+	
+	@Override
+	public int getLevel() {
+		return data.level;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 		if(isStartable()) {//TODO: almost the same as AbstractProducer#start() maybe combine?
 			boolean payed = pay();
 			if(payed) {
-			started = true;
+				started = true;
 				DRoTR.tbs.time.schedule(new TBSTime.Task(data.turnCost) {
 					@Override
 					public void turn() {
