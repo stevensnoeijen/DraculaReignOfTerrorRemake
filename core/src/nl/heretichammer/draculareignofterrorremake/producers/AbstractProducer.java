@@ -16,7 +16,7 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	protected ItemSupplier itemSupplier;
 	protected Consumer<P> consumer;
 	protected P produced;
-
+	
 	public AbstractProducer(D data) {
 		this.data = data;
 	}
@@ -97,6 +97,7 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 					
 					@Override
 					public void done() {
+						handleProduct();
 						done = true;
 					}
 				});

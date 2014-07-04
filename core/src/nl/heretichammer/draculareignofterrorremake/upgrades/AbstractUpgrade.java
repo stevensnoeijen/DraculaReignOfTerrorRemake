@@ -1,19 +1,17 @@
 package nl.heretichammer.draculareignofterrorremake.upgrades;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
-import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessableStartable;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
-public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> implements Upgrade {
+public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends AbstractTeamableAccessableStartable implements Upgrade {
 	protected final D data;
-	private Team team;
 	private ItemSupplier itemSupplier;
-	private boolean done = false;
-	private boolean started = false;
 	
 	public AbstractUpgrade(D data) {
 		this.data = data;
@@ -23,23 +21,25 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> implements 
 	public void setItemSupplier(ItemSupplier itemSupplier) {
 		this.itemSupplier = itemSupplier;  
 	}
-
-	@Override
-	public void setTeam(Team team) {
-		this.team = team;
-	}
-
-	@Override
-	public Team getTeam() {
-		return team;
-	}
-
+	
 	@Override
 	public boolean isAccessable() {
-		// TODO Auto-generated method stub
-		return false;
+		if(StringUtils.isEmpty(data.accessName)) {//if no accessName it is accessable
+			return true;
+		}
+		
+		if(getTeam() != null) {
+			return getTeam().accessManager.isAccessable(data.accessName);
+		}else {
+			return false;
+		}
 	}
 
+	@Override
+	public String getCodeName() {
+		return data.codeName;
+	}
+	
 	@Override
 	public String getName() {
 		return data.name;
@@ -59,34 +59,30 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> implements 
 		return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
 	}
 	
+	protected abstract void upgrade();
+	
+	/**
+	 * Only is really started when fully is {@link #pay()}-ed.
+	 */
 	@Override
 	public void start() {
-		boolean payed = pay();
-		if(payed) {
-		started = true;
-			DRoTR.tbs.time.schedule(new TBSTime.Task(data.turnCost) {
-				@Override
-				public void turn() {
+		if(isStartable()) {//TODO: almost the same as AbstractProducer#start() maybe combine?
+			boolean payed = pay();
+			if(payed) {
+			started = true;
+				DRoTR.tbs.time.schedule(new TBSTime.Task(data.turnCost) {
+					@Override
+					public void turn() {
+						
+					}
 					
-				}
-				
-				@Override
-				public void done() {
-					done = true;
-				}
-			});
+					@Override
+					public void done() {
+						upgrade();
+						done = true;
+					}
+				});
+			}
 		}
 	}
-
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isDone() {
-		return done;
-	}
-	
 }

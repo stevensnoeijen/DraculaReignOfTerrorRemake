@@ -6,8 +6,6 @@ import java.util.Map;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class AccessManager implements Teamable {
 	
 	private Team team;
@@ -27,12 +25,8 @@ public class AccessManager implements Teamable {
 		return accessibilities.get(name);
 	}
 	
-	public void load(){
-		throw new NotImplementedException();
-	}
-	
-	public void save(){
-		throw new NotImplementedException();
+	public void putAccessable(String name, boolean value) {
+		accessibilities.put(name, value);
 	}
 
 	@Override
