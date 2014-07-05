@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.upgrades.upgrader;
+package nl.heretichammer.draculareignofterrorremake.upgraders;
 
 
 public class BaseUpgrader extends AbstractUpgrader<Upgrader.UpgraderData> {

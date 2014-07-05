@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.upgrades;
+package nl.heretichammer.draculareignofterrorremake.upgraders.upgrades;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -6,12 +6,15 @@ import org.apache.commons.lang3.StringUtils;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
+import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
+import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessableStartable;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
 public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends AbstractTeamableAccessableStartable implements Upgrade {
 	protected final D data;
 	private ItemSupplier itemSupplier;
+	private Upgrader upgrader;
 	
 	public AbstractUpgrade(D data) {
 		this.data = data;
@@ -79,10 +82,30 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 					@Override
 					public void done() {
 						upgrade();
-						done = true;
+						done();
 					}
 				});
 			}
 		}
+	}
+	
+	/**
+	 * Called when upgrade is done.
+	 * Sets {@link AccessManager#putAccessable(String, int)} level of upgrade #done to true
+	 */
+	protected void done() {
+		done = true;
+		upgrader.onDone(this);
+	}
+	
+	@Override
+	public boolean isDone() {
+		// TODO Auto-generated method stub
+		return super.isDone();
+	}
+	
+	@Override
+	public void setUpgrader(Upgrader upgrader) {
+		this.upgrader = upgrader;
 	}
 }

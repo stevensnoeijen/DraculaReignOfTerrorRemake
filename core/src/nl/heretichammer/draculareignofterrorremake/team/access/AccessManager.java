@@ -28,6 +28,10 @@ public class AccessManager implements Teamable {
 	public void putAccessable(String name, boolean value) {
 		accessibilities.put(name, value);
 	}
+	
+	public void putAccessable(String name, int value) {
+		
+	}
 
 	@Override
 	public Team getTeam() {

@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.upgrades;
+package nl.heretichammer.draculareignofterrorremake.upgraders.upgrades;
 
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 

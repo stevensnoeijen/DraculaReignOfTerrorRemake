@@ -1,8 +1,9 @@
-package nl.heretichammer.draculareignofterrorremake.upgrades;
+package nl.heretichammer.draculareignofterrorremake.upgraders.upgrades;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
+import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.utils.Startable;
 
@@ -16,6 +17,7 @@ public interface Upgrade extends ItemSuppliable, Teamable, Accessible, Startable
 	public int getLevel();
 	public Item.ItemDescriptor[] getCost();
 	public int getTurnCost();
+	public void setUpgrader(Upgrader upgrader);
 	
 	public static class UpgradeData {
 		public String name;
