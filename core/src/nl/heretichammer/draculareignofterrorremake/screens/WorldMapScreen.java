@@ -40,6 +40,8 @@ public class WorldMapScreen extends SceneScreen {
 	private Player player;
 	private WorldMap worldMap;
 	
+	private static final float FONT_SMALL = .75f;
+	
 	public WorldMapScreen() {
 		World world = new World();
 		worldMap = new WorldMap(world);
@@ -63,17 +65,40 @@ public class WorldMapScreen extends SceneScreen {
 		//ui.mainTable.debug();
 		ui.mainTable.setFillParent(true);
 		stage.addActor(ui.mainTable);
-
 		
 		ui.mainTable.add( createTabs() );
 		ui.mainTable.add(ui.rightTable = new Table());
-		//ui.rightTable.debug();
+		ui.rightTable.debug();
 		
 		ui.rightTable.add(createMap());
 		ui.rightTable.row();
 		
-		ui.rightTable.add(ui.rightBottonTable = new Table()).pad(10);
-		ui.rightBottonTable.add(new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-panel-stats") ) ) );
+		ui.rightTable.add(ui.rightBottonTable = new Table()).padLeft(10);
+		//stats for resources
+		ui.rightBottonTable.add( ui.map.statsTable = new Table(skin) );
+		ui.map.statsTable.debug();
+		ui.map.statsTable.setBackground( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-panel-stats") ) );
+		ui.map.statsTable.add( ui.map.stats.currentGold = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentGold.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.currentWood = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentWood.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.currentFood = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentFood.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.currentMen = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentMen.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.currentArmy = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentArmy.setFontScale(FONT_SMALL);
+		ui.map.statsTable.row().height(20);
+		ui.map.statsTable.add( ui.map.stats.weekGold = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekGold.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.weekWood = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekWood.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.weekFood = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekFood.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add( ui.map.stats.weekMen = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekMen.setFontScale(FONT_SMALL);
+		ui.map.statsTable.add().width(35).center();
+		ui.map.statsTable.row();
 		
 		ui.rightBottonTable.add(ui.rightBottomRightTable = new Table()).pad(20);
 		//create year
@@ -82,7 +107,7 @@ public class WorldMapScreen extends SceneScreen {
 		ui.rightBottomRightTable.add(ui.map.year).align(Align.center);
 		ui.rightBottomRightTable.row();
 		ui.map.currentYear = new Label("0", skin);
-		ui.map.currentYear.setFontScale(.85f);
+		ui.map.currentYear.setFontScale(FONT_SMALL);
 		ui.rightBottomRightTable.add(ui.map.currentYear).align(Align.center);
 		ui.rightBottomRightTable.row();
 		//create week
@@ -91,7 +116,7 @@ public class WorldMapScreen extends SceneScreen {
 		ui.rightBottomRightTable.add(ui.map.week).align(Align.center);
 		ui.rightBottomRightTable.row();
 		ui.map.currentWeek = new Label("0", skin);
-		ui.map.currentWeek.setFontScale(.85f);
+		ui.map.currentWeek.setFontScale(FONT_SMALL);
 		ui.rightBottomRightTable.add(ui.map.currentWeek).align(Align.center);
 		ui.rightBottomRightTable.row();
 		updateWeekUI();//set texts
@@ -128,65 +153,86 @@ public class WorldMapScreen extends SceneScreen {
 		//create areas
 		//sibiu
 		ui.map.areas.sibiu = new ImageButton(createStyle(worldMap.world.areas.sibiu));
-		ui.map.areas.sibiu.setPosition(0, 160);
+		ui.map.areas.sibiu.setUserObject(worldMap.world.areas.sibiu);
+		ui.map.areas.sibiu.setPosition(0, 120);
 		ui.map.group.addActor(ui.map.areas.sibiu);
 		ui.map.buttons.add(ui.map.areas.sibiu);
 		//fagaras
 		ui.map.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
-		ui.map.areas.fagaras.setPosition(70, 175);
+		ui.map.areas.fagaras.setUserObject(worldMap.world.areas.fagaras);
+		ui.map.areas.fagaras.setPosition(70, 135);
 		ui.map.areas.fagaras.setChecked(true);
 		ui.map.group.addActor(ui.map.areas.fagaras);
 		ui.map.buttons.add(ui.map.areas.fagaras);
 		//curtea
 		ui.map.areas.curtea = new ImageButton(createStyle(worldMap.world.areas.curtea));
-		ui.map.areas.curtea.setPosition(30, 120);
+		ui.map.areas.curtea.setUserObject(worldMap.world.areas.curtea);
+		ui.map.areas.curtea.setPosition(30, 80);
 		ui.map.group.addActor(ui.map.areas.curtea);
 		ui.map.buttons.add(ui.map.areas.curtea);
 		//brasov
 		ui.map.areas.brasov = new ImageButton(createStyle(worldMap.world.areas.brasov));
-		ui.map.areas.brasov.setPosition(135, 170);
+		ui.map.areas.brasov.setUserObject(worldMap.world.areas.brasov);
+		ui.map.areas.brasov.setPosition(135, 130);
 		ui.map.group.addActor(ui.map.areas.brasov);
 		ui.map.buttons.add(ui.map.areas.brasov);
 		//pitesti
 		ui.map.areas.pitesti = new ImageButton(createStyle(worldMap.world.areas.pitesti));
-		ui.map.areas.pitesti.setPosition(130, 125);
+		ui.map.areas.pitesti.setUserObject(worldMap.world.areas.pitesti);
+		ui.map.areas.pitesti.setPosition(130, 85);
 		ui.map.group.addActor(ui.map.areas.pitesti);
 		ui.map.buttons.add(ui.map.areas.pitesti);
 		//tirgo
 		ui.map.areas.tirgo = new ImageButton(createStyle(worldMap.world.areas.tirgo));
-		ui.map.areas.tirgo.setPosition(100, 85);
+		ui.map.areas.tirgo.setUserObject(worldMap.world.areas.tirgo);
+		ui.map.areas.tirgo.setPosition(100, 45);
 		ui.map.group.addActor(ui.map.areas.tirgo);
 		ui.map.buttons.add(ui.map.areas.tirgo);
 		//snagov
 		ui.map.areas.snagov = new ImageButton(createStyle(worldMap.world.areas.snagov));
-		ui.map.areas.snagov.setPosition(185, 110);
+		ui.map.areas.snagov.setUserObject(worldMap.world.areas.snagov);
+		ui.map.areas.snagov.setPosition(185, 70);
 		ui.map.group.addActor(ui.map.areas.snagov);
 		ui.map.buttons.add(ui.map.areas.snagov);
 		//giurgiu
 		ui.map.areas.giurgiu = new ImageButton(createStyle(worldMap.world.areas.giurgiu));
-		ui.map.areas.giurgiu.setPosition(129, 39);
+		ui.map.areas.giurgiu.setUserObject(worldMap.world.areas.giurgiu);
+		ui.map.areas.giurgiu.setPosition(129, 0);
 		ui.map.group.addActor(ui.map.areas.giurgiu);
 		ui.map.buttons.add(ui.map.areas.giurgiu);
 		//braila
 		ui.map.areas.braila = new ImageButton(createStyle(worldMap.world.areas.braila));
-		ui.map.areas.braila.setPosition(236, 140);
+		ui.map.areas.braila.setUserObject(worldMap.world.areas.braila);
+		ui.map.areas.braila.setPosition(236, 100);
 		ui.map.group.addActor(ui.map.areas.braila);
 		ui.map.buttons.add(ui.map.areas.braila);
 		//hirsova
 		ui.map.areas.hirsova = new ImageButton(createStyle(worldMap.world.areas.hirsova));
-		ui.map.areas.hirsova.setPosition(234, 115);
+		ui.map.areas.hirsova.setUserObject(worldMap.world.areas.hirsova);
+		ui.map.areas.hirsova.setPosition(234, 75);
 		ui.map.group.addActor(ui.map.areas.hirsova);
 		ui.map.buttons.add(ui.map.areas.hirsova);
 		//rasova
 		ui.map.areas.rasova = new ImageButton(createStyle(worldMap.world.areas.rasova));
-		ui.map.areas.rasova.setPosition(229, 93);
+		ui.map.areas.rasova.setUserObject(worldMap.world.areas.rasova);
+		ui.map.areas.rasova.setPosition(229, 54);
 		ui.map.group.addActor(ui.map.areas.rasova);
 		ui.map.buttons.add(ui.map.areas.rasova);
 		//ostrov
 		ui.map.areas.ostrov = new ImageButton(createStyle(worldMap.world.areas.ostrov));
-		ui.map.areas.ostrov.setPosition(219, 69);
+		ui.map.areas.ostrov.setUserObject(worldMap.world.areas.ostrov);
+		ui.map.areas.ostrov.setPosition(219, 30);
 		ui.map.group.addActor(ui.map.areas.ostrov);
 		ui.map.buttons.add(ui.map.areas.ostrov);
+		
+		for(Button button : ui.map.buttons.getButtons()) {
+			button.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {					
+					System.out.println(((Area)event.getTarget().getUserObject()).getName());
+				}
+			});
+		}
 		
 		//TODO: add bounds for clickable part for images
 		return ui.map.group;
@@ -250,6 +296,7 @@ public class WorldMapScreen extends SceneScreen {
 			Areas areas = new Areas();
 			ButtonGroup buttons;
 			Stats stats = new Stats();
+			Table statsTable;
 			Label year, currentYear;
 			Label week, currentWeek;
 			Button wax;
