@@ -2,9 +2,13 @@ package nl.heretichammer.draculareignofterrorremake.map;
 
 import com.badlogic.gdx.graphics.Color;
 
+import nl.heretichammer.draculareignofterrorremake.tbs.TBSObject;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 
-public class World {
+public class World implements TBSObject {
+	private int year = 1456;
+	private int week = 1;
+	
 	public final Teams teams;
 	public final Areas areas;
 	
@@ -47,5 +51,23 @@ public class World {
 		private Areas() {
 			
 		}
+	}
+
+	@Override
+	public void turn() {
+		if(week == 52) {
+			year++;
+			week = 1;
+		}else {
+			week++;
+		}
+	}
+	
+	public int getWeek() {
+		return week;
+	}
+	
+	public int getYear() {
+		return year;
 	}
 }

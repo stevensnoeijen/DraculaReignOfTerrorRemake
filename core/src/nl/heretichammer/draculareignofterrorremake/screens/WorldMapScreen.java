@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -16,6 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -30,6 +34,7 @@ public class WorldMapScreen extends SceneScreen {
 	private AssetManager assetManager = new AssetManager();
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
 	
+	private Skin skin;
 	private final UI ui = new UI();
 	
 	private Player player;
@@ -46,7 +51,10 @@ public class WorldMapScreen extends SceneScreen {
 	public void show() {
 		super.show();
 		assetManager.load("images/council.pack", TextureAtlas.class);
+		assetManager.load("uiskin.json", Skin.class);
 		assetManager.finishLoading();
+		
+		skin = assetManager.get("uiskin.json", Skin.class);
 		
 		ui.background = new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll"));
 		stage.addActor(ui.background);
@@ -67,15 +75,47 @@ public class WorldMapScreen extends SceneScreen {
 		ui.rightTable.add(ui.rightBottonTable = new Table()).pad(10);
 		ui.rightBottonTable.add(new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-panel-stats") ) ) );
 		
-		ui.rightBottonTable.add(ui.rightBottomRightTable = new Table()).pad(10);
-		ui.rightBottomRightTable.add( new Image( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-label-annodomini-week") ), Scaling.none ) ).pad(10);
+		ui.rightBottonTable.add(ui.rightBottomRightTable = new Table()).pad(20);
+		//create year
+		ui.map.year = new Label("Anno Domini", skin, "bold");
+		ui.map.year.setColor(Color.BLACK);	
+		ui.rightBottomRightTable.add(ui.map.year).align(Align.center);
 		ui.rightBottomRightTable.row();
+		ui.map.currentYear = new Label("0", skin);
+		ui.map.currentYear.setFontScale(.85f);
+		ui.rightBottomRightTable.add(ui.map.currentYear).align(Align.center);
+		ui.rightBottomRightTable.row();
+		//create week
+		ui.map.week = new Label("Week", skin, "bold");
+		ui.map.week.setColor(Color.BLACK);
+		ui.rightBottomRightTable.add(ui.map.week).align(Align.center);
+		ui.rightBottomRightTable.row();
+		ui.map.currentWeek = new Label("0", skin);
+		ui.map.currentWeek.setFontScale(.85f);
+		ui.rightBottomRightTable.add(ui.map.currentWeek).align(Align.center);
+		ui.rightBottomRightTable.row();
+		updateWeekUI();//set texts
 		
 		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
 		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal") );
 		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal-select") );
+		ui.rightBottomRightTable.add( ui.map.wax = new ImageButton(waxsealStyle) ).pad(10);
+		ui.map.wax.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				worldMap.turn();
+				updateWeekUI();
+			}
+		});
 		
-		ui.rightBottomRightTable.add( new ImageButton(waxsealStyle) ).pad(10);
+	}
+	
+	/**
+	 * Update all ui-elements that can be changed in a week (turn).
+	 */
+	private void updateWeekUI() {
+		ui.map.currentYear.setText(String.valueOf(worldMap.getYear()));
+		ui.map.currentWeek.setText(String.valueOf(worldMap.getWeek()));
 	}
 	
 	private Actor createMap() {	
@@ -162,15 +202,11 @@ public class WorldMapScreen extends SceneScreen {
 		ui.tabs.training.table = new Table(); 
 		ui.tabs.content.add(ui.tabs.training.table);
 		
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ANTQUA.TTF"));
+		/*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ANTQUA.TTF"));
 		BitmapFont font = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter());
-		Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
+		Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);*/
 		
-		//ui.tabs.training.table.add(new Label("test", style));
-		
-		//Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-		//ui.tabs.training.table.add(new ImageButton(skin, "canon"));
-		
+		//ui.tabs.training.table.add(new Label("test", style));		
 		
 		//content.add(new Label("test", new Label.LabelStyle(new BitmapFont(), Color.WHITE))).top();
 		//Image stat = new Image(new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-level-blue") ) ) ;
@@ -178,15 +214,6 @@ public class WorldMapScreen extends SceneScreen {
 		
 		return ui.tabs.table;
 	}
-	
-	
-	/*private Button createImageButton(){
-		//ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-		//style.up =   //"images/council.pack:ui-label-annodomini-week"
-		
-		
-		//return new ImageButton();
-	}*/
 	
 	private ImageButton.ImageButtonStyle createStyle(Area area){
 		boolean enemy = true;
@@ -222,9 +249,21 @@ public class WorldMapScreen extends SceneScreen {
 			Group group;
 			Areas areas = new Areas();
 			ButtonGroup buttons;
+			Stats stats = new Stats();
+			Label year, currentYear;
+			Label week, currentWeek;
+			Button wax;
 			
 			private static final class Areas{
 				ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;
+			}
+			
+			private static final class Stats {
+				Label currentGold, weekGold;
+				Label currentWood, weekWood;
+				Label currentFood, weekFood;
+				Label currentMen, weekMen;
+				Label currentArmy;
 			}
 		}
 		

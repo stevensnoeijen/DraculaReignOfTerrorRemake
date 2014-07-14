@@ -1,6 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.team.access;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.team.Team;
@@ -14,6 +13,11 @@ public class AccessManager implements Teamable {
 	@Override
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+	
+	@Override
+	public Team getTeam() {
+		return team;
 	}
 	
 	/**
@@ -30,21 +34,6 @@ public class AccessManager implements Teamable {
 	}
 	
 	public void putAccessable(String name, int value) {
-		
-	}
-
-	@Override
-	public Team getTeam() {
-		return team;
-	}
-	
-	/**
-	 * Extention for .class. 
-	 * @author Steven Snoeijen
-	 *
-	 */
-	@SuppressWarnings("serial")
-	private static class AccessProperties extends HashMap<String, Boolean> {
 		
 	}
 }
