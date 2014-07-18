@@ -6,6 +6,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class AssetHelper {
 	private AssetManager assetManager;
@@ -39,5 +41,9 @@ public class AssetHelper {
 	 */
 	public Texture getAtlasTexture(String name) {
 		return getAtlasRegion(name).getTexture();
+	}
+	
+	public Drawable getDrawable(String name) {
+		return new TextureRegionDrawable(getAtlasRegion(name));
 	}
 }
