@@ -22,6 +22,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.gdx.extension.ui.tab.Tab;
+import com.gdx.extension.ui.tab.TabContainer;
+import com.gdx.extension.ui.tab.TabPane;
 
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
@@ -29,7 +32,7 @@ import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
 import nl.heretichammer.draculareignofterrorremake.team.Player;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
-public class WorldMapScreen extends SceneScreen {
+public class WorldMapScreen extends Scene2DScreen {
 	
 	private AssetManager assetManager = new AssetManager();
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
@@ -229,7 +232,7 @@ public class WorldMapScreen extends SceneScreen {
 			button.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {					
-					System.out.println(((Area)event.getTarget().getUserObject()).getName());
+					player.setSelectedArea((Area)event.getTarget().getUserObject());
 				}
 			});
 		}
@@ -239,26 +242,16 @@ public class WorldMapScreen extends SceneScreen {
 	}
 	
 	private Actor createTabs() {
-		ui.tabs.table = new Table();
-		ui.tabs.table.setBackground( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) );
-		ui.tabs.table.add().width(60);
-		ui.tabs.content = new Table();
-		ui.tabs.table.add(ui.tabs.content).padTop(40);
+		ui.tabs = new TabPane(skin);
 		
-		ui.tabs.training.table = new Table(); 
-		ui.tabs.content.add(ui.tabs.training.table);
+		TabContainer trainingContainer = new TabContainer(skin);
+		trainingContainer.setHeight(400);
+		Tab trainingTab = new Tab("Training", trainingContainer, skin);
+		trainingTab.setBackground( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) );
 		
-		/*FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/ANTQUA.TTF"));
-		BitmapFont font = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter());
-		Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);*/
+		ui.tabs.addTab(trainingTab);
 		
-		//ui.tabs.training.table.add(new Label("test", style));		
-		
-		//content.add(new Label("test", new Label.LabelStyle(new BitmapFont(), Color.WHITE))).top();
-		//Image stat = new Image(new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-level-blue") ) ) ;
-		//content.add(stat);
-		
-		return ui.tabs.table;
+		return ui.tabs;
 	}
 	
 	private ImageButton.ImageButtonStyle createStyle(Area area){
@@ -289,7 +282,7 @@ public class WorldMapScreen extends SceneScreen {
 		Table rightBottomRightTable;
 		
 		Map map = new Map();
-		Tabs tabs = new Tabs();
+		TabPane tabs;
 		
 		private static final class Map {
 			Group group;
