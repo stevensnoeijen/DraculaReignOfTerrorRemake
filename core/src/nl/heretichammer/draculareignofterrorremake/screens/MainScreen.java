@@ -52,29 +52,20 @@ public class MainScreen extends SceneScreen {
 		addActor(new Image(assetHelper.getDrawable("images/mainmenu.pack:ui-screen-main")), "background", 0, 0);
 		
 		//add menu items
-		menuGroup = new ButtonGroup();//for selection
-		ImageButton button;
+		menuGroup = new ButtonGroup();//for selection		
 		
-			
-		addActor(button = new ImageButton(createImageButtonStyle("engage")), "engage", 128, 278);
-		addMenuItem(button, MENU_ENGAGE);
-		button.setChecked(true);
-		stage.setKeyboardFocus(button);
-		addActor(button = new ImageButton(createImageButtonStyle("load")), "load", 128, 241);
-		addMenuItem(button, MENU_LOAD);
-		addActor(button = new ImageButton(createImageButtonStyle("save")), "save", 128, 198);
-		addMenuItem(button, MENU_SAVE);
-		addActor(button = new ImageButton(createImageButtonStyle("introduction")), "introduction", 95, 159);
-		addMenuItem(button, MENU_INTRODUCTION);
-		addActor(button = new ImageButton(createImageButtonStyle("options")), "options", 128, 114);
-		addMenuItem(button, MENU_OPTIONS);
-		addActor(button = new ImageButton(createImageButtonStyle("credits")), "credits", 128, 75);
-		addMenuItem(button, MENU_CREDITS);
-		addActor(button = new ImageButton(createImageButtonStyle("exit")), "exit", 128, 31);
-		addMenuItem(button, MENU_EXIT);
+		addActor(createMenuItem("engage", MENU_ENGAGE), 128, 278);		
+		addActor(createMenuItem("load", MENU_LOAD), 128, 241);
+		addActor(createMenuItem("save", MENU_SAVE), 128, 198);
+		addActor(createMenuItem("introduction", MENU_INTRODUCTION), 95, 159);
+		addActor(createMenuItem("options", MENU_OPTIONS), 128, 114);
+		addActor(createMenuItem("credits", MENU_CREDITS), 128, 75);	
+		addActor(createMenuItem("exit", MENU_EXIT), 128, 31);
 	}
 	
-	private void addMenuItem(Button button, final int menuItem) {
+	private Button createMenuItem(String name, final int menuItem) {
+		ImageButton button = new ImageButton(createImageButtonStyle(name));
+		
 		button.addListener(new ClickListener() {
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -92,17 +83,21 @@ public class MainScreen extends SceneScreen {
 			}
 		});
 		menuGroup.add(button);
+		return button;
 	}
 	
 	private void onMenuItem(int menuItem) {
 		
 	}
 	
-	private Actor addActor(Actor actor, String name, int x, int y) {
+	private void addActor(Actor actor, String name, int x, int y) {
 		actor.setName(name);
 		actor.setPosition(x, y);
 		stage.addActor(actor);
-		return actor;
+	}
+	
+	private void addActor(Actor actor, int x, int y) {
+		addActor(actor, null, x, y);
 	}
 	
 	private ImageButton.ImageButtonStyle createImageButtonStyle(String name){
