@@ -2,7 +2,9 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -13,13 +15,17 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
@@ -70,25 +76,31 @@ public class MainScreen extends SceneScreen {
 		//add menu items
 		menuGroup = new ButtonGroup();//for selection		
 		
+		Button loadButton, saveButton, introductionButton, optionsButton, creditsButton;
 		addActor(createMenuItem("engage", MENU_ENGAGE), 128, 278);		
-		addActor(createMenuItem("load", MENU_LOAD), 128, 241);
-		addActor(createMenuItem("save", MENU_SAVE), 128, 198);
-		addActor(createMenuItem("introduction", MENU_INTRODUCTION), 95, 159);
-		addActor(createMenuItem("options", MENU_OPTIONS), 128, 114);
-		addActor(createMenuItem("credits", MENU_CREDITS), 128, 75);	
+		addActor(loadButton = createMenuItem("load", MENU_LOAD), 128, 241);
+		loadButton.setDisabled(true);
+		addActor(saveButton = createMenuItem("save", MENU_SAVE), 128, 198);
+		saveButton.setDisabled(true);
+		addActor(introductionButton = createMenuItem("introduction", MENU_INTRODUCTION), 95, 159);
+		introductionButton.setDisabled(true);
+		addActor(optionsButton = createMenuItem("options", MENU_OPTIONS), 128, 114);
+		optionsButton.setDisabled(true);
+		addActor(creditsButton = createMenuItem("credits", MENU_CREDITS), 128, 75);
+		creditsButton.setDisabled(true);
 		addActor(createMenuItem("exit", MENU_EXIT), 128, 31);
 		
 		Gdx.input.setCursorImage(new Pixmap(Gdx.files.internal("images/pointer.png")), 0, 0);
 	}
 	
 	private Button createMenuItem(String name, final int menuItem) {
-		ImageButton button = new ImageButton(createImageButtonStyle(name));
+		final ImageButton button = new ImageButton(createImageButtonStyle(name));
 		
 		button.addListener(new ClickListener() {
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
-				if(!isPressed()) {
+				if(!button.isDisabled() && !isPressed()) {
 					block.play();
 				}
 			}
@@ -96,13 +108,15 @@ public class MainScreen extends SceneScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				strike.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						onMenuItem(menuItem);
-					}
-				}, .25f);//delay opening menu-item 1 second
+				if(!button.isDisabled()) {
+					strike.play();
+					Timer.schedule(new Timer.Task() {
+						@Override
+						public void run() {
+							onMenuItem(menuItem);
+						}
+					}, .25f);//delay opening menu-item 1 second
+				}
 			}
 		});
 		menuGroup.add(button);
@@ -112,9 +126,7 @@ public class MainScreen extends SceneScreen {
 	private void onMenuItem(int menuItem) {
 		switch(menuItem) {
 		case MENU_ENGAGE:
-			Dialog dialog = new Dialog("", skin);
-			dialog.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-dialog-engage"));
-			dialog.show(stage);
+			showEngageDialog();
 			break;
 		case MENU_LOAD:
 			showLoadWindow();
@@ -144,14 +156,136 @@ public class MainScreen extends SceneScreen {
 		}
 	}
 	
+	private void showEngageDialog() {
+		final Dialog dialog = new Dialog("", skin);
+		dialog.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-dialog-engage"));
+		
+		//create buttonstyles
+		ImageButtonStyle continueButtonStyle = new ImageButtonStyle();
+		continueButtonStyle.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-continue-selected");
+		continueButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-continue-clicked");
+		ImageButtonStyle newGameButtonStyle = new ImageButtonStyle();
+		newGameButtonStyle.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-newgame-selected");
+		newGameButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-newgame-clicked");
+		ImageButtonStyle cancelButtonStyle = new ImageButtonStyle();
+		cancelButtonStyle.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-cancel-selected");
+		cancelButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-cancel-clicked");
+		
+		//create and add buttons
+		ImageButton continueButton = new ImageButton(continueButtonStyle);
+		continueButton.setPosition(42, 105);
+		continueButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				stage.addAction(Actions.fadeOut(1f));
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						//TODO
+						//changeScreen(Wo)
+					}
+				}, 1f);
+			}
+		});
+		dialog.addActor(continueButton);
+		ImageButton newGameButton = new ImageButton(newGameButtonStyle);
+		newGameButton.setPosition(42, 62);
+		dialog.addActor(newGameButton);
+		ImageButton cancelButton = new ImageButton(cancelButtonStyle);
+		cancelButton.setPosition(42, 24);
+		cancelButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				click.play();
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						MainScreen.this.exit(dialog);
+					}
+				}, 0.25f);
+			}
+		});
+		dialog.addActor(cancelButton);
+		
+		dialog.show(stage);
+	}
+	
 	private void showLoadWindow() {
-		Window window = new Window("", skin);
+		final Window window = new Window("", skin);
 		window.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-window-load"));
 		window.setFillParent(true);
 		
 		//create buttonstyles
+		ImageButton.ImageButtonStyle okButtonStyle = new ImageButton.ImageButtonStyle();
+		okButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-ok-clicked");
+		ImageButton.ImageButtonStyle cancelButtonStyle = new ImageButton.ImageButtonStyle();
+		cancelButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-cancel-clicked");
 		
+		//create and add buttons
+		ImageButton okButton = new ImageButton(okButtonStyle);
+		okButton.setPosition(96, 260);
+		okButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				click.play();
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						//TODO
+						//loadGame();
+					}
+				}, 0.5f);
+			}
+		});
+		window.addActor(okButton);
+		ImageButton cancelButton = new ImageButton(cancelButtonStyle);
+		cancelButton.setPosition(96, 182);
+		cancelButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				click.play();
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						MainScreen.this.exit(window);
+					}
+				}, 0.25f);
+			}
+		});
+		window.addActor(cancelButton);
+		
+		//create liststyle
+		ListStyle listStyle = skin.get(ListStyle.class);
+		listStyle.selection = assetHelper.getDrawable("images/mainmenu.pack:ui-border-selected");
+		//create and fill list
+		List<Label> list = new List<Label>(listStyle);
+		list.setPosition(340, 400);
+		//create 8 game-labels
+		Label[] labels = new Label[8]; 
+		for(int i = 0; i < labels.length; i++) {
+			String text = ""+i;
+			labels[i] = new Label(text, skin);
+			labels[i].setHeight(100);
+		}
+		list.setItems(labels);
+		window.addActor(list);
+
 		stage.addActor(window);
+	}
+	
+	private void changeScreen(Class<? extends Screen> clazz) {
+		Game game = (Game)Gdx.app.getApplicationListener();
+		
+		if(clazz == WorldMapScreen.class) {
+			WorldMapScreen worldMapScreen = new WorldMapScreen();
+			game.setScreen(worldMapScreen);
+		}else {
+			throw new IllegalArgumentException("Screen can not be made");
+		}
 	}
 	
 	private void showOptionsWindow() {
@@ -259,8 +393,14 @@ public class MainScreen extends SceneScreen {
 	public void dispose() {
 		super.dispose();
 		music.dispose();
+		music = null;
 		block.dispose();
+		block = null;
 		strike.dispose();
+		strike = null;
+		click.dispose();
+		click = null;
 		assetManager.dispose();
+		assetManager = null;
 	}
 }
