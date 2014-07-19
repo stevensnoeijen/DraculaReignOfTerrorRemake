@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.width = 640;
 		config.height = 480;
 		config.resizable = false;
+		config.title = "Dracula: Reign of Terror Remake";
 		config.addIcon("images/icon.png", FileType.Internal);
 		new LwjglApplication(new DRoTRGame(), config);
 	}
