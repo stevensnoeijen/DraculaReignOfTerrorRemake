@@ -37,7 +37,7 @@ public class WorldMapScreen extends Scene2DScreen {
 	private Player player;
 	private WorldMap worldMap;
 	
-	private static final float FONT_SMALL = .75f;
+	private static final float FONT_SMALL = .8f;
 	
 	public WorldMapScreen() {
 		World world = new World();
@@ -55,74 +55,48 @@ public class WorldMapScreen extends Scene2DScreen {
 		assetManager.finishLoading();
 		
 		skin = assetManager.get("uiskin.json", Skin.class);
+		stage.addActor(new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll")));//background
 		
-		ui.background = new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll"));
-		stage.addActor(ui.background);
+		Actor tab = createTab();
+		tab.setPosition(25, 50);
+		stage.addActor(tab);
+
+		Actor map = createMap();
+		map.setPosition(280, 250);
+		stage.addActor(map);
 		
-		ui.mainTable = new Table();
-		//ui.mainTable.debug();
-		ui.mainTable.setFillParent(true);
-		stage.addActor(ui.mainTable);
+		Actor resources = createResources();
+		resources.setPosition(300, 50);
+		stage.addActor(resources);
 		
-		ui.mainTable.add( createTab() );
-		ui.mainTable.add(ui.rightTable = new Table());
-		ui.rightTable.debug();
-		
-		ui.rightTable.add(createMap());
-		ui.rightTable.row();
-		
-		ui.rightTable.add(ui.rightBottonTable = new Table()).padLeft(10);
-		//stats for resources
-		ui.rightBottonTable.add( ui.map.statsTable = new Table(skin) );
-		ui.map.statsTable.debug();
-		ui.map.statsTable.setBackground( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-panel-stats") ) );
-		ui.map.statsTable.add( ui.map.stats.currentGold = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentGold.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.currentWood = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentWood.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.currentFood = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentFood.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.currentMen = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentMen.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.currentArmy = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentArmy.setFontScale(FONT_SMALL);
-		ui.map.statsTable.row().height(20);
-		ui.map.statsTable.add( ui.map.stats.weekGold = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekGold.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.weekWood = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekWood.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.weekFood = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekFood.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add( ui.map.stats.weekMen = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekMen.setFontScale(FONT_SMALL);
-		ui.map.statsTable.add().width(35).center();
-		ui.map.statsTable.row();
-		
-		ui.rightBottonTable.add(ui.rightBottomRightTable = new Table()).pad(20);
 		//create year
-		ui.map.year = new Label("Anno Domini", skin, "bold");
-		ui.map.year.setColor(Color.BLACK);	
-		ui.rightBottomRightTable.add(ui.map.year).align(Align.center);
-		ui.rightBottomRightTable.row();
+		Label year = new Label("Anno Domini", skin, "bold");
+		year.setColor(Color.BLACK);
+		year.setPosition(510, 210);
+		stage.addActor(year);
+
 		ui.map.currentYear = new Label("0", skin);
 		ui.map.currentYear.setFontScale(FONT_SMALL);
-		ui.rightBottomRightTable.add(ui.map.currentYear).align(Align.center);
-		ui.rightBottomRightTable.row();
+		ui.map.currentYear.setPosition(550, 190);
+		stage.addActor(ui.map.currentYear);
+		
 		//create week
-		ui.map.week = new Label("Week", skin, "bold");
-		ui.map.week.setColor(Color.BLACK);
-		ui.rightBottomRightTable.add(ui.map.week).align(Align.center);
-		ui.rightBottomRightTable.row();
+		Label week = new Label("Week", skin, "bold");
+		week.setColor(Color.BLACK);
+		week.setPosition(540, 165);
+		stage.addActor(week);
+		
 		ui.map.currentWeek = new Label("0", skin);
 		ui.map.currentWeek.setFontScale(FONT_SMALL);
-		ui.rightBottomRightTable.add(ui.map.currentWeek).align(Align.center);
-		ui.rightBottomRightTable.row();
+		ui.map.currentWeek.setPosition(560, 150);
+		stage.addActor(ui.map.currentWeek);
 		updateWeekUI();//set texts
 		
 		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
 		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal") );
 		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal-select") );
-		ui.rightBottomRightTable.add( ui.map.wax = new ImageButton(waxsealStyle) ).pad(10);
+		ui.map.wax = new ImageButton(waxsealStyle);
+		//ui.map.wax.setPosition(x, y);
 		ui.map.wax.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -360,8 +334,38 @@ public class WorldMapScreen extends Scene2DScreen {
 			
 			trainingTable.row().spaceTop(1.5f);
 		}
-		
+		main.pack();
 		return main;
+	}
+	
+	private Actor createResources() {
+		//stats for resources
+		Table resourcesTable = new Table(skin);
+		resourcesTable.setPosition(350, 150);
+		stage.addActor(resourcesTable);
+		resourcesTable.setBackground( assetHelper.getDrawable("images/council.pack:ui-panel-stats") );
+		resourcesTable.add( ui.map.stats.currentGold = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentGold.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.currentWood = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentWood.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.currentFood = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentFood.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.currentMen = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentMen.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.currentArmy = new Label("0000", skin) ).width(35);
+		ui.map.stats.currentArmy.setFontScale(FONT_SMALL);
+		resourcesTable.row().height(20);
+		resourcesTable.add( ui.map.stats.weekGold = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekGold.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.weekWood = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekWood.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.weekFood = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekFood.setFontScale(FONT_SMALL);
+		resourcesTable.add( ui.map.stats.weekMen = new Label("1111", skin) ).width(35);
+		ui.map.stats.weekMen.setFontScale(FONT_SMALL);
+		resourcesTable.pack();
+		
+		return resourcesTable;
 	}
 	
 	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){
@@ -395,24 +399,16 @@ public class WorldMapScreen extends Scene2DScreen {
 		super.dispose();
 	}
 	
-	private static final class UI {
-		Image background;
-		Table mainTable;
-		Table rightTable;
-		Table rightBottonTable;
-		Table rightBottomRightTable;
-		
+	private static final class UI {	
 		Map map = new Map();
-		Tabs tabs;
 		
 		private static final class Map {
 			Group group;
 			Areas areas = new Areas();
 			ButtonGroup buttons;
 			Stats stats = new Stats();
-			Table statsTable;
-			Label year, currentYear;
-			Label week, currentWeek;
+			Label currentYear;
+			Label currentWeek;
 			Button wax;
 			
 			private static final class Areas{
