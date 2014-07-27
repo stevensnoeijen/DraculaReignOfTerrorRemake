@@ -75,10 +75,10 @@ public class WorldMapScreen extends Scene2DScreen {
 		year.setPosition(510, 210);
 		stage.addActor(year);
 
-		ui.map.currentYear = new Label("0", skin);
-		ui.map.currentYear.setFontScale(FONT_SMALL);
-		ui.map.currentYear.setPosition(550, 190);
-		stage.addActor(ui.map.currentYear);
+		ui.currentYear = new Label("0", skin);
+		ui.currentYear.setFontScale(FONT_SMALL);
+		ui.currentYear.setPosition(550, 190);
+		stage.addActor(ui.currentYear);
 		
 		//create week
 		Label week = new Label("Week", skin, "bold");
@@ -86,118 +86,120 @@ public class WorldMapScreen extends Scene2DScreen {
 		week.setPosition(540, 165);
 		stage.addActor(week);
 		
-		ui.map.currentWeek = new Label("0", skin);
-		ui.map.currentWeek.setFontScale(FONT_SMALL);
-		ui.map.currentWeek.setPosition(560, 150);
-		stage.addActor(ui.map.currentWeek);
+		ui.currentWeek = new Label("0", skin);
+		ui.currentWeek.setFontScale(FONT_SMALL);
+		ui.currentWeek.setPosition(560, 150);
+		stage.addActor(ui.currentWeek);
 		updateWeekUI();//set texts
 		
 		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
 		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal") );
 		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal-select") );
-		ui.map.wax = new ImageButton(waxsealStyle);
-		//ui.map.wax.setPosition(x, y);
-		ui.map.wax.addListener(new ClickListener() {
+		Button waxButton = new ImageButton(waxsealStyle);
+		waxButton.setPosition(525, 55);
+		waxButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				worldMap.turn();
 				updateWeekUI();
 			}
 		});
-		
+		stage.addActor(waxButton);
 	}
 	
 	/**
 	 * Update all ui-elements that can be changed in a week (turn).
 	 */
 	private void updateWeekUI() {
-		ui.map.currentYear.setText(String.valueOf(worldMap.getYear()));
-		ui.map.currentWeek.setText(String.valueOf(worldMap.getWeek()));
+		ui.currentYear.setText(String.valueOf(worldMap.getYear()));
+		ui.currentWeek.setText(String.valueOf(worldMap.getWeek()));
+		
+		//ui.resources.
 	}
 	
 	private Actor createMap() {	
-		ui.map.group = new Group();
-		ui.map.group.setSize(320, 240);
+		Group areaGroup = new Group();
+		areaGroup.setSize(320, 240);
 		
 		//add to buttongroup for one selection only
-		ui.map.buttons = new ButtonGroup();
+		ButtonGroup areasButtonGroup = new ButtonGroup();
 		
 		//create areas
 		//sibiu
-		ui.map.areas.sibiu = new ImageButton(createStyle(worldMap.world.areas.sibiu));
-		ui.map.areas.sibiu.setUserObject(worldMap.world.areas.sibiu);
-		ui.map.areas.sibiu.setPosition(0, 120);
-		ui.map.group.addActor(ui.map.areas.sibiu);
-		ui.map.buttons.add(ui.map.areas.sibiu);
+		ui.areas.sibiu = new ImageButton(createStyle(worldMap.world.areas.sibiu));
+		ui.areas.sibiu.setUserObject(worldMap.world.areas.sibiu);
+		ui.areas.sibiu.setPosition(0, 120);
+		areaGroup.addActor(ui.areas.sibiu);
+		areasButtonGroup.add(ui.areas.sibiu);
 		//fagaras
-		ui.map.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
-		ui.map.areas.fagaras.setUserObject(worldMap.world.areas.fagaras);
-		ui.map.areas.fagaras.setPosition(70, 135);
-		ui.map.areas.fagaras.setChecked(true);
-		ui.map.group.addActor(ui.map.areas.fagaras);
-		ui.map.buttons.add(ui.map.areas.fagaras);
+		ui.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
+		ui.areas.fagaras.setUserObject(worldMap.world.areas.fagaras);
+		ui.areas.fagaras.setPosition(70, 135);
+		ui.areas.fagaras.setChecked(true);
+		areaGroup.addActor(ui.areas.fagaras);
+		areasButtonGroup.add(ui.areas.fagaras);
 		//curtea
-		ui.map.areas.curtea = new ImageButton(createStyle(worldMap.world.areas.curtea));
-		ui.map.areas.curtea.setUserObject(worldMap.world.areas.curtea);
-		ui.map.areas.curtea.setPosition(30, 80);
-		ui.map.group.addActor(ui.map.areas.curtea);
-		ui.map.buttons.add(ui.map.areas.curtea);
+		ui.areas.curtea = new ImageButton(createStyle(worldMap.world.areas.curtea));
+		ui.areas.curtea.setUserObject(worldMap.world.areas.curtea);
+		ui.areas.curtea.setPosition(30, 80);
+		areaGroup.addActor(ui.areas.curtea);
+		areasButtonGroup.add(ui.areas.curtea);
 		//brasov
-		ui.map.areas.brasov = new ImageButton(createStyle(worldMap.world.areas.brasov));
-		ui.map.areas.brasov.setUserObject(worldMap.world.areas.brasov);
-		ui.map.areas.brasov.setPosition(135, 130);
-		ui.map.group.addActor(ui.map.areas.brasov);
-		ui.map.buttons.add(ui.map.areas.brasov);
+		ui.areas.brasov = new ImageButton(createStyle(worldMap.world.areas.brasov));
+		ui.areas.brasov.setUserObject(worldMap.world.areas.brasov);
+		ui.areas.brasov.setPosition(135, 130);
+		areaGroup.addActor(ui.areas.brasov);
+		areasButtonGroup.add(ui.areas.brasov);
 		//pitesti
-		ui.map.areas.pitesti = new ImageButton(createStyle(worldMap.world.areas.pitesti));
-		ui.map.areas.pitesti.setUserObject(worldMap.world.areas.pitesti);
-		ui.map.areas.pitesti.setPosition(130, 85);
-		ui.map.group.addActor(ui.map.areas.pitesti);
-		ui.map.buttons.add(ui.map.areas.pitesti);
+		ui.areas.pitesti = new ImageButton(createStyle(worldMap.world.areas.pitesti));
+		ui.areas.pitesti.setUserObject(worldMap.world.areas.pitesti);
+		ui.areas.pitesti.setPosition(130, 85);
+		areaGroup.addActor(ui.areas.pitesti);
+		areasButtonGroup.add(ui.areas.pitesti);
 		//tirgo
-		ui.map.areas.tirgo = new ImageButton(createStyle(worldMap.world.areas.tirgo));
-		ui.map.areas.tirgo.setUserObject(worldMap.world.areas.tirgo);
-		ui.map.areas.tirgo.setPosition(100, 45);
-		ui.map.group.addActor(ui.map.areas.tirgo);
-		ui.map.buttons.add(ui.map.areas.tirgo);
+		ui.areas.tirgo = new ImageButton(createStyle(worldMap.world.areas.tirgo));
+		ui.areas.tirgo.setUserObject(worldMap.world.areas.tirgo);
+		ui.areas.tirgo.setPosition(100, 45);
+		areaGroup.addActor(ui.areas.tirgo);
+		areasButtonGroup.add(ui.areas.tirgo);
 		//snagov
-		ui.map.areas.snagov = new ImageButton(createStyle(worldMap.world.areas.snagov));
-		ui.map.areas.snagov.setUserObject(worldMap.world.areas.snagov);
-		ui.map.areas.snagov.setPosition(185, 70);
-		ui.map.group.addActor(ui.map.areas.snagov);
-		ui.map.buttons.add(ui.map.areas.snagov);
+		ui.areas.snagov = new ImageButton(createStyle(worldMap.world.areas.snagov));
+		ui.areas.snagov.setUserObject(worldMap.world.areas.snagov);
+		ui.areas.snagov.setPosition(185, 70);
+		areaGroup.addActor(ui.areas.snagov);
+		areasButtonGroup.add(ui.areas.snagov);
 		//giurgiu
-		ui.map.areas.giurgiu = new ImageButton(createStyle(worldMap.world.areas.giurgiu));
-		ui.map.areas.giurgiu.setUserObject(worldMap.world.areas.giurgiu);
-		ui.map.areas.giurgiu.setPosition(129, 0);
-		ui.map.group.addActor(ui.map.areas.giurgiu);
-		ui.map.buttons.add(ui.map.areas.giurgiu);
+		ui.areas.giurgiu = new ImageButton(createStyle(worldMap.world.areas.giurgiu));
+		ui.areas.giurgiu.setUserObject(worldMap.world.areas.giurgiu);
+		ui.areas.giurgiu.setPosition(129, 0);
+		areaGroup.addActor(ui.areas.giurgiu);
+		areasButtonGroup.add(ui.areas.giurgiu);
 		//braila
-		ui.map.areas.braila = new ImageButton(createStyle(worldMap.world.areas.braila));
-		ui.map.areas.braila.setUserObject(worldMap.world.areas.braila);
-		ui.map.areas.braila.setPosition(236, 100);
-		ui.map.group.addActor(ui.map.areas.braila);
-		ui.map.buttons.add(ui.map.areas.braila);
+		ui.areas.braila = new ImageButton(createStyle(worldMap.world.areas.braila));
+		ui.areas.braila.setUserObject(worldMap.world.areas.braila);
+		ui.areas.braila.setPosition(236, 100);
+		areaGroup.addActor(ui.areas.braila);
+		areasButtonGroup.add(ui.areas.braila);
 		//hirsova
-		ui.map.areas.hirsova = new ImageButton(createStyle(worldMap.world.areas.hirsova));
-		ui.map.areas.hirsova.setUserObject(worldMap.world.areas.hirsova);
-		ui.map.areas.hirsova.setPosition(234, 75);
-		ui.map.group.addActor(ui.map.areas.hirsova);
-		ui.map.buttons.add(ui.map.areas.hirsova);
+		ui.areas.hirsova = new ImageButton(createStyle(worldMap.world.areas.hirsova));
+		ui.areas.hirsova.setUserObject(worldMap.world.areas.hirsova);
+		ui.areas.hirsova.setPosition(234, 75);
+		areaGroup.addActor(ui.areas.hirsova);
+		areasButtonGroup.add(ui.areas.hirsova);
 		//rasova
-		ui.map.areas.rasova = new ImageButton(createStyle(worldMap.world.areas.rasova));
-		ui.map.areas.rasova.setUserObject(worldMap.world.areas.rasova);
-		ui.map.areas.rasova.setPosition(229, 54);
-		ui.map.group.addActor(ui.map.areas.rasova);
-		ui.map.buttons.add(ui.map.areas.rasova);
+		ui.areas.rasova = new ImageButton(createStyle(worldMap.world.areas.rasova));
+		ui.areas.rasova.setUserObject(worldMap.world.areas.rasova);
+		ui.areas.rasova.setPosition(229, 54);
+		areaGroup.addActor(ui.areas.rasova);
+		areasButtonGroup.add(ui.areas.rasova);
 		//ostrov
-		ui.map.areas.ostrov = new ImageButton(createStyle(worldMap.world.areas.ostrov));
-		ui.map.areas.ostrov.setUserObject(worldMap.world.areas.ostrov);
-		ui.map.areas.ostrov.setPosition(219, 30);
-		ui.map.group.addActor(ui.map.areas.ostrov);
-		ui.map.buttons.add(ui.map.areas.ostrov);
+		ui.areas.ostrov = new ImageButton(createStyle(worldMap.world.areas.ostrov));
+		ui.areas.ostrov.setUserObject(worldMap.world.areas.ostrov);
+		ui.areas.ostrov.setPosition(219, 30);
+		areaGroup.addActor(ui.areas.ostrov);
+		areasButtonGroup.add(ui.areas.ostrov);
 		
-		for(Button button : ui.map.buttons.getButtons()) {
+		for(Button button : areasButtonGroup.getButtons()) {
 			button.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {					
@@ -207,7 +209,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		}
 		
 		//TODO: add bounds for clickable part for images
-		return ui.map.group;
+		return areaGroup;
 	}
 	
 	private Actor createTab() {
@@ -277,6 +279,8 @@ public class WorldMapScreen extends Scene2DScreen {
 		for(TroopProducer troopProducer : area.troopProducerManager.getProducers()) {
 			Unit.UnitData unitData = troopProducer.getUnitData();
 			
+			trainingTable.row();
+			
 			ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
 			trainButton.addListener(new ClickListener() {
 				@Override
@@ -287,85 +291,104 @@ public class WorldMapScreen extends Scene2DScreen {
 			trainingTable.add(trainButton);
 			//label constants
 			final float FONTSCALE = 0.8f;
-			final float WIDTH = 16;
+			final float WIDTH = 16, HEIGHT = 29;
 			final float SPACE = 1;
 			//troop costs
 			//gold
 			Label goldCostLabel = new Label(String.valueOf(troopProducer.findCost("gold")), skin);
 			goldCostLabel.setFontScale(FONTSCALE);
 			goldCostLabel.setAlignment(Align.center);
-			trainingTable.add(goldCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(goldCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//turns
 			Label turnsCostLabel = new Label(String.valueOf(troopProducer.getTurnCost()), skin);
 			turnsCostLabel.setFontScale(FONTSCALE);
 			turnsCostLabel.setAlignment(Align.center);
-			trainingTable.add(turnsCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(turnsCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//unit attributes
 			//strenght
 			Label trainingCostLabel = new Label(String.valueOf(unitData.attributes.strenght), skin);
 			trainingCostLabel.setFontScale(FONTSCALE);
 			trainingCostLabel.setAlignment(Align.center);
-			trainingTable.add(trainingCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(trainingCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//accuracy
 			Label accuracyCostLabel = new Label(String.valueOf(unitData.attributes.accuracy), skin);
 			accuracyCostLabel.setFontScale(FONTSCALE);
 			accuracyCostLabel.setAlignment(Align.center);
-			trainingTable.add(accuracyCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(accuracyCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//defance
 			Label defanceCostLabel = new Label(String.valueOf(unitData.attributes.defance), skin);
 			defanceCostLabel.setFontScale(FONTSCALE);
 			defanceCostLabel.setAlignment(Align.center);
-			trainingTable.add(defanceCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(defanceCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//stamina
 			Label staminaCostLabel = new Label(String.valueOf(unitData.attributes.stamina), skin);
 			staminaCostLabel.setFontScale(FONTSCALE);
 			staminaCostLabel.setAlignment(Align.center);
-			trainingTable.add(staminaCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(staminaCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//speed
 			Label speedCostLabel = new Label(String.valueOf(unitData.attributes.speed), skin);
 			speedCostLabel.setFontScale(FONTSCALE);
 			speedCostLabel.setAlignment(Align.center);
-			trainingTable.add(speedCostLabel).width(WIDTH).center().space(SPACE);
+			trainingTable.add(speedCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//range
 			Label rangeCostLabel = new Label(String.valueOf(unitData.attributes.range), skin);
 			rangeCostLabel.setFontScale(FONTSCALE);
 			rangeCostLabel.setAlignment(Align.center);
-			trainingTable.add(rangeCostLabel).width(WIDTH).center().space(SPACE);
-			
-			trainingTable.row().spaceTop(1.5f);
+			trainingTable.add(rangeCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 		}
 		main.pack();
 		return main;
 	}
 	
 	private Actor createResources() {
+		//constants
+		final float LABEL_WIDTH = 36;
+		final float LABEL_FONT = .8f;
+		
+		Group group = new Group();
+		
+		Image background = new Image( assetHelper.getDrawable("images/council.pack:ui-panel-stats") );
+		group.addActor(background);		
+		
 		//stats for resources
 		Table resourcesTable = new Table(skin);
-		resourcesTable.setPosition(350, 150);
-		stage.addActor(resourcesTable);
-		resourcesTable.setBackground( assetHelper.getDrawable("images/council.pack:ui-panel-stats") );
-		resourcesTable.add( ui.map.stats.currentGold = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentGold.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.currentWood = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentWood.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.currentFood = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentFood.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.currentMen = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentMen.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.currentArmy = new Label("0000", skin) ).width(35);
-		ui.map.stats.currentArmy.setFontScale(FONT_SMALL);
-		resourcesTable.row().height(20);
-		resourcesTable.add( ui.map.stats.weekGold = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekGold.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.weekWood = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekWood.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.weekFood = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekFood.setFontScale(FONT_SMALL);
-		resourcesTable.add( ui.map.stats.weekMen = new Label("1111", skin) ).width(35);
-		ui.map.stats.weekMen.setFontScale(FONT_SMALL);
-		resourcesTable.pack();
+		resourcesTable.setPosition(8, 95);
+		//resourcesTable.debug();
+		group.addActor(resourcesTable);
 		
-		return resourcesTable;
+		resourcesTable.row().height(12).spaceBottom(2);
+		resourcesTable.add( ui.resources.currentGold = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.currentGold.setFontScale(LABEL_FONT);
+		ui.resources.currentGold.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.currentWood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.currentWood.setFontScale(LABEL_FONT);
+		ui.resources.currentWood.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.currentFood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.currentFood.setFontScale(LABEL_FONT);
+		ui.resources.currentFood.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.currentMen = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.currentMen.setFontScale(LABEL_FONT);
+		ui.resources.currentMen.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.currentArmy = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.currentArmy.setFontScale(LABEL_FONT);
+		ui.resources.currentArmy.setAlignment(Align.center);
+		
+		resourcesTable.row().height(12);
+		resourcesTable.add( ui.resources.weekGold = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.weekGold.setFontScale(LABEL_FONT);
+		ui.resources.weekGold.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.weekWood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.weekWood.setFontScale(LABEL_FONT);
+		ui.resources.weekWood.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.weekFood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.weekFood.setFontScale(LABEL_FONT);
+		ui.resources.weekFood.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.weekMen = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.weekMen.setFontScale(LABEL_FONT);
+		ui.resources.weekMen.setAlignment(Align.center);
+		resourcesTable.pack();
+
+		return group;
 	}
 	
 	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){
@@ -400,28 +423,22 @@ public class WorldMapScreen extends Scene2DScreen {
 	}
 	
 	private static final class UI {	
-		Map map = new Map();
+		Areas areas = new Areas();
+		Resources resources = new Resources();
 		
-		private static final class Map {
-			Group group;
-			Areas areas = new Areas();
-			ButtonGroup buttons;
-			Stats stats = new Stats();
-			Label currentYear;
-			Label currentWeek;
-			Button wax;
-			
-			private static final class Areas{
-				ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;
-			}
-			
-			private static final class Stats {
-				Label currentGold, weekGold;
-				Label currentWood, weekWood;
-				Label currentFood, weekFood;
-				Label currentMen, weekMen;
-				Label currentArmy;
-			}
+		Label currentYear;
+		Label currentWeek;
+		
+		private static final class Areas{
+			ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;
+		}
+		
+		private static final class Resources {
+			Label currentGold, weekGold;
+			Label currentWood, weekWood;
+			Label currentFood, weekFood;
+			Label currentMen, weekMen;
+			Label currentArmy;
 		}
 		
 		private static final class Tabs {
