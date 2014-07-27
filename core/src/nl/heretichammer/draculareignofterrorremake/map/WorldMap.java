@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.map;
 
+import nl.heretichammer.draculareignofterrorremake.map.World.Areas;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSObject;
 
 public class WorldMap implements TBSObject {
@@ -21,5 +22,9 @@ public class WorldMap implements TBSObject {
 	@Override
 	public void turn() {
 		world.turn();
+	}
+	
+	public Areas getAreas() {
+		return world.areas;
 	}
 }

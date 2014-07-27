@@ -9,6 +9,7 @@ import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessa
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
+import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 
 public abstract class AbstractProducer<P,D extends Producer.ProducerData> extends AbstractTeamableAccessableStartable implements Producer<P> {
 	
@@ -24,6 +25,24 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	@Override
 	public Item.ItemDescriptor[] getCost() {
 		return data.cost;
+	}
+	
+	/**
+	 * 
+	 * @param name of the item
+	 * @return {@link ItemDescriptor#amount} or 0 if the item was not found
+	 */
+	public int findCost(String name) {
+		for(Item.ItemDescriptor item : data.cost) {
+			if(item.name.equals(name)) {
+				return item.amount;
+			}
+		}
+		return 0;
+	}
+	
+	public int getTurnCost() {
+		return data.turnCost;
 	}
 
 	@Override

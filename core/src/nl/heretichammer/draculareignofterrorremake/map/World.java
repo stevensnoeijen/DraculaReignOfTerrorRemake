@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSObject;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.team.Team.TeamColor;
 
 public class World implements TBSObject {
 	private int year = 1456;
@@ -18,8 +19,8 @@ public class World implements TBSObject {
 	}
 	
 	public static class Teams {
-		public static final Team transylvania = new Team("Transylvania", Color.BLUE);
-		public static final Team turks = new Team("Turks", Color.RED);
+		public static final Team transylvania = new Team("Transylvania", TeamColor.BLUE);
+		public static final Team turks = new Team("Turks", TeamColor.RED);
 		
 		public static Team byName(String name) {
 			if(name.equals("turks")) {

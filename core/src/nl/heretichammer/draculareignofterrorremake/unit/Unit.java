@@ -2,31 +2,80 @@ package nl.heretichammer.draculareignofterrorremake.unit;
 
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.items.BaseItem;
-import nl.heretichammer.draculareignofterrorremake.items.Item;
-import nl.heretichammer.draculareignofterrorremake.items.Key;
-import nl.heretichammer.draculareignofterrorremake.items.consumables.Consumable;
-import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainer;
+import nl.heretichammer.draculareignofterrorremake.map.Area;
+import nl.heretichammer.draculareignofterrorremake.map.Mappable;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.team.Team.TeamColor;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
-import nl.heretichammer.draculareignofterrorremake.unit.abilities.Ability;
-import nl.heretichammer.draculareignofterrorremake.unit.effects.Effect;
+import nl.heretichammer.draculareignofterrorremake.unit.Unit.UnitData.UnitMotionDescriptor;
+import nl.heretichammer.draculareignofterrorremake.utils.CardinalDirection;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 
-import com.badlogic.gdx.utils.Array;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
-public class Unit implements Cloneable {//implements Teamable{
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
+
+public class Unit implements Cloneable, Teamable, Mappable {
 	
-	public Unit(Model model) {
-		// TODO Auto-generated constructor stub
+	private UnitData data;
+	
+	private Team team;	
+	public Vector2 position;
+	
+	public Unit(UnitData data) {
+		this.data = data;
 	}
 	
-	//model
-	private Model model;
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return new Unit(data);
+	}
+	
+	@Override
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
+	@Override
+	public Team getTeam() {
+		return team;
+	}
+
+	@Override
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setPosition(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setArea(Area area) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Area getArea() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	/*
 	//visitors
 	private final Unit.ItemVisitor itemVisitor = new Unit.ItemVisitor();
@@ -42,9 +91,6 @@ public class Unit implements Cloneable {//implements Teamable{
 	private List<Effect> effects;
 	
 	private Team team;
-	
-	//sounds
-	private Map<String, FlxSound> sounds = new HashMap<String, FlxSound>();
 	
 	public Unit(Model model) {
 		if(model==null)throw new IllegalArgumentException();
@@ -229,9 +275,15 @@ public class Unit implements Cloneable {//implements Teamable{
 		}
 	}
 	*/
-	public static class Model {
+	public static class UnitData {
 		public String name;
-		public EnumMap<Attribute, Integer> attributes = new EnumMap<Unit.Attribute, Integer>(Unit.Attribute.class);
+		public final Attributes attributes = new Attributes();
+		public final Map<Triple<TeamColor, UnitMotionType, CardinalDirection>, UnitMotionDescriptor> motions = new HashMap<Triple<TeamColor, UnitMotionType,CardinalDirection>, UnitMotionDescriptor>();
+		
+		public static class UnitMotionDescriptor {
+			public String animation;
+			public String[] sounds;
+		}
 		
 		//public GraphicItemDescriptor graphic;
 		/*
@@ -286,9 +338,24 @@ public class Unit implements Cloneable {//implements Teamable{
 		*/
 	}
 	
+	public enum UnitMotionType {
+		ATTACK, MOVE, IDLE, DYING, DEAD
+	}
+	
+	public static class Attributes {
+		public int strenght;
+		public int accuracy;
+		public int defance;
+		public int stamina;
+		public int speed;
+		public int range;
+	}
+	
+	/*
 	public enum Attribute {
 		STRENGHT, ACCURACY, DEFANCE, STAMINA, SPEED, RANGE
 	}
+	*/
 	
 	public static class ItemDescriptor {
 		public String name;
@@ -297,9 +364,4 @@ public class Unit implements Cloneable {//implements Teamable{
 	public static interface UnitConsumer extends Consumer<Unit> {
 		
 	}
-	
-	@Override
-		protected Object clone() throws CloneNotSupportedException {
-			return new Unit(model);
-		}
 }

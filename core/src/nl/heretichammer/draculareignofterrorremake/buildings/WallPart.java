@@ -2,8 +2,8 @@ package nl.heretichammer.draculareignofterrorremake.buildings;
 
 public class WallPart extends BuildingPart {
 
-	public WallPart(Model model) {
-		super(model);
+	public WallPart(BuildingPartData data) {
+		super(data);
 	}
 
 }

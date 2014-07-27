@@ -1,7 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import nl.heretichammer.draculareignofterrorremake.utils.OrthographicCameraController;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,40 +15,34 @@ public class MapScreen extends Scene2DScreen {
 	protected MapRenderer mapRenderer;
 	protected Map map;
 	protected OrthographicCamera camera;
-	protected OrthographicCameraController cameraController;
 	
 	@Override
 	public void show() {
 		super.show();
-		
-		map = new TmxMapLoader().load("data/maps/test.tmx");
-		mapRenderer = new OrthogonalTiledMapRenderer((TiledMap) map, 1 / 60f);
-		camera = new OrthographicCamera(10f, 8f);
-		camera.position.set(10f/2f,8f/2f,0);
-		camera.update();
-		cameraController = new OrthographicCameraController(camera);
-		Gdx.input.setInputProcessor(new InputMultiplexer(stage, cameraController));
+		map = new TmxMapLoader().load("data/maps/test2.tmx");
+		mapRenderer = new OrthogonalTiledMapRenderer((TiledMap) map);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
 	}
 	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		      
-		float deltaTime = Gdx.graphics.getDeltaTime();
-		stage.act(deltaTime);
-
-		camera.update();
+		stage.act(delta);
 		      
 		mapRenderer.setView(camera);
 		mapRenderer.render();
-		      
+		
 		stage.draw();
 	}
 	
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		cameraController.resize(width, height);
+		camera.viewportHeight = height;
+		camera.viewportWidth = width;
+		camera.update();
 	}
 }

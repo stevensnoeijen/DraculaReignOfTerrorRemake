@@ -2,8 +2,8 @@ package nl.heretichammer.draculareignofterrorremake.buildings;
 
 public class BridgePart extends BuildingPart {
 
-	public BridgePart(Model model) {
-		super(model);
+	public BridgePart(BuildingPartData data) {
+		super(data);
 		// TODO Auto-generated constructor stub
 	}
 

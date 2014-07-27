@@ -1,19 +1,22 @@
 package nl.heretichammer.draculareignofterrorremake.data.factories;
 
+import java.lang.reflect.TypeVariable;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.DataDoesNotExistsException;
+import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 
 public abstract class AbstractDataFactory<D> {
 	protected static final Json json = new Json();
 	protected static final Map<String, Object> cache = new HashMap<String, Object>();
-
+	
 	public abstract D fromFile(String name);
 	
 	/**

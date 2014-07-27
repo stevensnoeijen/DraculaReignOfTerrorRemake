@@ -9,8 +9,8 @@ public class DoorPart extends BuildingPart implements Closeable, Lockable{
 	private boolean open;
 	private Lock lock;
 	
-	public DoorPart(Model model) {
-		super(model);
+	public DoorPart(BuildingPartData data) {
+		super(data);
 	}
 
 	@Override

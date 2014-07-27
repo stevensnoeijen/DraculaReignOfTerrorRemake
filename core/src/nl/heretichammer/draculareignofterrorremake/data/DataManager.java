@@ -6,6 +6,7 @@ import nl.heretichammer.draculareignofterrorremake.data.factories.BlockItemConta
 import nl.heretichammer.draculareignofterrorremake.data.factories.ItemDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.ItemProducerDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.TroopProducerDataFactory;
+import nl.heretichammer.draculareignofterrorremake.data.factories.UnitDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.UpgraderDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.WeightItemContainerDataFactory;
 import nl.heretichammer.draculareignofterrorremake.exceptions.DataModelDontExistException;
@@ -16,6 +17,7 @@ import nl.heretichammer.draculareignofterrorremake.items.containers.WeightItemCo
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.producers.itemproducer.ItemProducer;
 import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
 import nl.heretichammer.draculareignofterrorremake.upgraders.upgrades.AccessUpgrade;
 
@@ -64,4 +66,7 @@ public class DataManager {
 
 	//troops
 	//units
+	public Unit.UnitData getUnitData(String name){
+		return UnitDataFactory.instance.fromFile(name);
+	}
 }

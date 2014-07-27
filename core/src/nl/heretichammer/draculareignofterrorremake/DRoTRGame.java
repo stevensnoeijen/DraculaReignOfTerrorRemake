@@ -1,5 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake;
 
+import nl.heretichammer.draculareignofterrorremake.screens.AreaMapScreen;
+import nl.heretichammer.draculareignofterrorremake.screens.MainScreen;
+import nl.heretichammer.draculareignofterrorremake.screens.MapScreen;
 import nl.heretichammer.draculareignofterrorremake.screens.WorldMapScreen;
 
 import com.badlogic.gdx.Game;

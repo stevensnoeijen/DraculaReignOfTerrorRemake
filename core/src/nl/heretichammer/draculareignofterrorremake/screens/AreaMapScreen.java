@@ -2,6 +2,8 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import net.dermetfan.utils.libgdx.graphics.AnimatedSprite;
 import nl.heretichammer.draculareignofterrorremake.map.AreaMap;
+import nl.heretichammer.draculareignofterrorremake.unit.Unit;
+import nl.heretichammer.draculareignofterrorremake.unit.UnitFactory;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 import com.badlogic.gdx.Gdx;
@@ -42,6 +44,8 @@ public class AreaMapScreen extends MapScreen {
 		stage.addActor(new Image(assetHelper.getDrawable("images/battle-ui.pack:ui-panel-left")));
 		
 		spriteBatch = new SpriteBatch();
+		
+		Unit unit = UnitFactory.createUnit("swordfighter");
 		
 		sprite = new AnimatedSprite(assetHelper.getAnimation("images/units.pack:swordsmen/blue/swordsmen_blue_attack_east"));
 		//sprite.setSize(40, 40);

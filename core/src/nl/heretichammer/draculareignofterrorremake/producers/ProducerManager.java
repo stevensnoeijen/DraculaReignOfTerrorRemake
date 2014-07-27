@@ -30,4 +30,8 @@ public abstract class ProducerManager<P extends Producer<?>> implements Teamable
 	public Team getTeam() {
 		return team;
 	}
+	
+	public List<P> getProducers() {
+		return producers;
+	}
 }

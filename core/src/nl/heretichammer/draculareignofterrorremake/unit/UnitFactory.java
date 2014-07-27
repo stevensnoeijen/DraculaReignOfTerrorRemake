@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.DataModelDontExistException;
+import nl.heretichammer.draculareignofterrorremake.unit.Unit.UnitData;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
@@ -13,17 +14,17 @@ public class UnitFactory {
 	
 	private static final Json json = new Json();
 	
-	private static Map<String, Unit.Model> models = new HashMap<String, Unit.Model>();
+	private static Map<String, UnitData> cache = new HashMap<String, UnitData>();
 	
 	public static Unit createUnit(String name) {
-		if(!models.containsKey(name)) {
-			Unit.Model model = json.fromJson(Unit.Model.class, Gdx.files.internal(String.format("data/units/%s.json", name)));
-			if(model == null) {
+		if(!cache.containsKey(name)) {
+			UnitData data = json.fromJson(UnitData.class, Gdx.files.internal(String.format("data/units/%s.json", name)));
+			if(data == null) {
 				throw new DataModelDontExistException();
 			}
-			models.put(name, model);
+			cache.put(name, data);
 		}
-		return new Unit( models.get(name) );
+		return new Unit( cache.get(name) );
 	}
 	
 	public static Unit[] createUnits(String name, int number) {

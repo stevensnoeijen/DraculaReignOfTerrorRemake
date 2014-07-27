@@ -22,8 +22,8 @@ public class Area implements Teamable, ItemSupplier {
 	private List<Troop> troops = new ArrayList<Troop>();
 	private BlockItemContainer inventory = ItemContainerFactory.createBlockItemContainer("buildinginventory");
 	
-	private TroopProducerManager troopProducerManager;
-	private ItemProducerManager itemProducerManager;
+	public final TroopProducerManager troopProducerManager;
+	public final ItemProducerManager itemProducerManager;
 	
 	//adjacents
 	
@@ -103,6 +103,10 @@ public class Area implements Teamable, ItemSupplier {
 	public boolean hasItems(ItemDescriptor[] itemItemDescriptor) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public List<Troop> getTroops() {
+		return troops;
 	}
 	
 	public static class AreaData {

@@ -1,19 +1,19 @@
 package nl.heretichammer.draculareignofterrorremake.team;
 
+import nl.heretichammer.draculareignofterrorremake.items.Item;
+import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
 import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.Json;
 
 public class Team {//implements Json.Serializable
 	//public static final Team NEUTRAL = new Team("Neutral", Color.WHITE);
 	
 	private String name;
-	private Color color;
+	private TeamColor color;
 	
 	public final AccessManager accessManager;
+	public final Resources resources = new Resources();
 
-	public Team(String name, Color color) {
+	public Team(String name, TeamColor color) {
 		this();
 		this.name = name;
 		this.color = color;
@@ -31,7 +31,7 @@ public class Team {//implements Json.Serializable
 	/**
 	 * @return the color
 	 */
-	public Color getColor() {
+	public TeamColor getColor() {
 		return color;
 	}
 
@@ -49,4 +49,21 @@ public class Team {//implements Json.Serializable
 	/*public void setName(String name) {
 		this.name = name;
 	}*/
+	
+	public static enum TeamColor {
+		BLUE, RED
+	}
+	
+	public static class Resources {
+		public final Item gold = ItemFactory.create("gold");
+		public int goldIncome;
+		public final Item wood = ItemFactory.create("wood");
+		public int woodIncome;
+		public final Item food = ItemFactory.create("food");
+		public int foodIncome;
+		public final Item men = ItemFactory.create("men");
+		public int menIncome;
+		public int army;
+		public int armyIncome;
+	}
 }

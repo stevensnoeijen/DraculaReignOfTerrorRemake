@@ -100,12 +100,14 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "org.apache.commons:commons-lang3:3.1"
+        compile "org.apache.commons:commons-lang3:3.3.2"
+        //compile "net.peakgames.libgdx:stagebuilder-core:2.0-SNAPSHOT"
+        compile "com.gdx.extension:gdx-extension:1.0.0"
+        compile 'net.dermetfan.libgdx-utils:libgdx-utils:0.3.4'
     }
 }
 

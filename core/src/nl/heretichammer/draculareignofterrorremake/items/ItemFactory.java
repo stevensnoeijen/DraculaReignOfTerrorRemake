@@ -8,6 +8,12 @@ public class ItemFactory {
 		return create(model, itemItemDescriptor.amount);
 	}
 	
+	public static Item create(String name) {
+		Item.ItemDescriptor itemDescriptor = new Item.ItemDescriptor();
+		itemDescriptor.name = name;
+		return create(itemDescriptor);
+	}
+	
 	private static Item create(Item.ItemData model, int amount) {
 		return new BaseItem(model, amount);
 	}

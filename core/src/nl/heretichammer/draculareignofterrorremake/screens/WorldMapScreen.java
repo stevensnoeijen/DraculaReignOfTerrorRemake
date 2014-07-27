@@ -1,11 +1,16 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import com.badlogic.gdx.Gdx;
+import nl.heretichammer.draculareignofterrorremake.map.Area;
+import nl.heretichammer.draculareignofterrorremake.map.World;
+import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
+import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.team.Player;
+import nl.heretichammer.draculareignofterrorremake.unit.Unit;
+import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,21 +21,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Scaling;
-import com.gdx.extension.ui.tab.Tab;
-import com.gdx.extension.ui.tab.TabContainer;
-import com.gdx.extension.ui.tab.TabPane;
-
-import nl.heretichammer.draculareignofterrorremake.map.Area;
-import nl.heretichammer.draculareignofterrorremake.map.World;
-import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
-import nl.heretichammer.draculareignofterrorremake.team.Player;
-import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 public class WorldMapScreen extends Scene2DScreen {
 	
@@ -50,6 +44,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		worldMap = new WorldMap(world);
 		
 		player = new Player(world.teams.transylvania);
+		player.setSelectedArea(worldMap.getAreas().fagaras);
 	}
 	
 	@Override
@@ -69,7 +64,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		ui.mainTable.setFillParent(true);
 		stage.addActor(ui.mainTable);
 		
-		ui.mainTable.add( createTabs() );
+		ui.mainTable.add( createTab() );
 		ui.mainTable.add(ui.rightTable = new Table());
 		ui.rightTable.debug();
 		
@@ -241,17 +236,143 @@ public class WorldMapScreen extends Scene2DScreen {
 		return ui.map.group;
 	}
 	
-	private Actor createTabs() {
-		ui.tabs = new TabPane(skin);
+	private Actor createTab() {
+		Table main = new Table();
+		main.setHeight(400);
+		main.setBackground( assetHelper.getDrawable("images/council.pack:ui-tab-training") );
 		
-		TabContainer trainingContainer = new TabContainer(skin);
-		trainingContainer.setHeight(400);
-		Tab trainingTab = new Tab("Training", trainingContainer, skin);
-		trainingTab.setBackground( new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-tab-training") ) );
+		Table buttons = new Table(skin);
+		buttons.setSize(36, 400);
+		main.add(buttons).top().padTop(31);
+		//create invisable buttons for tabs
+		//training
+		ImageButton trainingTabButton = new ImageButton((Drawable)null);
+		trainingTabButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("clicked");
+			}
+		});
+		buttons.add(trainingTabButton).size(50, 67).row();		
+		//movement
+		ImageButton movementTabButton = new ImageButton((Drawable)null);
+		movementTabButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("clicked");
+			}
+		});
+		buttons.add(movementTabButton).size(50, 67).row();
+		//construction
+		ImageButton constructionTabButton = new ImageButton((Drawable)null);
+		constructionTabButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("clicked");
+			}
+		});
+		buttons.add(constructionTabButton).size(50, 67).row();
+		//information
+		ImageButton informationTabButton = new ImageButton((Drawable)null);
+		informationTabButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("clicked");
+			}
+		});
+		buttons.add(informationTabButton).size(50, 67).row();
+		//administration
+		ImageButton administrationTabButton = new ImageButton((Drawable)null);
+		administrationTabButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("clicked");
+			}
+		});
+		buttons.add(administrationTabButton).size(50, 67).row();
 		
-		ui.tabs.addTab(trainingTab);
+		Group right = new Group();
+		right.setSize(200, 400);
+		main.add(right);
 		
-		return ui.tabs;
+		Table trainingTable = new Table(skin);
+		trainingTable.setPosition(97, 197);
+		right.addActor(trainingTable);
+		
+		final Area area = player.getSelectedArea();
+		for(TroopProducer troopProducer : area.troopProducerManager.getProducers()) {
+			Unit.UnitData unitData = troopProducer.getUnitData();
+			
+			ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
+			trainButton.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					
+				}
+			});
+			trainingTable.add(trainButton);
+			//label constants
+			final float FONTSCALE = 0.8f;
+			final float WIDTH = 16;
+			final float SPACE = 1;
+			//troop costs
+			//gold
+			Label goldCostLabel = new Label(String.valueOf(troopProducer.findCost("gold")), skin);
+			goldCostLabel.setFontScale(FONTSCALE);
+			goldCostLabel.setAlignment(Align.center);
+			trainingTable.add(goldCostLabel).width(WIDTH).center().space(SPACE);
+			//turns
+			Label turnsCostLabel = new Label(String.valueOf(troopProducer.getTurnCost()), skin);
+			turnsCostLabel.setFontScale(FONTSCALE);
+			turnsCostLabel.setAlignment(Align.center);
+			trainingTable.add(turnsCostLabel).width(WIDTH).center().space(SPACE);
+			//unit attributes
+			//strenght
+			Label trainingCostLabel = new Label(String.valueOf(unitData.attributes.strenght), skin);
+			trainingCostLabel.setFontScale(FONTSCALE);
+			trainingCostLabel.setAlignment(Align.center);
+			trainingTable.add(trainingCostLabel).width(WIDTH).center().space(SPACE);
+			//accuracy
+			Label accuracyCostLabel = new Label(String.valueOf(unitData.attributes.accuracy), skin);
+			accuracyCostLabel.setFontScale(FONTSCALE);
+			accuracyCostLabel.setAlignment(Align.center);
+			trainingTable.add(accuracyCostLabel).width(WIDTH).center().space(SPACE);
+			//defance
+			Label defanceCostLabel = new Label(String.valueOf(unitData.attributes.defance), skin);
+			defanceCostLabel.setFontScale(FONTSCALE);
+			defanceCostLabel.setAlignment(Align.center);
+			trainingTable.add(defanceCostLabel).width(WIDTH).center().space(SPACE);
+			//stamina
+			Label staminaCostLabel = new Label(String.valueOf(unitData.attributes.stamina), skin);
+			staminaCostLabel.setFontScale(FONTSCALE);
+			staminaCostLabel.setAlignment(Align.center);
+			trainingTable.add(staminaCostLabel).width(WIDTH).center().space(SPACE);
+			//speed
+			Label speedCostLabel = new Label(String.valueOf(unitData.attributes.speed), skin);
+			speedCostLabel.setFontScale(FONTSCALE);
+			speedCostLabel.setAlignment(Align.center);
+			trainingTable.add(speedCostLabel).width(WIDTH).center().space(SPACE);
+			//range
+			Label rangeCostLabel = new Label(String.valueOf(unitData.attributes.range), skin);
+			rangeCostLabel.setFontScale(FONTSCALE);
+			rangeCostLabel.setAlignment(Align.center);
+			trainingTable.add(rangeCostLabel).width(WIDTH).center().space(SPACE);
+			
+			trainingTable.row().spaceTop(1.5f);
+		}
+		
+		return main;
+	}
+	
+	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){
+		String stylePrefixName = "images/council.pack:ui-button-";
+		
+		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+		style.up = assetHelper.getDrawable(stylePrefixName + name);
+		style.down = assetHelper.getDrawable(stylePrefixName + name + "-click");
+		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
+		
+		return style;
 	}
 	
 	private ImageButton.ImageButtonStyle createStyle(Area area){
@@ -282,7 +403,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		Table rightBottomRightTable;
 		
 		Map map = new Map();
-		TabPane tabs;
+		Tabs tabs;
 		
 		private static final class Map {
 			Group group;
@@ -308,9 +429,6 @@ public class WorldMapScreen extends Scene2DScreen {
 		}
 		
 		private static final class Tabs {
-			Table table;
-			Table content;
-			
 			//training
 			Training training = new Training();
 			
