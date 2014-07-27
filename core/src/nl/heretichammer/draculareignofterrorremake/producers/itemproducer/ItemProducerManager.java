@@ -1,6 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.producers.itemproducer;
 
+import java.util.List;
+
 import nl.heretichammer.draculareignofterrorremake.items.Item;
+import nl.heretichammer.draculareignofterrorremake.producers.Producer;
 import nl.heretichammer.draculareignofterrorremake.producers.ProducerManager;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
@@ -18,6 +21,15 @@ public class ItemProducerManager extends ProducerManager<ItemProducer> implement
 		producers.add( menProducer = ItemProducerFactory.create("men") );
 	}
 
+	public ItemProducer findProducerByProducesDataName(String name) {
+		for(ItemProducer producer : (List<ItemProducer>)producers) {
+			if(producer.getProducesData().name.equals(name)) {
+				return producer;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public void setConsumer(Consumer<Item> consumer) {
 		for(ItemProducer producer : producers) {

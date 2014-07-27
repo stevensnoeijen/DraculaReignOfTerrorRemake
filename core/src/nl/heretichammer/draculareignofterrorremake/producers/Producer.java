@@ -10,6 +10,7 @@ import nl.heretichammer.draculareignofterrorremake.items.Item;
 
 public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable, Startable {
 	public Item.ItemDescriptor[] getCost();
+	public Item.ItemDescriptor findCost(String name);
 	
 	/**
 	 * remove produced object

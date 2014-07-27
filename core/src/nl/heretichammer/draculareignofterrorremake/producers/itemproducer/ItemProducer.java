@@ -10,6 +10,10 @@ public class ItemProducer extends AbstractProducer<Item, ItemProducer.ItemProduc
 	public ItemProducer(ItemProducerData data) {
 		super(data);
 	}
+	
+	public Item.ItemDescriptor getProducesData(){
+		return data.produces;
+	}
 
 	public static class ItemProducerData extends Producer.ProducerData {
 		public Item.ItemDescriptor produces;

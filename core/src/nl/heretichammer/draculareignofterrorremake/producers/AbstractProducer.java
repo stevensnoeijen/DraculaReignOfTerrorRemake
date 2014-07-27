@@ -30,15 +30,18 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	/**
 	 * 
 	 * @param name of the item
-	 * @return {@link ItemDescriptor#amount} or 0 if the item was not found
+	 * @return {@link ItemDescriptor#amount} or {@link ItemDescriptor#NULL} if the item was not found
 	 */
-	public int findCost(String name) {
-		for(Item.ItemDescriptor item : data.cost) {
-			if(item.name.equals(name)) {
-				return item.amount;
+	@Override
+	public Item.ItemDescriptor findCost(String name) {
+		if(data.cost != null) {
+			for(Item.ItemDescriptor item : data.cost) {
+				if(item.name.equals(name)) {
+					return item;
+				}
 			}
 		}
-		return 0;
+		return Item.ItemDescriptor.NULL;
 	}
 	
 	public int getTurnCost() {

@@ -3,6 +3,9 @@ package nl.heretichammer.draculareignofterrorremake.producers;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Array;
+
+import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.utils.DRoTRUtils;
@@ -34,4 +37,21 @@ public abstract class ProducerManager<P extends Producer<?>> implements Teamable
 	public List<P> getProducers() {
 		return producers;
 	}
+	
+	/**
+	 * @return cost of all {@link #producers} for itemName
+	 */
+	public int getTotalCost(String itemName){
+		int totalCost = 0;
+			
+		for(Producer producer : producers) {
+			Item.ItemDescriptor item = producer.findCost(itemName);
+			if(item != null) {
+				totalCost += item.amount;
+			}
+		}
+		return totalCost;
+	}
+	
+		
 }

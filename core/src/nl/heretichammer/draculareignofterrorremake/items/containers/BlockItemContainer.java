@@ -110,4 +110,9 @@ public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockIt
 	public Iterable<Item> getAll() {
 		return items;
 	}
+
+	public Item findOneByName(String itemName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

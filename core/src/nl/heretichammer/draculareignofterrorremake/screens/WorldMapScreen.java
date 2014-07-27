@@ -5,6 +5,7 @@ import nl.heretichammer.draculareignofterrorremake.map.World;
 import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
 import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.team.Player;
+import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
@@ -90,7 +91,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		ui.currentWeek.setFontScale(FONT_SMALL);
 		ui.currentWeek.setPosition(560, 150);
 		stage.addActor(ui.currentWeek);
-		updateWeekUI();//set texts
+		
 		
 		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
 		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal") );
@@ -105,6 +106,9 @@ public class WorldMapScreen extends Scene2DScreen {
 			}
 		});
 		stage.addActor(waxButton);
+		
+		updateWeekUI();//set texts for week and year
+		updateResourcesUI();
 	}
 	
 	/**
@@ -113,8 +117,41 @@ public class WorldMapScreen extends Scene2DScreen {
 	private void updateWeekUI() {
 		ui.currentYear.setText(String.valueOf(worldMap.getYear()));
 		ui.currentWeek.setText(String.valueOf(worldMap.getWeek()));
+	}
+	
+	public void updateResourcesUI() {
+		final Team playersTeam = player.getTeam();
 		
-		//ui.resources.
+		//gold
+		ui.resources.currentGold.setText( String.valueOf( playersTeam.getItemAmount("gold") ) );
+		ui.resources.incomeGold.setText( incomeToString( playersTeam.getIncome("gold") ) );
+		//wood
+		ui.resources.currentWood.setText( String.valueOf( playersTeam.getItemAmount("wood") ) );
+		ui.resources.incomeWood.setText( incomeToString( playersTeam.getIncome("wood") ) );
+		//food
+		ui.resources.currentFood.setText( String.valueOf( playersTeam.getItemAmount("food") ) );
+		ui.resources.incomeFood.setText( incomeToString( playersTeam.getIncome("food") ) );
+		//men
+		ui.resources.currentMen.setText( String.valueOf( playersTeam.getItemAmount("men") ) );
+		ui.resources.incomeMen.setText( incomeToString( playersTeam.getIncome("men") ) );
+		//army
+		ui.resources.currentArmy.setText( String.valueOf( playersTeam.getUnits() ) );
+		
+	}
+	
+	/**
+	 * Adds +, - or nothing in front of the income and returns it as a {@link String}.
+	 * @param income
+	 * @return
+	 */
+	public static String incomeToString(int income) {
+		if(income > 0 ) {
+			return "+" + income;
+		}else if(income < 0) {
+			return "-" + income;
+		}else {//is 0
+			return String.valueOf(income);
+		}
 	}
 	
 	private Actor createMap() {	
@@ -295,7 +332,7 @@ public class WorldMapScreen extends Scene2DScreen {
 			final float SPACE = 1;
 			//troop costs
 			//gold
-			Label goldCostLabel = new Label(String.valueOf(troopProducer.findCost("gold")), skin);
+			Label goldCostLabel = new Label(String.valueOf(troopProducer.findCost("gold").amount), skin);
 			goldCostLabel.setFontScale(FONTSCALE);
 			goldCostLabel.setAlignment(Align.center);
 			trainingTable.add(goldCostLabel).size(WIDTH, HEIGHT).space(SPACE);
@@ -374,18 +411,18 @@ public class WorldMapScreen extends Scene2DScreen {
 		ui.resources.currentArmy.setAlignment(Align.center);
 		
 		resourcesTable.row().height(12);
-		resourcesTable.add( ui.resources.weekGold = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.weekGold.setFontScale(LABEL_FONT);
-		ui.resources.weekGold.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.weekWood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.weekWood.setFontScale(LABEL_FONT);
-		ui.resources.weekWood.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.weekFood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.weekFood.setFontScale(LABEL_FONT);
-		ui.resources.weekFood.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.weekMen = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.weekMen.setFontScale(LABEL_FONT);
-		ui.resources.weekMen.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.incomeGold = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.incomeGold.setFontScale(LABEL_FONT);
+		ui.resources.incomeGold.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.incomeWood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.incomeWood.setFontScale(LABEL_FONT);
+		ui.resources.incomeWood.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.incomeFood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.incomeFood.setFontScale(LABEL_FONT);
+		ui.resources.incomeFood.setAlignment(Align.center);
+		resourcesTable.add( ui.resources.incomeMen = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
+		ui.resources.incomeMen.setFontScale(LABEL_FONT);
+		ui.resources.incomeMen.setAlignment(Align.center);
 		resourcesTable.pack();
 
 		return group;
@@ -434,10 +471,10 @@ public class WorldMapScreen extends Scene2DScreen {
 		}
 		
 		private static final class Resources {
-			Label currentGold, weekGold;
-			Label currentWood, weekWood;
-			Label currentFood, weekFood;
-			Label currentMen, weekMen;
+			Label currentGold, incomeGold;
+			Label currentWood, incomeWood;
+			Label currentFood, incomeFood;
+			Label currentMen, incomeMen;
 			Label currentArmy;
 		}
 		

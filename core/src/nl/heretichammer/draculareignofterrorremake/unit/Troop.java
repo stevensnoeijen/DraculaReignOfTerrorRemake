@@ -1,8 +1,12 @@
 package nl.heretichammer.draculareignofterrorremake.unit;
 
+import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.team.Teamable;
+
 import com.badlogic.gdx.utils.Array;
 
-public class Troop {
+public class Troop implements Teamable {
+	private Team team;
 	private Array<Unit> units;
 	private int size;
 	
@@ -31,5 +35,15 @@ public class Troop {
 		public String name;
 		public String unitName;
 		public int size;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	@Override
+	public void setTeam(Team team) {
+		this.team = team;
+		team.addTroop(this);
 	}
 }

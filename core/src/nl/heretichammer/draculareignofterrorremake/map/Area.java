@@ -20,7 +20,7 @@ public class Area implements Teamable, ItemSupplier {
 	private String name;
 	private Team team;
 	private List<Troop> troops = new ArrayList<Troop>();
-	private BlockItemContainer inventory = ItemContainerFactory.createBlockItemContainer("buildinginventory");
+	private List<Item> resources = new ArrayList<Item>(4);
 	
 	public final TroopProducerManager troopProducerManager;
 	public final ItemProducerManager itemProducerManager;
@@ -31,7 +31,7 @@ public class Area implements Teamable, ItemSupplier {
 		this(data.name, World.Teams.byName(data.teamName));
 		
 		for(Item.ItemDescriptor itemItemDescriptor : data.items) {
-			inventory.add( ItemFactory.create(itemItemDescriptor) );
+			resources.add( ItemFactory.create(itemItemDescriptor) );
 		}
 	}
 	
@@ -50,7 +50,12 @@ public class Area implements Teamable, ItemSupplier {
 		itemProducerManager.setConsumer(new Consumer<Item>() {
 			@Override
 			public void consume(Item item) {
-				inventory.add(item);
+				Item resource = findResourceByName(item.getName());
+				if(resource != null) {//if exists in resources
+					resource.add(item);//add amount to resource
+				} else {				
+					resources.add(item);//add is as new
+				}
 			}
 		});
 		itemProducerManager.setItemSupplier(this);
@@ -63,6 +68,7 @@ public class Area implements Teamable, ItemSupplier {
 	@Override
 	public void setTeam(Team team) {
 		this.team = team;
+		team.addOwnedArea(this);
 		troopProducerManager.setTeam(team);
 	}
 
@@ -70,9 +76,14 @@ public class Area implements Teamable, ItemSupplier {
 	public Team getTeam() {
 		return team;
 	}
-
-	public BlockItemContainer getInventory() {
-		return inventory;
+	
+	public Item findResourceByName(String name) {
+		for(Item resource : resources) {
+			if(resource.getName().equals(name)) {
+				return resource;
+			}
+		}
+		return null;
 	}
 	
 	@Override
@@ -107,6 +118,19 @@ public class Area implements Teamable, ItemSupplier {
 	
 	public List<Troop> getTroops() {
 		return troops;
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return cost minus cost made
+	 */
+	public int getIncome(String name) {
+		int income = 0;
+		income += itemProducerManager.findProducerByProducesDataName(name).getProducesData().amount;
+		income -= itemProducerManager.getTotalCost(name);
+		income -= troopProducerManager.getTotalCost(name);
+		return income;
 	}
 	
 	public static class AreaData {
