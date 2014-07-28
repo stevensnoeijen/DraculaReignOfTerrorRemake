@@ -15,6 +15,7 @@ import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
+import nl.heretichammer.draculareignofterrorremake.utils.DRoTRUtils;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
 public class Area implements Teamable, ItemSupplier, Turnable {
@@ -68,7 +69,7 @@ public class Area implements Teamable, ItemSupplier, Turnable {
 	public void setTeam(Team team) {
 		this.team = team;
 		team.addOwnedArea(this);
-		troopProducerManager.setTeam(team);
+		DRoTRUtils.setTeam(team, troopProducerManager, itemProducerManager);
 	}
 
 	@Override
@@ -128,7 +129,6 @@ public class Area implements Teamable, ItemSupplier, Turnable {
 		int income = 0;
 		income += itemProducerManager.findProducerByProducesDataName(name).getProducesData().amount;
 		income -= itemProducerManager.getTotalCost(name);
-		income -= troopProducerManager.getTotalCost(name);
 		return income;
 	}
 	

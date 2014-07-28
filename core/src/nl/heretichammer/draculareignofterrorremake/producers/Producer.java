@@ -22,6 +22,8 @@ public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E
 	public static class ProducerData {
 		public String accessName;
 		public Item.ItemDescriptor[] cost;
-		public int turnCost;
+		public int turnCost = 1;
+		public boolean autoStart = false;
+		
 	}
 }

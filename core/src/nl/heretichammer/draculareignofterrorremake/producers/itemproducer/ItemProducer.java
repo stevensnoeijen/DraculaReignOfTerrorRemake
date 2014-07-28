@@ -9,6 +9,7 @@ public class ItemProducer extends AbstractProducer<Item, ItemProducer.ItemProduc
 
 	public ItemProducer(ItemProducerData data) {
 		super(data);
+		this.startable = true;
 	}
 	
 	public Item.ItemDescriptor getProducesData(){

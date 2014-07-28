@@ -89,7 +89,11 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	 * @return if payed
 	 */
 	private boolean pay() {
-		return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
+		if(data.cost == null) {//its free
+			return true;
+		}else {
+			return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
+		}
 	}
 	
 	/**
@@ -105,8 +109,15 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 		}
 	}
 	
+	public boolean isAutoStart() {
+		return data.autoStart;
+	}
+	
 	@Override
 	public void turn() {
+		if(!started && isAutoStart()) {
+			start();
+		}		
 		if(started) {
 			turn++;
 			if(turn >= getTurnCost()) {
