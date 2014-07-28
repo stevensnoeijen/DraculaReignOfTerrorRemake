@@ -5,18 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
-import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
+import nl.heretichammer.draculareignofterrorremake.tbs.TurnManager;
+import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 
-public class Team {//implements Json.Serializable
+public class Team implements Turnable {
+	public static final Team NULL = new Team("", null);
 	//public static final Team NEUTRAL = new Team("Neutral", Color.WHITE);
 	
 	private String name;
 	private TeamColor color;
 	private List<Area> ownedAreas = new ArrayList<Area>();
 	private List<Troop> troops = new LinkedList<Troop>();
+	private List<Player> players = new LinkedList<Player>();
 	
 	//public final properties
 	public final AccessManager accessManager;
@@ -48,6 +51,18 @@ public class Team {//implements Json.Serializable
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	public void addPlayer(Player player) {
+		if(player.getTeam() == this) {
+			players.add(player);
+		}else {
+			player.setTeam(this);//which calls this method again and will add it to troops
+		}		
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
 	}
 	
 	public List<Area> getOwnedAreas() {
@@ -99,6 +114,14 @@ public class Team {//implements Json.Serializable
 		}
 		return units;
 	}
+	
+	@Override
+	public void turn() {
+		for(Area area : ownedAreas) {
+			area.turn();
+		}
+		TurnManager.instance.done(this);
+	}
 
 	/**
 	 * not enabled, becouse this can give problems when saving
@@ -111,6 +134,4 @@ public class Team {//implements Json.Serializable
 	public static enum TeamColor {
 		BLUE, RED
 	}
-	
-	
 }

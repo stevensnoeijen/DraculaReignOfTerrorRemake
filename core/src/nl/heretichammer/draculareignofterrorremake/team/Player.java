@@ -1,18 +1,15 @@
 package nl.heretichammer.draculareignofterrorremake.team;
 
-import nl.heretichammer.draculareignofterrorremake.constants.Constants;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import nl.heretichammer.draculareignofterrorremake.tbs.TurnManager;
+import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 
-public class Player implements Teamable{
+public class Player implements Teamable, Turnable {
 	private Team team;
 	private Area selectedArea;
 	
 	public Player(Team team) {
-		if(team == null) {
-			throw new IllegalArgumentException(String.format(Constants.exceptions.paramNull, "team"));
-		}
-		this.team = team;
+		setTeam(team);
 	}
 	
 	@Override
@@ -22,7 +19,11 @@ public class Player implements Teamable{
 
 	@Override
 	public void setTeam(Team team) {
-		throw new NotImplementedException();
+		if(team == null) {
+			throw new NullPointerException();
+		}
+		this.team = team;
+		team.addPlayer(this);
 	}
 	
 	public void setSelectedArea(Area selectedArea) {
@@ -31,5 +32,14 @@ public class Player implements Teamable{
 	
 	public Area getSelectedArea() {
 		return selectedArea;
+	}
+
+	@Override
+	public void turn() {
+		
+	}
+	
+	public void turnDone() {
+		TurnManager.instance.done(this);
 	}
 }

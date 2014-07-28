@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
+import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
@@ -8,7 +9,7 @@ import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.utils.Startable;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 
-public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable, Startable {
+public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable, Startable, Turnable {
 	public Item.ItemDescriptor[] getCost();
 	public Item.ItemDescriptor findCost(String name);
 	

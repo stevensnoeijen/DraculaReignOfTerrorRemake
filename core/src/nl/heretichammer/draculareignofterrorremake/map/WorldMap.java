@@ -1,7 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.map;
 
+import java.util.List;
+
 import nl.heretichammer.draculareignofterrorremake.map.World.Areas;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSObject;
+import nl.heretichammer.draculareignofterrorremake.team.Team;
 
 public class WorldMap implements TBSObject {
 
@@ -26,5 +29,9 @@ public class WorldMap implements TBSObject {
 	
 	public Areas getAreas() {
 		return world.areas;
+	}
+	
+	public List<Team> getTeams() {
+		return world.getTeams();
 	}
 }

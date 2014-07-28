@@ -10,15 +10,18 @@ import nl.heretichammer.draculareignofterrorremake.items.containers.BlockItemCon
 import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainerFactory;
 import nl.heretichammer.draculareignofterrorremake.producers.itemproducer.ItemProducerManager;
 import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducerManager;
+import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
-public class Area implements Teamable, ItemSupplier {
+public class Area implements Teamable, ItemSupplier, Turnable {
+	private final AreaData data;
 	private String name;
 	private Team team;
+	private World world;
 	private List<Troop> troops = new ArrayList<Troop>();
 	private List<Item> resources = new ArrayList<Item>(4);
 	
@@ -28,18 +31,10 @@ public class Area implements Teamable, ItemSupplier {
 	//adjacents
 	
 	public Area(AreaData data) {
-		this(data.name, World.Teams.byName(data.teamName));
-		
-		for(Item.ItemDescriptor itemItemDescriptor : data.items) {
-			resources.add( ItemFactory.create(itemItemDescriptor) );
-		}
-	}
-	
-	public Area(String name, Team team) {
-		this.name = name;
+		this.data = data;
+		this.name = data.name;
 		troopProducerManager = new TroopProducerManager();
 		itemProducerManager = new ItemProducerManager();
-		setTeam(team);
 		troopProducerManager.setConsumer(new Consumer<Troop>() {
 			@Override
 			public void consume(Troop troop) {
@@ -59,6 +54,10 @@ public class Area implements Teamable, ItemSupplier {
 			}
 		});
 		itemProducerManager.setItemSupplier(this);
+		
+		for(Item.ItemDescriptor itemItemDescriptor : data.items) {
+			resources.add( ItemFactory.create(itemItemDescriptor) );
+		}
 	}
 	
 	public String getName() {
@@ -131,6 +130,17 @@ public class Area implements Teamable, ItemSupplier {
 		income -= itemProducerManager.getTotalCost(name);
 		income -= troopProducerManager.getTotalCost(name);
 		return income;
+	}
+	
+	@Override
+	public void turn() {
+		itemProducerManager.turn();
+		troopProducerManager.turn();
+	}
+	
+	public void setWorld(World world) {
+		this.world = world;
+		setTeam( world.findTeamByName(data.teamName) );
 	}
 	
 	public static class AreaData {

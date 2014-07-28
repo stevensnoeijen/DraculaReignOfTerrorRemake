@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
 import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
@@ -44,8 +45,9 @@ public class WorldMapScreen extends Scene2DScreen {
 		World world = new World();
 		worldMap = new WorldMap(world);
 		
-		player = new Player(world.teams.transylvania);
+		player = new Player(world.findTeamByName("transylvania"));
 		player.setSelectedArea(worldMap.getAreas().fagaras);
+		new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
 	}
 	
 	@Override
@@ -101,8 +103,10 @@ public class WorldMapScreen extends Scene2DScreen {
 		waxButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				player.turnDone();
 				worldMap.turn();
 				updateWeekUI();
+				updateResourcesUI();
 			}
 		});
 		stage.addActor(waxButton);

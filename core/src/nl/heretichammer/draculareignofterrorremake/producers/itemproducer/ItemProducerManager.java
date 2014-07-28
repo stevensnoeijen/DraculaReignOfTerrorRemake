@@ -3,7 +3,6 @@ package nl.heretichammer.draculareignofterrorremake.producers.itemproducer;
 import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
-import nl.heretichammer.draculareignofterrorremake.producers.Producer;
 import nl.heretichammer.draculareignofterrorremake.producers.ProducerManager;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;

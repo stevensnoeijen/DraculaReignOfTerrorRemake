@@ -1,15 +1,12 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import nl.heretichammer.draculareignofterrorremake.DRoTR;
-import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
+import nl.heretichammer.draculareignofterrorremake.items.Item;
+import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessableStartable;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
-import nl.heretichammer.draculareignofterrorremake.items.Item;
-import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 public abstract class AbstractProducer<P,D extends Producer.ProducerData> extends AbstractTeamableAccessableStartable implements Producer<P> {
 	
@@ -17,6 +14,7 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	protected ItemSupplier itemSupplier;
 	protected Consumer<P> consumer;
 	protected P produced;
+	protected int turn;
 	
 	public AbstractProducer(D data) {
 		this.data = data;
@@ -103,19 +101,25 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 			boolean payed = pay();
 			if(payed) {//if paid
 				started = true;
-				DRoTR.tbs.time.schedule(new TBSTime.Task(data.turnCost) {
-					@Override
-					public void turn() {
-						
-					}
-					
-					@Override
-					public void done() {
-						handleProduct();
-						done = true;
-					}
-				});
 			}
 		}
+	}
+	
+	@Override
+	public void turn() {
+		if(started) {
+			turn++;
+			if(turn >= getTurnCost()) {
+				//if done
+				handleProduct();
+				done();
+			}
+		}
+	}
+	
+	private void done() {
+		done = true;
+		started = false;
+		turn = 0;
 	}
 }

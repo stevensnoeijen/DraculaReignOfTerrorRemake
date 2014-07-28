@@ -1,5 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.tbs;
 
-public interface TBSObject extends Turnable {
-	
+public interface TurnListener {
+	public void onTurn();
 }
