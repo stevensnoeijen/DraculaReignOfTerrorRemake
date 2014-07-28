@@ -1,12 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.team;
 
-import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.tbs.TurnManager;
 import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 
 public class Player implements Teamable, Turnable {
 	private Team team;
-	private Area selectedArea;
 	
 	public Player(Team team) {
 		setTeam(team);
@@ -24,14 +22,6 @@ public class Player implements Teamable, Turnable {
 		}
 		this.team = team;
 		team.addPlayer(this);
-	}
-	
-	public void setSelectedArea(Area selectedArea) {
-		this.selectedArea = selectedArea;
-	}
-	
-	public Area getSelectedArea() {
-		return selectedArea;
 	}
 
 	@Override

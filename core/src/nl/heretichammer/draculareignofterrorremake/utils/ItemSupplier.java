@@ -17,6 +17,6 @@ public interface ItemSupplier {
 	public Item[] removeItems(Item.ItemDescriptor[] itemItemDescriptor);
 	public Item removeItem(Item.ItemDescriptor itemItemDescriptor);
 	
-	public boolean hadItem(Item.ItemDescriptor itemItemDescriptor);
+	public boolean hasItem(Item.ItemDescriptor itemItemDescriptor);
 	public boolean hasItems(Item.ItemDescriptor[] itemItemDescriptor);
 }

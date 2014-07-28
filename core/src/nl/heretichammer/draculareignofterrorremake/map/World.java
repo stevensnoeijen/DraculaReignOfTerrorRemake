@@ -11,8 +11,11 @@ import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Team.TeamColor;
 
 public class World implements TBSObject {
-	private int year = 1456;
-	private int week = 1;
+	public static int START_YEAR = 1456,
+			START_WEEK = 1;
+	
+	private int year = START_YEAR;
+	private int week = START_WEEK;
 	
 	private List<Team> teams = new ArrayList<Team>(2);
 	public final Areas areas;

@@ -37,6 +37,13 @@ public interface Item {
 	
 	public boolean equalModel(Item other);
 	
+	/**
+	 * 
+	 * @param itemDescriptor
+	 * @return true is the item is the itemDescriptor with the {@link Item#getAmount()} or more.
+	 */
+	public boolean is(Item.ItemDescriptor itemDescriptor);
+	
 	public static class ItemData {
 		public String name;
 		public String description;

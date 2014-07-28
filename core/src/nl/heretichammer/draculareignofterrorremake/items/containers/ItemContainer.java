@@ -6,8 +6,9 @@ import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Key;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
 import nl.heretichammer.draculareignofterrorremake.items.Lockable;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
-public abstract class ItemContainer<D extends ItemContainer.ItemContainerData> extends AbstractItem<D> implements Iterable<Item>, Closeable, Lockable {
+public abstract class ItemContainer<D extends ItemContainer.ItemContainerData> extends AbstractItem<D> implements Iterable<Item>, Closeable, Lockable, ItemSupplier {
 	
 	private Lock lock;
 	private boolean open;

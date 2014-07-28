@@ -6,6 +6,7 @@ import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
+import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 
 public class WeightItemContainer extends ItemContainer<WeightItemContainer.WeightItemContainerData> {
 	private final List<Item> items;
@@ -88,5 +89,53 @@ public class WeightItemContainer extends ItemContainer<WeightItemContainer.Weigh
 	public Iterable<Item> findByCategory(String category) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Item findItem(ItemDescriptor itemDescriptor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Item[] removeItems(ItemDescriptor[] itemDescriptors) {
+		if(hasItems(itemDescriptors)) {
+			Item[] items = new Item[itemDescriptors.length];
+			for(int i = 0; i < itemDescriptors.length; i++) {
+				items[i] = removeItem(itemDescriptors[i]);
+			}
+			return items;
+		}
+		return null;
+	}
+
+	@Override
+	public Item removeItem(ItemDescriptor itemDescriptor) {
+		for(Item item : items) {
+			if(item.is(itemDescriptor)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean hasItem(ItemDescriptor itemDescriptor) {
+		for(Item item : items) {
+			if(item.is(itemDescriptor)){
+				return true;
+			}
+		}
+		return false;//did not have the item
+	}
+
+	@Override
+	public boolean hasItems(ItemDescriptor[] itemDescriptors) {
+		for(ItemDescriptor itemDescriptor : itemDescriptors) {
+			if( !hasItem(itemDescriptor) ) {//if had not
+				return false;
+			}
+		}
+		return true;//if all items passed it has all items
 	}
 }

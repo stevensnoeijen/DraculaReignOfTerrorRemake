@@ -11,6 +11,7 @@ public class TroopProducer extends AbstractProducer<Troop, TroopProducer.TroopPr
 
 	public TroopProducer(TroopProducerData data) {
 		super(data);
+		startable = true;
 	}
 	
 	@Override

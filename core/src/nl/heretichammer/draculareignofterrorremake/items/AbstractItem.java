@@ -129,4 +129,13 @@ public abstract class AbstractItem<D extends Item.ItemData> implements Item{
 	public boolean isFull() {
 		return amount == getAmountMax();
 	}
+	
+	public boolean is(Item.ItemDescriptor itemDescriptor) {
+		return getName().equals(itemDescriptor.name) && amount >= itemDescriptor.amount;
+	}
+	
+	@Override
+	public String toString() {
+		return "{" + data.name + ":" + amount + "}";
+	}
 }

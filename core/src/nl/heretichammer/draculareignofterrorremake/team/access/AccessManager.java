@@ -1,14 +1,18 @@
 package nl.heretichammer.draculareignofterrorremake.team.access;
 
-import java.util.Map;
-
+import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
+
+import com.badlogic.gdx.Gdx;
 
 public class AccessManager implements Teamable {
 	
 	private Team team;
-	private Map<String, Boolean> accessibilities;
+	
+	public AccessManager() {
+		Gdx.app.getPreferences("test");
+	}
 	
 	@Override
 	public void setTeam(Team team) {
@@ -26,11 +30,11 @@ public class AccessManager implements Teamable {
 	 * @return
 	 */
 	public boolean isAccessable(String name){
-		return accessibilities.get(name);
+		return DRoTRGame.save.getBoolean("teams." + team.getName().toLowerCase() + ".accessibilities." +  name);
 	}
 	
 	public void putAccessable(String name, boolean value) {
-		accessibilities.put(name, value);
+		
 	}
 	
 	public void putAccessable(String name, int value) {

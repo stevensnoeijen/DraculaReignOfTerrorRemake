@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
@@ -12,6 +13,8 @@ import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -39,6 +42,12 @@ public class WorldMapScreen extends Scene2DScreen {
 	
 	private Player player;
 	private WorldMap worldMap;
+	private Area selectedArea;
+	
+	//sounds
+	private Sound click;
+	
+	private Music music;
 	
 	private static final float FONT_SMALL = .8f;
 	
@@ -47,8 +56,13 @@ public class WorldMapScreen extends Scene2DScreen {
 		worldMap = new WorldMap(world);
 		
 		player = new Player(world.findTeamByName("transylvania"));
-		player.setSelectedArea(worldMap.getAreas().fagaras);
 		new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
+		selectedArea = worldMap.getAreas().fagaras;
+	}
+	
+	public void setSelectedArea(Area selectedArea) {
+		this.selectedArea = selectedArea;
+		ui.location.setText("In " + selectedArea.getName());
 	}
 	
 	@Override
@@ -56,7 +70,13 @@ public class WorldMapScreen extends Scene2DScreen {
 		super.show();
 		assetManager.load("images/council.pack", TextureAtlas.class);
 		assetManager.load("uiskin.json", Skin.class);
+		assetManager.load("sounds/click.ogg", Sound.class);
+		assetManager.load("music/council2.mp3", Music.class);
 		assetManager.finishLoading();
+		
+		click = assetManager.get("sounds/click.ogg", Sound.class);
+		music = assetManager.get("music/council2.mp3", Music.class);
+		music.setLooping(true);
 		
 		skin = assetManager.get("uiskin.json", Skin.class);
 		stage.addActor(new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll")));//background
@@ -104,6 +124,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		waxButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				click.play();
 				player.turnDone();
 				worldMap.turn();
 				updateWeekUI();
@@ -114,6 +135,20 @@ public class WorldMapScreen extends Scene2DScreen {
 		
 		updateWeekUI();//set texts for week and year
 		updateResourcesUI();
+	}
+	
+	@Override
+	public void pause() {
+		super.pause();
+		music.pause();		
+	}
+	
+	@Override
+	public void resume() {
+		super.resume();
+		if(DRoTR.PREFERENCES.getBoolean("music.enabled")) {
+			music.play();
+		}
 	}
 	
 	/**
@@ -245,7 +280,7 @@ public class WorldMapScreen extends Scene2DScreen {
 			button.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {					
-					player.setSelectedArea((Area)event.getTarget().getUserObject());
+					setSelectedArea((Area)event.getTarget().getUserObject());
 				}
 			});
 		}
@@ -317,17 +352,19 @@ public class WorldMapScreen extends Scene2DScreen {
 		trainingTable.setPosition(97, 197);
 		right.addActor(trainingTable);
 		
-		final Area area = player.getSelectedArea();
-		for(TroopProducer troopProducer : area.troopProducerManager.getProducers()) {
+		for(final TroopProducer troopProducer : selectedArea.troopProducerManager.getProducers()) {
 			Unit.UnitData unitData = troopProducer.getUnitData();
 			
 			trainingTable.row();
 			
-			ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
+			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
+			//trainButton.setDisabled(!troopProducer.isStartable());
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					
+					troopProducer.start();
+					updateResourcesUI();
+					trainButton.setDisabled(true);
 				}
 			});
 			trainingTable.add(trainButton);
@@ -379,6 +416,19 @@ public class WorldMapScreen extends Scene2DScreen {
 			trainingTable.add(rangeCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 		}
 		main.pack();
+		
+		//add info labels
+		ui.location = new Label("In Fagaras", skin);
+		ui.location.setFontScale(0.8f);
+		ui.location.setPosition(55, 340);
+		right.addActor(ui.location);
+		
+		//ui.info
+		ui.info = new Label("test", skin);
+		ui.info.setFontScale(0.8f);
+		ui.info.setPosition(15, 30);		
+		right.addActor(ui.info);
+		
 		return main;
 	}
 	
@@ -440,6 +490,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		style.up = assetHelper.getDrawable(stylePrefixName + name);
 		style.down = assetHelper.getDrawable(stylePrefixName + name + "-click");
 		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
+		style.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		return style;
 	}
@@ -462,6 +513,8 @@ public class WorldMapScreen extends Scene2DScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
+		click.dispose();
+		music.dispose();
 	}
 	
 	private static final class UI {	
@@ -470,6 +523,8 @@ public class WorldMapScreen extends Scene2DScreen {
 		
 		Label currentYear;
 		Label currentWeek;
+		Label location;
+		Label info;
 		
 		private static final class Areas{
 			ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;

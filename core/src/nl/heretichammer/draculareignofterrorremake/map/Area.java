@@ -6,7 +6,7 @@ import java.util.List;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.ItemFactory;
 import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
-import nl.heretichammer.draculareignofterrorremake.items.containers.BlockItemContainer;
+import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainer;
 import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainerFactory;
 import nl.heretichammer.draculareignofterrorremake.producers.itemproducer.ItemProducerManager;
 import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducerManager;
@@ -24,7 +24,7 @@ public class Area implements Teamable, ItemSupplier, Turnable {
 	private Team team;
 	private World world;
 	private List<Troop> troops = new ArrayList<Troop>();
-	private List<Item> resources = new ArrayList<Item>(4);
+	private ItemContainer<?> resources = ItemContainerFactory.createBlockItemContainer("buildinginventory");
 	
 	public final TroopProducerManager troopProducerManager;
 	public final ItemProducerManager itemProducerManager;
@@ -88,32 +88,27 @@ public class Area implements Teamable, ItemSupplier, Turnable {
 	
 	@Override
 	public Item findItem(ItemDescriptor itemItemDescriptor) {
-		// TODO Auto-generated method stub
-		return null;
+		return resources.findItem(itemItemDescriptor);
 	}
 
 	@Override
-	public Item[] removeItems(ItemDescriptor[] itemItemDescriptor) {
-		// TODO Auto-generated method stub
-		return null;
+	public Item[] removeItems(ItemDescriptor[] itemDescriptors) {
+		return resources.removeItems(itemDescriptors);
 	}
 
 	@Override
-	public Item removeItem(ItemDescriptor itemItemDescriptor) {
-		// TODO Auto-generated method stub
-		return null;
+	public Item removeItem(ItemDescriptor itemDescriptor) {
+		return resources.removeItem(itemDescriptor);
 	}
 
 	@Override
-	public boolean hadItem(ItemDescriptor itemItemDescriptor) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasItem(ItemDescriptor itemDescriptor) {
+		return resources.hasItem(itemDescriptor);
 	}
 
 	@Override
-	public boolean hasItems(ItemDescriptor[] itemItemDescriptor) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean hasItems(ItemDescriptor[] itemDescriptors) {
+		return resources.hasItems(itemDescriptors);
 	}
 	
 	public List<Troop> getTroops() {
