@@ -2,6 +2,8 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.LinkedList;
+import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
@@ -34,8 +36,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Disposable;
 
 public class WorldMapScreen extends Scene2DScreen {
+	
+	private List<Disposable> disposables = new LinkedList<Disposable>();
 	
 	private AssetManager assetManager = new AssetManager();
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
@@ -364,7 +369,16 @@ public class WorldMapScreen extends Scene2DScreen {
 			
 			trainingTable.row();
 			
+			final Sound startSound = Gdx.audio.newSound(Gdx.files.internal(troopProducer.getStartSound()));
+			disposables.add(startSound);
+			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
+			trainButton.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					startSound.play();
+				}
+			});
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -538,6 +552,9 @@ public class WorldMapScreen extends Scene2DScreen {
 		super.dispose();
 		click.dispose();
 		music.dispose();
+		for(Disposable disposable : disposables) {
+			disposable.dispose();
+		}		
 	}
 	
 	private static final class UI {	

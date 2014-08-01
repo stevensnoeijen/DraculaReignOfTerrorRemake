@@ -27,7 +27,12 @@ public class TroopProducer extends AbstractProducer<Troop, TroopProducer.TroopPr
 		return data.produces.name;
 	}
 	
+	public String getStartSound() {
+		return data.startSound;
+	}
+	
 	public static class TroopProducerData extends Producer.ProducerData {
 		public Troop.TroopModel produces;
+		public String startSound;
 	}
 }
