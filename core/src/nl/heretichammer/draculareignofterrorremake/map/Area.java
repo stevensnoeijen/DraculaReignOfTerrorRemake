@@ -139,9 +139,14 @@ public class Area implements Teamable, ItemSupplier, Turnable {
 		setTeam( world.findTeamByName(data.teamName) );
 	}
 	
+	public String getMinimapImage() {
+		return data.minimapImage;
+	}
+	
 	public static class AreaData {
 		public String name;
 		public String teamName;
+		public String minimapImage;
 		public Item.ItemDescriptor[] items;
 	}
 }

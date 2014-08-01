@@ -53,6 +53,9 @@ public class WorldMapScreen extends Scene2DScreen {
 	private WorldMap worldMap;
 	private Area selectedArea;
 	
+	private static final int TAB_TRAINING = 0, TAB_MOVEMENTS = 1, TAB_CONSTRUCTIONS = 2, TAB_ADMINISTRATION = 3, TAB_INFORMATION = 4;
+	private int currentTab = TAB_TRAINING;
+	
 	//sounds
 	private Sound click;
 	
@@ -72,6 +75,7 @@ public class WorldMapScreen extends Scene2DScreen {
 	public void setSelectedArea(Area selectedArea) {
 		this.selectedArea = selectedArea;
 		ui.location.setText("In " + selectedArea.getName());
+		showTab(currentTab);
 	}
 	
 	@Override
@@ -318,7 +322,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		trainingTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTrainingTab();
+				showTab(TAB_TRAINING);
 			}
 		});
 		buttons.add(trainingTabButton).size(50, 67).row();		
@@ -327,7 +331,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		movementTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showMovementsTab();
+				showTab(TAB_MOVEMENTS);
 			}
 		});
 		buttons.add(movementTabButton).size(50, 67).row();
@@ -336,7 +340,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		constructionTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showConstructionsTab();
+				showTab(TAB_CONSTRUCTIONS);
 			}
 		});
 		buttons.add(constructionTabButton).size(50, 67).row();
@@ -345,7 +349,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		informationTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInformationTab();
+				showTab(TAB_INFORMATION);
 			}
 		});
 		buttons.add(informationTabButton).size(50, 67).row();
@@ -354,7 +358,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		administrationTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showAdministrationTab();
+				showTab(TAB_ADMINISTRATION);
 			}
 		});
 		buttons.add(administrationTabButton).size(50, 67).row();
@@ -378,6 +382,35 @@ public class WorldMapScreen extends Scene2DScreen {
 		right.addActor(ui.info);
 		
 		return main;
+	}
+	
+	/**
+	 * 
+	 * @param tab to set to {@value #TAB_TRAINING}, {@value #TAB_MOVEMENTS}, {@value #TAB_CONSTRUCTIONS}, {@value #TAB_ADMINISTRATION} or {@value #TAB_INFORMATION}.
+	 */
+	private void showTab(int tab) {
+		if(tab == TAB_TRAINING || tab == TAB_MOVEMENTS || tab == TAB_CONSTRUCTIONS || tab == TAB_ADMINISTRATION || tab == TAB_INFORMATION) {
+			currentTab = tab;
+			switch(currentTab) {
+			case TAB_TRAINING:
+				showTrainingTab();
+				break;
+			case TAB_MOVEMENTS:
+				showMovementsTab();
+				break;
+			case TAB_CONSTRUCTIONS:
+				showConstructionsTab();
+				break;
+			case TAB_ADMINISTRATION:
+				showAdministrationTab();
+				break;
+			case TAB_INFORMATION:
+				showInformationTab();
+				break;
+			}
+		}else {
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	private void showTrainingTab() {
@@ -418,7 +451,6 @@ public class WorldMapScreen extends Scene2DScreen {
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
 					if(((Boolean)evt.getNewValue()) == true) {
-						//trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 						trainButton.setDisabled(true);
 					}
 				}
@@ -427,7 +459,6 @@ public class WorldMapScreen extends Scene2DScreen {
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
 					if(((Boolean)evt.getNewValue()) == true) {
-						//trainButton.getStyle().imageDisabled = null;
 						trainButton.setDisabled(false);
 					}
 				}
@@ -521,6 +552,9 @@ public class WorldMapScreen extends Scene2DScreen {
 		clearTabContainer();
 		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-construction"));
 		
+		Image minimap = new Image( assetHelper.getDrawable(selectedArea.getMinimapImage()) );
+		minimap.setPosition(60, 190);
+		getTabContainer().addActor(minimap);
 	}
 	
 	private void showInformationTab() {
@@ -592,7 +626,8 @@ public class WorldMapScreen extends Scene2DScreen {
 		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
 		style.up = assetHelper.getDrawable(stylePrefixName + name);
 		style.down = assetHelper.getDrawable(stylePrefixName + name + "-click");
-		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
+		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");	
+		style.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		return style;
 	}
