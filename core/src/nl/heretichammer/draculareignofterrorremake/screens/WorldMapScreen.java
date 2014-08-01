@@ -402,7 +402,9 @@ public class WorldMapScreen extends Scene2DScreen {
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					startSound.play();
+					if(!trainButton.isDisabled()) {
+						startSound.play();
+					}
 				}
 			});
 			trainButton.addListener(new ClickListener() {
@@ -495,15 +497,23 @@ public class WorldMapScreen extends Scene2DScreen {
 	}
 	
 	private void showMovementsTab() {
+		final int COLUMN_MAX = 4;
 		clearTabContainer();
 		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-movement"));
 		Table troopsTable = new Table();
-		troopsTable.setPosition(40, 305);
+		troopsTable.setPosition(15, 315);
+		troopsTable.left().top();
 		getTabContainer().addActor(troopsTable);
 		
+		int column = 0;
 		for(Troop troop : selectedArea.getTroops()) {
+			column++;
 			ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
-			troopsTable.add(button);
+			troopsTable.add(button).width(42).center();
+			if(column == COLUMN_MAX) {
+				troopsTable.row();
+				column = 0;
+			}
 		}
 	}
 	
