@@ -31,6 +31,10 @@ public class Troop implements Teamable {
 		return size;
 	}
 	
+	public String getUnitName() {
+		return units.get(0).getName();
+	}
+	
 	public static class TroopModel {
 		public String name;
 		public String unitName;
@@ -45,5 +49,10 @@ public class Troop implements Teamable {
 	public void setTeam(Team team) {
 		this.team = team;
 		team.addTroop(this);
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

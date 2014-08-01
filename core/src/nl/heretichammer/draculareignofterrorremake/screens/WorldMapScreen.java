@@ -13,6 +13,7 @@ import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
 import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.team.Player;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
+import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
@@ -89,9 +90,10 @@ public class WorldMapScreen extends Scene2DScreen {
 		skin = assetManager.get("uiskin.json", Skin.class);
 		stage.addActor(new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll")));//background
 		
-		Actor tab = createTab();
-		tab.setPosition(25, 50);
+		Actor tab = createTabPane();
+		tab.setPosition(25, 50);		
 		stage.addActor(tab);
+		showTrainingTab();
 
 		Actor map = createMap();
 		map.setPosition(280, 250);
@@ -145,7 +147,7 @@ public class WorldMapScreen extends Scene2DScreen {
 	private void updateUI() {
 		updateWeekUI();//set texts for week and year
 		updateResourcesUI();
-		
+		showTrainingTab();
 		//update training-buttons
 	}
 	
@@ -301,11 +303,12 @@ public class WorldMapScreen extends Scene2DScreen {
 		return areaGroup;
 	}
 	
-	private Actor createTab() {
+	private Actor createTabPane() {
 		Table main = new Table();
+		main.setName("tab.pane");
 		main.setHeight(400);
-		main.setBackground( assetHelper.getDrawable("images/council.pack:ui-tab-training") );
 		
+		//create tab-buttons
 		Table buttons = new Table(skin);
 		buttons.setSize(36, 400);
 		main.add(buttons).top().padTop(31);
@@ -315,7 +318,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		trainingTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("clicked");
+				showTrainingTab();
 			}
 		});
 		buttons.add(trainingTabButton).size(50, 67).row();		
@@ -324,7 +327,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		movementTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("clicked");
+				showMovementsTab();
 			}
 		});
 		buttons.add(movementTabButton).size(50, 67).row();
@@ -333,7 +336,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		constructionTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("clicked");
+				showConstructionsTab();
 			}
 		});
 		buttons.add(constructionTabButton).size(50, 67).row();
@@ -342,7 +345,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		informationTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("clicked");
+				showInformationTab();
 			}
 		});
 		buttons.add(informationTabButton).size(50, 67).row();
@@ -351,18 +354,40 @@ public class WorldMapScreen extends Scene2DScreen {
 		administrationTabButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("clicked");
+				showAdministrationTab();
 			}
 		});
 		buttons.add(administrationTabButton).size(50, 67).row();
 		
 		Group right = new Group();
+		right.setName("tab.container");
 		right.setSize(200, 400);
 		main.add(right);
+		main.pack();
+		
+		//add info labels
+		ui.location = new Label("In Fagaras", skin);
+		ui.location.setFontScale(0.8f);
+		ui.location.setPosition(55, 340);
+		right.addActor(ui.location);
+		
+		//ui.info
+		ui.info = new Label("", skin);
+		ui.info.setFontScale(0.8f);
+		ui.info.setPosition(15, 30);		
+		right.addActor(ui.info);
+		
+		return main;
+	}
+	
+	private void showTrainingTab() {
+		clearTabContainer();
+		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-training"));
 		
 		Table trainingTable = new Table(skin);
 		trainingTable.setPosition(97, 197);
-		right.addActor(trainingTable);
+		Group tabContrainer = (Group)stage.getRoot().findActor("tab.container");
+		tabContrainer.addActor(trainingTable);
 		
 		for(final TroopProducer troopProducer : selectedArea.troopProducerManager.getProducers()) {
 			Unit.UnitData unitData = troopProducer.getUnitData();
@@ -373,6 +398,7 @@ public class WorldMapScreen extends Scene2DScreen {
 			disposables.add(startSound);
 			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
+			trainButton.setDisabled(troopProducer.isStarted());
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -453,21 +479,50 @@ public class WorldMapScreen extends Scene2DScreen {
 			rangeCostLabel.setAlignment(Align.center);
 			trainingTable.add(rangeCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 		}
-		main.pack();
+	}
+	
+	private void clearTabContainer() {
+		getTabContainer().clear();
+	}
+	
+	private Group getTabContainer() {
+		return (Group)stage.getRoot().findActor("tab.container");
+	}
+	
+	private void setTabBackground(Drawable drawable) {
+		Table tabPane = (Table)stage.getRoot().findActor("tab.pane");
+		tabPane.setBackground(drawable);
+	}
+	
+	private void showMovementsTab() {
+		clearTabContainer();
+		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-movement"));
+		Table troopsTable = new Table();
+		troopsTable.setPosition(40, 305);
+		getTabContainer().addActor(troopsTable);
 		
-		//add info labels
-		ui.location = new Label("In Fagaras", skin);
-		ui.location.setFontScale(0.8f);
-		ui.location.setPosition(55, 340);
-		right.addActor(ui.location);
+		for(Troop troop : selectedArea.getTroops()) {
+			ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
+			troopsTable.add(button);
+		}
+	}
+	
+	private void showConstructionsTab() {
+		clearTabContainer();
+		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-construction"));
 		
-		//ui.info
-		ui.info = new Label("test", skin);
-		ui.info.setFontScale(0.8f);
-		ui.info.setPosition(15, 30);		
-		right.addActor(ui.info);
+	}
+	
+	private void showInformationTab() {
+		clearTabContainer();
+		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-information"));
 		
-		return main;
+	}
+	
+	private void showAdministrationTab() {
+		clearTabContainer();
+		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-administration"));
+		
 	}
 	
 	private Actor createResources() {
@@ -532,6 +587,17 @@ public class WorldMapScreen extends Scene2DScreen {
 		return style;
 	}
 	
+	private ImageButton.ImageButtonStyle createMovementImageButtonStyle(String name){
+		String stylePrefixName = "images/council.pack:ui-checkbox-";
+		
+		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+		style.up = assetHelper.getDrawable(stylePrefixName + name);
+		style.checked = assetHelper.getDrawable(stylePrefixName + name + "-selected");
+		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
+		
+		return style;
+	}
+	
 	private ImageButton.ImageButtonStyle createStyle(Area area){
 		boolean enemy = true;
 		if(area.getTeam().equals(player.getTeam())) {//if area has other team
@@ -576,29 +642,6 @@ public class WorldMapScreen extends Scene2DScreen {
 			Label currentFood, incomeFood;
 			Label currentMen, incomeMen;
 			Label currentArmy;
-		}
-		
-		private static final class Tabs {
-			//training
-			Training training = new Training();
-			
-			private static final class Training {
-				Table table;
-				Unit swordsmen,	crossbowsoldiers, knight, juggernaut, catapult, cannon, spy;
-				
-				private static final class Unit {
-					ImageButton button;
-					Label gold;
-					Label turns;
-					Image strenght, accurancy, defance, stamina, speed, range;
-				}
-				
-			}
-			
-			//movement
-			//construction
-			//information
-			//administration
 		}
 	}
 }

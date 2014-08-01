@@ -15,7 +15,7 @@ public class TroopProducerManager extends ProducerManager<TroopProducer> impleme
 	public final TroopProducer spyTroopProducer;
 	
 	public TroopProducerManager() {
-		producers.add( swordsmenTroopProducer = TroopProducerFactory.create("swordsmen") );
+		producers.add( swordsmenTroopProducer = TroopProducerFactory.create("swordsoldiers") );
 		producers.add( crossbowsoldierTroopProducer = TroopProducerFactory.create("crossbowsoldiers") );
 		producers.add( knightTroopProducer = TroopProducerFactory.create("knight") );
 		producers.add( juggernautTroopProducer = TroopProducerFactory.create("juggernaut") );

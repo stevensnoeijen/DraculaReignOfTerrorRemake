@@ -146,6 +146,11 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 		return done;
 	}
 	
+	@Override
+	public boolean isStarted() {
+		return started;
+	}
+	
 	private void setStarted(boolean started) {
 		boolean oldValue = this.started;
 		this.started = started;

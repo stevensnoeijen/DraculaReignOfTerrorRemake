@@ -18,6 +18,7 @@ public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E
 	 */
 	public E remove();
 	public boolean isDone();
+	public boolean isStarted();
 	
 	
 	public static class ProducerData {

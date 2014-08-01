@@ -40,6 +40,10 @@ public class Unit implements Cloneable, Teamable, Mappable {
 	public void setTeam(Team team) {
 		this.team = team;
 	}
+	
+	public String getName() {
+		return data.name;
+	}
 
 	@Override
 	public Team getTeam() {
