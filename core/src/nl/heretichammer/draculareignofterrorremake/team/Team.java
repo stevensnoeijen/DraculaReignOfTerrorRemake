@@ -13,7 +13,7 @@ import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 
 public class Team implements Turnable {
 	public static final Team NULL = new Team("", null);
-	//public static final Team NEUTRAL = new Team("Neutral", Color.WHITE);
+	public static final Team NEUTRAL = new Team("Neutral", TeamColor.WHITE);
 	
 	private String name;
 	private TeamColor color;
@@ -132,6 +132,6 @@ public class Team implements Turnable {
 	}*/
 	
 	public static enum TeamColor {
-		BLUE, RED
+		BLUE, RED, WHITE
 	}
 }

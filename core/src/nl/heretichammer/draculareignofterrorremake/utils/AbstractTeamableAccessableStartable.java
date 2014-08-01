@@ -1,7 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
@@ -13,10 +11,13 @@ import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
  */
 public abstract class AbstractTeamableAccessableStartable extends AbstractAccessableStartable implements Teamable {
 
-	private Team team;
+	private Team team = Team.NEUTRAL;
 
 	@Override
 	public void setTeam(Team team) {
+		if(team == null) {
+			throw new IllegalArgumentException();
+		}
 		this.team = team;
 	}
 
@@ -33,14 +34,6 @@ public abstract class AbstractTeamableAccessableStartable extends AbstractAccess
 	 * @return
 	 */
 	protected boolean isAccessable(String accessName) {
-		Team team = getTeam();
-		if(team != null) {
-			if(StringUtils.isEmpty(accessName)) {
-				return true;
-			}else {
-				return team.accessManager.isAccessable(accessName);
-			}			
-		}
-		return false;
+		return team.accessManager.isAccessable(accessName);		
 	}
 }

@@ -43,6 +43,6 @@ public class UnitFactory {
 			throw new RuntimeException(e);
 		}
 		
-		return units.items;
+		return units.toArray(Unit.class);
 	}
 }

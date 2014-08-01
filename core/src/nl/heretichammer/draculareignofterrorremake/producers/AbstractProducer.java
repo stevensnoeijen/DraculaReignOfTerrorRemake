@@ -1,20 +1,24 @@
 package nl.heretichammer.draculareignofterrorremake.producers;
 
+import nl.heretichammer.draculareignofterrorremake.GameObject;
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
-import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessableStartable;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-public abstract class AbstractProducer<P,D extends Producer.ProducerData> extends AbstractTeamableAccessableStartable implements Producer<P> {
+public abstract class AbstractProducer<P,D extends Producer.ProducerData> extends GameObject implements Producer<P> {
 	
-	protected D data;	
+	protected D data;
+	
+	protected boolean started, paused;
+	
 	protected ItemSupplier itemSupplier;
 	protected Consumer<P> consumer;
 	protected P produced;
 	protected int turn;
+	protected boolean done = false;
 	
 	public AbstractProducer(D data) {
 		this.data = data;
@@ -99,13 +103,10 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	/**
 	 * Only is started when the {@link #getCost()} is payed fully.
 	 */
-	@Override
 	public void start() {
-		if(isStartable()) {
-			boolean payed = pay();
-			if(payed) {//if paid
-				started = true;
-			}
+		boolean payed = pay();
+		if(payed) {//if paid
+			started = true;
 		}
 	}
 	
@@ -132,5 +133,10 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 		done = true;
 		started = false;
 		turn = 0;
+	}
+	
+	@Override
+	public boolean isDone() {
+		return done;
 	}
 }

@@ -8,5 +8,4 @@ public interface Startable {
 	public void unpause();
 	public boolean isStoppable();
 	public void stop();
-	public boolean isDone();
 }

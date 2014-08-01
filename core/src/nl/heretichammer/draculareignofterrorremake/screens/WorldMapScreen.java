@@ -127,14 +127,18 @@ public class WorldMapScreen extends Scene2DScreen {
 				click.play();
 				player.turnDone();
 				worldMap.turn();
-				updateWeekUI();
-				updateResourcesUI();
+				updateUI();
 			}
 		});
 		stage.addActor(waxButton);
-		
+		updateUI();
+	}
+	
+	private void updateUI() {
 		updateWeekUI();//set texts for week and year
 		updateResourcesUI();
+		
+		//update training-buttons
 	}
 	
 	@Override

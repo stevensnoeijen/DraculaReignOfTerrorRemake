@@ -12,6 +12,7 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 	protected D data;
 	private Upgrade[] upgrades;
 	private Upgrade next;
+	protected boolean done = false;
 	
 	public AbstractUpgrader(D data) {
 		this.data = data;
@@ -54,6 +55,10 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 		return upgrades[upgrades.length-1].getLevel();
 	}
 
+	public boolean isDone() {
+		return done;
+	}
+	
 	@Override
 	public Upgrade getNext() {
 		if(next == null || next.isDone()) {

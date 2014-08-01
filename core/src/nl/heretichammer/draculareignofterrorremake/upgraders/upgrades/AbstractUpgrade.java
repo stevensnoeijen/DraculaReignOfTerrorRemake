@@ -15,6 +15,7 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 	protected final D data;
 	private ItemSupplier itemSupplier;
 	private Upgrader upgrader;
+	private boolean done = false;
 	
 	public AbstractUpgrade(D data) {
 		this.data = data;
@@ -100,8 +101,7 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 	
 	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
-		return super.isDone();
+		return done;
 	}
 	
 	@Override

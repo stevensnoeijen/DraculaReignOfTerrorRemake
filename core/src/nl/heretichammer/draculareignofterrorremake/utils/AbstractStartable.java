@@ -8,7 +8,6 @@ public abstract class AbstractStartable implements Startable {
 	
 	protected boolean started = false;
 	protected boolean paused = false;
-	protected boolean done = false;
 	
 	@Override
 	public boolean isStartable() {
@@ -49,10 +48,5 @@ public abstract class AbstractStartable implements Startable {
 	@Override
 	public void unpause() {
 		paused = false;		
-	}
-	
-	@Override
-	public boolean isDone() {
-		return done;
 	}
 }

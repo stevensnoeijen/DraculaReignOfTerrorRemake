@@ -1,5 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.team.access;
 
+import org.apache.commons.lang3.StringUtils;
+
 import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
@@ -30,7 +32,11 @@ public class AccessManager implements Teamable {
 	 * @return
 	 */
 	public boolean isAccessable(String name){
-		return DRoTRGame.save.getBoolean("teams." + team.getName().toLowerCase() + ".accessibilities." +  name);
+		if(StringUtils.isEmpty(name)) {
+			return true;
+		}else {
+			return DRoTRGame.save.getBoolean("teams." + team.getName().toLowerCase() + ".accessibilities." +  name);
+		}
 	}
 	
 	public void putAccessable(String name, boolean value) {

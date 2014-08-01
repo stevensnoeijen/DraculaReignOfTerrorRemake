@@ -18,6 +18,7 @@ public interface Upgrade extends ItemSuppliable, Teamable, Accessible, Startable
 	public Item.ItemDescriptor[] getCost();
 	public int getTurnCost();
 	public void setUpgrader(Upgrader upgrader);
+	public boolean isDone();
 	
 	public static class UpgradeData {
 		public String name;
