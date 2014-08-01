@@ -7,7 +7,6 @@ import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumable;
 import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
-import nl.heretichammer.draculareignofterrorremake.utils.Startable;
 
 public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable, Turnable {
 	public Item.ItemDescriptor[] getCost();

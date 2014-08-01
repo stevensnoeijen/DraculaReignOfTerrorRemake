@@ -12,13 +12,13 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	
 	protected D data;
 	
-	protected boolean started, paused;
+	private boolean started;
 	
 	protected ItemSupplier itemSupplier;
 	protected Consumer<P> consumer;
 	protected P produced;
-	protected int turn;
-	protected boolean done = false;
+	private int turn = 0;
+	private boolean done = false;
 	
 	public AbstractProducer(D data) {
 		this.data = data;
@@ -106,7 +106,7 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	public void start() {
 		boolean payed = pay();
 		if(payed) {//if paid
-			started = true;
+			setStarted(true);
 		}
 	}
 	
@@ -120,7 +120,7 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 			start();
 		}		
 		if(started) {
-			turn++;
+			setTurn(turn + 1);
 			if(turn >= getTurnCost()) {
 				//if done
 				handleProduct();
@@ -130,13 +130,31 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	}
 	
 	private void done() {
-		done = true;
-		started = false;
-		turn = 0;
+		setDone(true);
+		setStarted(false);
+		setTurn(0);
+	}
+	
+	private void setDone(boolean done) {
+		boolean oldValue = this.done;
+		this.done = done;
+		firePropertyChange("done", oldValue, done);
 	}
 	
 	@Override
 	public boolean isDone() {
 		return done;
+	}
+	
+	private void setStarted(boolean started) {
+		boolean oldValue = this.started;
+		this.started = started;
+		firePropertyChange("started", oldValue, started);
+	}
+	
+	public void setTurn(int turn) {
+		int oldValue = this.turn;
+		this.turn = turn;
+		firePropertyChange("turn", oldValue, turn);
 	}
 }

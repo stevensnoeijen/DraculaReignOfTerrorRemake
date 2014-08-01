@@ -1,5 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
@@ -362,15 +365,32 @@ public class WorldMapScreen extends Scene2DScreen {
 			trainingTable.row();
 			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
-			//trainButton.setDisabled(!troopProducer.isStartable());
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					troopProducer.start();
 					updateResourcesUI();
-					trainButton.setDisabled(true);
 				}
 			});
+			troopProducer.addPropertyChangeListener("started", new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					if(((Boolean)evt.getNewValue()) == true) {
+						//trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+						trainButton.setDisabled(true);
+					}
+				}
+			});
+			troopProducer.addPropertyChangeListener("done", new PropertyChangeListener() {
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					if(((Boolean)evt.getNewValue()) == true) {
+						//trainButton.getStyle().imageDisabled = null;
+						trainButton.setDisabled(false);
+					}
+				}
+			});
+			
 			trainingTable.add(trainButton);
 			//label constants
 			final float FONTSCALE = 0.8f;
@@ -494,7 +514,6 @@ public class WorldMapScreen extends Scene2DScreen {
 		style.up = assetHelper.getDrawable(stylePrefixName + name);
 		style.down = assetHelper.getDrawable(stylePrefixName + name + "-click");
 		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
-		style.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		return style;
 	}

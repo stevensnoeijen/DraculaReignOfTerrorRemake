@@ -29,7 +29,7 @@ public abstract class GameObject implements Teamable, Turnable, Accessible {
 	}
 	
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-		PropertyChangeEvent event = new PropertyChangeEvent(null, propertyName, oldValue, newValue);
+		PropertyChangeEvent event = new PropertyChangeEvent(this, propertyName, oldValue, newValue);
 		//fist call listeners with propertyName
 		if( listeners.containsKey(propertyName) ) {
 			for(PropertyChangeListener propertyChangeListener : listeners.get(propertyName)) {

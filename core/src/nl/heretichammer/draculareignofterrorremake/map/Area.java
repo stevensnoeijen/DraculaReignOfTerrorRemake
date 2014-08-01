@@ -39,6 +39,7 @@ public class Area implements Teamable, ItemSupplier, Turnable {
 		troopProducerManager.setConsumer(new Consumer<Troop>() {
 			@Override
 			public void consume(Troop troop) {
+				troop.setTeam(team);
 				troops.add(troop);
 			}
 		});
