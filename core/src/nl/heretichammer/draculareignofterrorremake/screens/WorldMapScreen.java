@@ -7,6 +7,7 @@ import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
+import nl.heretichammer.draculareignofterrorremake.buildings.Building;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
 import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
@@ -548,13 +549,71 @@ public class WorldMapScreen extends Scene2DScreen {
 		}
 	}
 	
+	private Building selectedBuilding = null;
+	private Building.BuildingType selectedBuildingType;
+	private int selectedBuildingLevel;
+	
 	private void showConstructionsTab() {
 		clearTabContainer();
 		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-construction"));
+		final Group tabContainer = getTabContainer();
 		
+		//minimap
 		Image minimap = new Image( assetHelper.getDrawable(selectedArea.getMinimapImage()) );
 		minimap.setPosition(60, 190);
-		getTabContainer().addActor(minimap);
+		tabContainer.addActor(minimap);
+		
+		//repair, upgrade and build-buttons
+		ImageButton repairButton, upgradeButton, buildButton;
+		ImageButton.ImageButtonStyle imageButtonStyle;
+		
+		//repairButton
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-repair");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-repair-click");
+		repairButton = new ImageButton(imageButtonStyle);
+		repairButton.setPosition(6, 250);
+		repairButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+			}
+		});
+		tabContainer.addActor(repairButton);
+		
+		//upgradeButton
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade-click");
+		upgradeButton = new ImageButton(imageButtonStyle);
+		upgradeButton.setPosition(6, 218);
+		upgradeButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+			}
+		});
+		tabContainer.addActor(upgradeButton);
+		
+		//buildButton
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-build");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-build-click");
+		buildButton = new ImageButton(imageButtonStyle);
+		buildButton.setPosition(6, 186);
+		buildButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+			}
+		});
+		tabContainer.addActor(buildButton);
+		
+		ImageButton bridgeButton, towerButton, castleButton, castle2Button;
+		
+		ImageButton number1Button, number2Button, number3Button, number4Button, number5Button, number6Button;
+		
+		Image buildingPreview;
 	}
 	
 	private void showInformationTab() {
