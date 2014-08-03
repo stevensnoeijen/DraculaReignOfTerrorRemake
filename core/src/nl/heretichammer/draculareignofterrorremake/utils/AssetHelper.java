@@ -3,16 +3,24 @@ package nl.heretichammer.draculareignofterrorremake.utils;
 import nl.heretichammer.draculareignofterrorremake.constants.Constants;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
 public class AssetHelper {
+	/**
+	 * A empty drawable, used when the disabled image is in the background.
+	 */
+	public static Drawable EMPTY = new SpriteDrawable( new Sprite( new Texture(1, 1, Pixmap.Format.Alpha) ) );
+	
 	private AssetManager assetManager;
 	
 	public AssetHelper(AssetManager assetManager) {

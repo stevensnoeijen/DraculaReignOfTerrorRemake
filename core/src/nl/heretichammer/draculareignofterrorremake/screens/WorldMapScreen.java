@@ -8,6 +8,7 @@ import java.util.List;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.buildings.Building;
+import nl.heretichammer.draculareignofterrorremake.buildings.Building.BuildingType;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.map.World;
 import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
@@ -550,8 +551,23 @@ public class WorldMapScreen extends Scene2DScreen {
 	}
 	
 	private Building selectedBuilding = null;
-	private Building.BuildingType selectedBuildingType;
 	private int selectedBuildingLevel;
+	public static final int CONSTRUCTIONMODE_REPAIR = 1, CONSTRUCTIONMODE_UPGRADE = 2, CONSTRUCTIONMODE_BUILD = 3;
+	private int constructionMode = CONSTRUCTIONMODE_REPAIR;
+	private Building.BuildingType selectedBuildingType = BuildingType.BRIDGE;
+	private boolean selectedBuildingTypeWithMoat = false;
+	
+	private void setConstructionMode(int constructionMode) {
+		if( constructionMode == CONSTRUCTIONMODE_REPAIR || constructionMode == CONSTRUCTIONMODE_UPGRADE || constructionMode == CONSTRUCTIONMODE_BUILD ) {
+			this.constructionMode = constructionMode;
+			showConstructionsTab();
+		}
+	}
+	
+	private void setSelectedBuildingType(BuildingType selectedBuildingType) {
+		this.selectedBuildingType = selectedBuildingType;
+		showConstructionsTab();
+	}
 	
 	private void showConstructionsTab() {
 		clearTabContainer();
@@ -571,12 +587,13 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-repair");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-repair-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		repairButton = new ImageButton(imageButtonStyle);
 		repairButton.setPosition(6, 250);
 		repairButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				
+				setConstructionMode(CONSTRUCTIONMODE_REPAIR);
 			}
 		});
 		tabContainer.addActor(repairButton);
@@ -585,12 +602,13 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		upgradeButton = new ImageButton(imageButtonStyle);
 		upgradeButton.setPosition(6, 218);
 		upgradeButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				
+				setConstructionMode(CONSTRUCTIONMODE_UPGRADE);
 			}
 		});
 		tabContainer.addActor(upgradeButton);
@@ -599,19 +617,85 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-build");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-build-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		buildButton = new ImageButton(imageButtonStyle);
 		buildButton.setPosition(6, 186);
 		buildButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				
+				setConstructionMode(CONSTRUCTIONMODE_BUILD);
 			}
 		});
 		tabContainer.addActor(buildButton);
 		
+		//building-buttons
 		ImageButton bridgeButton, towerButton, castleButton, castle2Button;
 		
+		//bridge-button
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-bridge");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-bridge-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
+		bridgeButton = new ImageButton(imageButtonStyle);
+		bridgeButton.setPosition(10, 147);
+		bridgeButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				setSelectedBuildingType(BuildingType.BRIDGE);
+			}
+		});
+		tabContainer.addActor(bridgeButton);
+		
+		//tower-button
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-tower");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-tower-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
+		towerButton = new ImageButton(imageButtonStyle);
+		towerButton.setPosition(55, 147);
+		towerButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				setSelectedBuildingType(BuildingType.TOWER);
+			}
+		});
+		tabContainer.addActor(towerButton);
+		
+		//castle-button
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-castle");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-castle-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
+		castleButton = new ImageButton(imageButtonStyle);
+		castleButton.setPosition(100, 147);
+		castleButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				setSelectedBuildingType(BuildingType.CASTLE);
+			}
+		});
+		tabContainer.addActor(castleButton);
+		
+		//castle2-button
+		imageButtonStyle = new ImageButton.ImageButtonStyle();
+		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-castle2");
+		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-castle2-click");
+		imageButtonStyle.disabled = AssetHelper.EMPTY;
+		castle2Button = new ImageButton(imageButtonStyle);
+		castle2Button.setPosition(145, 147);
+		castle2Button.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				selectedBuildingTypeWithMoat = true;
+				setSelectedBuildingType(BuildingType.CASTLE);
+				
+			}
+		});
+		tabContainer.addActor(castle2Button);
+		
+		//number-buttons
 		ImageButton number1Button, number2Button, number3Button, number4Button, number5Button, number6Button;
+		
 		
 		Image buildingPreview;
 	}
