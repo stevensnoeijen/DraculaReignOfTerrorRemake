@@ -1,8 +1,11 @@
 package nl.heretichammer.draculareignofterrorremake.data;
 
+import nl.heretichammer.draculareignofterrorremake.buildings.Building;
+import nl.heretichammer.draculareignofterrorremake.buildings.Building.BuildingType;
 import nl.heretichammer.draculareignofterrorremake.data.factories.AccessUpgradeDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.AreaDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.BlockItemContainerDataFactory;
+import nl.heretichammer.draculareignofterrorremake.data.factories.BuildingDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.ItemDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.ItemProducerDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.TroopProducerDataFactory;
@@ -68,5 +71,10 @@ public class DataManager {
 	//units
 	public Unit.UnitData getUnitData(String name){
 		return UnitDataFactory.instance.fromFile(name);
+	}
+	
+	//buildings
+	public Building.BuildingData getBuildingData(String name, int level){
+		return BuildingDataFactory.instance.fromFile(name + "-" + level);
 	}
 }

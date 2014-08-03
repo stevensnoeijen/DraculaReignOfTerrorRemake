@@ -19,6 +19,7 @@ public class Building {
 		public Item.ItemDescriptor[] upgradeCost;
 		public String previewImage;
 		public String mapIconImage;
+		public String buildMapIconImage;
 	}
 	
 	public static enum BuildingType {
