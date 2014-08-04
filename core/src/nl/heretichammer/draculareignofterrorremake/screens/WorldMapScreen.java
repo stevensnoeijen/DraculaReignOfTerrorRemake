@@ -33,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -587,6 +588,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-repair");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-repair-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		repairButton = new ImageButton(imageButtonStyle);
 		repairButton.setPosition(6, 250);
@@ -602,6 +604,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		upgradeButton = new ImageButton(imageButtonStyle);
 		upgradeButton.setPosition(6, 218);
@@ -617,6 +620,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-build");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-build-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		buildButton = new ImageButton(imageButtonStyle);
 		buildButton.setPosition(6, 186);
@@ -635,6 +639,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-bridge");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-bridge-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		bridgeButton = new ImageButton(imageButtonStyle);
 		bridgeButton.setPosition(10, 145);
@@ -650,6 +655,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-tower");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-tower-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		towerButton = new ImageButton(imageButtonStyle);
 		towerButton.setPosition(55, 145);
@@ -665,6 +671,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-castle");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-castle-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		castleButton = new ImageButton(imageButtonStyle);
 		castleButton.setPosition(100, 145);
@@ -680,6 +687,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
 		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-castle2");
 		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-castle2-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		castle2Button = new ImageButton(imageButtonStyle);
 		castle2Button.setPosition(145, 145);
@@ -794,7 +802,63 @@ public class WorldMapScreen extends Scene2DScreen {
 	private void showAdministrationTab() {
 		clearTabContainer();
 		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-administration"));
+		final Group tabContainer = getTabContainer();
 		
+		ImageButton.ImageButtonStyle upgradeButtonStyle = new ImageButton.ImageButtonStyle();
+		upgradeButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2");
+		upgradeButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2-click");
+		upgradeButtonStyle.disabled = AssetHelper.EMPTY;
+		upgradeButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		
+		//armament
+		Image armamentImage = new Image( assetHelper.getDrawable("images/council.pack:upgrade-armament-1") );
+		armamentImage.setPosition(5, 195);
+		tabContainer.addActor(armamentImage);
+		ImageButton armamentUpgradeButton = new ImageButton(upgradeButtonStyle);
+		armamentUpgradeButton.addListener(new ClickListener() {
+			
+		});
+		armamentUpgradeButton.setPosition(120, 195);
+		tabContainer.addActor(armamentUpgradeButton);
+		Label armamentUpgradeGoldCostLabel = new Label("150", skin);
+		armamentUpgradeGoldCostLabel.setFontScale(0.75f);
+		armamentUpgradeGoldCostLabel.setAlignment(Align.center);
+		armamentUpgradeGoldCostLabel.setPosition(130, 240);
+		tabContainer.addActor(armamentUpgradeGoldCostLabel);
+		Label armamentUpgradeTurnCostLabel = new Label("7", skin);
+		armamentUpgradeTurnCostLabel.setFontScale(0.75f);
+		armamentUpgradeTurnCostLabel.setAlignment(Align.center);
+		armamentUpgradeTurnCostLabel.setPosition(160, 240);
+		tabContainer.addActor(armamentUpgradeTurnCostLabel);
+		Label armamentLevelLabel = new Label("1/6", skin);
+		armamentLevelLabel.setFontScale(0.8f);
+		armamentLevelLabel.setPosition(90, 307);
+		tabContainer.addActor(armamentLevelLabel);
+		
+		//architecture
+		Image architectureImage = new Image( assetHelper.getDrawable("images/council.pack:upgrade-architecture-1") );
+		architectureImage.setPosition(5, 60);
+		tabContainer.addActor(architectureImage);
+		ImageButton architectureUpgradeButton = new ImageButton(upgradeButtonStyle);
+		architectureUpgradeButton.addListener(new ClickListener() {
+		
+		});
+		architectureUpgradeButton.setPosition(120, 65);
+		tabContainer.addActor(architectureUpgradeButton);
+		Label architectureUpgradeGoldCostLabel = new Label("200", skin);
+		architectureUpgradeGoldCostLabel.setFontScale(0.75f);
+		architectureUpgradeGoldCostLabel.setAlignment(Align.center);
+		architectureUpgradeGoldCostLabel.setPosition(130, 105);
+		tabContainer.addActor(architectureUpgradeGoldCostLabel);
+		Label architectureUpgradeTurnCostLabel = new Label("8", skin);
+		architectureUpgradeTurnCostLabel.setFontScale(0.75f);
+		architectureUpgradeTurnCostLabel.setAlignment(Align.center);
+		architectureUpgradeTurnCostLabel.setPosition(160, 105);
+		tabContainer.addActor(architectureUpgradeTurnCostLabel);
+		Label architectureLevelLabel = new Label("1/5", skin);
+		architectureLevelLabel.setFontScale(0.8f);
+		architectureLevelLabel.setPosition(90, 175);
+		tabContainer.addActor(architectureLevelLabel);
 	}
 	
 	private Actor createResources() {
