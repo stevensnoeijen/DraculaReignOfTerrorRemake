@@ -11,7 +11,7 @@ import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
  */
 public abstract class AbstractTeamableAccessableStartable extends AbstractAccessableStartable implements Teamable {
 
-	private Team team = Team.NEUTRAL;
+	private Team team = Team.NULL;
 
 	@Override
 	public void setTeam(Team team) {

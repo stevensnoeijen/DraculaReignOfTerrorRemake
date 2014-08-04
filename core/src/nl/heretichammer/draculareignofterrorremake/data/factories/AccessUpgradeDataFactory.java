@@ -8,7 +8,7 @@ public class AccessUpgradeDataFactory extends AbstractDataFactory<AccessUpgrade.
 	
 	@Override
 	public AccessUpgrade.AccessUpgradeData fromFile(String name) {
-		return get(String.format("data/upgrader/upgrades/%s.json", name), AccessUpgrade.AccessUpgradeData.class);
+		return get(String.format("data/upgraders/upgrades/%s.json", name), AccessUpgrade.AccessUpgradeData.class);
 	}
 
 }

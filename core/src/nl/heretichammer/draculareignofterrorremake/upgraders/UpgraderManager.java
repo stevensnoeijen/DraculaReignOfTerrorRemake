@@ -10,4 +10,13 @@ public class UpgraderManager extends AbstractUpgraderManager {
 		upgraders.add( architecture = UpgraderFactory.create("architecture") ); 
 		upgraders.add( armament = UpgraderFactory.create("armament") );
 	}
+
+	public Upgrader getUpgrader(String name) {
+		for(Upgrader upgrader : upgraders) {
+			if(upgrader.getName().equals(name)) {
+				return upgrader;
+			}
+		}
+		return null;
+	}
 }

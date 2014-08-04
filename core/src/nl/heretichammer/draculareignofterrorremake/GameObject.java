@@ -13,7 +13,7 @@ import com.google.common.collect.Multimap;
 
 public abstract class GameObject implements Teamable, Turnable, Accessible {
 	
-	private Team team = Team.NEUTRAL;
+	private Team team = Team.NULL;
 	private Multimap<String, PropertyChangeListener> listeners = LinkedListMultimap.create();
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {

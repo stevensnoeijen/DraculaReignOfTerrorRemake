@@ -1,8 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.team;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
@@ -10,16 +12,20 @@ import nl.heretichammer.draculareignofterrorremake.tbs.TurnManager;
 import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
+import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
+import nl.heretichammer.draculareignofterrorremake.upgraders.UpgraderManager;
 
 public class Team implements Turnable {
-	public static final Team NULL = new Team("", null);
-	public static final Team NEUTRAL = new Team("Neutral", TeamColor.WHITE);
+	public static final Team NULL = new Team();
 	
 	private String name;
 	private TeamColor color;
 	private List<Area> ownedAreas = new ArrayList<Area>();
 	private List<Troop> troops = new LinkedList<Troop>();
 	private List<Player> players = new LinkedList<Player>();
+	private UpgraderManager upgraderManager;
+	
+	private Map<String, String> properties = new HashMap<String, String>();
 	
 	//public final properties
 	public final AccessManager accessManager;
@@ -28,15 +34,13 @@ public class Team implements Turnable {
 		this();
 		this.name = name;
 		this.color = color;
+		upgraderManager = new UpgraderManager();
+		upgraderManager.setTeam(this);
 	}
 	
-	/**
-	 * For json
-	 */
-	public Team(){
+	private Team(){
 		accessManager = new AccessManager();//this can give problems with the saver?
 		accessManager.setTeam(this);
-		//accessManager.load();
 	}
 	
 	/**
@@ -121,6 +125,14 @@ public class Team implements Turnable {
 			area.turn();
 		}
 		TurnManager.instance.done(this);
+	}
+	
+	public Map<String, String> getProperties() {
+		return properties;
+	}
+	
+	public Upgrader getUpgrader(String name) {
+		return upgraderManager.getUpgrader(name);
 	}
 
 	/**

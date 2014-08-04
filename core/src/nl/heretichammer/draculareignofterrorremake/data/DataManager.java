@@ -1,7 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.data;
 
 import nl.heretichammer.draculareignofterrorremake.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.buildings.Building.BuildingType;
 import nl.heretichammer.draculareignofterrorremake.data.factories.AccessUpgradeDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.AreaDataFactory;
 import nl.heretichammer.draculareignofterrorremake.data.factories.BlockItemContainerDataFactory;
