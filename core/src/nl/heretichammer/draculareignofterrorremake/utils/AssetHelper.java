@@ -3,12 +3,13 @@ package nl.heretichammer.draculareignofterrorremake.utils;
 import nl.heretichammer.draculareignofterrorremake.constants.Constants;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -72,5 +73,9 @@ public class AssetHelper {
 	
 	public Animation getAnimation(String name) {
 		return new Animation(0.1f, getAtlasRegions(name), PlayMode.LOOP_REVERSED);
+	}
+
+	public Sound getSound(String name) {
+		return assetManager.get(String.format("sounds/%s.ogg", name), Sound.class);
 	}
 }

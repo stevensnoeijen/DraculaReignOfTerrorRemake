@@ -10,6 +10,7 @@ import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 
 public interface Producer<E> extends Accessible, Teamable, Consumable<Consumer<E>>, ItemSuppliable, Turnable {
 	public Item.ItemDescriptor[] getCost();
+	public boolean canPay();
 	public Item.ItemDescriptor findCost(String name);
 	
 	/**

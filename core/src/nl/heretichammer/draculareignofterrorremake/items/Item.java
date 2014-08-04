@@ -1,11 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.items;
 
-import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 import nl.heretichammer.draculareignofterrorremake.items.consumables.Consumable;
 import nl.heretichammer.draculareignofterrorremake.items.containers.ItemContainer;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 
-public interface Item {
+public interface Item extends Cloneable {
 	public String getName();
 	public String getCategory();
 	public String getDescription();

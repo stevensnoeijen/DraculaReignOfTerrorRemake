@@ -35,7 +35,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -90,6 +89,8 @@ public class WorldMapScreen extends Scene2DScreen {
 		assetManager.load("uiskin.json", Skin.class);
 		assetManager.load("sounds/click.ogg", Sound.class);
 		assetManager.load("music/council2.mp3", Music.class);
+		assetManager.load("sounds/upgrading armerment.ogg", Sound.class);
+		assetManager.load("sounds/upgrading architecture.ogg", Sound.class);
 		assetManager.finishLoading();
 		
 		click = assetManager.get("sounds/click.ogg", Sound.class);
@@ -431,14 +432,19 @@ public class WorldMapScreen extends Scene2DScreen {
 		
 		for(final TroopProducer troopProducer : selectedArea.troopProducerManager.getProducers()) {
 			Unit.UnitData unitData = troopProducer.getUnitData();
-			
 			trainingTable.row();
 			
 			final Sound startSound = Gdx.audio.newSound(Gdx.files.internal(troopProducer.getStartSound()));
 			disposables.add(startSound);
 			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
-			trainButton.setDisabled(troopProducer.isStarted());
+			if(troopProducer.isStarted()) {
+				trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");//add hourglass
+				trainButton.setDisabled(true);
+			}else if(!troopProducer.canPay()) {
+				trainButton.setDisabled(true);//only disable
+			}
+			
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -458,7 +464,10 @@ public class WorldMapScreen extends Scene2DScreen {
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
 					if(((Boolean)evt.getNewValue()) == true) {
+						trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 						trainButton.setDisabled(true);
+					}else {//false
+						//trainButton.getStyle().imageDisabled = null;
 					}
 				}
 			});
@@ -820,12 +829,21 @@ public class WorldMapScreen extends Scene2DScreen {
 		final Upgrader armamentUpgrader = team.getUpgrader("armament");
 		Upgrade currentArmamentUpgrade = armamentUpgrader.getCurrent();
 		final Upgrade nextArmamentUpgrade = armamentUpgrader.getNext();
+		nextArmamentUpgrade.setItemSupplier(selectedArea);
 		Image armamentImage = new Image( assetHelper.getDrawable( currentArmamentUpgrade.getImage() ) );
 		armamentImage.setPosition(5, 195);
 		tabContainer.addActor(armamentImage);
 		ImageButton armamentUpgradeButton = new ImageButton(upgradeButtonStyle);
+		if(!nextArmamentUpgrade.canPay()) {
+			armamentUpgradeButton.setVisible(false);//disabled
+		}
 		armamentUpgradeButton.addListener(new ClickListener() {
-						
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				nextArmamentUpgrade.start();
+				assetHelper.getSound("upgrading armerment").play();
+				((Button)event.getTarget()).setDisabled(true);
+			}
 		});
 		armamentUpgradeButton.setPosition(120, 195);
 		tabContainer.addActor(armamentUpgradeButton);
@@ -848,12 +866,21 @@ public class WorldMapScreen extends Scene2DScreen {
 		final Upgrader architectureUpgrader = team.getUpgrader("architecture");
 		Upgrade currentArchitectureUpgrade = architectureUpgrader.getCurrent();
 		final Upgrade nextArchitectureUpgrade = architectureUpgrader.getNext();
+		nextArchitectureUpgrade.setItemSupplier(selectedArea);
 		Image architectureImage = new Image( assetHelper.getDrawable( currentArchitectureUpgrade.getImage() ) );
 		architectureImage.setPosition(5, 60);
 		tabContainer.addActor(architectureImage);
 		ImageButton architectureUpgradeButton = new ImageButton(upgradeButtonStyle);
+		if(!nextArchitectureUpgrade.canPay()) {
+			architectureUpgradeButton.setVisible(false);//disabled
+		}
 		architectureUpgradeButton.addListener(new ClickListener() {
-		
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				nextArchitectureUpgrade.start();
+				assetHelper.getSound("upgrading architecture").play();
+				((Button)event.getTarget()).setDisabled(true);
+			}
 		});
 		architectureUpgradeButton.setPosition(120, 65);
 		tabContainer.addActor(architectureUpgradeButton);
@@ -931,7 +958,6 @@ public class WorldMapScreen extends Scene2DScreen {
 		style.up = assetHelper.getDrawable(stylePrefixName + name);
 		style.down = assetHelper.getDrawable(stylePrefixName + name + "-click");
 		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");	
-		style.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		return style;
 	}
@@ -965,6 +991,7 @@ public class WorldMapScreen extends Scene2DScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
+		assetManager.dispose();
 		click.dispose();
 		music.dispose();
 		for(Disposable disposable : disposables) {

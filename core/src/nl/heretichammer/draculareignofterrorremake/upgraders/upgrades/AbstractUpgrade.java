@@ -68,6 +68,11 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	public int getTurnCost() {
 		return data.turnCost;
 	}
+	
+	@Override
+	public boolean canPay() {
+		return itemSupplier.hasItems(data.cost);
+	}
 
 	private boolean pay() {
 		return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty

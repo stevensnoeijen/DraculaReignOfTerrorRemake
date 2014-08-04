@@ -1,6 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.items;
 
-import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
 
 public abstract class AbstractItem<D extends Item.ItemData> implements Item{
@@ -109,8 +108,7 @@ public abstract class AbstractItem<D extends Item.ItemData> implements Item{
 				removed.amount = amount;
 				return removed;
 			} catch (CloneNotSupportedException ex) {
-				DRoTR.log(ex);
-				return null;
+				throw new RuntimeException(ex);
 			}
 		}else
 			return null;

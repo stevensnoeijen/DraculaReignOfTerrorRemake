@@ -6,7 +6,6 @@ import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.items.Lock;
-import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
 
 public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockItemContainerData> {
 	private List<Item> items;
@@ -134,7 +133,12 @@ public class BlockItemContainer extends ItemContainer<BlockItemContainer.BlockIt
 	public Item removeItem(ItemDescriptor itemDescriptor) {
 		for(Item item : items) {
 			if(item.is(itemDescriptor)) {
-				return item;
+				if(item.getAmount() == itemDescriptor.amount) {//if item is required amount
+					remove(item);//remove item
+					return item;
+				}else {
+					return item.remove(itemDescriptor.amount);
+				}
 			}
 		}
 		return null;

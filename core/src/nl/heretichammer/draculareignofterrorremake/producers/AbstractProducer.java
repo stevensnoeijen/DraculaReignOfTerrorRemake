@@ -162,4 +162,9 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 		this.turn = turn;
 		firePropertyChange("turn", oldValue, turn);
 	}
+	
+	@Override
+	public boolean canPay() {
+		return itemSupplier.hasItems(data.cost);
+	}
 }

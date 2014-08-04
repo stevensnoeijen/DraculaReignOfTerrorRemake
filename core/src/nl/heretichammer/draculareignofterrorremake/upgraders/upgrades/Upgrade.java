@@ -15,6 +15,7 @@ import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 public interface Upgrade extends ItemSuppliable, Teamable, Accessible, Turnable {
 	public String getName();
 	public int getLevel();
+	public boolean canPay();
 	public Item.ItemDescriptor[] getCost();
 	public Item.ItemDescriptor getCost(String name);
 	public int getTurnCost();
