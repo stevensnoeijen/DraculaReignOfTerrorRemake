@@ -1,6 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.upgraders;
 
-import nl.heretichammer.draculareignofterrorremake.exceptions.DataDoesNotExistsException;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.upgraders.upgrades.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.upgraders.upgrades.UpgradeFactory;
@@ -79,10 +78,8 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 	 */
 	private void next() {
 		for(Upgrade upgrade : upgrades) {
-			if(upgrade == null) {
-				throw new DataDoesNotExistsException();//array whould be filled
-			}
 			if(!upgrade.isDone()) {//sets to upgrade that is not done yet
+				current = next;
 				next = upgrade;
 				break;//for
 			}

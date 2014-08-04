@@ -19,6 +19,9 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	
 	public AbstractUpgrade(D data) {
 		this.data = data;
+		if(data.turnCost == 0) {
+			done = true;
+		}
 	}
 	
 	@Override
@@ -85,11 +88,9 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	 */
 	@Override
 	public void start() {
-		if(isStartable()) {//TODO: almost the same as AbstractProducer#start() maybe combine?
-			boolean payed = pay();
-			if(payed) {
-				started = true;
-			}
+		boolean payed = pay();
+		if(payed) {
+			started = true;
 		}
 	}
 	
@@ -129,20 +130,6 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 		this.turn = turn;
 		firePropertyChange("turn", oldValue, turn);
 	}
-	
-	/**
-if(!started && isAutoStart()) {
-			start();
-		}		
-		if(started) {
-			setTurn(turn + 1);
-			if(turn >= getTurnCost()) {
-				//if done
-				handleProduct();
-				done();
-			}
-		}
-	 */
 	
 	@Override
 	public void turn() {

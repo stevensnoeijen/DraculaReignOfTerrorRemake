@@ -818,7 +818,6 @@ public class WorldMapScreen extends Scene2DScreen {
 		final Group tabContainer = getTabContainer();
 		final Team team = selectedArea.getTeam();
 		
-		
 		ImageButton.ImageButtonStyle upgradeButtonStyle = new ImageButton.ImageButtonStyle();
 		upgradeButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2");
 		upgradeButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2-click");
@@ -834,7 +833,9 @@ public class WorldMapScreen extends Scene2DScreen {
 		armamentImage.setPosition(5, 195);
 		tabContainer.addActor(armamentImage);
 		ImageButton armamentUpgradeButton = new ImageButton(upgradeButtonStyle);
-		if(!nextArmamentUpgrade.canPay()) {
+		if(nextArmamentUpgrade.isStarted()) {
+			armamentUpgradeButton.setDisabled(true);
+		}else if(!nextArmamentUpgrade.canPay()) {
 			armamentUpgradeButton.setVisible(false);//disabled
 		}
 		armamentUpgradeButton.addListener(new ClickListener() {
@@ -842,7 +843,7 @@ public class WorldMapScreen extends Scene2DScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				nextArmamentUpgrade.start();
 				assetHelper.getSound("upgrading armerment").play();
-				((Button)event.getTarget()).setDisabled(true);
+				updateUI();
 			}
 		});
 		armamentUpgradeButton.setPosition(120, 195);
@@ -871,7 +872,9 @@ public class WorldMapScreen extends Scene2DScreen {
 		architectureImage.setPosition(5, 60);
 		tabContainer.addActor(architectureImage);
 		ImageButton architectureUpgradeButton = new ImageButton(upgradeButtonStyle);
-		if(!nextArchitectureUpgrade.canPay()) {
+		if(nextArchitectureUpgrade.isStarted()) {
+			architectureUpgradeButton.setDisabled(true);
+		}else if(!nextArchitectureUpgrade.canPay()) {
 			architectureUpgradeButton.setVisible(false);//disabled
 		}
 		architectureUpgradeButton.addListener(new ClickListener() {
@@ -879,7 +882,7 @@ public class WorldMapScreen extends Scene2DScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				nextArchitectureUpgrade.start();
 				assetHelper.getSound("upgrading architecture").play();
-				((Button)event.getTarget()).setDisabled(true);
+				updateUI();
 			}
 		});
 		architectureUpgradeButton.setPosition(120, 65);
