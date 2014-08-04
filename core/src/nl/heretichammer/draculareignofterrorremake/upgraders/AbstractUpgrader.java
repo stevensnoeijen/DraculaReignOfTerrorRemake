@@ -11,7 +11,7 @@ import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractTeamableAccessableStartable implements Upgrader {
 	protected D data;
 	private Upgrade[] upgrades;
-	private Upgrade next;
+	private Upgrade current, next;
 	protected boolean done = false;
 	
 	public AbstractUpgrader(D data) {
@@ -24,6 +24,8 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 			upgrades[i].setUpgrader(this);
 			i++;
 		}
+		current = upgrades[0];
+		next = upgrades[1];
 	}
 	
 	@Override
@@ -63,12 +65,17 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 	public Upgrade getNext() {
 		if(next == null || next.isDone()) {
 			next();
-		}		
+		}
 		return next;
 	}
 	
+	@Override
+	public Upgrade getCurrent() {	
+		return current;
+	}
+	
 	/**
-	 * Sets {@link #next} to new upgrade.
+	 * Sets {@link #current} to new upgrade.
 	 */
 	private void next() {
 		for(Upgrade upgrade : upgrades) {
@@ -86,5 +93,12 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 	public void onDone(Upgrade upgrade) {
 		getTeam().accessManager.putAccessable(data.accessName + ".level", upgrade.getLevel());//set level that is done
 		next();
+	}
+
+	@Override
+	public void turn() {
+		if(next != null && next.isStarted() && !next.isDone()) {
+			next.turn();
+		}
 	}
 }

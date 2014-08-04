@@ -1,18 +1,18 @@
 package nl.heretichammer.draculareignofterrorremake.upgraders.upgrades;
 
+import nl.heretichammer.draculareignofterrorremake.GameObject;
+import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
+import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
+import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import nl.heretichammer.draculareignofterrorremake.DRoTR;
-import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
-import nl.heretichammer.draculareignofterrorremake.tbs.TBSTime;
-import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
-import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
-import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessableStartable;
-import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
-
-public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends AbstractTeamableAccessableStartable implements Upgrade {
+public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends GameObject implements Upgrade {
 	protected final D data;
+	private boolean started = false;
+	private int turn = 0;
 	private ItemSupplier itemSupplier;
 	private Upgrader upgrader;
 	private boolean done = false;
@@ -53,6 +53,16 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 	public ItemDescriptor[] getCost() {
 		return data.cost;
 	}
+	
+	@Override
+	public ItemDescriptor getCost(String name) {
+		for(ItemDescriptor item : data.cost) {
+			if(item.name.toLowerCase().equals(name)) {
+				return item;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public int getTurnCost() {
@@ -74,20 +84,17 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 			boolean payed = pay();
 			if(payed) {
 				started = true;
-				DRoTR.tbs.time.schedule(new TBSTime.Task(data.turnCost) {
-					@Override
-					public void turn() {
-						
-					}
-					
-					@Override
-					public void done() {
-						upgrade();
-						done();
-					}
-				});
 			}
 		}
+	}
+	
+	public boolean isStartable() {
+		return isAccessable();
+	}
+	
+	@Override
+	public boolean isStarted() {
+		return started;
 	}
 	
 	/**
@@ -107,5 +114,44 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Abs
 	@Override
 	public void setUpgrader(Upgrader upgrader) {
 		this.upgrader = upgrader;
+	}
+	
+	private void setTurn(int turn) {
+		if(turn < 0) {
+			throw new IllegalArgumentException("Turn can not be <0");
+		}
+		int oldValue = this.turn;
+		this.turn = turn;
+		firePropertyChange("turn", oldValue, turn);
+	}
+	
+	/**
+if(!started && isAutoStart()) {
+			start();
+		}		
+		if(started) {
+			setTurn(turn + 1);
+			if(turn >= getTurnCost()) {
+				//if done
+				handleProduct();
+				done();
+			}
+		}
+	 */
+	
+	@Override
+	public void turn() {
+		if(started) {
+			setTurn(turn + 1);
+			if(turn >= getTurnCost()) {
+				//is done
+				upgrade();
+				done();
+			}
+		}
+	}
+	
+	public String getImage() {
+		return data.image;
 	}
 }

@@ -3,13 +3,14 @@ package nl.heretichammer.draculareignofterrorremake.upgraders;
 import java.util.LinkedList;
 import java.util.List;
 
+import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
 import nl.heretichammer.draculareignofterrorremake.utils.DRoTRUtils;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
-public abstract class AbstractUpgraderManager implements Teamable, ItemSuppliable {
+public abstract class AbstractUpgraderManager implements Teamable, ItemSuppliable, Turnable {
 	protected List<Upgrader> upgraders = new LinkedList<Upgrader>();
 	private Team team;
 	
@@ -29,5 +30,12 @@ public abstract class AbstractUpgraderManager implements Teamable, ItemSuppliabl
 	@Override
 	public Team getTeam() {
 		return team;
+	}
+	
+	@Override
+	public void turn() {
+		for(Turnable turnable : upgraders) {
+			turnable.turn();
+		}
 	}
 }

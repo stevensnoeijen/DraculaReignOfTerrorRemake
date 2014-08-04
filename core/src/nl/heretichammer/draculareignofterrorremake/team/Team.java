@@ -124,6 +124,7 @@ public class Team implements Turnable {
 		for(Area area : ownedAreas) {
 			area.turn();
 		}
+		upgraderManager.turn();
 		TurnManager.instance.done(this);
 	}
 	

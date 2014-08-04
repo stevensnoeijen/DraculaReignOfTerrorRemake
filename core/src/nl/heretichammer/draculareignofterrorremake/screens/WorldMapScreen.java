@@ -17,6 +17,8 @@ import nl.heretichammer.draculareignofterrorremake.team.Player;
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 import nl.heretichammer.draculareignofterrorremake.unit.Unit;
+import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
+import nl.heretichammer.draculareignofterrorremake.upgraders.upgrades.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 import com.badlogic.gdx.Gdx;
@@ -154,7 +156,7 @@ public class WorldMapScreen extends Scene2DScreen {
 	private void updateUI() {
 		updateWeekUI();//set texts for week and year
 		updateResourcesUI();
-		showTrainingTab();
+		showTab(currentTab);
 		//update training-buttons
 	}
 	
@@ -376,13 +378,15 @@ public class WorldMapScreen extends Scene2DScreen {
 		ui.location = new Label("In Fagaras", skin);
 		ui.location.setFontScale(0.8f);
 		ui.location.setPosition(55, 340);
+		ui.location.toFront();
 		right.addActor(ui.location);
 		
 		//ui.info
-		ui.info = new Label("", skin);
+		ui.info = new Label("info", skin);
 		ui.info.setFontScale(0.8f);
-		ui.info.setPosition(15, 30);		
+		ui.info.setPosition(15, 30);
 		right.addActor(ui.info);
+		ui.info.toFront();
 		
 		return main;
 	}
@@ -803,6 +807,8 @@ public class WorldMapScreen extends Scene2DScreen {
 		clearTabContainer();
 		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-administration"));
 		final Group tabContainer = getTabContainer();
+		final Team team = selectedArea.getTeam();
+		
 		
 		ImageButton.ImageButtonStyle upgradeButtonStyle = new ImageButton.ImageButtonStyle();
 		upgradeButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2");
@@ -811,32 +817,38 @@ public class WorldMapScreen extends Scene2DScreen {
 		upgradeButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		//armament
-		Image armamentImage = new Image( assetHelper.getDrawable("images/council.pack:upgrade-armament-1") );
+		final Upgrader armamentUpgrader = team.getUpgrader("armament");
+		Upgrade currentArmamentUpgrade = armamentUpgrader.getCurrent();
+		final Upgrade nextArmamentUpgrade = armamentUpgrader.getNext();
+		Image armamentImage = new Image( assetHelper.getDrawable( currentArmamentUpgrade.getImage() ) );
 		armamentImage.setPosition(5, 195);
 		tabContainer.addActor(armamentImage);
 		ImageButton armamentUpgradeButton = new ImageButton(upgradeButtonStyle);
 		armamentUpgradeButton.addListener(new ClickListener() {
-			
+						
 		});
 		armamentUpgradeButton.setPosition(120, 195);
 		tabContainer.addActor(armamentUpgradeButton);
-		Label armamentUpgradeGoldCostLabel = new Label("150", skin);
+		Label armamentUpgradeGoldCostLabel = new Label( Integer.toString(nextArmamentUpgrade.getCost("gold").amount) , skin);
 		armamentUpgradeGoldCostLabel.setFontScale(0.75f);
 		armamentUpgradeGoldCostLabel.setAlignment(Align.center);
 		armamentUpgradeGoldCostLabel.setPosition(130, 240);
 		tabContainer.addActor(armamentUpgradeGoldCostLabel);
-		Label armamentUpgradeTurnCostLabel = new Label("7", skin);
+		Label armamentUpgradeTurnCostLabel = new Label(Integer.toString(nextArmamentUpgrade.getTurnCost()), skin);
 		armamentUpgradeTurnCostLabel.setFontScale(0.75f);
 		armamentUpgradeTurnCostLabel.setAlignment(Align.center);
 		armamentUpgradeTurnCostLabel.setPosition(160, 240);
 		tabContainer.addActor(armamentUpgradeTurnCostLabel);
-		Label armamentLevelLabel = new Label("1/6", skin);
+		Label armamentLevelLabel = new Label(currentArmamentUpgrade.getLevel() + "/" + armamentUpgrader.getMaxLevel(), skin);
 		armamentLevelLabel.setFontScale(0.8f);
 		armamentLevelLabel.setPosition(90, 307);
 		tabContainer.addActor(armamentLevelLabel);
 		
 		//architecture
-		Image architectureImage = new Image( assetHelper.getDrawable("images/council.pack:upgrade-architecture-1") );
+		final Upgrader architectureUpgrader = team.getUpgrader("architecture");
+		Upgrade currentArchitectureUpgrade = architectureUpgrader.getCurrent();
+		final Upgrade nextArchitectureUpgrade = architectureUpgrader.getNext();
+		Image architectureImage = new Image( assetHelper.getDrawable( currentArchitectureUpgrade.getImage() ) );
 		architectureImage.setPosition(5, 60);
 		tabContainer.addActor(architectureImage);
 		ImageButton architectureUpgradeButton = new ImageButton(upgradeButtonStyle);
@@ -845,17 +857,17 @@ public class WorldMapScreen extends Scene2DScreen {
 		});
 		architectureUpgradeButton.setPosition(120, 65);
 		tabContainer.addActor(architectureUpgradeButton);
-		Label architectureUpgradeGoldCostLabel = new Label("200", skin);
+		Label architectureUpgradeGoldCostLabel = new Label( Integer.toString( nextArchitectureUpgrade.getCost("gold").amount ) , skin);
 		architectureUpgradeGoldCostLabel.setFontScale(0.75f);
 		architectureUpgradeGoldCostLabel.setAlignment(Align.center);
 		architectureUpgradeGoldCostLabel.setPosition(130, 105);
 		tabContainer.addActor(architectureUpgradeGoldCostLabel);
-		Label architectureUpgradeTurnCostLabel = new Label("8", skin);
+		Label architectureUpgradeTurnCostLabel = new Label( Integer.toString( nextArchitectureUpgrade.getTurnCost() ), skin);
 		architectureUpgradeTurnCostLabel.setFontScale(0.75f);
 		architectureUpgradeTurnCostLabel.setAlignment(Align.center);
 		architectureUpgradeTurnCostLabel.setPosition(160, 105);
 		tabContainer.addActor(architectureUpgradeTurnCostLabel);
-		Label architectureLevelLabel = new Label("1/5", skin);
+		Label architectureLevelLabel = new Label( currentArchitectureUpgrade.getLevel() + "/" + architectureUpgrader.getMaxLevel(), skin);
 		architectureLevelLabel.setFontScale(0.8f);
 		architectureLevelLabel.setPosition(90, 175);
 		tabContainer.addActor(architectureLevelLabel);
