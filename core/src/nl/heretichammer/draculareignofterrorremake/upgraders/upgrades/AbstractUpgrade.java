@@ -19,9 +19,6 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	
 	public AbstractUpgrade(D data) {
 		this.data = data;
-		if(data.turnCost == 0) {
-			done = true;
-		}
 	}
 	
 	@Override
@@ -36,7 +33,7 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 		}
 		
 		if(getTeam() != null) {
-			return getTeam().accessManager.isAccessable(data.accessName);
+			return getTeam().isAccessible(data.accessName);
 		}else {
 			return false;
 		}
@@ -78,7 +75,11 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	}
 
 	private boolean pay() {
-		return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
+		if(ArrayUtils.isEmpty(data.cost)) {
+			return true;
+		}else {
+			return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
+		}
 	}
 	
 	protected abstract void upgrade();
@@ -91,6 +92,10 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 		boolean payed = pay();
 		if(payed) {
 			started = true;
+			if(data.turnCost == 0) {
+				upgrade();
+				done();
+			}
 		}
 	}
 	
@@ -108,6 +113,7 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	 * Sets {@link AccessManager#putAccessable(String, int)} level of upgrade #done to true
 	 */
 	protected void done() {
+		started = false;
 		done = true;
 		upgrader.onDone(this);
 	}
@@ -145,5 +151,10 @@ public abstract class AbstractUpgrade<D extends Upgrade.UpgradeData> extends Gam
 	
 	public String getImage() {
 		return data.image;
+	}
+	
+	@Override
+	public String toString() {
+		return getName() + ":" + getLevel();
 	}
 }

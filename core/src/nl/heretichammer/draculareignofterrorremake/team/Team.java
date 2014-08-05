@@ -10,7 +10,6 @@ import nl.heretichammer.draculareignofterrorremake.items.Item;
 import nl.heretichammer.draculareignofterrorremake.map.Area;
 import nl.heretichammer.draculareignofterrorremake.tbs.TurnManager;
 import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
-import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 import nl.heretichammer.draculareignofterrorremake.unit.Troop;
 import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
 import nl.heretichammer.draculareignofterrorremake.upgraders.UpgraderManager;
@@ -20,27 +19,31 @@ public class Team implements Turnable {
 	
 	private String name;
 	private TeamColor color;
-	private List<Area> ownedAreas = new ArrayList<Area>();
-	private List<Troop> troops = new LinkedList<Troop>();
-	private List<Player> players = new LinkedList<Player>();
+	private List<Area> ownedAreas;
+	private List<Troop> troops;
+	private List<Player> players;
 	private UpgraderManager upgraderManager;
 	
-	private Map<String, String> properties = new HashMap<String, String>();
+	private Map<String, String> properties;
 	
 	//public final properties
-	public final AccessManager accessManager;
+	//public final AccessManager accessManager;
 
 	public Team(String name, TeamColor color) {
 		this();
 		this.name = name;
 		this.color = color;
+		players = new LinkedList<Player>();
+		troops = new LinkedList<Troop>();
+		ownedAreas = new ArrayList<Area>();
+		properties = new HashMap<String, String>();
 		upgraderManager = new UpgraderManager();
 		upgraderManager.setTeam(this);
 	}
 	
 	private Team(){
-		accessManager = new AccessManager();//this can give problems with the saver?
-		accessManager.setTeam(this);
+		//accessManager = new AccessManager();//this can give problems with the saver?
+		//accessManager.setTeam(this);
 	}
 	
 	/**
@@ -128,14 +131,26 @@ public class Team implements Turnable {
 		TurnManager.instance.done(this);
 	}
 	
-	public Map<String, String> getProperties() {
-		return properties;
-	}
-	
 	public Upgrader getUpgrader(String name) {
 		return upgraderManager.getUpgrader(name);
 	}
 
+	public String getProperty(String name) {
+		return properties.get(name);
+	}
+	
+	public void putProperty(String name, String value) {
+		properties.put(name, value);
+	}
+	
+	public void putProperty(String name, int value) {
+		putProperty(name, Integer.toString(value));
+	}
+	
+	public void putProperty(String name, boolean value) {
+		putProperty(name, Boolean.toString(value));
+	}
+	
 	/**
 	 * not enabled, becouse this can give problems when saving
 	 * @param name the name to set
@@ -146,5 +161,9 @@ public class Team implements Turnable {
 	
 	public static enum TeamColor {
 		BLUE, RED, WHITE
+	}
+
+	public boolean isAccessible(String accessName) {
+		return Boolean.valueOf(getProperty(accessName));
 	}
 }

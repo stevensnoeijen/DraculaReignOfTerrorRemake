@@ -25,6 +25,9 @@ public abstract class AbstractUpgraderManager implements Teamable, ItemSuppliabl
 	public void setTeam(Team team) {
 		this.team = team;
 		DRoTRUtils.setTeam(team, (List<Teamable>)(List<?>)upgraders);
+		for(Upgrader upgrader : upgraders) {
+			upgrader.init();
+		}
 	}
 
 	@Override

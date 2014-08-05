@@ -23,8 +23,12 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 			upgrades[i].setUpgrader(this);
 			i++;
 		}
-		current = upgrades[0];
-		next = upgrades[1];
+		next = upgrades[0];
+	}
+	
+	@Override
+	public void init() {
+		next.start();
 	}
 	
 	@Override
@@ -69,7 +73,7 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 	}
 	
 	@Override
-	public Upgrade getCurrent() {	
+	public Upgrade getCurrent() {
 		return current;
 	}
 	
@@ -88,7 +92,7 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 
 	@Override
 	public void onDone(Upgrade upgrade) {
-		getTeam().accessManager.putAccessable(data.accessName + ".level", upgrade.getLevel());//set level that is done
+		getTeam().putProperty(data.accessName + ".level", upgrade.getLevel());//set level that is done
 		next();
 	}
 
@@ -97,5 +101,10 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 		if(next != null && next.isStarted() && !next.isDone()) {
 			next.turn();
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

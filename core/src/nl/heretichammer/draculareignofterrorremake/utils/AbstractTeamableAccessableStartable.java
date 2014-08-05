@@ -34,6 +34,6 @@ public abstract class AbstractTeamableAccessableStartable extends AbstractAccess
 	 * @return
 	 */
 	protected boolean isAccessable(String accessName) {
-		return team.accessManager.isAccessable(accessName);		
+		return team.isAccessible(accessName);		
 	}
 }

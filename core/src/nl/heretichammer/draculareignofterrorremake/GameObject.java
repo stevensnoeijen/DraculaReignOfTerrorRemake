@@ -91,6 +91,6 @@ public abstract class GameObject implements Teamable, Turnable, Accessible {
 	public void turn() {}
 	
 	public boolean isAccessable(String accessName) {
-		return team.accessManager.isAccessable(accessName);
+		return team.isAccessible(accessName);
 	}
 }

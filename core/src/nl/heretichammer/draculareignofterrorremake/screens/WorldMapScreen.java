@@ -431,6 +431,7 @@ public class WorldMapScreen extends Scene2DScreen {
 		tabContrainer.addActor(trainingTable);
 		
 		for(final TroopProducer troopProducer : selectedArea.troopProducerManager.getProducers()) {
+			boolean visable = true;
 			Unit.UnitData unitData = troopProducer.getUnitData();
 			trainingTable.row();
 			
@@ -438,13 +439,15 @@ public class WorldMapScreen extends Scene2DScreen {
 			disposables.add(startSound);
 			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
-			if(troopProducer.isStarted()) {
+			if(!troopProducer.isAccessable()) {
+				visable = false;
+				trainButton.setVisible(visable);
+			}else if(troopProducer.isStarted()) {
 				trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");//add hourglass
 				trainButton.setDisabled(true);
 			}else if(!troopProducer.canPay()) {
 				trainButton.setDisabled(true);//only disable
 			}
-			
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -490,42 +493,50 @@ public class WorldMapScreen extends Scene2DScreen {
 			Label goldCostLabel = new Label(String.valueOf(troopProducer.findCost("gold").amount), skin);
 			goldCostLabel.setFontScale(FONTSCALE);
 			goldCostLabel.setAlignment(Align.center);
+			goldCostLabel.setVisible(visable);
 			trainingTable.add(goldCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//turns
 			Label turnsCostLabel = new Label(String.valueOf(troopProducer.getTurnCost()), skin);
 			turnsCostLabel.setFontScale(FONTSCALE);
 			turnsCostLabel.setAlignment(Align.center);
+			turnsCostLabel.setVisible(visable);
 			trainingTable.add(turnsCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//unit attributes
 			//strenght
 			Label trainingCostLabel = new Label(String.valueOf(unitData.attributes.strenght), skin);
 			trainingCostLabel.setFontScale(FONTSCALE);
 			trainingCostLabel.setAlignment(Align.center);
+			trainingCostLabel.setVisible(visable);
 			trainingTable.add(trainingCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//accuracy
 			Label accuracyCostLabel = new Label(String.valueOf(unitData.attributes.accuracy), skin);
 			accuracyCostLabel.setFontScale(FONTSCALE);
 			accuracyCostLabel.setAlignment(Align.center);
+			accuracyCostLabel.setVisible(visable);
 			trainingTable.add(accuracyCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//defance
 			Label defanceCostLabel = new Label(String.valueOf(unitData.attributes.defance), skin);
 			defanceCostLabel.setFontScale(FONTSCALE);
 			defanceCostLabel.setAlignment(Align.center);
+			defanceCostLabel.setVisible(visable);
 			trainingTable.add(defanceCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//stamina
 			Label staminaCostLabel = new Label(String.valueOf(unitData.attributes.stamina), skin);
 			staminaCostLabel.setFontScale(FONTSCALE);
 			staminaCostLabel.setAlignment(Align.center);
+			staminaCostLabel.setVisible(visable);
 			trainingTable.add(staminaCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//speed
 			Label speedCostLabel = new Label(String.valueOf(unitData.attributes.speed), skin);
 			speedCostLabel.setFontScale(FONTSCALE);
 			speedCostLabel.setAlignment(Align.center);
+			speedCostLabel.setVisible(visable);
 			trainingTable.add(speedCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//range
 			Label rangeCostLabel = new Label(String.valueOf(unitData.attributes.range), skin);
 			rangeCostLabel.setFontScale(FONTSCALE);
 			rangeCostLabel.setAlignment(Align.center);
+			rangeCostLabel.setVisible(visable);
 			trainingTable.add(rangeCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 		}
 	}

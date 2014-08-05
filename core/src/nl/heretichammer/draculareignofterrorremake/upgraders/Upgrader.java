@@ -8,7 +8,10 @@ import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
 import nl.heretichammer.draculareignofterrorremake.utils.Startable;
 
 public interface Upgrader extends Startable, ItemSuppliable, Teamable, Accessible, Turnable {
-
+	/**
+	 * Init after team set for starting default upgrade(s)
+	 */
+	public void init();
 	public String getName();
 	public int getMaxLevel();
 	public Upgrade getCurrent();
