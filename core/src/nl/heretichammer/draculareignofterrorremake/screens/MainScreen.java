@@ -279,8 +279,8 @@ public class MainScreen extends Scene2DScreen {
 	private void changeScreen(Class<? extends Screen> clazz) {
 		Game game = (Game)Gdx.app.getApplicationListener();
 		
-		if(clazz == WorldMapScreen.class) {
-			WorldMapScreen worldMapScreen = new WorldMapScreen();
+		if(clazz == CouncilScreen.class) {
+			CouncilScreen worldMapScreen = new CouncilScreen();
 			game.setScreen(worldMapScreen);
 		}else {
 			throw new IllegalArgumentException("Screen can not be made");

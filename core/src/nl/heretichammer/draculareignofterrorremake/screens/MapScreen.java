@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class MapScreen extends Scene2DScreen {
+public abstract class MapScreen extends Scene2DScreen {
 	
 	protected MapRenderer mapRenderer;
 	protected Map map;
@@ -19,23 +19,26 @@ public class MapScreen extends Scene2DScreen {
 	@Override
 	public void show() {
 		super.show();
-		map = new TmxMapLoader().load("data/maps/test2.tmx");
+		map = new TmxMapLoader().load(getMapFilePath());
 		mapRenderer = new OrthogonalTiledMapRenderer((TiledMap) map);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.input.setInputProcessor(new InputMultiplexer(stage, this));
 	}
 	
+	public abstract String getMapFilePath();
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		      
-		stage.act(delta);
-		      
+		
+		renderMap(delta);		
+		renderStage(delta);
+	}
+	
+	protected void renderMap(float delta) {
 		mapRenderer.setView(camera);
 		mapRenderer.render();
-		
-		stage.draw();
 	}
 	
 	@Override

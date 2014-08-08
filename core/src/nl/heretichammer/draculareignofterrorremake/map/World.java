@@ -1,7 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.WeekNotDoneException;
 import nl.heretichammer.draculareignofterrorremake.tbs.TBSObject;
@@ -18,7 +20,9 @@ public class World implements TBSObject {
 	private int week = START_WEEK;
 	
 	private List<Team> teams = new ArrayList<Team>(2);
-	public final Areas areas;
+	private Map<String, Area> areas = new HashMap<String, Area>(); 
+	
+	public static final String[] AREANAMES = {"sibiu", "fagaras", "curtea", "brasov", "pitesti", "tirgo", "snagov", "giurgiu", "braila", "hirsova", "rasova", "ostrov"};
 	
 	public World() {
 		//create teams
@@ -26,19 +30,11 @@ public class World implements TBSObject {
 		teams.add(new Team(2, "Transylvania", TeamColor.BLUE));
 		
 		//create worlds
-		areas = new Areas();
-		areas.sibiu.setWorld(this);
-		areas.fagaras.setWorld(this);
-		areas.curtea.setWorld(this);
-		areas.brasov.setWorld(this);
-		areas.pitesti.setWorld(this);
-		areas.tirgo.setWorld(this);
-		areas.snagov.setWorld(this);
-		areas.giurgiu.setWorld(this);
-		areas.braila.setWorld(this);
-		areas.hirsova.setWorld(this);
-		areas.rasova.setWorld(this);
-		areas.ostrov.setWorld(this);
+		for(String areaname : AREANAMES) {
+			Area area = AreaFactory.create(areaname);
+			area.setWorld(this);
+			areas.put(areaname, area);
+		}
 	}
 	
 	private void fillTurnManager() {
@@ -48,25 +44,6 @@ public class World implements TBSObject {
 			for(Player player : team.getPlayers()) {
 				TurnManager.instance.addTurn(player);
 			}
-		}
-	}
-	
-	public final class Areas {
-		public final Area sibiu = AreaFactory.create("sibiu");
-		public final Area fagaras = AreaFactory.create("fagaras");
-		public final Area curtea = AreaFactory.create("curtea");
-		public final Area brasov = AreaFactory.create("brasov");
-		public final Area pitesti = AreaFactory.create("pitesti");
-		public final Area tirgo = AreaFactory.create("tirgo");
-		public final Area snagov = AreaFactory.create("snagov");
-		public final Area giurgiu = AreaFactory.create("giurgiu");
-		public final Area braila = AreaFactory.create("braila");
-		public final Area hirsova = AreaFactory.create("hirsova");
-		public final Area rasova = AreaFactory.create("rasova");
-		public final Area ostrov = AreaFactory.create("ostrov");
-		
-		private Areas() {
-			
 		}
 	}
 	
@@ -105,5 +82,9 @@ public class World implements TBSObject {
 	
 	public int getYear() {
 		return year;
+	}
+
+	public Area getArea(String name) {
+		return areas.get(name);
 	}
 }

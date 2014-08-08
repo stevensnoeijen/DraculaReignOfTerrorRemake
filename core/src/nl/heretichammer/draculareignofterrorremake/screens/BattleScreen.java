@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class AreaMapScreen extends MapScreen {
+public class BattleScreen extends MapScreen {
 	private AreaMapScreenState state;
 	private AreaMap areaMap;
 	
@@ -27,8 +27,13 @@ public class AreaMapScreen extends MapScreen {
 	private SpriteBatch spriteBatch;
 	private AnimatedSprite sprite;
 	
-	public AreaMapScreen() {
+	public BattleScreen() {
 		
+	}
+	
+	@Override
+	public String getMapFilePath() {
+		return "data/maps/test2.tmx";
 	}
 	
 	@Override
@@ -45,7 +50,7 @@ public class AreaMapScreen extends MapScreen {
 		
 		spriteBatch = new SpriteBatch();
 		
-		Unit unit = UnitFactory.createUnit("swordfighter");
+		Unit unit = UnitFactory.createUnit("swordsoldier");
 		
 		sprite = new AnimatedSprite(assetHelper.getAnimation("images/units.pack:swordsmen/blue/swordsmen_blue_attack_east"));
 		//sprite.setSize(40, 40);

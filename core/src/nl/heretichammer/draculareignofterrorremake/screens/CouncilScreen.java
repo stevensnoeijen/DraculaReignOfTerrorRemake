@@ -43,7 +43,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 
-public class WorldMapScreen extends Scene2DScreen {
+public class CouncilScreen extends Scene2DScreen {
 	
 	private List<Disposable> disposables = new LinkedList<Disposable>();
 	
@@ -67,13 +67,13 @@ public class WorldMapScreen extends Scene2DScreen {
 	
 	private static final float FONT_SMALL = .8f;
 	
-	public WorldMapScreen() {
+	public CouncilScreen() {
 		World world = new World();
 		worldMap = new WorldMap(world);
 		
 		player = new Player(world.findTeamByName("transylvania"));
 		new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
-		selectedArea = worldMap.getAreas().fagaras;
+		selectedArea = worldMap.getArea("fagaras");
 	}
 	
 	public void setSelectedArea(Area selectedArea) {
@@ -227,75 +227,75 @@ public class WorldMapScreen extends Scene2DScreen {
 		
 		//create areas
 		//sibiu
-		ui.areas.sibiu = new ImageButton(createStyle(worldMap.world.areas.sibiu));
-		ui.areas.sibiu.setUserObject(worldMap.world.areas.sibiu);
+		ui.areas.sibiu = new ImageButton(createStyle(worldMap.getArea("sibiu")));
+		ui.areas.sibiu.setUserObject(worldMap.getArea("sibiu"));
 		ui.areas.sibiu.setPosition(0, 120);
 		areaGroup.addActor(ui.areas.sibiu);
 		areasButtonGroup.add(ui.areas.sibiu);
 		//fagaras
-		ui.areas.fagaras = new ImageButton(createStyle(worldMap.world.areas.fagaras));
-		ui.areas.fagaras.setUserObject(worldMap.world.areas.fagaras);
+		ui.areas.fagaras = new ImageButton(createStyle(worldMap.getArea("fagaras")));
+		ui.areas.fagaras.setUserObject(worldMap.getArea("fagaras"));
 		ui.areas.fagaras.setPosition(70, 135);
 		ui.areas.fagaras.setChecked(true);
 		areaGroup.addActor(ui.areas.fagaras);
 		areasButtonGroup.add(ui.areas.fagaras);
 		//curtea
-		ui.areas.curtea = new ImageButton(createStyle(worldMap.world.areas.curtea));
-		ui.areas.curtea.setUserObject(worldMap.world.areas.curtea);
+		ui.areas.curtea = new ImageButton(createStyle(worldMap.getArea("curtea")));
+		ui.areas.curtea.setUserObject(worldMap.getArea("curtea"));
 		ui.areas.curtea.setPosition(30, 80);
 		areaGroup.addActor(ui.areas.curtea);
 		areasButtonGroup.add(ui.areas.curtea);
 		//brasov
-		ui.areas.brasov = new ImageButton(createStyle(worldMap.world.areas.brasov));
-		ui.areas.brasov.setUserObject(worldMap.world.areas.brasov);
+		ui.areas.brasov = new ImageButton(createStyle(worldMap.getArea("brasov")));
+		ui.areas.brasov.setUserObject(worldMap.getArea("brasov"));
 		ui.areas.brasov.setPosition(135, 130);
 		areaGroup.addActor(ui.areas.brasov);
 		areasButtonGroup.add(ui.areas.brasov);
 		//pitesti
-		ui.areas.pitesti = new ImageButton(createStyle(worldMap.world.areas.pitesti));
-		ui.areas.pitesti.setUserObject(worldMap.world.areas.pitesti);
+		ui.areas.pitesti = new ImageButton(createStyle(worldMap.getArea("pitesti")));
+		ui.areas.pitesti.setUserObject(worldMap.getArea("pitesti"));
 		ui.areas.pitesti.setPosition(130, 85);
 		areaGroup.addActor(ui.areas.pitesti);
 		areasButtonGroup.add(ui.areas.pitesti);
 		//tirgo
-		ui.areas.tirgo = new ImageButton(createStyle(worldMap.world.areas.tirgo));
-		ui.areas.tirgo.setUserObject(worldMap.world.areas.tirgo);
+		ui.areas.tirgo = new ImageButton(createStyle(worldMap.getArea("tirgo")));
+		ui.areas.tirgo.setUserObject(worldMap.getArea("tirgo"));
 		ui.areas.tirgo.setPosition(100, 45);
 		areaGroup.addActor(ui.areas.tirgo);
 		areasButtonGroup.add(ui.areas.tirgo);
 		//snagov
-		ui.areas.snagov = new ImageButton(createStyle(worldMap.world.areas.snagov));
-		ui.areas.snagov.setUserObject(worldMap.world.areas.snagov);
+		ui.areas.snagov = new ImageButton(createStyle(worldMap.getArea("snagov")));
+		ui.areas.snagov.setUserObject(worldMap.getArea("snagov"));
 		ui.areas.snagov.setPosition(185, 70);
 		areaGroup.addActor(ui.areas.snagov);
 		areasButtonGroup.add(ui.areas.snagov);
 		//giurgiu
-		ui.areas.giurgiu = new ImageButton(createStyle(worldMap.world.areas.giurgiu));
-		ui.areas.giurgiu.setUserObject(worldMap.world.areas.giurgiu);
+		ui.areas.giurgiu = new ImageButton(createStyle(worldMap.getArea("giurgiu")));
+		ui.areas.giurgiu.setUserObject(worldMap.getArea("giurgiu"));
 		ui.areas.giurgiu.setPosition(129, 0);
 		areaGroup.addActor(ui.areas.giurgiu);
 		areasButtonGroup.add(ui.areas.giurgiu);
 		//braila
-		ui.areas.braila = new ImageButton(createStyle(worldMap.world.areas.braila));
-		ui.areas.braila.setUserObject(worldMap.world.areas.braila);
+		ui.areas.braila = new ImageButton(createStyle(worldMap.getArea("braila")));
+		ui.areas.braila.setUserObject(worldMap.getArea("braila"));
 		ui.areas.braila.setPosition(236, 100);
 		areaGroup.addActor(ui.areas.braila);
 		areasButtonGroup.add(ui.areas.braila);
 		//hirsova
-		ui.areas.hirsova = new ImageButton(createStyle(worldMap.world.areas.hirsova));
-		ui.areas.hirsova.setUserObject(worldMap.world.areas.hirsova);
+		ui.areas.hirsova = new ImageButton(createStyle(worldMap.getArea("hirsova")));
+		ui.areas.hirsova.setUserObject(worldMap.getArea("hirsova"));
 		ui.areas.hirsova.setPosition(234, 75);
 		areaGroup.addActor(ui.areas.hirsova);
 		areasButtonGroup.add(ui.areas.hirsova);
 		//rasova
-		ui.areas.rasova = new ImageButton(createStyle(worldMap.world.areas.rasova));
-		ui.areas.rasova.setUserObject(worldMap.world.areas.rasova);
+		ui.areas.rasova = new ImageButton(createStyle(worldMap.getArea("rasova")));
+		ui.areas.rasova.setUserObject(worldMap.getArea("rasova"));
 		ui.areas.rasova.setPosition(229, 54);
 		areaGroup.addActor(ui.areas.rasova);
 		areasButtonGroup.add(ui.areas.rasova);
 		//ostrov
-		ui.areas.ostrov = new ImageButton(createStyle(worldMap.world.areas.ostrov));
-		ui.areas.ostrov.setUserObject(worldMap.world.areas.ostrov);
+		ui.areas.ostrov = new ImageButton(createStyle(worldMap.getArea("ostrov")));
+		ui.areas.ostrov.setUserObject(worldMap.getArea("ostrov"));
 		ui.areas.ostrov.setPosition(219, 30);
 		areaGroup.addActor(ui.areas.ostrov);
 		areasButtonGroup.add(ui.areas.ostrov);
