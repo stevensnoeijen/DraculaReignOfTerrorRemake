@@ -12,6 +12,7 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 	private Upgrade[] upgrades;
 	private Upgrade current, next;
 	protected boolean done = false;
+	private int level;
 	
 	public AbstractUpgrader(D data) {
 		this.data = data;
@@ -23,7 +24,7 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 			upgrades[i].setUpgrader(this);
 			i++;
 		}
-		next = upgrades[0];
+		setNext(upgrades[0]);
 	}
 	
 	@Override
@@ -84,7 +85,7 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 		for(Upgrade upgrade : upgrades) {
 			if(!upgrade.isDone()) {//sets to upgrade that is not done yet
 				current = next;
-				next = upgrade;
+				setNext(upgrade);
 				break;//for
 			}
 		}
@@ -92,8 +93,10 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 
 	@Override
 	public void onDone(Upgrade upgrade) {
-		getTeam().putProperty(data.accessName + ".level", upgrade.getLevel());//set level that is done
-		next();
+		if(upgrade == next && upgrade.isDone()) {
+			level = upgrade.getLevel();//set level that is done
+			next();
+		}
 	}
 
 	@Override
@@ -101,6 +104,15 @@ public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractT
 		if(next != null && next.isStarted() && !next.isDone()) {
 			next.turn();
 		}
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	private void setNext(Upgrade next) {
+		this.next = next;
+		level = next.getLevel();
 	}
 	
 	@Override

@@ -2,7 +2,6 @@ package nl.heretichammer.draculareignofterrorremake.upgraders.upgrades;
 
 import nl.heretichammer.draculareignofterrorremake.GameObject;
 import nl.heretichammer.draculareignofterrorremake.items.Item.ItemDescriptor;
-import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 

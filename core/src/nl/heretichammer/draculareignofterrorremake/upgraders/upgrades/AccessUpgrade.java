@@ -9,7 +9,7 @@ public class AccessUpgrade extends AbstractUpgrade<AccessUpgrade.AccessUpgradeDa
 	@Override
 	protected void upgrade() {
 		for(String access : data.accesses) {
-			getTeam().putProperty(access, true);
+			getTeam().putAccessibility(access, true);
 		}
 	}	
 	

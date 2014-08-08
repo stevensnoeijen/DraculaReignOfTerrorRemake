@@ -1002,6 +1002,18 @@ public class WorldMapScreen extends Scene2DScreen {
 		return style;		
 	}
 	
+	private void save() {
+		
+	}
+	
+	private void load(String name) {
+		
+	}
+	
+	public void loadDefaults() {
+		
+	}
+	
 	@Override
 	public void dispose() {
 		super.dispose();

@@ -22,8 +22,8 @@ public class World implements TBSObject {
 	
 	public World() {
 		//create teams
-		teams.add(new Team("Turks", TeamColor.RED));
-		teams.add(new Team("Transylvania", TeamColor.BLUE));
+		teams.add(new Team(1, "Turks", TeamColor.RED));
+		teams.add(new Team(2, "Transylvania", TeamColor.BLUE));
 		
 		//create worlds
 		areas = new Areas();

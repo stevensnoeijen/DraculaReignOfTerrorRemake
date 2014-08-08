@@ -16,34 +16,33 @@ import nl.heretichammer.draculareignofterrorremake.upgraders.UpgraderManager;
 
 public class Team implements Turnable {
 	public static final Team NULL = new Team();
+	public static final String SAVE_FORMAT = "teams.%d.%s";
 	
+	private int id;
 	private String name;
 	private TeamColor color;
 	private List<Area> ownedAreas;
 	private List<Troop> troops;
 	private List<Player> players;
 	private UpgraderManager upgraderManager;
-	
-	private Map<String, String> properties;
-	
-	//public final properties
-	//public final AccessManager accessManager;
+	private final Map<String, Boolean> accessibilities = getDefaultAccessibilities();
 
-	public Team(String name, TeamColor color) {
-		this();
+	public Team(int id, String name, TeamColor color) {
+		this.id = id;
 		this.name = name;
 		this.color = color;
 		players = new LinkedList<Player>();
 		troops = new LinkedList<Troop>();
 		ownedAreas = new ArrayList<Area>();
-		properties = new HashMap<String, String>();
 		upgraderManager = new UpgraderManager();
 		upgraderManager.setTeam(this);
 	}
 	
 	private Team(){
-		//accessManager = new AccessManager();//this can give problems with the saver?
-		//accessManager.setTeam(this);
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	/**
@@ -134,22 +133,6 @@ public class Team implements Turnable {
 	public Upgrader getUpgrader(String name) {
 		return upgraderManager.getUpgrader(name);
 	}
-
-	public String getProperty(String name) {
-		return properties.get(name);
-	}
-	
-	public void putProperty(String name, String value) {
-		properties.put(name, value);
-	}
-	
-	public void putProperty(String name, int value) {
-		putProperty(name, Integer.toString(value));
-	}
-	
-	public void putProperty(String name, boolean value) {
-		putProperty(name, Boolean.toString(value));
-	}
 	
 	/**
 	 * not enabled, becouse this can give problems when saving
@@ -160,10 +143,33 @@ public class Team implements Turnable {
 	}*/
 	
 	public static enum TeamColor {
-		BLUE, RED, WHITE
+		BLUE, RED
 	}
 
 	public boolean isAccessible(String accessName) {
-		return Boolean.valueOf(getProperty(accessName));
+		return accessibilities.get(accessName);
+	}
+	
+	public void setAccessibility(String accessibility, boolean value) {
+		if(!accessibilities.containsKey(accessibility)) {
+			throw new RuntimeException( String.format("doesn't contain accessibility '%s'", accessibility) );
+		}
+		accessibilities.put(accessibility, value);
+	}
+	
+	public void putAccessibility(String accessibility, boolean value) {
+		accessibilities.put(accessibility, value);
+	}
+	
+	public static Map<String, Boolean> getDefaultAccessibilities(){
+		Map<String, Boolean> accessibilities = new HashMap<String, Boolean>();
+		accessibilities.put("troopproducers.swordsmen", true);
+		accessibilities.put("troopproducers.crossbowsoldiers", true);
+		accessibilities.put("troopproducers.knight", false);
+		accessibilities.put("troopproducers.juggernaut", true);
+		accessibilities.put("troopproducers.catapult", false);
+		accessibilities.put("troopproducers.cannon", false);
+		accessibilities.put("troopproducers.spy", false);
+		return accessibilities;
 	}
 }

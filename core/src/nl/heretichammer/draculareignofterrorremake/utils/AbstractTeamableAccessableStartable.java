@@ -2,7 +2,6 @@ package nl.heretichammer.draculareignofterrorremake.utils;
 
 import nl.heretichammer.draculareignofterrorremake.team.Team;
 import nl.heretichammer.draculareignofterrorremake.team.Teamable;
-import nl.heretichammer.draculareignofterrorremake.team.access.AccessManager;
 
 /**
  * Implements {@link Teamable}
