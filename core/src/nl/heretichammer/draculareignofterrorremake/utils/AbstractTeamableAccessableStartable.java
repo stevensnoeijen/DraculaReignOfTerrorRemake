@@ -1,7 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.utils;
 
-import nl.heretichammer.draculareignofterrorremake.team.Team;
-import nl.heretichammer.draculareignofterrorremake.team.Teamable;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
 
 /**
  * Implements {@link Teamable}

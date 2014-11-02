@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.utils;
 
-import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
+import nl.heretichammer.draculareignofterrorremake.models.team.access.Accessible;
 
 /**
  * Accessable overrides {@link #isStartable()}, {@link #isPausable()} and {@link #isStoppable()},

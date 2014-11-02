@@ -2,8 +2,8 @@ package nl.heretichammer.draculareignofterrorremake.utils;
 
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.team.Team;
-import nl.heretichammer.draculareignofterrorremake.team.Teamable;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
 
 public class DRoTRUtils {
 	

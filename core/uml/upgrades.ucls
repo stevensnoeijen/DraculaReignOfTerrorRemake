@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="nl.heretichammer.draculareignofterrorremake.upgraders.AbstractUpgraderManager" 
+  <class id="1" language="java" 
+    name="nl.heretichammer.draculareignofterrorremake.models.upgraders.AbstractUpgraderManager" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/upgraders/AbstractUpgraderManager.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/upgraders/AbstractUpgraderManager.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="275" y="162"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -12,9 +13,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="nl.heretichammer.draculareignofterrorremake.upgraders.upgrades.Upgrade" 
+  <interface id="2" language="java" name="nl.heretichammer.draculareignofterrorremake.models.upgraders.upgrades.Upgrade" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/upgraders/upgrades/Upgrade.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/upgraders/upgrades/Upgrade.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="264" y="469"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

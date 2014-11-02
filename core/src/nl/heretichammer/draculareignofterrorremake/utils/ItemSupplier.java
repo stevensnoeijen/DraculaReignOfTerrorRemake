@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.utils;
 
-import nl.heretichammer.draculareignofterrorremake.items.Item;
+import nl.heretichammer.draculareignofterrorremake.models.items.Item;
 
 public interface ItemSupplier {
 	//TODO: make "supply" methods

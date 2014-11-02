@@ -6,19 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
+import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
-import nl.heretichammer.draculareignofterrorremake.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.buildings.Building.BuildingType;
-import nl.heretichammer.draculareignofterrorremake.map.Area;
-import nl.heretichammer.draculareignofterrorremake.map.World;
-import nl.heretichammer.draculareignofterrorremake.map.WorldMap;
-import nl.heretichammer.draculareignofterrorremake.producers.troopproducer.TroopProducer;
-import nl.heretichammer.draculareignofterrorremake.team.Player;
-import nl.heretichammer.draculareignofterrorremake.team.Team;
-import nl.heretichammer.draculareignofterrorremake.unit.Troop;
-import nl.heretichammer.draculareignofterrorremake.unit.Unit;
-import nl.heretichammer.draculareignofterrorremake.upgraders.Upgrader;
-import nl.heretichammer.draculareignofterrorremake.upgraders.upgrades.Upgrade;
+import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
+import nl.heretichammer.draculareignofterrorremake.models.buildings.Building.BuildingType;
+import nl.heretichammer.draculareignofterrorremake.models.map.Area;
+import nl.heretichammer.draculareignofterrorremake.models.map.World;
+import nl.heretichammer.draculareignofterrorremake.models.map.WorldMap;
+import nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.unit.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.unit.Unit;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.Upgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.upgrades.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 import com.badlogic.gdx.Gdx;
@@ -145,8 +145,7 @@ public class CouncilScreen extends Scene2DScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				click.play();
-				player.turnDone();
-				worldMap.turn();
+				worldMap.week();
 				updateUI();
 			}
 		});

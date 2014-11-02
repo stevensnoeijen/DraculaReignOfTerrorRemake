@@ -1,11 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import net.dermetfan.utils.libgdx.graphics.AnimatedSprite;
-import nl.heretichammer.draculareignofterrorremake.map.AreaMap;
-import nl.heretichammer.draculareignofterrorremake.unit.Unit;
-import nl.heretichammer.draculareignofterrorremake.unit.UnitFactory;
+import nl.heretichammer.draculareignofterrorremake.models.map.AreaMap;
+import nl.heretichammer.draculareignofterrorremake.models.unit.Unit;
+import nl.heretichammer.draculareignofterrorremake.models.unit.UnitFactory;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
-
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenAccessor;
 import aurelienribon.tweenengine.TweenManager;
@@ -29,31 +27,12 @@ public class BattleScreen extends MapScreen {
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
 	
 	private SpriteBatch spriteBatch;
-	private AnimatedSprite sprite;
 	
 	private final TweenManager tweenManager = new TweenManager();
 	
 	public final static int POSITION_XY = 1;
 	public BattleScreen() {
-		Tween.registerAccessor(AnimatedSprite.class, new TweenAccessor<AnimatedSprite>() {
-			@Override
-			public int getValues(AnimatedSprite sprite, int tweenType, float[] returnValues) {
-				if(tweenType == POSITION_XY) {
-					returnValues[0] = sprite.getX();
-					returnValues[1] = sprite.getY();
-					return 2;
-				}else {
-					return -1;
-				}				
-			}
 
-			@Override
-			public void setValues(AnimatedSprite sprite, int tweenType, float[] newValues) {
-				if(tweenType == POSITION_XY) {
-					sprite.setPosition(newValues[0], newValues[1]);
-				}
-			}
-		});
 	}
 	
 	@Override
@@ -77,11 +56,6 @@ public class BattleScreen extends MapScreen {
 		
 		Unit unit = UnitFactory.createUnit("swordsoldier");
 		
-		sprite = new AnimatedSprite(assetHelper.getAnimation("images/units.pack:swordsmen/blue/swordsmen_blue_attack_east"));
-		sprite.setPosition(10, 10);
-		//sprite.setSize(40, 40);
-		//sprite.setPosition(100, 100);
-		
 		setState(new AreaMapScreenPlayState());
 	}
 	
@@ -91,16 +65,13 @@ public class BattleScreen extends MapScreen {
 		tweenManager.update(delta);
 		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
-		sprite.draw(spriteBatch);
 		spriteBatch.end();
 	}
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector3 pos = camera.unproject(new Vector3(screenX, screenY, 0));
-		
-		Tween.to(sprite, POSITION_XY, 1f).target(pos.x, pos.y).start(tweenManager);
-		
+
 		//sprite.setCenter(pos.x, pos.y);
 		return true;
 	}
@@ -190,7 +161,7 @@ public class BattleScreen extends MapScreen {
 		@Override
 		public void create() {
 			//music.play();
-			sprite.setPlaying(true);
+			
 		}
 	}
 	
@@ -198,7 +169,7 @@ public class BattleScreen extends MapScreen {
 		@Override
 		public void create() {
 			music.pause();
-			sprite.setPlaying(false);
+			
 		}
 	}
 }

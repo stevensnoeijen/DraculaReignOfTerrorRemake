@@ -18,7 +18,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'DraculaReignOfTerrorRemake'
-        gdxVersion = '1.1.0'
+        gdxVersion = '1.4.1'
         roboVMVersion = '0.0.13'
     }
 
@@ -106,10 +106,11 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "org.apache.commons:commons-lang3:3.3.2"
         //compile "net.peakgames.libgdx:stagebuilder-core:2.0-SNAPSHOT"
-        compile "com.gdx.extension:gdx-extension:1.0.0"
-        compile 'net.dermetfan.libgdx-utils:libgdx-utils:0.3.4'
+        //compile "com.gdx.extension:gdx-extension:1.0.0"
+        //compile 'net.dermetfan.libgdx-utils:libgdx-utils:0.3.4'
         compile "com.google.guava:guava:12.0"
         compile fileTree(dir: '../libs', include: '*.jar')
+        compile "com.badlogicgames.ashley:ashley:1.2.0"
     }
 }
 

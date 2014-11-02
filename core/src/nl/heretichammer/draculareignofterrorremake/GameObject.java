@@ -3,15 +3,14 @@ package nl.heretichammer.draculareignofterrorremake;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import nl.heretichammer.draculareignofterrorremake.tbs.Turnable;
-import nl.heretichammer.draculareignofterrorremake.team.Team;
-import nl.heretichammer.draculareignofterrorremake.team.Teamable;
-import nl.heretichammer.draculareignofterrorremake.team.access.Accessible;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
+import nl.heretichammer.draculareignofterrorremake.models.team.access.Accessible;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 
-public abstract class GameObject implements Teamable, Turnable, Accessible {
+public abstract class GameObject implements Teamable, Accessible {
 	
 	private Team team = Team.NULL;
 	private Multimap<String, PropertyChangeListener> listeners = LinkedListMultimap.create();
@@ -86,9 +85,6 @@ public abstract class GameObject implements Teamable, Turnable, Accessible {
 	public Team getTeam() {
 		return team;
 	}
-	
-	@Override
-	public void turn() {}
 	
 	public boolean isAccessable(String accessName) {
 		return team.isAccessible(accessName);

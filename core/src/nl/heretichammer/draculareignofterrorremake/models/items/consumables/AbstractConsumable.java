@@ -1,0 +1,26 @@
+package nl.heretichammer.draculareignofterrorremake.models.items.consumables;
+
+import nl.heretichammer.draculareignofterrorremake.models.items.AbstractItem;
+import nl.heretichammer.draculareignofterrorremake.models.items.Item;
+
+public abstract class AbstractConsumable<M extends AbstractConsumable.Model> extends AbstractItem<M> implements Consumable {
+	
+	public AbstractConsumable(M model) {
+		super(model);
+	}
+	
+	@Override
+	public Ingestion getIngestion() {
+		return data.ingestion;
+	}
+	
+	@Override
+	public void accept(ItemVisitor visitor) {
+		visitor.visit(this);
+	}
+	
+	public static class Model extends Item.ItemData{
+		public Consumable.Ingestion ingestion;
+		public int amount;
+	}
+}

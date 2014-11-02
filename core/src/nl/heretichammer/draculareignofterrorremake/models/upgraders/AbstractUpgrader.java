@@ -1,0 +1,121 @@
+package nl.heretichammer.draculareignofterrorremake.models.upgraders;
+
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.upgrades.Upgrade;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.upgrades.UpgradeFactory;
+import nl.heretichammer.draculareignofterrorremake.utils.AbstractTeamableAccessableStartable;
+import nl.heretichammer.draculareignofterrorremake.utils.DRoTRUtils;
+import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
+
+public class AbstractUpgrader<D extends Upgrader.UpgraderData> extends AbstractTeamableAccessableStartable implements Upgrader {
+	protected D data;
+	private Upgrade[] upgrades;
+	private Upgrade current, next;
+	protected boolean done = false;
+	private int level;
+	
+	public AbstractUpgrader(D dasta) {
+		this.data = data;
+		//load upgrades
+		int i = 0;
+		upgrades = new Upgrade[data.upgrades.length];
+		for(String upgradeName : data.upgrades) {
+			upgrades[i] = UpgradeFactory.createAccessUpgrade(upgradeName);
+			upgrades[i].setUpgrader(this);
+			i++;
+		}
+		setNext(upgrades[0]);
+	}
+	
+	@Override
+	public void init() {
+		next.start();
+	}
+	
+	@Override
+	public void setTeam(Team team) {
+		super.setTeam(team);
+		DRoTRUtils.setTeam(team, upgrades);
+	}
+	
+	@Override
+	public void setItemSupplier(ItemSupplier itemSupplier) {
+		DRoTRUtils.setItemSupplier(itemSupplier, upgrades);
+	}
+
+	@Override
+	public boolean isAccessable() {
+		return isAccessable(data.accessName);
+	}
+
+	@Override
+	public String getName() {
+		return data.name;
+	}
+
+	@Override
+	public int getMaxLevel() {
+		if(upgrades == null) {
+			return 0;
+		}
+		return upgrades[upgrades.length-1].getLevel();
+	}
+
+	public boolean isDone() {
+		return done;
+	}
+	
+	@Override
+	public Upgrade getNext() {
+		if(next == null || next.isDone()) {
+			next();
+		}
+		return next;
+	}
+	
+	@Override
+	public Upgrade getCurrent() {
+		return current;
+	}
+	
+	/**
+	 * Sets {@link #current} to new upgrade.
+	 */
+	private void next() {
+		for(Upgrade upgrade : upgrades) {
+			if(!upgrade.isDone()) {//sets to upgrade that is not done yet
+				current = next;
+				setNext(upgrade);
+				break;//for
+			}
+		}
+	}
+
+	@Override
+	public void onDone(Upgrade upgrade) {
+		if(upgrade == next && upgrade.isDone()) {
+			level = upgrade.getLevel();//set level that is done
+			next();
+		}
+	}
+
+	public void week() {
+		if(next != null && next.isStarted() && !next.isDone()) {
+			next.week();
+		}
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	private void setNext(Upgrade next) {
+		this.next = next;
+		level = next.getLevel();
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
+}
