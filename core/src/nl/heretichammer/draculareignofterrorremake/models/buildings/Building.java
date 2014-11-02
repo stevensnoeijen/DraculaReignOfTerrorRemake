@@ -1,28 +1,14 @@
 package nl.heretichammer.draculareignofterrorremake.models.buildings;
 
-import nl.heretichammer.draculareignofterrorremake.models.items.Item;
+import nl.heretichammer.draculareignofterrorremake.models.buildings.parts.BuildingPart;
 import nl.heretichammer.draculareignofterrorremake.models.producers.Producer;
 
 public class Building {
 	private BuildingPart[] pieces;
-	private Producer<?> producer;
-	private BuildingData buildingData;
+	private int level;
+	private String previewImage;
+	private String mapIconImage;
+	private String buildMapIconImage;
 	
-	public BuildingData getData() {
-		return buildingData;
-	}
 	
-	public static class BuildingData {
-		public BuildingType type;
-		public int level;
-		public Item.ItemDescriptor[] buildCost;
-		public Item.ItemDescriptor[] upgradeCost;
-		public String previewImage;
-		public String mapIconImage;
-		public String buildMapIconImage;
-	}
-	
-	public static enum BuildingType {
-		BRIDGE, TOWER, CASTLE
-	}
 }

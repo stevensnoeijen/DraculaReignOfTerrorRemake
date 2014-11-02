@@ -1,11 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import nl.heretichammer.draculareignofterrorremake.models.map.AreaMap;
-import nl.heretichammer.draculareignofterrorremake.models.unit.Unit;
-import nl.heretichammer.draculareignofterrorremake.models.unit.UnitFactory;
+import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
+import nl.heretichammer.draculareignofterrorremake.models.units.UnitFactory;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenAccessor;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
@@ -19,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class BattleScreen extends MapScreen {
 	private AreaMapScreenState state;
-	private AreaMap areaMap;
+	private Area area;
 	
 	private Music music;
 	

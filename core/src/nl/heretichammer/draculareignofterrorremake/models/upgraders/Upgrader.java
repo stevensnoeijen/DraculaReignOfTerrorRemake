@@ -1,34 +1,38 @@
 package nl.heretichammer.draculareignofterrorremake.models.upgraders;
 
-import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
-import nl.heretichammer.draculareignofterrorremake.models.team.access.Accessible;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.upgrades.Upgrade;
-import nl.heretichammer.draculareignofterrorremake.utils.ItemSuppliable;
-import nl.heretichammer.draculareignofterrorremake.utils.Startable;
+import java.util.Queue;
 
-public interface Upgrader extends Startable, ItemSuppliable, Teamable, Accessible {
-	/**
-	 * Init after team set for starting default upgrade(s)
-	 */
-	public void init();
-	public String getName();
-	public int getMaxLevel();
-	public Upgrade getCurrent();
-	public Upgrade getNext();
-	public void week();
+import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
+import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
+
+public abstract class Upgrader<T extends Upgrade> extends TeamableModel implements Teamable {
+	private Queue<T> upgrades;
+	protected boolean done = false;
 	
-	/**
-	 * Called by an {@link Upgrade} when done
-	 * @param upgrade that is done
-	 */
-	public void onDone(Upgrade upgrade);
+	public abstract String getName();
 	
-	public static class UpgraderData {
-		public String accessName;
-		public String name;
-		/**
-		 * In order
-		 */
-		public String[] upgrades; 
+	protected void addUpgrade(T upgrade){
+		upgrade.setTeam(getTeam());	
+		upgrades.add(upgrade);
+	}
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void week() {
+		if(!upgrades.isEmpty()){
+			T currentUpgrade = upgrades.peek();
+			if(currentUpgrade.isStarted()) {
+				currentUpgrade.week();
+			}
+		}
+	}
+	
+	public abstract int getMaxLevel();
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

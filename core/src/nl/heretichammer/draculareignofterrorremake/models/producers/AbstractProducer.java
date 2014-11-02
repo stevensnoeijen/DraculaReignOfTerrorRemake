@@ -1,63 +1,25 @@
 package nl.heretichammer.draculareignofterrorremake.models.producers;
 
-import nl.heretichammer.draculareignofterrorremake.GameObject;
-import nl.heretichammer.draculareignofterrorremake.models.items.Item;
-import nl.heretichammer.draculareignofterrorremake.models.items.Item.ItemDescriptor;
-import nl.heretichammer.draculareignofterrorremake.utils.Consumer;
-import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
+import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
+import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedException;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
+import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
+import nl.heretichammer.draculareignofterrorremake.models.events.AccessableEvent;
+import nl.heretichammer.draculareignofterrorremake.models.events.ProducerCurrentTurnChangedEvent;
+import nl.heretichammer.draculareignofterrorremake.models.events.ProducerDoneEvent;
+import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-public abstract class AbstractProducer<P,D extends Producer.ProducerData> extends GameObject implements Producer<P> {
-	
-	protected D data;
-	
+public abstract class AbstractProducer<P> extends TeamableModel implements Producer<P> {
+	private boolean accessable = false;
 	private boolean started;
-	
-	protected ItemSupplier itemSupplier;
-	protected Consumer<P> consumer;
 	protected P produced;
-	private int turn = 0;
+	private int turnCost;
+	private int currentTurn = 0;
 	private boolean done = false;
+	protected ResourceSupplier resourceSupplier;
 	
-	public AbstractProducer(D data) {
-		this.data = data;
-	}
-	
-	@Override
-	public Item.ItemDescriptor[] getCost() {
-		return data.cost;
-	}
-	
-	/**
-	 * 
-	 * @param name of the item
-	 * @return {@link ItemDescriptor#amount} or {@link ItemDescriptor#NULL} if the item was not found
-	 */
-	@Override
-	public Item.ItemDescriptor findCost(String name) {
-		if(data.cost != null) {
-			for(Item.ItemDescriptor item : data.cost) {
-				if(item.name.equals(name)) {
-					return item;
-				}
-			}
-		}
-		return Item.ItemDescriptor.NULL;
-	}
-	
-	public int getTurnCost() {
-		return data.turnCost;
-	}
-
-	@Override
-	public void setItemSupplier(ItemSupplier itemSupplier) {
-		this.itemSupplier = itemSupplier;
-	}
-
-	@Override
-	public void setConsumer(Consumer<P> consumer) {
-		this.consumer = consumer;
+	public AbstractProducer() {
+		
 	}
 
 	@Override
@@ -77,53 +39,32 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	 */
 	protected void handleProduct(){
 		produce();
-		if(consumer != null){//if theres a consumer, let it consume and remove it from the producer.
-			consumer.consume(produced);
-			produced = null;
-		}
-	}
-
-	@Override
-	public boolean isAccessable() {
-		return isAccessable(data.accessName);
-	}
-	
-	/**
-	 * 
-	 * @return if payed
-	 */
-	private boolean pay() {
-		if(data.cost == null) {//its free
-			return true;
-		}else {
-			return !ArrayUtils.isEmpty(itemSupplier.removeItems(data.cost));//if all items are removed is the array not empty
-		}
 	}
 	
 	/**
 	 * Only is started when the {@link #getCost()} is payed fully.
 	 */
 	public void start() {
-		boolean payed = pay();
-		if(payed) {//if paid
+		if(accessable){
 			setStarted(true);
+		}else{
+			throw new NotAccessableException();
 		}
 	}
 	
-	public boolean isAutoStart() {
-		return data.autoStart;
-	}
-	
-	public void week() {
-		if(!started && isAutoStart()) {
-			start();
-		}		
+	public void week() {		
 		if(started) {
-			setTurn(turn + 1);
-			if(turn >= getTurnCost()) {
+			setCurrentTurn(currentTurn + 1);
+			if(currentTurn >= getTurnCost()) {
 				//if done
 				handleProduct();
 				done();
+			}
+		}else{
+			if(accessable){
+				throw new NotStartedException();
+			}else{
+				throw new NotAccessableException();
 			}
 		}
 	}
@@ -131,13 +72,12 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	private void done() {
 		setDone(true);
 		setStarted(false);
-		setTurn(0);
+		setCurrentTurn(0);
 	}
 	
 	private void setDone(boolean done) {
-		boolean oldValue = this.done;
 		this.done = done;
-		firePropertyChange("done", oldValue, done);
+		post(new ProducerDoneEvent<P>(this));
 	}
 	
 	@Override
@@ -151,19 +91,35 @@ public abstract class AbstractProducer<P,D extends Producer.ProducerData> extend
 	}
 	
 	private void setStarted(boolean started) {
-		boolean oldValue = this.started;
 		this.started = started;
-		firePropertyChange("started", oldValue, started);
+		post(new StartedEvent());
 	}
 	
-	public void setTurn(int turn) {
-		int oldValue = this.turn;
-		this.turn = turn;
-		firePropertyChange("turn", oldValue, turn);
+	private void setCurrentTurn(int currentTurn) {
+		this.currentTurn = currentTurn;
+		post(new ProducerCurrentTurnChangedEvent<P>(this));
 	}
 	
 	@Override
-	public boolean canPay() {
-		return itemSupplier.hasItems(data.cost);
+	public int getTurnCost() {
+		return turnCost;
 	}
+	
+	@Override
+	public int getCurrentTurn() {
+		return currentTurn;
+	}
+	
+	public void setResourceSupplier(ResourceSupplier resourceSupplier) {
+		this.resourceSupplier = resourceSupplier;
+	}
+	
+	public boolean isAccessable() {
+		return accessable;
+	};
+	
+	public void setAccessable(boolean accessable) {
+		this.accessable = accessable;
+		post(new AccessableEvent());
+	};
 }

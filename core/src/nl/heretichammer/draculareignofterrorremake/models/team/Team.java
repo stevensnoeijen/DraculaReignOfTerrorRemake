@@ -7,15 +7,30 @@ import java.util.List;
 import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.Player;
-import nl.heretichammer.draculareignofterrorremake.models.items.Item;
-import nl.heretichammer.draculareignofterrorremake.models.map.Area;
-import nl.heretichammer.draculareignofterrorremake.models.unit.Troop;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.Upgrader;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.UpgraderManager;
+import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.architecture.ArchitectureUpgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.armament.ArmamentUpgrader;
 
 public class Team {
-	public static final Team NULL = new Team();
-	public static final String SAVE_FORMAT = "teams.%d.%s";
+	public static final int PERMISSION_BRIDGE = 0,
+			PERMISSION_BRIDGE2 = 1,
+			PERMISSION_BRIDGE3 = 2,
+			PERMISSION_TOWER = 3,
+			PERMISSION_CASTLE1 = 4,
+			PERMISSION_CASTLE2 = 5,
+			PERMISSION_CASTLE3 = 6,
+			PERMISSION_CASTLE4 = 7,
+			PERMISSION_CASTLE5 = 8,
+			PERMISSION_CASTLE6 = 9,
+			PERMISSION_SWORDSMEN = 10,
+			PERMISSION_CROSSBOWSOLDIERS = 11,
+			PERMISSION_JUGGERNAUT = 12,
+			PERMISSION_KNIGHT = 13,
+			PERMISSION_SPY = 14,
+			PERMISSION_CATAPULT = 15,
+			PERMISSION_CANNON = 16;
+	private static final String ERR_PERMISSION = "Permission do not exist";
 	
 	private int id;
 	private String name;
@@ -23,8 +38,9 @@ public class Team {
 	private List<Area> ownedAreas;
 	private List<Troop> troops;
 	private List<Player> players;
-	private UpgraderManager upgraderManager;
-	private final Map<String, Boolean> accessibilities = getDefaultAccessibilities();
+	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
+	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
+	private Map<Integer, Boolean> permissions = new HashMap<Integer, Boolean>();
 
 	public Team(int id, String name, TeamColor color) {
 		this.id = id;
@@ -33,8 +49,23 @@ public class Team {
 		players = new LinkedList<Player>();
 		troops = new LinkedList<Troop>();
 		ownedAreas = new ArrayList<Area>();
-		upgraderManager = new UpgraderManager();
-		upgraderManager.setTeam(this);
+		//add permissions
+		permissions.put(PERMISSION_BRIDGE, true);
+		permissions.put(PERMISSION_BRIDGE2, false);
+		permissions.put(PERMISSION_BRIDGE3, false);
+		permissions.put(PERMISSION_TOWER, false);
+		permissions.put(PERMISSION_CASTLE1, false);
+		permissions.put(PERMISSION_CASTLE2, false);
+		permissions.put(PERMISSION_CASTLE3, false);
+		permissions.put(PERMISSION_CASTLE4, false);
+		permissions.put(PERMISSION_CASTLE5, false);
+		permissions.put(PERMISSION_CASTLE6, false);
+		permissions.put(PERMISSION_SWORDSMEN, true);
+		permissions.put(PERMISSION_CROSSBOWSOLDIERS, true);
+		permissions.put(PERMISSION_JUGGERNAUT, true);
+		permissions.put(PERMISSION_KNIGHT, false);
+		permissions.put(PERMISSION_SPY, false);
+		permissions.put(PERMISSION_CANNON, false);
 	}
 	
 	private Team(){
@@ -93,25 +124,6 @@ public class Team {
 		}
 	}
 	
-	public int getItemAmount(String itemName) {
-		int amount = 0;
-		for(Area area : ownedAreas) {
-			Item resource = area.findResourceByName(itemName);
-			if(resource != null) {
-				amount += resource.getAmount();
-			}
-		}
-		return amount;
-	}
-	
-	public int getIncome(String name) {
-		int income = 0;
-		for(Area area : ownedAreas) {
-			income += area.getIncome(name);
-		}
-		return income;
-	}
-	
 	public int getUnits() {
 		int units = 0;
 		for(Troop troop : troops) {
@@ -121,14 +133,20 @@ public class Team {
 	}
 	
 	public void week() {
-		for(Area area : ownedAreas) {
-			area.week();
-		}
-		upgraderManager.week();
+		armamentUpgrader.week();
+		architectureUpgrader.week();
 	}
 	
-	public Upgrader getUpgrader(String name) {
-		return upgraderManager.getUpgrader(name);
+	public void setPermission(int permission, boolean enable){
+		if(!permissions.containsKey(permissions)){
+			throw new IllegalArgumentException(ERR_PERMISSION);
+		}else{
+			permissions.put(permission, enable);
+		}
+	}
+	
+	public boolean hasPermission(int permission){
+		return permissions.get(permission);
 	}
 	
 	/**
@@ -141,32 +159,5 @@ public class Team {
 	
 	public static enum TeamColor {
 		BLUE, RED
-	}
-
-	public boolean isAccessible(String accessName) {
-		return accessibilities.get(accessName);
-	}
-	
-	public void setAccessibility(String accessibility, boolean value) {
-		if(!accessibilities.containsKey(accessibility)) {
-			throw new RuntimeException( String.format("doesn't contain accessibility '%s'", accessibility) );
-		}
-		accessibilities.put(accessibility, value);
-	}
-	
-	public void putAccessibility(String accessibility, boolean value) {
-		accessibilities.put(accessibility, value);
-	}
-	
-	public static Map<String, Boolean> getDefaultAccessibilities(){
-		Map<String, Boolean> accessibilities = new HashMap<String, Boolean>();
-		accessibilities.put("troopproducers.swordsmen", true);
-		accessibilities.put("troopproducers.crossbowsoldiers", true);
-		accessibilities.put("troopproducers.knight", false);
-		accessibilities.put("troopproducers.juggernaut", true);
-		accessibilities.put("troopproducers.catapult", false);
-		accessibilities.put("troopproducers.cannon", false);
-		accessibilities.put("troopproducers.spy", false);
-		return accessibilities;
 	}
 }

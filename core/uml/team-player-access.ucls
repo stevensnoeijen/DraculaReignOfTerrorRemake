@@ -34,9 +34,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="nl.heretichammer.draculareignofterrorremake.models.team.access.Accessible" 
+  <interface id="4" language="java" name="nl.heretichammer.draculareignofterrorremake.models.Accessible" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/team/access/Accessible.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/Accessible.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="895" y="484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

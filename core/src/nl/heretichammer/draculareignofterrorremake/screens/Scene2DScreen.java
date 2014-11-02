@@ -26,7 +26,6 @@ public abstract class Scene2DScreen extends ScreenAdapter implements InputProces
 	protected void renderStage(float delta) {
 		stage.act(delta);
 		stage.draw();
-		Table.drawDebug(stage);
 	}
 	
 	@Override

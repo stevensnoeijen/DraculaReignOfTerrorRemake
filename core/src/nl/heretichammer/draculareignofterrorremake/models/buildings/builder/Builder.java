@@ -1,7 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.models.buildings.builder;
 
+import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.utils.ItemSupplier;
 
 public interface Builder {
 	public void constructStart();
@@ -10,7 +10,5 @@ public interface Builder {
 	public void repairStop(Building building);
 	public void upgradeStart(Building building);
 	public void upgradeStop(Building building);
-	public void destructStart(Building building);
-	public void destructStop(Building building);
-	public void setItemSupplier(ItemSupplier itemSupplier);
+	public void setItemSupplier(ResourceSupplier resourceSupplier);
 }

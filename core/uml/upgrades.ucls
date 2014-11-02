@@ -13,9 +13,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="nl.heretichammer.draculareignofterrorremake.models.upgraders.upgrades.Upgrade" 
+  <interface id="2" language="java" name="nl.heretichammer.draculareignofterrorremake.models.upgraders.Upgrade" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/upgraders/upgrades/Upgrade.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/upgraders/Upgrade.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="264" y="469"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

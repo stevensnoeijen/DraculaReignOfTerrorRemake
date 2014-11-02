@@ -1,38 +1,60 @@
 package nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer;
 
-import nl.heretichammer.draculareignofterrorremake.models.data.DataManager;
+import nl.heretichammer.draculareignofterrorremake.annotations.TroopDescriptor;
+import nl.heretichammer.draculareignofterrorremake.models.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producers.AbstractProducer;
-import nl.heretichammer.draculareignofterrorremake.models.producers.Producer;
-import nl.heretichammer.draculareignofterrorremake.models.unit.Troop;
-import nl.heretichammer.draculareignofterrorremake.models.unit.Unit;
-import nl.heretichammer.draculareignofterrorremake.models.unit.UnitFactory;
+import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 
-public class TroopProducer extends AbstractProducer<Troop, TroopProducer.TroopProducerData> {
-
-	public TroopProducer(TroopProducerData data) {
-		super(data);
+public class TroopProducer<T extends Unit> extends AbstractProducer<Troop> {
+	private Class<T> clazz;
+	private TroopDescriptor troopDescriptor;
+	private int goldCost, woodCost, foodCost;
+	
+	public TroopProducer(Class<T> class1) {
+		this.clazz = class1;
+		troopDescriptor = class1.getAnnotation(TroopDescriptor.class);
 	}
 	
 	@Override
 	protected void produce() {
-		produced = new Troop(data.produces.size);
-		produced.addUnits(UnitFactory.createUnits(data.produces.unitName, data.produces.size));
-	}
-	
-	public Unit.UnitData getUnitData(){
-		return DataManager.instance.getUnitData(data.produces.unitName);		
+		produced = new Troop<T>(troopDescriptor.size());
+		for(int i = 0; i < troopDescriptor.size(); i++){
+			Unit unit;
+			try {
+				unit = clazz.newInstance();
+			} catch (InstantiationException | IllegalAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+			unit.setTeam(this);
+			produced.addUnit(unit);
+		}
+		post(new TroopProducedEvent());
 	}
 	
 	public String getTroopName() {
-		return data.produces.name;
+		return troopDescriptor.name();
 	}
 	
-	public String getStartSound() {
-		return data.startSound;
+	private void pay() {
+		resourceSupplier.removeSupplies(goldCost, woodCost, foodCost);
 	}
 	
-	public static class TroopProducerData extends Producer.ProducerData {
-		public Troop.TroopModel produces;
-		public String startSound;
+	@Override
+	public void start() {
+		pay();
+		super.start();
+	}
+	
+	public int getGoldCost(){
+		return goldCost;
+	}
+	
+	public int getWoodCost(){
+		return woodCost;
+	}
+	
+	public int getFoodCost(){
+		return foodCost;
 	}
 }

@@ -13,9 +13,9 @@
     </display>  
   </interface>  
   <class id="2" language="java" 
-    name="nl.heretichammer.draculareignofterrorremake.models.producers.itemproducer.ItemProducer" 
+    name="nl.heretichammer.draculareignofterrorremake.models.producers.resourceproducer.ResourceProducer" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/producers/itemproducer/ItemProducer.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/producers/resourceproducer/ResourceProducer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="662" y="765"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
