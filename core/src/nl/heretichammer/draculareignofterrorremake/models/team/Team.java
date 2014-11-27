@@ -13,23 +13,6 @@ import nl.heretichammer.draculareignofterrorremake.models.upgraders.architecture
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.armament.ArmamentUpgrader;
 
 public class Team {
-	public static final int PERMISSION_BRIDGE = 0,
-			PERMISSION_BRIDGE2 = 1,
-			PERMISSION_BRIDGE3 = 2,
-			PERMISSION_TOWER = 3,
-			PERMISSION_CASTLE1 = 4,
-			PERMISSION_CASTLE2 = 5,
-			PERMISSION_CASTLE3 = 6,
-			PERMISSION_CASTLE4 = 7,
-			PERMISSION_CASTLE5 = 8,
-			PERMISSION_CASTLE6 = 9,
-			PERMISSION_SWORDSMEN = 10,
-			PERMISSION_CROSSBOWSOLDIERS = 11,
-			PERMISSION_JUGGERNAUT = 12,
-			PERMISSION_KNIGHT = 13,
-			PERMISSION_SPY = 14,
-			PERMISSION_CATAPULT = 15,
-			PERMISSION_CANNON = 16;
 	private static final String ERR_PERMISSION = "Permission do not exist";
 	
 	private int id;
@@ -40,7 +23,7 @@ public class Team {
 	private List<Player> players;
 	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
 	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
-	private Map<Integer, Boolean> permissions = new HashMap<Integer, Boolean>();
+	private Map<Permission, Boolean> permissions = new HashMap<>();
 
 	public Team(int id, String name, TeamColor color) {
 		this.id = id;
@@ -50,25 +33,13 @@ public class Team {
 		troops = new LinkedList<Troop<?>>();
 		ownedAreas = new ArrayList<Area>();
 		//add permissions
-		permissions.put(PERMISSION_BRIDGE, true);
-		permissions.put(PERMISSION_BRIDGE2, false);
-		permissions.put(PERMISSION_BRIDGE3, false);
-		permissions.put(PERMISSION_TOWER, false);
-		permissions.put(PERMISSION_CASTLE1, false);
-		permissions.put(PERMISSION_CASTLE2, false);
-		permissions.put(PERMISSION_CASTLE3, false);
-		permissions.put(PERMISSION_CASTLE4, false);
-		permissions.put(PERMISSION_CASTLE5, false);
-		permissions.put(PERMISSION_CASTLE6, false);
-		permissions.put(PERMISSION_SWORDSMEN, true);
-		permissions.put(PERMISSION_CROSSBOWSOLDIERS, true);
-		permissions.put(PERMISSION_JUGGERNAUT, true);
-		permissions.put(PERMISSION_KNIGHT, false);
-		permissions.put(PERMISSION_SPY, false);
-		permissions.put(PERMISSION_CANNON, false);
+		for(Permission permission : Permission.values()){
+			permissions.put(permission, true);//TODO: dont set all permissions to true
+		}
 	}
 	
 	private Team(){
+		
 	}
 	
 	public int getId() {
@@ -137,7 +108,7 @@ public class Team {
 		architectureUpgrader.week();
 	}
 	
-	public void setPermission(int permission, boolean enable){
+	public void setPermission(Permission permission, boolean enable){
 		if(!permissions.containsKey(permissions)){
 			throw new IllegalArgumentException(ERR_PERMISSION);
 		}else{
@@ -145,8 +116,16 @@ public class Team {
 		}
 	}
 	
-	public boolean hasPermission(int permission){
+	public boolean hasPermission(Permission permission){
 		return permissions.get(permission);
+	}
+	
+	public ArchitectureUpgrader getArchitectureUpgrader() {
+		return this.architectureUpgrader;
+	}
+	
+	public ArmamentUpgrader getArmamentUpgrader() {
+		return this.armamentUpgrader;
 	}
 	
 	/**

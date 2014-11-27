@@ -6,6 +6,7 @@ import java.util.List;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
+import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
@@ -60,11 +61,6 @@ public class CouncilScreen extends Scene2DScreen {
 	private static final int TAB_TRAINING = 0, TAB_MOVEMENTS = 1, TAB_CONSTRUCTIONS = 2, TAB_ADMINISTRATION = 3, TAB_INFORMATION = 4;
 	private int currentTab = TAB_TRAINING;
 	
-	//sounds
-	private Sound click;
-	
-	private Music music;
-	
 	private static final float FONT_SMALL = .8f;
 	
 	public CouncilScreen() {
@@ -92,10 +88,6 @@ public class CouncilScreen extends Scene2DScreen {
 		assetManager.load("sounds/upgrading armerment.ogg", Sound.class);
 		assetManager.load("sounds/upgrading architecture.ogg", Sound.class);
 		assetManager.finishLoading();
-		
-		click = assetManager.get("sounds/click.ogg", Sound.class);
-		music = assetManager.get("music/council2.mp3", Music.class);
-		music.setLooping(true);
 		
 		skin = assetManager.get("uiskin.json", Skin.class);
 		stage.addActor(new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll")));//background
@@ -144,7 +136,6 @@ public class CouncilScreen extends Scene2DScreen {
 		waxButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				click.play();
 				world.week();
 				updateUI();
 			}
@@ -158,20 +149,6 @@ public class CouncilScreen extends Scene2DScreen {
 		updateResourcesUI();
 		showTab(currentTab);
 		//update training-buttons
-	}
-	
-	@Override
-	public void pause() {
-		super.pause();
-		music.pause();		
-	}
-	
-	@Override
-	public void resume() {
-		super.resume();
-		if(DRoTR.PREFERENCES.getBoolean("music.enabled")) {
-			music.play();
-		}
 	}
 	
 	/**
@@ -428,11 +405,8 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		for(final TroopProducer<?> troopProducer : selectedArea.getTroopProducers()) {
 			boolean visable = true;
-			Unit.UnitData unitData = troopProducer.getUnitData();
+			Uniter unitData = troopProducer.getUnitData();
 			trainingTable.row();
-			
-			final Sound startSound = Gdx.audio.newSound(Gdx.files.internal(troopProducer.getStartSound()));
-			disposables.add(startSound);
 			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
 			if(!troopProducer.isAccessable()) {
@@ -441,15 +415,13 @@ public class CouncilScreen extends Scene2DScreen {
 			}else if(troopProducer.isStarted()) {
 				trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");//add hourglass
 				trainButton.setDisabled(true);
-			}else if(!troopProducer.canPay()) {
+			}else if(!troopProducer.canSupplyCost()) {
 				trainButton.setDisabled(true);//only disable
 			}
 			trainButton.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					if(!trainButton.isDisabled()) {
-						startSound.play();
-					}
+					
 				}
 			});
 			trainButton.addListener(new ClickListener() {
@@ -461,7 +433,7 @@ public class CouncilScreen extends Scene2DScreen {
 			});
 			troopProducer.register(new Object(){
 				@Subscribe
-				public void on(StartedEvent<TroopProducer> event){
+				public void on(StartedEvent event){
 					trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 					trainButton.setDisabled(true);
 				}
@@ -479,50 +451,50 @@ public class CouncilScreen extends Scene2DScreen {
 			final float SPACE = 1;
 			//troop costs
 			//gold
-			Label goldCostLabel = new Label(String.valueOf(troopProducer.findCost("gold").amount), skin);
+			Label goldCostLabel = new Label(String.valueOf(troopProducer.getResourceCost(Resource.GOLD)), skin);
 			goldCostLabel.setFontScale(FONTSCALE);
 			goldCostLabel.setAlignment(Align.center);
 			goldCostLabel.setVisible(visable);
 			trainingTable.add(goldCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//turns
-			Label turnsCostLabel = new Label(String.valueOf(troopProducer.getTurnCost()), skin);
+			Label turnsCostLabel = new Label(String.valueOf(troopProducer.getResourceCost(Resource.TIME)), skin);
 			turnsCostLabel.setFontScale(FONTSCALE);
 			turnsCostLabel.setAlignment(Align.center);
 			turnsCostLabel.setVisible(visable);
 			trainingTable.add(turnsCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//unit attributes
 			//strenght
-			Label trainingCostLabel = new Label(String.valueOf(unitData.attributes.strenght), skin);
+			Label trainingCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.STRENGHT)), skin);
 			trainingCostLabel.setFontScale(FONTSCALE);
 			trainingCostLabel.setAlignment(Align.center);
 			trainingCostLabel.setVisible(visable);
 			trainingTable.add(trainingCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//accuracy
-			Label accuracyCostLabel = new Label(String.valueOf(unitData.attributes.accuracy), skin);
+			Label accuracyCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.ACCURACY)), skin);
 			accuracyCostLabel.setFontScale(FONTSCALE);
 			accuracyCostLabel.setAlignment(Align.center);
 			accuracyCostLabel.setVisible(visable);
 			trainingTable.add(accuracyCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//defance
-			Label defanceCostLabel = new Label(String.valueOf(unitData.attributes.defance), skin);
+			Label defanceCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.DEFANCE)), skin);
 			defanceCostLabel.setFontScale(FONTSCALE);
 			defanceCostLabel.setAlignment(Align.center);
 			defanceCostLabel.setVisible(visable);
 			trainingTable.add(defanceCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//stamina
-			Label staminaCostLabel = new Label(String.valueOf(unitData.attributes.stamina), skin);
+			Label staminaCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.STAMINA)), skin);
 			staminaCostLabel.setFontScale(FONTSCALE);
 			staminaCostLabel.setAlignment(Align.center);
 			staminaCostLabel.setVisible(visable);
 			trainingTable.add(staminaCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//speed
-			Label speedCostLabel = new Label(String.valueOf(unitData.attributes.speed), skin);
+			Label speedCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.SPEED)), skin);
 			speedCostLabel.setFontScale(FONTSCALE);
 			speedCostLabel.setAlignment(Align.center);
 			speedCostLabel.setVisible(visable);
 			trainingTable.add(speedCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//range
-			Label rangeCostLabel = new Label(String.valueOf(unitData.attributes.range), skin);
+			Label rangeCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.RANGE)), skin);
 			rangeCostLabel.setFontScale(FONTSCALE);
 			rangeCostLabel.setAlignment(Align.center);
 			rangeCostLabel.setVisible(visable);
@@ -564,10 +536,14 @@ public class CouncilScreen extends Scene2DScreen {
 		}
 	}
 	
+	private static enum BuildingType {
+		BRIDGE, TOWER, CASTLE
+	}
+	
 	private Building selectedBuilding = null;
 	public static final int CONSTRUCTIONMODE_REPAIR = 1, CONSTRUCTIONMODE_UPGRADE = 2, CONSTRUCTIONMODE_BUILD = 3;
 	private int constructionMode = CONSTRUCTIONMODE_REPAIR;
-	private Building.BuildingType selectedBuildingType = BuildingType.BRIDGE;
+	private BuildingType selectedBuildingType = BuildingType.BRIDGE;
 	private boolean selectedBuildingTypeWithMoat = false;
 	private int selectedBuildingLevel = 0;
 	
@@ -825,10 +801,8 @@ public class CouncilScreen extends Scene2DScreen {
 		upgradeButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		//armament
-		final Upgrader armamentUpgrader = team.getUpgrader("armament");
-		Upgrade currentArmamentUpgrade = armamentUpgrader.getCurrent();
+		final Upgrader armamentUpgrader = team.getArmamentUpgrader();	
 		final Upgrade nextArmamentUpgrade = armamentUpgrader.getNext();
-		nextArmamentUpgrade.setItemSupplier(selectedArea);
 		Image armamentImage = new Image( assetHelper.getDrawable( currentArmamentUpgrade.getImage() ) );
 		armamentImage.setPosition(5, 195);
 		tabContainer.addActor(armamentImage);
@@ -1007,8 +981,6 @@ public class CouncilScreen extends Scene2DScreen {
 	public void dispose() {
 		super.dispose();
 		assetManager.dispose();
-		click.dispose();
-		music.dispose();
 		for(Disposable disposable : disposables) {
 			disposable.dispose();
 		}		

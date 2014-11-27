@@ -1,7 +1,13 @@
 package nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
+import nl.heretichammer.draculareignofterrorremake.annotations.UnitAttribute;
+import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
+import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producers.AbstractProducer;
@@ -10,10 +16,22 @@ import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
 	private Class<T> clazz;
 	private Trooper trooper;
+	private Uniter uniter;
+	private Map<Resource, Integer> cost;
+	private Map<Unit.AttributeType, Integer> unitAttributes;
 	
 	public TroopProducer(Class<T> clazz) {
 		this.clazz = clazz;
 		trooper = clazz.getAnnotation(Trooper.class);
+		uniter = clazz.getAnnotation(Uniter.class);
+		cost = new HashMap<>();
+		for(ResourceCost costs : trooper.cost()){
+			this.cost.put(costs.resource(), costs.amount());
+		}
+		unitAttributes = new HashMap<>();
+		for(UnitAttribute attribute : uniter.attributes()){
+			this.unitAttributes.put(attribute.type(), attribute.value());
+		}
 	}
 	
 	@Override
@@ -52,6 +70,10 @@ public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
 	public ResourceCost[] getCost() {
 		return trooper.cost();
 	}
+	
+	public int getResourceCost(Resource resource){
+		return cost.get(resource);
+	}
 
 	@Override
 	public boolean canSupplyCost() {
@@ -61,5 +83,17 @@ public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
 			}
 		}
 		return true;
+	}
+	
+	public Trooper getTroopDate(){
+		return trooper;
+	}
+	
+	public Uniter getUnitData(){
+		return uniter;
+	}
+	
+	public int getUnitAttributeValue(Unit.AttributeType attributeType){
+		return unitAttributes.get(attributeType);
 	}
 }

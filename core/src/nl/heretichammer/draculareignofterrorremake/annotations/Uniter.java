@@ -13,6 +13,5 @@ public @interface Uniter {
 	public String name();
 	public Class<?> particle() default NullType.class;
 	public boolean physical() default true;
-	public ResourceCost[] cost();
 	public UnitAttribute[] attributes();
 }

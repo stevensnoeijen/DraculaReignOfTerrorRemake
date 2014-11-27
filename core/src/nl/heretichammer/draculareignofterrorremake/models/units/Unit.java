@@ -262,6 +262,7 @@ public class Unit extends TeamableModel implements Cloneable, Teamable, Mappable
 		}
 	}
 	*/
+	
 	public static class UnitData {
 		public String name;
 		public final Attributes attributes = new Attributes();

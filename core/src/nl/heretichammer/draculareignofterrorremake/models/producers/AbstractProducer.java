@@ -101,11 +101,6 @@ public abstract class AbstractProducer<P> extends TeamableModel implements Produ
 	}
 	
 	@Override
-	public int getTurnCost() {
-		return turnCost;
-	}
-	
-	@Override
 	public int getCurrentTurn() {
 		return currentTurn;
 	}

@@ -2,7 +2,6 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
-import nl.heretichammer.draculareignofterrorremake.models.units.UnitFactory;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 import aurelienribon.tweenengine.TweenManager;
 
@@ -51,8 +50,6 @@ public class BattleScreen extends MapScreen {
 		stage.addActor(new Image(assetHelper.getDrawable("images/battle-ui.pack:ui-panel-left")));
 		
 		spriteBatch = new SpriteBatch();
-		
-		Unit unit = UnitFactory.createUnit("swordsoldier");
 		
 		setState(new AreaMapScreenPlayState());
 	}

@@ -3,6 +3,7 @@ package nl.heretichammer.draculareignofterrorremake.models.upgraders;
 import java.util.Queue;
 
 import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
 
 public abstract class Upgrader<T extends Upgrade> extends TeamableModel implements Teamable {
@@ -10,6 +11,12 @@ public abstract class Upgrader<T extends Upgrade> extends TeamableModel implemen
 	protected boolean done = false;
 	
 	public abstract String getName();
+	
+	@Override
+	public void setTeam(Team team) {
+		
+		super.setTeam(team);
+	}
 	
 	protected void addUpgrade(T upgrade){
 		upgrade.setTeam(getTeam());	
@@ -27,6 +34,10 @@ public abstract class Upgrader<T extends Upgrade> extends TeamableModel implemen
 				currentUpgrade.week();
 			}
 		}
+	}
+	
+	public T getNext(){
+		return upgrades.peek();
 	}
 	
 	public abstract int getMaxLevel();
