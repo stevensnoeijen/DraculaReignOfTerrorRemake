@@ -7,10 +7,10 @@ import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.models.buildings.Building.BuildingType;
 import nl.heretichammer.draculareignofterrorremake.models.events.ProducerDoneEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer.TroopProducer;
@@ -182,24 +182,21 @@ public class CouncilScreen extends Scene2DScreen {
 		ui.currentWeek.setText(String.valueOf(world.getWeek()));
 	}
 	
-	public void updateResourcesUI() {
-		final Team playersTeam = player.getTeam();
-		
+	public void updateResourcesUI() {		
 		//gold
-		ui.resources.currentGold.setText( String.valueOf( playersTeam.getItemAmount("gold") ) );
-		ui.resources.incomeGold.setText( incomeToString( playersTeam.getIncome("gold") ) );
+		ui.resources.currentGold.setText( String.valueOf( selectedArea.getResourceAmount(Resource.GOLD) ) );
+		ui.resources.incomeGold.setText( incomeToString( selectedArea.getResourceIncome(Resource.GOLD) ) );
 		//wood
-		ui.resources.currentWood.setText( String.valueOf( playersTeam.getItemAmount("wood") ) );
-		ui.resources.incomeWood.setText( incomeToString( playersTeam.getIncome("wood") ) );
+		ui.resources.currentWood.setText( String.valueOf( selectedArea.getResourceAmount(Resource.WOOD)  ) );
+		ui.resources.incomeWood.setText( incomeToString( selectedArea.getResourceIncome(Resource.WOOD) ) );
 		//food
-		ui.resources.currentFood.setText( String.valueOf( playersTeam.getItemAmount("food") ) );
-		ui.resources.incomeFood.setText( incomeToString( playersTeam.getIncome("food") ) );
+		ui.resources.currentFood.setText( String.valueOf( selectedArea.getResourceAmount(Resource.FOOD)  ) );
+		ui.resources.incomeFood.setText( incomeToString( selectedArea.getResourceIncome(Resource.FOOD)  ) );
 		//men
-		ui.resources.currentMen.setText( String.valueOf( playersTeam.getItemAmount("men") ) );
-		ui.resources.incomeMen.setText( incomeToString( playersTeam.getIncome("men") ) );
+		ui.resources.currentMen.setText( String.valueOf( selectedArea.getResourceAmount(Resource.MEN)  ) );
+		ui.resources.incomeMen.setText( incomeToString( selectedArea.getResourceIncome(Resource.MEN)  ) );
 		//army
-		ui.resources.currentArmy.setText( String.valueOf( playersTeam.getUnits() ) );
-		
+		ui.resources.currentArmy.setText( String.valueOf( selectedArea.getArmy() ) );
 	}
 	
 	/**
@@ -429,7 +426,7 @@ public class CouncilScreen extends Scene2DScreen {
 		Group tabContrainer = (Group)stage.getRoot().findActor("tab.container");
 		tabContrainer.addActor(trainingTable);
 		
-		for(final TroopProducer troopProducer : selectedArea.troopProducerManager.getProducers()) {
+		for(final TroopProducer<?> troopProducer : selectedArea.getTroopProducers()) {
 			boolean visable = true;
 			Unit.UnitData unitData = troopProducer.getUnitData();
 			trainingTable.row();

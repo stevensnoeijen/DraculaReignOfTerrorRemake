@@ -1,16 +1,24 @@
 package nl.heretichammer.draculareignofterrorremake.models;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResources;
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producers.Producer;
 import nl.heretichammer.draculareignofterrorremake.models.producers.resourceproducer.ResourceProducer;
 import nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.units.Cannon;
+import nl.heretichammer.draculareignofterrorremake.models.units.Catapult;
+import nl.heretichammer.draculareignofterrorremake.models.units.Crossbowsoldier;
+import nl.heretichammer.draculareignofterrorremake.models.units.Juggernaut;
+import nl.heretichammer.draculareignofterrorremake.models.units.Knight;
+import nl.heretichammer.draculareignofterrorremake.models.units.Spy;
 import nl.heretichammer.draculareignofterrorremake.models.units.Swordsmen;
+import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -35,51 +43,66 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	private World world;//TODO: replace with neighbors
 	private Set<Troop<?>> troops = new HashSet<Troop<?>>();
 	
-	private int gold, wood, food, men, army;
-	private int goldIncome, woodIncome, foodIncome;
+	private Map<Resource, Integer> resources = new HashMap<>();
+	private int army = 0;
 	
-	private TroopProducer<Swordsmen> swordsmenProducer = new TroopProducer<Swordsmen>(Swordsmen.class);
-	//private TroopProducer<Crossbowsoldier> crossbowsoldierProducer = new TroopProducer<Crossbowsoldier>(Crossbowsoldier.class);
-	//knight
-	//juggernaut
-	//catapult
-	//cannon
-	//spy
-	
-	private ResourceProducer goldProducer = new ResourceProducer();
-	//wood
-	//food
-	
-	/**
-	 * Producers that will be run at {@link #week()}
-	 */
 	private Set<Producer<?>> producers = new HashSet<>();
+	private Set<TroopProducer<?>> troopProducers = new HashSet<>();	
+	private Map<Resource, ResourceProducer> resourceProducers = new HashMap<>();
 	
 	public Area() {
-		producers.add(swordsmenProducer);
-		swordsmenProducer.setResourceSupplier(this);
-		swordsmenProducer.register(new Object(){
+		//create resources
+		resources.put(Resource.GOLD, 50);
+		resources.put(Resource.WOOD, 10);
+		resources.put(Resource.FOOD, 20);
+		resources.put(Resource.MEN, 50);
+		
+		//create and add troopproducers
+		addTroopProducer( new TroopProducer<Swordsmen>(Swordsmen.class) );
+		addTroopProducer( new TroopProducer<Crossbowsoldier>(Crossbowsoldier.class) );
+		addTroopProducer( new TroopProducer<Knight>(Knight.class) );
+		addTroopProducer( new TroopProducer<Juggernaut>(Juggernaut.class) );
+		addTroopProducer( new TroopProducer<Catapult>(Catapult.class) );
+		addTroopProducer( new TroopProducer<Cannon>(Cannon.class) );
+		addTroopProducer( new TroopProducer<Spy>(Spy.class) );
+		
+		//create and add resouceproducers
+		addResourceProducer( new ResourceProducer(Resource.GOLD, 20) );
+		addResourceProducer( new ResourceProducer(Resource.WOOD, 10) );
+		addResourceProducer( new ResourceProducer(Resource.FOOD, 35) );
+		addResourceProducer( new ResourceProducer(Resource.MEN, 2) );
+	}
+	
+	private void addTroopProducer(final TroopProducer<? extends Unit> troopProducer){
+		troopProducer.setResourceSupplier(this);
+		troopProducer.register(new Object(){
 			//TODO: make listener for this?
 			@Subscribe
 			public void on(TroopProducedEvent e){
-				addTroop(swordsmenProducer.remove());
+				addTroop(troopProducer.remove());
 			}
 		});
-		
-		//create resouceproducers
-		producers.add(goldProducer);
-		goldProducer.register(new Object(){
+		troopProducers.add(troopProducer);
+		producers.add(troopProducer);
+	}
+	
+	private void addResourceProducer(final ResourceProducer resourceProducer){
+		resourceProducer.setResourceSupplier(this);
+		resourceProducer.register(new Object(){
 			@Subscribe
 			public void on(ResourceProducedEvent e){
-				addResources(e.gold, e.wood, e.food);
+				incrementResource(e.resource, e.produced);
 			}
 		});
+		resourceProducers.put(resourceProducer.getResource(), resourceProducer);
+		producers.add(resourceProducer);
 	}
 	
 	@Override
 	public void setTeam(Team team) {
-		swordsmenProducer.setTeam(this);
-		goldProducer.setTeam(this);
+		for(Producer<?> producer : producers) {
+			producer.setTeam(team);
+		}
 		super.setTeam(team);
 	}
 	
@@ -111,46 +134,16 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		return minimapImage;
 	}
 	
-	public int getGold() {
-		return gold;
+	public int getResourceAmount(Resource resource){
+		return resources.get(resource);
 	}
 	
-	public int getFood() {
-		return food;
+	public int getArmy() {
+		return this.army;
 	}
 	
-	public int getWood() {
-		return wood;
-	}
-	
-	private void addResources(int gold, int wood, int food){
-		addGold(gold);
-		addWood(wood);
-		addFood(food);
-	}
-	
-	private void addGold(int gold){
-		if(hasGold(gold)){
-			this.gold += gold;
-		}else{
-			throw new InsufficientResources();
-		}
-	}
-	
-	private void addWood(int wood){
-		if(hasWood(wood)){
-			this.wood += wood;
-		}else{
-			throw new InsufficientResources();
-		}
-	}
-	
-	private void addFood(int food){
-		if(hasFood(food)){
-			this.food += food;
-		}else{
-			throw new InsufficientResources();
-		}
+	public int getResourceIncome(Resource resource) {
+		return resourceProducers.get(resource).getProduces();
 	}
 	
 	/**
@@ -158,46 +151,32 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	 * @param gold
 	 * @return
 	 */
-	public boolean hasGold(int gold){
-		if(gold == 0){
+	@Override
+	public boolean hasResource(Resource resource, int amount){
+		if(amount == 0){
 			return true;
 		}else{
-			return (this.gold - gold) >= 0;
+			return (resources.get(resource) + amount) >= 0;
 		}
 	}
 	
-	public boolean hasWood(int wood){
-		if(wood == 0){
-			return true;
-		}else{
-			return (this.wood - wood) >= 0;
-		}
+	@Override
+	public void incrementResource(Resource resource, int amount) {
+		int current = resources.get(resource);
+		int incremented = current + amount;
+		resources.put(resource, incremented);
 	}
 	
-	public boolean hasFood(int food){
-		if(food == 0){
-			return true;
-		}else{
-			return (this.food - food) >= 0;
-		}
-	}
-
 	@Override
-	public void removeSupplies(int gold, int wood, int food) {
-		addGold(gold);
-		addWood(wood);
-		addFood(food);
+	public void decrementResource(Resource resource, int amount) {
+		incrementResource(resource, -amount);
 	}
-
-	@Override
-	public boolean canSupply(int gold, int wood, int food) {
-		return hasGold(gold) && hasWood(wood) && hasFood(food);
+	
+	public Iterable<TroopProducer<?>> getTroopProducers() {
+		return this.troopProducers;
 	}
-
-	@Override
-	public void addSupplies(int gold, int wood, int food) {
-		addFood(food);
-		addWood(wood);
-		addFood(food);
+	
+	public Iterable<ResourceProducer> getResourceProducers() {
+		return this.resourceProducers.values();
 	}
 }

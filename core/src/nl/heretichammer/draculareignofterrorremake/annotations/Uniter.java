@@ -5,14 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.lang.model.type.NullType;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface TroopDescriptor {
-	public static final int DEFAULT_SIZE = 1;
-	
+public @interface Uniter {
 	public String name();
-	public int size() default DEFAULT_SIZE;
-	public int goldCost();
-	public int woodCost();
-	public int foodCost();
+	public Class<?> particle() default NullType.class;
+	public boolean physical() default true;
+	public ResourceCost[] cost();
+	public UnitAttribute[] attributes();
 }

@@ -1,26 +1,26 @@
 package nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.TroopDescriptor;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
+import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producers.AbstractProducer;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 
-public class TroopProducer<T extends Unit> extends AbstractProducer<Troop> {
+public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
 	private Class<T> clazz;
-	private TroopDescriptor troopDescriptor;
-	private int goldCost, woodCost, foodCost;
+	private Trooper trooper;
 	
-	public TroopProducer(Class<T> class1) {
-		this.clazz = class1;
-		troopDescriptor = class1.getAnnotation(TroopDescriptor.class);
+	public TroopProducer(Class<T> clazz) {
+		this.clazz = clazz;
+		trooper = clazz.getAnnotation(Trooper.class);
 	}
 	
 	@Override
 	protected void produce() {
-		produced = new Troop<T>(troopDescriptor.size());
-		for(int i = 0; i < troopDescriptor.size(); i++){
-			Unit unit;
+		produced = new Troop<T>(trooper.size());
+		for(int i = 0; i < trooper.size(); i++){
+			T unit;
 			try {
 				unit = clazz.newInstance();
 			} catch (InstantiationException | IllegalAccessException ex) {
@@ -33,11 +33,13 @@ public class TroopProducer<T extends Unit> extends AbstractProducer<Troop> {
 	}
 	
 	public String getTroopName() {
-		return troopDescriptor.name();
+		return trooper.name();
 	}
 	
 	private void pay() {
-		resourceSupplier.removeSupplies(goldCost, woodCost, foodCost);
+		for(ResourceCost costs : trooper.cost()){
+			resourceSupplier.decrementResource(costs.resource(), costs.amount());
+		}
 	}
 	
 	@Override
@@ -45,16 +47,19 @@ public class TroopProducer<T extends Unit> extends AbstractProducer<Troop> {
 		pay();
 		super.start();
 	}
-	
-	public int getGoldCost(){
-		return goldCost;
+
+	@Override
+	public ResourceCost[] getCost() {
+		return trooper.cost();
 	}
-	
-	public int getWoodCost(){
-		return woodCost;
-	}
-	
-	public int getFoodCost(){
-		return foodCost;
+
+	@Override
+	public boolean canSupplyCost() {
+		for(ResourceCost costs : trooper.cost()){
+			if(!resourceSupplier.hasResource(costs.resource(), costs.amount())){
+				return false;
+			}
+		}
+		return true;
 	}
 }

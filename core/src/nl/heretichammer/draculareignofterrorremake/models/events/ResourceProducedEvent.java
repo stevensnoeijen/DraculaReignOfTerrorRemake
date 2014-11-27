@@ -1,5 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake.models.events;
 
+import nl.heretichammer.draculareignofterrorremake.models.Resource;
+
 public class ResourceProducedEvent {
-	public int gold, wood, food; 
+	public Resource resource;
+	public int produced;
 }

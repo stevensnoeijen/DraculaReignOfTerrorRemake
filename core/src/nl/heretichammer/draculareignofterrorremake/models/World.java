@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.Player;
-import nl.heretichammer.draculareignofterrorremake.exceptions.WeekNotDoneException;
+import nl.heretichammer.draculareignofterrorremake.models.AreaFactory;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team.TeamColor;
 
@@ -35,7 +34,7 @@ public class World {
 		}
 	}
 	
-	public List<Team> getTeams() {
+	public Iterable<Team> getTeams() {
 		return teams;
 	}
 	

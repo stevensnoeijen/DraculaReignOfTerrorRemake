@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface UnitDescriptor {
+public @interface Trooper {	
 	public String name();
+	public int size();
+	public ResourceCost[] cost();
 }

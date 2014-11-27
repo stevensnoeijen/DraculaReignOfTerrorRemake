@@ -338,11 +338,9 @@ public class Unit extends TeamableModel implements Cloneable, Teamable, Mappable
 		public int range;
 	}
 	
-	/*
-	public enum Attribute {
+	public enum AttributeType {
 		STRENGHT, ACCURACY, DEFANCE, STAMINA, SPEED, RANGE
 	}
-	*/
 	
 	public static class ItemDescriptor {
 		public String name;

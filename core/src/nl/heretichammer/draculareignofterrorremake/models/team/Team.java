@@ -36,7 +36,7 @@ public class Team {
 	private String name;
 	private TeamColor color;
 	private List<Area> ownedAreas;
-	private List<Troop> troops;
+	private List<Troop<?>> troops;
 	private List<Player> players;
 	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
 	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
@@ -47,7 +47,7 @@ public class Team {
 		this.name = name;
 		this.color = color;
 		players = new LinkedList<Player>();
-		troops = new LinkedList<Troop>();
+		troops = new LinkedList<Troop<?>>();
 		ownedAreas = new ArrayList<Area>();
 		//add permissions
 		permissions.put(PERMISSION_BRIDGE, true);
