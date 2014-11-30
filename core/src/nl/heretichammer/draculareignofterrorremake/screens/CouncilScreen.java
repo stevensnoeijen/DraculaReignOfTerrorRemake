@@ -3,7 +3,6 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 import java.util.LinkedList;
 import java.util.List;
 
-import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
@@ -17,11 +16,10 @@ import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.Upgrade;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.Upgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -46,6 +44,8 @@ import com.google.common.eventbus.Subscribe;
 
 public class CouncilScreen extends Scene2DScreen {
 	
+	private static final String LEVEL_DIVIDER = "/";
+
 	private List<Disposable> disposables = new LinkedList<Disposable>();
 	
 	private AssetManager assetManager = new AssetManager();
@@ -801,77 +801,73 @@ public class CouncilScreen extends Scene2DScreen {
 		upgradeButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
 		
 		//armament
-		final Upgrader armamentUpgrader = team.getArmamentUpgrader();	
-		final Upgrade nextArmamentUpgrade = armamentUpgrader.getNext();
-		Image armamentImage = new Image( assetHelper.getDrawable( currentArmamentUpgrade.getImage() ) );
+		final ArmamentUpgrader armamentUpgrader = team.getArmamentUpgrader();	
+		Image armamentImage = new Image( assetHelper.getDrawable( armamentUpgrader.getImage() ) );
 		armamentImage.setPosition(5, 195);
 		tabContainer.addActor(armamentImage);
 		ImageButton armamentUpgradeButton = new ImageButton(upgradeButtonStyle);
-		if(nextArmamentUpgrade.isStarted()) {
+		if(armamentUpgrader.isStarted()) {
 			armamentUpgradeButton.setDisabled(true);
-		}else if(!nextArmamentUpgrade.canPay()) {
+		}else if(!armamentUpgrader.canPayNextUpgrade()) {
 			armamentUpgradeButton.setVisible(false);//disabled
 		}
 		armamentUpgradeButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				nextArmamentUpgrade.start();
+				armamentUpgrader.startNextUpgrade();
 				assetHelper.getSound("upgrading armerment").play();
 				updateUI();
 			}
 		});
 		armamentUpgradeButton.setPosition(120, 195);
 		tabContainer.addActor(armamentUpgradeButton);
-		Label armamentUpgradeGoldCostLabel = new Label( Integer.toString(nextArmamentUpgrade.getCost("gold").amount) , skin);
+		Label armamentUpgradeGoldCostLabel = new Label(Integer.toString(armamentUpgrader.getNextUpgradeCosts(Resource.GOLD)), skin);
 		armamentUpgradeGoldCostLabel.setFontScale(0.75f);
 		armamentUpgradeGoldCostLabel.setAlignment(Align.center);
 		armamentUpgradeGoldCostLabel.setPosition(130, 240);
 		tabContainer.addActor(armamentUpgradeGoldCostLabel);
-		Label armamentUpgradeTurnCostLabel = new Label(Integer.toString(nextArmamentUpgrade.getTurnCost()), skin);
+		Label armamentUpgradeTurnCostLabel = new Label(Integer.toString(armamentUpgrader.getNextUpgradeCosts(Resource.TIME)), skin);
 		armamentUpgradeTurnCostLabel.setFontScale(0.75f);
 		armamentUpgradeTurnCostLabel.setAlignment(Align.center);
 		armamentUpgradeTurnCostLabel.setPosition(160, 240);
 		tabContainer.addActor(armamentUpgradeTurnCostLabel);
-		Label armamentLevelLabel = new Label(currentArmamentUpgrade.getLevel() + "/" + armamentUpgrader.getMaxLevel(), skin);
+		Label armamentLevelLabel = new Label(armamentUpgrader.getLevel() + LEVEL_DIVIDER + armamentUpgrader.getMaxLevel(), skin);
 		armamentLevelLabel.setFontScale(0.8f);
 		armamentLevelLabel.setPosition(90, 307);
 		tabContainer.addActor(armamentLevelLabel);
 		
 		//architecture
-		final Upgrader architectureUpgrader = team.getUpgrader("architecture");
-		Upgrade currentArchitectureUpgrade = architectureUpgrader.getCurrent();
-		final Upgrade nextArchitectureUpgrade = architectureUpgrader.getNext();
-		nextArchitectureUpgrade.setItemSupplier(selectedArea);
-		Image architectureImage = new Image( assetHelper.getDrawable( currentArchitectureUpgrade.getImage() ) );
+		final ArchitectureUpgrader architectureUpgrader = team.getArchitectureUpgrader();
+		Image architectureImage = new Image( assetHelper.getDrawable( architectureUpgrader.getImage() ) );
 		architectureImage.setPosition(5, 60);
 		tabContainer.addActor(architectureImage);
 		ImageButton architectureUpgradeButton = new ImageButton(upgradeButtonStyle);
-		if(nextArchitectureUpgrade.isStarted()) {
+		if(architectureUpgrader.isStarted()) {
 			architectureUpgradeButton.setDisabled(true);
-		}else if(!nextArchitectureUpgrade.canPay()) {
+		}else if(!architectureUpgrader.canPayNextUpgrade()) {
 			architectureUpgradeButton.setVisible(false);//disabled
 		}
 		architectureUpgradeButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				nextArchitectureUpgrade.start();
+				architectureUpgrader.startNextUpgrade();
 				assetHelper.getSound("upgrading architecture").play();
 				updateUI();
 			}
 		});
 		architectureUpgradeButton.setPosition(120, 65);
 		tabContainer.addActor(architectureUpgradeButton);
-		Label architectureUpgradeGoldCostLabel = new Label( Integer.toString( nextArchitectureUpgrade.getCost("gold").amount ) , skin);
+		Label architectureUpgradeGoldCostLabel = new Label( Integer.toString( architectureUpgrader.getNextUpgradeCosts(Resource.GOLD) ) , skin);
 		architectureUpgradeGoldCostLabel.setFontScale(0.75f);
 		architectureUpgradeGoldCostLabel.setAlignment(Align.center);
 		architectureUpgradeGoldCostLabel.setPosition(130, 105);
 		tabContainer.addActor(architectureUpgradeGoldCostLabel);
-		Label architectureUpgradeTurnCostLabel = new Label( Integer.toString( nextArchitectureUpgrade.getTurnCost() ), skin);
+		Label architectureUpgradeTurnCostLabel = new Label( Integer.toString( architectureUpgrader.getNextUpgradeCosts(Resource.TIME) ), skin);
 		architectureUpgradeTurnCostLabel.setFontScale(0.75f);
 		architectureUpgradeTurnCostLabel.setAlignment(Align.center);
 		architectureUpgradeTurnCostLabel.setPosition(160, 105);
 		tabContainer.addActor(architectureUpgradeTurnCostLabel);
-		Label architectureLevelLabel = new Label( currentArchitectureUpgrade.getLevel() + "/" + architectureUpgrader.getMaxLevel(), skin);
+		Label architectureLevelLabel = new Label( architectureUpgrader.getLevel() + LEVEL_DIVIDER + architectureUpgrader.getMaxLevel(), skin);
 		architectureLevelLabel.setFontScale(0.8f);
 		architectureLevelLabel.setPosition(90, 175);
 		tabContainer.addActor(architectureLevelLabel);

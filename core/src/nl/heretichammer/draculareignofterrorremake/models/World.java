@@ -5,15 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.models.AreaFactory;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
-import nl.heretichammer.draculareignofterrorremake.models.team.Team.TeamColor;
 
 public class World {
 	public static final int START_YEAR = 1456,
 			START_WEEK = 1;
-	public static final String TEAM_TURKS = "Turks",
-			TEAM_TRANSYLVANIA = "Transylvania";
 	
 	private int year = START_YEAR;
 	private int week = START_WEEK;
@@ -23,8 +19,8 @@ public class World {
 	
 	public World() {
 		//create teams
-		teams.add(new Team(1, TEAM_TURKS, TeamColor.RED));
-		teams.add(new Team(2, TEAM_TRANSYLVANIA, TeamColor.BLUE));
+		teams.add(Team.turks);
+		teams.add(Team.transylvanians);
 		
 		//create worlds
 		for(String areaname : Area.NAMES) {

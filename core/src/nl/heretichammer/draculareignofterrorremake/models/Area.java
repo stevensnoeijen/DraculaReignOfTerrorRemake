@@ -120,7 +120,7 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	
 	public void week() {
 		for(Producer<?> producer : producers){
-			if(producer.isAccessable() && producer.isStarted()){
+			if(producer.isStarted()){
 				producer.week();
 			}
 		}
@@ -178,5 +178,23 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	
 	public Iterable<ResourceProducer> getResourceProducers() {
 		return this.resourceProducers.values();
+	}
+	
+	protected void select(){
+		Team team = getTeam();
+		team.getArchitectureUpgrader().setResourceSupplier(this);
+		team.getArmamentUpgrader().setResourceSupplier(this);
+		for(Producer<?> producer : producers){
+			producer.setResourceSupplier(this);
+		}
+	}
+	
+	protected void unselect(){
+		Team team = getTeam();
+		team.getArchitectureUpgrader().setResourceSupplier(null);
+		team.getArmamentUpgrader().setResourceSupplier(null);
+		for(Producer<?> producer : producers){
+			producer.setResourceSupplier(this);
+		}
 	}
 }

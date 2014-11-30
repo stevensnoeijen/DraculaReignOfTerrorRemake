@@ -6,44 +6,36 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.architecture.ArchitectureUpgrader;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.armament.ArmamentUpgrader;
+import nl.heretichammer.draculareignofterrorremake.models.events.PermissionSetEvent;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 
-public class Team {
+public class Team extends Model {
 	private static final String ERR_PERMISSION = "Permission do not exist";
 	
-	private int id;
+	public static final Team turks = new Team("Turks", TeamColor.RED);
+	public static final Team transylvanians = new Team("Transylvanians", TeamColor.BLUE);
+	
 	private String name;
 	private TeamColor color;
 	private List<Area> ownedAreas;
 	private List<Troop<?>> troops;
-	private List<Player> players;
 	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
 	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
 	private Map<Permission, Boolean> permissions = new HashMap<>();
 
-	public Team(int id, String name, TeamColor color) {
-		this.id = id;
+	private Team(String name, TeamColor color) {
 		this.name = name;
 		this.color = color;
-		players = new LinkedList<Player>();
 		troops = new LinkedList<Troop<?>>();
 		ownedAreas = new ArrayList<Area>();
 		//add permissions
 		for(Permission permission : Permission.values()){
 			permissions.put(permission, true);//TODO: dont set all permissions to true
 		}
-	}
-	
-	private Team(){
-		
-	}
-	
-	public int getId() {
-		return id;
 	}
 	
 	/**
@@ -58,18 +50,6 @@ public class Team {
 	 */
 	public String getName() {
 		return name;
-	}
-	
-	public void addPlayer(Player player) {
-		if(player.getTeam() == this) {
-			players.add(player);
-		}else {
-			player.setTeam(this);//which calls this method again and will add it to troops
-		}		
-	}
-	
-	public List<Player> getPlayers() {
-		return players;
 	}
 	
 	public List<Area> getOwnedAreas() {
@@ -113,6 +93,7 @@ public class Team {
 			throw new IllegalArgumentException(ERR_PERMISSION);
 		}else{
 			permissions.put(permission, enable);
+			post(new PermissionSetEvent());
 		}
 	}
 	

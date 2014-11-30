@@ -18,9 +18,8 @@ public class Player implements Teamable {
 	@Override
 	public void setTeam(Team team) {
 		if(team == null) {
-			throw new NullPointerException();
+			throw new IllegalArgumentException();
 		}
 		this.team = team;
-		team.addPlayer(this);
 	}
 }

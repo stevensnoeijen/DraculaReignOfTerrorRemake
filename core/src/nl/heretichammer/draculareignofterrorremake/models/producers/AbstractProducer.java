@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.models.producers;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedException;
+import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
 import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
 import nl.heretichammer.draculareignofterrorremake.models.events.AccessableEvent;
@@ -9,7 +10,7 @@ import nl.heretichammer.draculareignofterrorremake.models.events.ProducerCurrent
 import nl.heretichammer.draculareignofterrorremake.models.events.ProducerDoneEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 
-public abstract class AbstractProducer<P> extends TeamableModel implements Producer<P> {
+public abstract class AbstractProducer<P> extends Model implements Producer<P> {
 	private boolean accessable = false;
 	private boolean started;
 	protected P produced;
