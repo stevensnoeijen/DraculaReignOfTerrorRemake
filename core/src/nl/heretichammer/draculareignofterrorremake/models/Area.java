@@ -7,9 +7,9 @@ import java.util.Set;
 
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.producers.Producer;
-import nl.heretichammer.draculareignofterrorremake.models.producers.resourceproducer.ResourceProducer;
-import nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.models.producer.Producer;
+import nl.heretichammer.draculareignofterrorremake.models.producer.ResourceProducer;
+import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.units.Cannon;
 import nl.heretichammer.draculareignofterrorremake.models.units.Catapult;
@@ -46,7 +46,6 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	private Map<Resource, Integer> resources = new HashMap<>();
 	private int army = 0;
 	
-	private Set<Producer<?>> producers = new HashSet<>();
 	private Set<TroopProducer<?>> troopProducers = new HashSet<>();	
 	private Map<Resource, ResourceProducer> resourceProducers = new HashMap<>();
 	
@@ -83,7 +82,6 @@ public class Area extends TeamableModel implements ResourceSupplier {
 			}
 		});
 		troopProducers.add(troopProducer);
-		producers.add(troopProducer);
 	}
 	
 	private void addResourceProducer(final ResourceProducer resourceProducer){
@@ -95,14 +93,10 @@ public class Area extends TeamableModel implements ResourceSupplier {
 			}
 		});
 		resourceProducers.put(resourceProducer.getResource(), resourceProducer);
-		producers.add(resourceProducer);
 	}
 	
 	@Override
 	public void setTeam(Team team) {
-		for(Producer<?> producer : producers) {
-			producer.setTeam(team);
-		}
 		super.setTeam(team);
 	}
 	
@@ -119,7 +113,12 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	}
 	
 	public void week() {
-		for(Producer<?> producer : producers){
+		for(Producer<?> producer : resourceProducers.values()){
+			if(producer.isStarted()){
+				producer.week();
+			}
+		}
+		for(Producer<?> producer : troopProducers){
 			if(producer.isStarted()){
 				producer.week();
 			}
@@ -178,23 +177,5 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	
 	public Iterable<ResourceProducer> getResourceProducers() {
 		return this.resourceProducers.values();
-	}
-	
-	protected void select(){
-		Team team = getTeam();
-		team.getArchitectureUpgrader().setResourceSupplier(this);
-		team.getArmamentUpgrader().setResourceSupplier(this);
-		for(Producer<?> producer : producers){
-			producer.setResourceSupplier(this);
-		}
-	}
-	
-	protected void unselect(){
-		Team team = getTeam();
-		team.getArchitectureUpgrader().setResourceSupplier(null);
-		team.getArmamentUpgrader().setResourceSupplier(null);
-		for(Producer<?> producer : producers){
-			producer.setResourceSupplier(this);
-		}
 	}
 }

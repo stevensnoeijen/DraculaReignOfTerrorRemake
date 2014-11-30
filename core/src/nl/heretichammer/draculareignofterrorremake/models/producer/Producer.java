@@ -1,31 +1,26 @@
-package nl.heretichammer.draculareignofterrorremake.models.producers;
+package nl.heretichammer.draculareignofterrorremake.models.producer;
 
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
-import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
 import nl.heretichammer.draculareignofterrorremake.models.events.AccessableEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.ProducerCurrentTurnChangedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.ProducerDoneEvent;
+import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
+import nl.heretichammer.draculareignofterrorremake.models.events.TimeChangedEvent;
 
-public abstract class AbstractProducer<P> extends Model implements Producer<P> {
+public abstract class Producer<P> extends Model{
 	private boolean accessable = false;
 	private boolean started;
 	protected P produced;
-	private int turnCost;
-	private int currentTurn = 0;
+	private int timeCost;
+	private int time = 0;
 	private boolean done = false;
 	protected ResourceSupplier resourceSupplier;
 	
-	public AbstractProducer() {
+	public Producer() {
 		
-	}
-
-	@Override
-	public P remove() {
-		return produced;
 	}
 
 	/**
@@ -34,13 +29,6 @@ public abstract class AbstractProducer<P> extends Model implements Producer<P> {
 	 * @return
 	 */
 	protected abstract void produce();
-	
-	/**
-	 * Calls {@link #produce()} and moves the {@link #produced} to {@link #consumer} (is there's one).
-	 */
-	protected void handleProduct(){
-		produce();
-	}
 	
 	/**
 	 * Only is started when the {@link #getCost()} is payed fully.
@@ -55,10 +43,10 @@ public abstract class AbstractProducer<P> extends Model implements Producer<P> {
 	
 	public void week() {		
 		if(started) {
-			setCurrentTurn(currentTurn + 1);
-			if(currentTurn >= getTurnCost()) {
+			setTime(time + 1);
+			if(time >= timeCost) {
 				//if done
-				handleProduct();
+				produce();
 				done();
 			}
 		}else{
@@ -73,20 +61,18 @@ public abstract class AbstractProducer<P> extends Model implements Producer<P> {
 	private void done() {
 		setDone(true);
 		setStarted(false);
-		setCurrentTurn(0);
+		setTime(0);
 	}
 	
 	private void setDone(boolean done) {
 		this.done = done;
-		post(new ProducerDoneEvent<P>(this));
+		post(new DoneEvent());
 	}
 	
-	@Override
 	public boolean isDone() {
 		return done;
 	}
 	
-	@Override
 	public boolean isStarted() {
 		return started;
 	}
@@ -96,14 +82,13 @@ public abstract class AbstractProducer<P> extends Model implements Producer<P> {
 		post(new StartedEvent());
 	}
 	
-	private void setCurrentTurn(int currentTurn) {
-		this.currentTurn = currentTurn;
-		post(new ProducerCurrentTurnChangedEvent<P>(this));
+	private void setTime(int time) {
+		this.time = time;
+		post(new TimeChangedEvent());
 	}
 	
-	@Override
-	public int getCurrentTurn() {
-		return currentTurn;
+	public int getTime() {
+		return time;
 	}
 	
 	public void setResourceSupplier(ResourceSupplier resourceSupplier) {
@@ -118,4 +103,24 @@ public abstract class AbstractProducer<P> extends Model implements Producer<P> {
 		this.accessable = accessable;
 		post(new AccessableEvent());
 	};
+	
+	public abstract ResourceCost[] getCost();
+
+	public boolean canSupplyCost() {
+		ResourceCost[] cost = getCost();
+		if(cost != null){
+			for(ResourceCost costs : cost){
+				if(!resourceSupplier.hasResource(costs.resource(), costs.amount())){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public P remove(){
+		P produced = this.produced;
+		this.produced = null;
+		return produced;
+	}
 }

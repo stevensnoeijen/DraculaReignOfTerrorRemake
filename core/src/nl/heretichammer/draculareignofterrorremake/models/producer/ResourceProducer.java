@@ -1,10 +1,10 @@
-package nl.heretichammer.draculareignofterrorremake.models.producers.resourceproducer;
+package nl.heretichammer.draculareignofterrorremake.models.producer;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
-import nl.heretichammer.draculareignofterrorremake.models.producers.AbstractProducer;
+import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 
-public class ResourceProducer extends AbstractProducer<Integer> {
+public class ResourceProducer extends Producer<Integer> {
 
 	/**
 	 * Produces resource
@@ -28,15 +28,10 @@ public class ResourceProducer extends AbstractProducer<Integer> {
 	@Override
 	protected void produce() {
 		produced = produces;
+		post(new ResourceProducedEvent());
 	}
-
-	@Override
+	
 	public ResourceCost[] getCost() {
 		return null;
-	}
-
-	@Override
-	public boolean canSupplyCost() {
-		return true;
-	}
+	};
 }

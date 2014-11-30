@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer;
+package nl.heretichammer.draculareignofterrorremake.models.producer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,16 +9,18 @@ import nl.heretichammer.draculareignofterrorremake.annotations.UnitAttribute;
 import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.events.TeamChangedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.producers.AbstractProducer;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 
-public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
+public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	private Class<T> clazz;
 	private Trooper trooper;
 	private Uniter uniter;
 	private Map<Resource, Integer> cost;
 	private Map<Unit.AttributeType, Integer> unitAttributes;
+	private Team team;
 	
 	public TroopProducer(Class<T> clazz) {
 		this.clazz = clazz;
@@ -44,7 +46,7 @@ public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
 			} catch (InstantiationException | IllegalAccessException ex) {
 				throw new RuntimeException(ex);
 			}
-			unit.setTeam(this);
+			unit.setTeam(team);
 			produced.addUnit(unit);
 		}
 		post(new TroopProducedEvent());
@@ -95,5 +97,14 @@ public class TroopProducer<T extends Unit> extends AbstractProducer<Troop<T>> {
 	
 	public int getUnitAttributeValue(Unit.AttributeType attributeType){
 		return unitAttributes.get(attributeType);
+	}
+	
+	public Team getTeam() {
+		return this.team;
+	}
+	
+	public void setTeam(Team team) {
+		this.team = team;
+		post(new TeamChangedEvent());
 	}
 }

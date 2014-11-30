@@ -1,7 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.models.buildings;
 
 import nl.heretichammer.draculareignofterrorremake.models.buildings.parts.BuildingPart;
-import nl.heretichammer.draculareignofterrorremake.models.producers.Producer;
+import nl.heretichammer.draculareignofterrorremake.models.producer.Producer;
 
 public class Building {
 	private BuildingPart[] pieces;

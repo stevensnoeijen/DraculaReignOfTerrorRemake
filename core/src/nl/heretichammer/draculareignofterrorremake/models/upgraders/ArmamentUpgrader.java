@@ -36,20 +36,17 @@ public class ArmamentUpgrader extends Upgrader {
 	
 	@Upgrade(level=2, cost={@ResourceCost(resource=Resource.GOLD, amount=200),@ResourceCost(resource=Resource.TIME, amount=8)}, image="council.pack:upgrade-armament-2")
 	protected void upgrade2(){
-		Team team = getTeam();
 		team.setPermission(Permission.KNIGHT, true);
 		team.setPermission(Permission.SPY, true);
 	}
 	
 	@Upgrade(level=3, cost={@ResourceCost(resource=Resource.GOLD, amount=250),@ResourceCost(resource=Resource.TIME, amount=10)}, image="council.pack:upgrade-armament-3")
 	protected void upgrade3(){
-		Team team = getTeam();
 		team.setPermission(Permission.CATAPULT, true);
 	}
 	
 	@Upgrade(level=4, cost={@ResourceCost(resource=Resource.GOLD, amount=250),@ResourceCost(resource=Resource.TIME, amount=11)}, image="council.pack:upgrade-armament-4")
 	protected void upgrade4(){
-		Team team = getTeam();
 		team.setPermission(Permission.CANNON, true);
 	}
 	

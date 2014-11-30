@@ -11,9 +11,9 @@ import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.models.events.ProducerDoneEvent;
+import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.producers.troopproducer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
@@ -439,7 +439,7 @@ public class CouncilScreen extends Scene2DScreen {
 				}
 				
 				@Subscribe
-				public void on(ProducerDoneEvent<TroopProducer> event){
+				public void on(DoneEvent event){
 					trainButton.setDisabled(false);
 				}
 			});

@@ -12,17 +12,18 @@ import java.util.Queue;
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResources;
+import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSuppliable;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
-import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
 import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.EndedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.LevelChangedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TimeChangedEvent;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 
-public abstract class Upgrader extends TeamableModel implements ResourceSuppliable {
+public abstract class Upgrader extends Model implements ResourceSuppliable {
 	protected static final String SOUND_UPGRADING_CANCELLED = "upgrading cancelled.ogg";
 	
 	private ResourceSupplier resourceSupplier;
@@ -31,6 +32,7 @@ public abstract class Upgrader extends TeamableModel implements ResourceSuppliab
 	private boolean started = false;
 	private boolean done = false;
 	private String image;
+	protected Team team;
 	
 	@SuppressWarnings("unchecked")
 	public Upgrader() {
@@ -43,6 +45,10 @@ public abstract class Upgrader extends TeamableModel implements ResourceSuppliab
 		}
 		Collections.sort((List<UpgradeMethod>)upgrades);
 		image = upgrades.peek().getImage();
+	}
+	
+	public void setTeam(Team team) {
+		this.team = team;
 	}
 	
 	public abstract String getName();
