@@ -3,13 +3,14 @@ package nl.heretichammer.draculareignofterrorremake.models.upgraders;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResources;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
@@ -90,16 +91,12 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 	}
 	
-	public ResourceCosts[] getNextUpgradeCost(){
-		return upgrades.peek().getCost();
+	public int getNextUpgradeCost(Resource resource){
+		return upgrades.peek().getCost(resource);
 	}
 	
 	public int getNextUpgradeCosts(Resource resource){
-		if(resource == Resource.TIME){
-			return upgrades.peek().timeCost;
-		}else{
-			return upgrades.peek().cost.get(resource).amount();
-		}
+		return upgrades.peek().cost.get(resource);
 	}
 	
 	public void startNextUpgrade(){
@@ -139,30 +136,29 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		/**
 		 * All costs except {@link Resource#TIME}
 		 */
-		private Map<Resource, ResourceCosts> cost;
-		private int timeCost;
+		private Map<Resource, Integer> cost;
 		private int time = 0;
 		
 		private UpgradeMethod(Method method) {
 			upgrade = method.getAnnotation(Upgrade.class);			
-			cost = new HashMap<Resource, ResourceCosts>();
-			for(ResourceCosts costs : upgrade.cost()){
-				if(costs.resource() == Resource.TIME){
-					timeCost = costs.amount();
-				}else{
-					cost.put(costs.resource(), costs);
-				}
-			}
+			cost = new EnumMap<Resource, Integer>(Resource.class);
+			ResourceCost cost = upgrade.cost();
+			this.cost.put(Resource.GOLD, cost.gold());
+			this.cost.put(Resource.TIME, cost.time());
+			this.cost.put(Resource.FOOD, cost.food());
+			this.cost.put(Resource.WOOD, cost.wood());
 		}
 		
-		public ResourceCosts[] getCost(){
-			return upgrade.cost();
+		public int getCost(Resource resource){
+			return this.cost.get(resource);
 		}
 		
 		public boolean canPay(){
-			for(ResourceCosts costs : upgrade.cost()){
-				if(!resourceSupplier.hasResource(costs.resource(), costs.amount())){
-					return false;
+			for(Resource resource : cost.keySet()){
+				if(resource != Resource.TIME){
+					if(!resourceSupplier.hasResource(resource, cost.get(resource))){
+						return false;
+					}
 				}
 			}
 			return true;
@@ -179,9 +175,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		private void pay(){
 			if(canPay()){
-				for(ResourceCosts costs : upgrade.cost()){
-					if(costs.resource() != Resource.TIME){
-						resourceSupplier.decrementResource(costs.resource(), costs.amount());
+				for(Resource resource : cost.keySet()){
+					if(resource != Resource.TIME){
+						resourceSupplier.decrementResource(resource, cost.get(resource));
 					}
 				}
 			}else{
@@ -190,9 +186,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 		
 		private void refund(){
-			for(ResourceCosts costs : upgrade.cost()){
-				if(costs.resource() != Resource.TIME){
-					resourceSupplier.incrementResource(costs.resource(), costs.amount());
+			for(Resource resource : cost.keySet()){
+				if(resource != Resource.TIME){
+					resourceSupplier.incrementResource(resource, cost.get(resource));
 				}
 			}
 		}
@@ -212,7 +208,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		protected void week(){
 			setTime(time+1);
-			if(timeCost == time){
+			if(cost.get(Resource.TIME) == time){
 				done();
 			}
 		}

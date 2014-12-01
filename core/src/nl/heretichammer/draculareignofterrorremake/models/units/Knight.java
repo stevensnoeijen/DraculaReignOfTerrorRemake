@@ -1,14 +1,19 @@
 package nl.heretichammer.draculareignofterrorremake.models.units;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
-import nl.heretichammer.draculareignofterrorremake.annotations.UnitAttributes;
-import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 
-@Trooper(name="knight", size=1, cost=@ResourceCosts(gold=4, time=4))
-@Uniter(name = "knight", attributes=@UnitAttributes(strength=8,accuracy=0,defence=8,stamina=4,speed=4,range=1))
+@Trooper(name="knight", size=1, cost=@ResourceCost(gold=4, time=4))
 public class Knight extends Unit {
+	public static final String NAME = "knight";
+	public static final int STRENGTH = 8, ACCURACY = 0, DEFENSE = 8, STAMINA = 4, SPEED = 4, RANGE = 1;
+	
 	public Knight() {
 		
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 }

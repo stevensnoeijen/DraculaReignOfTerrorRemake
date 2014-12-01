@@ -4,7 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ResourceCosts {
+public @interface ResourceCost {
 	public int time();
 	public int gold();
 	public int wood() default 0;

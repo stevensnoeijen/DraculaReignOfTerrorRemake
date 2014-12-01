@@ -1,11 +1,11 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
-import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.events.TeamChangedEvent;
@@ -16,17 +16,16 @@ import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	private Class<T> clazz;
 	private Trooper trooper;
-	private Uniter uniter;
 	private Map<Resource, Integer> cost;
 	private Team team;
 	
 	public TroopProducer(Class<T> clazz) {
 		this.clazz = clazz;
 		trooper = clazz.getAnnotation(Trooper.class);
-		uniter = clazz.getAnnotation(Uniter.class);
+		
 		//set cost
-		cost = new HashMap<>();
-		ResourceCosts cost = trooper.cost();
+		cost = new EnumMap<>(Resource.class);
+		ResourceCost cost = trooper.cost();
 		this.cost.put(Resource.GOLD, cost.gold());
 		this.cost.put(Resource.TIME, cost.time());
 		if(cost.wood() != 0){
@@ -89,29 +88,6 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	
 	public Trooper getTroopDate(){
 		return trooper;
-	}
-	
-	public Uniter getUnitData(){
-		return uniter;
-	}
-	
-	public int getUnitAttributeValue(Unit.AttributeType attributeType){
-		switch(attributeType){
-		case ACCURACY:
-			return uniter.attributes().accuracy();
-		case DEFANCE:
-			return uniter.attributes().defence();
-		case RANGE:
-			return uniter.attributes().range();
-		case SPEED:
-			return uniter.attributes().speed();
-		case STAMINA:
-			return uniter.attributes().stamina();
-		case STRENGHT:
-			return uniter.attributes().strength();
-		default:
-			throw new IllegalArgumentException();
-		}
 	}
 	
 	public Team getTeam() {

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Mappable;
 import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team.TeamColor;
@@ -15,17 +14,15 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class Unit extends TeamableModel implements Cloneable, Teamable, Mappable {
-	private Uniter uniter;
+public abstract class Unit extends TeamableModel implements Cloneable, Teamable, Mappable {
+
 	private Vector2 position = new Vector2();
 	
 	public Unit() {
-		uniter = getClass().getAnnotation(Uniter.class);
+		
 	}
 	
-	public String getName() {
-		return uniter.name();
-	}
+	public abstract String getName();
 	
 	@Override
 	public float getX() {

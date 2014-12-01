@@ -1,15 +1,19 @@
 package nl.heretichammer.draculareignofterrorremake.models.units;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
-import nl.heretichammer.draculareignofterrorremake.annotations.UnitAttributes;
-import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 
-@Trooper(name="spy", size=1, cost=@ResourceCosts(gold=4, time=5))
-@Uniter(name = "spy", attributes=@UnitAttributes(strength=0,accuracy=0,defence=0,stamina=0,speed=0,range=0))
+@Trooper(name="spy", size=1, cost=@ResourceCost(gold=4, time=5))
 public class Spy extends Unit {
+	public static final String NAME = "spy";
+	public static final int STRENGTH = 0, ACCURACY = 0, DEFENSE = 0, STAMINA = 0, SPEED = 0, RANGE = 0;
+	
 	public Spy() {
 		
 	}
 
+	@Override
+	public String getName() {
+		return NAME;
+	}
 }

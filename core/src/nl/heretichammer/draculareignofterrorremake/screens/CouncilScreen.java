@@ -5,7 +5,6 @@ import java.util.List;
 
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
-import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
@@ -405,7 +404,6 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		for(final TroopProducer<?> troopProducer : selectedArea.getTroopProducers()) {
 			boolean visable = true;
-			Uniter unitData = troopProducer.getUnitData();
 			trainingTable.row();
 			
 			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));

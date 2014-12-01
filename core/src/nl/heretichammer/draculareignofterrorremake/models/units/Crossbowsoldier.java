@@ -1,14 +1,19 @@
 package nl.heretichammer.draculareignofterrorremake.models.units;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
-import nl.heretichammer.draculareignofterrorremake.annotations.UnitAttributes;
-import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 
-@Trooper(name="crossbowsoldiers", size=5, cost=@ResourceCosts(gold=5, time=2))
-@Uniter(name = "crossbowsoldier", attributes=@UnitAttributes(strength=2,accuracy=6,defence=3,stamina=2,speed=2,range=5))
+@Trooper(name="crossbowsoldiers", size=5, cost=@ResourceCost(gold=5, time=2))
 public class Crossbowsoldier extends Unit {
+	public static final String NAME = "crossbowsoldier";
+	public static final int STRENGTH = 2, ACCURACY = 6, DEFENSE = 3, STAMINA = 2, SPEED = 2, RANGE = 5;
+	
 	public Crossbowsoldier() {
 		
+	}
+	
+	@Override
+	public String getName() {
+		return NAME;
 	}
 }
