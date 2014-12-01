@@ -3,9 +3,8 @@ package nl.heretichammer.draculareignofterrorremake.models.producer;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
-import nl.heretichammer.draculareignofterrorremake.annotations.UnitAttribute;
 import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
@@ -19,20 +18,22 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	private Trooper trooper;
 	private Uniter uniter;
 	private Map<Resource, Integer> cost;
-	private Map<Unit.AttributeType, Integer> unitAttributes;
 	private Team team;
 	
 	public TroopProducer(Class<T> clazz) {
 		this.clazz = clazz;
 		trooper = clazz.getAnnotation(Trooper.class);
 		uniter = clazz.getAnnotation(Uniter.class);
+		//set cost
 		cost = new HashMap<>();
-		for(ResourceCost costs : trooper.cost()){
-			this.cost.put(costs.resource(), costs.amount());
+		ResourceCosts cost = trooper.cost();
+		this.cost.put(Resource.GOLD, cost.gold());
+		this.cost.put(Resource.TIME, cost.time());
+		if(cost.wood() != 0){
+			this.cost.put(Resource.WOOD, cost.wood());
 		}
-		unitAttributes = new HashMap<>();
-		for(UnitAttribute attribute : uniter.attributes()){
-			this.unitAttributes.put(attribute.type(), attribute.value());
+		if(cost.food() != 0){
+			this.cost.put(Resource.FOOD, cost.food());
 		}
 	}
 	
@@ -57,8 +58,8 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	}
 	
 	private void pay() {
-		for(ResourceCost costs : trooper.cost()){
-			resourceSupplier.decrementResource(costs.resource(), costs.amount());
+		for(Resource resource : cost.keySet()){
+			resourceSupplier.decrementResource(resource, cost.get(resource));
 		}
 	}
 	
@@ -68,9 +69,8 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 		super.start();
 	}
 
-	@Override
-	public ResourceCost[] getCost() {
-		return trooper.cost();
+	public int getCost(Resource resource) {
+		return cost.get(resource);
 	}
 	
 	public int getResourceCost(Resource resource){
@@ -79,8 +79,8 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 
 	@Override
 	public boolean canSupplyCost() {
-		for(ResourceCost costs : trooper.cost()){
-			if(!resourceSupplier.hasResource(costs.resource(), costs.amount())){
+		for(Resource resource : cost.keySet()){
+			if(!resourceSupplier.hasResource(resource, cost.get(resource))){
 				return false;
 			}
 		}
@@ -96,7 +96,22 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	}
 	
 	public int getUnitAttributeValue(Unit.AttributeType attributeType){
-		return unitAttributes.get(attributeType);
+		switch(attributeType){
+		case ACCURACY:
+			return uniter.attributes().accuracy();
+		case DEFANCE:
+			return uniter.attributes().defence();
+		case RANGE:
+			return uniter.attributes().range();
+		case SPEED:
+			return uniter.attributes().speed();
+		case STAMINA:
+			return uniter.attributes().stamina();
+		case STRENGHT:
+			return uniter.attributes().strength();
+		default:
+			throw new IllegalArgumentException();
+		}
 	}
 	
 	public Team getTeam() {

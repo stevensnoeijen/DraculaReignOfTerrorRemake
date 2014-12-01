@@ -1,6 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 
@@ -31,7 +30,8 @@ public class ResourceProducer extends Producer<Integer> {
 		post(new ResourceProducedEvent());
 	}
 	
-	public ResourceCost[] getCost() {
-		return null;
-	};
+	@Override
+	public int getCost(Resource resource) {
+		return 0;
+	}
 }

@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Upgrade {
 	int level();
-	ResourceCost[] cost();
+	ResourceCosts[] cost();
 	String image();
 }

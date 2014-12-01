@@ -5,13 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.lang.model.type.NullType;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Uniter {
-	public String name();
-	public Class<?> particle() default NullType.class;
-	public boolean physical() default true;
-	public UnitAttributes attributes();
+public @interface UnitAttributes {
+	public int strength();
+	public int accuracy();
+	public int defence();
+	public int stamina();
+	public int speed();
+	public int range();
 }

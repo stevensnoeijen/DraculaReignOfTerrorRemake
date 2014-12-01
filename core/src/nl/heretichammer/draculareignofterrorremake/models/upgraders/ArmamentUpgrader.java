@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.upgraders;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
 import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
@@ -34,23 +34,23 @@ public class ArmamentUpgrader extends Upgrader {
 		
 	}
 	
-	@Upgrade(level=2, cost={@ResourceCost(resource=Resource.GOLD, amount=200),@ResourceCost(resource=Resource.TIME, amount=8)}, image="council.pack:upgrade-armament-2")
+	@Upgrade(level=2, cost={@ResourceCosts(resource=Resource.GOLD, amount=200),@ResourceCosts(resource=Resource.TIME, amount=8)}, image="council.pack:upgrade-armament-2")
 	protected void upgrade2(){
 		team.setPermission(Permission.KNIGHT, true);
 		team.setPermission(Permission.SPY, true);
 	}
 	
-	@Upgrade(level=3, cost={@ResourceCost(resource=Resource.GOLD, amount=250),@ResourceCost(resource=Resource.TIME, amount=10)}, image="council.pack:upgrade-armament-3")
+	@Upgrade(level=3, cost={@ResourceCosts(resource=Resource.GOLD, amount=250),@ResourceCosts(resource=Resource.TIME, amount=10)}, image="council.pack:upgrade-armament-3")
 	protected void upgrade3(){
 		team.setPermission(Permission.CATAPULT, true);
 	}
 	
-	@Upgrade(level=4, cost={@ResourceCost(resource=Resource.GOLD, amount=250),@ResourceCost(resource=Resource.TIME, amount=11)}, image="council.pack:upgrade-armament-4")
+	@Upgrade(level=4, cost={@ResourceCosts(resource=Resource.GOLD, amount=250),@ResourceCosts(resource=Resource.TIME, amount=11)}, image="council.pack:upgrade-armament-4")
 	protected void upgrade4(){
 		team.setPermission(Permission.CANNON, true);
 	}
 	
-	@Upgrade(level=5, cost={@ResourceCost(resource=Resource.GOLD, amount=300),@ResourceCost(resource=Resource.TIME, amount=13)}, image="council.pack:upgrade-armament-5")
+	@Upgrade(level=5, cost={@ResourceCosts(resource=Resource.GOLD, amount=300),@ResourceCosts(resource=Resource.TIME, amount=13)}, image="council.pack:upgrade-armament-5")
 	protected void upgrade5(){
 		
 	}

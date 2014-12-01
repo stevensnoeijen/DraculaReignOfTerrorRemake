@@ -1,9 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
+import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
 import nl.heretichammer.draculareignofterrorremake.models.events.AccessableEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
@@ -104,15 +104,13 @@ public abstract class Producer<P> extends Model{
 		post(new AccessableEvent());
 	};
 	
-	public abstract ResourceCost[] getCost();
+	public abstract int getCost(Resource resource);
 
 	public boolean canSupplyCost() {
-		ResourceCost[] cost = getCost();
-		if(cost != null){
-			for(ResourceCost costs : cost){
-				if(!resourceSupplier.hasResource(costs.resource(), costs.amount())){
-					return false;
-				}
+		for(Resource resource : Resource.values()){
+			int amount = getCost(resource);
+			if(!resourceSupplier.hasResource(resource, amount)){
+				return false;
 			}
 		}
 		return true;

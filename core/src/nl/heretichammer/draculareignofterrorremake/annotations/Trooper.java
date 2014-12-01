@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface Trooper {	
 	public String name();
 	public int size();
-	public ResourceCost[] cost();
+	public ResourceCosts cost();
 }

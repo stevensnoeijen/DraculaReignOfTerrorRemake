@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
+import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCosts;
 import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResources;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
@@ -90,7 +90,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 	}
 	
-	public ResourceCost[] getNextUpgradeCost(){
+	public ResourceCosts[] getNextUpgradeCost(){
 		return upgrades.peek().getCost();
 	}
 	
@@ -139,14 +139,14 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		/**
 		 * All costs except {@link Resource#TIME}
 		 */
-		private Map<Resource, ResourceCost> cost;
+		private Map<Resource, ResourceCosts> cost;
 		private int timeCost;
 		private int time = 0;
 		
 		private UpgradeMethod(Method method) {
 			upgrade = method.getAnnotation(Upgrade.class);			
-			cost = new HashMap<Resource, ResourceCost>();
-			for(ResourceCost costs : upgrade.cost()){
+			cost = new HashMap<Resource, ResourceCosts>();
+			for(ResourceCosts costs : upgrade.cost()){
 				if(costs.resource() == Resource.TIME){
 					timeCost = costs.amount();
 				}else{
@@ -155,12 +155,12 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 			}
 		}
 		
-		public ResourceCost[] getCost(){
+		public ResourceCosts[] getCost(){
 			return upgrade.cost();
 		}
 		
 		public boolean canPay(){
-			for(ResourceCost costs : upgrade.cost()){
+			for(ResourceCosts costs : upgrade.cost()){
 				if(!resourceSupplier.hasResource(costs.resource(), costs.amount())){
 					return false;
 				}
@@ -179,7 +179,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		private void pay(){
 			if(canPay()){
-				for(ResourceCost costs : upgrade.cost()){
+				for(ResourceCosts costs : upgrade.cost()){
 					if(costs.resource() != Resource.TIME){
 						resourceSupplier.decrementResource(costs.resource(), costs.amount());
 					}
@@ -190,7 +190,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 		
 		private void refund(){
-			for(ResourceCost costs : upgrade.cost()){
+			for(ResourceCosts costs : upgrade.cost()){
 				if(costs.resource() != Resource.TIME){
 					resourceSupplier.incrementResource(costs.resource(), costs.amount());
 				}

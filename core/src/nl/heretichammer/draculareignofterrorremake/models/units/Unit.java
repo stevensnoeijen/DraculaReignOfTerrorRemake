@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.annotations.Uniter;
 import nl.heretichammer.draculareignofterrorremake.models.Mappable;
 import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team.TeamColor;
@@ -16,51 +16,30 @@ import org.apache.commons.lang3.tuple.Triple;
 import com.badlogic.gdx.math.Vector2;
 
 public class Unit extends TeamableModel implements Cloneable, Teamable, Mappable {
+	private Uniter uniter;
+	private Vector2 position = new Vector2();
 	
-	private UnitData data;
-	
-	public Vector2 position;
-	
-	public Unit(UnitData data) {
-		this.data = data;
-	}
-	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return new Unit(data);
+	public Unit() {
+		uniter = getClass().getAnnotation(Uniter.class);
 	}
 	
 	public String getName() {
-		return data.name;
+		return uniter.name();
 	}
+	
 	@Override
-	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getX() {
+		return position.x;
 	}
 
 	@Override
-	public void setPosition(int x, int y) {
-		// TODO Auto-generated method stub
-		
+	public float getY() {
+		return position.y;
 	}
 
 	@Override
-	public void setArea(Area area) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Area getArea() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setPosition(float x, float y) {
+		position.set(x, y);
 	}
 	
 	/*
