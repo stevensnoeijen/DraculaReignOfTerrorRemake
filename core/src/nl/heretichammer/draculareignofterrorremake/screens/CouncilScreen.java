@@ -18,7 +18,9 @@ import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
+import nl.heretichammer.draculareignofterrorremake.view.ActorParser;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -66,7 +68,7 @@ public class CouncilScreen extends Scene2DScreen {
 		World world = new World();
 		world = new World();
 		
-		player = new Player(world.findTeamByName("transylvania"));
+		player = new Player(Team.transylvanians);
 		new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
 		selectedArea = world.getArea("fagaras");
 	}
@@ -80,17 +82,23 @@ public class CouncilScreen extends Scene2DScreen {
 	@Override
 	public void show() {
 		super.show();
-		assetManager.load("images/council.pack", TextureAtlas.class);
-		assetManager.load("uiskin.json", Skin.class);
-		assetManager.load("sounds/click.ogg", Sound.class);
+		assetManager.load("image/council.pack", TextureAtlas.class);
+		//assetManager.load("uiskin.json", Skin.class);
+		assetManager.load("sound/click.ogg", Sound.class);
 		assetManager.load("music/council2.mp3", Music.class);
-		assetManager.load("sounds/upgrading armerment.ogg", Sound.class);
-		assetManager.load("sounds/upgrading architecture.ogg", Sound.class);
+		assetManager.load("sound/upgrading armerment.ogg", Sound.class);
+		assetManager.load("sound/upgrading architecture.ogg", Sound.class);
 		assetManager.finishLoading();
 		
-		skin = assetManager.get("uiskin.json", Skin.class);
-		stage.addActor(new Image(assetHelper.getAtlasTexture("images/council.pack:ui-scroll")));//background
+		//skin = assetManager.get("uiskin.json", Skin.class);
 		
+		ActorParser parser = new ActorParser();
+		parser.setAssetHelper(assetHelper);
+		Group group = parser.parse(Gdx.files.internal("layout/CouncilScreen.xml"));
+		
+		stage.addActor(group);//background
+		
+		/*
 		Actor tab = createTabPane();
 		tab.setPosition(25, 50);		
 		stage.addActor(tab);
@@ -128,8 +136,8 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		
 		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
-		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal") );
-		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("images/council.pack:ui-waxseal-select") );
+		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("image/council.pack:ui-waxseal") );
+		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("image/council.pack:ui-waxseal-select") );
 		Button waxButton = new ImageButton(waxsealStyle);
 		waxButton.setPosition(525, 55);
 		waxButton.addListener(new ClickListener() {
@@ -141,6 +149,7 @@ public class CouncilScreen extends Scene2DScreen {
 		});
 		stage.addActor(waxButton);
 		updateUI();
+		*/
 	}
 	
 	private void updateUI() {
@@ -395,7 +404,7 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	private void showTrainingTab() {
 		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-training"));
+		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
 		
 		Table trainingTable = new Table(skin);
 		trainingTable.setPosition(97, 197);
@@ -411,7 +420,7 @@ public class CouncilScreen extends Scene2DScreen {
 				visable = false;
 				trainButton.setVisible(visable);
 			}else if(troopProducer.isStarted()) {
-				trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");//add hourglass
+				trainButton.getStyle().imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");//add hourglass
 				trainButton.setDisabled(true);
 			}else if(!troopProducer.canSupplyCost()) {
 				trainButton.setDisabled(true);//only disable
@@ -432,7 +441,7 @@ public class CouncilScreen extends Scene2DScreen {
 			troopProducer.register(new Object(){
 				@Subscribe
 				public void on(StartedEvent event){
-					trainButton.getStyle().imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+					trainButton.getStyle().imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 					trainButton.setDisabled(true);
 				}
 				
@@ -462,37 +471,37 @@ public class CouncilScreen extends Scene2DScreen {
 			trainingTable.add(turnsCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//unit attributes
 			//strenght
-			Label trainingCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.STRENGHT)), skin);
+			Label trainingCostLabel = new Label("?", skin);
 			trainingCostLabel.setFontScale(FONTSCALE);
 			trainingCostLabel.setAlignment(Align.center);
 			trainingCostLabel.setVisible(visable);
 			trainingTable.add(trainingCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//accuracy
-			Label accuracyCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.ACCURACY)), skin);
+			Label accuracyCostLabel = new Label("?", skin);
 			accuracyCostLabel.setFontScale(FONTSCALE);
 			accuracyCostLabel.setAlignment(Align.center);
 			accuracyCostLabel.setVisible(visable);
 			trainingTable.add(accuracyCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//defance
-			Label defanceCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.DEFANCE)), skin);
+			Label defanceCostLabel = new Label("?", skin);
 			defanceCostLabel.setFontScale(FONTSCALE);
 			defanceCostLabel.setAlignment(Align.center);
 			defanceCostLabel.setVisible(visable);
 			trainingTable.add(defanceCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//stamina
-			Label staminaCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.STAMINA)), skin);
+			Label staminaCostLabel = new Label("?", skin);
 			staminaCostLabel.setFontScale(FONTSCALE);
 			staminaCostLabel.setAlignment(Align.center);
 			staminaCostLabel.setVisible(visable);
 			trainingTable.add(staminaCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//speed
-			Label speedCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.SPEED)), skin);
+			Label speedCostLabel = new Label("?", skin);
 			speedCostLabel.setFontScale(FONTSCALE);
 			speedCostLabel.setAlignment(Align.center);
 			speedCostLabel.setVisible(visable);
 			trainingTable.add(speedCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 			//range
-			Label rangeCostLabel = new Label(String.valueOf(troopProducer.getUnitAttributeValue(Unit.AttributeType.RANGE)), skin);
+			Label rangeCostLabel = new Label("?", skin);
 			rangeCostLabel.setFontScale(FONTSCALE);
 			rangeCostLabel.setAlignment(Align.center);
 			rangeCostLabel.setVisible(visable);
@@ -516,7 +525,7 @@ public class CouncilScreen extends Scene2DScreen {
 	private void showMovementsTab() {
 		final int COLUMN_MAX = 4;
 		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-movement"));
+		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
 		Table troopsTable = new Table();
 		troopsTable.setPosition(15, 315);
 		troopsTable.left().top();
@@ -559,7 +568,7 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	private void showConstructionsTab() {
 		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-construction"));
+		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
 		final Group tabContainer = getTabContainer();
 		
 		//minimap
@@ -573,9 +582,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//repairButton
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-repair");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-repair-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-repair");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-repair-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		repairButton = new ImageButton(imageButtonStyle);
 		repairButton.setPosition(6, 250);
@@ -589,9 +598,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//upgradeButton
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-upgrade");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-upgrade-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		upgradeButton = new ImageButton(imageButtonStyle);
 		upgradeButton.setPosition(6, 218);
@@ -605,9 +614,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//buildButton
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-build");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-build-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-build");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-build-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		buildButton = new ImageButton(imageButtonStyle);
 		buildButton.setPosition(6, 186);
@@ -624,9 +633,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//bridge-button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-bridge");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-bridge-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-bridge");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-bridge-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		bridgeButton = new ImageButton(imageButtonStyle);
 		bridgeButton.setPosition(10, 145);
@@ -640,9 +649,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//tower-button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-tower");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-tower-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-tower");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-tower-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		towerButton = new ImageButton(imageButtonStyle);
 		towerButton.setPosition(55, 145);
@@ -656,9 +665,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//castle-button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-castle");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-castle-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-castle");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-castle-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		castleButton = new ImageButton(imageButtonStyle);
 		castleButton.setPosition(100, 145);
@@ -672,9 +681,9 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//castle2-button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-castle2");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-castle2-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-castle2");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-castle2-click");
+		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		castle2Button = new ImageButton(imageButtonStyle);
 		castle2Button.setPosition(145, 145);
@@ -692,8 +701,8 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//number 1 button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-1");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-1-click");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-1");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-1-click");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		number1Button = new ImageButton(imageButtonStyle);
 		number1Button.setPosition(16, 119);
@@ -706,8 +715,8 @@ public class CouncilScreen extends Scene2DScreen {
 		tabContainer.addActor(number1Button);
 		//number 2 button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-2");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-2-click");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-2");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-2-click");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		number2Button = new ImageButton(imageButtonStyle);
 		number2Button.setPosition(16, 95);
@@ -720,8 +729,8 @@ public class CouncilScreen extends Scene2DScreen {
 		tabContainer.addActor(number2Button);
 		//number 3 button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-3");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-3-click");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-3");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-3-click");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		number3Button = new ImageButton(imageButtonStyle);
 		number3Button.setPosition(16, 70);
@@ -734,8 +743,8 @@ public class CouncilScreen extends Scene2DScreen {
 		tabContainer.addActor(number3Button);
 		//number 4 button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-4");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-4-click");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-4");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-4-click");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		number4Button = new ImageButton(imageButtonStyle);
 		number4Button.setPosition(54, 119);
@@ -748,8 +757,8 @@ public class CouncilScreen extends Scene2DScreen {
 		tabContainer.addActor(number4Button);
 		//number 5 button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-5");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-5-click");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-5");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-5-click");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		number5Button = new ImageButton(imageButtonStyle);
 		number5Button.setPosition(54, 95);
@@ -762,8 +771,8 @@ public class CouncilScreen extends Scene2DScreen {
 		tabContainer.addActor(number5Button);
 		//number 6 button
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-6");
-		imageButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-6-click");
+		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-6");
+		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-6-click");
 		imageButtonStyle.disabled = AssetHelper.EMPTY;
 		number6Button = new ImageButton(imageButtonStyle);
 		number6Button.setPosition(54, 70);
@@ -776,27 +785,27 @@ public class CouncilScreen extends Scene2DScreen {
 		tabContainer.addActor(number6Button);
 		
 		//building-preview-image
-		Image buildingPreview = new Image(assetHelper.getDrawable("images/council.pack:tower-preview"));
+		Image buildingPreview = new Image(assetHelper.getDrawable("image/council.pack:tower-preview"));
 		buildingPreview.setPosition(110, 65);
 		tabContainer.addActor(buildingPreview);
 	}
 	
 	private void showInformationTab() {
 		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-information"));
+		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
 	}
 	
 	private void showAdministrationTab() {
 		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("images/council.pack:ui-tab-administration"));
+		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
 		final Group tabContainer = getTabContainer();
 		final Team team = selectedArea.getTeam();
 		
 		ImageButton.ImageButtonStyle upgradeButtonStyle = new ImageButton.ImageButtonStyle();
-		upgradeButtonStyle.up = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2");
-		upgradeButtonStyle.down = assetHelper.getDrawable("images/council.pack:ui-button-upgrade2-click");
+		upgradeButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-upgrade2");
+		upgradeButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-upgrade2-click");
 		upgradeButtonStyle.disabled = AssetHelper.EMPTY;
-		upgradeButtonStyle.imageDisabled = assetHelper.getDrawable("images/council.pack:ui-button-overlay-wait-full");
+		upgradeButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
 		
 		//armament
 		final ArmamentUpgrader armamentUpgrader = team.getArmamentUpgrader();	
@@ -878,7 +887,7 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		Group group = new Group();
 		
-		Image background = new Image( assetHelper.getDrawable("images/council.pack:ui-panel-stats") );
+		Image background = new Image( assetHelper.getDrawable("image/council.pack:ui-panel-stats") );
 		group.addActor(background);		
 		
 		//stats for resources
@@ -923,7 +932,7 @@ public class CouncilScreen extends Scene2DScreen {
 	}
 	
 	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){
-		String stylePrefixName = "images/council.pack:ui-button-";
+		String stylePrefixName = "image/council.pack:ui-button-";
 		
 		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
 		style.up = assetHelper.getDrawable(stylePrefixName + name);
@@ -934,7 +943,7 @@ public class CouncilScreen extends Scene2DScreen {
 	}
 	
 	private ImageButton.ImageButtonStyle createMovementImageButtonStyle(String name){
-		String stylePrefixName = "images/council.pack:ui-checkbox-";
+		String stylePrefixName = "image/council.pack:ui-checkbox-";
 		
 		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
 		style.up = assetHelper.getDrawable(stylePrefixName + name);
@@ -949,7 +958,7 @@ public class CouncilScreen extends Scene2DScreen {
 		if(area.getTeam().equals(player.getTeam())) {//if area has other team
 			enemy = false;
 		}
-		final String buttonUpStyle = "images/council.pack:area-" + area.getName().toLowerCase() + (enemy ? "-enemy" : "");
+		final String buttonUpStyle = "image/council.pack:area-" + area.getName().toLowerCase() + (enemy ? "-enemy" : "");
 		final String buttonCheckedStyle = buttonUpStyle + "-select";
 		
 		//style

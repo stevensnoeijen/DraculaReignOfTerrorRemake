@@ -40,14 +40,14 @@ public class BattleScreen extends MapScreen {
 	@Override
 	public void show() {
 		super.show();		
-		assetManager.load("images/battle-ui.pack", TextureAtlas.class);
-		assetManager.load("images/units.pack", TextureAtlas.class);
+		assetManager.load("image/battle-ui.pack", TextureAtlas.class);
+		assetManager.load("image/units.pack", TextureAtlas.class);
 		assetManager.load("music/war1.mp3", Music.class);
 		assetManager.finishLoading();
 		
 		music = assetManager.get("music/war1.mp3", Music.class);
 		
-		stage.addActor(new Image(assetHelper.getDrawable("images/battle-ui.pack:ui-panel-left")));
+		stage.addActor(new Image(assetHelper.getDrawable("image/battle-ui.pack:ui-panel-left")));
 		
 		spriteBatch = new SpriteBatch();
 		

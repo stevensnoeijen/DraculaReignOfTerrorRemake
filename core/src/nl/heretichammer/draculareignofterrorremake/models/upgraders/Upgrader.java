@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 	@SuppressWarnings("unchecked")
 	public Upgrader() {
 		upgrades = new LinkedList<>();
-		for(Method method : this.getClass().getMethods()){
+		for(Method method : this.getClass().getDeclaredMethods()){
 			if(method.isAnnotationPresent(Upgrade.class)){
 				UpgradeMethod updateMethod = new UpgradeMethod(method);
 				upgrades.add(updateMethod);
