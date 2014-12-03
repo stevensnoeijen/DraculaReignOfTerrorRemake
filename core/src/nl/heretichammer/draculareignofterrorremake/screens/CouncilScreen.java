@@ -18,10 +18,11 @@ import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
-import nl.heretichammer.draculareignofterrorremake.view.ActorParser;
+import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -65,6 +66,7 @@ public class CouncilScreen extends Scene2DScreen {
 	private static final float FONT_SMALL = .8f;
 	
 	public CouncilScreen() {
+		assetManager.setLoader(Actor.class, new ActorLoader(new InternalFileHandleResolver()));
 		World world = new World();
 		world = new World();
 		
@@ -88,15 +90,12 @@ public class CouncilScreen extends Scene2DScreen {
 		assetManager.load("music/council2.mp3", Music.class);
 		assetManager.load("sound/upgrading armerment.ogg", Sound.class);
 		assetManager.load("sound/upgrading architecture.ogg", Sound.class);
+		assetManager.load("layout/CouncilScreen.xml", Actor.class);
 		assetManager.finishLoading();
 		
 		//skin = assetManager.get("uiskin.json", Skin.class);
 		
-		ActorParser parser = new ActorParser();
-		parser.setAssetHelper(assetHelper);
-		Group group = parser.parse(Gdx.files.internal("layout/CouncilScreen.xml"));
-		
-		stage.addActor(group);//background
+		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );//background
 		
 		/*
 		Actor tab = createTabPane();
