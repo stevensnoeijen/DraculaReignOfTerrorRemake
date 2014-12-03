@@ -5,7 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
@@ -21,7 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
-import com.badlogic.gdx.utils.XmlReader.Element;
+
 
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
 	@SuppressWarnings("unchecked")
@@ -86,10 +88,11 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		return actor;
 	}
 	
-	private static class ActorParser {
+	private class ActorParser {
 		
 		private Class<? extends Actor> clazz;
-		private Map<String, PropertyParser> propertyParsers = new HashMap<>();
+		private Map<String, Setter> setters = new HashMap<>();
+		private Map<String, Adder> adders = new HashMap<>();
 		
 		@SuppressWarnings("unchecked")
 		public ActorParser(Class<? extends Actor> clazz) {
@@ -97,28 +100,54 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 			for (; clazz != null; clazz = (Class<? extends Actor>) clazz.getSuperclass()) {//TODO: check if to replace with an own (abstract) ActorParser
 				for(Method method : clazz.getDeclaredMethods()){
 					String name = method.getName();
-					if(Modifier.isPublic(method.getModifiers()) && ( name.startsWith("set") && !name.contains("Stage"))){
-						PropertyParser propertyParser = new PropertyParser(method);
-						propertyParsers.put(name.replaceFirst("set", "").toLowerCase(), propertyParser);
+					if(Modifier.isPublic(method.getModifiers())){
+						if(name.startsWith("set") && !name.contains("Stage")){//setter
+							Setter setter = new Setter(method);
+							setters.put(name.replaceFirst("set", "").toLowerCase(), setter);
+						}else if(name.equals("addActor")){//TODO: make this more generic (also with the other addActor* methods)
+							Adder adder = new Adder(method);
+							adders.put(name.replaceFirst("add", "").toLowerCase(), adder);
+						}
 					}
 				}
 			}
 		}
 		
-		public Actor create(Element element){
+		public Actor create(XmlReader.Element element){
 			try {
 				Actor actor = clazz.newInstance();//TODO: check if constructor must parameters
 				ObjectMap<String, String> attributes = element.getAttributes();
 				if(attributes != null){
 					for(String key : attributes.keys()){
 						String value = element.get(key);
-						PropertyParser propertyParser = propertyParsers.get(key);
-						propertyParser.set(actor, value);
+						Setter setter = setters.get(key);
+						setter.set(actor, value);
 					}
+				}
+				int count = element.getChildCount();
+				for(int i = 0; i < count; i++){
+					add(actor, element.getChild(i));
 				}
 				return actor;
 			} catch (InstantiationException | IllegalAccessException ex) {
 				throw new RuntimeException(ex);
+			}
+		}
+		
+		private void add(Actor actor, XmlReader.Element element){
+			String name = element.getName();
+			name = name.substring(0, name.length()-1);//adder name
+			if(adders.containsKey(name)){
+				Adder adder = adders.get(name);
+				int count = element.getChildCount();
+				for(int i = 0; i < count; i++){
+					XmlReader.Element child = element.getChild(i);
+					
+					ActorParser parser = actorParsers.get(child.getName());
+					Actor content = parser.create(child);
+					
+					adder.add(actor, content);//TODO: add actions
+				}
 			}
 		}
 		
@@ -127,10 +156,10 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 			return clazz.getSimpleName();
 		}
 		
-		private static class PropertyParser {
+		private class Setter {
 			private Method method;
 			
-			public PropertyParser(Method method) {
+			public Setter(Method method) {
 				this.method = method;
 			}
 			
@@ -171,6 +200,22 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 						return null;
 					}
 					//FIXME: add drawable
+				}
+			}
+		}
+		
+		private class Adder {
+			private Method method;
+			
+			public Adder(Method method){
+				this.method = method;
+			}
+			
+			public void add(Actor actor, Actor content){
+				try {
+					method.invoke(actor, content);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+					throw new RuntimeException(ex);
 				}
 			}
 		}
