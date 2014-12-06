@@ -1,6 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.utils;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -21,17 +22,19 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
 	@SuppressWarnings("unchecked")
-	private static Class<? extends Actor>[] LOAD_ACTORPARSER = new Class[] { Group.class, Image.class };
+	private static Class<? extends Actor>[] LOAD_ACTOR_PARSERS = new Class[] { Group.class, Image.class, ImageButton.class };
 	
 	private AssetManager assetManager;
 	
@@ -47,7 +50,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		dependencyProperties.put("drawable", TextureAtlas.class);
 		
 		actorParsers = new HashMap<>();
-		for(Class<? extends Actor> clazz : LOAD_ACTORPARSER){
+		for(Class<? extends Actor> clazz : LOAD_ACTOR_PARSERS){
 			actorParsers.put(clazz.getSimpleName().toLowerCase(), new ActorParser(clazz));
 		}
 	}
@@ -109,13 +112,79 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		return actor;
 	}
 	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private <T> T parse(String value, Class<T> clazz){
+		if(clazz.isArray()){
+			Class<?> component = clazz.getComponentType();//item in array
+			String[] values = value.split(",");
+			
+			T parsed = (T) java.lang.reflect.Array.newInstance(component, values.length);
+			for(int i = 0; i < values.length; i++){
+				java.lang.reflect.Array.set(parsed, i, parse(values[i], component));
+			}
+			return parsed;
+		}else{
+			if(clazz == String.class){
+				return (T)value;
+			}else if(clazz.isEnum()){
+				return (T) Enum.valueOf((Class<Enum>)clazz, value);
+			}else if(clazz == Integer.class){
+				return (T) new Integer(value);
+			}else if(clazz == Float.TYPE){
+				return (T) new Float(value);
+			}else if(clazz == Boolean.class){
+				return (T) new Boolean(value);
+			}else if(clazz == Rectangle.class){
+				String[] values = value.split(",");
+				return (T) new Rectangle(Float.parseFloat(values[0]), Float.parseFloat(values[1]), Float.parseFloat(values[2]), Float.parseFloat(values[3]));
+			}else if(clazz == Drawable.class){
+				String[] args = value.split(":");
+				String file = args[0];
+				String textureName = args[1];
+				
+				return (T) new TextureRegionDrawable( assetManager.get(file, TextureAtlas.class).findRegion(textureName) );
+			}else{
+				return null;
+			}
+			//FIXME: add drawable
+		}
+	}
+	
+	private class ActorStyleParser<T> {
+		private Class<T> clazz;
+		private Field[] fields;
+		
+		public ActorStyleParser(Class<T> clazz) {
+			this.clazz = clazz;
+			fields = clazz.getFields();			
+		}
+
+		public T create(XmlReader.Element element) {
+			try {
+				T style = clazz.newInstance();
+				ObjectMap<String, String> attributes = element.getAttributes();
+				for(Field field : fields){
+					String fieldName = field.getName();
+					if(attributes.containsKey(fieldName)){
+						field.set(style, parse(attributes.get(fieldName), field.getType()));
+					}
+				}				
+				return style;
+			} catch (InstantiationException | IllegalAccessException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+	}
+	
 	private class ActorParser {
 		
 		private static final String ARGUMENT_SPLITTER = ",";
 
 		private Class<? extends Actor> clazz;
 		
-		//private Map<Pair<String, Integer>, ActorConstructor> constructors
+		
+		private ActorStyleParser<?> actorStyleParser;
 		/**
 		 * Key is name of the property and number of parameters
 		 */
@@ -125,6 +194,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		@SuppressWarnings("unchecked")
 		public ActorParser(Class<? extends Actor> clazz) {
 			this.clazz = clazz;
+			//create setters and adders
 			for (; clazz != null; clazz = (Class<? extends Actor>) clazz.getSuperclass()) {//TODO: check if to replace with an own (abstract) ActorParser
 				for(Method method : clazz.getDeclaredMethods()){
 					String name = method.getName();
@@ -140,16 +210,33 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 					}
 				}
 			}
+			
+			if(this.clazz == ImageButton.class){
+				actorStyleParser = new ActorStyleParser<ImageButton.ImageButtonStyle>(ImageButton.ImageButtonStyle.class);
+			}			
+		}
+		
+		private Actor construct(XmlReader.Element element){
+			try {
+				Actor actor;
+				if(clazz == Image.class){//TODO: put this in the constructor
+					actor = clazz.getConstructor(Drawable.class).newInstance( parse(element.getAttribute("drawable"), Drawable.class) );
+				}else if(clazz == ImageButton.class){
+					XmlReader.Element styleElement = element.getChildByName("style");
+					ImageButton.ImageButtonStyle style = (ImageButton.ImageButtonStyle) actorStyleParser.create(styleElement);
+					actor = clazz.getConstructor(ImageButton.ImageButtonStyle.class).newInstance(style);
+				}else{
+					actor = clazz.newInstance();//TODO: check if constructor must parameters
+				}
+				return actor;
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+				throw new RuntimeException(ex);
+			}
 		}
 		
 		public Actor create(XmlReader.Element element){
 			try {
-				Actor actor;
-				if(clazz == Image.class){
-					actor= clazz.getConstructor(Drawable.class).newInstance( parse(element.getAttribute("drawable"), Drawable.class) );
-				}else{
-					actor = clazz.newInstance();//TODO: check if constructor must parameters
-				}
+				Actor actor = construct(element);
 				ObjectMap<String, String> attributes = element.getAttributes();
 				if(attributes != null){
 					for(String key : attributes.keys()){
@@ -163,10 +250,14 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 				}
 				int count = element.getChildCount();
 				for(int i = 0; i < count; i++){
-					add(actor, element.getChild(i));
+					Element child = element.getChild(i);
+					String childName = child.getName();
+					if(childName.endsWith("s")){
+						add(actor, element.getChild(i));
+					}
 				}
 				return actor;
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+			} catch (IllegalArgumentException | SecurityException ex) {
 				throw new RuntimeException(ex);
 			}
 		}
@@ -191,45 +282,6 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		@Override
 		public String toString() {
 			return clazz.getSimpleName();
-		}
-		
-		
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		private <T> T parse(String value, Class<T> clazz){
-			if(clazz.isArray()){
-				Class<?> component = clazz.getComponentType();//item in array
-				String[] values = value.split(ARGUMENT_SPLITTER);
-				
-				T parsed = (T) java.lang.reflect.Array.newInstance(component, values.length);
-				for(int i = 0; i < values.length; i++){
-					java.lang.reflect.Array.set(parsed, i, parse(values[i], component));
-				}
-				return parsed;
-			}else{
-				if(clazz == String.class){
-					return (T)value;
-				}else if(clazz.isEnum()){
-					return (T) Enum.valueOf((Class<Enum>)clazz, value);
-				}else if(clazz == Integer.class){
-					return (T) new Integer(value);
-				}else if(clazz == Float.class){
-					return (T) new Float(value);
-				}else if(clazz == Boolean.class){
-					return (T) new Boolean(value);
-				}else if(clazz == Rectangle.class){
-					String[] values = value.split(ARGUMENT_SPLITTER);
-					return (T) new Rectangle(Float.parseFloat(values[0]), Float.parseFloat(values[1]), Float.parseFloat(values[2]), Float.parseFloat(values[3]));
-				}else if(clazz == Drawable.class){
-					String[] args = value.split(":");
-					String file = args[0];
-					String textureName = args[1];
-					
-					return (T) new TextureRegionDrawable( assetManager.get(file, TextureAtlas.class).findRegion(textureName) );
-				}else{
-					return null;
-				}
-				//FIXME: add drawable
-			}
 		}
 		
 		private class Setter {

@@ -130,23 +130,16 @@ public class CouncilScreen extends Scene2DScreen {
 		ui.currentWeek.setFontScale(FONT_SMALL);
 		ui.currentWeek.setPosition(560, 150);
 		stage.addActor(ui.currentWeek);
+		*/
 		
-		
-		ImageButton.ImageButtonStyle waxsealStyle = new ImageButton.ImageButtonStyle();
-		waxsealStyle.up = new TextureRegionDrawable(assetHelper.getAtlasRegion("image/council.pack:ui-waxseal") );
-		waxsealStyle.down = new TextureRegionDrawable(assetHelper.getAtlasRegion("image/council.pack:ui-waxseal-select") );
-		Button waxButton = new ImageButton(waxsealStyle);
-		waxButton.setPosition(525, 55);
-		waxButton.addListener(new ClickListener() {
+		stage.getRoot().findActor("wax").addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				world.week();
 				updateUI();
 			}
 		});
-		stage.addActor(waxButton);
-		updateUI();
-		*/
+		//updateUI();
 	}
 	
 	private void updateUI() {
