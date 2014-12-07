@@ -865,36 +865,7 @@ public class CouncilScreen extends Scene2DScreen {
 		//resourcesTable.debug();
 		group.addActor(resourcesTable);
 		
-		resourcesTable.row().height(12).spaceBottom(2);
-		resourcesTable.add( ui.resources.currentGold = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.currentGold.setFontScale(LABEL_FONT);
-		ui.resources.currentGold.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.currentWood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.currentWood.setFontScale(LABEL_FONT);
-		ui.resources.currentWood.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.currentFood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.currentFood.setFontScale(LABEL_FONT);
-		ui.resources.currentFood.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.currentMen = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.currentMen.setFontScale(LABEL_FONT);
-		ui.resources.currentMen.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.currentArmy = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.currentArmy.setFontScale(LABEL_FONT);
-		ui.resources.currentArmy.setAlignment(Align.center);
 		
-		resourcesTable.row().height(12);
-		resourcesTable.add( ui.resources.incomeGold = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.incomeGold.setFontScale(LABEL_FONT);
-		ui.resources.incomeGold.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.incomeWood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.incomeWood.setFontScale(LABEL_FONT);
-		ui.resources.incomeWood.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.incomeFood = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.incomeFood.setFontScale(LABEL_FONT);
-		ui.resources.incomeFood.setAlignment(Align.center);
-		resourcesTable.add( ui.resources.incomeMen = new Label("0", skin) ).width(LABEL_WIDTH).spaceRight(2);
-		ui.resources.incomeMen.setFontScale(LABEL_FONT);
-		ui.resources.incomeMen.setAlignment(Align.center);
 		resourcesTable.pack();
 
 		return group;

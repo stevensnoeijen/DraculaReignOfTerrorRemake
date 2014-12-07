@@ -8,6 +8,13 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ActorCreator;
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.GroupCreator;
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ImageButtonCreator;
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ImageCreator;
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.LabelCreator;
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.TableCreator;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.badlogic.gdx.Gdx;
@@ -26,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -36,8 +44,10 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
+	private ObjectMap<String, ActorCreator<?>> creators;
+	
 	@SuppressWarnings("unchecked")
-	private static Class<? extends Actor>[] LOAD_ACTOR_PARSERS = new Class[] { Group.class, Image.class, ImageButton.class, Label.class };
+	private static Class<? extends Actor>[] LOAD_ACTOR_PARSERS = new Class[] { Group.class, Image.class, ImageButton.class, Label.class, Table.class };
 	
 	private AssetManager assetManager;
 	
@@ -50,6 +60,13 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 
 	public ActorLoader(FileHandleResolver fileHandleResolver) {
 		super(fileHandleResolver);
+		creators = new ObjectMap<>();
+		creators.put("group", new GroupCreator(this));
+		creators.put("image", new ImageCreator(this));
+		creators.put("table", new TableCreator<Table>(this));
+		creators.put("label", new LabelCreator(this));
+		creators.put("imagebutton", new ImageButtonCreator(this));
+		
 		dependencyProperties.put("drawable", TextureAtlas.class);
 		dependencyProperties.put("skin", Skin.class);
 		
@@ -111,16 +128,22 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	
 	private Actor load(FileHandle file){	
 		String name = root.getName();
-		ActorParser parser = actorParsers.get(name);
-		Actor actor = parser.create(root);
-		return actor;
+		return creators.get(name).create(root);
+	}
+	
+	public Actor create(XmlReader.Element element){
+		return creators.get(element.getName()).create(element);
+	}
+	
+	public <T> T getLoadedAsset(String fileName, Class<T> clazz){
+		return parse(fileName, clazz);//TODO: replace with assetmanager call
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private <T> T parse(String value, Class<T> clazz){
+	public <T> T parse(String value, Class<T> clazz){
 		if(clazz.isArray()){
 			Class<?> component = clazz.getComponentType();//item in array
-			String[] values = value.split(",");
+			String[] values = value.replaceAll("\\s", "").split(",");
 			
 			T parsed = (T) java.lang.reflect.Array.newInstance(component, values.length);
 			for(int i = 0; i < values.length; i++){
@@ -139,8 +162,8 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 			}else if(clazz == Boolean.class){
 				return (T) new Boolean(value);
 			}else if(clazz == Rectangle.class){
-				String[] values = value.split(",");
-				return (T) new Rectangle(Float.parseFloat(values[0]), Float.parseFloat(values[1]), Float.parseFloat(values[2]), Float.parseFloat(values[3]));
+				String[] args = value.split(",");
+				return (T) new Rectangle(Float.parseFloat(args[0]), Float.parseFloat(args[1]), Float.parseFloat(args[2]), Float.parseFloat(args[3]));
 			}else if(clazz == Drawable.class){
 				String[] args = value.split(":");
 				String file = args[0];
@@ -216,6 +239,8 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 						}else if(name.equals("addActor")){//TODO: make this more generic (also with the other addActor* methods)
 							Adder adder = new Adder(method);
 							adders.put(name.replaceFirst("add", "").toLowerCase(), adder);
+						}else if(name.equals("row")){
+							
 						}
 					}
 				}
@@ -265,8 +290,10 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 				for(int i = 0; i < count; i++){
 					Element child = element.getChild(i);
 					String childName = child.getName();
-					if(childName.endsWith("s")){
-						add(actor, element.getChild(i));
+					if(childName.equals("actors") || childName.equals("rows")){
+						add(actor, child);
+					}else{
+						throw new UnsupportedOperationException();
 					}
 				}
 				return actor;
