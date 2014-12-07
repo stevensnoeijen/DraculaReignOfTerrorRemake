@@ -17,6 +17,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -147,6 +148,12 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 				return (T) new TextureRegionDrawable( assetManager.get(file, TextureAtlas.class).findRegion(textureName) );
 			}else if(clazz == Skin.class){
 				return (T) assetManager.get(value, Skin.class);
+			}else if(clazz == Color.class){
+				try {
+					return (T) Color.class.getField(value.toUpperCase()).get(null);
+				} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+					throw new RuntimeException(ex);
+				}
 			}else{
 				return null;
 			}
