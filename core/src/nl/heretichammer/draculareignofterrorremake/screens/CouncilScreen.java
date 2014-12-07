@@ -109,23 +109,6 @@ public class CouncilScreen extends Scene2DScreen {
 		Actor resources = createResources();
 		resources.setPosition(300, 50);
 		stage.addActor(resources);
-		
-		//create year
-		Label year = new Label("Anno Domini", skin, "bold");
-		year.setColor(Color.BLACK);
-		year.setPosition(510, 210);
-		stage.addActor(year);
-
-		ui.currentYear = new Label("0", skin);
-		ui.currentYear.setFontScale(FONT_SMALL);
-		ui.currentYear.setPosition(550, 190);
-		stage.addActor(ui.currentYear);
-		
-		//create week
-		Label week = new Label("Week", skin, "bold");
-		week.setColor(Color.BLACK);
-		week.setPosition(540, 165);
-		stage.addActor(week);
 		*/
 		
 		stage.getRoot().findActor("wax").addListener(new ClickListener() {
