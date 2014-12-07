@@ -93,6 +93,7 @@ public class CouncilScreen extends Scene2DScreen {
 		assetManager.load("layout/CouncilScreen.xml", Actor.class);
 		assetManager.finishLoading();
 		
+		skin = assetManager.get("skin/uiskin.json", Skin.class); 
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );//background
 		
 		/*
@@ -125,11 +126,6 @@ public class CouncilScreen extends Scene2DScreen {
 		week.setColor(Color.BLACK);
 		week.setPosition(540, 165);
 		stage.addActor(week);
-		
-		ui.currentWeek = new Label("0", skin);
-		ui.currentWeek.setFontScale(FONT_SMALL);
-		ui.currentWeek.setPosition(560, 150);
-		stage.addActor(ui.currentWeek);
 		*/
 		
 		stage.getRoot().findActor("wax").addListener(new ClickListener() {

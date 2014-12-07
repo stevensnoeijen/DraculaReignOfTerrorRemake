@@ -23,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -34,7 +36,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
 	@SuppressWarnings("unchecked")
-	private static Class<? extends Actor>[] LOAD_ACTOR_PARSERS = new Class[] { Group.class, Image.class, ImageButton.class };
+	private static Class<? extends Actor>[] LOAD_ACTOR_PARSERS = new Class[] { Group.class, Image.class, ImageButton.class, Label.class };
 	
 	private AssetManager assetManager;
 	
@@ -48,6 +50,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	public ActorLoader(FileHandleResolver fileHandleResolver) {
 		super(fileHandleResolver);
 		dependencyProperties.put("drawable", TextureAtlas.class);
+		dependencyProperties.put("skin", Skin.class);
 		
 		actorParsers = new HashMap<>();
 		for(Class<? extends Actor> clazz : LOAD_ACTOR_PARSERS){
@@ -112,7 +115,6 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		return actor;
 	}
 	
-
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private <T> T parse(String value, Class<T> clazz){
 		if(clazz.isArray()){
@@ -125,7 +127,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 			}
 			return parsed;
 		}else{
-			if(clazz == String.class){
+			if(clazz == String.class || clazz == CharSequence.class){
 				return (T)value;
 			}else if(clazz.isEnum()){
 				return (T) Enum.valueOf((Class<Enum>)clazz, value);
@@ -142,8 +144,9 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 				String[] args = value.split(":");
 				String file = args[0];
 				String textureName = args[1];
-				
 				return (T) new TextureRegionDrawable( assetManager.get(file, TextureAtlas.class).findRegion(textureName) );
+			}else if(clazz == Skin.class){
+				return (T) assetManager.get(value, Skin.class);
 			}else{
 				return null;
 			}
@@ -225,6 +228,8 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 					XmlReader.Element styleElement = element.getChildByName("style");
 					ImageButton.ImageButtonStyle style = (ImageButton.ImageButtonStyle) actorStyleParser.create(styleElement);
 					actor = clazz.getConstructor(ImageButton.ImageButtonStyle.class).newInstance(style);
+				}else if(clazz == Label.class){
+					actor = clazz.getConstructor(CharSequence.class, Skin.class).newInstance( (CharSequence)element.getAttribute("text"), parse(element.getAttribute("skin"), Skin.class));
 				}else{
 					actor = clazz.newInstance();//TODO: check if constructor must parameters
 				}
@@ -237,6 +242,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		public Actor create(XmlReader.Element element){
 			try {
 				Actor actor = construct(element);
+				//set attributes
 				ObjectMap<String, String> attributes = element.getAttributes();
 				if(attributes != null){
 					for(String key : attributes.keys()){
