@@ -39,10 +39,12 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 		int count = element.getChildCount();
 		if(count > 0){
 			XmlReader.Element actors = element.getChildByName("actors");
-			int actorcount = actors.getChildCount();
-			//get actors
-			for(int i = 0; i < actorcount; i++){
-				group.addActor( actorLoader.create(actors.getChild(i)) );
+			if(actors != null){
+				int actorcount = actors.getChildCount();
+				//get actors
+				for(int i = 0; i < actorcount; i++){
+					group.addActor( actorLoader.create(actors.getChild(i)) );
+				}
 			}
 		}
 	}

@@ -28,7 +28,7 @@ public class LabelCreator extends WidgetCreator<Label> {
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("alignment")){
-				String[] args = attributes.get("alignment").replace(SPACE, "").split(SEPERATOR);
+				String[] args = attributes.get("alignment").replaceAll(SPACE, "").split(SEPERATOR);
 				if(args.length == 1){
 					label.setAlignment(parseAlignment(args[0]));
 				}else{//2
@@ -38,11 +38,13 @@ public class LabelCreator extends WidgetCreator<Label> {
 			if(attributes.containsKey("ellipsis")){
 				label.setEllipse(Boolean.parseBoolean(attributes.get("ellipsis")));
 			}
-			if(attributes.containsKey("fontscalex")){
-				label.setFontScaleX(Float.parseFloat(attributes.get("fontscalex")));
-			}
-			if(attributes.containsKey("fontscaley")){
-				label.setFontScaleY(Float.parseFloat(attributes.get("fontscaley")));
+			if(attributes.containsKey("fontscale")){
+				String[] args = attributes.get("fontscale").replaceAll(SPACE, "").split(SPACE);
+				if(args.length == 1){
+					label.setFontScale(Float.parseFloat(args[0]));
+				}else{
+					label.setFontScale(Float.parseFloat(args[0]), Float.parseFloat(args[1]));
+				}
 			}
 			if(attributes.containsKey("wrap")){
 				label.setWrap(Boolean.parseBoolean(attributes.get("wrap")));

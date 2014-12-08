@@ -85,7 +85,7 @@ public class CouncilScreen extends Scene2DScreen {
 	public void show() {
 		super.show();
 		assetManager.load("image/council.pack", TextureAtlas.class);
-		assetManager.load("skin/uiskin.json", Skin.class);
+		//assetManager.load("skin/uiskin.json", Skin.class);
 		assetManager.load("sound/click.ogg", Sound.class);
 		assetManager.load("music/council2.mp3", Music.class);
 		assetManager.load("sound/upgrading armerment.ogg", Sound.class);
@@ -93,7 +93,7 @@ public class CouncilScreen extends Scene2DScreen {
 		assetManager.load("layout/CouncilScreen.xml", Actor.class);
 		assetManager.finishLoading();
 		
-		skin = assetManager.get("skin/uiskin.json", Skin.class); 
+		//skin = assetManager.get("skin/uiskin.json", Skin.class); 
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );//background
 		
 		/*

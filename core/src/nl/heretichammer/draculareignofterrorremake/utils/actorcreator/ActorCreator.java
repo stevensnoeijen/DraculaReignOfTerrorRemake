@@ -67,6 +67,12 @@ public abstract class ActorCreator<T extends Actor> {
 			if(attributes.containsKey("zindex")){
 				actor.setZIndex(Integer.parseInt(attributes.get("zindex")));
 			}
+			if(attributes.containsKey("x")){
+				actor.setX(Float.parseFloat(attributes.get("x")));
+			}
+			if(attributes.containsKey("y")){
+				actor.setY(Float.parseFloat(attributes.get("y")));
+			}
 		}
 	}
 	

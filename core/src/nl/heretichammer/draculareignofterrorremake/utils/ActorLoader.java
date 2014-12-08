@@ -61,7 +61,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	public ActorLoader(FileHandleResolver fileHandleResolver) {
 		super(fileHandleResolver);
 		creators = new ObjectMap<>();
-		creators.put("group", new GroupCreator(this));
+		creators.put("group", new GroupCreator<Group>(this));
 		creators.put("image", new ImageCreator(this));
 		creators.put("table", new TableCreator<Table>(this));
 		creators.put("label", new LabelCreator(this));
@@ -84,7 +84,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	}
 
 	@Override
-	public Actor loadSync(AssetManager assetManager,	String fileName, FileHandle file, ActorLoaderParameter parameter) {
+	public Actor loadSync(AssetManager assetManager, String fileName, FileHandle file, ActorLoaderParameter parameter) {
 		return loaded;
 	}
 
@@ -93,15 +93,15 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	public Array<AssetDescriptor> getDependencies(String fileName, FileHandle file, ActorLoaderParameter parameter) {
 		try {
 			this.root = reader.parse(file);
-			return getDependencies(this.root);		
+			return getDependencies(this.root).values().toArray();		
 		} catch (IOException ex) {
 			throw new GdxRuntimeException("Could't load layout '" + fileName + "'", ex);
 		}
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private Array<AssetDescriptor> getDependencies(XmlReader.Element element){
-		Array<AssetDescriptor> dependencies = new Array<>();
+	private ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
 		
 		ObjectMap<String, String> elementAttributes = element.getAttributes();
 		if(elementAttributes != null){//element has attributes
@@ -112,7 +112,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 					if(type == TextureAtlas.class){
 						attributeValue = attributeValue.split(":")[0];//only get atlas-file
 					}
-					dependencies.add(new AssetDescriptor<>(Gdx.files.internal(attributeValue), type));
+					dependencies.put(attributeValue, new AssetDescriptor<>(Gdx.files.internal(attributeValue), type));
 				}
 			}
 		}
@@ -120,7 +120,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		//get dependencies from children
 		int count = element.getChildCount();
 		for(int i = 0; i < count; i++){
-			dependencies.addAll(getDependencies(element.getChild(i)));//TODO: fix that there are also duplicates?
+			dependencies.putAll(getDependencies(element.getChild(i)));//TODO: fix that there are also duplicates?
 		}
 		
 		return dependencies;

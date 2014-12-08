@@ -33,7 +33,7 @@ public class ImageButtonCreator extends ActorCreator<ImageButton>{
 			throw new IllegalArgumentException("imagebutton must have a skin or style set");
 		}
 		set(imageButton, element);
-		return null;
+		return imageButton;
 	}
 	
 	private ImageButton.ImageButtonStyle createStyle(Element element){

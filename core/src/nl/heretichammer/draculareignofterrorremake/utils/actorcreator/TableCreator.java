@@ -40,7 +40,7 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 			//get rows
 			for(int i = 0; i < rowcount; i++){
 				XmlReader.Element row = rows.getChild(i);
-				createRow(element, table);//create row
+				createRow(row, table);//create row
 			}
 		}
 	}
