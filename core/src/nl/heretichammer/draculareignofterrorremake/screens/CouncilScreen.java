@@ -101,10 +101,6 @@ public class CouncilScreen extends Scene2DScreen {
 		tab.setPosition(25, 50);		
 		stage.addActor(tab);
 		showTrainingTab();
-
-		Actor map = createMap();
-		map.setPosition(280, 250);
-		stage.addActor(map);
 		*/
 		
 		stage.getRoot().findActor("wax").addListener(new ClickListener() {
@@ -162,27 +158,6 @@ public class CouncilScreen extends Scene2DScreen {
 		}else {//is 0
 			return String.valueOf(income);
 		}
-	}
-	
-	private Actor createMap() {	
-		Group areaGroup = new Group();
-		areaGroup.setSize(320, 240);
-		
-		//add to buttongroup for one selection only
-		ButtonGroup areasButtonGroup = new ButtonGroup();
-		
-		
-		for(Button button : areasButtonGroup.getButtons()) {
-			button.addListener(new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {					
-					setSelectedArea((Area)event.getTarget().getUserObject());
-				}
-			});
-		}
-		
-		//TODO: add bounds for clickable part for images
-		return areaGroup;
 	}
 	
 	private Actor createTabPane() {
@@ -791,33 +766,6 @@ public class CouncilScreen extends Scene2DScreen {
 		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
 		
 		return style;
-	}
-	
-	private ImageButton.ImageButtonStyle createStyle(Area area){
-		boolean enemy = true;
-		if(area.getTeam().equals(player.getTeam())) {//if area has other team
-			enemy = false;
-		}
-		final String buttonUpStyle = "image/council.pack:area-" + area.getName().toLowerCase() + (enemy ? "-enemy" : "");
-		final String buttonCheckedStyle = buttonUpStyle + "-select";
-		
-		//style
-		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-		style.up = new TextureRegionDrawable(assetHelper.getAtlasRegion(buttonUpStyle));
-		style.checked = new TextureRegionDrawable(assetHelper.getAtlasRegion(buttonCheckedStyle));
-		return style;		
-	}
-	
-	private void save() {
-		
-	}
-	
-	private void load(String name) {
-		
-	}
-	
-	public void loadDefaults() {
-		
 	}
 	
 	@Override
