@@ -66,6 +66,10 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		this.assetManager = assetManager;
 		loaded = null;
 		loaded = load(file);
+		//reset creators
+		for(ActorCreator<?> creator : creators.values()){
+			creator.reset();
+		}
 	}
 
 	@Override

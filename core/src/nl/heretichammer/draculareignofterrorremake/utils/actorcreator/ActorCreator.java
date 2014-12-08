@@ -107,4 +107,11 @@ public abstract class ActorCreator<T extends Actor> {
 			throw new UnsupportedOperationException();
 		}
 	}
+	
+	/**
+	 * Reset temp values saved while creating the actors. 
+	 */
+	public void reset(){
+		
+	}
 }
