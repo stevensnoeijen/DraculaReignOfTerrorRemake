@@ -44,7 +44,7 @@ public class ImageButtonCreator extends ActorCreator<ImageButton>{
 			for(Field field : ImageButton.ImageButtonStyle.class.getFields()){
 				String fieldName = field.getName();
 				if(attributes.containsKey(fieldName)){
-					field.set(style, parse(attributes.get(fieldName), field.getType()));
+					field.set(style, actorLoader.getLoadedAsset(attributes.get(fieldName), field.getType()));
 				}
 			}
 		} catch (IllegalAccessException ex) {

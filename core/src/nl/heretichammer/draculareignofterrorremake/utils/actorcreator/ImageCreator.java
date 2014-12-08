@@ -16,7 +16,7 @@ public class ImageCreator extends WidgetCreator<Image> {
 
 	@Override
 	public Image create(Element element) {
-		Drawable drawable = actorLoader.parse(element.get("drawable"), Drawable.class); 
+		Drawable drawable = actorLoader.getLoadedAsset(element.get("drawable"), Drawable.class); 
 		Image image = new Image(drawable);
 		set(image, element);
 		return image;

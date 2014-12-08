@@ -29,7 +29,7 @@ public abstract class ActorCreator<T extends Actor> {
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("color")){
-				actor.setColor(parse(attributes.get("color"), Color.class));
+				actor.setColor(parseColor(attributes.get("color")));
 			}
 			if(attributes.containsKey("debug")){
 				actor.setDebug(Boolean.parseBoolean(attributes.get("debug").split(SEPERATOR)[0]));
@@ -56,7 +56,7 @@ public abstract class ActorCreator<T extends Actor> {
 				actor.setScaleX(Float.parseFloat(attributes.get("scalex")));
 			}
 			if(attributes.containsKey("scaley")){
-				actor.setScaleY(parse(attributes.get("scaley"), Float.class));
+				actor.setScaleY(Float.parseFloat(attributes.get("scaley")));
 			}
 			if(attributes.containsKey("visible")){
 				actor.setVisible(Boolean.parseBoolean(attributes.get("visible")));
@@ -74,10 +74,6 @@ public abstract class ActorCreator<T extends Actor> {
 				actor.setY(Float.parseFloat(attributes.get("y")));
 			}
 		}
-	}
-	
-	protected <T> T parse(String value, Class<T> clazz){
-		return actorLoader.parse(value, clazz);
 	}
 	
 	protected int parseAlignment(String value){
