@@ -105,10 +105,6 @@ public class CouncilScreen extends Scene2DScreen {
 		Actor map = createMap();
 		map.setPosition(280, 250);
 		stage.addActor(map);
-		
-		Actor resources = createResources();
-		resources.setPosition(300, 50);
-		stage.addActor(resources);
 		*/
 		
 		stage.getRoot().findActor("wax").addListener(new ClickListener() {
@@ -175,80 +171,6 @@ public class CouncilScreen extends Scene2DScreen {
 		//add to buttongroup for one selection only
 		ButtonGroup areasButtonGroup = new ButtonGroup();
 		
-		//create areas
-		//sibiu
-		ui.areas.sibiu = new ImageButton(createStyle(world.getArea("sibiu")));
-		ui.areas.sibiu.setUserObject(world.getArea("sibiu"));
-		ui.areas.sibiu.setPosition(0, 120);
-		areaGroup.addActor(ui.areas.sibiu);
-		areasButtonGroup.add(ui.areas.sibiu);
-		//fagaras
-		ui.areas.fagaras = new ImageButton(createStyle(world.getArea("fagaras")));
-		ui.areas.fagaras.setUserObject(world.getArea("fagaras"));
-		ui.areas.fagaras.setPosition(70, 135);
-		ui.areas.fagaras.setChecked(true);
-		areaGroup.addActor(ui.areas.fagaras);
-		areasButtonGroup.add(ui.areas.fagaras);
-		//curtea
-		ui.areas.curtea = new ImageButton(createStyle(world.getArea("curtea")));
-		ui.areas.curtea.setUserObject(world.getArea("curtea"));
-		ui.areas.curtea.setPosition(30, 80);
-		areaGroup.addActor(ui.areas.curtea);
-		areasButtonGroup.add(ui.areas.curtea);
-		//brasov
-		ui.areas.brasov = new ImageButton(createStyle(world.getArea("brasov")));
-		ui.areas.brasov.setUserObject(world.getArea("brasov"));
-		ui.areas.brasov.setPosition(135, 130);
-		areaGroup.addActor(ui.areas.brasov);
-		areasButtonGroup.add(ui.areas.brasov);
-		//pitesti
-		ui.areas.pitesti = new ImageButton(createStyle(world.getArea("pitesti")));
-		ui.areas.pitesti.setUserObject(world.getArea("pitesti"));
-		ui.areas.pitesti.setPosition(130, 85);
-		areaGroup.addActor(ui.areas.pitesti);
-		areasButtonGroup.add(ui.areas.pitesti);
-		//tirgo
-		ui.areas.tirgo = new ImageButton(createStyle(world.getArea("tirgo")));
-		ui.areas.tirgo.setUserObject(world.getArea("tirgo"));
-		ui.areas.tirgo.setPosition(100, 45);
-		areaGroup.addActor(ui.areas.tirgo);
-		areasButtonGroup.add(ui.areas.tirgo);
-		//snagov
-		ui.areas.snagov = new ImageButton(createStyle(world.getArea("snagov")));
-		ui.areas.snagov.setUserObject(world.getArea("snagov"));
-		ui.areas.snagov.setPosition(185, 70);
-		areaGroup.addActor(ui.areas.snagov);
-		areasButtonGroup.add(ui.areas.snagov);
-		//giurgiu
-		ui.areas.giurgiu = new ImageButton(createStyle(world.getArea("giurgiu")));
-		ui.areas.giurgiu.setUserObject(world.getArea("giurgiu"));
-		ui.areas.giurgiu.setPosition(129, 0);
-		areaGroup.addActor(ui.areas.giurgiu);
-		areasButtonGroup.add(ui.areas.giurgiu);
-		//braila
-		ui.areas.braila = new ImageButton(createStyle(world.getArea("braila")));
-		ui.areas.braila.setUserObject(world.getArea("braila"));
-		ui.areas.braila.setPosition(236, 100);
-		areaGroup.addActor(ui.areas.braila);
-		areasButtonGroup.add(ui.areas.braila);
-		//hirsova
-		ui.areas.hirsova = new ImageButton(createStyle(world.getArea("hirsova")));
-		ui.areas.hirsova.setUserObject(world.getArea("hirsova"));
-		ui.areas.hirsova.setPosition(234, 75);
-		areaGroup.addActor(ui.areas.hirsova);
-		areasButtonGroup.add(ui.areas.hirsova);
-		//rasova
-		ui.areas.rasova = new ImageButton(createStyle(world.getArea("rasova")));
-		ui.areas.rasova.setUserObject(world.getArea("rasova"));
-		ui.areas.rasova.setPosition(229, 54);
-		areaGroup.addActor(ui.areas.rasova);
-		areasButtonGroup.add(ui.areas.rasova);
-		//ostrov
-		ui.areas.ostrov = new ImageButton(createStyle(world.getArea("ostrov")));
-		ui.areas.ostrov.setUserObject(world.getArea("ostrov"));
-		ui.areas.ostrov.setPosition(219, 30);
-		areaGroup.addActor(ui.areas.ostrov);
-		areasButtonGroup.add(ui.areas.ostrov);
 		
 		for(Button button : areasButtonGroup.getButtons()) {
 			button.addListener(new ClickListener() {
@@ -847,28 +769,6 @@ public class CouncilScreen extends Scene2DScreen {
 		architectureLevelLabel.setFontScale(0.8f);
 		architectureLevelLabel.setPosition(90, 175);
 		tabContainer.addActor(architectureLevelLabel);
-	}
-	
-	private Actor createResources() {
-		//constants
-		final float LABEL_WIDTH = 36;
-		final float LABEL_FONT = .8f;
-		
-		Group group = new Group();
-		
-		Image background = new Image( assetHelper.getDrawable("image/council.pack:ui-panel-stats") );
-		group.addActor(background);		
-		
-		//stats for resources
-		Table resourcesTable = new Table(skin);
-		resourcesTable.setPosition(8, 95);
-		//resourcesTable.debug();
-		group.addActor(resourcesTable);
-		
-		
-		resourcesTable.pack();
-
-		return group;
 	}
 	
 	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){

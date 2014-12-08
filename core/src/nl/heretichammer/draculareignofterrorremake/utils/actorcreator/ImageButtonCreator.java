@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
-public class ImageButtonCreator extends ActorCreator<ImageButton>{
+public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 
 	public ImageButtonCreator(ActorLoader actorLoader) {
 		super(actorLoader);
