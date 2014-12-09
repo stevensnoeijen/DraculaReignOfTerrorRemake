@@ -13,8 +13,8 @@ public abstract class WidgetGroupCreator<T extends WidgetGroup> extends GroupCre
 	}
 	
 	@Override
-	protected void set(WidgetGroup widgetGroup , Element element) {
-		super.set(widgetGroup, element);
+	protected void set(WidgetGroup widgetGroup, Element element, Object context) {
+		super.set(widgetGroup, element, context);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("fillparent")){

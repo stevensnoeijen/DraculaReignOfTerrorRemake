@@ -1,9 +1,14 @@
 package nl.heretichammer.draculareignofterrorremake.utils.actorcreator;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -19,8 +24,8 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 	}
 	
 	@Override
-	protected void set(Button button, Element element) {
-		super.set(button, element);
+	protected void set(Button button, Element element, final Object context) {
+		super.set(button, element, context);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes.containsKey("checked")){
 			button.setChecked(Boolean.parseBoolean(attributes.get("checked")));
@@ -35,6 +40,24 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 				buttongroups.put(name, buttonGroup);
 			}
 			buttongroups.get(name).add(button);//add button to group
+		}
+		if(attributes.containsKey("click")){
+			try {
+				String click = attributes.get("click");
+				final Method method = context.getClass().getMethod(click, InputEvent.class);
+				button.addListener(new ClickListener(){
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						try {
+							method.invoke(context, event);
+						} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException ex) {
+							throw new RuntimeException(ex);
+						}
+					}
+				});
+			} catch (IllegalArgumentException | NoSuchMethodException | SecurityException ex) {
+				throw new RuntimeException(ex);
+			}
 		}
 	}
 	

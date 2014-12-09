@@ -13,8 +13,8 @@ public abstract class WidgetCreator<T extends Widget> extends ActorCreator<T> {
 	}
 	
 	@Override
-	protected void set(T widget, Element element) {
-		super.set(widget, element);
+	protected void set(T widget, Element element, Object context) {
+		super.set(widget, element, context);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("fillparent")){

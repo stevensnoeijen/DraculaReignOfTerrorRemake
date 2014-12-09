@@ -15,15 +15,15 @@ public class ImageCreator extends WidgetCreator<Image> {
 	}
 
 	@Override
-	public Image create(Element element) {
+	public Image create(Element element, Object context) {
 		Drawable drawable = actorLoader.getLoadedAsset(element.get("drawable"), Drawable.class); 
 		Image image = new Image(drawable);
-		set(image, element);
+		set(image, element, context);
 		return image;
 	}
 	
-	protected void set(Image image, Element element) {
-		super.set(image, element);
+	protected void set(Image image, Element element, Object context) {
+		super.set(image, element, context);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("align")){

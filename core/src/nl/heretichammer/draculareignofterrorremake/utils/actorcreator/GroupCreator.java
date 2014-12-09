@@ -14,15 +14,15 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 	}
 	
 	@Override
-	public T create(XmlReader.Element element) {
+	public T create(XmlReader.Element element, Object context) {
 		Group group = new Group();
-		set(group, element);
+		set(group, element, context);
 		return (T)group;
 	}
 	
 	@Override
-	protected void set(Group group, XmlReader.Element element) {
-		super.set((T)group, element);
+	protected void set(Group group, XmlReader.Element element, Object context) {
+		super.set((T)group, element, context);
 		
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
@@ -43,7 +43,7 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 				int actorcount = actors.getChildCount();
 				//get actors
 				for(int i = 0; i < actorcount; i++){
-					group.addActor( actorLoader.create(actors.getChild(i)) );
+					group.addActor( actorLoader.create(actors.getChild(i), context) );
 				}
 			}
 		}

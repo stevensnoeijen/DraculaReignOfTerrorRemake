@@ -85,12 +85,11 @@ public class CouncilScreen extends Scene2DScreen {
 	public void show() {
 		super.show();
 		assetManager.load("image/council.pack", TextureAtlas.class);
-		//assetManager.load("skin/uiskin.json", Skin.class);
 		assetManager.load("sound/click.ogg", Sound.class);
 		assetManager.load("music/council2.mp3", Music.class);
 		assetManager.load("sound/upgrading armerment.ogg", Sound.class);
 		assetManager.load("sound/upgrading architecture.ogg", Sound.class);
-		assetManager.load("layout/CouncilScreen.xml", Actor.class);
+		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
 		assetManager.finishLoading();
 		
 		//skin = assetManager.get("skin/uiskin.json", Skin.class); 
@@ -111,6 +110,12 @@ public class CouncilScreen extends Scene2DScreen {
 			}
 		});
 		//updateUI();
+	}
+	
+	public void tabClicked(InputEvent event){
+		String name = event.getTarget().getName();
+		
+		//stage.getRoot().findActor(name + ".content").setVisible(true);
 	}
 	
 	private void updateUI() {
@@ -221,20 +226,6 @@ public class CouncilScreen extends Scene2DScreen {
 		right.setSize(200, 400);
 		main.add(right);
 		main.pack();
-		
-		//add info labels
-		ui.location = new Label("In Fagaras", skin);
-		ui.location.setFontScale(0.8f);
-		ui.location.setPosition(55, 340);
-		ui.location.toFront();
-		right.addActor(ui.location);
-		
-		//ui.info
-		ui.info = new Label("info", skin);
-		ui.info.setFontScale(0.8f);
-		ui.info.setPosition(15, 30);
-		right.addActor(ui.info);
-		ui.info.toFront();
 		
 		return main;
 	}

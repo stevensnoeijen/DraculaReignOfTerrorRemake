@@ -65,7 +65,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	public void loadAsync(AssetManager assetManager, String fileName, FileHandle file, ActorLoaderParameter parameter) {
 		this.assetManager = assetManager;
 		loaded = null;
-		loaded = load(file);
+		loaded = load(file, parameter.context);
 		//reset creators
 		for(ActorCreator<?> creator : creators.values()){
 			creator.reset();
@@ -115,13 +115,13 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		return dependencies;
 	}
 	
-	private Actor load(FileHandle file){	
+	private Actor load(FileHandle file, Object context){	
 		String name = root.getName();
-		return creators.get(name).create(root);
+		return creators.get(name).create(root, context);
 	}
 	
-	public Actor create(XmlReader.Element element){
-		return creators.get(element.getName()).create(element);
+	public Actor create(XmlReader.Element element, Object context){
+		return creators.get(element.getName()).create(element, context);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -139,6 +139,13 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	}
 	
 	public static class ActorLoaderParameter extends AssetLoaderParameters<Actor> {
+		/**
+		 * For handling click events
+		 */
+		public Object context;
 		
+		public ActorLoaderParameter(Object context) {
+			this.context = context;
+		}
 	}
 }

@@ -14,17 +14,17 @@ public class LabelCreator extends WidgetCreator<Label> {
 	}
 	
 	@Override
-	public Label create(Element element) {
+	public Label create(Element element, Object context) {
 		String text = element.get("text");
 		Skin skin =  actorLoader.getLoadedAsset(element.get("skin"), Skin.class);
 		Label label = new Label(text, skin);
-		set(label, element);
+		set(label, element, context);
 		return label;
 	}
 	
 	@Override
-	protected void set(Label label, Element element) {
-		super.set(label, element);
+	protected void set(Label label, Element element, Object context) {
+		super.set(label, element, context);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("alignment")){

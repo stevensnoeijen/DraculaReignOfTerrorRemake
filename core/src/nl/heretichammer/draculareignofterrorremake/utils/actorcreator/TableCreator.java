@@ -17,15 +17,15 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 	}
 	
 	@Override
-	public T create(Element element) {
+	public T create(Element element, Object context) {
 		Table table = new Table();
-		set(table, element);
+		set(table, element, context);
 		return (T) table;
 	}
 	
 	@Override
-	protected void set(Table table, Element element) {
-		super.set(table, element);
+	protected void set(Table table, Element element, Object context) {
+		super.set(table, element, context);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("skin")){//if skin attribute is set it in the 
@@ -40,20 +40,20 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 			//get rows
 			for(int i = 0; i < rowcount; i++){
 				XmlReader.Element row = rows.getChild(i);
-				createRow(row, table);//create row
+				createRow(row, table, context);//create row
 			}
 		}
 	}
 	
-	private Cell<?> createRow(XmlReader.Element element, Table table){
+	private Cell<?> createRow(XmlReader.Element element, Table table, Object context){
 		Cell<?> cell = table.row();//create row
-		setCell(cell, element);
+		setCell(cell, element, context);
 		return cell;
 	}
 	
-	private Cell<?> createCell(XmlReader.Element element, Table table){
+	private Cell<?> createCell(XmlReader.Element element, Table table, Object context){
 		Cell<?> cell = table.add();
-		setCell(cell, element);
+		setCell(cell, element, context);
 		return cell;
 	}
 	
@@ -62,7 +62,7 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 	 * @param cell
 	 * @param element
 	 */
-	private void setCell(Cell<?> cell, XmlReader.Element element){
+	private void setCell(Cell<?> cell, XmlReader.Element element, Object context){
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){//set attributes
 			if(attributes.containsKey("align")){
@@ -112,10 +112,10 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 		}
 		if(element.getName().equals("row")){//if row
 			for(XmlReader.Element rowcell : element.getChildrenByName("cell")){
-				createCell(rowcell, cell.getTable());//create cell from element
+				createCell(rowcell, cell.getTable(), context);//create cell from element
 			}
 		}else{//set actor to cell
-			Actor inside = actorLoader.create(element.getChild(0));
+			Actor inside = actorLoader.create(element.getChild(0), context);
 			cell.setActor(inside);
 		}
 	}

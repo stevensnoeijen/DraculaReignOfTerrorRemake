@@ -18,14 +18,14 @@ public abstract class ActorCreator<T extends Actor> {
 		this.actorLoader = actorLoader;
 	}
 	
-	public abstract T create(XmlReader.Element element);
+	public abstract T create(XmlReader.Element element, Object context);
 	
 	/**
 	 * Sets all attributes from element to the actor.
 	 * @param actor
 	 * @param element
 	 */
-	protected void set(T actor, XmlReader.Element element){
+	protected void set(T actor, XmlReader.Element element, Object context){
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("color")){
