@@ -9,6 +9,7 @@ import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.GroupCreat
 import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ImageButtonCreator;
 import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ImageCreator;
 import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.LabelCreator;
+import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.StackCreator;
 import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.TableCreator;
 
 import com.badlogic.gdx.Gdx;
@@ -37,9 +38,6 @@ import com.badlogic.gdx.utils.XmlReader;
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
 	private ObjectMap<String, ActorCreator<?>> creators;
 	
-	@SuppressWarnings("unchecked")
-	private static Class<? extends Actor>[] LOAD_ACTOR_PARSERS = new Class[] { Group.class, Image.class, ImageButton.class, Label.class, Table.class };
-	
 	private AssetManager assetManager;
 	
 	private XmlReader reader = new XmlReader();
@@ -56,6 +54,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		creators.put("table", new TableCreator<Table>(this));
 		creators.put("label", new LabelCreator(this));
 		creators.put("imagebutton", new ImageButtonCreator(this));
+		creators.put("stack", new StackCreator(this));
 		
 		dependencyProperties.put("drawable", TextureAtlas.class);
 		dependencyProperties.put("skin", Skin.class);

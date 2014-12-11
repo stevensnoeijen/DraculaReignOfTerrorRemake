@@ -44,6 +44,7 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 		if(attributes.containsKey("click")){
 			try {
 				String click = attributes.get("click");
+				
 				final Method method = context.getClass().getMethod(click, InputEvent.class);
 				button.addListener(new ClickListener(){
 					@Override

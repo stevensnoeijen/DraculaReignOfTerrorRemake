@@ -67,7 +67,6 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	public CouncilScreen() {
 		assetManager.setLoader(Actor.class, new ActorLoader(new InternalFileHandleResolver()));
-		World world = new World();
 		world = new World();
 		
 		player = new Player(Team.transylvanians);
@@ -102,20 +101,29 @@ public class CouncilScreen extends Scene2DScreen {
 		showTrainingTab();
 		*/
 		
-		stage.getRoot().findActor("wax").addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				world.week();
-				updateUI();
-			}
-		});
 		//updateUI();
+	}
+	
+	public void weekClicked(InputEvent event){
+		world.week();
 	}
 	
 	public void tabClicked(InputEvent event){
 		String name = event.getTarget().getName();
 		
+		stage.getRoot().findActor(name + ".content").setVisible(true);
+		
 		//stage.getRoot().findActor(name + ".content").setVisible(true);
+	}
+	
+	public void trainUnitClicked(InputEvent event){
+		String name = event.getTarget().getName();
+		String troopName = name.split(".")[1];
+		for(TroopProducer<?> troopProducer : selectedArea.getTroopProducers()){
+			if(troopProducer.getTroopName().equals(troopName)){
+				troopProducer.start();
+			}
+		}
 	}
 	
 	private void updateUI() {
