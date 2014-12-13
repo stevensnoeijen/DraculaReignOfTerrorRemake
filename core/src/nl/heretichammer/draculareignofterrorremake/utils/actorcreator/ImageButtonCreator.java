@@ -25,8 +25,8 @@ public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 			if(attributes.containsKey("skin")){
 				Skin skin = actorLoader.getLoadedAsset(attributes.get("skin"), Skin.class);
 				imageButton = new ImageButton(skin);
-			}else if(element.getChildByName("style") != null){
-				ImageButton.ImageButtonStyle style = createStyle(element.getChildByName("style"), context);
+			}else if(attributes.containsKey("style")){
+				ImageButton.ImageButtonStyle style = createStyle(attributes.get("style"), context);
 				imageButton = new ImageButton(style);
 			}else{
 				imageButton = new ImageButton((Drawable)null);
@@ -38,18 +38,19 @@ public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 		return imageButton;
 	}
 	
-	private ImageButton.ImageButtonStyle createStyle(Element element, Object context){
-		ObjectMap<String, String> attributes = element.getAttributes();
+	private ImageButton.ImageButtonStyle createStyle(String attributes, Object context){
+		attributes = attributes.replaceAll(SPACE, "");
 		ImageButton.ImageButtonStyle style = new ImageButtonStyle();
 		//dont check if attributes is not null becouse this must have some values
 		try{
-			for(Field field : ImageButton.ImageButtonStyle.class.getFields()){
-				String fieldName = field.getName();
-				if(attributes.containsKey(fieldName)){
-					field.set(style, actorLoader.getLoadedAsset(attributes.get(fieldName), field.getType()));
-				}
+			for(String attribute : attributes.split(",")){
+				String[] args = attribute.split("=");
+				String key = args[0];
+				String value = args[1];
+				Field field = ImageButton.ImageButtonStyle.class.getField(key);
+				field.set(style, actorLoader.getLoadedAsset(value, field.getType()));
 			}
-		} catch (IllegalAccessException ex) {
+		} catch (IllegalAccessException | NoSuchFieldException | SecurityException ex) {
 			throw new RuntimeException(ex);
 		}
 		return style;

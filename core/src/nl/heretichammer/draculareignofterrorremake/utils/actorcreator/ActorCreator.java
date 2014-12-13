@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.XmlReader;
 
 public abstract class ActorCreator<T extends Actor> {
 	public static final String SEPERATOR = ",";
-	public static final String SPACE = "//s";
+	public static final String SPACE = "\\s+";
 	
 	protected final ActorLoader actorLoader;
 	
