@@ -102,6 +102,8 @@ public class CouncilScreen extends Scene2DScreen {
 		*/
 		
 		//updateUI();
+		
+		((Image)stage.getRoot().findActor("tab.background")).setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
 	}
 	
 	public void weekClicked(InputEvent event){
@@ -111,7 +113,34 @@ public class CouncilScreen extends Scene2DScreen {
 	public void tabClicked(InputEvent event){
 		String name = event.getTarget().getName();
 		
-		stage.getRoot().findActor(name + ".content").setVisible(true);
+		Group root = stage.getRoot();
+		//hide all
+		root.findActor("training.content").setVisible(false);
+		root.findActor("movement.content").setVisible(false);
+		root.findActor("constructions.content").setVisible(false);
+		root.findActor("information.content").setVisible(false);
+		root.findActor("administration.content").setVisible(false);
+		//change background
+		Image background = (Image) root.findActor("tab.background");
+		switch(name){
+		case "training":
+			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
+			break;
+		case "movement":
+			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
+			break;
+		case "constructions":
+			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
+			break;
+		case "information":
+			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
+			break;
+		case "administration":
+			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
+			break;
+		}		
+		//show clicked tab
+		root.findActor(name + ".content").setVisible(true);
 		
 		//stage.getRoot().findActor(name + ".content").setVisible(true);
 	}
