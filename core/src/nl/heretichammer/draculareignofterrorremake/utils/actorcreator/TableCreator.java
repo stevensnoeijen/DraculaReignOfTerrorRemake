@@ -3,6 +3,7 @@ package nl.heretichammer.draculareignofterrorremake.utils.actorcreator;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -33,20 +34,19 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 				table.setSkin(skin);
 			}
 		}
-		int count = element.getChildCount();
-		if(count > 0){
-			XmlReader.Element rows = element.getChildByName("rows");
-			int rowcount = rows.getChildCount();
-			//get rows
-			for(int i = 0; i < rowcount; i++){
-				XmlReader.Element row = rows.getChild(i);
-				createRow(row, table, context);//create row
-			}
-		}
+		//rows are added in add method
 	}
 	
+	/**
+	 * Adds rows
+	 */
+	@Override
 	protected void add(T table, Element element, Object context) {
-		
+		if(element.getName().equals("row")){
+			createRow(element, table, context);
+		}else{
+			throw new UnsupportedOperationException();
+		}
 	};
 	
 	private Cell<?> createRow(XmlReader.Element element, Table table, Object context){
