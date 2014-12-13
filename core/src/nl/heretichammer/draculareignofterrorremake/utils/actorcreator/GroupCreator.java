@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 public class GroupCreator<T extends Group> extends ActorCreator<T> {
 
@@ -38,15 +39,16 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 		}
 		int count = element.getChildCount();
 		if(count > 0){
-			XmlReader.Element actors = element.getChildByName("actors");
-			if(actors != null){
-				int actorcount = actors.getChildCount();
-				//get actors
-				for(int i = 0; i < actorcount; i++){
-					group.addActor( actorLoader.create(actors.getChild(i), context) );
-				}
+			//get actors
+			for(int i = 0; i < count; i++){
+				add((T)group, element.getChild(i), context);
 			}
 		}
+	}
+	
+	@Override
+	protected void add(T group, Element element, Object context) {
+		group.addActor( actorLoader.create(element, context) );
 	}
 	
 	protected Rectangle parseRectangle(String value){

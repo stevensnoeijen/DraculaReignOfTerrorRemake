@@ -76,6 +76,16 @@ public abstract class ActorCreator<T extends Actor> {
 		}
 	}
 	
+	/**
+	 * Should be called with the children of the element when {@link #set(Actor, com.badlogic.gdx.utils.XmlReader.Element, Object)} is called.
+	 * @param actor
+	 * @param element
+	 * @param context
+	 */
+	protected void add(T actor, XmlReader.Element element, Object context){
+		throw new UnsupportedOperationException();
+	}
+	
 	protected int parseAlignment(String value){
 		if(value.equals("bottom")){
 			return Align.bottom;

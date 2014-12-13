@@ -45,6 +45,10 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 		}
 	}
 	
+	protected void add(T table, Element element, Object context) {
+		
+	};
+	
 	private Cell<?> createRow(XmlReader.Element element, Table table, Object context){
 		Cell<?> cell = table.row();//create row
 		setCell(cell, element, context);
