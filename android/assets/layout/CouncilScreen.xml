@@ -3,10 +3,11 @@
 	<image drawable="image/council.pack:ui-scroll"/>
 	
 	<image drawable="image/council.pack:ui-tab-training" x="25" y="50" name="tab.background"/>
-	<table x="25" y="50" height="400" width="250" debug="true">
+	<table x="25" y="50" height="400" width="250">
 		<row>
 			<cell align="top" pad="31,0,0,0">
-				<table x="36" y="400" debug="true"><!-- tab buttons -->
+				<!-- tab buttons -->
+				<table x="36" y="400">
 					<row>
 						<cell width="50" height="67">
 							<imagebutton click="showTrainingTab"/>
@@ -218,7 +219,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.scout" style="up=image/council.pack:ui-button-scout, down=image/council.pack:ui-button-scout-click, disabled=image/council.pack:ui-button-scout-disabled" />
+					                <imagebutton click="trainUnitClicked" name="trainer.spy" style="up=image/council.pack:ui-button-spy, down=image/council.pack:ui-button-spy-click, disabled=image/council.pack:ui-button-spy-disabled" />
 					            </cell>
 					            <cell width="17">
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
@@ -274,6 +275,36 @@
 				        <image name="constructions.preview" drawable="image/council.pack:tower-preview" x="110" y="65"/>
 				    </group>
 				    <group name="tab.information" visible="false">
+				    	<!-- resources -->
+				    	<label alignment="center" x="25" y="245" skin="skin/uiskin.json" text="?" name="information.gold"/>
+				    	<label alignment="center" x="75" y="245" skin="skin/uiskin.json" text="?" name="information.wood"/>
+				    	<label alignment="center" x="120" y="245" skin="skin/uiskin.json" text="?" name="information.food"/>
+				    	<label alignment="center" x="170" y="245" skin="skin/uiskin.json" text="?" name="information.men"/>
+				    	<!-- troops -->
+				    	<image x="20" y="210" drawable="image/council.pack:info-swordsmen"/>
+				    	<label x="30" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.swordsmen"/>
+				    	<image x="65" y="210" drawable="image/council.pack:info-crossbowsoldier"/>
+				    	<label x="75" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.crossbowsoldier"/>
+				    	<image x="105" y="210" drawable="image/council.pack:info-knight"/>
+				    	<label x="115" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.knight"/>
+				    	<image x="150" y="210" drawable="image/council.pack:info-juggernaut"/>
+				    	<label x="160" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.juggernaut"/>
+				    	
+				    	<image x="20" y="160" drawable="image/council.pack:info-catapult"/>
+				    	<label x="30" y="140" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.catapult"/>
+				    	<image x="65" y="160" drawable="image/council.pack:info-canon"/>
+				    	<label x="75" y="140" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.crossbowsoldier"/>
+				    	<image x="105" y="160" drawable="image/council.pack:info-spy"/>
+				    	<label x="115" y="140" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.knight"/>
+				    	<!-- buildings -->
+				    	<image x="20" y="90" drawable="image/council.pack:info-bridge"/>
+				    	<label x="30" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.tower"/>
+				    	<image x="65" y="90" drawable="image/council.pack:info-tower"/>
+				    	<label x="75" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.tower"/>
+				    	<image x="105" y="90" drawable="image/council.pack:info-castle1"/>
+				    	<label x="115" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.castle1"/>
+				    	<image x="150" y="90" drawable="image/council.pack:info-castle2"/>
+				    	<label x="160" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.castle2"/>
 				    </group>
 				    <group name="tab.administration" visible="false">
 				        <label fontscale="0.8f" alignment="center" x="90" y="307" skin="skin/uiskin.json" text="?/?" name="administration.armament.level"/>

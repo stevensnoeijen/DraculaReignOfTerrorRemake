@@ -116,6 +116,21 @@ public class CouncilScreen extends Scene2DScreen {
 		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
 		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
+		
+		Table table = root.findActor("movement.troops");
+		table.clear();
+		table.row().align(Align.topLeft);
+		int column = 0;
+		for(Troop troop : selectedArea.getTroops()) {
+			column++;
+			ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
+			table.add(button).width(42).center();
+			if(column == 4) {
+				table.row().align(Align.topLeft);
+				column = 0;
+			}
+		}
+		
 		root.findActor("tab.movement").setVisible(true);
 	}
 	
@@ -181,27 +196,6 @@ public class CouncilScreen extends Scene2DScreen {
 		tabPane.setBackground(drawable);
 	}
 	
-	private void showMovementsTab() {
-		final int COLUMN_MAX = 4;
-		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
-		Table troopsTable = new Table();
-		troopsTable.setPosition(15, 315);
-		troopsTable.left().top();
-		getTabContainer().addActor(troopsTable);
-		
-		int column = 0;
-		for(Troop troop : selectedArea.getTroops()) {
-			column++;
-			ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
-			troopsTable.add(button).width(42).center();
-			if(column == COLUMN_MAX) {
-				troopsTable.row();
-				column = 0;
-			}
-		}
-	}
-	
 	private static enum BuildingType {
 		BRIDGE, TOWER, CASTLE
 	}
@@ -254,11 +248,6 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	public void number(InputEvent event){
 		System.out.println(event.getListenerActor().getUserObject());
-	}
-	
-	private void showInformationTab() {
-		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
 	}
 	
 	public void upgradeArmament(InputEvent event){
