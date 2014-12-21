@@ -45,7 +45,7 @@
 						<table x="97" y="197">
 					        <row height="30">
 					            <cell>
-					            	<imagebutton click="trainUnitClicked" name="trainer.swordsoldiers" style="up=image/council.pack:ui-button-swordsoldiers, down=image/council.pack:ui-button-swordsoldiers-click, disabled=image/council.pack:ui-button-swordsoldiers-disabled"/>
+					            	<imagebutton click="trainTroop" name="trainer.swordsoldiers" userobject="swordsoldiers" style="up=image/council.pack:ui-button-swordsoldiers, down=image/council.pack:ui-button-swordsoldiers-click, disabled=image/council.pack:ui-button-swordsoldiers-disabled"/>
 					            </cell>
 					            <cell width="17">										                
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
@@ -74,7 +74,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.crossbowsoldiers" style="up=image/council.pack:ui-button-crossbowsoldiers, down=image/council.pack:ui-button-crossbowsoldiers-click, disabled=image/council.pack:ui-button-crossbowsoldiers-disabled"/>
+					                <imagebutton click="trainTroop" name="trainer.crossbowsoldiers" userobject="crossbowsoldiers" style="up=image/council.pack:ui-button-crossbowsoldiers, down=image/council.pack:ui-button-crossbowsoldiers-click, disabled=image/council.pack:ui-button-crossbowsoldiers-disabled"/>
 					            </cell>
 					            <cell width="17">										                
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
@@ -103,7 +103,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.knight" style="up=image/council.pack:ui-button-knight, down=image/council.pack:ui-button-knight-click, disabled=image/council.pack:ui-button-knight-disabled" />
+					                <imagebutton click="trainTroop" name="trainer.knight" userobject="knight" style="up=image/council.pack:ui-button-knight, down=image/council.pack:ui-button-knight-click, disabled=image/council.pack:ui-button-knight-disabled" />
 					            </cell>
 					            <cell width="17">									                
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
@@ -132,7 +132,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.juggernaut" style="up=image/council.pack:ui-button-juggernaut, down=image/council.pack:ui-button-juggernaut-click, disabled=image/council.pack:ui-button-juggernaut-disabled" />
+					                <imagebutton click="trainTroop" name="trainer.juggernaut" userobject="juggernaut" style="up=image/council.pack:ui-button-juggernaut, down=image/council.pack:ui-button-juggernaut-click, disabled=image/council.pack:ui-button-juggernaut-disabled" />
 					            </cell>
 					            <cell width="17">
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
@@ -161,7 +161,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.catapult" style="up=image/council.pack:ui-button-catapult, down=image/council.pack:ui-button-catapult-click, disabled=image/council.pack:ui-button-catapult-disabled" />
+					                <imagebutton click="trainTroop" name="trainer.catapult" userobject="catapult" style="up=image/council.pack:ui-button-catapult, down=image/council.pack:ui-button-catapult-click, disabled=image/council.pack:ui-button-catapult-disabled" />
 					            </cell>
 					            <cell width="17">
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
@@ -190,7 +190,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.cannon" style="up=image/council.pack:ui-button-cannon, down=image/council.pack:ui-button-cannon-click, disabled=image/council.pack:ui-button-cannon-disabled" />
+					                <imagebutton click="trainTroop" name="trainer.cannon" userobject="cannon" style="up=image/council.pack:ui-button-cannon, down=image/council.pack:ui-button-cannon-click, disabled=image/council.pack:ui-button-cannon-disabled" />
 					            </cell>
 					            <cell width="17">
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
@@ -219,7 +219,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainUnitClicked" name="trainer.spy" style="up=image/council.pack:ui-button-spy, down=image/council.pack:ui-button-spy-click, disabled=image/council.pack:ui-button-spy-disabled" />
+					                <imagebutton click="trainTroop" name="trainer.spy" userobject="spy" style="up=image/council.pack:ui-button-spy, down=image/council.pack:ui-button-spy-click, disabled=image/council.pack:ui-button-spy-disabled" />
 					            </cell>
 					            <cell width="17">
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
@@ -384,5 +384,5 @@
 	<label skin="skin/uiskin.json" color="black" text="Week" x="540" y="165"/>
 	<label name="week" text="?" skin="skin/uiskin.json" x="560" y="150" fontscale="0.8"/>
 	
-	<imagebutton x="525" y="55" click="weekClicked" style="up=image/council.pack:ui-waxseal, down=image/council.pack:ui-waxseal-select"/>
+	<imagebutton x="525" y="55" click="week" style="up=image/council.pack:ui-waxseal, down=image/council.pack:ui-waxseal-select"/>
 </group>

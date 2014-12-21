@@ -1,65 +1,64 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.lang.reflect.Field;
 
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
+import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
-import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
-import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
-import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Disposable;
-import com.google.common.eventbus.Subscribe;
 
 public class CouncilScreen extends Scene2DScreen {
 	
 	private static final String LEVEL_DIVIDER = "/";
-
-	private List<Disposable> disposables = new LinkedList<Disposable>();
 	
 	private AssetManager assetManager = new AssetManager();
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
 	
-	private Skin skin;
+	@Asset("sound/click.ogg")
+	private Sound sound_click;
+	
+	@Asset("sound/upgrading armerment.ogg")
+	private Sound sound_upgradingArmerment;
+	@Asset("sound/upgrading architecture.ogg")
+	private Sound sound_upgradingArchitecture;
+	@Asset("sound/training swordsoldiers.ogg")
+	private Sound sound_trainingSwordsoldiers;
+	@Asset("sound/training crossbowsoldiers.ogg")
+	private Sound sound_trainingCrossbowsoldiers;
+	@Asset("sound/building juggernaut.ogg")
+	private Sound sound_trainingJuggernaut;
+	@Asset("sound/training a knight.ogg")
+	private Sound sound_trainingKnight;
+	@Asset("sound/building a catapult.ogg")
+	private Sound sound_trainingCatapult;
+	@Asset("sound/building a cannon.ogg")
+	private Sound sound_trainingCannon;
+	@Asset("sound/training spies.ogg")
+	private Sound sound_trainingSpies;
 	
 	private Player player;
 	private World world;
 	private Area selectedArea;
-	
-	private static final float FONT_SMALL = .8f;
 	
 	public CouncilScreen() {
 		assetManager.setLoader(Actor.class, new ActorLoader(new InternalFileHandleResolver()));
@@ -78,19 +77,34 @@ public class CouncilScreen extends Scene2DScreen {
 	public void show() {
 		super.show();
 		assetManager.load("image/council.pack", TextureAtlas.class);
-		assetManager.load("sound/click.ogg", Sound.class);
+		//load assets that are defined with fields
+		for(Field field : this.getClass().getDeclaredFields()){
+			if(field.isAnnotationPresent(Asset.class)){
+				Asset asset = field.getAnnotation(Asset.class);
+				assetManager.load(asset.value(), field.getType());
+			}
+		}		
 		assetManager.load("music/council2.mp3", Music.class);
-		assetManager.load("sound/upgrading armerment.ogg", Sound.class);
-		assetManager.load("sound/upgrading architecture.ogg", Sound.class);
 		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
 		assetManager.finishLoading();
 		
-		//skin = assetManager.get("skin/uiskin.json", Skin.class); 
+		for(Field field : this.getClass().getDeclaredFields()){
+			if(field.isAnnotationPresent(Asset.class)){
+				Asset asset = field.getAnnotation(Asset.class);
+				try {
+					field.set(this, assetManager.get(asset.value(), field.getType()));
+				} catch (Exception ex){
+					throw new RuntimeException(ex);
+				}
+			}
+		}
+		
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );//background
 	}
 	
-	public void weekClicked(InputEvent event){
-		world.week();
+	public void week(InputEvent event){
+		sound_click.play();
+		//world.week();
 	}
 	
 	private void hideAllTabs(){
@@ -158,14 +172,28 @@ public class CouncilScreen extends Scene2DScreen {
 		root.findActor("tab.administration").setVisible(true);
 	}
 	
-	public void trainUnitClicked(InputEvent event){
-		String name = event.getTarget().getName();
-		String troopName = name.split(".")[1];
-		for(TroopProducer<?> troopProducer : selectedArea.getTroopProducers()){
-			if(troopProducer.getTroopName().equals(troopName)){
-				troopProducer.start();
-			}
+	public void trainTroop(InputEvent event){
+		//event.getButton()
+		String name = event.getTarget().getUserObject().toString();
+		
+		if(name.equals("swordsoldiers")){
+			sound_trainingSwordsoldiers.play();
+		}else if(name.equals("crossbowsoldiers")){
+			sound_trainingCrossbowsoldiers.play();
+		}else if(name.equals("knight")){
+			sound_trainingKnight.play();
+		}else if(name.equals("juggernaut")){
+			sound_trainingJuggernaut.play();
+		}else if(name.equals("catapult")){
+			sound_trainingCatapult.play();
+		}else if(name.equals("cannon")){
+			sound_trainingCannon.play();
+		}else if(name.equals("spy")){
+			sound_trainingSpies.play();
 		}
+		
+		//TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
+		//troopProducer.start();
 	}
 	
 	/**
@@ -181,19 +209,6 @@ public class CouncilScreen extends Scene2DScreen {
 		}else {//is 0
 			return String.valueOf(income);
 		}
-	}
-	
-	private void clearTabContainer() {
-		getTabContainer().clear();
-	}
-	
-	private Group getTabContainer() {
-		return (Group)stage.getRoot().findActor("tab.container");
-	}
-	
-	private void setTabBackground(Drawable drawable) {
-		Table tabPane = (Table)stage.getRoot().findActor("tab.pane");
-		tabPane.setBackground(drawable);
 	}
 	
 	private static enum BuildingType {
@@ -252,23 +267,12 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	public void upgradeArmament(InputEvent event){
 		//player.getTeam().getArmamentUpgrader().startNextUpgrade();
-		assetHelper.getSound("upgrading armerment").play();
+		sound_upgradingArmerment.play();
 	}
 	
 	public void upgradeArchitecture(InputEvent event){
 		//player.getTeam().getArchitectureUpgrader().startNextUpgrade();
-		assetHelper.getSound("upgrading architecture").play();
-	}
-	
-	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){
-		String stylePrefixName = "image/council.pack:ui-button-";
-		
-		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-		style.up = assetHelper.getDrawable(stylePrefixName + name);
-		style.down = assetHelper.getDrawable(stylePrefixName + name + "-click");
-		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");	
-		
-		return style;
+		sound_upgradingArchitecture.play();
 	}
 	
 	private ImageButton.ImageButtonStyle createMovementImageButtonStyle(String name){
@@ -285,9 +289,7 @@ public class CouncilScreen extends Scene2DScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		assetManager.dispose();
-		for(Disposable disposable : disposables) {
-			disposable.dispose();
-		}		
+		assetManager.dispose();	
+		//TODO: check if al loaded assets in this class will be disposed automaticly?
 	}
 }

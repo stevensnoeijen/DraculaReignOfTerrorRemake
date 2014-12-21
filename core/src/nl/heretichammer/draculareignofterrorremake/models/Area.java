@@ -175,6 +175,20 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		return this.troopProducers;
 	}
 	
+	/**
+	 * 
+	 * @param name of troop to produce
+	 * @return
+	 */
+	public TroopProducer<?> getTroopProducer(String name){
+		for(TroopProducer<?> troopProducer : troopProducers){
+			if(troopProducer.getTroopName().equals(name)){
+				return troopProducer;
+			}
+		}
+		return null;
+	}
+	
 	public Iterable<ResourceProducer> getResourceProducers() {
 		return this.resourceProducers.values();
 	}

@@ -76,6 +76,6 @@ public class AssetHelper {
 	}
 
 	public Sound getSound(String name) {
-		return assetManager.get(String.format("sounds/%s.ogg", name), Sound.class);
+		return assetManager.get(String.format("sound/%s.ogg", name), Sound.class);
 	}
 }
