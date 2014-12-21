@@ -1,0 +1,11 @@
+{
+	name: "armament",
+	accessName: "upgrader.armament",
+	upgrades: [
+       "armamentupgrades/armament1",
+       "armamentupgrades/armament2",
+       "armamentupgrades/armament3",
+       "armamentupgrades/armament4",
+       "armamentupgrades/armament5"
+	]
+}

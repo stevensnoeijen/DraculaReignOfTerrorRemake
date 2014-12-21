@@ -1,0 +1,23 @@
+{
+	name: "Brasov",
+	teamName: "turks",
+	minimapImage: "images/council.pack:minimap-brasov",
+	items: [
+	    {
+	    	name: "food",
+	    	amount: 20
+        },
+        {
+	    	name: "gold",
+	    	amount: 50
+        },
+        {
+	    	name: "men",
+	    	amount: 50
+        },
+        {
+	    	name: "wood",
+	    	amount: 10
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+	accessName: "troopproducers.crossbowsoldiers",
+	cost: [{name: "gold", amount: 5}],
+	turnCost: 2,
+	produces: {
+		name: "crossbowsoldiers",
+		unitName: "crossbowsoldier",
+		size: 5
+	},
+	startSound: "sounds/training crossbowsoldiers.ogg"
+}

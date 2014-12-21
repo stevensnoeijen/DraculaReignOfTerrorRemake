@@ -1,0 +1,11 @@
+{
+	name: "catapult",
+	attributes: {
+		strenght: 4,
+		accuracy: 4,
+		defance: 1,
+		stamina: 7,
+		speed: 1,
+		range: 5
+	}
+}

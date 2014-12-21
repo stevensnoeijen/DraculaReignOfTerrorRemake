@@ -1,0 +1,11 @@
+{
+	name: "knight",
+	attributes: {
+		strenght: 8,
+		accuracy: 0,
+		defance: 8,
+		stamina: 4,
+		speed: 4,
+		range: 1
+	}
+}

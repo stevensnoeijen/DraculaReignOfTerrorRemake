@@ -1,0 +1,23 @@
+{
+	name: "Fagaras",
+	teamName: "transylvania",
+	minimapImage: "images/council.pack:minimap-fagaras",
+	items: [
+	    {
+	    	name: "food",
+	    	amount: 20
+        },
+        {
+	    	name: "gold",
+	    	amount: 50
+        },
+        {
+	    	name: "men",
+	    	amount: 50
+        },
+        {
+	    	name: "wood",
+	    	amount: 10
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+	name: "swordsoldier",
+	attributes: {
+		strenght: 3,
+		accuracy: 0,
+		defance: 4,
+		stamina: 3,
+		speed: 2,
+		range: 1
+	},
+	motions:{
+		class: java.util.HashMap,
+		(BLUE,ATTACK,EAST):{
+			animation:"images/units.pack:swordsmen/blue/swordsmen_blue_attack_east",
+			sounds:["sounds/block.ogg"]}
+	}
+}

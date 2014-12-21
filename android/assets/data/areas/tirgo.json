@@ -1,0 +1,23 @@
+{
+	name: "Tirgo",
+	teamName: "turks",
+	minimapImage: "images/council.pack:minimap-targo",
+	items: [
+	    {
+	    	name: "food",
+	    	amount: 20
+        },
+        {
+	    	name: "gold",
+	    	amount: 50
+        },
+        {
+	    	name: "men",
+	    	amount: 50
+        },
+        {
+	    	name: "wood",
+	    	amount: 10
+        }
+    ]
+}

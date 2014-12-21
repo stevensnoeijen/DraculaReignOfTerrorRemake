@@ -1,0 +1,11 @@
+{
+	name: "cannon",
+	attributes: {
+		strenght: 6,
+		accuracy: 3,
+		defance: 1,
+		stamina: 7,
+		speed: 1,
+		range: 4
+	}
+}

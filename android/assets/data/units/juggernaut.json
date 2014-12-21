@@ -1,0 +1,11 @@
+{
+	name: "juggernaut",
+	attributes: {
+		strenght: 3,
+		accuracy: 0,
+		defance: 1,
+		stamina: 5,
+		speed: 2,
+		range: 1
+	}
+}

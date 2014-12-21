@@ -1,0 +1,15 @@
+{
+	name: "architecture",
+	level: 4,
+	accessName: "upgrade.architecture.4",
+	cost: [{
+		name: "gold",
+		amount: 250
+	}],
+	turnCost: 10,
+	accesses: [
+       "building.castle.4",
+       "building.castle.5",
+       "building.castle.6"
+	]
+}

@@ -1,0 +1,11 @@
+{
+	accessName: "troopproducers.juggernaut",
+	cost: [{name: "gold", amount: 2}],
+	turnCost: 3,
+	produces: {
+		name: "juggernaut",
+		unitName: "juggernaut",
+		size: 1
+	},
+	startSound: "sounds/building juggernaut.ogg"
+}

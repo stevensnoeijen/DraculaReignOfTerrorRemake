@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<group>
+	<image drawable="image/council.pack:ui-scroll"/>
+	
+	<image drawable="image/council.pack:ui-tab-training" x="25" y="50" name="tab.background"/>
+	<table x="25" y="50" height="400" width="250" debug="true">
+		<row>
+			<cell align="top" pad="31,0,0,0">
+				<table x="36" y="400" debug="true"><!-- tab buttons -->
+					<row>
+						<cell width="50" height="67">
+							<imagebutton click="tabClicked" name="training"/>
+						</cell>
+					</row>
+					<row>
+						<cell width="50" height="67">
+							<imagebutton click="tabClicked" name="movement"/>
+						</cell>
+					</row>
+					<row>
+						<cell width="50" height="67">
+							<imagebutton click="tabClicked" name="constructions"/>
+						</cell>
+					</row>
+					<row>
+						<cell width="50" height="67">
+							<imagebutton click="tabClicked" name="information"/>
+						</cell>
+					</row>
+					<row>
+						<cell width="50" height="67">
+							<imagebutton click="tabClicked" name="administration"/>
+						</cell>
+					</row>
+				</table>
+			</cell>
+			<cell width="200" height="400">
+				<stack> <!-- tab container -->
+					<group><!-- basics -->
+						<label name="location" skin="skin/uiskin.json" text="location" fontscale="0.8" x="70" y="330"/>
+						<label name="info" skin="skin/uiskin.json" text="info" fontscale="0.8" x="15" y="27"/>
+					</group>
+					<group name="training.content" visible="true">
+						<table x="97" y="197">
+					        <row height="30">
+					            <cell>
+					            	<imagebutton click="trainUnitClicked" name="trainer.swordsoldiers" style="up=image/council.pack:ui-button-swordsoldiers, down=image/council.pack:ui-button-swordsoldiers-click, disabled=image/council.pack:ui-button-swordsoldiers-disabled"/>
+					            </cell>
+					            <cell width="17">										                
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+				            </row>
+				            <row height="30">
+					            <cell>
+					                <imagebutton click="trainUnitClicked" name="trainer.crossbowsoldiers" style="up=image/council.pack:ui-button-crossbowsoldiers, down=image/council.pack:ui-button-crossbowsoldiers-click, disabled=image/council.pack:ui-button-crossbowsoldiers-disabled"/>
+					            </cell>
+					            <cell width="17">										                
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="6"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					            </cell>
+				            </row>
+				            <row height="30">
+					            <cell>
+					                <imagebutton click="trainUnitClicked" name="trainer.knight" style="up=image/council.pack:ui-button-knight, down=image/council.pack:ui-button-knight-click, disabled=image/council.pack:ui-button-knight-disabled" />
+					            </cell>
+					            <cell width="17">									                
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+				            </row>
+				            <row height="30">
+					            <cell>
+					                <imagebutton click="trainUnitClicked" name="trainer.juggernaut" style="up=image/council.pack:ui-button-juggernaut, down=image/council.pack:ui-button-juggernaut-click, disabled=image/council.pack:ui-button-juggernaut-disabled" />
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+				            </row>
+				            <row height="30">
+					            <cell>
+					                <imagebutton click="trainUnitClicked" name="trainer.catapult" style="up=image/council.pack:ui-button-catapult, down=image/council.pack:ui-button-catapult-click, disabled=image/council.pack:ui-button-catapult-disabled" />
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="6"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					            </cell>
+				            </row>
+				            <row height="30">
+					            <cell>
+					                <imagebutton click="trainUnitClicked" name="trainer.cannon" style="up=image/council.pack:ui-button-cannon, down=image/council.pack:ui-button-cannon-click, disabled=image/council.pack:ui-button-cannon-disabled" />
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="6"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+				            </row>
+				            <row height="30">
+					            <cell>
+					                <imagebutton click="trainUnitClicked" name="trainer.scout" style="up=image/council.pack:ui-button-scout, down=image/council.pack:ui-button-scout-click, disabled=image/council.pack:ui-button-scout-disabled" />
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+					            <cell width="17">
+					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					            </cell>
+				            </row>
+						</table>
+					</group>
+					<group name="movement.content" visible="false">
+					    <table x="15" y="315">
+					        
+					    </table>
+				    </group>
+				    <group name="constructions.content" visible="false">
+				    </group>
+				    <group name="information.content" visible="false">
+				    </group>
+				    <group name="administration.content" visible="false">
+				        <label fontscale="0.8f" alignment="center" x="90" y="307" skin="skin/uiskin.json" text="?/?" name="administration.armament.level"/>
+				        <image x="5" y="195" drawable="image/council.pack:upgrade-armament-1"/>
+				        <label fontscale="0.75f" alignment="center" x="130" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.gold"/>
+				        <label fontscale="0.75f" alignment="center" x="160" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.time"/>
+				        <imagebutton x="120" y="195" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty, imageDisabled=image/council.pack:ui-button-overlay-wait-full" click="upgradeArmament"/>
+				        
+				        <label fontscale="0.8f" alignment="center" x="90" y="175" skin="skin/uiskin.json" text="?/?" name="administration.architecture.level"/>
+				        <image x="5" y="60" drawable="image/council.pack:upgrade-architecture-1"/>
+				        <label fontscale="0.75f" alignment="center" x="130" y="105" skin="skin/uiskin.json" text="???" name="administration.rchitecture.gold"/>
+				        <label fontscale="0.75f" alignment="center" x="160" y="105" skin="skin/uiskin.json" text="???" name="administration.rchitecture.time"/>
+				        <imagebutton x="120" y="65" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty, imageDisabled=image/council.pack:ui-button-overlay-wait-full" click="upgradeArchitecture"/>
+				    </group>
+				</stack>
+			</cell>
+		</row>
+	</table>
+	
+	<group x="280" y="240">
+		<imagebutton name="area.sibiu" x="0" y="120" group="areas" style="up=image/council.pack:area-sibiu, checked=image/council.pack:area-sibiu-select"/>
+		<imagebutton name="area.fagaras" x="70" y="135" group="areas" style="up=image/council.pack:area-fagaras, checked=image/council.pack:area-fagaras-select"/>
+		<imagebutton name="area.curtea" x="30" y="80" group="areas" style="up=image/council.pack:area-curtea, checked=image/council.pack:area-curtea-select"/>
+		<imagebutton name="area.brasov" x="135" y="130" group="areas" style="up=image/council.pack:area-brasov, checked=image/council.pack:area-brasov-select"/>
+		<imagebutton name="area.pitesti" x="130" y="85" group="areas" style="up=image/council.pack:area-pitesti, checked=image/council.pack:area-pitesti-select"/>
+		<imagebutton name="area.tirgo" x="100" y="45" group="areas" style="up=image/council.pack:area-tirgo, checked=image/council.pack:area-tirgo-select"/>
+		<imagebutton name="area.snagov" x="185" y="70" group="areas" style="up=image/council.pack:area-snagov, checked=image/council.pack:area-snagov-select"/>
+		<imagebutton name="area.giurgiu" x="129" y="0" group="areas" style="up=image/council.pack:area-giurgiu, checked=image/council.pack:area-giurgiu-select"/>
+		<imagebutton name="area.giurgiu" x="129" y="0" group="areas" style="up=image/council.pack:area-giurgiu, checked=image/council.pack:area-giurgiu-select"/>
+		<imagebutton name="area.braila" x="236" y="100" group="areas" style="up=image/council.pack:area-braila, checked=image/council.pack:area-braila-select"/>
+		<imagebutton name="area.hirsova" x="234" y="75" group="areas" style="up=image/council.pack:area-hirsova, checked=image/council.pack:area-hirsova-select"/>
+		<imagebutton name="area.rasova" x="229" y="54" group="areas" style="up=image/council.pack:area-rasova, checked=image/council.pack:area-rasova-select"/>
+		<imagebutton name="area.ostrov" x="219" y="30" group="areas" style="up=image/council.pack:area-ostrov, checked=image/council.pack:area-ostrov-select"/>
+	</group>
+	
+	<group x="300" y="50" name="stats">
+	    <image drawable="image/council.pack:ui-panel-stats"/>
+		<table x="102" y="105">
+		    <row height="15" spaceBottom="2">
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="gold"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="wood"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="food"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="men"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="army"/>
+		        </cell>
+		    </row>
+		    <row height="15">
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeGold"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeWood"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeFood"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeMen"/>
+		        </cell>
+		        <cell width="38">
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeArmy"/>
+		        </cell>
+		    </row>
+		</table>
+	</group>
+	<label skin="skin/uiskin.json" color="black" text="Anno Domini" x="515" y="210"/>
+	<label name="year" text="?" skin="skin/uiskin.json" x="560" y="190" fontscale="0.8"/>
+	<label skin="skin/uiskin.json" color="black" text="Week" x="540" y="165"/>
+	<label name="week" text="?" skin="skin/uiskin.json" x="560" y="150" fontscale="0.8"/>
+	
+	<imagebutton x="525" y="55" click="weekClicked" style="up=image/council.pack:ui-waxseal, down=image/council.pack:ui-waxseal-select"/>
+</group>

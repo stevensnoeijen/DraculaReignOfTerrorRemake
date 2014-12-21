@@ -1,0 +1,11 @@
+{
+	accessName: "troopproducers.spy",
+	cost: [{name: "gold", amount: 4}],
+	turnCost: 5,
+	produces: {
+		name: "spy",
+		unitName: "spy",
+		size: 1
+	},
+	startSound: "sounds/training spies.ogg"
+}

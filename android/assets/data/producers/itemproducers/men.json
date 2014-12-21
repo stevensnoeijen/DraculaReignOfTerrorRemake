@@ -1,0 +1,8 @@
+{
+	autoStart: true,
+	turnCost: 1,
+	produces: {
+		name: "men",
+		amount: 50
+	}
+}

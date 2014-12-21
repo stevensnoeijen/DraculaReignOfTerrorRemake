@@ -1,0 +1,11 @@
+{
+	name: "spy",
+	attributes: {
+		strenght: 0,
+		accuracy: 0,
+		defance: 0,
+		stamina: 0,
+		speed: 0,
+		range: 0
+	}
+}

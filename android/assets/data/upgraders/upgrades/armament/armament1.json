@@ -1,0 +1,13 @@
+{
+	name: "armament",
+	level: 1,
+	accessName: "upgrade.armament.1",
+	cost: [],
+	turnCost: 0,
+	accesses: [
+       "unit.swordsmen",
+       "unit.crossbowsoldiers",
+       "unit.juggernaut",
+       "upgrade.armament.2"
+	]
+}

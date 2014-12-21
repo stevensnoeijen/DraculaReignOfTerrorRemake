@@ -1,0 +1,15 @@
+{
+	name: "armament",
+	level: 2,
+	accessName: "upgrade.armament.2",
+	cost: [{
+		name: "gold",
+		amount: 200
+	}],
+	turnCost: 8,
+	accesses: [
+       "unit.knight",
+       "unit.spy",
+       "upgrade.armament.3"
+	]
+}

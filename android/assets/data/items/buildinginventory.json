@@ -1,0 +1,11 @@
+{
+	name: "building inventory",
+	description: "",
+	category: "inventory",
+	weight: 0,
+	image: "",
+	amountMax: 1,
+	amountDefault: 1,
+	lock: null,
+	maxBlocks: 4
+}
