@@ -73,6 +73,9 @@ public abstract class ActorCreator<T extends Actor> {
 			if(attributes.containsKey("y")){
 				actor.setY(Float.parseFloat(attributes.get("y")));
 			}
+			if(attributes.containsKey("userobject")){
+				actor.setUserObject(attributes.get("userobject"));
+			}
 		}
 	}
 	

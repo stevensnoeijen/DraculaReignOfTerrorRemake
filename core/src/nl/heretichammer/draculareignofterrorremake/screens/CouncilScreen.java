@@ -275,9 +275,6 @@ public class CouncilScreen extends Scene2DScreen {
 			case TAB_MOVEMENTS:
 				showMovementsTab();
 				break;
-			case TAB_CONSTRUCTIONS:
-				showConstructionsTab();
-				break;
 			case TAB_INFORMATION:
 				showInformationTab();
 				break;
@@ -442,13 +439,11 @@ public class CouncilScreen extends Scene2DScreen {
 	private void setConstructionMode(int constructionMode) {
 		if( constructionMode == CONSTRUCTIONMODE_REPAIR || constructionMode == CONSTRUCTIONMODE_UPGRADE || constructionMode == CONSTRUCTIONMODE_BUILD ) {
 			this.constructionMode = constructionMode;
-			showConstructionsTab();
 		}
 	}
 	
 	private void setSelectedBuildingType(BuildingType selectedBuildingType) {
 		this.selectedBuildingType = selectedBuildingType;
-		showConstructionsTab();
 	}
 	
 	public void repair(InputEvent event){
@@ -463,177 +458,25 @@ public class CouncilScreen extends Scene2DScreen {
 		setConstructionMode(CONSTRUCTIONMODE_BUILD);
 	}
 	
-	private void showConstructionsTab() {
-		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
-		final Group tabContainer = getTabContainer();
-		
-		//repair, upgrade and build-buttons
-		ImageButton upgradeButton, buildButton;
-		ImageButton.ImageButtonStyle imageButtonStyle;
-		
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		
-		//building-buttons
-		ImageButton bridgeButton, towerButton, castleButton, castle2Button;
-		
-		//bridge-button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-bridge");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-bridge-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		bridgeButton = new ImageButton(imageButtonStyle);
-		bridgeButton.setPosition(10, 145);
-		bridgeButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setSelectedBuildingType(BuildingType.BRIDGE);
-			}
-		});
-		tabContainer.addActor(bridgeButton);
-		
-		//tower-button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-tower");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-tower-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		towerButton = new ImageButton(imageButtonStyle);
-		towerButton.setPosition(55, 145);
-		towerButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setSelectedBuildingType(BuildingType.TOWER);
-			}
-		});
-		tabContainer.addActor(towerButton);
-		
-		//castle-button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-castle");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-castle-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		castleButton = new ImageButton(imageButtonStyle);
-		castleButton.setPosition(100, 145);
-		castleButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setSelectedBuildingType(BuildingType.CASTLE);
-			}
-		});
-		tabContainer.addActor(castleButton);
-		
-		//castle2-button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-castle2");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-castle2-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		castle2Button = new ImageButton(imageButtonStyle);
-		castle2Button.setPosition(145, 145);
-		castle2Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				selectedBuildingTypeWithMoat = true;
-				setSelectedBuildingType(BuildingType.CASTLE);
-			}
-		});
-		tabContainer.addActor(castle2Button);
-		
-		//number-buttons
-		ImageButton number1Button, number2Button, number3Button, number4Button, number5Button, number6Button;
-		
-		//number 1 button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-1");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-1-click");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		number1Button = new ImageButton(imageButtonStyle);
-		number1Button.setPosition(16, 119);
-		number1Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-								
-			}
-		});
-		tabContainer.addActor(number1Button);
-		//number 2 button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-2");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-2-click");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		number2Button = new ImageButton(imageButtonStyle);
-		number2Button.setPosition(16, 95);
-		number2Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-								
-			}
-		});
-		tabContainer.addActor(number2Button);
-		//number 3 button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-3");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-3-click");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		number3Button = new ImageButton(imageButtonStyle);
-		number3Button.setPosition(16, 70);
-		number3Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-								
-			}
-		});
-		tabContainer.addActor(number3Button);
-		//number 4 button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-4");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-4-click");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		number4Button = new ImageButton(imageButtonStyle);
-		number4Button.setPosition(54, 119);
-		number4Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-							
-			}
-		});
-		tabContainer.addActor(number4Button);
-		//number 5 button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-5");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-5-click");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		number5Button = new ImageButton(imageButtonStyle);
-		number5Button.setPosition(54, 95);
-		number5Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-								
-			}
-		});
-		tabContainer.addActor(number5Button);
-		//number 6 button
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-6");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-6-click");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		number6Button = new ImageButton(imageButtonStyle);
-		number6Button.setPosition(54, 70);
-		number6Button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-								
-			}
-		});
-		tabContainer.addActor(number6Button);
-		
-		//building-preview-image
-		Image buildingPreview = new Image(assetHelper.getDrawable("image/council.pack:tower-preview"));
-		buildingPreview.setPosition(110, 65);
-		tabContainer.addActor(buildingPreview);
+	public void buildingTypeBridge(InputEvent event){
+		setSelectedBuildingType(BuildingType.BRIDGE);
+	}
+	
+	public void buildingTypeTower(InputEvent event){
+		setSelectedBuildingType(BuildingType.TOWER);
+	}
+	
+	public void buildingTypeCastle(InputEvent event){
+		setSelectedBuildingType(BuildingType.CASTLE);
+	}
+	
+	public void buildingTypeCastle2(InputEvent event){
+		selectedBuildingTypeWithMoat = true;
+		setSelectedBuildingType(BuildingType.CASTLE);
+	}
+	
+	public void number(InputEvent event){
+		System.out.println(event.getListenerActor().getUserObject());
 	}
 	
 	private void showInformationTab() {

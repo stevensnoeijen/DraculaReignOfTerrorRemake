@@ -259,7 +259,19 @@
 				        <imagebutton x="6" y="218" click="upgrade" style="up=image/council.pack:ui-button-upgrade, down=image/council.pack:ui-button-upgrade-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
 				        <imagebutton x="6" y="186" click="build" style="up=image/council.pack:ui-button-build, down=image/council.pack:ui-button-build-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
 				        <!-- building types -->
-				        <imagebutton x="10" y="145" style="up=image/council.pack:ui-button-bridge, down=image/council.pack:ui-button-bridge-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="10" y="145" click="buildingTypeBridge" style="up=image/council.pack:ui-button-bridge, down=image/council.pack:ui-button-bridge-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="55" y="145" click="buildingTypeTower" style="up=image/council.pack:ui-button-tower, down=image/council.pack:ui-button-tower-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="100" y="145" click="buildingTypeCastle" style="up=image/council.pack:ui-button-castle, down=image/council.pack:ui-button-castle-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="145" y="145" click="buildingTypeCastle2" style="up=image/council.pack:ui-button-castle2, down=image/council.pack:ui-button-castle2-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <!-- numbers -->
+				        <imagebutton x="16" y="119" click="number" userobject="1" style="up=image/council.pack:ui-button-1, down=image/council.pack:ui-button-1-click, disabled=empty"/>
+				        <imagebutton x="16" y="95" click="number" userobject="2" style="up=image/council.pack:ui-button-2, down=image/council.pack:ui-button-2-click, disabled=empty"/>
+				        <imagebutton x="16" y="70" click="number" userobject="3" style="up=image/council.pack:ui-button-3, down=image/council.pack:ui-button-3-click, disabled=empty"/>
+				        <imagebutton x="54" y="119" click="number" userobject="4" style="up=image/council.pack:ui-button-4, down=image/council.pack:ui-button-4-click, disabled=empty"/>
+				        <imagebutton x="54" y="95" click="number" userobject="5" style="up=image/council.pack:ui-button-5, down=image/council.pack:ui-button-5-click, disabled=empty"/>
+				        <imagebutton x="54" y="70" click="number" userobject="6" style="up=image/council.pack:ui-button-6, down=image/council.pack:ui-button-6-click, disabled=empty"/>
+				        
+				        <image name="constructions.preview" drawable="image/council.pack:tower-preview" x="110" y="65"/>
 				    </group>
 				    <group name="information.content" visible="false">
 				    </group>
