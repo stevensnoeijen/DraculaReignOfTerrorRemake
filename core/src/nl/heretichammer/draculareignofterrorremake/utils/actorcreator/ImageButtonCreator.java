@@ -50,7 +50,7 @@ public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 				Field field = ImageButton.ImageButtonStyle.class.getField(key);
 				field.set(style, actorLoader.getLoadedAsset(value, field.getType()));
 			}
-		} catch (IllegalAccessException | NoSuchFieldException | SecurityException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 		return style;

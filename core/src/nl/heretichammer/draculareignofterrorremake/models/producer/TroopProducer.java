@@ -24,7 +24,7 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 		trooper = clazz.getAnnotation(Trooper.class);
 		
 		//set cost
-		cost = new EnumMap<>(Resource.class);
+		cost = new EnumMap<Resource, Integer>(Resource.class);
 		ResourceCost cost = trooper.cost();
 		this.cost.put(Resource.GOLD, cost.gold());
 		this.cost.put(Resource.TIME, cost.time());
@@ -43,7 +43,7 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 			T unit;
 			try {
 				unit = clazz.newInstance();
-			} catch (InstantiationException | IllegalAccessException ex) {
+			} catch(Exception ex) {
 				throw new RuntimeException(ex);
 			}
 			unit.setTeam(team);

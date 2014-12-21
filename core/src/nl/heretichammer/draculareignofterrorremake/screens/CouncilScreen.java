@@ -122,23 +122,17 @@ public class CouncilScreen extends Scene2DScreen {
 		root.findActor("administration.content").setVisible(false);
 		//change background
 		Image background = (Image) root.findActor("tab.background");
-		switch(name){
-		case "training":
+		if(name.equals("training")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
-			break;
-		case "movement":
+		}else if(name.equals("movement")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
-			break;
-		case "constructions":
+		}else if(name.equals("constructions")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
-			break;
-		case "information":
+		}else if(name.equals("information")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
-			break;
-		case "administration":
+		}else if(name.equals("administration")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
-			break;
-		}		
+		}
 		//show clicked tab
 		root.findActor(name + ".content").setVisible(true);
 		
@@ -457,67 +451,28 @@ public class CouncilScreen extends Scene2DScreen {
 		showConstructionsTab();
 	}
 	
+	public void repair(InputEvent event){
+		setConstructionMode(CONSTRUCTIONMODE_REPAIR);
+	}
+	
+	public void upgrade(InputEvent event){
+		setConstructionMode(CONSTRUCTIONMODE_UPGRADE);
+	}
+	
+	public void build(InputEvent event){
+		setConstructionMode(CONSTRUCTIONMODE_BUILD);
+	}
+	
 	private void showConstructionsTab() {
 		clearTabContainer();
 		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
 		final Group tabContainer = getTabContainer();
 		
-		//minimap
-		Image minimap = new Image( assetHelper.getDrawable(selectedArea.getMinimapImage()) );
-		minimap.setPosition(60, 190);
-		tabContainer.addActor(minimap);
-		
 		//repair, upgrade and build-buttons
-		ImageButton repairButton, upgradeButton, buildButton;
+		ImageButton upgradeButton, buildButton;
 		ImageButton.ImageButtonStyle imageButtonStyle;
 		
-		//repairButton
 		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-repair");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-repair-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		repairButton = new ImageButton(imageButtonStyle);
-		repairButton.setPosition(6, 250);
-		repairButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setConstructionMode(CONSTRUCTIONMODE_REPAIR);
-			}
-		});
-		tabContainer.addActor(repairButton);
-		
-		//upgradeButton
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-upgrade");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-upgrade-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		upgradeButton = new ImageButton(imageButtonStyle);
-		upgradeButton.setPosition(6, 218);
-		upgradeButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setConstructionMode(CONSTRUCTIONMODE_UPGRADE);
-			}
-		});
-		tabContainer.addActor(upgradeButton);
-		
-		//buildButton
-		imageButtonStyle = new ImageButton.ImageButtonStyle();
-		imageButtonStyle.up = assetHelper.getDrawable("image/council.pack:ui-button-build");
-		imageButtonStyle.down = assetHelper.getDrawable("image/council.pack:ui-button-build-click");
-		imageButtonStyle.imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-		imageButtonStyle.disabled = AssetHelper.EMPTY;
-		buildButton = new ImageButton(imageButtonStyle);
-		buildButton.setPosition(6, 186);
-		buildButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setConstructionMode(CONSTRUCTIONMODE_BUILD);
-			}
-		});
-		tabContainer.addActor(buildButton);
 		
 		//building-buttons
 		ImageButton bridgeButton, towerButton, castleButton, castle2Button;

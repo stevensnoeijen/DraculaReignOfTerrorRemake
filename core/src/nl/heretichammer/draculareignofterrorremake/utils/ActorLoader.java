@@ -33,7 +33,7 @@ import com.badlogic.gdx.utils.XmlReader;
 
 
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
-	private ObjectMap<String, ActorCreator<?>> creators;
+	private ObjectMap<String, ActorCreator<?>> creators = new ObjectMap<String, ActorCreator<?>>();
 	
 	private AssetManager assetManager;
 	
@@ -41,11 +41,10 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	private XmlReader.Element root;
 	private Actor loaded;
 	
-	private Map<String, Class<?>> dependencyProperties = new HashMap<>();
+	private Map<String, Class<?>> dependencyProperties = new HashMap<String, Class<?>>();
 
 	public ActorLoader(FileHandleResolver fileHandleResolver) {
 		super(fileHandleResolver);
-		creators = new ObjectMap<>();
 		creators.put("group", new GroupCreator<Group>(this));
 		creators.put("image", new ImageCreator(this));
 		creators.put("table", new TableCreator<Table>(this));
@@ -97,7 +96,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 					if(type == TextureAtlas.class){
 						attributeValue = attributeValue.split(":")[0];//only get atlas-file
 					}
-					dependencies.put(attributeValue, new AssetDescriptor<>(Gdx.files.internal(attributeValue), type));
+					dependencies.put(attributeValue, new AssetDescriptor(Gdx.files.internal(attributeValue), type));
 				}
 			}
 		}

@@ -253,6 +253,13 @@
 					    </table>
 				    </group>
 				    <group name="constructions.content" visible="false">
+				        <image drawable="image/council.pack:minimap-fagaras" x="60" y="190" name="constructions.minimap"/>
+				        <!-- construction options -->
+				        <imagebutton x="6" y="250" click="repair" style="up=image/council.pack:ui-button-repair, down=image/council.pack:ui-button-repair-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="6" y="218" click="upgrade" style="up=image/council.pack:ui-button-upgrade, down=image/council.pack:ui-button-upgrade-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="6" y="186" click="build" style="up=image/council.pack:ui-button-build, down=image/council.pack:ui-button-build-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <!-- building types -->
+				        <imagebutton x="10" y="145" style="up=image/council.pack:ui-button-bridge, down=image/council.pack:ui-button-bridge-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
 				    </group>
 				    <group name="information.content" visible="false">
 				    </group>

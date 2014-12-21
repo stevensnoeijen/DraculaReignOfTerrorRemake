@@ -25,7 +25,7 @@ public class Team extends Model {
 	private List<Troop<?>> troops;
 	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
 	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
-	private Map<Permission, Boolean> permissions = new HashMap<>();
+	private Map<Permission, Boolean> permissions = new HashMap<Permission, Boolean>();
 
 	private Team(String name, TeamColor color) {
 		this.name = name;

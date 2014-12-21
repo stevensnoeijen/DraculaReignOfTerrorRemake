@@ -113,7 +113,7 @@ public abstract class ActorCreator<T extends Actor> {
 	protected Color parseColor(String value){
 		try {
 			return (Color) Color.class.getField(value.toUpperCase()).get(null);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+		} catch (Exception ex) {
 			throw new UnsupportedOperationException();
 		}
 	}

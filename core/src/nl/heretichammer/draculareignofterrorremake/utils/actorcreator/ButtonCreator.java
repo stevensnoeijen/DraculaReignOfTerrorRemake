@@ -1,6 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.utils.actorcreator;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
@@ -51,12 +50,12 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 					public void clicked(InputEvent event, float x, float y) {
 						try {
 							method.invoke(context, event);
-						} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException ex) {
+						} catch (Exception ex) {
 							throw new RuntimeException(ex);
 						}
 					}
 				});
-			} catch (IllegalArgumentException | NoSuchMethodException | SecurityException ex) {
+			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
 		}

@@ -43,11 +43,11 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	private World world;//TODO: replace with neighbors
 	private Set<Troop<?>> troops = new HashSet<Troop<?>>();
 	
-	private Map<Resource, Integer> resources = new HashMap<>();
+	private Map<Resource, Integer> resources = new HashMap<Resource, Integer>();
 	private int army = 0;
 	
-	private Set<TroopProducer<?>> troopProducers = new HashSet<>();	
-	private Map<Resource, ResourceProducer> resourceProducers = new HashMap<>();
+	private Set<TroopProducer<?>> troopProducers = new HashSet<TroopProducer<?>>();	
+	private Map<Resource, ResourceProducer> resourceProducers = new HashMap<Resource, ResourceProducer>();
 	
 	public Area() {
 		//create resources

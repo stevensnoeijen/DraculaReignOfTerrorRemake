@@ -36,7 +36,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 	
 	@SuppressWarnings("unchecked")
 	public Upgrader() {
-		upgrades = new LinkedList<>();
+		upgrades = new LinkedList<UpgradeMethod>();
 		for(Method method : this.getClass().getDeclaredMethods()){
 			if(method.isAnnotationPresent(Upgrade.class)){
 				UpgradeMethod updateMethod = new UpgradeMethod(method);
@@ -218,7 +218,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 				method.invoke(this);
 				image = upgrades.peek().getImage();
 				post(new DoneEvent());
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
