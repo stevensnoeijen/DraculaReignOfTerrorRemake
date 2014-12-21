@@ -123,6 +123,10 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	@SuppressWarnings("unchecked")
 	public <T> T getLoadedAsset(String fileName, Class<T> clazz){
 		if(clazz == Drawable.class){
+			if(fileName.equals("empty")){
+				return (T) AssetHelper.EMPTY;
+			}
+			
 			String[] args = fileName.split(":");
 			String file = args[0];
 			String textureName = args[1];
