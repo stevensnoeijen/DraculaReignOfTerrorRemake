@@ -9,27 +9,27 @@
 				<table x="36" y="400" debug="true"><!-- tab buttons -->
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" userobject="tab.training"/>
+							<imagebutton click="showTrainingTab"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" userobject="tab.movement"/>
+							<imagebutton click="showMovementTab"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" userobject="tab.constructions"/>
+							<imagebutton click="showConstructionsTab"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" userobject="tab.information"/>
+							<imagebutton click="showInformationTab"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" userobject="tab.administration"/>
+							<imagebutton click="showAdministrationTab"/>
 						</cell>
 					</row>
 				</table>
@@ -248,7 +248,7 @@
 						</table>
 					</group>
 					<group name="tab.movement" visible="false">
-					    <table x="15" y="315">
+					    <table x="15" y="315" name="movement.troops">
 					        
 					    </table>
 				    </group>

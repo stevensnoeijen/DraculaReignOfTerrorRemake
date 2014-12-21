@@ -54,14 +54,10 @@ public class CouncilScreen extends Scene2DScreen {
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
 	
 	private Skin skin;
-	private final UI ui = new UI();
 	
 	private Player player;
 	private World world;
 	private Area selectedArea;
-	
-	private static final int TAB_TRAINING = 0, TAB_MOVEMENTS = 1, TAB_CONSTRUCTIONS = 2, TAB_ADMINISTRATION = 3, TAB_INFORMATION = 4;
-	private int currentTab = TAB_TRAINING;
 	
 	private static final float FONT_SMALL = .8f;
 	
@@ -76,8 +72,6 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	public void setSelectedArea(Area selectedArea) {
 		this.selectedArea = selectedArea;
-		ui.location.setText("In " + selectedArea.getName());
-		showTab(currentTab);
 	}
 	
 	@Override
@@ -93,24 +87,13 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		//skin = assetManager.get("skin/uiskin.json", Skin.class); 
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );//background
-		
-		/*
-		Actor tab = createTabPane();
-		tab.setPosition(25, 50);		
-		stage.addActor(tab);
-		showTrainingTab();
-		*/
-		
-		//updateUI();
 	}
 	
 	public void weekClicked(InputEvent event){
 		world.week();
 	}
 	
-	public void tabClicked(InputEvent event){
-		String name = event.getTarget().getUserObject().toString();
-		
+	private void hideAllTabs(){
 		Group root = stage.getRoot();
 		//hide all
 		root.findActor("tab.training").setVisible(false);
@@ -118,23 +101,46 @@ public class CouncilScreen extends Scene2DScreen {
 		root.findActor("tab.constructions").setVisible(false);
 		root.findActor("tab.information").setVisible(false);
 		root.findActor("tab.administration").setVisible(false);
-		//change background
+	}
+	
+	public void showTrainingTab(InputEvent event){
+		hideAllTabs();
+		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
-		if(name.equals("tab.training")){
-			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
-		}else if(name.equals("tab.movement")){
-			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
-		}else if(name.equals("tab.constructions")){
-			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
-		}else if(name.equals("tab.information")){
-			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
-		}else if(name.equals("tab.administration")){
-			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
-		}
-		//show clicked tab
-		root.findActor(name).setVisible(true);
-		
-		//stage.getRoot().findActor(name + ".content").setVisible(true);
+		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
+		root.findActor("tab.training").setVisible(true);
+	}
+	
+	public void showMovementTab(InputEvent event){
+		hideAllTabs();
+		Group root = stage.getRoot();
+		Image background = (Image) root.findActor("tab.background");
+		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
+		root.findActor("tab.movement").setVisible(true);
+	}
+	
+	public void showConstructionsTab(InputEvent event){
+		hideAllTabs();
+		Group root = stage.getRoot();
+		Image background = (Image) root.findActor("tab.background");
+		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
+		root.findActor("tab.constructions").setVisible(true);
+	}
+	
+	public void showInformationTab(InputEvent event){
+		hideAllTabs();
+		Group root = stage.getRoot();
+		Image background = (Image) root.findActor("tab.background");
+		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
+		root.findActor("tab.information").setVisible(true);
+	}
+	
+	public void showAdministrationTab(InputEvent event){
+		hideAllTabs();
+		Group root = stage.getRoot();
+		Image background = (Image) root.findActor("tab.background");
+		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
+		root.findActor("tab.administration").setVisible(true);
 	}
 	
 	public void trainUnitClicked(InputEvent event){
@@ -145,38 +151,6 @@ public class CouncilScreen extends Scene2DScreen {
 				troopProducer.start();
 			}
 		}
-	}
-	
-	private void updateUI() {
-		updateWeekUI();//set texts for week and year
-		updateResourcesUI();
-		showTab(currentTab);
-		//update training-buttons
-	}
-	
-	/**
-	 * Update all ui-elements that can be changed in a week (turn).
-	 */
-	private void updateWeekUI() {
-		ui.currentYear.setText(String.valueOf(world.getYear()));
-		ui.currentWeek.setText(String.valueOf(world.getWeek()));
-	}
-	
-	public void updateResourcesUI() {		
-		//gold
-		ui.resources.currentGold.setText( String.valueOf( selectedArea.getResourceAmount(Resource.GOLD) ) );
-		ui.resources.incomeGold.setText( incomeToString( selectedArea.getResourceIncome(Resource.GOLD) ) );
-		//wood
-		ui.resources.currentWood.setText( String.valueOf( selectedArea.getResourceAmount(Resource.WOOD)  ) );
-		ui.resources.incomeWood.setText( incomeToString( selectedArea.getResourceIncome(Resource.WOOD) ) );
-		//food
-		ui.resources.currentFood.setText( String.valueOf( selectedArea.getResourceAmount(Resource.FOOD)  ) );
-		ui.resources.incomeFood.setText( incomeToString( selectedArea.getResourceIncome(Resource.FOOD)  ) );
-		//men
-		ui.resources.currentMen.setText( String.valueOf( selectedArea.getResourceAmount(Resource.MEN)  ) );
-		ui.resources.incomeMen.setText( incomeToString( selectedArea.getResourceIncome(Resource.MEN)  ) );
-		//army
-		ui.resources.currentArmy.setText( String.valueOf( selectedArea.getArmy() ) );
 	}
 	
 	/**
@@ -191,201 +165,6 @@ public class CouncilScreen extends Scene2DScreen {
 			return "-" + income;
 		}else {//is 0
 			return String.valueOf(income);
-		}
-	}
-	
-	private Actor createTabPane() {
-		Table main = new Table();
-		main.setName("tab.pane");
-		main.setHeight(400);
-		
-		//create tab-buttons
-		Table buttons = new Table(skin);
-		buttons.setSize(36, 400);
-		main.add(buttons).top().padTop(31);
-		//create invisable buttons for tabs
-		//training
-		ImageButton trainingTabButton = new ImageButton((Drawable)null);
-		trainingTabButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showTab(TAB_TRAINING);
-			}
-		});
-		buttons.add(trainingTabButton).size(50, 67).row();		
-		//movement
-		ImageButton movementTabButton = new ImageButton((Drawable)null);
-		movementTabButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showTab(TAB_MOVEMENTS);
-			}
-		});
-		buttons.add(movementTabButton).size(50, 67).row();
-		//construction
-		ImageButton constructionTabButton = new ImageButton((Drawable)null);
-		constructionTabButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showTab(TAB_CONSTRUCTIONS);
-			}
-		});
-		buttons.add(constructionTabButton).size(50, 67).row();
-		//information
-		ImageButton informationTabButton = new ImageButton((Drawable)null);
-		informationTabButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showTab(TAB_INFORMATION);
-			}
-		});
-		buttons.add(informationTabButton).size(50, 67).row();
-		//administration
-		ImageButton administrationTabButton = new ImageButton((Drawable)null);
-		administrationTabButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showTab(TAB_ADMINISTRATION);
-			}
-		});
-		buttons.add(administrationTabButton).size(50, 67).row();
-		
-		Group right = new Group();
-		right.setName("tab.container");
-		right.setSize(200, 400);
-		main.add(right);
-		main.pack();
-		
-		return main;
-	}
-	
-	/**
-	 * 
-	 * @param tab to set to {@value #TAB_TRAINING}, {@value #TAB_MOVEMENTS}, {@value #TAB_CONSTRUCTIONS}, {@value #TAB_ADMINISTRATION} or {@value #TAB_INFORMATION}.
-	 */
-	private void showTab(int tab) {
-		if(tab == TAB_TRAINING || tab == TAB_MOVEMENTS || tab == TAB_CONSTRUCTIONS || tab == TAB_ADMINISTRATION || tab == TAB_INFORMATION) {
-			currentTab = tab;
-			switch(currentTab) {
-			case TAB_TRAINING:
-				showTrainingTab();
-				break;
-			case TAB_MOVEMENTS:
-				showMovementsTab();
-				break;
-			case TAB_INFORMATION:
-				showInformationTab();
-				break;
-			}
-		}else {
-			throw new IllegalArgumentException();
-		}
-	}
-	
-	private void showTrainingTab() {
-		clearTabContainer();
-		setTabBackground(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
-		
-		Table trainingTable = new Table(skin);
-		trainingTable.setPosition(97, 197);
-		Group tabContrainer = (Group)stage.getRoot().findActor("tab.container");
-		tabContrainer.addActor(trainingTable);
-		
-		for(final TroopProducer<?> troopProducer : selectedArea.getTroopProducers()) {
-			boolean visable = true;
-			trainingTable.row();
-			
-			final ImageButton trainButton = new ImageButton(createTrainingImageButtonStyle(troopProducer.getTroopName()));
-			if(!troopProducer.isAccessable()) {
-				visable = false;
-				trainButton.setVisible(visable);
-			}else if(troopProducer.isStarted()) {
-				trainButton.getStyle().imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");//add hourglass
-				trainButton.setDisabled(true);
-			}else if(!troopProducer.canSupplyCost()) {
-				trainButton.setDisabled(true);//only disable
-			}
-			trainButton.addListener(new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					
-				}
-			});
-			trainButton.addListener(new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					troopProducer.start();
-					updateResourcesUI();
-				}
-			});
-			troopProducer.register(new Object(){
-				@Subscribe
-				public void on(StartedEvent event){
-					trainButton.getStyle().imageDisabled = assetHelper.getDrawable("image/council.pack:ui-button-overlay-wait-full");
-					trainButton.setDisabled(true);
-				}
-				
-				@Subscribe
-				public void on(DoneEvent event){
-					trainButton.setDisabled(false);
-				}
-			});
-			
-			trainingTable.add(trainButton);
-			//label constants
-			final float FONTSCALE = 0.8f;
-			final float WIDTH = 16, HEIGHT = 29;
-			final float SPACE = 1;
-			//troop costs
-			//gold
-			Label goldCostLabel = new Label(String.valueOf(troopProducer.getResourceCost(Resource.GOLD)), skin);
-			goldCostLabel.setFontScale(FONTSCALE);
-			goldCostLabel.setAlignment(Align.center);
-			goldCostLabel.setVisible(visable);
-			trainingTable.add(goldCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//turns
-			Label turnsCostLabel = new Label(String.valueOf(troopProducer.getResourceCost(Resource.TIME)), skin);
-			turnsCostLabel.setFontScale(FONTSCALE);
-			turnsCostLabel.setAlignment(Align.center);
-			turnsCostLabel.setVisible(visable);
-			trainingTable.add(turnsCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//unit attributes
-			//strenght
-			Label trainingCostLabel = new Label("?", skin);
-			trainingCostLabel.setFontScale(FONTSCALE);
-			trainingCostLabel.setAlignment(Align.center);
-			trainingCostLabel.setVisible(visable);
-			trainingTable.add(trainingCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//accuracy
-			Label accuracyCostLabel = new Label("?", skin);
-			accuracyCostLabel.setFontScale(FONTSCALE);
-			accuracyCostLabel.setAlignment(Align.center);
-			accuracyCostLabel.setVisible(visable);
-			trainingTable.add(accuracyCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//defance
-			Label defanceCostLabel = new Label("?", skin);
-			defanceCostLabel.setFontScale(FONTSCALE);
-			defanceCostLabel.setAlignment(Align.center);
-			defanceCostLabel.setVisible(visable);
-			trainingTable.add(defanceCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//stamina
-			Label staminaCostLabel = new Label("?", skin);
-			staminaCostLabel.setFontScale(FONTSCALE);
-			staminaCostLabel.setAlignment(Align.center);
-			staminaCostLabel.setVisible(visable);
-			trainingTable.add(staminaCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//speed
-			Label speedCostLabel = new Label("?", skin);
-			speedCostLabel.setFontScale(FONTSCALE);
-			speedCostLabel.setAlignment(Align.center);
-			speedCostLabel.setVisible(visable);
-			trainingTable.add(speedCostLabel).size(WIDTH, HEIGHT).space(SPACE);
-			//range
-			Label rangeCostLabel = new Label("?", skin);
-			rangeCostLabel.setFontScale(FONTSCALE);
-			rangeCostLabel.setAlignment(Align.center);
-			rangeCostLabel.setVisible(visable);
-			trainingTable.add(rangeCostLabel).size(WIDTH, HEIGHT).space(SPACE);
 		}
 	}
 	
@@ -485,13 +264,11 @@ public class CouncilScreen extends Scene2DScreen {
 	public void upgradeArmament(InputEvent event){
 		//player.getTeam().getArmamentUpgrader().startNextUpgrade();
 		assetHelper.getSound("upgrading armerment").play();
-		updateUI();
 	}
 	
 	public void upgradeArchitecture(InputEvent event){
 		//player.getTeam().getArchitectureUpgrader().startNextUpgrade();
 		assetHelper.getSound("upgrading architecture").play();
-		updateUI();
 	}
 	
 	private ImageButton.ImageButtonStyle createTrainingImageButtonStyle(String name){
@@ -523,27 +300,5 @@ public class CouncilScreen extends Scene2DScreen {
 		for(Disposable disposable : disposables) {
 			disposable.dispose();
 		}		
-	}
-	
-	private static final class UI {	
-		Areas areas = new Areas();
-		Resources resources = new Resources();
-		
-		Label currentYear;
-		Label currentWeek;
-		Label location;
-		Label info;
-		
-		private static final class Areas{
-			ImageButton sibiu, fagaras, curtea, brasov, pitesti, tirgo, snagov, giurgiu, braila, hirsova, rasova, ostrov;
-		}
-		
-		private static final class Resources {
-			Label currentGold, incomeGold;
-			Label currentWood, incomeWood;
-			Label currentFood, incomeFood;
-			Label currentMen, incomeMen;
-			Label currentArmy;
-		}
 	}
 }
