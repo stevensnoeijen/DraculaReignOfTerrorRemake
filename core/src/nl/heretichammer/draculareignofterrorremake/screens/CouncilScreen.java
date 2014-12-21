@@ -102,8 +102,6 @@ public class CouncilScreen extends Scene2DScreen {
 		*/
 		
 		//updateUI();
-		
-		((Image)stage.getRoot().findActor("tab.background")).setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
 	}
 	
 	public void weekClicked(InputEvent event){
@@ -111,30 +109,30 @@ public class CouncilScreen extends Scene2DScreen {
 	}
 	
 	public void tabClicked(InputEvent event){
-		String name = event.getTarget().getName();
+		String name = event.getTarget().getUserObject().toString();
 		
 		Group root = stage.getRoot();
 		//hide all
-		root.findActor("training.content").setVisible(false);
-		root.findActor("movement.content").setVisible(false);
-		root.findActor("constructions.content").setVisible(false);
-		root.findActor("information.content").setVisible(false);
-		root.findActor("administration.content").setVisible(false);
+		root.findActor("tab.training").setVisible(false);
+		root.findActor("tab.movement").setVisible(false);
+		root.findActor("tab.constructions").setVisible(false);
+		root.findActor("tab.information").setVisible(false);
+		root.findActor("tab.administration").setVisible(false);
 		//change background
 		Image background = (Image) root.findActor("tab.background");
-		if(name.equals("training")){
+		if(name.equals("tab.training")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
-		}else if(name.equals("movement")){
+		}else if(name.equals("tab.movement")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
-		}else if(name.equals("constructions")){
+		}else if(name.equals("tab.constructions")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
-		}else if(name.equals("information")){
+		}else if(name.equals("tab.information")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
-		}else if(name.equals("administration")){
+		}else if(name.equals("tab.administration")){
 			background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
 		}
 		//show clicked tab
-		root.findActor(name + ".content").setVisible(true);
+		root.findActor(name).setVisible(true);
 		
 		//stage.getRoot().findActor(name + ".content").setVisible(true);
 	}

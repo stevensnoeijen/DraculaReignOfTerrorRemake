@@ -9,27 +9,27 @@
 				<table x="36" y="400" debug="true"><!-- tab buttons -->
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" name="training"/>
+							<imagebutton click="tabClicked" userobject="tab.training"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" name="movement"/>
+							<imagebutton click="tabClicked" userobject="tab.movement"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" name="constructions"/>
+							<imagebutton click="tabClicked" userobject="tab.constructions"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" name="information"/>
+							<imagebutton click="tabClicked" userobject="tab.information"/>
 						</cell>
 					</row>
 					<row>
 						<cell width="50" height="67">
-							<imagebutton click="tabClicked" name="administration"/>
+							<imagebutton click="tabClicked" userobject="tab.administration"/>
 						</cell>
 					</row>
 				</table>
@@ -40,7 +40,7 @@
 						<label name="location" skin="skin/uiskin.json" text="location" fontscale="0.8" x="70" y="330"/>
 						<label name="info" skin="skin/uiskin.json" text="info" fontscale="0.8" x="15" y="27"/>
 					</group>
-					<group name="training.content" visible="true">
+					<group name="tab.training" visible="true">
 						<table x="97" y="197">
 					        <row height="30">
 					            <cell>
@@ -247,12 +247,12 @@
 				            </row>
 						</table>
 					</group>
-					<group name="movement.content" visible="false">
+					<group name="tab.movement" visible="false">
 					    <table x="15" y="315">
 					        
 					    </table>
 				    </group>
-				    <group name="constructions.content" visible="false">
+				    <group name="tab.constructions" visible="false">
 				        <image drawable="image/council.pack:minimap-fagaras" x="60" y="190" name="constructions.minimap"/>
 				        <!-- construction options -->
 				        <imagebutton x="6" y="250" click="repair" style="up=image/council.pack:ui-button-repair, down=image/council.pack:ui-button-repair-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
@@ -273,9 +273,9 @@
 				        
 				        <image name="constructions.preview" drawable="image/council.pack:tower-preview" x="110" y="65"/>
 				    </group>
-				    <group name="information.content" visible="false">
+				    <group name="tab.information" visible="false">
 				    </group>
-				    <group name="administration.content" visible="false">
+				    <group name="tab.administration" visible="false">
 				        <label fontscale="0.8f" alignment="center" x="90" y="307" skin="skin/uiskin.json" text="?/?" name="administration.armament.level"/>
 				        <image x="5" y="195" drawable="image/council.pack:upgrade-armament-1"/>
 				        <label fontscale="0.75f" alignment="center" x="130" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.gold"/>
