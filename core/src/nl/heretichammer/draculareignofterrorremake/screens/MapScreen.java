@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public abstract class MapScreen extends Scene2DScreen {
+public abstract class MapScreen extends ActorScreen {
 	
 	protected MapRenderer mapRenderer;
 	protected Map map;

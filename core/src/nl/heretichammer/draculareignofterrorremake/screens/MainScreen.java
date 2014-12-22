@@ -28,7 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
-public class MainScreen extends Scene2DScreen {
+public class MainScreen extends ActorScreen {
 	
 	private static final int MENU_ENGAGE = 0, MENU_LOAD = 1, MENU_SAVE = 2, MENU_INTRODUCTION = 3, MENU_OPTIONS = 4, MENU_CREDITS = 5, MENU_EXIT = 6;
 	

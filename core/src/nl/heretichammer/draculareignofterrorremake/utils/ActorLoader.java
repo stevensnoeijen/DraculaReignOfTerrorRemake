@@ -19,12 +19,16 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -33,6 +37,11 @@ import com.badlogic.gdx.utils.XmlReader;
 
 
 public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.ActorLoaderParameter> {
+	/**
+	 * A empty drawable, used when the disabled image is in the background.
+	 */
+	public static Drawable EMPTY = new SpriteDrawable( new Sprite( new Texture(1, 1, Pixmap.Format.Alpha) ) );
+	
 	private ObjectMap<String, ActorCreator<?>> creators = new ObjectMap<String, ActorCreator<?>>();
 	
 	private AssetManager assetManager;
@@ -123,7 +132,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	public <T> T getLoadedAsset(String fileName, Class<T> clazz){
 		if(clazz == Drawable.class){
 			if(fileName.equals("empty")){
-				return (T) AssetHelper.EMPTY;
+				return (T) EMPTY;
 			}
 			
 			String[] args = fileName.split(":");

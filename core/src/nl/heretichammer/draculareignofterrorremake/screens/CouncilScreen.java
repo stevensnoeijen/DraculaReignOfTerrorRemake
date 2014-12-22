@@ -1,7 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.beans.PropertyChangeEvent;
-import java.lang.reflect.Field;
 
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
@@ -13,12 +12,11 @@ import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
-import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,15 +25,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.google.common.eventbus.Subscribe;
 
-public class CouncilScreen extends Scene2DScreen {
-	
-	private static final String LEVEL_DIVIDER = "/";
-	
-	private AssetManager assetManager = new AssetManager();
-	private AssetHelper assetHelper = new AssetHelper(assetManager);
-	
+public class CouncilScreen extends ActorScreen {	
+	@Asset("image/council.pack") private TextureAtlas images;
 	@Asset("music/council1.mp3") private Music music;
 	
 	//sounds
@@ -87,57 +82,25 @@ public class CouncilScreen extends Scene2DScreen {
 	private Area selectedArea;
 	
 	public CouncilScreen() {
-		assetManager.setLoader(Actor.class, new ActorLoader(new InternalFileHandleResolver()));
 		world = new World();
 		player = new Player(Team.transylvanians);
 		//new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
 	}
 	
-	public void setSelectedArea(Area selectedArea) {
-		this.selectedArea = selectedArea;
-		//update view
-		ImageButton[] views = new ImageButton[]{ view_trainerSwordsoldiers, view_trainerCrossbowsoldiers, view_trainerKnight, view_trainerJuggernaut, view_trainerCatapult, view_trainerCatapult, view_trainerSpy};
-		for(ImageButton view : views){
-			TroopProducer<?> troopProducer = selectedArea.getTroopProducer(view.getUserObject().toString());
-			//troopProducer.
-		}
+	@Override
+	protected void load(AssetManager assetManager) {
+		super.load(assetManager);
+		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
 	}
+	
+	protected void loaded(AssetManager assetManager) {
+		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
+		super.loaded(assetManager);
+	};
 	
 	@Override
 	public void show() {
 		super.show();
-		//TODO: move this to a manager-class
-		//load assets that are defined with fields
-		for(Field field : this.getClass().getDeclaredFields()){
-			if(field.isAnnotationPresent(Asset.class)){
-				Asset asset = field.getAnnotation(Asset.class);
-				assetManager.load(asset.value(), field.getType());
-			}
-		}		
-		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
-		assetManager.finishLoading();
-		
-		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
-		Group root = stage.getRoot();
-		
-		for(Field field : this.getClass().getDeclaredFields()){
-			if(field.isAnnotationPresent(Asset.class)){
-				Asset asset = field.getAnnotation(Asset.class);
-				try {
-					field.set(this, assetManager.get(asset.value(), field.getType()));
-				} catch (Exception ex){
-					throw new RuntimeException(ex);
-				}
-			}else if(field.isAnnotationPresent(View.class)){
-				View view = field.getAnnotation(View.class);
-				Actor actor = root.findActor(view.value());
-				try {
-					field.set(this, field.getType().cast(actor));
-				} catch (Exception ex){
-					throw new RuntimeException(ex);
-				}
-			}
-		}
 		
 		setSelectedArea(world.getArea("fagaras"));
 		//music.play();
@@ -155,6 +118,16 @@ public class CouncilScreen extends Scene2DScreen {
 				}
 			}
 		});
+	}
+	
+	public void setSelectedArea(Area selectedArea) {
+		this.selectedArea = selectedArea;
+		//update view
+		ImageButton[] views = new ImageButton[]{ view_trainerSwordsoldiers, view_trainerCrossbowsoldiers, view_trainerKnight, view_trainerJuggernaut, view_trainerCatapult, view_trainerCatapult, view_trainerSpy};
+		for(ImageButton view : views){
+			TroopProducer<?> troopProducer = selectedArea.getTroopProducer(view.getUserObject().toString());
+			//troopProducer.
+		}
 	}
 	
 	public void selectArea(InputEvent event){
@@ -182,7 +155,7 @@ public class CouncilScreen extends Scene2DScreen {
 		hideAllTabs();
 		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-training"));
+		background.setDrawable(getDrawable("ui-tab-training"));
 		root.findActor("tab.training").setVisible(true);
 	}
 	
@@ -190,7 +163,7 @@ public class CouncilScreen extends Scene2DScreen {
 		hideAllTabs();
 		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-movement"));
+		background.setDrawable(getDrawable("ui-tab-movement"));
 		
 		Table table = root.findActor("movement.troops");
 		table.clear();
@@ -213,7 +186,7 @@ public class CouncilScreen extends Scene2DScreen {
 		hideAllTabs();
 		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-construction"));
+		background.setDrawable(getDrawable("ui-tab-construction"));
 		root.findActor("tab.constructions").setVisible(true);
 	}
 	
@@ -221,7 +194,7 @@ public class CouncilScreen extends Scene2DScreen {
 		hideAllTabs();
 		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-information"));
+		background.setDrawable(getDrawable("ui-tab-information"));
 		root.findActor("tab.information").setVisible(true);
 	}
 	
@@ -229,7 +202,7 @@ public class CouncilScreen extends Scene2DScreen {
 		hideAllTabs();
 		Group root = stage.getRoot();
 		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(assetHelper.getDrawable("image/council.pack:ui-tab-administration"));
+		background.setDrawable(getDrawable("ui-tab-administration"));
 		root.findActor("tab.administration").setVisible(true);
 	}
 	
@@ -336,13 +309,11 @@ public class CouncilScreen extends Scene2DScreen {
 		sound_upgradingArchitecture.play();
 	}
 	
-	private ImageButton.ImageButtonStyle createMovementImageButtonStyle(String name){
-		String stylePrefixName = "image/council.pack:ui-checkbox-";
-		
+	private ImageButton.ImageButtonStyle createMovementImageButtonStyle(String name){		
 		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-		style.up = assetHelper.getDrawable(stylePrefixName + name);
-		style.checked = assetHelper.getDrawable(stylePrefixName + name + "-selected");
-		style.disabled = assetHelper.getDrawable(stylePrefixName + name + "-disabled");		
+		style.up = getDrawable("ui-checkbox-" + name);
+		style.checked = getDrawable("ui-checkbox-" + name + "-selected");
+		style.disabled = getDrawable("ui-checkbox-" + name + "-disabled");		
 		
 		return style;
 	}
@@ -350,7 +321,10 @@ public class CouncilScreen extends Scene2DScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		assetManager.dispose();	
 		//TODO: check if al loaded assets in this class will be disposed automaticly?
+	}
+	
+	private Drawable getDrawable(String name){
+		return new TextureRegionDrawable(images.findRegion(name));
 	}
 }
