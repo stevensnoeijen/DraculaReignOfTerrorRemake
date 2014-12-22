@@ -9,7 +9,6 @@ import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
@@ -18,7 +17,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -33,6 +31,9 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	private AssetManager assetManager = new AssetManager();
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
+	
+	@Asset("music/council1.mp3")
+	private Music music;
 	
 	@Asset("sound/click.ogg")
 	private Sound sound_click;
@@ -76,7 +77,7 @@ public class CouncilScreen extends Scene2DScreen {
 	@Override
 	public void show() {
 		super.show();
-		assetManager.load("image/council.pack", TextureAtlas.class);
+		//TODO: move this to a manager-class
 		//load assets that are defined with fields
 		for(Field field : this.getClass().getDeclaredFields()){
 			if(field.isAnnotationPresent(Asset.class)){
@@ -84,7 +85,6 @@ public class CouncilScreen extends Scene2DScreen {
 				assetManager.load(asset.value(), field.getType());
 			}
 		}		
-		assetManager.load("music/council2.mp3", Music.class);
 		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
 		assetManager.finishLoading();
 		
@@ -99,7 +99,8 @@ public class CouncilScreen extends Scene2DScreen {
 			}
 		}
 		
-		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );//background
+		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
+		music.play();
 	}
 	
 	public void week(InputEvent event){
