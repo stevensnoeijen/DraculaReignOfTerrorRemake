@@ -117,6 +117,11 @@ public class Team extends Model {
 		this.name = name;
 	}*/
 	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 	public static enum TeamColor {
 		BLUE, RED
 	}

@@ -98,4 +98,9 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 		this.team = team;
 		post(new TeamChangedEvent());
 	}
+	
+	@Override
+	public String toString() {
+		return trooper.name();
+	}
 }

@@ -45,7 +45,7 @@
 						<table x="97" y="197">
 					        <row height="30">
 					            <cell>
-					            	<imagebutton click="trainTroop" name="trainer.swordsoldiers" userobject="swordsoldiers" style="up=image/council.pack:ui-button-swordsoldiers, down=image/council.pack:ui-button-swordsoldiers-click, disabled=image/council.pack:ui-button-swordsoldiers-disabled"/>
+					            	<imagebutton click="trainTroop" name="trainer.swordsoldiers" userobject="swordsoldier" style="up=image/council.pack:ui-button-swordsoldiers, down=image/council.pack:ui-button-swordsoldiers-click, disabled=image/council.pack:ui-button-swordsoldiers-disabled"/>
 					            </cell>
 					            <cell width="17">										                
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
@@ -74,7 +74,7 @@
 				            </row>
 				            <row height="30">
 					            <cell>
-					                <imagebutton click="trainTroop" name="trainer.crossbowsoldiers" userobject="crossbowsoldiers" style="up=image/council.pack:ui-button-crossbowsoldiers, down=image/council.pack:ui-button-crossbowsoldiers-click, disabled=image/council.pack:ui-button-crossbowsoldiers-disabled"/>
+					                <imagebutton click="trainTroop" name="trainer.crossbowsoldiers" userobject="crossbowsoldier" style="up=image/council.pack:ui-button-crossbowsoldiers, down=image/council.pack:ui-button-crossbowsoldiers-click, disabled=image/council.pack:ui-button-crossbowsoldiers-disabled"/>
 					            </cell>
 					            <cell width="17">										                
 					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
@@ -325,19 +325,18 @@
 	</table>
 	
 	<group x="280" y="240">
-		<imagebutton name="area.sibiu" x="0" y="120" group="areas" style="up=image/council.pack:area-sibiu, checked=image/council.pack:area-sibiu-select"/>
-		<imagebutton name="area.fagaras" x="70" y="135" group="areas" style="up=image/council.pack:area-fagaras, checked=image/council.pack:area-fagaras-select"/>
-		<imagebutton name="area.curtea" x="30" y="80" group="areas" style="up=image/council.pack:area-curtea, checked=image/council.pack:area-curtea-select"/>
-		<imagebutton name="area.brasov" x="135" y="130" group="areas" style="up=image/council.pack:area-brasov, checked=image/council.pack:area-brasov-select"/>
-		<imagebutton name="area.pitesti" x="130" y="85" group="areas" style="up=image/council.pack:area-pitesti, checked=image/council.pack:area-pitesti-select"/>
-		<imagebutton name="area.tirgo" x="100" y="45" group="areas" style="up=image/council.pack:area-tirgo, checked=image/council.pack:area-tirgo-select"/>
-		<imagebutton name="area.snagov" x="185" y="70" group="areas" style="up=image/council.pack:area-snagov, checked=image/council.pack:area-snagov-select"/>
-		<imagebutton name="area.giurgiu" x="129" y="0" group="areas" style="up=image/council.pack:area-giurgiu, checked=image/council.pack:area-giurgiu-select"/>
-		<imagebutton name="area.giurgiu" x="129" y="0" group="areas" style="up=image/council.pack:area-giurgiu, checked=image/council.pack:area-giurgiu-select"/>
-		<imagebutton name="area.braila" x="236" y="100" group="areas" style="up=image/council.pack:area-braila, checked=image/council.pack:area-braila-select"/>
-		<imagebutton name="area.hirsova" x="234" y="75" group="areas" style="up=image/council.pack:area-hirsova, checked=image/council.pack:area-hirsova-select"/>
-		<imagebutton name="area.rasova" x="229" y="54" group="areas" style="up=image/council.pack:area-rasova, checked=image/council.pack:area-rasova-select"/>
-		<imagebutton name="area.ostrov" x="219" y="30" group="areas" style="up=image/council.pack:area-ostrov, checked=image/council.pack:area-ostrov-select"/>
+		<imagebutton name="area.sibiu" userobject="sibiu" click="selectArea" x="0" y="120" group="areas" style="up=image/council.pack:area-sibiu, checked=image/council.pack:area-sibiu-select"/>
+		<imagebutton name="area.fagaras" userobject="fagaras" click="selectArea" x="70" y="135" group="areas" style="up=image/council.pack:area-fagaras, checked=image/council.pack:area-fagaras-select"/>
+		<imagebutton name="area.curtea" userobject="curtea" click="selectArea" x="30" y="80" group="areas" style="up=image/council.pack:area-curtea, checked=image/council.pack:area-curtea-select"/>
+		<imagebutton name="area.brasov" userobject="brasov" click="selectArea" x="135" y="130" group="areas" style="up=image/council.pack:area-brasov, checked=image/council.pack:area-brasov-select"/>
+		<imagebutton name="area.pitesti" userobject="pitesti" click="selectArea" x="130" y="85" group="areas" style="up=image/council.pack:area-pitesti, checked=image/council.pack:area-pitesti-select"/>
+		<imagebutton name="area.tirgo" userobject="tirgo" click="selectArea" x="100" y="45" group="areas" style="up=image/council.pack:area-tirgo, checked=image/council.pack:area-tirgo-select"/>
+		<imagebutton name="area.snagov" userobject="snagov" click="selectArea" x="185" y="70" group="areas" style="up=image/council.pack:area-snagov, checked=image/council.pack:area-snagov-select"/>
+		<imagebutton name="area.giurgiu" userobject="giurgiu" click="selectArea" x="129" y="0" group="areas" style="up=image/council.pack:area-giurgiu, checked=image/council.pack:area-giurgiu-select"/>
+		<imagebutton name="area.braila" userobject="braila" click="selectArea" x="236" y="100" group="areas" style="up=image/council.pack:area-braila, checked=image/council.pack:area-braila-select"/>
+		<imagebutton name="area.hirsova" userobject="hirsova" click="selectArea" x="234" y="75" group="areas" style="up=image/council.pack:area-hirsova, checked=image/council.pack:area-hirsova-select"/>
+		<imagebutton name="area.rasova" userobject="rasova" click="selectArea" x="229" y="54" group="areas" style="up=image/council.pack:area-rasova, checked=image/council.pack:area-rasova-select"/>
+		<imagebutton name="area.ostrov" userobject="ostrov" click="selectArea" x="219" y="30" group="areas" style="up=image/council.pack:area-ostrov, checked=image/council.pack:area-ostrov-select"/>
 	</group>
 	
 	<group x="300" y="50" name="stats">

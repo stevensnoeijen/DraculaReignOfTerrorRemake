@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 
 public class World {
@@ -22,11 +27,42 @@ public class World {
 		teams.add(Team.turks);
 		teams.add(Team.transylvanians);
 		
-		//create worlds
-		for(String areaname : Area.NAMES) {
-			Area area = AreaFactory.create(areaname);
+		//load areas
+		Json json = new Json();
+		json.setSerializer(Map.class, new Json.Serializer<Map>() {
+			@Override
+			public void write(Json json, Map object, Class knownType) {
+				
+			}
+
+			@Override
+			public Map read(Json json, JsonValue jsonData, Class type) {
+				return new HashMap<Object, Object>();
+			}
+		});
+		json.setSerializer(Team.class, new Json.Serializer<Team>() {
+			@Override
+			public Team read(Json json, JsonValue jsonData, Class type) {
+				String name = jsonData.asString();
+				if(name.equals("transylvanians")){
+					return Team.transylvanians;
+				}else if(name.equals("turks")){
+					return Team.turks;
+				}else{
+					return null;
+				}
+			}
+			
+			@Override
+			public void write(Json json, Team object, Class knownType) {
+				
+			}
+		});
+		Area[] areas = json.fromJson(Area[].class, Gdx.files.internal("data/areas.json"));
+		
+		for(Area area : areas) {
 			area.setWorld(this);
-			areas.put(areaname, area);
+			this.areas.put(area.getName().toLowerCase(), area);
 		}
 	}
 	

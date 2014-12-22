@@ -22,27 +22,11 @@ import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 
 import com.google.common.eventbus.Subscribe;
 
-public class Area extends TeamableModel implements ResourceSupplier {
-	public static final String SIBIU = "sibiu";
-	public static final String FAGARAS = "fagaras";
-	public static final String CURTEA = "curtea";
-	public static final String BRASOV = "brasov";
-	public static final String PITESTI = "pitesti";
-	public static final String TIRGO = "tirgo";
-	public static final String SNAGOV = "snagov";
-	public static final String GIURGIU = "giurgiu";
-	public static final String BRAILA = "braila";
-	public static final String HIRSOVA = "hirsova";
-	public static final String RASOVA = "rasova";
-	public static final String OSTROV = "ostrov";
-
-	public static final String[] NAMES = { SIBIU, FAGARAS, CURTEA, BRASOV, PITESTI, TIRGO, SNAGOV, GIURGIU, BRAILA, HIRSOVA, RASOVA, OSTROV };
-	
-	private String minimapImage;
+public class Area extends TeamableModel implements ResourceSupplier {	
 	private String name;
+	private String minimapImage;
 	private World world;//TODO: replace with neighbors
 	private Set<Troop<?>> troops = new HashSet<Troop<?>>();
-	
 	private Map<Resource, Integer> resources = new HashMap<Resource, Integer>();
 	private int army = 0;
 	

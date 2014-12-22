@@ -1,14 +1,17 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
 
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
+import nl.heretichammer.draculareignofterrorremake.annotations.View;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
+import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
@@ -24,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.google.common.collect.Lists;
 
 public class CouncilScreen extends Scene2DScreen {
 	
@@ -32,30 +36,48 @@ public class CouncilScreen extends Scene2DScreen {
 	private AssetManager assetManager = new AssetManager();
 	private AssetHelper assetHelper = new AssetHelper(assetManager);
 	
-	@Asset("music/council1.mp3")
-	private Music music;
+	@Asset("music/council1.mp3") private Music music;
 	
-	@Asset("sound/click.ogg")
-	private Sound sound_click;
+	//sounds
+	@Asset("sound/click.ogg") private Sound sound_click;
+	//upgrading
+	@Asset("sound/upgrading armerment.ogg") private Sound sound_upgradingArmerment;
+	@Asset("sound/upgrading architecture.ogg") private Sound sound_upgradingArchitecture;
+	@Asset("sound/training swordsoldiers.ogg") private Sound sound_trainingSwordsoldiers;
+	@Asset("sound/training crossbowsoldiers.ogg") private Sound sound_trainingCrossbowsoldiers;
+	@Asset("sound/building juggernaut.ogg") private Sound sound_trainingJuggernaut;
+	@Asset("sound/training a knight.ogg") private Sound sound_trainingKnight;
+	@Asset("sound/building a catapult.ogg") private Sound sound_trainingCatapult;
+	@Asset("sound/building a cannon.ogg") private Sound sound_trainingCannon;
+	@Asset("sound/training spies.ogg") private Sound sound_trainingSpies;
+	//construction
+	//repair
+	@Asset("sound/repairing bridge.ogg") private Sound sound_repairingBridge;
+	@Asset("sound/repairing tower.ogg") private Sound sound_repairingTower;
+	@Asset("sound/repairing stronghold.ogg") private Sound sound_repairingStronghold;
+	@Asset("sound/repairing fortification.ogg") private Sound sound_repairingFortification;
+	@Asset("sound/repairing cancelled.ogg") private Sound sound_repairingCancelled;
+	//upgrade
+	@Asset("sound/upgrading stronghold.ogg") private Sound sound_upgradingStronghold;
+	@Asset("sound/upgrading fortification.ogg") private Sound sound_upgradingFortification;
+	@Asset("sound/upgrading cancelled.ogg") private Sound sound_upgradingCancelled;
+	//build
+	@Asset("sound/building bridge.ogg") private Sound sound_buildingBridge;
+	@Asset("sound/building tower.ogg") private Sound sound_buildingTower;
+	@Asset("sound/building stronghold.ogg") private Sound sound_buildingStronghold;
+	@Asset("sound/building fortification.ogg") private Sound sound_buildingFortification;
+	@Asset("sound/building cancelled.ogg") private Sound sound_buildingCancelled;
+	@Asset("sound/building completed.ogg") private Sound sound_buildingCompleted;
 	
-	@Asset("sound/upgrading armerment.ogg")
-	private Sound sound_upgradingArmerment;
-	@Asset("sound/upgrading architecture.ogg")
-	private Sound sound_upgradingArchitecture;
-	@Asset("sound/training swordsoldiers.ogg")
-	private Sound sound_trainingSwordsoldiers;
-	@Asset("sound/training crossbowsoldiers.ogg")
-	private Sound sound_trainingCrossbowsoldiers;
-	@Asset("sound/building juggernaut.ogg")
-	private Sound sound_trainingJuggernaut;
-	@Asset("sound/training a knight.ogg")
-	private Sound sound_trainingKnight;
-	@Asset("sound/building a catapult.ogg")
-	private Sound sound_trainingCatapult;
-	@Asset("sound/building a cannon.ogg")
-	private Sound sound_trainingCannon;
-	@Asset("sound/training spies.ogg")
-	private Sound sound_trainingSpies;
+	//views auto-bind to the given name in the stage
+	@View("trainer.swordsoldiers") private ImageButton view_trainerSwordsoldiers;
+	@View("trainer.crossbowsoldiers") private ImageButton view_trainerCrossbowsoldiers;
+	@View("trainer.knight") private ImageButton view_trainerKnight;
+	@View("trainer.juggernaut") private ImageButton view_trainerJuggernaut;
+	@View("trainer.catapult") private ImageButton view_trainerCatapult;
+	@View("trainer.cannon") private ImageButton view_trainerCannon;
+	@View("trainer.spy") private ImageButton view_trainerSpy;
+	
 	
 	private Player player;
 	private World world;
@@ -64,14 +86,18 @@ public class CouncilScreen extends Scene2DScreen {
 	public CouncilScreen() {
 		assetManager.setLoader(Actor.class, new ActorLoader(new InternalFileHandleResolver()));
 		world = new World();
-		
 		player = new Player(Team.transylvanians);
-		new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
-		selectedArea = world.getArea("fagaras");
+		//new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
 	}
 	
 	public void setSelectedArea(Area selectedArea) {
 		this.selectedArea = selectedArea;
+		//update view
+		ImageButton[] views = new ImageButton[]{ view_trainerSwordsoldiers, view_trainerCrossbowsoldiers, view_trainerKnight, view_trainerJuggernaut, view_trainerCatapult, view_trainerCatapult, view_trainerSpy};
+		for(ImageButton view : views){
+			TroopProducer<?> troopProducer = selectedArea.getTroopProducer(view.getUserObject().toString());
+			//troopProducer.
+		}
 	}
 	
 	@Override
@@ -88,6 +114,9 @@ public class CouncilScreen extends Scene2DScreen {
 		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
 		assetManager.finishLoading();
 		
+		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
+		Group root = stage.getRoot();
+		
 		for(Field field : this.getClass().getDeclaredFields()){
 			if(field.isAnnotationPresent(Asset.class)){
 				Asset asset = field.getAnnotation(Asset.class);
@@ -96,11 +125,25 @@ public class CouncilScreen extends Scene2DScreen {
 				} catch (Exception ex){
 					throw new RuntimeException(ex);
 				}
+			}else if(field.isAnnotationPresent(View.class)){
+				View view = field.getAnnotation(View.class);
+				Actor actor = root.findActor(view.value());
+				try {
+					field.set(this, field.getType().cast(actor));
+				} catch (Exception ex){
+					throw new RuntimeException(ex);
+				}
 			}
 		}
 		
-		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
-		music.play();
+		setSelectedArea(world.getArea("fagaras"));
+		//music.play();
+	}
+	
+	public void selectArea(InputEvent event){
+		String name = event.getTarget().getUserObject().toString();
+		Area area = world.getArea(name);
+		setSelectedArea(area);
 	}
 	
 	public void week(InputEvent event){
@@ -174,12 +217,11 @@ public class CouncilScreen extends Scene2DScreen {
 	}
 	
 	public void trainTroop(InputEvent event){
-		//event.getButton()
 		String name = event.getTarget().getUserObject().toString();
 		
-		if(name.equals("swordsoldiers")){
+		if(name.equals("swordsoldier")){
 			sound_trainingSwordsoldiers.play();
-		}else if(name.equals("crossbowsoldiers")){
+		}else if(name.equals("crossbowsoldier")){
 			sound_trainingCrossbowsoldiers.play();
 		}else if(name.equals("knight")){
 			sound_trainingKnight.play();
@@ -193,8 +235,8 @@ public class CouncilScreen extends Scene2DScreen {
 			sound_trainingSpies.play();
 		}
 		
-		//TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
-		//troopProducer.start();
+		TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
+		troopProducer.start();
 	}
 	
 	/**
@@ -235,6 +277,7 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	public void repair(InputEvent event){
 		setConstructionMode(CONSTRUCTIONMODE_REPAIR);
+		
 	}
 	
 	public void upgrade(InputEvent event){
