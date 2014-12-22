@@ -1,10 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Field;
-import java.util.Collections;
 
 import nl.heretichammer.draculareignofterrorremake.Player;
-import nl.heretichammer.draculareignofterrorremake.ai.AIPlayer;
 import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
 import nl.heretichammer.draculareignofterrorremake.annotations.View;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
@@ -25,9 +24,10 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
 
 public class CouncilScreen extends Scene2DScreen {
 	
@@ -70,6 +70,9 @@ public class CouncilScreen extends Scene2DScreen {
 	@Asset("sound/building completed.ogg") private Sound sound_buildingCompleted;
 	
 	//views auto-bind to the given name in the stage
+	@View("week") private Label view_week;
+	@View("year") private Label view_year;
+	//trainers
 	@View("trainer.swordsoldiers") private ImageButton view_trainerSwordsoldiers;
 	@View("trainer.crossbowsoldiers") private ImageButton view_trainerCrossbowsoldiers;
 	@View("trainer.knight") private ImageButton view_trainerKnight;
@@ -138,6 +141,20 @@ public class CouncilScreen extends Scene2DScreen {
 		
 		setSelectedArea(world.getArea("fagaras"));
 		//music.play();
+		
+		view_week.setText( String.valueOf(world.getWeek()) );
+		view_year.setText( String.valueOf(world.getYear()) );
+		world.register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String name = e.getPropertyName();
+				if(name.equals("week")){
+					view_week.setText( e.getNewValue().toString() );
+				}else if(name.equals("year")){
+					view_year.setText( e.getNewValue().toString() );
+				}
+			}
+		});
 	}
 	
 	public void selectArea(InputEvent event){
@@ -148,7 +165,7 @@ public class CouncilScreen extends Scene2DScreen {
 	
 	public void week(InputEvent event){
 		sound_click.play();
-		//world.week();
+		world.week();
 	}
 	
 	private void hideAllTabs(){

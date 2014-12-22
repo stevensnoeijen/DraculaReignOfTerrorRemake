@@ -1,18 +1,18 @@
 package nl.heretichammer.draculareignofterrorremake.models;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
-import nl.heretichammer.draculareignofterrorremake.models.team.Team;
-
-public class World {
+public class World extends Model {
 	public static final int START_YEAR = 1456,
 			START_WEEK = 1;
 	
@@ -82,9 +82,12 @@ public class World {
 	public void week() {
 		if(week == 52) {
 			year++;
+			post(new PropertyChangeEvent(this, "year", year-1, year));
 			week = 1;
+			post(new PropertyChangeEvent(this, "week", 52, week));
 		}else {
 			week++;
+			post(new PropertyChangeEvent(this, "week", week-1, week));
 		}
 		for(Area area : areas.values()){
 			area.week();

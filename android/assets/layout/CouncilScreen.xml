@@ -379,9 +379,9 @@
 		</table>
 	</group>
 	<label skin="skin/uiskin.json" color="black" text="Anno Domini" x="515" y="210"/>
-	<label name="year" text="?" skin="skin/uiskin.json" x="560" y="190" fontscale="0.8"/>
+	<label name="year" text="?" skin="skin/uiskin.json" x="560" y="190" fontscale="0.8" alignment="center"/>
 	<label skin="skin/uiskin.json" color="black" text="Week" x="540" y="165"/>
-	<label name="week" text="?" skin="skin/uiskin.json" x="560" y="150" fontscale="0.8"/>
+	<label name="week" text="?" skin="skin/uiskin.json" x="560" y="150" fontscale="0.8" alignment="center"/>
 	
 	<imagebutton x="525" y="55" click="week" style="up=image/council.pack:ui-waxseal, down=image/council.pack:ui-waxseal-select"/>
 </group>
