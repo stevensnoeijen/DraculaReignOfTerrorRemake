@@ -11,11 +11,13 @@ import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
+import nl.heretichammer.draculareignofterrorremake.models.events.ResourceChangeEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.utils.Binder;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -236,6 +238,20 @@ public class CouncilScreen extends ActorScreen {
 		view_food.setText(Integer.toString(selectedArea.getResource(Resource.FOOD)));
 		view_men.setText(Integer.toString(selectedArea.getResource(Resource.MEN)));
 		view_army.setText(Integer.toString(selectedArea.getArmy()));
+		selectedArea.register(new Object(){
+			@Subscribe
+			public void on(ResourceChangeEvent e){
+				if(e.resource == Resource.GOLD){
+					view_gold.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.GOLD)));
+				}else if(e.resource == Resource.WOOD){
+					view_wood.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.WOOD)));
+				}else if(e.resource == Resource.FOOD){
+					view_food.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.FOOD)));
+				}else if(e.resource == Resource.MEN){
+					view_men.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.MEN)));
+				}
+			}
+		});
 		
 		//income
 		view_goldIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.GOLD)));

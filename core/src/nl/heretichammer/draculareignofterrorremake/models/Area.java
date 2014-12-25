@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import nl.heretichammer.draculareignofterrorremake.models.events.ResourceAmountChanged;
+import nl.heretichammer.draculareignofterrorremake.models.events.ResourceChangeEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producer.Producer;
@@ -151,7 +151,7 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		int current = resources.get(resource);
 		int incremented = current + amount;
 		resources.put(resource, incremented);
-		post(new ResourceAmountChanged(this, resource, incremented));
+		post(new ResourceChangeEvent(this, resource, incremented));
 	}
 	
 	@Override
