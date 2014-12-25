@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import nl.heretichammer.draculareignofterrorremake.models.events.ResourceAmountChanged;
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producer.Producer;
@@ -28,7 +29,6 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	private World world;//TODO: replace with neighbors
 	private Set<Troop<?>> troops = new HashSet<Troop<?>>();
 	private Map<Resource, Integer> resources = new HashMap<Resource, Integer>();
-	private int army = 0;
 	
 	private Set<TroopProducer<?>> troopProducers = new HashSet<TroopProducer<?>>();	
 	private Map<Resource, ResourceProducer> resourceProducers = new HashMap<Resource, ResourceProducer>();
@@ -73,7 +73,7 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		resourceProducer.register(new Object(){
 			@Subscribe
 			public void on(ResourceProducedEvent e){
-				incrementResource(e.resource, e.produced);
+				incrementResource(e.resource, e.source.remove());
 			}
 		});
 		resourceProducers.put(resourceProducer.getResource(), resourceProducer);
@@ -82,6 +82,9 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	@Override
 	public void setTeam(Team team) {
 		super.setTeam(team);
+		for(TroopProducer<?> troopProducer : troopProducers){
+			troopProducer.setTeam(team);
+		}
 	}
 	
 	public String getName() {
@@ -98,14 +101,10 @@ public class Area extends TeamableModel implements ResourceSupplier {
 	
 	public void week() {
 		for(Producer<?> producer : resourceProducers.values()){
-			if(producer.isStarted()){
-				producer.week();
-			}
+			producer.week();
 		}
 		for(Producer<?> producer : troopProducers){
-			if(producer.isStarted()){
-				producer.week();
-			}
+			producer.week();
 		}
 	}
 	
@@ -117,12 +116,16 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		return minimapImage;
 	}
 	
-	public int getResourceAmount(Resource resource){
+	public int getResource(Resource resource){
 		return resources.get(resource);
 	}
 	
 	public int getArmy() {
-		return this.army;
+		int amount = 0;
+		for(Troop<?> troop : troops){
+			amount += troop.getSize();
+		}
+		return amount;
 	}
 	
 	public int getResourceIncome(Resource resource) {
@@ -148,6 +151,7 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		int current = resources.get(resource);
 		int incremented = current + amount;
 		resources.put(resource, incremented);
+		post(new ResourceAmountChanged(this, resource, incremented));
 	}
 	
 	@Override

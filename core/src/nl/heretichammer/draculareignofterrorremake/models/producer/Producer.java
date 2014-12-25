@@ -7,15 +7,14 @@ import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedExceptio
 import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
-import nl.heretichammer.draculareignofterrorremake.models.events.AccessableEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.TimeChangedEvent;
 
 public abstract class Producer<P> extends Model{
-	private boolean started;
+	private boolean autoRestart = false;
+	private boolean started = false;
 	protected P produced;
-	private int timeCost;
+	protected int timeCost = 0;
 	private int time = 0;
 	private boolean done = false;
 	protected ResourceSupplier resourceSupplier;
@@ -36,13 +35,24 @@ public abstract class Producer<P> extends Model{
 	 */
 	public void start() {
 		if(isAccessable()){
+			setTime(0);
 			setStarted(true);
 		}else{
 			throw new NotAccessableException();
 		}
 	}
 	
-	public void week() {		
+	public void restart(){
+		if(isDone()){
+			setDone(false);
+		}
+		start();
+	}
+	
+	public void week() {
+		if(!started && isAutoRestart()){
+			start();
+		}		
 		if(started) {
 			setTime(time + 1);
 			if(time >= timeCost) {
@@ -50,22 +60,19 @@ public abstract class Producer<P> extends Model{
 				produce();
 				done();
 			}
-		}else{
-			if(isAccessable()){
-				throw new NotStartedException();
-			}else{
-				throw new NotAccessableException();
-			}
 		}
 	}
 	
 	private void done() {
 		setDone(true);
-		setStarted(false);
-		setTime(0);
+		if(isAutoRestart()){
+			restart();
+		}else{
+			setStarted(false);
+		}
 	}
 	
-	private void setDone(boolean done) {
+	protected void setDone(boolean done) {
 		this.done = done;
 		post(new DoneEvent());
 	}
@@ -115,5 +122,13 @@ public abstract class Producer<P> extends Model{
 		P produced = this.produced;
 		this.produced = null;
 		return produced;
+	}
+
+	public boolean isAutoRestart() {
+		return autoRestart;
+	}
+
+	public void setAutoRestart(boolean autoRestart) {
+		this.autoRestart = autoRestart;
 	}
 }

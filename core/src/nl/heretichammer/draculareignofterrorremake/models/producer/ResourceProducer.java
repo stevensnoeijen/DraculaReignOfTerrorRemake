@@ -12,8 +12,10 @@ public class ResourceProducer extends Producer<Integer> {
 	private int produces;
 	
 	public ResourceProducer(Resource resource, int produces) {
+		this.timeCost = 1;
 		this.resource = resource;
 		this.produces = produces;
+		setAutoRestart(true);
 	}
 
 	public Resource getResource() {

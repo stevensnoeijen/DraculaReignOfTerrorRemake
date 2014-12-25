@@ -70,6 +70,7 @@ public class World extends Model {
 		
 		for(Area area : areas) {
 			area.setWorld(this);
+			area.setTeam(area.getTeam());//reset team
 			this.areas.put(area.getName().toLowerCase(), area);
 		}
 	}

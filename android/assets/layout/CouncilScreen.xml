@@ -363,19 +363,16 @@
 		    </row>
 		    <row height="15">
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeGold"/>
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="goldIncome"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeWood"/>
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="woodIncome"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeFood"/>
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="foodIncome"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeMen"/>
-		        </cell>
-		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="incomeArmy"/>
+		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="menIncome"/>
 		        </cell>
 		    </row>
 		</table>

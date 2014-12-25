@@ -81,6 +81,16 @@ public class CouncilScreen extends ActorScreen {
 	@View("info") private Label view_info;
 	@View("week") private Label view_week;
 	@View("year") private Label view_year;
+	//resources
+	@View("gold") private Label view_gold;
+	@View("wood") private Label view_wood;
+	@View("food") private Label view_food;
+	@View("men") private Label view_men;
+	@View("army") private Label view_army;
+	@View("goldIncome") private Label view_goldIncome;
+	@View("woodIncome") private Label view_woodIncome;
+	@View("foodIncome") private Label view_foodIncome;
+	@View("menIncome") private Label view_menIncome;
 	//trainers
 	@View("trainer.swordsoldiers") private ImageButton view_trainerSwordsoldiers;
 	@View("trainer.crossbowsoldiers") private ImageButton view_trainerCrossbowsoldiers;
@@ -111,9 +121,6 @@ public class CouncilScreen extends ActorScreen {
 		world = new World();
 		player = new Player(Team.transylvanians);
 		//new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
-		selectedArea = world.getArea("fagaras");
-		player.getTeam().getArchitectureUpgrader().setResourceSupplier(selectedArea);
-		player.getTeam().getArmamentUpgrader().setResourceSupplier(selectedArea);
 	}
 	
 	@Override
@@ -130,6 +137,7 @@ public class CouncilScreen extends ActorScreen {
 	@Override
 	public void show() {
 		super.show();
+		setSelectedArea( world.getArea("fagaras") );
 		final Team team = player.getTeam();
 		
 		
@@ -164,7 +172,6 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
-		
 		
 		ArmamentUpgrader armamentUpgrader = team.getArmamentUpgrader();
 		armamentUpgrader.register(new Object(){
@@ -217,14 +224,24 @@ public class CouncilScreen extends ActorScreen {
 	
 	public void setSelectedArea(Area selectedArea) {
 		this.selectedArea = selectedArea;
+		Team team = player.getTeam();
+		team.getArchitectureUpgrader().setResourceSupplier(selectedArea);
+		team.getArmamentUpgrader().setResourceSupplier(selectedArea);
+		
 		view_location.setText( selectedArea.getName() );
 		
-		//update view
-		/*ImageButton[] views = new ImageButton[]{ view_trainerSwordsoldiers, view_trainerCrossbowsoldiers, view_trainerKnight, view_trainerJuggernaut, view_trainerCatapult, view_trainerCatapult, view_trainerSpy};
-		for(ImageButton view : views){
-			TroopProducer<?> troopProducer = selectedArea.getTroopProducer(view.getUserObject().toString());
-			//troopProducer.
-		}*/
+		//resources
+		view_gold.setText(Integer.toString(selectedArea.getResource(Resource.GOLD)));
+		view_wood.setText(Integer.toString(selectedArea.getResource(Resource.WOOD)));
+		view_food.setText(Integer.toString(selectedArea.getResource(Resource.FOOD)));
+		view_men.setText(Integer.toString(selectedArea.getResource(Resource.MEN)));
+		view_army.setText(Integer.toString(selectedArea.getArmy()));
+		
+		//income
+		view_goldIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.GOLD)));
+		view_woodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.WOOD)));
+		view_foodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.FOOD)));
+		view_menIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.MEN)));
 	}
 	
 	public void selectArea(InputEvent event){

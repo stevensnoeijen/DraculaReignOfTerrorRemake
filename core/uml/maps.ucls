@@ -23,40 +23,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="3" language="java" name="nl.heretichammer.draculareignofterrorremake.models.map.Moveable" 
-    project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/map/Moveable.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="245" y="362"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="4" language="java" name="nl.heretichammer.draculareignofterrorremake.models.map.AreaMap" 
-    project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/map/AreaMap.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1051" y="481"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="nl.heretichammer.draculareignofterrorremake.models.map.WorldMap" 
-    project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/map/WorldMap.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="644" y="480"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="nl.heretichammer.draculareignofterrorremake.models.World" 
+  <class id="3" language="java" name="nl.heretichammer.draculareignofterrorremake.models.World" 
     project="DraculaReignOfTerrorRemake-core" 
     file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/World.java" 
     binary="false" corner="BOTTOM_RIGHT">    
@@ -67,28 +34,12 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="7">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="8" name="area"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
+  <association id="4">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="5" name="areas"/>      
+      <multiplicity id="6" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="10">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="11" name="areas"/>      
-      <multiplicity id="12" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="13">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="14" name="world"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
