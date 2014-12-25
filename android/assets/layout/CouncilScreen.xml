@@ -256,9 +256,9 @@
 				    <group name="tab.constructions" visible="false">
 				        <image drawable="image/council.pack:minimap-fagaras" x="60" y="190" name="constructions.minimap"/>
 				        <!-- construction options -->
-				        <imagebutton x="6" y="250" click="repair" style="up=image/council.pack:ui-button-repair, down=image/council.pack:ui-button-repair-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
-				        <imagebutton x="6" y="218" click="upgrade" style="up=image/council.pack:ui-button-upgrade, down=image/council.pack:ui-button-upgrade-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
-				        <imagebutton x="6" y="186" click="build" style="up=image/council.pack:ui-button-build, down=image/council.pack:ui-button-build-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="6" y="250" click="repairBuilding" style="up=image/council.pack:ui-button-repair, down=image/council.pack:ui-button-repair-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="6" y="218" click="upgradeBuilding" style="up=image/council.pack:ui-button-upgrade, down=image/council.pack:ui-button-upgrade-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
+				        <imagebutton x="6" y="186" click="buildBuilding" style="up=image/council.pack:ui-button-build, down=image/council.pack:ui-button-build-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
 				        <!-- building types -->
 				        <imagebutton x="10" y="145" click="buildingTypeBridge" style="up=image/council.pack:ui-button-bridge, down=image/council.pack:ui-button-bridge-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
 				        <imagebutton x="55" y="145" click="buildingTypeTower" style="up=image/council.pack:ui-button-tower, down=image/council.pack:ui-button-tower-click, imageDisabled=image/council.pack:ui-button-overlay-wait-full, disabled=empty"/>
@@ -307,17 +307,19 @@
 				    	<label x="160" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.castle2"/>
 				    </group>
 				    <group name="tab.administration" visible="false">
+				    	<!--  armament -->
 				        <label fontscale="0.8f" alignment="center" x="90" y="307" skin="skin/uiskin.json" text="?/?" name="administration.armament.level"/>
-				        <image x="5" y="195" drawable="image/council.pack:upgrade-armament-1"/>
+				        <image x="5" y="195" drawable="image/council.pack:upgrade-armament-1" name="administration.armament.image"/>
 				        <label fontscale="0.75f" alignment="center" x="130" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.gold"/>
 				        <label fontscale="0.75f" alignment="center" x="160" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.time"/>
-				        <imagebutton x="120" y="195" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty, imageDisabled=image/council.pack:ui-button-overlay-wait-full" click="upgradeArmament"/>
+				        <imagebutton x="120" y="195" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty" click="upgradeArmament" name="administration.armament.button"/>
 				        
+				        <!-- architecture -->
 				        <label fontscale="0.8f" alignment="center" x="90" y="175" skin="skin/uiskin.json" text="?/?" name="administration.architecture.level"/>
-				        <image x="5" y="60" drawable="image/council.pack:upgrade-architecture-1"/>
-				        <label fontscale="0.75f" alignment="center" x="130" y="105" skin="skin/uiskin.json" text="???" name="administration.rchitecture.gold"/>
-				        <label fontscale="0.75f" alignment="center" x="160" y="105" skin="skin/uiskin.json" text="???" name="administration.rchitecture.time"/>
-				        <imagebutton x="120" y="65" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty, imageDisabled=image/council.pack:ui-button-overlay-wait-full" click="upgradeArchitecture"/>
+				        <image x="5" y="60" drawable="image/council.pack:upgrade-architecture-1"  name="administration.architecture.image"/>
+				        <label fontscale="0.75f" alignment="center" x="130" y="105" skin="skin/uiskin.json" text="???" name="administration.architecture.gold"/>
+				        <label fontscale="0.75f" alignment="center" x="160" y="105" skin="skin/uiskin.json" text="???" name="administration.architecture.time"/>
+				        <imagebutton x="120" y="65" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty" click="upgradeArchitecture" name="administration.architecture.button"/>
 				    </group>
 				</stack>
 			</cell>
@@ -326,7 +328,7 @@
 	
 	<group x="280" y="240">
 		<imagebutton name="area.sibiu" userobject="sibiu" click="selectArea" x="0" y="120" group="areas" style="up=image/council.pack:area-sibiu, checked=image/council.pack:area-sibiu-select"/>
-		<imagebutton name="area.fagaras" userobject="fagaras" click="selectArea" x="70" y="135" group="areas" style="up=image/council.pack:area-fagaras, checked=image/council.pack:area-fagaras-select"/>
+		<imagebutton name="area.fagaras" userobject="fagaras" click="selectArea" checked="true" x="70" y="135" group="areas" style="up=image/council.pack:area-fagaras, checked=image/council.pack:area-fagaras-select"/>
 		<imagebutton name="area.curtea" userobject="curtea" click="selectArea" x="30" y="80" group="areas" style="up=image/council.pack:area-curtea, checked=image/council.pack:area-curtea-select"/>
 		<imagebutton name="area.brasov" userobject="brasov" click="selectArea" x="135" y="130" group="areas" style="up=image/council.pack:area-brasov, checked=image/council.pack:area-brasov-select"/>
 		<imagebutton name="area.pitesti" userobject="pitesti" click="selectArea" x="130" y="85" group="areas" style="up=image/council.pack:area-pitesti, checked=image/council.pack:area-pitesti-select"/>

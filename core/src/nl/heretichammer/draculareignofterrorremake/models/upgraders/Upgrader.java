@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.upgraders;
 
-import java.lang.reflect.InvocationTargetException;
+import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -16,11 +16,6 @@ import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSuppliable;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
-import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.EndedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.LevelChangedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.TimeChangedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 
 public abstract class Upgrader extends Model implements ResourceSuppliable {
@@ -30,7 +25,6 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 	private Queue<UpgradeMethod> upgrades;
 	private int level = 1;
 	private boolean started = false;
-	private boolean done = false;
 	private String image;
 	protected Team team;
 	
@@ -44,6 +38,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 			}
 		}
 		Collections.sort((List<UpgradeMethod>)upgrades);
+		if(upgrades.peek().getLevel() == level){
+			upgrades.remove();
+		}
 		image = upgrades.peek().getImage();
 	}
 	
@@ -68,7 +65,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 			upgrades.remove();
 		}
 		image = upgrades.peek().getImage();
-		post(new LevelChangedEvent());
+		post(new PropertyChangeEvent(this, "level", level-1, level));
 	}
 	
 	public boolean canPayNextUpgrade(){
@@ -77,10 +74,6 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 	
 	public boolean isStarted(){
 		return started;
-	}
-	
-	public boolean isDone() {
-		return done;
 	}
 
 	public void week() {
@@ -119,9 +112,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 	private void setStarted(boolean started){
 		this.started = started;
 		if(started){
-			post(new StartedEvent());
+			post(new PropertyChangeEvent(this, "started", false, true));
 		}else{
-			post(new EndedEvent());
+			post(new PropertyChangeEvent(this, "started", true, false));
 		}
 	}
 	
@@ -193,8 +186,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 		
 		private void setTime(int time){
+			int oldTime = this.time;
 			this.time = time;
-			post(new TimeChangedEvent());
+			post(new PropertyChangeEvent(this, "time", oldTime, time));
 		}
 		
 		public void cancel(){
@@ -217,7 +211,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 				upgrades.poll();//remove self
 				method.invoke(this);
 				image = upgrades.peek().getImage();
-				post(new DoneEvent());
+				post(new PropertyChangeEvent(this, "done", false, true));
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

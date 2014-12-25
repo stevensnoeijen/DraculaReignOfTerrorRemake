@@ -37,7 +37,15 @@ public class World extends Model {
 
 			@Override
 			public Map read(Json json, JsonValue jsonData, Class type) {
-				return new HashMap<Object, Object>();
+				HashMap<Object, Object> map = new HashMap<Object, Object>();
+				
+				for(int i = 0; i < jsonData.size; i++){
+					JsonValue child = jsonData.get(i);
+					Object key = Resource.valueOf(child.name);
+					Object value = child.asInt();
+					map.put(key, value);
+				}
+				return map;
 			}
 		});
 		json.setSerializer(Team.class, new Json.Serializer<Team>() {

@@ -2,15 +2,19 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.beans.PropertyChangeEvent;
 
+import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.Player;
 import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
 import nl.heretichammer.draculareignofterrorremake.annotations.View;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -65,6 +69,14 @@ public class CouncilScreen extends ActorScreen {
 	@Asset("sound/building completed.ogg") private Sound sound_buildingCompleted;
 	
 	//views auto-bind to the given name in the stage
+	//tabs
+	@View("tab.background") private Image view_tabBackground;
+	@View("tab.training") private Group view_tabTraining;
+	@View("tab.movement") private Group view_tabMovement;
+	@View("tab.constructions") private Group view_tabConstructions;
+	@View("tab.information") private Group view_tabInformation;
+	@View("tab.administration") private Group view_tabAdministration;
+	//info
 	@View("week") private Label view_week;
 	@View("year") private Label view_year;
 	//trainers
@@ -75,7 +87,19 @@ public class CouncilScreen extends ActorScreen {
 	@View("trainer.catapult") private ImageButton view_trainerCatapult;
 	@View("trainer.cannon") private ImageButton view_trainerCannon;
 	@View("trainer.spy") private ImageButton view_trainerSpy;
-	
+	//administration
+	//armament
+	@View("administration.armament.level") private Label armamentLevel;
+	@View("administration.armament.image") private Image armamentImage;
+	@View("administration.armament.gold") private Label armamentGold;
+	@View("administration.armament.time") private Label armamentTime;
+	@View("administration.armament.button") private ImageButton armamentButton;
+	//architecture
+	@View("administration.architecture.level") private Label architectureLevel;
+	@View("administration.architecture.image") private Image architectureImage;
+	@View("administration.architecture.gold") private Label architectureGold;
+	@View("administration.architecture.time") private Label architectureTime;
+	@View("administration.architecture.button") private ImageButton architectureButton;
 	
 	private Player player;
 	private World world;
@@ -85,6 +109,9 @@ public class CouncilScreen extends ActorScreen {
 		world = new World();
 		player = new Player(Team.transylvanians);
 		//new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
+		selectedArea = world.getArea("fagaras");
+		player.getTeam().getArchitectureUpgrader().setResourceSupplier(selectedArea);
+		player.getTeam().getArmamentUpgrader().setResourceSupplier(selectedArea);
 	}
 	
 	@Override
@@ -101,9 +128,14 @@ public class CouncilScreen extends ActorScreen {
 	@Override
 	public void show() {
 		super.show();
+		final Team team = player.getTeam();
+		
+		
+		if(DRoTRGame.preferences.getBoolean("music")){
+			music.play();
+		}
 		
 		setSelectedArea(world.getArea("fagaras"));
-		//music.play();
 		
 		view_week.setText( String.valueOf(world.getWeek()) );
 		view_year.setText( String.valueOf(world.getYear()) );
@@ -113,11 +145,72 @@ public class CouncilScreen extends ActorScreen {
 				String name = e.getPropertyName();
 				if(name.equals("week")){
 					view_week.setText( e.getNewValue().toString() );
+					
+					if(team.getArmamentUpgrader().canPayNextUpgrade()){
+						armamentButton.setDisabled(true);
+					}else{
+						armamentButton.setDisabled(false);
+					}
+					
+					if(team.getArchitectureUpgrader().canPayNextUpgrade()){
+						architectureButton.setDisabled(true);
+					}else{
+						architectureButton.setDisabled(false);
+					}
 				}else if(name.equals("year")){
 					view_year.setText( e.getNewValue().toString() );
 				}
 			}
 		});
+		
+		
+		ArmamentUpgrader armamentUpgrader = team.getArmamentUpgrader();
+		armamentUpgrader.register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				ArmamentUpgrader armamentUpgrader = (ArmamentUpgrader) e.getSource();
+				String name = e.getPropertyName();
+				if(name.equals("level")){
+					armamentLevel.setText(armamentUpgrader.getLevel() + "/" + armamentUpgrader.getMaxLevel());
+					armamentImage.setDrawable( getDrawable(armamentUpgrader.getImage()) );
+					armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+					armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );					
+				}
+			}
+		});
+		armamentLevel.setText(armamentUpgrader.getLevel() + "/" + armamentUpgrader.getMaxLevel());
+		armamentImage.setDrawable( getDrawable(armamentUpgrader.getImage()) );
+		armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+		armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );
+		if(armamentUpgrader.canPayNextUpgrade()){
+			armamentButton.setDisabled(true);
+		}else{
+			armamentButton.setDisabled(false);
+		}
+		
+		ArchitectureUpgrader architectureUpgrader = team.getArchitectureUpgrader();
+		architectureUpgrader.register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				ArchitectureUpgrader architectureUpgrader = (ArchitectureUpgrader) e.getSource();
+				String name = e.getPropertyName();
+				if(name.equals("level")){
+					architectureLevel.setText(architectureUpgrader.getLevel() + "/" + architectureUpgrader.getMaxLevel());
+					architectureImage.setDrawable( getDrawable(architectureUpgrader.getImage()) );
+					architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+					architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
+				}
+			}
+		});
+		architectureLevel.setText(architectureUpgrader.getLevel() + "/" + architectureUpgrader.getMaxLevel());
+		architectureImage.setDrawable( getDrawable(architectureUpgrader.getImage()) );
+		architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+		architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
+		if(architectureUpgrader.canPayNextUpgrade()){
+			architectureButton.setDisabled(true);
+		}else{
+			architectureButton.setDisabled(false);
+		}
 	}
 	
 	public void setSelectedArea(Area selectedArea) {
@@ -142,29 +235,25 @@ public class CouncilScreen extends ActorScreen {
 	}
 	
 	private void hideAllTabs(){
-		Group root = stage.getRoot();
 		//hide all
-		root.findActor("tab.training").setVisible(false);
-		root.findActor("tab.movement").setVisible(false);
-		root.findActor("tab.constructions").setVisible(false);
-		root.findActor("tab.information").setVisible(false);
-		root.findActor("tab.administration").setVisible(false);
+		view_tabTraining.setVisible(false);
+		view_tabMovement.setVisible(false);
+		view_tabConstructions.setVisible(false);
+		view_tabInformation.setVisible(false);
+		view_tabAdministration.setVisible(false);
 	}
 	
 	public void showTrainingTab(InputEvent event){
 		hideAllTabs();
-		Group root = stage.getRoot();
-		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(getDrawable("ui-tab-training"));
-		root.findActor("tab.training").setVisible(true);
+		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-training"));
+		view_tabTraining.setVisible(true);
 	}
 	
 	public void showMovementTab(InputEvent event){
 		hideAllTabs();
-		Group root = stage.getRoot();
-		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(getDrawable("ui-tab-movement"));
+		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-movement"));
 		
+		Group root = stage.getRoot();
 		Table table = root.findActor("movement.troops");
 		table.clear();
 		table.row().align(Align.topLeft);
@@ -179,31 +268,25 @@ public class CouncilScreen extends ActorScreen {
 			}
 		}
 		
-		root.findActor("tab.movement").setVisible(true);
+		view_tabMovement.setVisible(true);
 	}
 	
 	public void showConstructionsTab(InputEvent event){
 		hideAllTabs();
-		Group root = stage.getRoot();
-		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(getDrawable("ui-tab-construction"));
-		root.findActor("tab.constructions").setVisible(true);
+		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-construction"));
+		view_tabConstructions.setVisible(true);
 	}
 	
 	public void showInformationTab(InputEvent event){
 		hideAllTabs();
-		Group root = stage.getRoot();
-		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(getDrawable("ui-tab-information"));
-		root.findActor("tab.information").setVisible(true);
+		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-information"));
+		view_tabInformation.setVisible(true);
 	}
 	
 	public void showAdministrationTab(InputEvent event){
 		hideAllTabs();
-		Group root = stage.getRoot();
-		Image background = (Image) root.findActor("tab.background");
-		background.setDrawable(getDrawable("ui-tab-administration"));
-		root.findActor("tab.administration").setVisible(true);
+		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-administration"));
+		view_tabAdministration.setVisible(true);
 	}
 	
 	public void trainTroop(InputEvent event){
@@ -225,8 +308,8 @@ public class CouncilScreen extends ActorScreen {
 			sound_trainingSpies.play();
 		}
 		
-		TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
-		troopProducer.start();
+		//TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
+		//troopProducer.start();
 	}
 	
 	/**
@@ -265,16 +348,15 @@ public class CouncilScreen extends ActorScreen {
 		this.selectedBuildingType = selectedBuildingType;
 	}
 	
-	public void repair(InputEvent event){
+	public void repairBuilding(InputEvent event){
 		setConstructionMode(CONSTRUCTIONMODE_REPAIR);
-		
 	}
 	
-	public void upgrade(InputEvent event){
+	public void upgradeBuilding(InputEvent event){
 		setConstructionMode(CONSTRUCTIONMODE_UPGRADE);
 	}
 	
-	public void build(InputEvent event){
+	public void buildBuilding(InputEvent event){
 		setConstructionMode(CONSTRUCTIONMODE_BUILD);
 	}
 	
@@ -300,12 +382,12 @@ public class CouncilScreen extends ActorScreen {
 	}
 	
 	public void upgradeArmament(InputEvent event){
-		//player.getTeam().getArmamentUpgrader().startNextUpgrade();
+		player.getTeam().getArmamentUpgrader().startNextUpgrade();
 		sound_upgradingArmerment.play();
 	}
 	
 	public void upgradeArchitecture(InputEvent event){
-		//player.getTeam().getArchitectureUpgrader().startNextUpgrade();
+		player.getTeam().getArchitectureUpgrader().startNextUpgrade();
 		sound_upgradingArchitecture.play();
 	}
 	
@@ -325,6 +407,11 @@ public class CouncilScreen extends ActorScreen {
 	}
 	
 	private Drawable getDrawable(String name){
-		return new TextureRegionDrawable(images.findRegion(name));
+		if(name.startsWith("image/council.pack:")){
+			name = name.replace("image/council.pack:", "");
+			return new TextureRegionDrawable(images.findRegion(name));
+		}else{
+			throw new IllegalArgumentException();
+		}
 	}
 }
