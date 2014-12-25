@@ -3,15 +3,12 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 import java.lang.reflect.Field;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
-import nl.heretichammer.draculareignofterrorremake.annotations.View;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class ActorScreen extends ScreenAdapter implements InputProcessor {
@@ -27,37 +24,10 @@ public abstract class ActorScreen extends ScreenAdapter implements InputProcesso
 	}
 	
 	protected void load(AssetManager assetManager){
-		//load assets that are defined with fields
-		for(Field field : getClass().getDeclaredFields()){
-			if(field.isAnnotationPresent(Asset.class)){
-				Asset asset = field.getAnnotation(Asset.class);
-				assetManager.load(asset.value(), field.getType());
-			}
-		}
+		
 	}
 	
 	protected void loaded(AssetManager assetManager){
-		Group root = stage.getRoot();
-		for(Field field : this.getClass().getDeclaredFields()){
-			if(field.isAnnotationPresent(Asset.class)){
-				Asset asset = field.getAnnotation(Asset.class);
-				try {
-					field.setAccessible(true);
-					field.set(this, assetManager.get(asset.value(), field.getType()));
-				} catch (Exception ex){
-					throw new RuntimeException(ex);
-				}
-			}else if(field.isAnnotationPresent(View.class)){
-				View view = field.getAnnotation(View.class);
-				Actor actor = root.findActor(view.value());
-				try {
-					field.setAccessible(true);
-					field.set(this, field.getType().cast(actor));
-				} catch (Exception ex){
-					throw new RuntimeException(ex);
-				}
-			}
-		}
 		loaded = true;
 	}
 	

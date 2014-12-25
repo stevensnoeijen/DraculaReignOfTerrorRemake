@@ -17,7 +17,9 @@ import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.utils.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.utils.Binder;
+import nl.heretichammer.draculareignofterrorremake.utils.ViewUtils;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -70,56 +72,14 @@ public class CouncilScreen extends ActorScreen {
 	@Asset("sound/building cancelled.ogg") private Sound sound_buildingCancelled;
 	@Asset("sound/building completed.ogg") private Sound sound_buildingCompleted;
 	
-	//views auto-bind to the given name in the stage
-	//tabs
-	@View("tab.background") private Image view_tabBackground;
-	@View("tab.training") private Group view_tabTraining;
-	@View("tab.movement") private Group view_tabMovement;
-	@View("tab.constructions") private Group view_tabConstructions;
-	@View("tab.information") private Group view_tabInformation;
-	@View("tab.administration") private Group view_tabAdministration;
-	//info
-	@View("location") private Label view_location;
-	@View("info") private Label view_info;
-	@View("week") private Label view_week;
-	@View("year") private Label view_year;
-	//resources
-	@View("gold") private Label view_gold;
-	@View("wood") private Label view_wood;
-	@View("food") private Label view_food;
-	@View("men") private Label view_men;
-	@View("army") private Label view_army;
-	@View("goldIncome") private Label view_goldIncome;
-	@View("woodIncome") private Label view_woodIncome;
-	@View("foodIncome") private Label view_foodIncome;
-	@View("menIncome") private Label view_menIncome;
-	//trainers
-	@View("trainer.swordsoldiers") private ImageButton view_trainerSwordsoldiers;
-	@View("trainer.crossbowsoldiers") private ImageButton view_trainerCrossbowsoldiers;
-	@View("trainer.knight") private ImageButton view_trainerKnight;
-	@View("trainer.juggernaut") private ImageButton view_trainerJuggernaut;
-	@View("trainer.catapult") private ImageButton view_trainerCatapult;
-	@View("trainer.cannon") private ImageButton view_trainerCannon;
-	@View("trainer.spy") private ImageButton view_trainerSpy;
-	//administration
-	//armament
-	@View("administration.armament.level") private Label armamentLevel;
-	@View("administration.armament.image") private Image armamentImage;
-	@View("administration.armament.gold") private Label armamentGold;
-	@View("administration.armament.time") private Label armamentTime;
-	@View("administration.armament.button") private ImageButton armamentButton;
-	//architecture
-	@View("administration.architecture.level") private Label architectureLevel;
-	@View("administration.architecture.image") private Image architectureImage;
-	@View("administration.architecture.gold") private Label architectureGold;
-	@View("administration.architecture.time") private Label architectureTime;
-	@View("administration.architecture.button") private ImageButton architectureButton;
+	private UI ui;
 	
 	private Player player;
 	private World world;
 	private Area selectedArea;
 	
 	public CouncilScreen() {
+		ui = new UI();
 		world = new World();
 		player = new Player(Team.transylvanians);
 		//new AIPlayer(world.findTeamByName("turks"));//will add itself to turks team
@@ -128,11 +88,14 @@ public class CouncilScreen extends ActorScreen {
 	@Override
 	protected void load(AssetManager assetManager) {
 		super.load(assetManager);
-		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(this));
+		AssetUtils.load(this, assetManager);
+		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
 	}
 	
 	protected void loaded(AssetManager assetManager) {
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
+		ViewUtils.bind(stage.getRoot(), ui);
+		AssetUtils.bind(this, assetManager);
 		super.loaded(assetManager);
 	};
 	
@@ -149,28 +112,28 @@ public class CouncilScreen extends ActorScreen {
 		
 		setSelectedArea(world.getArea("fagaras"));
 		
-		view_week.setText( String.valueOf(world.getWeek()) );
-		view_year.setText( String.valueOf(world.getYear()) );
+		ui.view_week.setText( String.valueOf(world.getWeek()) );
+		ui.view_year.setText( String.valueOf(world.getYear()) );
 		world.register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
 				String name = e.getPropertyName();
 				if(name.equals("week")){
-					view_week.setText( e.getNewValue().toString() );
+					ui.view_week.setText( e.getNewValue().toString() );
 					
 					if(team.getArmamentUpgrader().canPayNextUpgrade()){
-						armamentButton.setDisabled(true);
+						ui.armamentButton.setDisabled(true);
 					}else{
-						armamentButton.setDisabled(false);
+						ui.armamentButton.setDisabled(false);
 					}
 					
 					if(team.getArchitectureUpgrader().canPayNextUpgrade()){
-						architectureButton.setDisabled(true);
+						ui.architectureButton.setDisabled(true);
 					}else{
-						architectureButton.setDisabled(false);
+						ui.architectureButton.setDisabled(false);
 					}
 				}else if(name.equals("year")){
-					view_year.setText( e.getNewValue().toString() );
+					ui.view_year.setText( e.getNewValue().toString() );
 				}
 			}
 		});
@@ -182,21 +145,21 @@ public class CouncilScreen extends ActorScreen {
 				ArmamentUpgrader armamentUpgrader = (ArmamentUpgrader) e.getSource();
 				String name = e.getPropertyName();
 				if(name.equals("level")){
-					armamentLevel.setText(armamentUpgrader.getLevel() + "/" + armamentUpgrader.getMaxLevel());
-					armamentImage.setDrawable( getDrawable(armamentUpgrader.getImage()) );
-					armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
-					armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );					
+					ui.armamentLevel.setText(armamentUpgrader.getLevel() + "/" + armamentUpgrader.getMaxLevel());
+					ui.armamentImage.setDrawable( getDrawable(armamentUpgrader.getImage()) );
+					ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+					ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );					
 				}
 			}
 		});
-		armamentLevel.setText(armamentUpgrader.getLevel() + "/" + armamentUpgrader.getMaxLevel());
-		armamentImage.setDrawable( getDrawable(armamentUpgrader.getImage()) );
-		armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
-		armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );
+		ui.armamentLevel.setText(armamentUpgrader.getLevel() + "/" + armamentUpgrader.getMaxLevel());
+		ui.armamentImage.setDrawable( getDrawable(armamentUpgrader.getImage()) );
+		ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+		ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );
 		if(armamentUpgrader.canPayNextUpgrade()){
-			armamentButton.setDisabled(true);
+			ui.armamentButton.setDisabled(true);
 		}else{
-			armamentButton.setDisabled(false);
+			ui.armamentButton.setDisabled(false);
 		}
 		
 		ArchitectureUpgrader architectureUpgrader = team.getArchitectureUpgrader();
@@ -206,21 +169,21 @@ public class CouncilScreen extends ActorScreen {
 				ArchitectureUpgrader architectureUpgrader = (ArchitectureUpgrader) e.getSource();
 				String name = e.getPropertyName();
 				if(name.equals("level")){
-					architectureLevel.setText(architectureUpgrader.getLevel() + "/" + architectureUpgrader.getMaxLevel());
-					architectureImage.setDrawable( getDrawable(architectureUpgrader.getImage()) );
-					architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
-					architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
+					ui.architectureLevel.setText(architectureUpgrader.getLevel() + "/" + architectureUpgrader.getMaxLevel());
+					ui.architectureImage.setDrawable( getDrawable(architectureUpgrader.getImage()) );
+					ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+					ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
 				}
 			}
 		});
-		architectureLevel.setText(architectureUpgrader.getLevel() + "/" + architectureUpgrader.getMaxLevel());
-		architectureImage.setDrawable( getDrawable(architectureUpgrader.getImage()) );
-		architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
-		architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
+		ui.architectureLevel.setText(architectureUpgrader.getLevel() + "/" + architectureUpgrader.getMaxLevel());
+		ui.architectureImage.setDrawable( getDrawable(architectureUpgrader.getImage()) );
+		ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
+		ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
 		if(architectureUpgrader.canPayNextUpgrade()){
-			architectureButton.setDisabled(true);
+			ui.architectureButton.setDisabled(true);
 		}else{
-			architectureButton.setDisabled(false);
+			ui.architectureButton.setDisabled(false);
 		}
 	}
 	
@@ -230,123 +193,43 @@ public class CouncilScreen extends ActorScreen {
 		team.getArchitectureUpgrader().setResourceSupplier(selectedArea);
 		team.getArmamentUpgrader().setResourceSupplier(selectedArea);
 		
-		view_location.setText( selectedArea.getName() );
+		ui.view_location.setText( selectedArea.getName() );
 		
 		//resources
-		view_gold.setText(Integer.toString(selectedArea.getResource(Resource.GOLD)));
-		view_wood.setText(Integer.toString(selectedArea.getResource(Resource.WOOD)));
-		view_food.setText(Integer.toString(selectedArea.getResource(Resource.FOOD)));
-		view_men.setText(Integer.toString(selectedArea.getResource(Resource.MEN)));
-		view_army.setText(Integer.toString(selectedArea.getArmy()));
+		ui.view_gold.setText(Integer.toString(selectedArea.getResource(Resource.GOLD)));
+		ui.view_wood.setText(Integer.toString(selectedArea.getResource(Resource.WOOD)));
+		ui.view_food.setText(Integer.toString(selectedArea.getResource(Resource.FOOD)));
+		ui.view_men.setText(Integer.toString(selectedArea.getResource(Resource.MEN)));
+		ui.view_army.setText(Integer.toString(selectedArea.getArmy()));
 		selectedArea.register(new Object(){
 			@Subscribe
 			public void on(ResourceChangeEvent e){
 				if(e.resource == Resource.GOLD){
-					view_gold.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.GOLD)));
+					ui.view_gold.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.GOLD)));
 				}else if(e.resource == Resource.WOOD){
-					view_wood.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.WOOD)));
+					ui.view_wood.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.WOOD)));
 				}else if(e.resource == Resource.FOOD){
-					view_food.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.FOOD)));
+					ui.view_food.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.FOOD)));
 				}else if(e.resource == Resource.MEN){
-					view_men.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.MEN)));
+					ui.view_men.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.MEN)));
 				}
 			}
 		});
 		
 		//income
-		view_goldIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.GOLD)));
-		view_woodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.WOOD)));
-		view_foodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.FOOD)));
-		view_menIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.MEN)));
-	}
-	
-	public void selectArea(InputEvent event){
-		String name = event.getTarget().getUserObject().toString();
-		Area area = world.getArea(name);
-		setSelectedArea(area);
-	}
-	
-	public void week(InputEvent event){
-		sound_click.play();
-		world.week();
+		ui.view_goldIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.GOLD)));
+		ui.view_woodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.WOOD)));
+		ui.view_foodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.FOOD)));
+		ui.view_menIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.MEN)));
 	}
 	
 	private void hideAllTabs(){
 		//hide all
-		view_tabTraining.setVisible(false);
-		view_tabMovement.setVisible(false);
-		view_tabConstructions.setVisible(false);
-		view_tabInformation.setVisible(false);
-		view_tabAdministration.setVisible(false);
-	}
-	
-	public void showTrainingTab(InputEvent event){
-		hideAllTabs();
-		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-training"));
-		view_tabTraining.setVisible(true);
-	}
-	
-	public void showMovementTab(InputEvent event){
-		hideAllTabs();
-		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-movement"));
-		
-		Group root = stage.getRoot();
-		Table table = root.findActor("movement.troops");
-		table.clear();
-		table.row().align(Align.topLeft);
-		int column = 0;
-		for(Troop troop : selectedArea.getTroops()) {
-			column++;
-			ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
-			table.add(button).width(42).center();
-			if(column == 4) {
-				table.row().align(Align.topLeft);
-				column = 0;
-			}
-		}
-		
-		view_tabMovement.setVisible(true);
-	}
-	
-	public void showConstructionsTab(InputEvent event){
-		hideAllTabs();
-		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-construction"));
-		view_tabConstructions.setVisible(true);
-	}
-	
-	public void showInformationTab(InputEvent event){
-		hideAllTabs();
-		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-information"));
-		view_tabInformation.setVisible(true);
-	}
-	
-	public void showAdministrationTab(InputEvent event){
-		hideAllTabs();
-		view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-administration"));
-		view_tabAdministration.setVisible(true);
-	}
-	
-	public void trainTroop(InputEvent event){
-		String name = event.getTarget().getUserObject().toString();
-		
-		if(name.equals("swordsoldier")){
-			sound_trainingSwordsoldiers.play();
-		}else if(name.equals("crossbowsoldier")){
-			sound_trainingCrossbowsoldiers.play();
-		}else if(name.equals("knight")){
-			sound_trainingKnight.play();
-		}else if(name.equals("juggernaut")){
-			sound_trainingJuggernaut.play();
-		}else if(name.equals("catapult")){
-			sound_trainingCatapult.play();
-		}else if(name.equals("cannon")){
-			sound_trainingCannon.play();
-		}else if(name.equals("spy")){
-			sound_trainingSpies.play();
-		}
-		
-		//TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
-		//troopProducer.start();
+		ui.view_tabTraining.setVisible(false);
+		ui.view_tabMovement.setVisible(false);
+		ui.view_tabConstructions.setVisible(false);
+		ui.view_tabInformation.setVisible(false);
+		ui.view_tabAdministration.setVisible(false);
 	}
 	
 	/**
@@ -385,49 +268,6 @@ public class CouncilScreen extends ActorScreen {
 		this.selectedBuildingType = selectedBuildingType;
 	}
 	
-	public void repairBuilding(InputEvent event){
-		setConstructionMode(CONSTRUCTIONMODE_REPAIR);
-	}
-	
-	public void upgradeBuilding(InputEvent event){
-		setConstructionMode(CONSTRUCTIONMODE_UPGRADE);
-	}
-	
-	public void buildBuilding(InputEvent event){
-		setConstructionMode(CONSTRUCTIONMODE_BUILD);
-	}
-	
-	public void buildingTypeBridge(InputEvent event){
-		setSelectedBuildingType(BuildingType.BRIDGE);
-	}
-	
-	public void buildingTypeTower(InputEvent event){
-		setSelectedBuildingType(BuildingType.TOWER);
-	}
-	
-	public void buildingTypeCastle(InputEvent event){
-		setSelectedBuildingType(BuildingType.CASTLE);
-	}
-	
-	public void buildingTypeCastle2(InputEvent event){
-		selectedBuildingTypeWithMoat = true;
-		setSelectedBuildingType(BuildingType.CASTLE);
-	}
-	
-	public void number(InputEvent event){
-		System.out.println(event.getListenerActor().getUserObject());
-	}
-	
-	public void upgradeArmament(InputEvent event){
-		player.getTeam().getArmamentUpgrader().startNextUpgrade();
-		sound_upgradingArmerment.play();
-	}
-	
-	public void upgradeArchitecture(InputEvent event){
-		player.getTeam().getArchitectureUpgrader().startNextUpgrade();
-		sound_upgradingArchitecture.play();
-	}
-	
 	private ImageButton.ImageButtonStyle createMovementImageButtonStyle(String name){		
 		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
 		style.up = getDrawable("ui-checkbox-" + name);
@@ -449,6 +289,177 @@ public class CouncilScreen extends ActorScreen {
 			return new TextureRegionDrawable(images.findRegion(name));
 		}else{
 			throw new IllegalArgumentException();
+		}
+	}
+	
+	public class UI {
+		//views auto-bind to the given name in the stage
+		//tabs
+		@View("tab.background") private Image view_tabBackground;
+		@View("tab.training") private Group view_tabTraining;
+		@View("tab.movement") private Group view_tabMovement;
+		@View("tab.constructions") private Group view_tabConstructions;
+		@View("tab.information") private Group view_tabInformation;
+		@View("tab.administration") private Group view_tabAdministration;
+		//info
+		@View("location") private Label view_location;
+		@View("info") private Label view_info;
+		@View("week") private Label view_week;
+		@View("year") private Label view_year;
+		//resources
+		@View("gold") private Label view_gold;
+		@View("wood") private Label view_wood;
+		@View("food") private Label view_food;
+		@View("men") private Label view_men;
+		@View("army") private Label view_army;
+		@View("goldIncome") private Label view_goldIncome;
+		@View("woodIncome") private Label view_woodIncome;
+		@View("foodIncome") private Label view_foodIncome;
+		@View("menIncome") private Label view_menIncome;
+		//trainers
+		@View("trainer.swordsoldiers") private ImageButton view_trainerSwordsoldiers;
+		@View("trainer.crossbowsoldiers") private ImageButton view_trainerCrossbowsoldiers;
+		@View("trainer.knight") private ImageButton view_trainerKnight;
+		@View("trainer.juggernaut") private ImageButton view_trainerJuggernaut;
+		@View("trainer.catapult") private ImageButton view_trainerCatapult;
+		@View("trainer.cannon") private ImageButton view_trainerCannon;
+		@View("trainer.spy") private ImageButton view_trainerSpy;
+		//administration
+		//armament
+		@View("administration.armament.level") private Label armamentLevel;
+		@View("administration.armament.image") private Image armamentImage;
+		@View("administration.armament.gold") private Label armamentGold;
+		@View("administration.armament.time") private Label armamentTime;
+		@View("administration.armament.button") private ImageButton armamentButton;
+		//architecture
+		@View("administration.architecture.level") private Label architectureLevel;
+		@View("administration.architecture.image") private Image architectureImage;
+		@View("administration.architecture.gold") private Label architectureGold;
+		@View("administration.architecture.time") private Label architectureTime;
+		@View("administration.architecture.button") private ImageButton architectureButton;
+		
+		
+		public void selectArea(InputEvent event){
+			String name = event.getTarget().getUserObject().toString();
+			Area area = world.getArea(name);
+			setSelectedArea(area);
+		}
+		
+		public void week(InputEvent event){
+			sound_click.play();
+			world.week();
+		}
+		
+		public void showTrainingTab(InputEvent event){
+			hideAllTabs();
+			ui.view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-training"));
+			ui.view_tabTraining.setVisible(true);
+		}
+		
+		public void showMovementTab(InputEvent event){
+			hideAllTabs();
+			ui.view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-movement"));
+			
+			Group root = stage.getRoot();
+			Table table = root.findActor("movement.troops");
+			table.clear();
+			table.row().align(Align.topLeft);
+			int column = 0;
+			for(Troop troop : selectedArea.getTroops()) {
+				column++;
+				ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
+				table.add(button).width(42).center();
+				if(column == 4) {
+					table.row().align(Align.topLeft);
+					column = 0;
+				}
+			}
+			
+			ui.view_tabMovement.setVisible(true);
+		}
+		
+		public void showConstructionsTab(InputEvent event){
+			hideAllTabs();
+			ui.view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-construction"));
+			ui.view_tabConstructions.setVisible(true);
+		}
+		
+		public void showInformationTab(InputEvent event){
+			hideAllTabs();
+			ui.view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-information"));
+			ui.view_tabInformation.setVisible(true);
+		}
+		
+		public void showAdministrationTab(InputEvent event){
+			hideAllTabs();
+			ui.view_tabBackground.setDrawable(getDrawable("image/council.pack:ui-tab-administration"));
+			ui.view_tabAdministration.setVisible(true);
+		}
+		
+		public void trainTroop(InputEvent event){
+			String name = event.getTarget().getUserObject().toString();
+			
+			if(name.equals("swordsoldier")){
+				sound_trainingSwordsoldiers.play();
+			}else if(name.equals("crossbowsoldier")){
+				sound_trainingCrossbowsoldiers.play();
+			}else if(name.equals("knight")){
+				sound_trainingKnight.play();
+			}else if(name.equals("juggernaut")){
+				sound_trainingJuggernaut.play();
+			}else if(name.equals("catapult")){
+				sound_trainingCatapult.play();
+			}else if(name.equals("cannon")){
+				sound_trainingCannon.play();
+			}else if(name.equals("spy")){
+				sound_trainingSpies.play();
+			}
+			
+			//TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
+			//troopProducer.start();
+		}
+		
+		public void repairBuilding(InputEvent event){
+			setConstructionMode(CONSTRUCTIONMODE_REPAIR);
+		}
+		
+		public void upgradeBuilding(InputEvent event){
+			setConstructionMode(CONSTRUCTIONMODE_UPGRADE);
+		}
+		
+		public void buildBuilding(InputEvent event){
+			setConstructionMode(CONSTRUCTIONMODE_BUILD);
+		}
+		
+		public void buildingTypeBridge(InputEvent event){
+			setSelectedBuildingType(BuildingType.BRIDGE);
+		}
+		
+		public void buildingTypeTower(InputEvent event){
+			setSelectedBuildingType(BuildingType.TOWER);
+		}
+		
+		public void buildingTypeCastle(InputEvent event){
+			setSelectedBuildingType(BuildingType.CASTLE);
+		}
+		
+		public void buildingTypeCastle2(InputEvent event){
+			selectedBuildingTypeWithMoat = true;
+			setSelectedBuildingType(BuildingType.CASTLE);
+		}
+		
+		public void number(InputEvent event){
+			System.out.println(event.getListenerActor().getUserObject());
+		}
+		
+		public void upgradeArmament(InputEvent event){
+			player.getTeam().getArmamentUpgrader().startNextUpgrade();
+			sound_upgradingArmerment.play();
+		}
+		
+		public void upgradeArchitecture(InputEvent event){
+			player.getTeam().getArchitectureUpgrader().startNextUpgrade();
+			sound_upgradingArchitecture.play();
 		}
 	}
 }
