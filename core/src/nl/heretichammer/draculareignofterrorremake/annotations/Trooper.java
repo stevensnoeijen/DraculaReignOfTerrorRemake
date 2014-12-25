@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Trooper {	
@@ -12,4 +14,5 @@ public @interface Trooper {
 	public int size();
 	public boolean physical() default true;
 	public ResourceCost cost();
+	public Permission permission();
 }
