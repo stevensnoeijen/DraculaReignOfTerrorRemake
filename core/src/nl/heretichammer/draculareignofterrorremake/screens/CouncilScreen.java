@@ -77,6 +77,8 @@ public class CouncilScreen extends ActorScreen {
 	@View("tab.information") private Group view_tabInformation;
 	@View("tab.administration") private Group view_tabAdministration;
 	//info
+	@View("location") private Label view_location;
+	@View("info") private Label view_info;
 	@View("week") private Label view_week;
 	@View("year") private Label view_year;
 	//trainers
@@ -215,12 +217,14 @@ public class CouncilScreen extends ActorScreen {
 	
 	public void setSelectedArea(Area selectedArea) {
 		this.selectedArea = selectedArea;
+		view_location.setText( selectedArea.getName() );
+		
 		//update view
-		ImageButton[] views = new ImageButton[]{ view_trainerSwordsoldiers, view_trainerCrossbowsoldiers, view_trainerKnight, view_trainerJuggernaut, view_trainerCatapult, view_trainerCatapult, view_trainerSpy};
+		/*ImageButton[] views = new ImageButton[]{ view_trainerSwordsoldiers, view_trainerCrossbowsoldiers, view_trainerKnight, view_trainerJuggernaut, view_trainerCatapult, view_trainerCatapult, view_trainerSpy};
 		for(ImageButton view : views){
 			TroopProducer<?> troopProducer = selectedArea.getTroopProducer(view.getUserObject().toString());
 			//troopProducer.
-		}
+		}*/
 	}
 	
 	public void selectArea(InputEvent event){

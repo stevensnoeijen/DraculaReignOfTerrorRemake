@@ -38,7 +38,7 @@
 			<cell width="200" height="400">
 				<stack> <!-- tab container -->
 					<group><!-- basics -->
-						<label name="location" skin="skin/uiskin.json" text="location" fontscale="0.8" x="70" y="330"/>
+						<label name="location" skin="skin/uiskin.json" text="location" fontscale="0.8" x="75" y="330" alignment="center"/>
 						<label name="info" skin="skin/uiskin.json" text="info" fontscale="0.8" x="15" y="27"/>
 					</group>
 					<group name="tab.training" visible="true">
