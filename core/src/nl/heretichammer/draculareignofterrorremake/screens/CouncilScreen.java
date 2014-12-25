@@ -92,6 +92,7 @@ public class CouncilScreen extends ActorScreen {
 		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
 	}
 	
+	@Override
 	protected void loaded(AssetManager assetManager) {
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
 		ViewUtils.bind(stage.getRoot(), ui);
@@ -112,15 +113,14 @@ public class CouncilScreen extends ActorScreen {
 		
 		setSelectedArea(world.getArea("fagaras"));
 		
-		ui.view_week.setText( String.valueOf(world.getWeek()) );
-		ui.view_year.setText( String.valueOf(world.getYear()) );
+		Binder.bind(world, "week", ui.view_week);
+		Binder.bind(world, "year", ui.view_year);
+		
 		world.register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
 				String name = e.getPropertyName();
-				if(name.equals("week")){
-					ui.view_week.setText( e.getNewValue().toString() );
-					
+				if(name.equals("week")){					
 					if(team.getArmamentUpgrader().canPayNextUpgrade()){
 						ui.armamentButton.setDisabled(true);
 					}else{
@@ -132,8 +132,6 @@ public class CouncilScreen extends ActorScreen {
 					}else{
 						ui.architectureButton.setDisabled(false);
 					}
-				}else if(name.equals("year")){
-					ui.view_year.setText( e.getNewValue().toString() );
 				}
 			}
 		});
