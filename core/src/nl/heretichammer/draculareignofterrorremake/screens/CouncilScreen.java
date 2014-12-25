@@ -74,10 +74,8 @@ public class CouncilScreen extends ActorScreen {
 			assets.music.play();
 		}
 		
-		setSelectedArea(world.getArea("fagaras"));
-		
-		Binder.bind(world, "week", ui.week);
-		Binder.bind(world, "year", ui.year);
+		Binder.bind(ui.week, world, "week");
+		Binder.bind(ui.year, world, "year");
 		
 		world.register(new Object(){
 			@Subscribe
@@ -149,6 +147,11 @@ public class CouncilScreen extends ActorScreen {
 	}
 	
 	public void setSelectedArea(Area selectedArea) {
+		if(this.selectedArea != null){
+			Binder.unbind(ui.gold, ui.wood, ui.food, ui.men, ui.army);
+			Binder.unbind(ui.goldIncome, ui.woodIncome, ui.foodIncome, ui.menIncome);
+		}
+		
 		this.selectedArea = selectedArea;
 		Team team = player.getTeam();
 		team.getArchitectureUpgrader().setResourceSupplier(selectedArea);
@@ -157,31 +160,16 @@ public class CouncilScreen extends ActorScreen {
 		ui.location.setText( selectedArea.getName() );
 		
 		//resources
-		ui.gold.setText(Integer.toString(selectedArea.getResource(Resource.GOLD)));
-		ui.wood.setText(Integer.toString(selectedArea.getResource(Resource.WOOD)));
-		ui.food.setText(Integer.toString(selectedArea.getResource(Resource.FOOD)));
-		ui.men.setText(Integer.toString(selectedArea.getResource(Resource.MEN)));
-		ui.army.setText(Integer.toString(selectedArea.getArmy()));
-		selectedArea.register(new Object(){
-			@Subscribe
-			public void on(ResourceChangeEvent e){
-				if(e.resource == Resource.GOLD){
-					ui.gold.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.GOLD)));
-				}else if(e.resource == Resource.WOOD){
-					ui.wood.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.WOOD)));
-				}else if(e.resource == Resource.FOOD){
-					ui.food.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.FOOD)));
-				}else if(e.resource == Resource.MEN){
-					ui.men.setText(Integer.toString(CouncilScreen.this.selectedArea.getResource(Resource.MEN)));
-				}
-			}
-		});
-		
+		Binder.bind(ui.gold, selectedArea, "resource", Resource.GOLD);
+		Binder.bind(ui.wood, selectedArea, "resource", Resource.WOOD);
+		Binder.bind(ui.food, selectedArea, "resource", Resource.FOOD);
+		Binder.bind(ui.men, selectedArea, "resource", Resource.MEN);
+		Binder.bind(ui.army, selectedArea, "army");
 		//income
-		ui.goldIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.GOLD)));
-		ui.woodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.WOOD)));
-		ui.foodIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.FOOD)));
-		ui.menIncome.setText(Integer.toString(selectedArea.getResourceIncome(Resource.MEN)));
+		Binder.bind(ui.goldIncome, selectedArea, "resourceIncome", Resource.GOLD);
+		Binder.bind(ui.woodIncome, selectedArea, "resourceIncome", Resource.WOOD);
+		Binder.bind(ui.foodIncome, selectedArea, "resourceIncome", Resource.FOOD);
+		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", Resource.MEN);
 	}
 	
 	private void hideAllTabs(){

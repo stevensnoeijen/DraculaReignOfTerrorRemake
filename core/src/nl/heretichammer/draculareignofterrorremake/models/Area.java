@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models;
 
+import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -152,6 +153,7 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		int incremented = current + amount;
 		resources.put(resource, incremented);
 		post(new ResourceChangeEvent(this, resource, incremented));
+		post(new PropertyChangeEvent(this, "resource", null, null));//temp
 	}
 	
 	@Override
