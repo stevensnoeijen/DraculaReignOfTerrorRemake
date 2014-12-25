@@ -2,8 +2,9 @@ package nl.heretichammer.draculareignofterrorremake.models.units;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
+import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
-@Trooper(name="catapult", size=1, cost=@ResourceCost(gold=7, time=6))
+@Trooper(name="catapult", size=1, cost=@ResourceCost(gold=7, time=6), permission=Permission.CATAPULT)
 public class Catapult extends Unit {
 	public static final String NAME = "catapult";
 	public static final int STRENGTH = 4, ACCURACY = 4, DEFENSE = 1, STAMINA = 7, SPEED = 1, RANGE = 5;

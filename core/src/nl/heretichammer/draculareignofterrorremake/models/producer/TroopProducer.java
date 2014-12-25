@@ -99,6 +99,10 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 		post(new TeamChangedEvent());
 	}
 	
+	public boolean isAccessable() {
+		return team.hasPermission(trooper.permission());
+	};
+	
 	@Override
 	public String toString() {
 		return trooper.name();

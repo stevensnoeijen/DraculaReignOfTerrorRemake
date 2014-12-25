@@ -1,5 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
+import java.beans.PropertyChangeEvent;
+
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
@@ -11,7 +13,6 @@ import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TimeChangedEvent;
 
 public abstract class Producer<P> extends Model{
-	private boolean accessable = false;
 	private boolean started;
 	protected P produced;
 	private int timeCost;
@@ -34,7 +35,7 @@ public abstract class Producer<P> extends Model{
 	 * Only is started when the {@link #getCost()} is payed fully.
 	 */
 	public void start() {
-		if(accessable){
+		if(isAccessable()){
 			setStarted(true);
 		}else{
 			throw new NotAccessableException();
@@ -50,7 +51,7 @@ public abstract class Producer<P> extends Model{
 				done();
 			}
 		}else{
-			if(accessable){
+			if(isAccessable()){
 				throw new NotStartedException();
 			}else{
 				throw new NotAccessableException();
@@ -83,8 +84,9 @@ public abstract class Producer<P> extends Model{
 	}
 	
 	private void setTime(int time) {
+		int oldtime = this.time;
 		this.time = time;
-		post(new TimeChangedEvent());
+		post(new PropertyChangeEvent(this, "time", oldtime, time));
 	}
 	
 	public int getTime() {
@@ -95,14 +97,7 @@ public abstract class Producer<P> extends Model{
 		this.resourceSupplier = resourceSupplier;
 	}
 	
-	public boolean isAccessable() {
-		return accessable;
-	};
-	
-	public void setAccessable(boolean accessable) {
-		this.accessable = accessable;
-		post(new AccessableEvent());
-	};
+	public abstract boolean isAccessable();
 	
 	public abstract int getCost(Resource resource);
 

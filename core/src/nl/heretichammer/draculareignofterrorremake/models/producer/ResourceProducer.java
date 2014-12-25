@@ -27,11 +27,16 @@ public class ResourceProducer extends Producer<Integer> {
 	@Override
 	protected void produce() {
 		produced = produces;
-		post(new ResourceProducedEvent());
+		post(new ResourceProducedEvent(this, resource, produced));
 	}
 	
 	@Override
 	public int getCost(Resource resource) {
 		return 0;
+	}
+	
+	@Override
+	public boolean isAccessable() {
+		return true;
 	}
 }
