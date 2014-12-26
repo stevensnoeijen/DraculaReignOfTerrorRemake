@@ -41,7 +41,6 @@ public class CouncilScreen extends ActorScreen {
 	private UI ui = new UI();
 	private Player player;
 	private World world;
-	private Area selectedArea;
 	
 	public CouncilScreen() {
 		world = new World();
@@ -147,15 +146,12 @@ public class CouncilScreen extends ActorScreen {
 	}
 	
 	public void setSelectedArea(Area selectedArea) {
-		if(this.selectedArea != null){
+		if(player.getSelectedArea() != null){
 			Binder.unbind(ui.gold, ui.wood, ui.food, ui.men, ui.army);
 			Binder.unbind(ui.goldIncome, ui.woodIncome, ui.foodIncome, ui.menIncome);
 		}
 		
-		this.selectedArea = selectedArea;
-		Team team = player.getTeam();
-		team.getArchitectureUpgrader().setResourceSupplier(selectedArea);
-		team.getArmamentUpgrader().setResourceSupplier(selectedArea);
+		player.setSelectedArea(selectedArea);
 		
 		ui.location.setText( selectedArea.getName() );
 		
@@ -186,7 +182,7 @@ public class CouncilScreen extends ActorScreen {
 	 * @param income
 	 * @return
 	 */
-	public static String incomeToString(int income) {
+	private static String incomeToString(int income) {
 		if(income > 0 ) {
 			return "+" + income;
 		}else if(income < 0) {
@@ -350,7 +346,7 @@ public class CouncilScreen extends ActorScreen {
 			table.clear();
 			table.row().align(Align.topLeft);
 			int column = 0;
-			for(Troop troop : selectedArea.getTroops()) {
+			for(Troop troop : player.getSelectedArea().getTroops()) {
 				column++;
 				ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
 				table.add(button).width(42).center();
