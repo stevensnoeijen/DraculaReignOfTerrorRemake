@@ -33,6 +33,9 @@ public abstract class Producer<P> extends Model{
 	 * Only is started when the {@link #getCost()} is payed fully.
 	 */
 	public void start() {
+		if(started){
+			throw new IllegalStateException("producer is already started");
+		}
 		if(isAccessable()){
 			pay();
 			setTime(0);

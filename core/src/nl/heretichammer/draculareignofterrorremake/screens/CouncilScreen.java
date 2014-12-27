@@ -167,43 +167,44 @@ public class CouncilScreen extends ActorScreen {
 		Binder.bind(ui.foodIncome, selectedArea, "resourceIncome", Resource.FOOD);
 		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", Resource.MEN);
 		
-		//trainings
+		//resources
 		selectedArea.register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
 				if(e.getPropertyName().equals("resources")){
 					Area area = (Area)e.getSource();
-					if(area.getTroopProducer("swordsoldier").canSupplyCost()){
+					//trainings
+					if(!area.getTroopProducer("swordsoldier").isStarted() && area.getTroopProducer("swordsoldier").canSupplyCost()){
 						ui.trainerSwordsoldiers.setDisabled(false);
 					}else{
 						ui.trainerSwordsoldiers.setDisabled(true);
 					}
-					if(area.getTroopProducer("crossbowsoldier").canSupplyCost()){
+					if(!area.getTroopProducer("crossbowsoldier").isStarted() && area.getTroopProducer("crossbowsoldier").canSupplyCost()){
 						ui.trainerCrossbowsoldiers.setDisabled(false);
 					}else{
 						ui.trainerCrossbowsoldiers.setDisabled(true);
 					}
-					if(area.getTroopProducer("knight").canSupplyCost()){
+					if(!area.getTroopProducer("knight").isStarted() && area.getTroopProducer("knight").canSupplyCost()){
 						ui.trainerKnight.setDisabled(false);
 					}else{
 						ui.trainerKnight.setDisabled(true);
 					}
-					if(area.getTroopProducer("juggernaut").canSupplyCost()){
+					if(!area.getTroopProducer("juggernaut").isStarted() && area.getTroopProducer("juggernaut").canSupplyCost()){
 						ui.trainerJuggernaut.setDisabled(false);
 					}else{
 						ui.trainerJuggernaut.setDisabled(true);
 					}
-					if(area.getTroopProducer("catapult").canSupplyCost()){
+					if(!area.getTroopProducer("catapult").isStarted() && area.getTroopProducer("catapult").canSupplyCost()){
 						ui.trainerCatapult.setDisabled(false);
 					}else{
 						ui.trainerCatapult.setDisabled(true);
 					}
-					if(area.getTroopProducer("cannon").canSupplyCost()){
+					if(!area.getTroopProducer("cannon").isStarted() && area.getTroopProducer("cannon").canSupplyCost()){
 						ui.trainerCannon.setDisabled(false);
 					}else{
 						ui.trainerCannon.setDisabled(true);
 					}
-					if(area.getTroopProducer("spy").canSupplyCost()){
+					if(!area.getTroopProducer("spy").isStarted() && area.getTroopProducer("spy").canSupplyCost()){
 						ui.trainerSpy.setDisabled(false);
 					}else{
 						ui.trainerSpy.setDisabled(true);
@@ -211,7 +212,7 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
-		
+		//started
 		//swordsoldiers
 		selectedArea.getTroopProducer("swordsoldier").register(new Object(){
 			@Subscribe
@@ -226,7 +227,84 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
-		
+		selectedArea.getTroopProducer("crossbowsoldier").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerCrossbowsoldiers.setDisabled(true);
+					}else{
+						ui.trainerCrossbowsoldiers.setDisabled(false);
+					}
+				}
+			}
+		});
+		selectedArea.getTroopProducer("knight").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerKnight.setDisabled(true);
+					}else{
+						ui.trainerKnight.setDisabled(false);
+					}
+				}
+			}
+		});
+		selectedArea.getTroopProducer("juggernaut").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerJuggernaut.setDisabled(true);
+					}else{
+						ui.trainerJuggernaut.setDisabled(false);
+					}
+				}
+			}
+		});
+		selectedArea.getTroopProducer("catapult").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerCatapult.setDisabled(true);
+					}else{
+						ui.trainerCatapult.setDisabled(false);
+					}
+				}
+			}
+		});
+		selectedArea.getTroopProducer("cannon").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerCannon.setDisabled(true);
+					}else{
+						ui.trainerCannon.setDisabled(false);
+					}
+				}
+			}
+		});
+		selectedArea.getTroopProducer("spy").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerSpy.setDisabled(true);
+					}else{
+						ui.trainerSpy.setDisabled(false);
+					}
+				}
+			}
+		});
 	}
 	
 	private void hideAllTabs(){
