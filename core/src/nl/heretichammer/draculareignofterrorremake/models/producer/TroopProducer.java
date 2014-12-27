@@ -1,8 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
 import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
@@ -16,7 +14,6 @@ import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	private Class<T> clazz;
 	private Trooper trooper;
-	private Map<Resource, Integer> cost;
 	private Team team;
 	
 	public TroopProducer(Class<T> clazz) {
@@ -54,18 +51,6 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	
 	public String getTroopName() {
 		return trooper.name();
-	}
-	
-	private void pay() {
-		for(Resource resource : cost.keySet()){
-			resourceSupplier.decrementResource(resource, cost.get(resource));
-		}
-	}
-	
-	@Override
-	public void start() {
-		pay();
-		super.start();
 	}
 
 	public int getCost(Resource resource) {

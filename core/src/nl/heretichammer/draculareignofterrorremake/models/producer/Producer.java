@@ -1,20 +1,19 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
 import java.beans.PropertyChangeEvent;
+import java.util.EnumMap;
+import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
-import nl.heretichammer.draculareignofterrorremake.exceptions.NotStartedException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
-import nl.heretichammer.draculareignofterrorremake.models.events.DoneEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.StartedEvent;
 
 public abstract class Producer<P> extends Model{
 	private boolean autoRestart = false;
 	private boolean started = false;
 	protected P produced;
-	protected int timeCost = 0;
+	protected Map<Resource, Integer> cost = new EnumMap<Resource, Integer>(Resource.class);
 	private int time = 0;
 	private boolean done = false;
 	protected ResourceSupplier resourceSupplier;
@@ -35,6 +34,7 @@ public abstract class Producer<P> extends Model{
 	 */
 	public void start() {
 		if(isAccessable()){
+			pay();
 			setTime(0);
 			setStarted(true);
 		}else{
@@ -55,7 +55,7 @@ public abstract class Producer<P> extends Model{
 		}		
 		if(started) {
 			setTime(time + 1);
-			if(time >= timeCost) {
+			if(time >= cost.get(Resource.TIME)) {
 				//if done
 				produce();
 				done();
@@ -74,7 +74,7 @@ public abstract class Producer<P> extends Model{
 	
 	protected void setDone(boolean done) {
 		this.done = done;
-		post(new DoneEvent());
+		post(new PropertyChangeEvent(this, "done", !done, done));
 	}
 	
 	public boolean isDone() {
@@ -87,7 +87,7 @@ public abstract class Producer<P> extends Model{
 	
 	private void setStarted(boolean started) {
 		this.started = started;
-		post(new StartedEvent());
+		post(new PropertyChangeEvent(this, "started", !started, started));
 	}
 	
 	private void setTime(int time) {
@@ -106,7 +106,9 @@ public abstract class Producer<P> extends Model{
 	
 	public abstract boolean isAccessable();
 	
-	public abstract int getCost(Resource resource);
+	public int getCost(Resource resource){
+		return cost.get(resource);
+	}
 
 	public boolean canSupplyCost() {
 		for(Resource resource : Resource.values()){
@@ -116,6 +118,14 @@ public abstract class Producer<P> extends Model{
 			}
 		}
 		return true;
+	}
+	
+	private void pay() {
+		for(Resource resource : cost.keySet()){
+			if(resource != Resource.TIME){//all resources except time
+				resourceSupplier.decrementResource(resource, cost.get(resource));
+			}
+		}
 	}
 	
 	public P remove(){
@@ -128,7 +138,7 @@ public abstract class Producer<P> extends Model{
 		return autoRestart;
 	}
 
-	public void setAutoRestart(boolean autoRestart) {
+	protected void setAutoRestart(boolean autoRestart) {
 		this.autoRestart = autoRestart;
 	}
 }

@@ -19,7 +19,7 @@
 	},
 	{
 		name: "Fagaras",
-		team: "transylvania",
+		team: "transylvanians",
 		minimapImage: "images/council.pack:minimap-fagaras",
 		resources: { FOOD: 20, GOLD: 50, MEN: 50, WOOD: 10 }
 	},

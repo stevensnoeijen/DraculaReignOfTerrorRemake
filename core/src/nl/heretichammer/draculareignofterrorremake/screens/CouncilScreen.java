@@ -166,6 +166,23 @@ public class CouncilScreen extends ActorScreen {
 		Binder.bind(ui.woodIncome, selectedArea, "resourceIncome", Resource.WOOD);
 		Binder.bind(ui.foodIncome, selectedArea, "resourceIncome", Resource.FOOD);
 		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", Resource.MEN);
+		
+		//trainings
+		//swordsoldiers
+		selectedArea.getTroopProducer("swordsoldier").register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String propertyName = e.getPropertyName();
+				if(propertyName.equals("started")){
+					if(e.getNewValue().equals(true)){
+						ui.trainerSwordsoldiers.setDisabled(true);
+					}else{
+						ui.trainerSwordsoldiers.setDisabled(false);
+					}
+				}
+			}
+		});
+		//
 	}
 	
 	private void hideAllTabs(){
@@ -319,7 +336,6 @@ public class CouncilScreen extends ActorScreen {
 		@View("administration.architecture.time") private Label architectureTime;
 		@View("administration.architecture.button") private ImageButton architectureButton;
 		
-		
 		public void selectArea(InputEvent event){
 			String name = event.getTarget().getUserObject().toString();
 			Area area = world.getArea(name);
@@ -396,8 +412,7 @@ public class CouncilScreen extends ActorScreen {
 				assets.sound_trainingSpies.play();
 			}
 			
-			//TroopProducer<?> troopProducer = selectedArea.getTroopProducer(name);
-			//troopProducer.start();
+			player.getSelectedArea().getTroopProducer(name).start();
 		}
 		
 		public void repairBuilding(InputEvent event){
