@@ -38,11 +38,21 @@ public abstract class Producer<P> extends Model{
 		}
 		if(isAccessable()){
 			pay();
-			setTime(0);
+			reset();
 			setStarted(true);
 		}else{
 			throw new NotAccessableException();
 		}
+	}
+	
+	private void reset(){
+		setTime(0);
+	}
+	
+	public void stop(){
+		refund();
+		setStarted(false);
+		reset();
 	}
 	
 	public void restart(){
@@ -129,6 +139,14 @@ public abstract class Producer<P> extends Model{
 		for(Resource resource : cost.keySet()){
 			if(resource != Resource.TIME){//all resources except time
 				resourceSupplier.decrementResource(resource, cost.get(resource));
+			}
+		}
+	}
+	
+	private void refund(){
+		for(Resource resource : cost.keySet()){
+			if(resource != Resource.TIME){//all resources except time
+				resourceSupplier.incrementResource(resource, cost.get(resource));
 			}
 		}
 	}

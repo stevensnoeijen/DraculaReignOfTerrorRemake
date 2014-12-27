@@ -12,6 +12,7 @@ import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceChangeEvent;
+import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
@@ -383,6 +384,7 @@ public class CouncilScreen extends ActorScreen {
 		@Asset("sound/building a catapult.ogg") private Sound sound_trainingCatapult;
 		@Asset("sound/building a cannon.ogg") private Sound sound_trainingCannon;
 		@Asset("sound/training spies.ogg") private Sound sound_trainingSpies;
+		@Asset("sound/training cancelled.ogg") private Sound sound_trainingCancelled;
 		//construction
 		//repair
 		@Asset("sound/repairing bridge.ogg") private Sound sound_repairingBridge;
@@ -517,24 +519,29 @@ public class CouncilScreen extends ActorScreen {
 		
 		public void trainTroop(InputEvent event){
 			String name = event.getTarget().getUserObject().toString();
+			TroopProducer<?> troopProducer = player.getSelectedArea().getTroopProducer(name);
 			
-			if(name.equals("swordsoldier")){
-				assets.sound_trainingSwordsoldiers.play();
-			}else if(name.equals("crossbowsoldier")){
-				assets.sound_trainingCrossbowsoldiers.play();
-			}else if(name.equals("knight")){
-				assets.sound_trainingKnight.play();
-			}else if(name.equals("juggernaut")){
-				assets.sound_trainingJuggernaut.play();
-			}else if(name.equals("catapult")){
-				assets.sound_trainingCatapult.play();
-			}else if(name.equals("cannon")){
-				assets.sound_trainingCannon.play();
-			}else if(name.equals("spy")){
-				assets.sound_trainingSpies.play();
+			if(!troopProducer.isStarted()){
+				if(name.equals("swordsoldier")){
+					assets.sound_trainingSwordsoldiers.play();
+				}else if(name.equals("crossbowsoldier")){
+					assets.sound_trainingCrossbowsoldiers.play();
+				}else if(name.equals("knight")){
+					assets.sound_trainingKnight.play();
+				}else if(name.equals("juggernaut")){
+					assets.sound_trainingJuggernaut.play();
+				}else if(name.equals("catapult")){
+					assets.sound_trainingCatapult.play();
+				}else if(name.equals("cannon")){
+					assets.sound_trainingCannon.play();
+				}else if(name.equals("spy")){
+					assets.sound_trainingSpies.play();
+				}
+				troopProducer.start();
+			}else{//stop
+				assets.sound_trainingCancelled.play();
+				troopProducer.stop();
 			}
-			
-			player.getSelectedArea().getTroopProducer(name).start();
 		}
 		
 		public void repairBuilding(InputEvent event){
