@@ -168,6 +168,50 @@ public class CouncilScreen extends ActorScreen {
 		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", Resource.MEN);
 		
 		//trainings
+		selectedArea.register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				if(e.getPropertyName().equals("resources")){
+					Area area = (Area)e.getSource();
+					if(area.getTroopProducer("swordsoldier").canSupplyCost()){
+						ui.trainerSwordsoldiers.setDisabled(false);
+					}else{
+						ui.trainerSwordsoldiers.setDisabled(true);
+					}
+					if(area.getTroopProducer("crossbowsoldier").canSupplyCost()){
+						ui.trainerCrossbowsoldiers.setDisabled(false);
+					}else{
+						ui.trainerCrossbowsoldiers.setDisabled(true);
+					}
+					if(area.getTroopProducer("knight").canSupplyCost()){
+						ui.trainerKnight.setDisabled(false);
+					}else{
+						ui.trainerKnight.setDisabled(true);
+					}
+					if(area.getTroopProducer("juggernaut").canSupplyCost()){
+						ui.trainerJuggernaut.setDisabled(false);
+					}else{
+						ui.trainerJuggernaut.setDisabled(true);
+					}
+					if(area.getTroopProducer("catapult").canSupplyCost()){
+						ui.trainerCatapult.setDisabled(false);
+					}else{
+						ui.trainerCatapult.setDisabled(true);
+					}
+					if(area.getTroopProducer("cannon").canSupplyCost()){
+						ui.trainerCannon.setDisabled(false);
+					}else{
+						ui.trainerCannon.setDisabled(true);
+					}
+					if(area.getTroopProducer("spy").canSupplyCost()){
+						ui.trainerSpy.setDisabled(false);
+					}else{
+						ui.trainerSpy.setDisabled(true);
+					}
+				}
+			}
+		});
+		
 		//swordsoldiers
 		selectedArea.getTroopProducer("swordsoldier").register(new Object(){
 			@Subscribe
@@ -182,7 +226,7 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
-		//
+		
 	}
 	
 	private void hideAllTabs(){

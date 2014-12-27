@@ -111,10 +111,12 @@ public abstract class Producer<P> extends Model{
 	}
 
 	public boolean canSupplyCost() {
-		for(Resource resource : Resource.values()){
-			int amount = getCost(resource);
-			if(!resourceSupplier.hasResource(resource, amount)){
-				return false;
+		for(Resource resource : cost.keySet()){
+			if(resource != Resource.TIME){//check everything except time
+				int amount = getCost(resource);
+				if(!resourceSupplier.hasResource(resource, -amount)){
+					return false;
+				}
 			}
 		}
 		return true;

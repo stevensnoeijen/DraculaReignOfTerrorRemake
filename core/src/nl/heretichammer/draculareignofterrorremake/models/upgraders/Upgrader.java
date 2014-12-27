@@ -11,7 +11,7 @@ import java.util.Queue;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
-import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResources;
+import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResourcesException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSuppliable;
@@ -173,7 +173,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 					}
 				}
 			}else{
-				throw new InsufficientResources();
+				throw new InsufficientResourcesException();
 			}
 		}
 		

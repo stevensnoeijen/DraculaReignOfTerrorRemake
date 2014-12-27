@@ -60,16 +60,6 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	public int getResourceCost(Resource resource){
 		return cost.get(resource);
 	}
-
-	@Override
-	public boolean canSupplyCost() {
-		for(Resource resource : cost.keySet()){
-			if(!resourceSupplier.hasResource(resource, cost.get(resource))){
-				return false;
-			}
-		}
-		return true;
-	}
 	
 	public Trooper getTroopDate(){
 		return trooper;
