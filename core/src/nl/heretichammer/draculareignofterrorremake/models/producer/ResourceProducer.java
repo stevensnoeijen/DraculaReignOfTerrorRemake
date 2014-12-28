@@ -38,7 +38,7 @@ public class ResourceProducer extends Producer<Integer> {
 	}
 	
 	@Override
-	public boolean isAccessable() {
+	protected boolean isAccessable() {
 		return true;
 	}
 }

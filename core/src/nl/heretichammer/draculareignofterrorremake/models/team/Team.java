@@ -1,7 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake.models.team;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class Team extends Model {
 	private List<Troop<?>> troops;
 	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
 	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
-	private Map<Permission, Boolean> permissions = new HashMap<Permission, Boolean>();
+	private Map<Permission, Boolean> permissions = new EnumMap<Permission, Boolean>(Permission.class);
 
 	private Team(String name, TeamColor color) {
 		this.name = name;
@@ -33,9 +34,15 @@ public class Team extends Model {
 		troops = new LinkedList<Troop<?>>();
 		ownedAreas = new ArrayList<Area>();
 		//add permissions
-		for(Permission permission : Permission.values()){
-			permissions.put(permission, true);//TODO: dont set all permissions to true
+		for(Permission permission : Permission.values()){//add all permissions
+			permissions.put(permission, false);
 		}
+		//set default permisisons to true
+		permissions.put(Permission.BRIDGE1, true);
+		permissions.put(Permission.TOWER, true);
+		permissions.put(Permission.SWORDSMEN, true);
+		permissions.put(Permission.CROSSBOWSOLDIERS, true);
+		permissions.put(Permission.JUGGERNAUT, true);
 	}
 	
 	/**
@@ -94,6 +101,7 @@ public class Team extends Model {
 		}else{
 			permissions.put(permission, enable);
 			post(new PermissionSetEvent());
+			post(new PropertyChangeEvent(this, "permissions", null, permissions));
 		}
 	}
 	

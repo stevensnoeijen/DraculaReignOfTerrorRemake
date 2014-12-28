@@ -117,7 +117,7 @@ public abstract class Producer<P> extends Model{
 		this.resourceSupplier = resourceSupplier;
 	}
 	
-	public abstract boolean isAccessable();
+	protected abstract boolean isAccessable();
 	
 	public int getCost(Resource resource){
 		return cost.get(resource);

@@ -11,8 +11,8 @@ import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.models.events.ResourceChangeEvent;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
@@ -153,6 +153,7 @@ public class CouncilScreen extends ActorScreen {
 		}
 		
 		player.setSelectedArea(selectedArea);
+		Team team = player.getTeam();
 		
 		ui.location.setText( selectedArea.getName() );
 		
@@ -213,6 +214,49 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		team.register(new Object(){
+			public void on(PropertyChangeEvent e){
+				if(e.getPropertyName().equals("permissions")){
+					Team team = player.getTeam();
+					if(team.hasPermission(Permission.SWORDSMEN)){
+						ui.trainerSwordsoldiers.setVisible(true);
+					}else{
+						ui.trainerSwordsoldiers.setVisible(false);
+					}
+					if(team.hasPermission(Permission.CROSSBOWSOLDIERS)){
+						ui.trainerCrossbowsoldiers.setVisible(true);
+					}else{
+						ui.trainerCrossbowsoldiers.setVisible(false);
+					}
+					if(team.hasPermission(Permission.KNIGHT)){
+						ui.trainerKnight.setVisible(true);
+					}else{
+						ui.trainerKnight.setVisible(false);
+					}
+					if(team.hasPermission(Permission.JUGGERNAUT)){
+						ui.trainerJuggernaut.setVisible(true);
+					}else{
+						ui.trainerJuggernaut.setVisible(false);
+					}
+					if(team.hasPermission(Permission.CATAPULT)){
+						ui.trainerCatapult.setVisible(true);
+					}else{
+						ui.trainerCatapult.setVisible(false);
+					}
+					if(team.hasPermission(Permission.CANNON)){
+						ui.trainerCannon.setVisible(true);
+					}else{
+						ui.trainerCannon.setVisible(false);
+					}
+					if(team.hasPermission(Permission.SPY)){
+						ui.trainerSpy.setVisible(true);
+					}else{
+						ui.trainerSpy.setVisible(false);
+					}
+				}
+			}
+		});
+		
 		//started
 		//swordsoldiers
 		selectedArea.getTroopProducer("swordsoldier").register(new Object(){
@@ -228,6 +272,10 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.SWORDSMEN)){
+			ui.trainerSwordsoldiers.setVisible(false);
+		}
+		
 		selectedArea.getTroopProducer("crossbowsoldier").register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -241,6 +289,10 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.CROSSBOWSOLDIERS)){
+			ui.trainerCrossbowsoldiers.setVisible(false);
+		}
+		
 		selectedArea.getTroopProducer("knight").register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -254,6 +306,10 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.KNIGHT)){
+			ui.trainerKnight.setVisible(false);
+		}
+		
 		selectedArea.getTroopProducer("juggernaut").register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -267,6 +323,10 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.JUGGERNAUT)){
+			ui.trainerJuggernaut.setVisible(false);
+		}
+		
 		selectedArea.getTroopProducer("catapult").register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -280,6 +340,10 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.CATAPULT)){
+			ui.trainerCatapult.setVisible(false);
+		}
+		
 		selectedArea.getTroopProducer("cannon").register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -293,6 +357,10 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.CANNON)){
+			ui.trainerCannon.setVisible(false);
+		}
+		
 		selectedArea.getTroopProducer("spy").register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -306,6 +374,9 @@ public class CouncilScreen extends ActorScreen {
 				}
 			}
 		});
+		if(!team.hasPermission(Permission.SPY)){
+			ui.trainerSpy.setVisible(false);
+		}
 	}
 	
 	private void hideAllTabs(){

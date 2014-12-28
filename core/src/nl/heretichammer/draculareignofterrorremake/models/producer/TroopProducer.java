@@ -74,7 +74,8 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 		post(new TeamChangedEvent());
 	}
 	
-	public boolean isAccessable() {
+	@Override
+	protected boolean isAccessable() {
 		return team.hasPermission(trooper.permission());
 	};
 	
