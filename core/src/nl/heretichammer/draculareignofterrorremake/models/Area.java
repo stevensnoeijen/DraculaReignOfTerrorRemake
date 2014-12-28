@@ -28,7 +28,6 @@ import com.google.common.eventbus.Subscribe;
 public class Area extends TeamableModel implements ResourceSupplier {	
 	private String name;
 	private String minimapImage;
-	private World world;//TODO: replace with neighbors
 	private Set<Troop<?>> troops = new HashSet<Troop<?>>();
 	private Map<Resource, Integer> resources = new HashMap<Resource, Integer>();
 	
@@ -110,10 +109,6 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		}
 	}
 	
-	public void setWorld(World world) {
-		this.world = world;
-	}
-	
 	public String getMinimapImage() {
 		return minimapImage;
 	}
@@ -144,7 +139,7 @@ public class Area extends TeamableModel implements ResourceSupplier {
 		if(amount == 0){
 			return true;
 		}else{
-			return (resources.get(resource) + amount) >= 0;
+			return (resources.get(resource) - amount) >= 0;
 		}
 	}
 	

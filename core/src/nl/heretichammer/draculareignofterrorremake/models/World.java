@@ -69,7 +69,6 @@ public class World extends Model {
 		Area[] areas = json.fromJson(Area[].class, Gdx.files.internal("data/areas.json"));
 		
 		for(Area area : areas) {
-			area.setWorld(this);
 			area.setTeam(area.getTeam());//reset team
 			this.areas.put(area.getName().toLowerCase(), area);
 		}

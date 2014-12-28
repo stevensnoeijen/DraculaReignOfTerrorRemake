@@ -95,6 +95,10 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		upgrades.peek().start();
 	}
 	
+	public void cancelUpgrade(){
+		upgrades.peek().cancel();
+	}
+	
 	protected abstract int getStartLevel();
 	
 	public abstract int getMaxLevel();
@@ -179,8 +183,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		private void refund(){
 			for(Resource resource : cost.keySet()){
-				if(resource != Resource.TIME){
-					resourceSupplier.incrementResource(resource, cost.get(resource));
+				int amount = cost.get(resource);
+				if(resource != Resource.TIME && amount > 0){
+					resourceSupplier.incrementResource(resource, amount);
 				}
 			}
 		}
@@ -188,7 +193,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		private void setTime(int time){
 			int oldTime = this.time;
 			this.time = time;
-			post(new PropertyChangeEvent(this, "time", oldTime, time));
+			post(new PropertyChangeEvent(Upgrader.this, "time", oldTime, time));
 		}
 		
 		public void cancel(){

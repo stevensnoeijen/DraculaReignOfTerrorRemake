@@ -28,6 +28,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -77,26 +78,6 @@ public class CouncilScreen extends ActorScreen {
 		Binder.bind(ui.week, world, "week");
 		Binder.bind(ui.year, world, "year");
 		
-		world.register(new Object(){
-			@Subscribe
-			public void on(PropertyChangeEvent e){
-				String name = e.getPropertyName();
-				if(name.equals("week")){					
-					if(team.getArmamentUpgrader().canPayNextUpgrade()){
-						ui.armamentButton.setDisabled(true);
-					}else{
-						ui.armamentButton.setDisabled(false);
-					}
-					
-					if(team.getArchitectureUpgrader().canPayNextUpgrade()){
-						ui.architectureButton.setDisabled(true);
-					}else{
-						ui.architectureButton.setDisabled(false);
-					}
-				}
-			}
-		});
-		
 		ArmamentUpgrader armamentUpgrader = team.getArmamentUpgrader();
 		armamentUpgrader.register(new Object(){
 			@Subscribe
@@ -108,6 +89,20 @@ public class CouncilScreen extends ActorScreen {
 					ui.armamentImage.setDrawable( assets.getDrawable(armamentUpgrader.getImage()) );
 					ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
 					ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );					
+				}else if(name.equals("started")){
+					boolean value = (Boolean)e.getNewValue();
+					if(value){//started
+						ui.armamentButton.setDisabled(true);
+						ui.armamentButton.setTouchable(Touchable.enabled);//cancelable
+					}else{//cancelled
+						if(armamentUpgrader.canPayNextUpgrade()){
+							ui.armamentButton.setTouchable(Touchable.enabled);
+							ui.armamentButton.setDisabled(false);
+						}else{
+							ui.armamentButton.setTouchable(Touchable.disabled);
+							ui.armamentButton.setDisabled(true);
+						}
+					}
 				}
 			}
 		});
@@ -116,9 +111,11 @@ public class CouncilScreen extends ActorScreen {
 		ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.GOLD)) );
 		ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNextUpgradeCost(Resource.TIME)) );
 		if(armamentUpgrader.canPayNextUpgrade()){
-			ui.armamentButton.setDisabled(true);
-		}else{
+			ui.armamentButton.setTouchable(Touchable.enabled);
 			ui.armamentButton.setDisabled(false);
+		}else{
+			ui.armamentButton.setTouchable(Touchable.disabled);
+			ui.armamentButton.setDisabled(true);
 		}
 		
 		ArchitectureUpgrader architectureUpgrader = team.getArchitectureUpgrader();
@@ -132,6 +129,20 @@ public class CouncilScreen extends ActorScreen {
 					ui.architectureImage.setDrawable( assets.getDrawable(architectureUpgrader.getImage()) );
 					ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
 					ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
+				}else if(name.equals("started")){
+					boolean value = (Boolean)e.getNewValue();
+					if(value){//started
+						ui.architectureButton.setDisabled(true);
+						ui.architectureButton.setTouchable(Touchable.enabled);//cancelable
+					}else{//cancelled
+						if(architectureUpgrader.canPayNextUpgrade()){
+							ui.architectureButton.setDisabled(false);
+							ui.architectureButton.setTouchable(Touchable.enabled);//cancelable
+						}else{
+							ui.architectureButton.setDisabled(true);
+							ui.architectureButton.setTouchable(Touchable.disabled);//cancelable
+						}
+					}
 				}
 			}
 		});
@@ -140,9 +151,11 @@ public class CouncilScreen extends ActorScreen {
 		ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.GOLD)) );
 		ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNextUpgradeCost(Resource.TIME)) );
 		if(architectureUpgrader.canPayNextUpgrade()){
-			ui.architectureButton.setDisabled(true);
-		}else{
+			ui.architectureButton.setTouchable(Touchable.enabled);
 			ui.architectureButton.setDisabled(false);
+		}else{
+			ui.architectureButton.setTouchable(Touchable.disabled);
+			ui.architectureButton.setDisabled(true);
 		}
 	}
 	
@@ -215,6 +228,7 @@ public class CouncilScreen extends ActorScreen {
 			}
 		});
 		team.register(new Object(){
+			@Subscribe
 			public void on(PropertyChangeEvent e){
 				if(e.getPropertyName().equals("permissions")){
 					Team team = player.getTeam();
@@ -377,6 +391,35 @@ public class CouncilScreen extends ActorScreen {
 		if(!team.hasPermission(Permission.SPY)){
 			ui.trainerSpy.setVisible(false);
 		}
+		
+		selectedArea.register(new Object(){
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				String name = e.getPropertyName();
+				if(name.equals("resources")){
+					Team team = player.getTeam();
+					if(!team.getArmamentUpgrader().isStarted()){
+						if(team.getArmamentUpgrader().canPayNextUpgrade()){
+							ui.armamentButton.setTouchable(Touchable.enabled);
+							ui.armamentButton.setDisabled(false);
+						}else{
+							ui.armamentButton.setTouchable(Touchable.disabled);
+							ui.armamentButton.setDisabled(true);
+						}
+					}
+					
+					if(!team.getArchitectureUpgrader().isStarted()){
+						if(team.getArchitectureUpgrader().canPayNextUpgrade()){
+							ui.architectureButton.setTouchable(Touchable.enabled);
+							ui.architectureButton.setDisabled(false);
+						}else{
+							ui.architectureButton.setTouchable(Touchable.disabled);
+							ui.architectureButton.setDisabled(true);
+						}
+					}
+				}
+			}
+		});
 	}
 	
 	private void hideAllTabs(){
@@ -649,13 +692,25 @@ public class CouncilScreen extends ActorScreen {
 		}
 		
 		public void upgradeArmament(InputEvent event){
-			player.getTeam().getArmamentUpgrader().startNextUpgrade();
-			assets.sound_upgradingArmerment.play();
+			ArmamentUpgrader armamentUpgrader = player.getTeam().getArmamentUpgrader();
+			if(!armamentUpgrader.isStarted()){
+				armamentUpgrader.startNextUpgrade();
+				assets.sound_upgradingArmerment.play();
+			}else{//cancel
+				armamentUpgrader.cancelUpgrade();
+				assets.sound_upgradingCancelled.play();
+			}
 		}
 		
 		public void upgradeArchitecture(InputEvent event){
-			player.getTeam().getArchitectureUpgrader().startNextUpgrade();
-			assets.sound_upgradingArchitecture.play();
+			ArchitectureUpgrader architectureUpgrader = player.getTeam().getArchitectureUpgrader();
+			if(!architectureUpgrader.isStarted()){
+				architectureUpgrader.startNextUpgrade();
+				assets.sound_upgradingArchitecture.play();
+			}else{
+				architectureUpgrader.cancelUpgrade();
+				assets.sound_upgradingCancelled.play();
+			}
 		}
 	}
 }
