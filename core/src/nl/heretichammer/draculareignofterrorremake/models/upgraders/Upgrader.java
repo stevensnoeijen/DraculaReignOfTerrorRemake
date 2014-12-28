@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResourcesException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSuppliable;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;

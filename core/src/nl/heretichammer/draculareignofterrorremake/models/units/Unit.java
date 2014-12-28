@@ -8,7 +8,6 @@ import nl.heretichammer.draculareignofterrorremake.models.Mappable;
 import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team.TeamColor;
 import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
-import nl.heretichammer.draculareignofterrorremake.utils.CardinalDirection;
 
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -242,7 +241,7 @@ public abstract class Unit extends TeamableModel implements Cloneable, Teamable,
 	public static class UnitData {
 		public String name;
 		public final Attributes attributes = new Attributes();
-		public final Map<Triple<TeamColor, UnitMotionType, CardinalDirection>, UnitMotionDescriptor> motions = new HashMap<Triple<TeamColor, UnitMotionType,CardinalDirection>, UnitMotionDescriptor>();
+		//public final Map<Triple<TeamColor, UnitMotionType, CardinalDirection>, UnitMotionDescriptor> motions = new HashMap<Triple<TeamColor, UnitMotionType,CardinalDirection>, UnitMotionDescriptor>();
 		
 		public static class UnitMotionDescriptor {
 			public String animation;

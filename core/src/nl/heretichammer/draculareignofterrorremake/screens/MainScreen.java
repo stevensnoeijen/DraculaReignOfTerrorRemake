@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
+import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

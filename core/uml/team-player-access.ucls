@@ -12,10 +12,10 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="nl.heretichammer.draculareignofterrorremake.Player" 
+  <class id="2" language="java" name="nl.heretichammer.draculareignofterrorremake.models.Player" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/Player.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/models/Player.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="890" y="87"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

@@ -1,8 +1,8 @@
-package nl.heretichammer.draculareignofterrorremake.utils.actorcreator;
+package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import java.lang.reflect.Field;
 
-import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;

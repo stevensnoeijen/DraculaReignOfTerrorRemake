@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.utils;
+package nl.heretichammer.draculareignofterrorremake.view.binder;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Method;

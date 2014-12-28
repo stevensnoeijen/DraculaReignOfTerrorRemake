@@ -2,13 +2,13 @@ package nl.heretichammer.draculareignofterrorremake.models.producer;
 
 import java.util.EnumMap;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
-import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.events.TeamChangedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.units.Trooper;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 
 public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {

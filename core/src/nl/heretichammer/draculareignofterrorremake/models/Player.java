@@ -1,10 +1,9 @@
-package nl.heretichammer.draculareignofterrorremake;
+package nl.heretichammer.draculareignofterrorremake.models;
 
-import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
 
-public class Player implements Teamable {
+public class Player extends Model implements Teamable {
 	private Team team;
 	private Area selectedArea;
 	

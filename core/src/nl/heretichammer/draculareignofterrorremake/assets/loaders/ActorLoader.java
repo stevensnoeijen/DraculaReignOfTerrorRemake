@@ -1,16 +1,16 @@
-package nl.heretichammer.draculareignofterrorremake.utils;
+package nl.heretichammer.draculareignofterrorremake.assets.loaders;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ActorCreator;
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.GroupCreator;
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ImageButtonCreator;
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.ImageCreator;
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.LabelCreator;
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.StackCreator;
-import nl.heretichammer.draculareignofterrorremake.utils.actorcreator.TableCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.GroupCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ImageButtonCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ImageCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.LabelCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.StackCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.TableCreator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;

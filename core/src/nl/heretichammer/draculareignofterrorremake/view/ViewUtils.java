@@ -1,8 +1,6 @@
-package nl.heretichammer.draculareignofterrorremake.utils;
+package nl.heretichammer.draculareignofterrorremake.view;
 
 import java.lang.reflect.Field;
-
-import nl.heretichammer.draculareignofterrorremake.annotations.View;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;

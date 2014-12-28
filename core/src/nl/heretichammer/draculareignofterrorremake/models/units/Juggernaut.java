@@ -1,7 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.units;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
-import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 @Trooper(name="juggernaut", size=1, cost=@ResourceCost(gold=2, time=3), permission=Permission.JUGGERNAUT)

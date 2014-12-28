@@ -3,10 +3,11 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 import java.beans.PropertyChangeEvent;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
-import nl.heretichammer.draculareignofterrorremake.Player;
-import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
-import nl.heretichammer.draculareignofterrorremake.annotations.View;
+import nl.heretichammer.draculareignofterrorremake.assets.Asset;
+import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.Player;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.World;
@@ -16,10 +17,9 @@ import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
-import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
-import nl.heretichammer.draculareignofterrorremake.utils.AssetUtils;
-import nl.heretichammer.draculareignofterrorremake.utils.Binder;
-import nl.heretichammer.draculareignofterrorremake.utils.ViewUtils;
+import nl.heretichammer.draculareignofterrorremake.view.View;
+import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
+import nl.heretichammer.draculareignofterrorremake.view.binder.Binder;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;

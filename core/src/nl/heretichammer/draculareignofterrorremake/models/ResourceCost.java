@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.annotations;
+package nl.heretichammer.draculareignofterrorremake.models;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -1,8 +1,6 @@
-package nl.heretichammer.draculareignofterrorremake.utils;
+package nl.heretichammer.draculareignofterrorremake.assets;
 
 import java.lang.reflect.Field;
-
-import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
 
 import com.badlogic.gdx.assets.AssetManager;
 

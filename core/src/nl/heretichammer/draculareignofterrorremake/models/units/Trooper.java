@@ -1,10 +1,11 @@
-package nl.heretichammer.draculareignofterrorremake.annotations;
+package nl.heretichammer.draculareignofterrorremake.models.units;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 @Retention(RetentionPolicy.RUNTIME)

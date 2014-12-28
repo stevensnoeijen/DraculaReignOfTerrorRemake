@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.utils;
+package nl.heretichammer.draculareignofterrorremake.assets;
 
 import nl.heretichammer.draculareignofterrorremake.constants.Constants;
 

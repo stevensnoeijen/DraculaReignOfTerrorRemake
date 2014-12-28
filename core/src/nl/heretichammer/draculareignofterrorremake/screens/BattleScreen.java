@@ -1,8 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
-import nl.heretichammer.draculareignofterrorremake.utils.AssetHelper;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;

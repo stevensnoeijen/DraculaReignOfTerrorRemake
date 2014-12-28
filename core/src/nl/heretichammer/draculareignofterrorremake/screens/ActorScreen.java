@@ -2,7 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.lang.reflect.Field;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.Asset;
+import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

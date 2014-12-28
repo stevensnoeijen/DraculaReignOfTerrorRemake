@@ -1,10 +1,10 @@
-package nl.heretichammer.draculareignofterrorremake.utils.actorcreator;
+package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
-import nl.heretichammer.draculareignofterrorremake.utils.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
 public abstract class WidgetCreator<T extends Widget> extends ActorCreator<T> {
 

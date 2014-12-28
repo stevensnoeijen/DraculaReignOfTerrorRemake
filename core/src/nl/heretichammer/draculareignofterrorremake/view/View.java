@@ -1,4 +1,4 @@
-package nl.heretichammer.draculareignofterrorremake.annotations;
+package nl.heretichammer.draculareignofterrorremake.view;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Asset {
-	public String value();
+public @interface View {
+	String value();
 }

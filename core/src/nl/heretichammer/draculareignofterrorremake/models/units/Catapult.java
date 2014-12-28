@@ -1,7 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.units;
 
-import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
-import nl.heretichammer.draculareignofterrorremake.annotations.Trooper;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 @Trooper(name="catapult", size=1, cost=@ResourceCost(gold=7, time=6), permission=Permission.CATAPULT)
