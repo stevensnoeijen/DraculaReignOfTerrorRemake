@@ -1,7 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.upgraders;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
-import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 public class ArmamentUpgrader extends Upgrader {

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Queue;
 
 import nl.heretichammer.draculareignofterrorremake.annotations.ResourceCost;
-import nl.heretichammer.draculareignofterrorremake.annotations.Upgrade;
 import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResourcesException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
 import nl.heretichammer.draculareignofterrorremake.models.Resource;
@@ -83,22 +82,10 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 	}
 	
-	public int getNextUpgradeCost(Resource resource){
-		return upgrades.peek().getCost(resource);
+	public UpgradeMethod getNextUpgrade(){
+		return upgrades.peek();
 	}
-	
-	public int getNextUpgradeCosts(Resource resource){
-		return upgrades.peek().cost.get(resource);
-	}
-	
-	public void startNextUpgrade(){
-		upgrades.peek().start();
-	}
-	
-	public void cancelUpgrade(){
-		upgrades.peek().cancel();
-	}
-	
+
 	protected abstract int getStartLevel();
 	
 	public abstract int getMaxLevel();
