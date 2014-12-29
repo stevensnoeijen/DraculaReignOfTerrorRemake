@@ -4,8 +4,6 @@ import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 public class ArmamentUpgrader extends Upgrader {
-	private static final String SOUND_UPGRADING_ARMERMENT = "sound/upgrading armerment.ogg";
-	private static final String NAME = "Armament";
 
 	public ArmamentUpgrader() {
 		
@@ -13,7 +11,7 @@ public class ArmamentUpgrader extends Upgrader {
 
 	@Override
 	public String getName() {
-		return NAME;
+		return "Armament";
 	}
 	
 	@Override
@@ -50,15 +48,5 @@ public class ArmamentUpgrader extends Upgrader {
 	@Upgrade(level=5, cost=@ResourceCost(gold=300, time=13), image="image/council.pack:upgrade-armament-5")
 	protected void upgrade5(){
 		
-	}
-
-	@Override
-	public String getStartSound() {
-		return SOUND_UPGRADING_ARMERMENT;
-	}
-
-	@Override
-	public String getCancelSound() {
-		return SOUND_UPGRADING_CANCELLED;
 	}
 }

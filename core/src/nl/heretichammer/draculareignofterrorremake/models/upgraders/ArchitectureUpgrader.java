@@ -4,8 +4,6 @@ import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 public class ArchitectureUpgrader extends Upgrader {
-	private static final String SOUND_UPGRADING_ARCHITECTURE = "sound/upgrading architecture.ogg";
-	public static final String NAME = "Architecture";
 	
 	public ArchitectureUpgrader() {
 		
@@ -13,7 +11,7 @@ public class ArchitectureUpgrader extends Upgrader {
 	
 	@Override
 	public String getName() {
-		return NAME;
+		return "Architecture";
 	}
 	
 	@Override
@@ -50,15 +48,5 @@ public class ArchitectureUpgrader extends Upgrader {
 		team.setPermission(Permission.CASTLE4, true);
 		team.setPermission(Permission.CASTLE5, true);
 		team.setPermission(Permission.CASTLE6, true);
-	}
-
-	@Override
-	public String getStartSound() {
-		return SOUND_UPGRADING_ARCHITECTURE;
-	}
-
-	@Override
-	public String getCancelSound() {
-		return SOUND_UPGRADING_CANCELLED;
 	}
 }

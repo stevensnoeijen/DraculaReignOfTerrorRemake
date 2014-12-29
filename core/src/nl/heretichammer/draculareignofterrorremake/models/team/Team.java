@@ -31,6 +31,8 @@ public class Team extends Model {
 	private Team(String name, TeamColor color) {
 		this.name = name;
 		this.color = color;
+		armamentUpgrader.setTeam(this);
+		architectureUpgrader.setTeam(this);
 		troops = new LinkedList<Troop<?>>();
 		ownedAreas = new ArrayList<Area>();
 		//add permissions
@@ -96,7 +98,7 @@ public class Team extends Model {
 	}
 	
 	public void setPermission(Permission permission, boolean enable){
-		if(!permissions.containsKey(permissions)){
+		if(!permissions.containsKey(permission)){
 			throw new IllegalArgumentException(ERR_PERMISSION);
 		}else{
 			permissions.put(permission, enable);

@@ -17,9 +17,7 @@ import nl.heretichammer.draculareignofterrorremake.models.ResourceSuppliable;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 
-public abstract class Upgrader extends Model implements ResourceSuppliable {
-	protected static final String SOUND_UPGRADING_CANCELLED = "upgrading cancelled.ogg";
-	
+public abstract class Upgrader extends Model implements ResourceSuppliable {	
 	private ResourceSupplier resourceSupplier;
 	private Queue<UpgradeMethod> upgrades;
 	private int level = 1;
@@ -38,9 +36,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 		Collections.sort((List<UpgradeMethod>)upgrades);
 		if(upgrades.peek().getLevel() == level){
+			image = upgrades.peek().getImage();
 			upgrades.remove();
 		}
-		image = upgrades.peek().getImage();
 	}
 	
 	public void setTeam(Team team) {
@@ -109,10 +107,6 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 	}
 	
-	public abstract String getStartSound();
-	
-	public abstract String getCancelSound();
-	
 	public class UpgradeMethod implements Comparable<UpgradeMethod> {
 		private Upgrade upgrade;
 		private Method method;
@@ -123,6 +117,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		private int time = 0;
 		
 		private UpgradeMethod(Method method) {
+			this.method = method;
 			upgrade = method.getAnnotation(Upgrade.class);			
 			cost = new EnumMap<Resource, Integer>(Resource.class);
 			ResourceCost cost = upgrade.cost();
@@ -201,9 +196,10 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		private void done(){
 			try {
 				upgrades.poll();//remove self
-				method.invoke(this);
-				image = upgrades.peek().getImage();
-				post(new PropertyChangeEvent(this, "done", false, true));
+				method.invoke(Upgrader.this);
+				image = upgrades.peek().getImage();//get next image
+				post(new PropertyChangeEvent(Upgrader.this, "done", false, true));
+				setStarted(false);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
