@@ -1,7 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.assets;
 
-import nl.heretichammer.draculareignofterrorremake.constants.Constants;
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -37,7 +35,7 @@ public class AssetHelper {
 	public Array<AtlasRegion> getAtlasRegions(String name) {
 		String[] args = name.split(":");
 		if(args.length != 2) {
-			throw new IllegalArgumentException(Constants.exceptions.incorrectformat);
+			throw new IllegalArgumentException("Incorrect format");
 		}
 		final String fileName = args[0];
 		final String region = args[1];
@@ -49,7 +47,7 @@ public class AssetHelper {
 	public AtlasRegion getAtlasRegion(String name) {
 		String[] args = name.split(":");
 		if(args.length != 2) {
-			throw new IllegalArgumentException(Constants.exceptions.incorrectformat);
+			throw new IllegalArgumentException("Incorrect format");
 		}
 		final String fileName = args[0];
 		final String region = args[1];

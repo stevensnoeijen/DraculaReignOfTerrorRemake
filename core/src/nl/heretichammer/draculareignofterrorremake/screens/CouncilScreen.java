@@ -38,7 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.google.common.eventbus.Subscribe;
 
-public class CouncilScreen extends ActorScreen {	
+public class CouncilScreen extends ActorScreen {
 	private Assets assets = new Assets();
 	private UI ui = new UI();
 	private Player player;
@@ -529,6 +529,68 @@ public class CouncilScreen extends ActorScreen {
 	}
 	
 	public class UI {
+		private static final String TOOLTIP_AREA_SELECTED = "In %s";
+		private static final String TOOLTIP_GOLD = "Available gold and the progress";
+		private static final String TOOLTIP_WOOD = "Available wood and the progress";
+		private static final String TOOLTIP_FOOD = "Available food and the progress";
+		private static final String TOOLTIP_MEN = "Available men and the progress";
+		private static final String TOOLTIP_ARMY = "Available army and the progress";
+		private static final String INFO_NOTKNOWN = "This is not known, yet...";
+		private static final String INFO_SELECTS = "Selects %s";
+		private static final String TOOLTIP_CONFIRM = "Confirm orders and advance to next turn";
+		//unit properties
+		private static final String TOOLTIP_UNIT_ATTACK = "Attack strength";
+		private static final String TOOLTIP_UNIT_ACCURACY = "Accuracy of aim";
+		private static final String TOOLTIP_UNIT_DEFENCE = "Defence strength";
+		private static final String TOOLTIP_UNIT_STAMINA = "Stamina";
+		private static final String TOOLTIP_UNIT_SPEED = "Speed";
+		private static final String TOOLTIP_UNIT_RANGE = "Range";
+		//resources
+		private static final String TOOLTIP_RESOURCE_GOLD = "Gold";
+		private static final String TOOLTIP_RESOURCE_WOOD = "Wood";
+		private static final String TOOLTIP_RESOURCE_FOOD = "Food";
+		//building types
+		private static final String TOOLTIP_BUILDINGTYPE_BRIDGE = "bridge";
+		private static final String TOOLTIP_BUILDINGTYPE_TOWER = "tower";
+		private static final String TOOLTIP_BUILDINGTYPE_CASTLE = "castle";
+		//graph
+		private static final String TOOLTIP_TOGGLE_GRAPH = "Click to toggle graph";
+		//training
+		private static final String TOOLTIP_TRAINING_COST_GOLD = "Cost in gold";
+		private static final String TOOLTIP_TRAINING_COST_TIME = "Time to produce";
+		private static final String TOOLTIP_TRAINING_UNIT_SWORDSMEN = "Train five swordsmen";
+		private static final String TOOLTIP_TRAINING_UNIT_CROSSBOWSOLDIERS = "Train five crossbowsoldiers";
+		private static final String TOOLTIP_TRAINING_UNIT_JUGGERNAUT = "Build a juggernaut";
+		//movements
+		private static final String TOOLTIP_MOVEMENT_SELECT = "Select troops and click on a province to move or attack";
+		//construction
+		private static final String TOOLTIP_CONSTRUCTION_REPAIR_SELECT = "Select repair mode";
+		private static final String TOOLTIP_CONSTRUCTION_REPAIR = "Click to repair";
+		private static final String TOOLTIP_CONSTRUCTION_UPGRADE_SELECT = "Select upgrade mode";
+		private static final String TOOLTIP_CONSTRUCTION_UPGRADE = "Click to upgrade";
+		private static final String TOOLTIP_CONSTRUCTION_BUILD_SELECT = "Select build mode";
+		private static final String TOOLTIP_CONSTRUCTION_BUILD = "Click to build";
+		private static final String TOOLTIP_CONSTRUCTION_MINIMAP = "Use minimap to start building";
+		private static final String TOOLTIP_CONSTRUCTION_MINIMAP_SHOW = "Shows a minimap of the province";
+		private static final String TOOLTIP_CONSTRUCTION_ARCHITECTURES = "Select different architectures";
+		private static final String TOOLTIP_CONSTRUCTION_BUILD_BUILDING = "Build %s";
+		//information
+		private static final String INFO_INFORMATION_TROOPS = "Shows all your troops in province";
+		private static final String INFO_INFORMATION_BUILDING = "Shows all buildings in province";
+		private static final String TOOLTIP_INFORMATION_RESOURCE_GOLD = "Gold resources produced per week in Province";
+		private static final String TOOLTIP_INFORMATION_RESOURCE_WOOD = "Building material resources produced per week in Province";
+		private static final String TOOLTIP_INFORMATION_RESOURCE_FOOD = "Food resources produced per week in Province";
+		private static final String TOOLTIP_INFORMATION_RESOURCE_MEN = "MEn resources produced per week in Province";
+		private static final String INFP_INFORMATION_SCOUTREPORT = "Out spies report";
+		//administration
+		private static final String TOOLTIP_ADMINISTRATION_ARMAMENT = "Armament";
+		private static final String TOOLTIP_ADMINISTRATION_ARCHITECTURE = "Architecture";
+		private static final String TOOLTIP_ADMINISTRATION_UPGRADE = "Upgrade level of %s";
+		private static final String TOOLTIP_ADMINISTRATION_INPROGRESS = "In progress\nClick to cancel";
+		//reports
+		private static final String REPORT_UNDERATTACK = "We're under attack!\nThe turks have crossed  the border of %s. Now we must defend our ground until last man falls";
+		private static final String REPORT_SCOUT = "Scouts reporting!\nOur spies in the county of %s has succeeded in sending us resource information!";		
+		
 		//views auto-bind to the given name in the stage
 		//tabs
 		@View("tab.background") private Image tabBackground;

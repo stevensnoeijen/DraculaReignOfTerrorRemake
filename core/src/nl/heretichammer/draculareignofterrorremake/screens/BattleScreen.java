@@ -148,6 +148,10 @@ public class BattleScreen extends MapScreen {
 		return false;
 	}
 	
+	private class UI {
+		private static final String TOOLTIP_TROOP_FORMATION_WALK = "Formation walk";
+	}
+	
 	private interface AreaMapScreenState {
 		public void create();
 	}
