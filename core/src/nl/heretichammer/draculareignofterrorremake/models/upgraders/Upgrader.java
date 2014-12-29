@@ -20,10 +20,9 @@ import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 public abstract class Upgrader extends Model implements ResourceSuppliable {	
 	private ResourceSupplier resourceSupplier;
 	private Queue<UpgradeMethod> upgrades;
-	private int level = 1;
 	private boolean started = false;
-	private String image;
 	protected Team team;
+	private UpgradeMethod current;
 	
 	@SuppressWarnings("unchecked")
 	public Upgrader() {
@@ -35,10 +34,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 			}
 		}
 		Collections.sort((List<UpgradeMethod>)upgrades);
-		if(upgrades.peek().getLevel() == level){
-			image = upgrades.peek().getImage();
-			upgrades.remove();
-		}
+		current = upgrades.poll();//always get first level
 	}
 	
 	public void setTeam(Team team) {
@@ -47,26 +43,25 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 	
 	public abstract String getName();
 	
-	public String getImage(){
-		return image;
+	public UpgradeMethod getCurrent(){
+		return current;
 	}
-
-	public int getLevel() {
-		return this.level;
+	
+	public boolean hasNext(){
+		return !upgrades.isEmpty();
+	}
+	
+	public UpgradeMethod getNext(){
+		return upgrades.peek();
 	}
 	
 	public void setLevel(int level) {
-		this.level = level;
+		UpgradeMethod old = upgrades.peek();
 		//remove levels before
-		while(upgrades.peek().getLevel() < level){
-			upgrades.remove();
+		while(upgrades.peek().getLevel() <= level){
+			current = upgrades.remove();
 		}
-		image = upgrades.peek().getImage();
-		post(new PropertyChangeEvent(this, "level", level-1, level));
-	}
-	
-	public boolean canPayNextUpgrade(){
-		return upgrades.peek().canPay();
+		post(new PropertyChangeEvent(this, "current", old, current));
 	}
 	
 	public boolean isStarted(){
@@ -80,12 +75,6 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 	}
 	
-	public UpgradeMethod getNextUpgrade(){
-		return upgrades.peek();
-	}
-
-	protected abstract int getStartLevel();
-	
 	public abstract int getMaxLevel();
 	
 	@Override
@@ -98,12 +87,12 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		this.resourceSupplier = resourceSupplier;
 	}
 	
-	private void setStarted(boolean started){
-		this.started = started;
-		if(started){
-			post(new PropertyChangeEvent(this, "started", false, true));
-		}else{
-			post(new PropertyChangeEvent(this, "started", true, false));
+	private void next(){
+		UpgradeMethod old = current;
+		current = upgrades.poll();
+		post(new PropertyChangeEvent(this, "current", old, current));
+		if(!upgrades.isEmpty()){//has next
+			post(new PropertyChangeEvent(this, "next", current, upgrades.peek()));
 		}
 	}
 	
@@ -148,7 +137,8 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		public void start(){
 			pay();
-			setStarted(true);
+			started = true;
+			post(new PropertyChangeEvent(Upgrader.this, "started", false, true));
 		}
 		
 		private void pay(){
@@ -182,7 +172,8 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 			if(isStarted()){
 				refund();
 				setTime(0);
-				setStarted(false);
+				started = false;
+				post(new PropertyChangeEvent(Upgrader.this, "cancelled", false, true));
 			}
 		}
 		
@@ -195,11 +186,12 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		private void done(){
 			try {
-				upgrades.poll();//remove self
 				method.invoke(Upgrader.this);
-				image = upgrades.peek().getImage();//get next image
+				started = false;
+				if(hasNext()){
+					next();
+				}
 				post(new PropertyChangeEvent(Upgrader.this, "done", false, true));
-				setStarted(false);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

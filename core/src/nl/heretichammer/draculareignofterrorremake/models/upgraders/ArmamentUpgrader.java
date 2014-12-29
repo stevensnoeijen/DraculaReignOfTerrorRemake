@@ -13,12 +13,7 @@ public class ArmamentUpgrader extends Upgrader {
 	public String getName() {
 		return "Armament";
 	}
-	
-	@Override
-	protected int getStartLevel() {
-		return 2;
-	}
-	
+
 	@Override
 	public int getMaxLevel() {
 		return 5;

@@ -15,11 +15,6 @@ public class ArchitectureUpgrader extends Upgrader {
 	}
 	
 	@Override
-	protected int getStartLevel() {
-		return 2;
-	}
-	
-	@Override
 	public int getMaxLevel() {
 		return 4;
 	}
