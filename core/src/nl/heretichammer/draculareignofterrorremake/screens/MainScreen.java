@@ -4,6 +4,7 @@ import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
 import nl.heretichammer.draculareignofterrorremake.view.View;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 
@@ -37,6 +38,7 @@ import com.badlogic.gdx.utils.Timer;
 public class MainScreen extends ActorScreen {
 	private Assets assets = new Assets();
 	private UI ui = new UI();
+	private LoadWindow loadWindow = new LoadWindow();
 	
 	private AssetManager assetManager;
 	private AssetHelper assetHelper;
@@ -53,7 +55,7 @@ public class MainScreen extends ActorScreen {
 		super.load(assetManager);
 		AssetUtils.load(assets, assetManager);
 		assetManager.load("layout/MainScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
-		assetManager.load("layout/LoadWindow.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
+		loadWindow.load(assetManager);
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public class MainScreen extends ActorScreen {
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
 		assets.mainScreen = (Group) assetManager.get("layout/MainScreen.xml", Actor.class);
-		assets.loadWindow = (Window) assetManager.get("layout/LoadWindow.xml", Actor.class);
+		loadWindow.loaded(assetManager);
 		stage.addActor(assets.mainScreen);
 		assets.music.setLooping(true);
 		super.loaded(assetManager);
@@ -131,18 +133,9 @@ public class MainScreen extends ActorScreen {
 	}
 	
 	private void showLoadWindow() {
-		stage.addActor(assets.loadWindow);
+		loadWindow.show(stage);
 		
-		/*		
-		//create buttonstyles
-		ImageButton.ImageButtonStyle okButtonStyle = new ImageButton.ImageButtonStyle();
-		okButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-ok-clicked");
-		ImageButton.ImageButtonStyle cancelButtonStyle = new ImageButton.ImageButtonStyle();
-		cancelButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-cancel-clicked");
-		
-		//create and add buttons
-		ImageButton okButton = new ImageButton(okButtonStyle);
-		okButton.setPosition(96, 260);
+		/*
 		okButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -158,22 +151,6 @@ public class MainScreen extends ActorScreen {
 			}
 		});
 		window.addActor(okButton);
-		ImageButton cancelButton = new ImageButton(cancelButtonStyle);
-		cancelButton.setPosition(96, 182);
-		cancelButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				assets.click.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						MainScreen.this.exit(window);
-					}
-				}, 0.25f);
-			}
-		});
-		window.addActor(cancelButton);
 		
 		//create liststyle
 		ListStyle listStyle = skin.get(ListStyle.class);
@@ -319,7 +296,6 @@ public class MainScreen extends ActorScreen {
 		@Asset("sound/click.ogg") private Sound click;
 		@Asset("image/pointer.png") private Pixmap pointer;
 		private Group mainScreen;
-		private Window loadWindow;
 	}
 	
 	public class UI {

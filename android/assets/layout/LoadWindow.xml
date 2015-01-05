@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window name="loadWindow" title="" skin="skin/uiskin.json" background="image/mainmenu.pack:ui-window-load" fillparent="true">
-	<imagebutton name="ok" x="96" y="260" style="down=image/mainmenu.pack:ui-button2-ok-clicked" />
-	<imagebutton name="cancel" x="96" y="182" style="down=image/mainmenu.pack:ui-button2-cancel-clicked" />
+	<imagebutton name="ok" x="96" y="260" style="down=image/mainmenu.pack:ui-button2-ok-clicked" click="ok" />
+	<imagebutton name="cancel" x="96" y="182" style="down=image/mainmenu.pack:ui-button2-cancel-clicked" click="cancel" />
 </window>
