@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<group>
+	<image name="background" drawable="image/mainmenu.pack:ui-screen-main" />
+
+	<imagebutton name="engage" x="128" y="278" style="down=image/mainmenu.pack:ui-button-engage-clicked, over=image/mainmenu.pack:ui-button-engage-selected, disabled=image/mainmenu.pack:ui-button-engage-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+	<imagebutton name="load" x="128" y="241" style="down=image/mainmenu.pack:ui-button-load-clicked, over=image/mainmenu.pack:ui-button-load-selected, disabled=image/mainmenu.pack:ui-button-load-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+	<imagebutton name="save" x="128" y="198" style="down=image/mainmenu.pack:ui-button-save-clicked, over=image/mainmenu.pack:ui-button-save-selected, disabled=image/mainmenu.pack:ui-button-save-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+	<imagebutton name="introduction" x="95" y="159" style="down=image/mainmenu.pack:ui-button-introduction-clicked, over=image/mainmenu.pack:ui-button-introduction-selected, disabled=image/mainmenu.pack:ui-button-introduction-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+	<imagebutton name="options" x="128" y="114" style="down=image/mainmenu.pack:ui-button-options-clicked, over=image/mainmenu.pack:ui-button-options-selected, disabled=image/mainmenu.pack:ui-button-options-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+	<imagebutton name="credits" x="128" y="75" style="down=image/mainmenu.pack:ui-button-credits-clicked, over=image/mainmenu.pack:ui-button-credits-selected, disabled=image/mainmenu.pack:ui-button-credits-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+	<imagebutton name="exit" x="128" y="31" style="down=image/mainmenu.pack:ui-button-exit-clicked, over=image/mainmenu.pack:ui-button-exit-selected, disabled=image/mainmenu.pack:ui-button-exit-disabled" group="menu" click="clickMenuItem" enter="enterMenuItem"/>
+</group>

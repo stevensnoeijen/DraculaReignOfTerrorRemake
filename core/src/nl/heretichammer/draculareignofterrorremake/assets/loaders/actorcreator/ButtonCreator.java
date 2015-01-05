@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
@@ -54,11 +55,33 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 							throw new RuntimeException(ex);
 						}
 					}
+					
+					
 				});
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			}
 		}
+		if(attributes.containsKey("enter")){
+			try {
+				String enter = attributes.get("enter");
+				
+				final Method method = context.getClass().getMethod(enter, InputEvent.class);
+				button.addListener(new ClickListener(){
+					@Override
+					public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
+						try {
+							method.invoke(context, event);
+						} catch (Exception ex) {
+							throw new RuntimeException(ex);
+						}						
+					};
+				});
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+		
 	}
 	
 	@Override

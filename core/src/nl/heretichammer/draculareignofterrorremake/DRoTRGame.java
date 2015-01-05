@@ -1,8 +1,8 @@
 package nl.heretichammer.draculareignofterrorremake;
 
-import nl.heretichammer.draculareignofterrorremake.screens.CouncilScreen;
-import nl.heretichammer.draculareignofterrorremake.screens.LoadScreen;
 import nl.heretichammer.draculareignofterrorremake.screens.ActorScreen;
+import nl.heretichammer.draculareignofterrorremake.screens.LoadScreen;
+import nl.heretichammer.draculareignofterrorremake.screens.MainScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -17,7 +17,7 @@ public class DRoTRGame extends Game {
 	public void create() {
 		preferences = Gdx.app.getPreferences("drotr/settings.xml");
 		preferences.flush();
-		setScreen(new CouncilScreen());
+		setScreen(new MainScreen());
 	}
 	
 	@Override

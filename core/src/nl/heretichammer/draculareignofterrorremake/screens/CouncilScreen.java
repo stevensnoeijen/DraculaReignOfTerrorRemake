@@ -502,7 +502,7 @@ public class CouncilScreen extends ActorScreen {
 		//TODO: check if al loaded assets in this class will be disposed automaticly?
 	}
 	
-	public static class Assets {
+	public class Assets {
 		@Asset("image/council.pack") private TextureAtlas images;
 		@Asset("music/council1.mp3") private Music music;
 		

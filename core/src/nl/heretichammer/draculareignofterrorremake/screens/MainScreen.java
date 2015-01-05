@@ -1,6 +1,10 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
+import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -29,13 +33,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
 public class MainScreen extends ActorScreen {
-	
-	private static final int MENU_ENGAGE = 0, MENU_LOAD = 1, MENU_SAVE = 2, MENU_INTRODUCTION = 3, MENU_OPTIONS = 4, MENU_CREDITS = 5, MENU_EXIT = 6;
-	
-	private Music music;
-	private Sound block, strike, click;
-	
-	private ButtonGroup menuGroup;
+	private Assets assets = new Assets();
+	private UI ui = new UI();
 	
 	private AssetManager assetManager;
 	private AssetHelper assetHelper;
@@ -48,111 +47,30 @@ public class MainScreen extends ActorScreen {
 	}
 	
 	@Override
+	protected void load(AssetManager assetManager) {
+		super.load(assetManager);
+		AssetUtils.load(assets, assetManager);
+		assetManager.load("layout/MainScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
+	}
+
+	@Override
+	protected void loaded(AssetManager assetManager) {
+		stage.addActor( assetManager.get("layout/MainScreen.xml", Actor.class) );
+		ViewUtils.bind(stage.getRoot(), ui);
+		AssetUtils.bind(assets, assetManager);
+		assets.music.setLooping(true);
+		super.loaded(assetManager);
+	};
+	
+	@Override
 	public void show() {
 		super.show();
+		assets.music.play();
+		
 		assetManager.load("uiskin.json", Skin.class);
 		assetManager.load("images/mainmenu.pack", TextureAtlas.class);
-		assetManager.load("music/war1.mp3", Music.class);
-		assetManager.load("sounds/block.ogg", Sound.class);
-		assetManager.load("sounds/projectile-hit2.ogg", Sound.class);
-		assetManager.load("sounds/click.ogg", Sound.class);
-		assetManager.finishLoading();
 		
-		skin = assetManager.get("uiskin.json", Skin.class);
-		
-		//set music
-		music = assetManager.get("music/war1.mp3", Music.class);
-		music.setLooping(true);
-		music.play();
-		//set sounds
-		block = assetManager.get("sounds/block.ogg", Sound.class);
-		strike = assetManager.get("sounds/projectile-hit2.ogg", Sound.class);
-		click = assetManager.get("sounds/click.ogg", Sound.class);
-		
-		//add background
-		addActor(new Image(assetHelper.getDrawable("images/mainmenu.pack:ui-screen-main")), "background", 0, 0);
-		
-		//add menu items
-		menuGroup = new ButtonGroup();//for selection		
-		
-		Button loadButton, saveButton, introductionButton, optionsButton, creditsButton;
-		addActor(createMenuItem("engage", MENU_ENGAGE), 128, 278);		
-		addActor(loadButton = createMenuItem("load", MENU_LOAD), 128, 241);
-		loadButton.setDisabled(true);
-		addActor(saveButton = createMenuItem("save", MENU_SAVE), 128, 198);
-		saveButton.setDisabled(true);
-		addActor(introductionButton = createMenuItem("introduction", MENU_INTRODUCTION), 95, 159);
-		introductionButton.setDisabled(true);
-		addActor(optionsButton = createMenuItem("options", MENU_OPTIONS), 128, 114);
-		optionsButton.setDisabled(true);
-		addActor(creditsButton = createMenuItem("credits", MENU_CREDITS), 128, 75);
-		creditsButton.setDisabled(true);
-		addActor(createMenuItem("exit", MENU_EXIT), 128, 31);
-		
-		Gdx.input.setCursorImage(new Pixmap(Gdx.files.internal("images/pointer.png")), 0, 0);
-	}
-	
-	private Button createMenuItem(String name, final int menuItem) {
-		final ImageButton button = new ImageButton(createImageButtonStyle(name));
-		
-		button.addListener(new ClickListener() {
-			@Override
-			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				super.enter(event, x, y, pointer, fromActor);
-				if(!button.isDisabled() && !isPressed()) {
-					block.play();
-				}
-			}
-			
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				if(!button.isDisabled()) {
-					strike.play();
-					Timer.schedule(new Timer.Task() {
-						@Override
-						public void run() {
-							onMenuItem(menuItem);
-						}
-					}, .25f);//delay opening menu-item 1 second
-				}
-			}
-		});
-		menuGroup.add(button);
-		return button;
-	}
-	
-	private void onMenuItem(int menuItem) {
-		switch(menuItem) {
-		case MENU_ENGAGE:
-			showEngageDialog();
-			break;
-		case MENU_LOAD:
-			showLoadWindow();
-			break;
-		case MENU_SAVE:
-			
-			break;
-		case MENU_INTRODUCTION:
-			
-			break;
-		case MENU_OPTIONS:
-			showOptionsWindow();
-			break;
-		case MENU_CREDITS:
-			
-			break;
-		case MENU_EXIT:
-			stage.addAction(Actions.sequence(Actions.fadeOut(0.75f), new Action() {
-				@Override
-				public boolean act(float delta) {
-					Gdx.app.exit();
-					return true;
-				}
-			}));
-			break;
-		default:
-		}
+		Gdx.input.setCursorImage(new Pixmap(Gdx.files.internal("image/pointer.png")), 0, 0);
 	}
 	
 	private void showEngageDialog() {
@@ -197,7 +115,7 @@ public class MainScreen extends ActorScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				click.play();
+				assets.click.play();
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
@@ -213,6 +131,7 @@ public class MainScreen extends ActorScreen {
 	
 	private void showLoadWindow() {
 		final Window window = new Window("", skin);
+		
 		window.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-window-load"));
 		window.setFillParent(true);
 		
@@ -229,7 +148,7 @@ public class MainScreen extends ActorScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				click.play();
+				assets.click.play();
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
@@ -246,7 +165,7 @@ public class MainScreen extends ActorScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				click.play();
+				assets.click.play();
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
@@ -307,7 +226,7 @@ public class MainScreen extends ActorScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				click.play();
+				assets.click.play();
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
@@ -323,7 +242,7 @@ public class MainScreen extends ActorScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				click.play();
+				assets.click.play();
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
@@ -339,7 +258,7 @@ public class MainScreen extends ActorScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
-				click.play();
+				assets.click.play();
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
@@ -352,54 +271,98 @@ public class MainScreen extends ActorScreen {
 		
 		stage.addActor(window);
 	}
+
+	private void exit(){
+		stage.addAction(Actions.sequence(Actions.fadeOut(0.75f), new Action() {
+			@Override
+			public boolean act(float delta) {
+				Gdx.app.exit();
+				return true;
+			}
+		}));
+	}
 	
 	private void exit(Window window) {
 		window.remove();
 	}
 	
-	private void addActor(Actor actor, String name, int x, int y) {
-		actor.setName(name);
-		actor.setPosition(x, y);
-		stage.addActor(actor);
-	}
-	
-	private void addActor(Actor actor, int x, int y) {
-		addActor(actor, null, x, y);
-	}
-	
-	private ImageButton.ImageButtonStyle createImageButtonStyle(String name){
-		ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-		style.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-" + name + "-clicked");
-		style.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-" + name + "-selected");
-		style.disabled = assetHelper.getDrawable("images/mainmenu.pack:ui-button-" + name + "-disabled");
-		
-		return style;
-	}
-	
 	@Override
 	public void resume() {
 		super.resume();
-		music.play();
+		assets.music.play();
 	}
 	
 	@Override
 	public void pause() {
 		super.pause();
-		music.pause();
+		assets.music.pause();
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
-		music.dispose();
-		music = null;
-		block.dispose();
-		block = null;
-		strike.dispose();
-		strike = null;
-		click.dispose();
-		click = null;
+		assets.music.dispose();
+		assets.music = null;
+		
 		assetManager.dispose();
 		assetManager = null;
+	}
+	
+	private static enum MenuItem {
+		ENGAGE, LOAD, SAVE, INTRODUCTION, OPTIONS, CREDITS, EXIT
+	}
+	
+	public class Assets {
+		@Asset("music/war1.mp3") private Music music;
+		@Asset("sound/block.ogg") private Sound block;
+		@Asset("sound/projectile-hit2.ogg") private Sound strike;
+		@Asset("sound/click.ogg") private Sound click;
+	}
+	
+	public class UI {
+		
+		public void enterMenuItem(InputEvent event) {
+			Button button = (Button)event.getTarget();
+			if(!button.isDisabled()) {
+				assets.block.play();
+			}
+		}
+		
+		public void clickMenuItem(InputEvent event) {
+			final Button button = (Button)event.getTarget();			
+			if(!button.isDisabled()) {
+				assets.strike.play();
+				Timer.schedule(new Timer.Task() {
+					@Override
+					public void run() {
+						MenuItem menuItem = MenuItem.valueOf(button.getName().toUpperCase());
+						open(menuItem);
+					}
+				}, .25f);//delay opening menu-item 1 second
+			}
+		}
+		
+		private void open(MenuItem menuItem){
+			switch (menuItem) {
+			case ENGAGE:
+				showEngageDialog();
+				break;
+			case LOAD:
+				showLoadWindow();
+				break;
+			case SAVE:
+				showLoadWindow();
+				break;
+			case INTRODUCTION:
+				throw new UnsupportedOperationException();
+			case OPTIONS:
+				showOptionsWindow();
+			case EXIT:
+				exit();
+				break;
+			default:
+				throw new UnsupportedOperationException();
+			}
+		}
 	}
 }
