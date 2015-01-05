@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -52,13 +53,16 @@ public class MainScreen extends ActorScreen {
 		super.load(assetManager);
 		AssetUtils.load(assets, assetManager);
 		assetManager.load("layout/MainScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
+		assetManager.load("layout/LoadWindow.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
 	}
 
 	@Override
 	protected void loaded(AssetManager assetManager) {
-		stage.addActor( assetManager.get("layout/MainScreen.xml", Actor.class) );
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
+		assets.mainScreen = (Group) assetManager.get("layout/MainScreen.xml", Actor.class);
+		assets.loadWindow = (Window) assetManager.get("layout/LoadWindow.xml", Actor.class);
+		stage.addActor(assets.mainScreen);
 		assets.music.setLooping(true);
 		super.loaded(assetManager);
 	};
@@ -315,6 +319,8 @@ public class MainScreen extends ActorScreen {
 		@Asset("sound/projectile-hit2.ogg") private Sound strike;
 		@Asset("sound/click.ogg") private Sound click;
 		@Asset("image/pointer.png") private Pixmap pointer;
+		private Group mainScreen;
+		private Window loadWindow;
 	}
 	
 	public class UI {

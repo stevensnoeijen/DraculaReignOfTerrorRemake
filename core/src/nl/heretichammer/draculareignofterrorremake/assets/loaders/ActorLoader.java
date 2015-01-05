@@ -11,6 +11,7 @@ import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.I
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.LabelCreator;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.StackCreator;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.TableCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.WindowCreator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
@@ -27,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -60,6 +62,7 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		creators.put("label", new LabelCreator(this));
 		creators.put("imagebutton", new ImageButtonCreator(this));
 		creators.put("stack", new StackCreator(this));
+		creators.put("window", new WindowCreator<Window>(this));
 		
 		dependencyProperties.put("drawable", TextureAtlas.class);
 		dependencyProperties.put("skin", Skin.class);
