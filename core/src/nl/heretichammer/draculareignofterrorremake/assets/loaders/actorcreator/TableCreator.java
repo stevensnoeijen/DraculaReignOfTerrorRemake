@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -32,6 +33,10 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 			if(attributes.containsKey("skin")){//if skin attribute is set it in the 
 				Skin skin = actorLoader.getLoadedAsset(attributes.get("skin"), Skin.class);
 				table.setSkin(skin);
+			}
+			if(attributes.containsKey("background")){//if skin attribute is set it in the 
+				Drawable background = actorLoader.getLoadedAsset(attributes.get("background"), Drawable.class);
+				table.setBackground(background);
 			}
 		}
 		//rows are added in add method

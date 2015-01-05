@@ -42,18 +42,27 @@ public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 		attributes = attributes.replaceAll(SPACE, "");
 		ImageButton.ImageButtonStyle style = new ImageButtonStyle();
 		//dont check if attributes is not null becouse this must have some values
-		try{
+	
+		if(attributes.contains(",")){
 			for(String attribute : attributes.split(",")){
-				String[] args = attribute.split("=");
-				String key = args[0];
-				String value = args[1];
-				Field field = ImageButton.ImageButtonStyle.class.getField(key);
-				field.set(style, actorLoader.getLoadedAsset(value, field.getType()));
+				setStyleAttribute(style, attribute);
 			}
+		}else{//only has 1 attribute
+			setStyleAttribute(style, attributes);
+		}
+		return style;
+	}
+	
+	private void setStyleAttribute(ImageButton.ImageButtonStyle style, String attribute){
+		try{
+			String[] args = attribute.split("=");
+			String key = args[0];
+			String value = args[1];
+			Field field = ImageButton.ImageButtonStyle.class.getField(key);
+			field.set(style, actorLoader.getLoadedAsset(value, field.getType()));
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
-		return style;
 	}
 
 	@Override

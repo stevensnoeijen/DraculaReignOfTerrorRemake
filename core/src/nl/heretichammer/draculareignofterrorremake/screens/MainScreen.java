@@ -131,11 +131,9 @@ public class MainScreen extends ActorScreen {
 	}
 	
 	private void showLoadWindow() {
-		final Window window = new Window("", skin);
+		stage.addActor(assets.loadWindow);
 		
-		window.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-window-load"));
-		window.setFillParent(true);
-		
+		/*		
 		//create buttonstyles
 		ImageButton.ImageButtonStyle okButtonStyle = new ImageButton.ImageButtonStyle();
 		okButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-ok-clicked");
@@ -194,6 +192,7 @@ public class MainScreen extends ActorScreen {
 		window.addActor(list);
 
 		stage.addActor(window);
+		*/
 	}
 	
 	private void changeScreen(Class<? extends Screen> clazz) {

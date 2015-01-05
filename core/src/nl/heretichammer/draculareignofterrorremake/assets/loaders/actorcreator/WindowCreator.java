@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -44,5 +45,10 @@ public class WindowCreator<T extends Window> extends TableCreator<T> {
 		if(attributes.containsKey("titlealignment")){
 			window.setTitleAlignment(Integer.parseInt(attributes.get("titlealignment")));
 		}
+	}
+	
+	@Override
+	protected void add(T window, Element element, Object context) {
+		window.addActor( actorLoader.create(element, context) );
 	}
 }
