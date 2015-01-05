@@ -4,6 +4,7 @@ import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.view.View;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 
 import com.badlogic.gdx.Game;
@@ -66,11 +67,7 @@ public class MainScreen extends ActorScreen {
 	public void show() {
 		super.show();
 		assets.music.play();
-		
-		assetManager.load("uiskin.json", Skin.class);
-		assetManager.load("images/mainmenu.pack", TextureAtlas.class);
-		
-		Gdx.input.setCursorImage(new Pixmap(Gdx.files.internal("image/pointer.png")), 0, 0);
+		Gdx.input.setCursorImage(assets.pointer, 0, 0);
 	}
 	
 	private void showEngageDialog() {
@@ -317,9 +314,17 @@ public class MainScreen extends ActorScreen {
 		@Asset("sound/block.ogg") private Sound block;
 		@Asset("sound/projectile-hit2.ogg") private Sound strike;
 		@Asset("sound/click.ogg") private Sound click;
+		@Asset("image/pointer.png") private Pixmap pointer;
 	}
 	
 	public class UI {
+		@View("engage") private ImageButton engage;
+		@View("load") private ImageButton load;
+		@View("save") private ImageButton save;
+		@View("introduction") private ImageButton introduction;
+		@View("options") private ImageButton options;
+		@View("credits") private ImageButton credits;
+		@View("exit") private ImageButton exit;
 		
 		public void enterMenuItem(InputEvent event) {
 			Button button = (Button)event.getTarget();
