@@ -1,10 +1,15 @@
 package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
+import java.lang.reflect.Method;
+
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 
@@ -25,7 +30,7 @@ public abstract class ActorCreator<T extends Actor> {
 	 * @param actor
 	 * @param element
 	 */
-	protected void set(T actor, XmlReader.Element element, Object context){
+	protected void set(T actor, XmlReader.Element element, final Object context){
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("color")){
@@ -75,6 +80,49 @@ public abstract class ActorCreator<T extends Actor> {
 			}
 			if(attributes.containsKey("userobject")){
 				actor.setUserObject(attributes.get("userobject"));
+			}
+			if(attributes.containsKey("click")){
+				try {
+					String click = attributes.get("click");
+					
+					final Method method = context.getClass().getMethod(click, InputEvent.class);
+					actor.addListener(new ClickListener(){
+						@Override
+						public void clicked(InputEvent event, float x, float y) {
+							try {
+								method.invoke(context, event);
+							} catch (Exception ex) {
+								throw new RuntimeException(ex);
+							}
+						}
+						
+						
+					});
+				} catch (Exception ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+			if(attributes.containsKey("enter")){
+				try {
+					String enter = attributes.get("enter");
+					
+					final Method method = context.getClass().getMethod(enter, InputEvent.class);
+					actor.addListener(new ClickListener(){
+						@Override
+						public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
+							try {
+								method.invoke(context, event);
+							} catch (Exception ex) {
+								throw new RuntimeException(ex);
+							}						
+						};
+					});
+				} catch (Exception ex) {
+					throw new RuntimeException(ex);
+				}
+			}
+			if(attributes.containsKey("touchable")){
+				actor.setTouchable(Touchable.valueOf(attributes.get("touchable").replace('o', 'O')));
 			}
 		}
 	}

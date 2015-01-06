@@ -6,17 +6,24 @@ import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
 public class LoadWindow implements ScreenWindow {
 	private boolean loaded;
 	@Asset("sound/click.ogg") private Sound click;
+	@Asset("image/mainmenu.pack") private TextureAtlas textures;
 	private UI ui = new UI();
 	private Window window;
+	private Image selected;
 	
 	@Override
 	public boolean isLoaded() {
@@ -38,6 +45,12 @@ public class LoadWindow implements ScreenWindow {
 	@Override
 	public void show(Stage stage) {
 		stage.addActor(window);
+		selected = new Image(new TextureRegionDrawable(textures.findRegion("ui-border-selected")));
+	}
+	
+	@Override
+	public void resume() {
+		
 	}
 
 	@Override
@@ -45,17 +58,20 @@ public class LoadWindow implements ScreenWindow {
 		window.remove();
 	}
 	
-	private void loadGame(){
+	private void loadGame(String name){
 		//TODO
+		selected.remove();
 	}
 	
 	public class UI {
 		public void ok(InputEvent event){
+			Label label = (Label)event.getTarget();
+			final String name = label.getUserObject().toString();
 			click.play();
 			Timer.schedule(new Timer.Task() {
 				@Override
 				public void run() {
-					loadGame();
+					loadGame(name);
 				}
 			}, 0.5f);
 		}
@@ -66,8 +82,17 @@ public class LoadWindow implements ScreenWindow {
 				@Override
 				public void run() {
 					close();
+					selected.remove();
 				}
 			}, 0.25f);
+		}
+		
+		public void selectLoad(InputEvent event){
+			if(selected.getParent() == null){//add if not added
+				window.addActor(selected);
+			}
+			Label target = (Label)event.getTarget();
+			selected.setPosition(target.getX() - 5f, target.getY());
 		}
 	}
 }

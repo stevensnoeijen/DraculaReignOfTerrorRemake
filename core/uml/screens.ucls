@@ -23,9 +23,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.MainScreen" 
+  <class id="3" language="java" name="nl.heretichammer.draculareignofterrorremake.screens.MainMenuScreen" 
     project="DraculaReignOfTerrorRemake-core" 
-    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/screens/MainScreen.java" 
+    file="/DraculaReignOfTerrorRemake-core/src/nl/heretichammer/draculareignofterrorremake/screens/MainMenuScreen.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="562" y="173"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

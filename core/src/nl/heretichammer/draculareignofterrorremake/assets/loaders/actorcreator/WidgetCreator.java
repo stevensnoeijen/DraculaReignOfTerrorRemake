@@ -23,6 +23,9 @@ public abstract class WidgetCreator<T extends Widget> extends ActorCreator<T> {
 			if(attributes.containsKey("layoutenabled")){
 				widget.setLayoutEnabled(Boolean.parseBoolean(attributes.get("layoutenabled")));
 			}
+			if(attributes.containsKey("pack") && Boolean.parseBoolean(attributes.get("pack"))){//if pack is set to true
+				widget.pack();
+			}
 		}
 	}
 }

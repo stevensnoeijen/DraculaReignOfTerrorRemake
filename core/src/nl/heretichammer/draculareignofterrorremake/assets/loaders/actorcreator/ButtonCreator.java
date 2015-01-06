@@ -1,14 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
-import java.lang.reflect.Method;
-
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -41,47 +36,6 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 			}
 			buttongroups.get(name).add(button);//add button to group
 		}
-		if(attributes.containsKey("click")){
-			try {
-				String click = attributes.get("click");
-				
-				final Method method = context.getClass().getMethod(click, InputEvent.class);
-				button.addListener(new ClickListener(){
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						try {
-							method.invoke(context, event);
-						} catch (Exception ex) {
-							throw new RuntimeException(ex);
-						}
-					}
-					
-					
-				});
-			} catch (Exception ex) {
-				throw new RuntimeException(ex);
-			}
-		}
-		if(attributes.containsKey("enter")){
-			try {
-				String enter = attributes.get("enter");
-				
-				final Method method = context.getClass().getMethod(enter, InputEvent.class);
-				button.addListener(new ClickListener(){
-					@Override
-					public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
-						try {
-							method.invoke(context, event);
-						} catch (Exception ex) {
-							throw new RuntimeException(ex);
-						}						
-					};
-				});
-			} catch (Exception ex) {
-				throw new RuntimeException(ex);
-			}
-		}
-		
 	}
 	
 	@Override

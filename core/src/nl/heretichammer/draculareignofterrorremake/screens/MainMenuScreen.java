@@ -35,7 +35,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
-public class MainScreen extends ActorScreen {
+public class MainMenuScreen extends ActorScreen {
 	private Assets assets = new Assets();
 	private UI ui = new UI();
 	private LoadWindow loadWindow = new LoadWindow();
@@ -45,7 +45,7 @@ public class MainScreen extends ActorScreen {
 	
 	private Skin skin;
 	
-	public MainScreen() {
+	public MainMenuScreen() {
 		assetManager = new AssetManager();
 		assetHelper = new AssetHelper(assetManager);
 	}
@@ -54,7 +54,7 @@ public class MainScreen extends ActorScreen {
 	protected void load(AssetManager assetManager) {
 		super.load(assetManager);
 		AssetUtils.load(assets, assetManager);
-		assetManager.load("layout/MainScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
+		assetManager.load("layout/MainMenuScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
 		loadWindow.load(assetManager);
 	}
 
@@ -62,7 +62,7 @@ public class MainScreen extends ActorScreen {
 	protected void loaded(AssetManager assetManager) {
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
-		assets.mainScreen = (Group) assetManager.get("layout/MainScreen.xml", Actor.class);
+		assets.mainScreen = (Group) assetManager.get("layout/MainMenuScreen.xml", Actor.class);
 		loadWindow.loaded(assetManager);
 		stage.addActor(assets.mainScreen);
 		assets.music.setLooping(true);
@@ -122,7 +122,7 @@ public class MainScreen extends ActorScreen {
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
-						MainScreen.this.exit(dialog);
+						MainMenuScreen.this.exit(dialog);
 					}
 				}, 0.25f);
 			}
@@ -130,46 +130,6 @@ public class MainScreen extends ActorScreen {
 		dialog.addActor(cancelButton);
 		
 		dialog.show(stage);
-	}
-	
-	private void showLoadWindow() {
-		loadWindow.show(stage);
-		
-		/*
-		okButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				assets.click.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						//TODO
-						//loadGame();
-					}
-				}, 0.5f);
-			}
-		});
-		window.addActor(okButton);
-		
-		//create liststyle
-		ListStyle listStyle = skin.get(ListStyle.class);
-		listStyle.selection = assetHelper.getDrawable("images/mainmenu.pack:ui-border-selected");
-		//create and fill list
-		List<Label> list = new List<Label>(listStyle);
-		list.setPosition(340, 400);
-		//create 8 game-labels
-		Label[] labels = new Label[8]; 
-		for(int i = 0; i < labels.length; i++) {
-			String text = ""+i;
-			labels[i] = new Label(text, skin);
-			labels[i].setHeight(100);
-		}
-		list.setItems(labels);
-		window.addActor(list);
-
-		stage.addActor(window);
-		*/
 	}
 	
 	private void changeScreen(Class<? extends Screen> clazz) {
@@ -207,7 +167,7 @@ public class MainScreen extends ActorScreen {
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
-						MainScreen.this.exit(window);
+						MainMenuScreen.this.exit(window);
 					}
 				}, 0.5f);
 			}
@@ -223,7 +183,7 @@ public class MainScreen extends ActorScreen {
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
-						MainScreen.this.exit(window);
+						MainMenuScreen.this.exit(window);
 					}
 				}, 0.25f);
 			}
@@ -239,7 +199,7 @@ public class MainScreen extends ActorScreen {
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {
-						MainScreen.this.exit(window);
+						MainMenuScreen.this.exit(window);
 					}
 				}, 0.25f);
 			}
@@ -334,10 +294,10 @@ public class MainScreen extends ActorScreen {
 				showEngageDialog();
 				break;
 			case LOAD:
-				showLoadWindow();
+				loadWindow.show(stage);
 				break;
 			case SAVE:
-				showLoadWindow();
+				loadWindow.show(stage);
 				break;
 			case INTRODUCTION:
 				throw new UnsupportedOperationException();

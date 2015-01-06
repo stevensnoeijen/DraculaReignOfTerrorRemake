@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -15,7 +16,10 @@ public class LabelCreator extends WidgetCreator<Label> {
 	
 	@Override
 	public Label create(Element element, Object context) {
-		String text = element.get("text");
+		String text = "";
+		if(element.getAttributes().containsKey("text")){
+			text = element.get("text");
+		}
 		Skin skin =  actorLoader.getLoadedAsset(element.get("skin"), Skin.class);
 		Label label = new Label(text, skin);
 		set(label, element, context);
@@ -48,6 +52,9 @@ public class LabelCreator extends WidgetCreator<Label> {
 			}
 			if(attributes.containsKey("wrap")){
 				label.setWrap(Boolean.parseBoolean(attributes.get("wrap")));
+			}
+			if(attributes.containsKey("layout") && Boolean.parseBoolean(attributes.get("layout"))){//if pack is set to true
+				label.layout();
 			}
 		}
 	}

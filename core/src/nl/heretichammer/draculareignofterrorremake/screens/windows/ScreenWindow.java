@@ -12,5 +12,7 @@ public interface ScreenWindow {
 	
 	public void show(Stage stage);
 	
+	public  void resume();
+	
 	public void close();
 }
