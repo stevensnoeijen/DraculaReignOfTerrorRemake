@@ -1,10 +1,12 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
+import nl.heretichammer.draculareignofterrorremake.screens.windows.SaveWindow;
 import nl.heretichammer.draculareignofterrorremake.view.View;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 
@@ -15,21 +17,15 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -39,6 +35,7 @@ public class MainMenuScreen extends ActorScreen {
 	private Assets assets = new Assets();
 	private UI ui = new UI();
 	private LoadWindow loadWindow = new LoadWindow();
+	private SaveWindow saveWindow = new SaveWindow();
 	
 	private AssetManager assetManager;
 	private AssetHelper assetHelper;
@@ -55,6 +52,7 @@ public class MainMenuScreen extends ActorScreen {
 		super.load(assetManager);
 		AssetUtils.load(assets, assetManager);
 		assetManager.load("layout/MainMenuScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
+		saveWindow.load(assetManager);
 		loadWindow.load(assetManager);
 	}
 
@@ -63,6 +61,7 @@ public class MainMenuScreen extends ActorScreen {
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
 		assets.mainScreen = (Group) assetManager.get("layout/MainMenuScreen.xml", Actor.class);
+		saveWindow.loaded(assetManager);
 		loadWindow.loaded(assetManager);
 		stage.addActor(assets.mainScreen);
 		assets.music.setLooping(true);
@@ -72,7 +71,9 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void show() {
 		super.show();
-		assets.music.play();
+		if(DRoTRGame.preferences.getBoolean("music")){
+			assets.music.play();
+		}
 		Gdx.input.setCursorImage(assets.pointer, 0, 0);
 	}
 	
@@ -226,13 +227,17 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void resume() {
 		super.resume();
-		assets.music.play();
+		if(DRoTRGame.preferences.getBoolean("music")){
+			assets.music.play();
+		}
 	}
 	
 	@Override
 	public void pause() {
 		super.pause();
-		assets.music.pause();
+		if(DRoTRGame.preferences.getBoolean("music")){
+			assets.music.pause();
+		}
 	}
 	
 	@Override
@@ -297,7 +302,7 @@ public class MainMenuScreen extends ActorScreen {
 				loadWindow.show(stage);
 				break;
 			case SAVE:
-				loadWindow.show(stage);
+				saveWindow.show(stage);
 				break;
 			case INTRODUCTION:
 				throw new UnsupportedOperationException();
