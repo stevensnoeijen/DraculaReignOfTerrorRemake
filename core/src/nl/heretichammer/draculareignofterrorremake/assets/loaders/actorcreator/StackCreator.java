@@ -10,6 +10,11 @@ public class StackCreator extends WidgetGroupCreator<Stack> {
 	public StackCreator(ActorLoader actorLoader) {
 		super(actorLoader);
 	}
+	
+	@Override
+	public String getName() {
+		return "stack";
+	}
 
 	@Override
 	public Stack create(Element element, Object context) {

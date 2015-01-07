@@ -11,9 +11,9 @@ import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.I
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.LabelCreator;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.StackCreator;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.TableCreator;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.TextFieldCreator;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.WindowCreator;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -26,6 +26,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -52,20 +53,23 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	private XmlReader.Element root;
 	private Actor loaded;
 	
-	private Map<String, Class<?>> dependencyProperties = new HashMap<String, Class<?>>();
+	@SuppressWarnings("rawtypes")
+	private Map<StyleDescriptor, Object> styles = new HashMap<StyleDescriptor, Object>();
 
 	public ActorLoader(FileHandleResolver fileHandleResolver) {
 		super(fileHandleResolver);
-		creators.put("group", new GroupCreator<Group>(this));
-		creators.put("image", new ImageCreator(this));
-		creators.put("table", new TableCreator<Table>(this));
-		creators.put("label", new LabelCreator(this));
-		creators.put("imagebutton", new ImageButtonCreator(this));
-		creators.put("stack", new StackCreator(this));
-		creators.put("window", new WindowCreator<Window>(this));
-		
-		dependencyProperties.put("drawable", TextureAtlas.class);
-		dependencyProperties.put("skin", Skin.class);
+		addCreator(new GroupCreator<Group>(this));
+		addCreator(new ImageCreator(this));
+		addCreator(new TableCreator<Table>(this));
+		addCreator(new LabelCreator(this));
+		addCreator(new ImageButtonCreator(this));
+		addCreator(new StackCreator(this));
+		addCreator(new WindowCreator<Window>(this));
+		addCreator(new TextFieldCreator<TextField>(this));
+	}
+	
+	private void addCreator(ActorCreator<?> actorCreator){
+		creators.put(actorCreator.getName(), actorCreator);
 	}
 	
 	@Override
@@ -73,6 +77,15 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		this.assetManager = assetManager;
 		loaded = null;
 		loaded = load(file, parameter.context);
+		reset();
+	}
+	
+	/**
+	 * Reset temp values
+	 */
+	private void reset(){
+		//clear styles
+		styles.clear();
 		//reset creators
 		for(ActorCreator<?> creator : creators.values()){
 			creator.reset();
@@ -96,30 +109,9 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
-		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
-		
-		ObjectMap<String, String> elementAttributes = element.getAttributes();
-		if(elementAttributes != null){//element has attributes
-			for(String attribute : dependencyProperties.keySet()){
-				if(elementAttributes.containsKey(attribute)){
-					String attributeValue = elementAttributes.get(attribute);
-					Class<?> type = dependencyProperties.get(attribute);
-					if(type == TextureAtlas.class){
-						attributeValue = attributeValue.split(":")[0];//only get atlas-file
-					}
-					dependencies.put(attributeValue, new AssetDescriptor(Gdx.files.internal(attributeValue), type));
-				}
-			}
-		}
-		
-		//get dependencies from children
-		int count = element.getChildCount();
-		for(int i = 0; i < count; i++){
-			dependencies.putAll(getDependencies(element.getChild(i)));//TODO: fix that there are also duplicates?
-		}
-		
-		return dependencies;
+	public ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
+		ActorCreator<?> creator = creators.get(element.getName());
+		return creator.getDependencies(element);
 	}
 	
 	private Actor load(FileHandle file, Object context){	
@@ -132,12 +124,11 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T> T getLoadedAsset(String fileName, Class<T> clazz){
+	public <T> T getAsset(String fileName, Class<T> clazz){
 		if(clazz == Drawable.class){
 			if(fileName.equals("empty")){
 				return (T) EMPTY;
 			}
-			
 			String[] args = fileName.split(":");
 			String file = args[0];
 			String textureName = args[1];
@@ -149,6 +140,29 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T> T getStyle(String attributes, Class<T> clazz){
+		StyleDescriptor<T> descriptor = new StyleDescriptor<T>(attributes, clazz);
+		if(styles.containsKey(descriptor)){
+			return (T)styles.get(descriptor);
+		}else{
+			T style = createStyle(attributes, clazz);
+			styles.put(descriptor, style);
+			return style;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <T> T createStyle(String attributes, Class<T> clazz){ 
+		for(ActorCreator<?> actorCreator : creators.values()){
+			if(actorCreator.getStyleType() == clazz){
+				T style = (T) actorCreator.createStyle(attributes);
+				return style;
+			}
+		}
+		throw new IllegalArgumentException();
+	}
+	
 	public static class ActorLoaderParameter extends AssetLoaderParameters<Actor> {
 		/**
 		 * For handling click events
@@ -158,5 +172,31 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		public ActorLoaderParameter(Object context) {
 			this.context = context;
 		}
+	}
+	
+	protected static class StyleDescriptor<T> {
+		public final String style;
+		public final Class<T> type;
+		
+		public StyleDescriptor (String style, Class<T> type) {
+			this.style = style;
+			this.type = type;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(obj instanceof StyleDescriptor){
+				@SuppressWarnings("rawtypes")
+				StyleDescriptor other = (StyleDescriptor)obj;
+				return this.style.equals(other.style) && this.type == other.type;
+			}else{
+				return super.equals(obj);
+			}
+		};
+		
+		@Override
+		public int hashCode() {
+			return style.hashCode();
+		};
 	}
 }

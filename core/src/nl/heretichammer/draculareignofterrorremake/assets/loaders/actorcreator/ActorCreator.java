@@ -2,9 +2,10 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import java.lang.reflect.Method;
 
+import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -23,6 +24,14 @@ public abstract class ActorCreator<T extends Actor> {
 		this.actorLoader = actorLoader;
 	}
 	
+	public abstract String getName();
+	
+	@SuppressWarnings("rawtypes")
+	public ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
+		return dependencies;
+	}
+	
 	public abstract T create(XmlReader.Element element, Object context);
 	
 	/**
@@ -34,7 +43,7 @@ public abstract class ActorCreator<T extends Actor> {
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("color")){
-				actor.setColor(parseColor(attributes.get("color")));
+				actor.setColor(AssetUtils.parseColor(attributes.get("color")));
 			}
 			if(attributes.containsKey("debug")){
 				actor.setDebug(Boolean.parseBoolean(attributes.get("debug").split(SEPERATOR)[0]));
@@ -161,12 +170,12 @@ public abstract class ActorCreator<T extends Actor> {
 		}
 	}
 	
-	protected Color parseColor(String value){
-		try {
-			return (Color) Color.class.getField(value.toUpperCase()).get(null);
-		} catch (Exception ex) {
-			throw new UnsupportedOperationException();
-		}
+	public Class<?> getStyleType(){
+		return null;
+	}
+	
+	public Object createStyle(String attributes){
+		return null;
 	}
 	
 	/**

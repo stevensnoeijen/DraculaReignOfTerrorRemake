@@ -2,8 +2,9 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,6 +20,33 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 	}
 	
 	@Override
+	public String getName() {
+		return "table";
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();//create new, because groupcreator will fill it with it's children, which in table are row(s) and dont have dependencies themself
+		if(element.getAttributes().containsKey("background")){
+			String imageFile = element.getAttribute("background").split(":")[0];
+			dependencies.put(imageFile, new AssetDescriptor<TextureAtlas>(imageFile, TextureAtlas.class));
+		}
+		//get row-element dependencies
+		int count = element.getChildCount();
+		for(int i = 0; i < count; i++){
+			Element row = element.getChild(i);
+			int rowchildcount = row.getChildCount();
+			//get every child in the table
+			for(int y = 0; y < rowchildcount; y++){
+				dependencies.putAll( actorLoader.getDependencies(row.getChild(y)) );
+			}
+		}
+		return dependencies;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public T create(Element element, Object context) {
 		Table table = new Table();
 		set(table, element, context);
@@ -31,11 +59,11 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("skin")){//if skin attribute is set it in the 
-				Skin skin = actorLoader.getLoadedAsset(attributes.get("skin"), Skin.class);
+				Skin skin = actorLoader.getAsset(attributes.get("skin"), Skin.class);
 				table.setSkin(skin);
 			}
 			if(attributes.containsKey("background")){//if skin attribute is set it in the 
-				Drawable background = actorLoader.getLoadedAsset(attributes.get("background"), Drawable.class);
+				Drawable background = actorLoader.getAsset(attributes.get("background"), Drawable.class);
 				table.setBackground(background);
 			}
 		}

@@ -2,7 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -15,12 +15,25 @@ public class LabelCreator extends WidgetCreator<Label> {
 	}
 	
 	@Override
+	public String getName() {
+		return "label";
+	}
+	
+	@Override
+	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
+		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
+		AssetDescriptor<Skin> assetDescriptor = new AssetDescriptor<Skin>(element.get("skin"), Skin.class);
+		dependencies.put(assetDescriptor.fileName, assetDescriptor);
+		return dependencies;
+	}
+	
+	@Override
 	public Label create(Element element, Object context) {
 		String text = "";
 		if(element.getAttributes().containsKey("text")){
 			text = element.get("text");
 		}
-		Skin skin =  actorLoader.getLoadedAsset(element.get("skin"), Skin.class);
+		Skin skin =  actorLoader.getAsset(element.get("skin"), Skin.class);
 		Label label = new Label(text, skin);
 		set(label, element, context);
 		return label;

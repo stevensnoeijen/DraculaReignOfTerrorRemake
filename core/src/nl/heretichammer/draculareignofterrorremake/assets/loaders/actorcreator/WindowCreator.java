@@ -2,7 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -13,11 +13,33 @@ public class WindowCreator<T extends Window> extends TableCreator<T> {
 	public WindowCreator(ActorLoader actorLoader) {
 		super(actorLoader);
 	}
+	
+	@Override
+	public String getName() {
+		return "window";
+	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
+		ObjectMap<String, String> attributes = element.getAttributes();
+		if(attributes.containsKey("skin")){
+			AssetDescriptor<Skin> assetDescriptor = new AssetDescriptor<Skin>(element.get("skin"), Skin.class);
+			dependencies.put(assetDescriptor.fileName, assetDescriptor);
+		}
+		return dependencies;
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public T create(Element element, Object context) {
-		Skin skin = actorLoader.getLoadedAsset(element.get("skin"), Skin.class);
-		Window window = new Window(element.get("title"), skin);
+		String title = "";
+		if(element.getAttributes().containsKey("title")){
+			title = element.get("title");
+		}
+		Skin skin = actorLoader.getAsset(element.get("skin"), Skin.class);
+		Window window = new Window(title, skin);
 		set(window, element, context);
 		return (T) window;
 	}

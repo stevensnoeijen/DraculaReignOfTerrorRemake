@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -12,6 +13,23 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 
 	public GroupCreator(ActorLoader actorLoader) {
 		super(actorLoader);
+	}
+	
+	@Override
+	public String getName() {
+		return "group";
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
+		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
+		int count = element.getChildCount();
+		for(int i = 0; i < count; i++){
+			Element child = element.getChild(i);
+			dependencies.putAll( actorLoader.getDependencies(child) );
+		}
+		return dependencies;
 	}
 	
 	@Override
