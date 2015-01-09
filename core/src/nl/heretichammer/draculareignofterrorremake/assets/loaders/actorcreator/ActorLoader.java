@@ -1,18 +1,8 @@
-package nl.heretichammer.draculareignofterrorremake.assets.loaders;
+package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.GroupCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ImageButtonCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ImageCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.LabelCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.StackCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.TableCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.TextFieldCreator;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.WindowCreator;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;

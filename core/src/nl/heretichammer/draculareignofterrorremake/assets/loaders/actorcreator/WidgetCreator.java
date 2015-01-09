@@ -4,8 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
-
 public abstract class WidgetCreator<T extends Widget> extends ActorCreator<T> {
 
 	public WidgetCreator(ActorLoader actorLoader) {

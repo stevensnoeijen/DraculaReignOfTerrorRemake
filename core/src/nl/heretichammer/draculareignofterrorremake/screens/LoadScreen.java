@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

@@ -3,7 +3,6 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 import java.lang.reflect.Method;
 
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.Actor;

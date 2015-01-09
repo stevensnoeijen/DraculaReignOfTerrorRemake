@@ -2,7 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.screens.windows;
 
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;

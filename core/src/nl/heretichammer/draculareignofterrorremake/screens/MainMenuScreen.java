@@ -4,7 +4,7 @@ import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.SaveWindow;
 import nl.heretichammer.draculareignofterrorremake.view.View;

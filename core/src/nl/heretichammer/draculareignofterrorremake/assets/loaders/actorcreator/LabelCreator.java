@@ -1,7 +1,5 @@
 package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.ActorLoader;
-
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
