@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -87,11 +88,11 @@ public class SaveWindow implements ScreenWindow {
 			}, 0.25f);
 		}
 		
-		public void selectSave(InputEvent event){
+		public void select(InputEvent event){
 			if(selected.getParent() == null){//add if not added
 				window.addActor(selected);
 			}
-			Label target = (Label)event.getTarget();
+			TextField target = (TextField)event.getTarget();
 			selected.setPosition(target.getX() - 5f, target.getY());
 		}
 	}

@@ -22,11 +22,7 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 	@Override
 	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
 		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
-		int count = element.getChildCount();
-		for(int i = 0; i < count; i++){
-			Element child = element.getChild(i);
-			dependencies.putAll( actorLoader.getDependencies(child) );
-		}
+		getChildenDependencies(element, dependencies);
 		return dependencies;
 	}
 	

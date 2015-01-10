@@ -12,13 +12,14 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
@@ -124,7 +125,15 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 			String textureName = args[1];
 			return (T) new TextureRegionDrawable( assetManager.get(file, TextureAtlas.class).findRegion(textureName) );
 		}else if(clazz == Skin.class){
-			return (T) assetManager.get(fileName, Skin.class);
+			return (T) assetManager.get(fileName, clazz);
+		}else if(clazz == BitmapFont.class){
+			if(fileName.endsWith(".fnt")){
+				return (T) assetManager.get(fileName, BitmapFont.class);
+			}else if(fileName.endsWith(".ttf")){
+				throw new UnsupportedOperationException();
+			}else{
+				throw new UnsupportedOperationException();
+			}
 		}else{
 			throw new UnsupportedOperationException();
 		}

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 public abstract class ActorCreator<T extends Actor> {
 	public static final String SEPERATOR = ",";
@@ -29,6 +30,14 @@ public abstract class ActorCreator<T extends Actor> {
 	public ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
 		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
 		return dependencies;
+	}
+	
+	protected final void getChildenDependencies(XmlReader.Element root, ObjectMap<String, AssetDescriptor> dependencies){
+		int count = root.getChildCount();
+		for(int i = 0; i < count; i++){
+			Element child = root.getChild(i);
+			dependencies.putAll( actorLoader.getDependencies(child) );
+		}
 	}
 	
 	public abstract T create(XmlReader.Element element, Object context);

@@ -1,7 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.screens.windows;
 
-import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
+import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 
@@ -87,7 +86,7 @@ public class LoadWindow implements ScreenWindow {
 			}, 0.25f);
 		}
 		
-		public void selectLoad(InputEvent event){
+		public void select(InputEvent event){
 			if(selected.getParent() == null){//add if not added
 				window.addActor(selected);
 			}

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<window skin="skin/uiskin.json" background="image/mainmenu.pack:ui-window-load" fillparent="true">
+<window skin="skin/default.json" background="image/mainmenu.pack:ui-window-load" fillparent="true">
 	<image x="83" y="360" drawable="image/mainmenu.pack:ui-label-save" />
 	
 	<imagebutton name="ok" x="96" y="260" style="down=image/mainmenu.pack:ui-button2-ok-clicked" click="ok" />
 	<imagebutton name="cancel" x="96" y="182" style="down=image/mainmenu.pack:ui-button2-cancel-clicked" click="cancel" />
 	
-	<textfield name="save0" x="350" y="375" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save1" x="350" y="335" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save2" x="350" y="295" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save3" x="350" y="255" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save4" x="350" y="215" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save5" x="350" y="175" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save6" x="350" y="135" skin="skin/uiskin.json" click="selectSave" />
-	<label name="save7" x="350" y="95" skin="skin/uiskin.json" click="selectSave" />
+	<textfield name="save0" x="350" y="375" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save1" x="350" y="335" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save2" x="350" y="295" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save3" x="350" y="255" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save4" x="350" y="215" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save5" x="350" y="175" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save6" x="350" y="135" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
+	<textfield name="save7" x="350" y="95" width="200" click="select" style="font=font/default.fnt, fontcolor=white, selection=skin/default.atlas:default-select-selection"/>
 </window>

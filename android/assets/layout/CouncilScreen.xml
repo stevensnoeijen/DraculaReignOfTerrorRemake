@@ -38,8 +38,8 @@
 			<cell width="200" height="400">
 				<stack> <!-- tab container -->
 					<group><!-- basics -->
-						<label name="location" skin="skin/uiskin.json" text="location" fontscale="0.8" x="75" y="330" alignment="center"/>
-						<label name="info" skin="skin/uiskin.json" text="info" fontscale="0.8" x="15" y="27"/>
+						<label name="location" skin="skin/default.json" text="location" fontscale="0.8" x="75" y="330" alignment="center"/>
+						<label name="info" skin="skin/default.json" text="info" fontscale="0.8" x="15" y="27"/>
 					</group>
 					<group name="tab.training" visible="true">
 						<table x="97" y="197">
@@ -48,28 +48,28 @@
 					            	<imagebutton click="trainTroop" name="trainer.swordsoldiers" userobject="swordsoldier" style="up=image/council.pack:ui-button-swordsoldiers, down=image/council.pack:ui-button-swordsoldiers-click, disabled=image/council.pack:ui-button-swordsoldiers-disabled"/>
 					            </cell>
 					            <cell width="17">										                
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="3"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="3"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 				            </row>
 				            <row height="30">
@@ -77,28 +77,28 @@
 					                <imagebutton click="trainTroop" name="trainer.crossbowsoldiers" userobject="crossbowsoldier" style="up=image/council.pack:ui-button-crossbowsoldiers, down=image/council.pack:ui-button-crossbowsoldiers-click, disabled=image/council.pack:ui-button-crossbowsoldiers-disabled"/>
 					            </cell>
 					            <cell width="17">										                
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="5"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="6"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="6"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="3"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="5"/>										                
 					            </cell>
 				            </row>
 				            <row height="30">
@@ -106,28 +106,28 @@
 					                <imagebutton click="trainTroop" name="trainer.knight" userobject="knight" style="up=image/council.pack:ui-button-knight, down=image/council.pack:ui-button-knight-click, disabled=image/council.pack:ui-button-knight-disabled" />
 					            </cell>
 					            <cell width="17">									                
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="8"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="8"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 				            </row>
 				            <row height="30">
@@ -135,28 +135,28 @@
 					                <imagebutton click="trainTroop" name="trainer.juggernaut" userobject="juggernaut" style="up=image/council.pack:ui-button-juggernaut, down=image/council.pack:ui-button-juggernaut-click, disabled=image/council.pack:ui-button-juggernaut-disabled" />
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="3"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="3"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="5"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="2"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="2"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 				            </row>
 				            <row height="30">
@@ -164,28 +164,28 @@
 					                <imagebutton click="trainTroop" name="trainer.catapult" userobject="catapult" style="up=image/council.pack:ui-button-catapult, down=image/council.pack:ui-button-catapult-click, disabled=image/council.pack:ui-button-catapult-disabled" />
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="7"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="6"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="6"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="7"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="5"/>										                
 					            </cell>
 				            </row>
 				            <row height="30">
@@ -193,28 +193,28 @@
 					                <imagebutton click="trainTroop" name="trainer.cannon" userobject="cannon" style="up=image/council.pack:ui-button-cannon, down=image/council.pack:ui-button-cannon-click, disabled=image/council.pack:ui-button-cannon-disabled" />
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="8"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="8"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="7"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="6"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="6"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="3"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="3"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="7"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="7"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="1"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="1"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 				            </row>
 				            <row height="30">
@@ -222,28 +222,28 @@
 					                <imagebutton click="trainTroop" name="trainer.spy" userobject="spy" style="up=image/council.pack:ui-button-spy, down=image/council.pack:ui-button-spy-click, disabled=image/council.pack:ui-button-spy-disabled" />
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="4"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="4"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="5"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="5"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 					            <cell width="17">
-					                <label skin="skin/uiskin.json" fontscale="0.8" alignment="center" text="0"/>										                
+					                <label skin="skin/default.json" fontscale="0.8" alignment="center" text="0"/>										                
 					            </cell>
 				            </row>
 						</table>
@@ -276,49 +276,49 @@
 				    </group>
 				    <group name="tab.information" visible="false">
 				    	<!-- resources -->
-				    	<label alignment="center" x="25" y="245" skin="skin/uiskin.json" text="?" name="information.gold"/>
-				    	<label alignment="center" x="75" y="245" skin="skin/uiskin.json" text="?" name="information.wood"/>
-				    	<label alignment="center" x="120" y="245" skin="skin/uiskin.json" text="?" name="information.food"/>
-				    	<label alignment="center" x="170" y="245" skin="skin/uiskin.json" text="?" name="information.men"/>
+				    	<label alignment="center" x="25" y="245" skin="skin/default.json" text="?" name="information.gold"/>
+				    	<label alignment="center" x="75" y="245" skin="skin/default.json" text="?" name="information.wood"/>
+				    	<label alignment="center" x="120" y="245" skin="skin/default.json" text="?" name="information.food"/>
+				    	<label alignment="center" x="170" y="245" skin="skin/default.json" text="?" name="information.men"/>
 				    	<!-- troops -->
 				    	<image x="20" y="210" drawable="image/council.pack:info-swordsmen"/>
-				    	<label x="30" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.swordsmen"/>
+				    	<label x="30" y="190" skin="skin/default.json" text="?" fontscale="0.8f" name="information.swordsmen"/>
 				    	<image x="65" y="210" drawable="image/council.pack:info-crossbowsoldier"/>
-				    	<label x="75" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.crossbowsoldier"/>
+				    	<label x="75" y="190" skin="skin/default.json" text="?" fontscale="0.8f" name="information.crossbowsoldier"/>
 				    	<image x="105" y="210" drawable="image/council.pack:info-knight"/>
-				    	<label x="115" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.knight"/>
+				    	<label x="115" y="190" skin="skin/default.json" text="?" fontscale="0.8f" name="information.knight"/>
 				    	<image x="150" y="210" drawable="image/council.pack:info-juggernaut"/>
-				    	<label x="160" y="190" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.juggernaut"/>
+				    	<label x="160" y="190" skin="skin/default.json" text="?" fontscale="0.8f" name="information.juggernaut"/>
 				    	
 				    	<image x="20" y="160" drawable="image/council.pack:info-catapult"/>
-				    	<label x="30" y="140" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.catapult"/>
+				    	<label x="30" y="140" skin="skin/default.json" text="?" fontscale="0.8f" name="information.catapult"/>
 				    	<image x="65" y="160" drawable="image/council.pack:info-canon"/>
-				    	<label x="75" y="140" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.crossbowsoldier"/>
+				    	<label x="75" y="140" skin="skin/default.json" text="?" fontscale="0.8f" name="information.crossbowsoldier"/>
 				    	<image x="105" y="160" drawable="image/council.pack:info-spy"/>
-				    	<label x="115" y="140" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.knight"/>
+				    	<label x="115" y="140" skin="skin/default.json" text="?" fontscale="0.8f" name="information.knight"/>
 				    	<!-- buildings -->
 				    	<image x="20" y="90" drawable="image/council.pack:info-bridge"/>
-				    	<label x="30" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.tower"/>
+				    	<label x="30" y="70" skin="skin/default.json" text="?" fontscale="0.8f" name="information.tower"/>
 				    	<image x="65" y="90" drawable="image/council.pack:info-tower"/>
-				    	<label x="75" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.tower"/>
+				    	<label x="75" y="70" skin="skin/default.json" text="?" fontscale="0.8f" name="information.tower"/>
 				    	<image x="105" y="90" drawable="image/council.pack:info-castle1"/>
-				    	<label x="115" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.castle1"/>
+				    	<label x="115" y="70" skin="skin/default.json" text="?" fontscale="0.8f" name="information.castle1"/>
 				    	<image x="150" y="90" drawable="image/council.pack:info-castle2"/>
-				    	<label x="160" y="70" skin="skin/uiskin.json" text="?" fontscale="0.8f" name="information.castle2"/>
+				    	<label x="160" y="70" skin="skin/default.json" text="?" fontscale="0.8f" name="information.castle2"/>
 				    </group>
 				    <group name="tab.administration" visible="false">
 				    	<!--  armament -->
-				        <label fontscale="0.8f" alignment="center" x="90" y="307" skin="skin/uiskin.json" text="?/?" name="administration.armament.level"/>
+				        <label fontscale="0.8f" alignment="center" x="90" y="307" skin="skin/default.json" text="?/?" name="administration.armament.level"/>
 				        <image x="5" y="195" drawable="image/council.pack:upgrade-armament-1" name="administration.armament.image"/>
-				        <label fontscale="0.75f" alignment="center" x="130" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.gold"/>
-				        <label fontscale="0.75f" alignment="center" x="160" y="240" skin="skin/uiskin.json" text="???" name="administration.armament.time"/>
+				        <label fontscale="0.75f" alignment="center" x="130" y="240" skin="skin/default.json" text="???" name="administration.armament.gold"/>
+				        <label fontscale="0.75f" alignment="center" x="160" y="240" skin="skin/default.json" text="???" name="administration.armament.time"/>
 				        <imagebutton x="120" y="195" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty" click="upgradeArmament" name="administration.armament.button"/>
 				        
 				        <!-- architecture -->
-				        <label fontscale="0.8f" alignment="center" x="90" y="175" skin="skin/uiskin.json" text="?/?" name="administration.architecture.level"/>
+				        <label fontscale="0.8f" alignment="center" x="90" y="175" skin="skin/default.json" text="?/?" name="administration.architecture.level"/>
 				        <image x="5" y="60" drawable="image/council.pack:upgrade-architecture-1"  name="administration.architecture.image"/>
-				        <label fontscale="0.75f" alignment="center" x="130" y="105" skin="skin/uiskin.json" text="???" name="administration.architecture.gold"/>
-				        <label fontscale="0.75f" alignment="center" x="160" y="105" skin="skin/uiskin.json" text="???" name="administration.architecture.time"/>
+				        <label fontscale="0.75f" alignment="center" x="130" y="105" skin="skin/default.json" text="???" name="administration.architecture.gold"/>
+				        <label fontscale="0.75f" alignment="center" x="160" y="105" skin="skin/default.json" text="???" name="administration.architecture.time"/>
 				        <imagebutton x="120" y="65" style="up=image/council.pack:ui-button-upgrade2, down=image/council.pack:ui-button-upgrade2-click, disabled=empty" click="upgradeArchitecture" name="administration.architecture.button"/>
 				    </group>
 				</stack>
@@ -346,41 +346,41 @@
 		<table x="102" y="105">
 		    <row height="15" spaceBottom="2">
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="gold"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="gold"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="wood"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="wood"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="food"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="food"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="men"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="men"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="army"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="army"/>
 		        </cell>
 		    </row>
 		    <row height="15">
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="goldIncome"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="goldIncome"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="woodIncome"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="woodIncome"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="foodIncome"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="foodIncome"/>
 		        </cell>
 		        <cell width="38">
-		            <label skin="skin/uiskin.json" text="?" fontscale=".7" alignment="center" name="menIncome"/>
+		            <label skin="skin/default.json" text="?" fontscale=".7" alignment="center" name="menIncome"/>
 		        </cell>
 		    </row>
 		</table>
 	</group>
-	<label skin="skin/uiskin.json" color="black" text="Anno Domini" x="515" y="210"/>
-	<label name="year" text="?" skin="skin/uiskin.json" x="560" y="190" fontscale="0.8" alignment="center"/>
-	<label skin="skin/uiskin.json" color="black" text="Week" x="540" y="165"/>
-	<label name="week" text="?" skin="skin/uiskin.json" x="560" y="150" fontscale="0.8" alignment="center"/>
+	<label skin="skin/default.json" color="black" text="Anno Domini" x="515" y="210"/>
+	<label name="year" text="?" skin="skin/default.json" x="560" y="190" fontscale="0.8" alignment="center"/>
+	<label skin="skin/default.json" color="black" text="Week" x="540" y="165"/>
+	<label name="week" text="?" skin="skin/default.json" x="560" y="150" fontscale="0.8" alignment="center"/>
 	
 	<imagebutton x="525" y="55" click="week" style="up=image/council.pack:ui-waxseal, down=image/council.pack:ui-waxseal-select"/>
 </group>
