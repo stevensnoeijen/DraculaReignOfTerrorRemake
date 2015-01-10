@@ -13,7 +13,7 @@ public class EventbusTest {
 	boolean called;
 	
 	@Before
-	public void init(){
+	public void reset(){
 		called = false;
 	}
 	
@@ -47,11 +47,16 @@ public class EventbusTest {
 	
 	@Test
 	public void unregisterTest() {
-		 fail();
-	}
-
-	@Test
-	public void postTest() {
-		fail();
+		Eventbus eventbus = new Eventbus();
+		Subscriber subscriber;
+		eventbus.register(subscriber = new Subscriber() {
+			@Subscribe
+			public void on(PropertyChangeEvent e){
+				called = true;
+			}
+		});
+		eventbus.unregister(subscriber);
+		eventbus.post(new PropertyChangeEvent("me", "name", "steven", "stevo"));
+		assertFalse(called);//should not be changed
 	}
 }

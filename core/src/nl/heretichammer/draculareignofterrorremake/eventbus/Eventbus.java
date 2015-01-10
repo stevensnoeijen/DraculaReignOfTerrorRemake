@@ -2,7 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.eventbus;
 
 public class Eventbus {
 	
-	private SubscriberRegistry subscriberRegistry = new SubscriberRegistry();
+	private final SubscriberRegistry subscriberRegistry = new SubscriberRegistry();
 	
 	public void register(Subscriber subscriber){
 		subscriberRegistry.register(subscriber);
