@@ -6,6 +6,7 @@ import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
+import nl.heretichammer.draculareignofterrorremake.screens.windows.OptionsWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.SaveWindow;
 import nl.heretichammer.draculareignofterrorremake.view.View;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
@@ -36,11 +37,12 @@ public class MainMenuScreen extends ActorScreen {
 	private UI ui = new UI();
 	private LoadWindow loadWindow = new LoadWindow();
 	private SaveWindow saveWindow = new SaveWindow();
+	private OptionsWindow optionsWindow = new OptionsWindow();
 	
 	private AssetManager assetManager;
 	private AssetHelper assetHelper;
 	
-	private Skin skin;
+	private Skin skin;//FIXME: remove this
 	
 	public MainMenuScreen() {
 		assetManager = new AssetManager();
@@ -54,6 +56,7 @@ public class MainMenuScreen extends ActorScreen {
 		assetManager.load("layout/MainMenuScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
 		saveWindow.load(assetManager);
 		loadWindow.load(assetManager);
+		optionsWindow.load(assetManager);
 	}
 
 	@Override
@@ -63,6 +66,7 @@ public class MainMenuScreen extends ActorScreen {
 		assets.mainScreen = (Group) assetManager.get("layout/MainMenuScreen.xml", Actor.class);
 		saveWindow.loaded(assetManager);
 		loadWindow.loaded(assetManager);
+		optionsWindow.loaded(assetManager);
 		stage.addActor(assets.mainScreen);
 		assets.music.setLooping(true);
 		super.loaded(assetManager);
@@ -144,72 +148,6 @@ public class MainMenuScreen extends ActorScreen {
 		}
 	}
 	
-	private void showOptionsWindow() {
-		final Window window = new Window("", skin);
-		window.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-window-options"));
-		window.setFillParent(true);
-		
-		//create buttonstyles
-		ImageButton.ImageButtonStyle okButtonStyle = new ImageButton.ImageButtonStyle();
-		okButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-ok-clicked");
-		ImageButton.ImageButtonStyle cancelButtonStyle = new ImageButton.ImageButtonStyle();
-		cancelButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-cancel-clicked");
-		ImageButton.ImageButtonStyle defaultButtonStyle = new ImageButton.ImageButtonStyle();
-		defaultButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button2-default-clicked");
-
-		//create and add buttons
-		ImageButton okButton = new ImageButton(okButtonStyle);
-		okButton.setPosition(112, 265);
-		okButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				assets.click.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						MainMenuScreen.this.exit(window);
-					}
-				}, 0.5f);
-			}
-		});
-		window.addActor(okButton);
-		ImageButton cancelButton = new ImageButton(cancelButtonStyle);
-		cancelButton.setPosition(112, 192);
-		cancelButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				assets.click.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						MainMenuScreen.this.exit(window);
-					}
-				}, 0.25f);
-			}
-		});
-		window.addActor(cancelButton);
-		ImageButton defaultButton = new ImageButton(defaultButtonStyle);
-		defaultButton.setPosition(112, 118);
-		defaultButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				assets.click.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						MainMenuScreen.this.exit(window);
-					}
-				}, 0.25f);
-			}
-		});
-		window.addActor(defaultButton);
-		
-		stage.addActor(window);
-	}
-
 	private void exit(){
 		stage.addAction(Actions.sequence(Actions.fadeOut(0.75f), new Action() {
 			@Override
@@ -306,8 +244,10 @@ public class MainMenuScreen extends ActorScreen {
 				break;
 			case INTRODUCTION:
 				throw new UnsupportedOperationException();
+				//break;
 			case OPTIONS:
-				showOptionsWindow();
+				optionsWindow.show(stage);
+				break;
 			case EXIT:
 				exit();
 				break;

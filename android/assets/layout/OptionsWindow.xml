@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window skin="skin/default.json" background="image/mainmenu.pack:ui-window-options" fillparent="true">
+	<imagebutton name="ok" x="112" y="265" style="down=image/mainmenu.pack:ui-button2-ok-clicked" click="ok" />
+	<imagebutton name="cancel" x="112" y="192" style="down=image/mainmenu.pack:ui-button2-cancel-clicked" click="cancel" />
+	<imagebutton name="default" x="112" y="118" style="down=image/mainmenu.pack:ui-button2-default-clicked" click="defaultClick" />
+	
+</window>
