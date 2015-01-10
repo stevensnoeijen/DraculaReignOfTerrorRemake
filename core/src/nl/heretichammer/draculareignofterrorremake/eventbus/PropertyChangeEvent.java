@@ -21,12 +21,12 @@ public class PropertyChangeEvent implements Event {
 		return propertyName;
 	}
 	
-	public <T> T getOldValue(Class<T> type) {
-		return (T)oldValue;
+	public Object getOldValue() {
+		return oldValue;
 	}
 	
-	public <T> T getNewValue(Class<T> type) {
-		return (T)newValue;
+	public Object getNewValue() {
+		return newValue;
 	}
 	
 	public final static class PropertyChangeEventFilter implements Filter<PropertyChangeEvent> {
