@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 public class SubscribeMethod {
 	private final Subscriber subscriber;
 	private final Method method;
+	private final Class<? extends Event> eventType;
 	private final Subscribe subscribe;
 	private final Filter<Event> filter;
 	
@@ -13,7 +14,7 @@ public class SubscribeMethod {
 		this.method = method;
 		this.subscribe = method.getAnnotation(Subscribe.class);
 		
-		Class<? extends Event> eventType = (Class<? extends Event>) method.getParameterTypes()[0];
+		eventType = (Class<? extends Event>) method.getParameterTypes()[0];
 		if(eventType.isAnnotationPresent(Filterable.class)){
 			try {
 				filter = (Filter<Event>) eventType.getAnnotation(Filterable.class).value().newInstance();
@@ -23,6 +24,14 @@ public class SubscribeMethod {
 		}else{
 			filter = Filter.NULL;
 		}
+	}
+	
+	public Subscriber getSubscriber() {
+		return subscriber;
+	}
+	
+	public Class<? extends Event> getEventType(){
+		return eventType;
 	}
 	
 	/**

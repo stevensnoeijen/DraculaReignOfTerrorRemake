@@ -4,26 +4,26 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class SubscriberRegistry {
-	
 	private final Map<Class<? extends Event>, List<SubscribeMethod>> subscribers = Collections.synchronizedMap(new HashMap<Class<? extends Event>, List<SubscribeMethod>>());
 	
-	private Map<Class<? extends Event>, List<SubscribeMethod>> getSubscribers(Subscriber subscriber){
+	private Map<Class<? extends Event>, List<SubscribeMethod>> getSubscribeMethods(Subscriber subscriber){
 		Map<Class<? extends Event>, List<SubscribeMethod>> subscribers = new HashMap<Class<? extends Event>, List<SubscribeMethod>>();
 		Class<? extends Subscriber> clazz = subscriber.getClass();
 		for(Method method : clazz.getMethods()){
 			if(method.isAnnotationPresent(Subscribe.class)){
-				Subscribe subscribe = method.getAnnotation(Subscribe.class);
 				if(method.getParameterCount() == 1){
-					Class<? extends Event> parameterType = (Class<? extends Event>) method.getParameterTypes()[0];
-					if(!subscribers.containsKey(parameterType)){//create list for events if it not exist
-						subscribers.put(parameterType, new ArrayList<SubscribeMethod>());
-					}					
 					SubscribeMethod subscriberMethod = new SubscribeMethod(subscriber, method);
-					subscribers.get(parameterType).add(subscriberMethod);
+					Class<? extends Event> eventType = subscriberMethod.getEventType();
+					
+					if(!subscribers.containsKey(eventType)){//create list for events if it not exist
+						subscribers.put(eventType, Collections.synchronizedList( new ArrayList<SubscribeMethod>()) );
+					}
+					subscribers.get(eventType).add(subscriberMethod);
 				}else{
 					throw new UnsupportedOperationException();
 				}
@@ -33,7 +33,7 @@ public class SubscriberRegistry {
 	}
 	
 	public void register(Subscriber subscriber){
-		for(Map.Entry<Class<? extends Event>, List<SubscribeMethod>> eventSubscribers : getSubscribers(subscriber).entrySet()){//per subscribe method
+		for(Map.Entry<Class<? extends Event>, List<SubscribeMethod>> eventSubscribers : getSubscribeMethods(subscriber).entrySet()){//per subscribe method
 			Class<? extends Event> eventType = eventSubscribers.getKey();
 			if(!this.subscribers.containsKey(eventType)){//create list for events if it not exist
 				this.subscribers.put(eventType, new ArrayList<SubscribeMethod>());
@@ -44,7 +44,20 @@ public class SubscriberRegistry {
 	}
 	
 	public void unregister(Subscriber subscriber){
-		throw new UnsupportedOperationException();
+		for(Method method : subscriber.getClass().getMethods()){//go through every method
+			method.setAccessible(true);
+			if(method.isAnnotationPresent(Subscribe.class)){//that has subscribe annotation
+				@SuppressWarnings("unchecked")
+				Class<? extends Event> eventType = (Class<? extends Event>) method.getParameterTypes()[0];//get first param, which must be the event
+				List<SubscribeMethod> subscribeMethods = subscribers.get(eventType);//get subscribemethods of the event-type
+				for (Iterator<SubscribeMethod> iterator = subscribeMethods.iterator(); iterator.hasNext();) {//search trough the subscribemethods
+					SubscribeMethod subscribeMethod = iterator.next();
+					if(subscribeMethod.getSubscriber() == subscriber){
+						iterator.remove();//remove if this subscrivemethod is from the subscriber
+					}
+				}
+			}
+		}
 	}
 	
 	Iterable<SubscribeMethod> getSubscribeMethod(Class<? extends Event> eventType){
