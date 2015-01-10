@@ -18,5 +18,5 @@ public @interface Subscribe {
 	 * Filter to only receive of a certain (1 or multiple) property, if not set it will receive all.
 	 * @return regex of property/properties
 	 */
-	//public String filter() default "";
+	public String filter() default "";
 }

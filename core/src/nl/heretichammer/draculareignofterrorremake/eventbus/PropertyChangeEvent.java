@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.eventbus;
 
+@Filterable(PropertyChangeEvent.PropertyChangeEventFilter.class)
 public class PropertyChangeEvent implements Event {
 	private Object source;
 	private String propertyName;
@@ -12,7 +13,6 @@ public class PropertyChangeEvent implements Event {
 		this.newValue = newValue;
 	}
 
-	@Override
 	public Object getSource() {
 		return source;
 	}
@@ -35,5 +35,12 @@ public class PropertyChangeEvent implements Event {
 		this.propertyName = null;
 		this.oldValue = null;
 		this.newValue = null;
+	}
+	
+	public final static class PropertyChangeEventFilter implements Filter<PropertyChangeEvent> {
+		@Override
+		public boolean allow(PropertyChangeEvent event, String filter) {
+			return filter.contains(event.propertyName);
+		}
 	}
 }
