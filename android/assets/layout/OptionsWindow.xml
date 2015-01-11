@@ -4,6 +4,6 @@
 	<imagebutton name="cancel" x="112" y="192" style="down=image/mainmenu.pack:ui-button2-cancel-clicked" click="cancel" />
 	<imagebutton name="default" x="112" y="118" style="down=image/mainmenu.pack:ui-button2-default-clicked" click="defaultClick" />
 	
-	<slider min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="388"/>
+	<slider name="sfx" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="388" drag="drag"/>
 	
 </window>

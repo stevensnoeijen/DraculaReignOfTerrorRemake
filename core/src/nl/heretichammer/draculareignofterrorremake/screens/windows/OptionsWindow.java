@@ -3,12 +3,14 @@ package nl.heretichammer.draculareignofterrorremake.screens.windows;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.view.View;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Timer;
 
@@ -60,7 +62,9 @@ public class OptionsWindow implements ScreenWindow {
 		
 	}
 	
-	public class UI {		
+	public class UI {
+		@View("sfx") private Slider sfx;
+		
 		public void ok(InputEvent event){
 			click.play();
 			Timer.schedule(new Timer.Task() {
@@ -90,6 +94,10 @@ public class OptionsWindow implements ScreenWindow {
 					loadDefault();
 				}
 			}, 0.25f);
+		}
+		
+		public void drag(InputEvent e){
+			System.out.println("drag");
 		}
 	}
 

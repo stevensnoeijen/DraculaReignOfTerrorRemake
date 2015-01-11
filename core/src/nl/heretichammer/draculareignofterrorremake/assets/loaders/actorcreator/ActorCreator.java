@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -141,6 +142,24 @@ public abstract class ActorCreator<T extends Actor> {
 			}
 			if(attributes.containsKey("touchable")){
 				actor.setTouchable(Touchable.valueOf(attributes.get("touchable").replace('o', 'O')));
+			}
+			if(attributes.containsKey("drag")){
+				try {
+					String drag = attributes.get("drag");
+					final Method method = context.getClass().getMethod(drag, InputEvent.class);
+					actor.addListener(new DragListener(){
+						@Override
+						public void drag(InputEvent event, float x, float y, int pointer) {
+							try {
+								method.invoke(context, event);
+							} catch (Exception ex) {
+								throw new RuntimeException(ex);
+							}
+						};
+					});
+				} catch (Exception ex) {
+					throw new RuntimeException(ex);
+				}
 			}
 		}
 	}
