@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -57,6 +58,8 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 		addCreator(new StackCreator(this));
 		addCreator(new WindowCreator<Window>(this));
 		addCreator(new TextFieldCreator<TextField>(this));
+		addCreator(new ProgressBarCreator<ProgressBar>(this));
+		addCreator(new SliderCreator(this));
 	}
 	
 	private void addCreator(ActorCreator<?> actorCreator){
@@ -101,8 +104,13 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	
 	@SuppressWarnings("rawtypes")
 	public ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
-		ActorCreator<?> creator = creators.get(element.getName());
-		return creator.getDependencies(element);
+		String name  = element.getName();
+		ActorCreator<?> creator = creators.get(name);
+		if(creator != null){
+			return creator.getDependencies(element);
+		}else{
+			throw new UnsupportedOperationException("Actorcreator " + name + " does not exist");
+		}
 	}
 	
 	private Actor load(FileHandle file, Object context){	

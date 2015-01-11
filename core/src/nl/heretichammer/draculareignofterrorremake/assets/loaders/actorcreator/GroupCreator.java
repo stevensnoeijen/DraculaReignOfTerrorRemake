@@ -21,8 +21,8 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
-		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
-		getChildenDependencies(element, dependencies);
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();;
+		getChildrenDependencies(element, dependencies);
 		return dependencies;
 	}
 	
@@ -66,5 +66,15 @@ public class GroupCreator<T extends Group> extends ActorCreator<T> {
 	protected Rectangle parseRectangle(String value){
 		String[] args = value.split(",");
 		return new Rectangle(Float.parseFloat(args[0]), Float.parseFloat(args[1]), Float.parseFloat(args[2]), Float.parseFloat(args[3]));
+	}
+
+	@Override
+	public Class<?> getStyleType() {
+		return null;
+	}
+
+	@Override
+	public Object createStyle(String attributes) {
+		return null;
 	}
 }

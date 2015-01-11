@@ -28,17 +28,30 @@ public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes.containsKey("style")){
-			String style = attributes.get("style");
-			String[] args = style.replaceAll(SPACE, "").split(SEPERATOR);
-			for(String arg : args){
-				String[] keyval = arg.split("=");
-				String key = keyval[0];
-				String value = keyval[1];
-				
-				if(key.equalsIgnoreCase("imageChecked") || key.equalsIgnoreCase("imageCheckedOver") || key.equalsIgnoreCase("imageDisabled") || key.equalsIgnoreCase("imageDown") || key.equalsIgnoreCase("imageOver") || key.equalsIgnoreCase("imageUp")){
-					AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(value), TextureAtlas.class);
-					dependencies.put(assetDescriptor.fileName, assetDescriptor);
-				}
+			ObjectMap<String, String> styleAttributes = parseStyleAttributes(attributes.get("style"));
+			if(styleAttributes.containsKey("imagechecked")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("imagechecked")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("imagecheckedover")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("imagecheckedover")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("imagedisabled")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("imagedisabled")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("imagedown")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("imagedown")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("imageover")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("imageover")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("imageup")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("imageup")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 		}
 		

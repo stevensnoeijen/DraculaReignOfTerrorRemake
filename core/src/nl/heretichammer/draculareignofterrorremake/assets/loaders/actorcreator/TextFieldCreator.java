@@ -23,27 +23,40 @@ public class TextFieldCreator<T extends TextField> extends WidgetCreator<T> {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ObjectMap<String,AssetDescriptor> getDependencies(Element element) {
-		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes.containsKey("skin")){
 			AssetDescriptor<Skin> assetDescriptor = new AssetDescriptor<Skin>(element.get("skin"), Skin.class);
 			dependencies.put(assetDescriptor.fileName, assetDescriptor);
 		}else if(attributes.containsKey("style")){
-			String style = attributes.get("style");
-			String[] args = style.replaceAll(SPACE, "").split(SEPERATOR);
-			for(String arg : args){
-				String[] keyval = arg.split("=");
-				String key = keyval[0];
-				String value = keyval[1];
-				
-				if(key.equals("background") || key.equals("key") || key.equals("disabledbackground") || key.equals("focusedbackground") || key.equals("selection")){
-					AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(value), TextureAtlas.class);
-					dependencies.put(assetDescriptor.fileName, assetDescriptor);
-				}
-				if(key.equals("font") || key.equals("messageFont")){
-					AssetDescriptor<BitmapFont> assetDescriptor = new AssetDescriptor<BitmapFont>(value, BitmapFont.class);
-					dependencies.put(assetDescriptor.fileName, assetDescriptor);
-				}
+			ObjectMap<String, String> styleAttributes = parseStyleAttributes(attributes.get("style"));
+			if(styleAttributes.containsKey("font")){//required
+				AssetDescriptor<BitmapFont> assetDescriptor = new AssetDescriptor<BitmapFont>(styleAttributes.get("font"), BitmapFont.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("fontcolor")){//required
+				AssetDescriptor<BitmapFont> assetDescriptor = new AssetDescriptor<BitmapFont>(styleAttributes.get("font"), BitmapFont.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("background")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("disabledbackground")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("disabledbackground")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("focusedbackground")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("focusedbackground")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("selection")){
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("selection")), TextureAtlas.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
+			}
+			if(styleAttributes.containsKey("messageFont")){
+				AssetDescriptor<BitmapFont> assetDescriptor = new AssetDescriptor<BitmapFont>(styleAttributes.get("messageFont"), BitmapFont.class);
+				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 		}
 		return dependencies;
@@ -82,43 +95,41 @@ public class TextFieldCreator<T extends TextField> extends WidgetCreator<T> {
 	
 	@Override
 	public Object createStyle(String attributes) {
-		attributes = attributes.replaceAll(SPACE, "");
+		ObjectMap<String, String> styleAttributes = parseStyleAttributes(attributes);
 		TextField.TextFieldStyle style = new TextField.TextFieldStyle();
-		for(String attribute : attributes.split(",")){
-			String[] args = attribute.split("=");
-			String key = args[0];
-			String value = args[1];
 			
-			if(key.equals("background")){
-				style.background = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equals("cursor")){
-				style.cursor = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("disabledBackground")){
-				style.disabledBackground = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("disabledFontColor")){
-				style.disabledFontColor = AssetUtils.parseColor(value);
-			}
-			if(key.equalsIgnoreCase("focusedBackground")){
-				style.focusedBackground = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("focusedFontColor")){
-				style.focusedFontColor = AssetUtils.parseColor(value);
-			}
-			if(key.equals("font")){
-				style.font = actorLoader.getAsset(value, BitmapFont.class);
-			}
-			if(key.equalsIgnoreCase("fontcolor")){
-				style.fontColor = AssetUtils.parseColor(value);
-			}
-			if(key.equalsIgnoreCase("messageFont")){
-				style.messageFont = actorLoader.getAsset(value, BitmapFont.class);
-			}
-			if(key.equalsIgnoreCase("selection")){
-				style.selection = actorLoader.getAsset(value, Drawable.class);
-			}
+		if(styleAttributes.containsKey("background")){
+			style.background = actorLoader.getAsset(styleAttributes.get("background"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("cursor")){
+			style.cursor = actorLoader.getAsset(styleAttributes.get("cursor"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("disabledbackground")){
+			style.disabledBackground = actorLoader.getAsset(styleAttributes.get("disabledbackground"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("disabledfontcolor")){
+			style.disabledFontColor = ActorUtils.parseColor(styleAttributes.get("disabledfontcolor"));
+		}
+		if(styleAttributes.containsKey("focusedbackground")){
+			style.focusedBackground = actorLoader.getAsset(styleAttributes.get("focusedbackground"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("focusedfontcolor")){
+			style.focusedFontColor = ActorUtils.parseColor(styleAttributes.get("focusedbackground"));
+		}
+		if(styleAttributes.containsKey("font")){
+			style.font = actorLoader.getAsset(styleAttributes.get("font"), BitmapFont.class);
+		}
+		if(styleAttributes.containsKey("fontcolor")){
+			style.fontColor = ActorUtils.parseColor(styleAttributes.get("fontcolor"));
+		}
+		if(styleAttributes.containsKey("messagefont")){
+			style.messageFont = actorLoader.getAsset(styleAttributes.get("messagefont"), BitmapFont.class);
+		}
+		if(styleAttributes.containsKey("fontcolor")){
+			style.fontColor = ActorUtils.parseColor(styleAttributes.get("fontcolor"));
+		}
+		if(styleAttributes.containsKey("selection")){
+			style.selection = actorLoader.getAsset(styleAttributes.get("selection"), Drawable.class);
 		}
 		return style;
 	}

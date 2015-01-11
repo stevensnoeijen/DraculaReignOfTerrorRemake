@@ -2,8 +2,6 @@ package nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator;
 
 import java.lang.reflect.Method;
 
-import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
-
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -26,19 +24,22 @@ public abstract class ActorCreator<T extends Actor> {
 	
 	public abstract String getName();
 	
-	@SuppressWarnings("rawtypes")
-	public ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element){
-		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
-		return dependencies;
-	}
+	/**
+	 * @return if this object can have children. If so the dependencies of the children will be also checked.
+	 */
+	//protected abstract boolean isChildrenable();
 	
-	protected final void getChildenDependencies(XmlReader.Element root, ObjectMap<String, AssetDescriptor> dependencies){
+	protected final void getChildrenDependencies(XmlReader.Element root, ObjectMap<String, AssetDescriptor> dependencies){
 		int count = root.getChildCount();
 		for(int i = 0; i < count; i++){
 			Element child = root.getChild(i);
 			dependencies.putAll( actorLoader.getDependencies(child) );
 		}
 	}
+	
+
+	@SuppressWarnings("rawtypes")
+	public abstract ObjectMap<String, AssetDescriptor> getDependencies(XmlReader.Element element);
 	
 	public abstract T create(XmlReader.Element element, Object context);
 	
@@ -51,7 +52,7 @@ public abstract class ActorCreator<T extends Actor> {
 		ObjectMap<String, String> attributes = element.getAttributes();
 		if(attributes != null){
 			if(attributes.containsKey("color")){
-				actor.setColor(AssetUtils.parseColor(attributes.get("color")));
+				actor.setColor(ActorUtils.parseColor(attributes.get("color")));
 			}
 			if(attributes.containsKey("debug")){
 				actor.setDebug(Boolean.parseBoolean(attributes.get("debug").split(SEPERATOR)[0]));
@@ -178,13 +179,23 @@ public abstract class ActorCreator<T extends Actor> {
 		}
 	}
 	
-	public Class<?> getStyleType(){
-		return null;
+	protected ObjectMap<String, String> parseStyleAttributes(String style){
+		ObjectMap<String, String> attributes = new ObjectMap<String, String>();
+		String[] args = style.replaceAll(SPACE, "").split(SEPERATOR);
+		for(String arg : args){
+			String[] keyval = arg.split("=");
+			String key = keyval[0];
+			String value = keyval[1];
+			attributes.put(key, value);
+		}
+		return attributes;
 	}
 	
-	public Object createStyle(String attributes){
-		return null;
-	}
+	public abstract Class<?> getStyleType();
+	
+	public abstract Object createStyle(String attributes);
+	
+	//public abstract ObjectMap<String, AssetDescriptor<?>> getStyleDependencies(ObjectMap<String, String> attributes);
 	
 	/**
 	 * Reset temp values saved while creating the actors. 

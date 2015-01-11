@@ -26,7 +26,7 @@ public class WindowCreator<T extends Window> extends TableCreator<T> {
 			AssetDescriptor<Skin> assetDescriptor = new AssetDescriptor<Skin>(element.get("skin"), Skin.class);
 			dependencies.put(assetDescriptor.fileName, assetDescriptor);
 		}
-		getChildenDependencies(element, dependencies);
+		getChildrenDependencies(element, dependencies);
 		return dependencies;
 	}
 	

@@ -19,7 +19,7 @@ public class LabelCreator extends WidgetCreator<Label> {
 	
 	@Override
 	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
-		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
 		AssetDescriptor<Skin> assetDescriptor = new AssetDescriptor<Skin>(element.get("skin"), Skin.class);
 		dependencies.put(assetDescriptor.fileName, assetDescriptor);
 		return dependencies;
@@ -68,5 +68,15 @@ public class LabelCreator extends WidgetCreator<Label> {
 				label.layout();
 			}
 		}
+	}
+
+	@Override
+	public Class<?> getStyleType() {
+		return Label.LabelStyle.class;
+	}
+
+	@Override
+	public Object createStyle(String attributes) {
+		throw new UnsupportedOperationException();
 	}
 }

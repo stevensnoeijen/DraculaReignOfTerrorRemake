@@ -23,7 +23,7 @@ public class ImageCreator extends WidgetCreator<Image> {
 	
 	@Override
 	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
-		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
+		ObjectMap<String, AssetDescriptor> dependencies = new ObjectMap<String, AssetDescriptor>();
 		dependencies.put(element.get("drawable"), new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(element.get("drawable")), TextureAtlas.class));
 		return dependencies;
 	}
@@ -52,5 +52,15 @@ public class ImageCreator extends WidgetCreator<Image> {
 				image.setScaling(Scaling.valueOf(attributes.get("scaling")));
 			}
 		}
+	}
+
+	@Override
+	public Class<?> getStyleType() {
+		return null;
+	}
+
+	@Override
+	public Object createStyle(String attributes) {
+		return null;
 	};
 }
