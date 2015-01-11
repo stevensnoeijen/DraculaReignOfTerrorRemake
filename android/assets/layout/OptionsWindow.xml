@@ -5,5 +5,10 @@
 	<imagebutton name="default" x="112" y="118" style="down=image/mainmenu.pack:ui-button2-default-clicked" click="defaultClick" />
 	
 	<slider name="sfx" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="388" drag="drag"/>
-	
+	<slider name="music" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="336" drag="drag"/>
+	<slider name="brightness" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="284" drag="drag"/>
+	<slider name="color" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="232" drag="drag"/>
+	<slider name="contrast" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="180" drag="drag"/>
+	<slider name="gamespeed" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="128" drag="drag"/>
+	<slider name="scrollspeed" min="0" max="1" stepsize="0.1" vertical="false" style="background=empty, knob=image/mainmenu.pack:ui-slider-knob" width="130" x="445" y="76" drag="drag"/> -->
 </window>

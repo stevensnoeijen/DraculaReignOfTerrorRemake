@@ -64,6 +64,12 @@ public class OptionsWindow implements ScreenWindow {
 	
 	public class UI {
 		@View("sfx") private Slider sfx;
+		@View("music") private Slider music;
+		@View("brightness") private Slider brightness;
+		@View("color") private Slider color;
+		@View("contrast") private Slider contrast;
+		@View("gamespeed") private Slider gamespeed;
+		@View("scrollspeed") private Slider scrollspeed;
 		
 		public void ok(InputEvent event){
 			click.play();
@@ -97,7 +103,7 @@ public class OptionsWindow implements ScreenWindow {
 		}
 		
 		public void drag(InputEvent e){
-			System.out.println("drag");
+			
 		}
 	}
 
