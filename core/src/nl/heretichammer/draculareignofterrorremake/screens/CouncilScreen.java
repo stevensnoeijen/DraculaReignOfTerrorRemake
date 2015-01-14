@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.beans.PropertyChangeEvent;
 
+import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
@@ -71,7 +72,7 @@ public class CouncilScreen extends ActorScreen {
 		setSelectedArea( world.getArea("fagaras") );
 		final Team team = player.getTeam();
 		
-		if(DRoTRGame.preferences.getBoolean("music")){
+		if(DRoTR.options.music != 0){
 			assets.music.play();
 		}
 		

@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
@@ -80,38 +81,12 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void show() {
 		super.show();
-		if(DRoTRGame.preferences.getBoolean("music")){
+		if(DRoTR.options.music != 0){
 			assets.music.play();
 		}
 		Gdx.input.setCursorImage(assets.pointer, 0, 0);
 	}
-	/*
-	private void showEngageDialog() {
-		final Dialog dialog = new Dialog("", skin);
-		dialog.addActor(continueButton);
-		ImageButton newGameButton = new ImageButton(newGameButtonStyle);
-		newGameButton.setPosition(42, 62);
-		dialog.addActor(newGameButton);
-		ImageButton cancelButton = new ImageButton(cancelButtonStyle);
-		cancelButton.setPosition(42, 24);
-		cancelButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				assets.click.play();
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						MainMenuScreen.this.exit(dialog);
-					}
-				}, 0.25f);
-			}
-		});
-		dialog.addActor(cancelButton);
-		
-		dialog.show(stage);
-	}
-	*/
+
 	private void changeScreen(Class<? extends Screen> clazz) {
 		Game game = (Game)Gdx.app.getApplicationListener();
 		
@@ -140,7 +115,7 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void resume() {
 		super.resume();
-		if(DRoTRGame.preferences.getBoolean("music")){
+		if(DRoTR.options.music != 0){
 			assets.music.play();
 		}
 	}
@@ -148,7 +123,7 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void pause() {
 		super.pause();
-		if(DRoTRGame.preferences.getBoolean("music")){
+		if(DRoTR.options.music != 0){
 			assets.music.pause();
 		}
 	}

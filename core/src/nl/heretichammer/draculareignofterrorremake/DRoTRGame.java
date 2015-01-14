@@ -5,18 +5,13 @@ import nl.heretichammer.draculareignofterrorremake.screens.LoadScreen;
 import nl.heretichammer.draculareignofterrorremake.screens.MainMenuScreen;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 
 public class DRoTRGame extends Game {
 	
-	public static Preferences preferences;
-	
 	@Override
 	public void create() {
-		preferences = Gdx.app.getPreferences("drotr/settings.xml");
-		preferences.flush();
+		DRoTR.options.load();
 		setScreen(new MainMenuScreen());
 	}
 	
