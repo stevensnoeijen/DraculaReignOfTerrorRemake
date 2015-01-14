@@ -148,14 +148,14 @@ public class MainMenuScreen extends ActorScreen {
 		public void enterMenuItem(InputEvent event) {
 			Button button = (Button)event.getTarget();
 			if(!button.isDisabled()) {
-				assets.block.play();
+				assets.block.play(DRoTR.options.sfx);
 			}
 		}
 		
 		public void clickMenuItem(InputEvent event) {
 			final Button button = (Button)event.getTarget();			
 			if(!button.isDisabled()) {
-				assets.strike.play();
+				assets.strike.play(DRoTR.options.sfx);
 				Timer.schedule(new Timer.Task() {
 					@Override
 					public void run() {

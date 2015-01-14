@@ -94,7 +94,7 @@ public class OptionsWindow implements ScreenWindow {
 		@View("scrollspeed") private Slider scrollspeed;
 		
 		public void ok(InputEvent event){
-			click.play();
+			click.play(DRoTR.options.sfx);
 			save();
 			Timer.schedule(new Timer.Task() {
 				@Override
@@ -105,7 +105,7 @@ public class OptionsWindow implements ScreenWindow {
 		}
 		
 		public void cancel(InputEvent event){
-			click.play();
+			click.play(DRoTR.options.sfx);
 			DRoTR.options.load();//load options before
 			Timer.schedule(new Timer.Task() {
 				@Override
@@ -116,7 +116,7 @@ public class OptionsWindow implements ScreenWindow {
 		}
 		
 		public void defaultClick(InputEvent event){
-			click.play();
+			click.play(DRoTR.options.sfx);
 			loadDefault();
 		}
 		
