@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens.windows;
 
+import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
@@ -60,6 +61,10 @@ public class LoadWindow implements ScreenWindow {
 	private void loadGame(String name){
 		//TODO
 		selected.remove();
+	}
+	
+	public void dispose() {
+		Disposer.dispose(this);
 	}
 	
 	public class UI {

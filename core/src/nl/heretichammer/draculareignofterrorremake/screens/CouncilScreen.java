@@ -18,7 +18,7 @@ import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
-import nl.heretichammer.draculareignofterrorremake.view.Bind;
+import nl.heretichammer.draculareignofterrorremake.view.View;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 import nl.heretichammer.draculareignofterrorremake.view.binder.Binder;
 
@@ -63,6 +63,7 @@ public class CouncilScreen extends ActorScreen {
 		stage.addActor( assetManager.get("layout/CouncilScreen.xml", Actor.class) );
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
+		assets.music.setLooping(true);
 		super.loaded(assetManager);
 	};
 	
@@ -72,9 +73,8 @@ public class CouncilScreen extends ActorScreen {
 		setSelectedArea( world.getArea("fagaras") );
 		final Team team = player.getTeam();
 		
-		if(DRoTR.options.music != 0){
-			assets.music.play();
-		}
+		assets.music.setVolume(DRoTR.options.music);
+		assets.music.play();
 		
 		Binder.bind(ui.week, world, "week");
 		Binder.bind(ui.year, world, "year");
@@ -614,48 +614,48 @@ public class CouncilScreen extends ActorScreen {
 		
 		//views auto-bind to the given name in the stage
 		//tabs
-		@Bind("tab.background") private Image tabBackground;
-		@Bind("tab.training") private Group tabTraining;
-		@Bind("tab.movement") private Group tabMovement;
-		@Bind("tab.constructions") private Group tabConstructions;
-		@Bind("tab.information") private Group tabInformation;
-		@Bind("tab.administration") private Group tabAdministration;
+		@View("tab.background") private Image tabBackground;
+		@View("tab.training") private Group tabTraining;
+		@View("tab.movement") private Group tabMovement;
+		@View("tab.constructions") private Group tabConstructions;
+		@View("tab.information") private Group tabInformation;
+		@View("tab.administration") private Group tabAdministration;
 		//info
-		@Bind("location") private Label location;
-		@Bind("info") private Label info;
-		@Bind("week") private Label week;
-		@Bind("year") private Label year;
+		@View("location") private Label location;
+		@View("info") private Label info;
+		@View("week") private Label week;
+		@View("year") private Label year;
 		//resources
-		@Bind("gold") private Label gold;
-		@Bind("wood") private Label wood;
-		@Bind("food") private Label food;
-		@Bind("men") private Label men;
-		@Bind("army") private Label army;
-		@Bind("goldIncome") private Label goldIncome;
-		@Bind("woodIncome") private Label woodIncome;
-		@Bind("foodIncome") private Label foodIncome;
-		@Bind("menIncome") private Label menIncome;
+		@View("gold") private Label gold;
+		@View("wood") private Label wood;
+		@View("food") private Label food;
+		@View("men") private Label men;
+		@View("army") private Label army;
+		@View("goldIncome") private Label goldIncome;
+		@View("woodIncome") private Label woodIncome;
+		@View("foodIncome") private Label foodIncome;
+		@View("menIncome") private Label menIncome;
 		//trainers
-		@Bind("trainer.swordsoldiers") private ImageButton trainerSwordsoldiers;
-		@Bind("trainer.crossbowsoldiers") private ImageButton trainerCrossbowsoldiers;
-		@Bind("trainer.knight") private ImageButton trainerKnight;
-		@Bind("trainer.juggernaut") private ImageButton trainerJuggernaut;
-		@Bind("trainer.catapult") private ImageButton trainerCatapult;
-		@Bind("trainer.cannon") private ImageButton trainerCannon;
-		@Bind("trainer.spy") private ImageButton trainerSpy;
+		@View("trainer.swordsoldiers") private ImageButton trainerSwordsoldiers;
+		@View("trainer.crossbowsoldiers") private ImageButton trainerCrossbowsoldiers;
+		@View("trainer.knight") private ImageButton trainerKnight;
+		@View("trainer.juggernaut") private ImageButton trainerJuggernaut;
+		@View("trainer.catapult") private ImageButton trainerCatapult;
+		@View("trainer.cannon") private ImageButton trainerCannon;
+		@View("trainer.spy") private ImageButton trainerSpy;
 		//administration
 		//armament
-		@Bind("administration.armament.level") private Label armamentLevel;
-		@Bind("administration.armament.image") private Image armamentImage;
-		@Bind("administration.armament.gold") private Label armamentGold;
-		@Bind("administration.armament.time") private Label armamentTime;
-		@Bind("administration.armament.button") private ImageButton armamentButton;
+		@View("administration.armament.level") private Label armamentLevel;
+		@View("administration.armament.image") private Image armamentImage;
+		@View("administration.armament.gold") private Label armamentGold;
+		@View("administration.armament.time") private Label armamentTime;
+		@View("administration.armament.button") private ImageButton armamentButton;
 		//architecture
-		@Bind("administration.architecture.level") private Label architectureLevel;
-		@Bind("administration.architecture.image") private Image architectureImage;
-		@Bind("administration.architecture.gold") private Label architectureGold;
-		@Bind("administration.architecture.time") private Label architectureTime;
-		@Bind("administration.architecture.button") private ImageButton architectureButton;
+		@View("administration.architecture.level") private Label architectureLevel;
+		@View("administration.architecture.image") private Image architectureImage;
+		@View("administration.architecture.gold") private Label architectureGold;
+		@View("administration.architecture.time") private Label architectureTime;
+		@View("administration.architecture.button") private ImageButton architectureButton;
 		
 		public void selectArea(InputEvent event){
 			String name = event.getTarget().getUserObject().toString();

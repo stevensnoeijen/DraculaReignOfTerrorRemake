@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
+import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
@@ -10,7 +11,7 @@ import nl.heretichammer.draculareignofterrorremake.screens.windows.EngageDialog;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.OptionsWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.SaveWindow;
-import nl.heretichammer.draculareignofterrorremake.view.Bind;
+import nl.heretichammer.draculareignofterrorremake.view.View;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 
 import com.badlogic.gdx.Game;
@@ -32,25 +33,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 
 public class MainMenuScreen extends ActorScreen {
 	private Assets assets = new Assets();
 	private UI ui = new UI();
 	
+	private Group mainScreen;
 	private LoadWindow loadWindow = new LoadWindow();
 	private SaveWindow saveWindow = new SaveWindow();
 	private OptionsWindow optionsWindow = new OptionsWindow();
 	private EngageDialog engageDialog = new EngageDialog();
 	
-	private AssetManager assetManager;
-	private AssetHelper assetHelper;
-	
-	private Skin skin;//FIXME: remove this
-	
 	public MainMenuScreen() {
-		assetManager = new AssetManager();
-		assetHelper = new AssetHelper(assetManager);
+
 	}
 	
 	@Override
@@ -68,12 +65,12 @@ public class MainMenuScreen extends ActorScreen {
 	protected void loaded(AssetManager assetManager) {
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
-		assets.mainScreen = (Group) assetManager.get("layout/MainMenuScreen.xml", Actor.class);
+		mainScreen = (Group) assetManager.get("layout/MainMenuScreen.xml", Actor.class);
 		saveWindow.loaded(assetManager);
 		loadWindow.loaded(assetManager);
 		optionsWindow.loaded(assetManager);
 		engageDialog.loaded(assetManager);
-		stage.addActor(assets.mainScreen);
+		stage.addActor(mainScreen);
 		assets.music.setLooping(true);
 		super.loaded(assetManager);
 	};
@@ -131,34 +128,34 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		assets.music.dispose();
-		assets.music = null;
-		
-		assetManager.dispose();
-		assetManager = null;
+		assets.dispose();
+		assets = null;
 	}
 	
 	private static enum MenuItem {
 		ENGAGE, LOAD, SAVE, INTRODUCTION, OPTIONS, CREDITS, EXIT
 	}
 	
-	public class Assets {
+	public class Assets implements Disposable {
 		@Asset("music/war1.mp3") private Music music;
 		@Asset("sound/block.ogg") private Sound block;
 		@Asset("sound/projectile-hit2.ogg") private Sound strike;
 		@Asset("sound/click.ogg") private Sound click;
 		@Asset("image/pointer.png") private Pixmap pointer;
-		private Group mainScreen;
+		
+		public void dispose() {
+			Disposer.dispose(this);
+		}
 	}
 	
 	public class UI {
-		@Bind("engage") private ImageButton engage;
-		@Bind("load") private ImageButton load;
-		@Bind("save") private ImageButton save;
-		@Bind("introduction") private ImageButton introduction;
-		@Bind("options") private ImageButton options;
-		@Bind("credits") private ImageButton credits;
-		@Bind("exit") private ImageButton exit;
+		@View("engage") private ImageButton engage;
+		@View("load") private ImageButton load;
+		@View("save") private ImageButton save;
+		@View("introduction") private ImageButton introduction;
+		@View("options") private ImageButton options;
+		@View("credits") private ImageButton credits;
+		@View("exit") private ImageButton exit;
 		
 		public void enterMenuItem(InputEvent event) {
 			Button button = (Button)event.getTarget();

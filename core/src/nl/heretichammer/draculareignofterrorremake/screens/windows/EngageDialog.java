@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens.windows;
 
+import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
@@ -55,6 +56,11 @@ public class EngageDialog implements ScreenWindow {
 	@Override
 	public void close() {
 		window.remove();
+	}
+	
+	@Override
+	public void dispose() {
+		Disposer.dispose(this);
 	}
 	
 	public class UI {
