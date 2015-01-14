@@ -3,7 +3,7 @@ package nl.heretichammer.draculareignofterrorremake.screens.windows;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
-import nl.heretichammer.draculareignofterrorremake.view.View;
+import nl.heretichammer.draculareignofterrorremake.view.Bind;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
@@ -63,13 +63,13 @@ public class OptionsWindow implements ScreenWindow {
 	}
 	
 	public class UI {
-		@View("sfx") private Slider sfx;
-		@View("music") private Slider music;
-		@View("brightness") private Slider brightness;
-		@View("color") private Slider color;
-		@View("contrast") private Slider contrast;
-		@View("gamespeed") private Slider gamespeed;
-		@View("scrollspeed") private Slider scrollspeed;
+		@Bind("sfx") private Slider sfx;
+		@Bind("music") private Slider music;
+		@Bind("brightness") private Slider brightness;
+		@Bind("color") private Slider color;
+		@Bind("contrast") private Slider contrast;
+		@Bind("gamespeed") private Slider gamespeed;
+		@Bind("scrollspeed") private Slider scrollspeed;
 		
 		public void ok(InputEvent event){
 			click.play();

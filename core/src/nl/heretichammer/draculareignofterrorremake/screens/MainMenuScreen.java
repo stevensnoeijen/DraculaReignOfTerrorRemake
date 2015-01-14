@@ -8,7 +8,7 @@ import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.A
 import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.OptionsWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.SaveWindow;
-import nl.heretichammer.draculareignofterrorremake.view.View;
+import nl.heretichammer.draculareignofterrorremake.view.Bind;
 import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
 
 import com.badlogic.gdx.Game;
@@ -202,13 +202,13 @@ public class MainMenuScreen extends ActorScreen {
 	}
 	
 	public class UI {
-		@View("engage") private ImageButton engage;
-		@View("load") private ImageButton load;
-		@View("save") private ImageButton save;
-		@View("introduction") private ImageButton introduction;
-		@View("options") private ImageButton options;
-		@View("credits") private ImageButton credits;
-		@View("exit") private ImageButton exit;
+		@Bind("engage") private ImageButton engage;
+		@Bind("load") private ImageButton load;
+		@Bind("save") private ImageButton save;
+		@Bind("introduction") private ImageButton introduction;
+		@Bind("options") private ImageButton options;
+		@Bind("credits") private ImageButton credits;
+		@Bind("exit") private ImageButton exit;
 		
 		public void enterMenuItem(InputEvent event) {
 			Button button = (Button)event.getTarget();

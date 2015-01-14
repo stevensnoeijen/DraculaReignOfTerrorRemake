@@ -9,8 +9,8 @@ public class ViewUtils {
 	
 	public static void bind(Group root, Object context){
 		for(Field field : context.getClass().getDeclaredFields()){
-			if(field.isAnnotationPresent(View.class)){
-				View view = field.getAnnotation(View.class);
+			if(field.isAnnotationPresent(Bind.class)){
+				Bind view = field.getAnnotation(Bind.class);
 				Actor actor = root.findActor(view.value());
 				try {
 					field.setAccessible(true);
