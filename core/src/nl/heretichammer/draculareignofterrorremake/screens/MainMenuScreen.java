@@ -72,16 +72,15 @@ public class MainMenuScreen extends ActorScreen {
 		engageDialog.loaded(assetManager);
 		stage.addActor(mainScreen);
 		assets.music.setLooping(true);
+		assets.music.setVolume(DRoTR.options.music);
 		super.loaded(assetManager);
 	};
 	
 	@Override
 	public void show() {
 		super.show();
-		if(DRoTR.options.music != 0){
-			assets.music.play();
-		}
 		Gdx.input.setCursorImage(assets.pointer, 0, 0);
+		assets.music.play();
 	}
 
 	private void changeScreen(Class<? extends Screen> clazz) {
@@ -112,17 +111,13 @@ public class MainMenuScreen extends ActorScreen {
 	@Override
 	public void resume() {
 		super.resume();
-		if(DRoTR.options.music != 0){
-			assets.music.play();
-		}
+		assets.music.play();
 	}
 	
 	@Override
 	public void pause() {
 		super.pause();
-		if(DRoTR.options.music != 0){
-			assets.music.pause();
-		}
+		assets.music.pause();
 	}
 	
 	private static enum MenuItem {

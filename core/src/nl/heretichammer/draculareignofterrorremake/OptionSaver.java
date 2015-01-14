@@ -26,7 +26,7 @@ public class OptionSaver {
 	 */
 	private void scan(Object context){
 		for(Field field : context.getClass().getFields()){
-			if(field.isAnnotationPresent(Option.class) && field.isAccessible()){//only public option fields
+			if(field.isAnnotationPresent(Option.class)){//only public option fields
 				options.put(field.getName(), field);
 			}
 		}
@@ -38,7 +38,7 @@ public class OptionSaver {
 	private void loadDefaults(){
 		try{
 			for(Field field : context.getClass().getFields()){
-				if(field.isAnnotationPresent(Option.class) && field.isAccessible()){//only public option fields
+				if(field.isAnnotationPresent(Option.class)){//only public option fields
 					defaults.put(field.getName(), field.get(context));
 				}
 			}
@@ -76,11 +76,11 @@ public class OptionSaver {
 	private void setPreference(String name, Object value, Class<?> type){
 		if(type == String.class){
 			preferences.putString(name, (String)value);
-		}else if(type == Integer.class){
+		}else if(type == int.class){
 			preferences.putInteger(name, (Integer)value);
-		}else if(type == Float.class){
+		}else if(type == float.class){
 			preferences.putFloat(name, (Float)value);
-		}else if(type == Boolean.class){
+		}else if(type == boolean.class){
 			preferences.putBoolean(name, (Boolean)value);
 		}else{
 			throw new UnsupportedOperationException();
@@ -92,11 +92,11 @@ public class OptionSaver {
 		Object defaultValue = getDefault(name);
 		if(type == String.class){
 			return (T) preferences.getString(name, (String) defaultValue);
-		}else if(type == Integer.class){
+		}else if(type == int.class){
 			return (T) Integer.valueOf( preferences.getInteger(name, (Integer) defaultValue) );
-		}else if(type == Float.class){
+		}else if(type == float.class){
 			return (T) Float.valueOf( preferences.getFloat(name, (Float) defaultValue) );
-		}else if(type == Boolean.class){
+		}else if(type == boolean.class){
 			return (T) Boolean.valueOf( preferences.getBoolean(name, (Boolean) defaultValue) );
 		}else{
 			throw new UnsupportedOperationException();
@@ -107,6 +107,9 @@ public class OptionSaver {
 		return defaults.get(name);
 	}
 	
+	/**
+	 * Reset to defaults.
+	 */
 	public void reset(){
 		try{
 			for(Map.Entry<String, Object> defaultValue : defaults.entrySet()){

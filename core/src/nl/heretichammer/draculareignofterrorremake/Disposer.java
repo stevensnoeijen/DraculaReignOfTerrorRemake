@@ -16,7 +16,7 @@ public class Disposer {
 		try{
 			for(Field field : context.getClass().getFields()){
 				field.setAccessible(true);
-				if(field.isAnnotationPresent(Asset.class) || Disposable.class.isAssignableFrom(field.getType())){
+				if(Disposable.class.isAssignableFrom(field.getType())){
 					((Disposable)field.get(context)).dispose();
 					field.set(context, null);
 				}
