@@ -5,6 +5,7 @@ import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.screens.windows.EngageDialog;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.LoadWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.OptionsWindow;
 import nl.heretichammer.draculareignofterrorremake.screens.windows.SaveWindow;
@@ -35,9 +36,11 @@ import com.badlogic.gdx.utils.Timer;
 public class MainMenuScreen extends ActorScreen {
 	private Assets assets = new Assets();
 	private UI ui = new UI();
+	
 	private LoadWindow loadWindow = new LoadWindow();
 	private SaveWindow saveWindow = new SaveWindow();
 	private OptionsWindow optionsWindow = new OptionsWindow();
+	private EngageDialog engageDialog = new EngageDialog();
 	
 	private AssetManager assetManager;
 	private AssetHelper assetHelper;
@@ -57,6 +60,7 @@ public class MainMenuScreen extends ActorScreen {
 		saveWindow.load(assetManager);
 		loadWindow.load(assetManager);
 		optionsWindow.load(assetManager);
+		engageDialog.load(assetManager);
 	}
 
 	@Override
@@ -67,6 +71,7 @@ public class MainMenuScreen extends ActorScreen {
 		saveWindow.loaded(assetManager);
 		loadWindow.loaded(assetManager);
 		optionsWindow.loaded(assetManager);
+		engageDialog.loaded(assetManager);
 		stage.addActor(assets.mainScreen);
 		assets.music.setLooping(true);
 		super.loaded(assetManager);
@@ -80,39 +85,9 @@ public class MainMenuScreen extends ActorScreen {
 		}
 		Gdx.input.setCursorImage(assets.pointer, 0, 0);
 	}
-	
+	/*
 	private void showEngageDialog() {
 		final Dialog dialog = new Dialog("", skin);
-		dialog.setBackground(assetHelper.getDrawable("images/mainmenu.pack:ui-dialog-engage"));
-		
-		//create buttonstyles
-		ImageButtonStyle continueButtonStyle = new ImageButtonStyle();
-		continueButtonStyle.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-continue-selected");
-		continueButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-continue-clicked");
-		ImageButtonStyle newGameButtonStyle = new ImageButtonStyle();
-		newGameButtonStyle.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-newgame-selected");
-		newGameButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-newgame-clicked");
-		ImageButtonStyle cancelButtonStyle = new ImageButtonStyle();
-		cancelButtonStyle.over = assetHelper.getDrawable("images/mainmenu.pack:ui-button-cancel-selected");
-		cancelButtonStyle.down = assetHelper.getDrawable("images/mainmenu.pack:ui-button-cancel-clicked");
-		
-		//create and add buttons
-		ImageButton continueButton = new ImageButton(continueButtonStyle);
-		continueButton.setPosition(42, 105);
-		continueButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				super.clicked(event, x, y);
-				stage.addAction(Actions.fadeOut(1f));
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						//TODO
-						//changeScreen(Wo)
-					}
-				}, 1f);
-			}
-		});
 		dialog.addActor(continueButton);
 		ImageButton newGameButton = new ImageButton(newGameButtonStyle);
 		newGameButton.setPosition(42, 62);
@@ -136,7 +111,7 @@ public class MainMenuScreen extends ActorScreen {
 		
 		dialog.show(stage);
 	}
-	
+	*/
 	private void changeScreen(Class<? extends Screen> clazz) {
 		Game game = (Game)Gdx.app.getApplicationListener();
 		
@@ -234,7 +209,7 @@ public class MainMenuScreen extends ActorScreen {
 		private void open(MenuItem menuItem){
 			switch (menuItem) {
 			case ENGAGE:
-				showEngageDialog();
+				engageDialog.show(stage);
 				break;
 			case LOAD:
 				loadWindow.show(stage);

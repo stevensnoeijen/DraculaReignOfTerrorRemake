@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -140,6 +141,19 @@ public abstract class ActorCreator<T extends Actor> {
 					throw new RuntimeException(ex);
 				}
 			}
+			if(attributes.containsKey("listeners")){
+				String listeners = attributes.get("listeners");
+				for(String listenerName : listeners.replaceAll(SPACE, "").split(SEPERATOR)){
+					try {
+						EventListener listener = (EventListener)context.getClass().getField(listenerName).get(context);
+						actor.addListener(listener);
+					} catch (Exception ex){
+						throw new RuntimeException(ex);
+					}
+				}
+				
+				//
+			}			
 			if(attributes.containsKey("touchable")){
 				actor.setTouchable(Touchable.valueOf(attributes.get("touchable").replace('o', 'O')));
 			}

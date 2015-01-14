@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window skin="skin/default.json" background="image/mainmenu.pack:ui-dialog-engage" x="200" y="160">
+	<imagebutton x="42" y="105" style="over=image/mainmenu.pack:ui-button-continue-selected, down=image/mainmenu.pack:ui-button-continue-clicked" listeners="continueListener"/>
+	<imagebutton x="42" y="62" style="over=image/mainmenu.pack:ui-button-newgame-selected, down=image/mainmenu.pack:ui-button-newgame-clicked" listeners="newgameListener"/>
+	<imagebutton x="42" y="24" style="over=image/mainmenu.pack:ui-button-cancel-selected, down=image/mainmenu.pack:ui-button-cancel-clicked" listeners="cancelListener"/>
+</window>
