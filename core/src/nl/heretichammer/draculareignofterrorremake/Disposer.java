@@ -9,12 +9,14 @@ import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 public class Disposer {
 	/**
 	 * Disposes all {@link Asset} fields and set them to null.
+	 * Also disposes all fields that are asign from the {@link Disposable} and set them to null.
 	 * @param context that containt assets
 	 */
 	public static void dispose(Object context){
 		try{
 			for(Field field : context.getClass().getFields()){
-				if(field.isAccessible() && field.isAnnotationPresent(Asset.class)){
+				field.setAccessible(true);
+				if(field.isAnnotationPresent(Asset.class) || Disposable.class.isAssignableFrom(field.getType())){
 					((Disposable)field.get(context)).dispose();
 					field.set(context, null);
 				}

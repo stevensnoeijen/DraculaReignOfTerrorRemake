@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
+import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
@@ -37,6 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Disposable;
 import com.google.common.eventbus.Subscribe;
 
 public class CouncilScreen extends ActorScreen {
@@ -503,7 +505,7 @@ public class CouncilScreen extends ActorScreen {
 		//TODO: check if al loaded assets in this class will be disposed automaticly?
 	}
 	
-	public class Assets {
+	public class Assets implements Disposable {
 		@Asset("image/council.pack") private TextureAtlas images;
 		@Asset("music/council1.mp3") private Music music;
 		
@@ -546,6 +548,11 @@ public class CouncilScreen extends ActorScreen {
 			}else{
 				throw new IllegalArgumentException();
 			}
+		}
+		
+		@Override
+		public void dispose() {
+			Disposer.dispose(this);
 		}
 	}
 	

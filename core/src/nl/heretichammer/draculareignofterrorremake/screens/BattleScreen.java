@@ -1,5 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
@@ -104,6 +105,7 @@ public class BattleScreen extends MapScreen {
 	public void dispose() {
 		super.dispose();
 		spriteBatch.dispose();
+		Disposer.dispose(this);
 	}
 	
 	@Override

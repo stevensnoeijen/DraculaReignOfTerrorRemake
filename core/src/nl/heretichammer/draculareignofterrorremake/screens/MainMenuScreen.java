@@ -125,13 +125,6 @@ public class MainMenuScreen extends ActorScreen {
 		}
 	}
 	
-	@Override
-	public void dispose() {
-		super.dispose();
-		assets.dispose();
-		assets = null;
-	}
-	
 	private static enum MenuItem {
 		ENGAGE, LOAD, SAVE, INTRODUCTION, OPTIONS, CREDITS, EXIT
 	}

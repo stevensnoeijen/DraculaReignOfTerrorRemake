@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.lang.reflect.Field;
 
+import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 
 import com.badlogic.gdx.Gdx;
@@ -57,6 +58,7 @@ public abstract class ActorScreen extends ScreenAdapter implements InputProcesso
 	public void dispose() {
 		super.dispose();
 		stage.dispose();
+		Disposer.dispose(this);
 	}
 
 	@Override
