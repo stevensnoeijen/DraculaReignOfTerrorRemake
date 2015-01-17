@@ -3,7 +3,6 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 import java.beans.PropertyChangeEvent;
 
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
-import nl.heretichammer.draculareignofterrorremake.DRoTRGame;
 import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
@@ -66,6 +65,7 @@ public class CouncilScreen extends ActorScreen {
 		ViewUtils.bind(stage.getRoot(), ui);
 		AssetUtils.bind(assets, assetManager);
 		assets.music.setLooping(true);
+		assets.music.setVolume(DRoTR.options.music);
 		super.loaded(assetManager);
 	};
 	
@@ -671,7 +671,7 @@ public class CouncilScreen extends ActorScreen {
 		}
 		
 		public void week(InputEvent event){
-			assets.sound_click.play();
+			assets.sound_click.play(DRoTR.options.sfx);
 			world.week();
 		}
 		
@@ -727,23 +727,23 @@ public class CouncilScreen extends ActorScreen {
 			
 			if(!troopProducer.isStarted()){
 				if(name.equals("swordsoldier")){
-					assets.sound_trainingSwordsoldiers.play();
+					assets.sound_trainingSwordsoldiers.play(DRoTR.options.sfx);
 				}else if(name.equals("crossbowsoldier")){
-					assets.sound_trainingCrossbowsoldiers.play();
+					assets.sound_trainingCrossbowsoldiers.play(DRoTR.options.sfx);
 				}else if(name.equals("knight")){
-					assets.sound_trainingKnight.play();
+					assets.sound_trainingKnight.play(DRoTR.options.sfx);
 				}else if(name.equals("juggernaut")){
-					assets.sound_trainingJuggernaut.play();
+					assets.sound_trainingJuggernaut.play(DRoTR.options.sfx);
 				}else if(name.equals("catapult")){
-					assets.sound_trainingCatapult.play();
+					assets.sound_trainingCatapult.play(DRoTR.options.sfx);
 				}else if(name.equals("cannon")){
-					assets.sound_trainingCannon.play();
+					assets.sound_trainingCannon.play(DRoTR.options.sfx);
 				}else if(name.equals("spy")){
-					assets.sound_trainingSpies.play();
+					assets.sound_trainingSpies.play(DRoTR.options.sfx);
 				}
 				troopProducer.start();
 			}else{//stop
-				assets.sound_trainingCancelled.play();
+				assets.sound_trainingCancelled.play(DRoTR.options.sfx);
 				troopProducer.stop();
 			}
 		}
@@ -785,10 +785,10 @@ public class CouncilScreen extends ActorScreen {
 			ArmamentUpgrader armamentUpgrader = player.getTeam().getArmamentUpgrader();
 			if(!armamentUpgrader.isStarted()){
 				armamentUpgrader.getNext().start();;
-				assets.sound_upgradingArmerment.play();
+				assets.sound_upgradingArmerment.play(DRoTR.options.sfx);
 			}else{//cancel
 				armamentUpgrader.getNext().cancel();
-				assets.sound_upgradingCancelled.play();
+				assets.sound_upgradingCancelled.play(DRoTR.options.sfx);
 			}
 		}
 		
@@ -796,10 +796,10 @@ public class CouncilScreen extends ActorScreen {
 			ArchitectureUpgrader architectureUpgrader = player.getTeam().getArchitectureUpgrader();
 			if(!architectureUpgrader.isStarted()){
 				architectureUpgrader.getNext().start();
-				assets.sound_upgradingArchitecture.play();
+				assets.sound_upgradingArchitecture.play(DRoTR.options.sfx);
 			}else{
 				architectureUpgrader.getNext().cancel();
-				assets.sound_upgradingCancelled.play();
+				assets.sound_upgradingCancelled.play(DRoTR.options.sfx);
 			}
 		}
 	}
