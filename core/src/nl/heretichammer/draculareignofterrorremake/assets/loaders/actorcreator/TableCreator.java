@@ -36,8 +36,8 @@ public class TableCreator<T extends Table> extends WidgetGroupCreator<T> {
 			Element row = element.getChild(i);
 			int rowchildcount = row.getChildCount();
 			//get every child in the table
-			for(int y = 0; y < rowchildcount; y++){
-				dependencies.putAll( actorLoader.getDependencies(row.getChild(y)) );
+			for(int j = 0; j < rowchildcount; j++){
+				dependencies.putAll( actorLoader.getDependencies(row.getChild(j).getChild(0) ) );
 			}
 		}
 		return dependencies;

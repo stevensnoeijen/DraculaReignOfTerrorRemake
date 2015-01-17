@@ -21,29 +21,6 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 		super(actorLoader);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	@Override
-	public ObjectMap<String, AssetDescriptor> getDependencies(Element element) {
-		ObjectMap<String, AssetDescriptor> dependencies = super.getDependencies(element);
-		ObjectMap<String, String> attributes = element.getAttributes();
-		if(attributes.containsKey("style")){
-			String style = attributes.get("style");
-			String[] args = style.replaceAll(SPACE, "").split(SEPERATOR);
-			for(String arg : args){
-				String[] keyval = arg.split("=");
-				String key = keyval[0];
-				String value = keyval[1];
-				
-				if(key.equals("checked") || key.equalsIgnoreCase("checkedOver") || key.equals("disabled") || key.equals("down") || key.equals("over") || key.equals("up")){
-					AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(value), TextureAtlas.class);
-					dependencies.put(assetDescriptor.fileName, assetDescriptor);
-				}
-			}
-		}
-		
-		return dependencies;
-	}
-	
 	@Override
 	protected void set(Button button, Element element, final Object context) {
 		super.set(button, element, context);
@@ -64,42 +41,36 @@ public class ButtonCreator<T extends Button> extends WidgetGroupCreator<T> {
 		}
 	}
 	
-	protected void setStyleProperties(Button.ButtonStyle style, String attributes) {
-		for(String attribute : attributes.replaceAll(SPACE, "").split(",")){
-			String[] args = attribute.split("=");
-			String key = args[0];
-			String value = args[1];
-			
-			if(key.equals("checked")){
-				style.checked = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("checkedOver")){
-				style.checkedOver = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equals("disabled")){
-				style.disabled = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equals("down")){
-				style.down = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equals("over")){
-				style.over = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("pressedOffsetX")){
-				style.pressedOffsetX = Float.parseFloat(value);
-			}
-			if(key.equalsIgnoreCase("pressedOffsetY")){
-				style.pressedOffsetY = Float.parseFloat(value);
-			}
-			if(key.equalsIgnoreCase("unpressedOffsetX")){
-				style.unpressedOffsetX = Float.parseFloat(value);
-			}
-			if(key.equalsIgnoreCase("unpressedOffsetY")){
-				style.unpressedOffsetY = Float.parseFloat(value);
-			}
-			if(key.equalsIgnoreCase("up")){
-				style.up = actorLoader.getAsset(value, Drawable.class);
-			}
+	protected void setStyleProperties(Button.ButtonStyle style, ObjectMap<String, String> attributes) {
+		if(attributes.containsKey("checked")){
+			style.checked = actorLoader.getAsset(attributes.get("checked"), Drawable.class);
+		}
+		if(attributes.containsKey("checkedover")){
+			style.checkedOver = actorLoader.getAsset(attributes.get("checkedover"), Drawable.class);
+		}
+		if(attributes.containsKey("disabled")){
+			style.disabled = actorLoader.getAsset(attributes.get("disabled"), Drawable.class);
+		}
+		if(attributes.containsKey("down")){
+			style.down = actorLoader.getAsset(attributes.get("down"), Drawable.class);
+		}
+		if(attributes.containsKey("over")){
+			style.over = actorLoader.getAsset(attributes.get("over"), Drawable.class);
+		}
+		if(attributes.containsKey("pressedoffsetx")){
+			style.pressedOffsetX = Float.parseFloat(attributes.get("pressedoffsetx"));
+		}
+		if(attributes.containsKey("pressedoffsety")){
+			style.pressedOffsetY = Float.parseFloat(attributes.get("pressedoffsety"));
+		}
+		if(attributes.containsKey("unpressedoffsetx")){
+			style.unpressedOffsetX = Float.parseFloat(attributes.get("unpressedoffsetx"));
+		}
+		if(attributes.containsKey("unpressedoffsety")){
+			style.unpressedOffsetY = Float.parseFloat(attributes.get("unpressedoffsety"));
+		}
+		if(attributes.containsKey("up")){
+			style.up = actorLoader.getAsset(attributes.get("up"), Drawable.class);
 		}
 	}
 	

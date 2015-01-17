@@ -86,32 +86,30 @@ public class ImageButtonCreator extends ButtonCreator<ImageButton>{
 	
 	@Override
 	public Object createStyle(String attributes) {
+		ObjectMap<String, String> styleAttributes = parseStyleAttributes(attributes);
+		
 		ImageButton.ImageButtonStyle style = new ImageButtonStyle();
-		setStyleProperties(style, attributes);
-		for(String attribute : attributes.replaceAll(SPACE, "").split(",")){
-			String[] args = attribute.split("=");
-			String key = args[0];
-			String value = args[1];
+		setStyleProperties(style, styleAttributes);
 			
-			if(key.equalsIgnoreCase("imageChecked")){
-				style.imageChecked = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("imageCheckedOver")){
-				style.imageCheckedOver = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("imageDisabled")){
-				style.imageDisabled = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("imageDown")){
-				style.imageDown = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("imageOver")){
-				style.imageOver = actorLoader.getAsset(value, Drawable.class);
-			}
-			if(key.equalsIgnoreCase("imageUp")){
-				style.imageUp = actorLoader.getAsset(value, Drawable.class);
-			}
+		if(styleAttributes.containsKey("imagechecked")){
+			style.imageChecked = actorLoader.getAsset(styleAttributes.get("imagechecked"), Drawable.class);
 		}
+		if(styleAttributes.containsKey("imagecheckedover")){
+			style.imageCheckedOver = actorLoader.getAsset(styleAttributes.get("imagecheckedover"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("imagedisabled")){
+			style.imageDisabled = actorLoader.getAsset(styleAttributes.get("imagedisabled"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("imagedown")){
+			style.imageDown = actorLoader.getAsset(styleAttributes.get("imagedown"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("imageover")){
+			style.imageOver = actorLoader.getAsset(styleAttributes.get("imageover"), Drawable.class);
+		}
+		if(styleAttributes.containsKey("imageup")){
+			style.imageUp = actorLoader.getAsset(styleAttributes.get("imageup"), Drawable.class);
+		}
+		
 		return style;
 	};
 
