@@ -30,7 +30,7 @@ public class AssetUtils {
 		}
 	}
 	
-	public static String getFileName(String drawableName){
+	public static String getAtlasFileName(String drawableName){
 		return drawableName.split(":")[0];
 	}
 }

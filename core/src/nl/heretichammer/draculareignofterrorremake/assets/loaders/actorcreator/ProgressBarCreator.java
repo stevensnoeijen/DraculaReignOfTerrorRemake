@@ -32,40 +32,40 @@ public class ProgressBarCreator<T extends ProgressBar> extends WidgetCreator<T> 
 		}else if(attributes.containsKey("style")){
 			ObjectMap<String, String> styleAttributes = parseStyleAttributes(attributes.get("style"));
 			if(styleAttributes.containsKey("backbround")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("disabledbackground")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("disabledbackground")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("disabledbackground")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("disabledknob")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("disabledknob")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("disabledknob")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			
 			if(styleAttributes.containsKey("backbround")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			
 			if(styleAttributes.containsKey("backbround")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			
 			if(styleAttributes.containsKey("backbround")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			
 			if(styleAttributes.containsKey("backbround")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			
 			if(styleAttributes.containsKey("backbround")){//required
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 		}

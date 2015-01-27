@@ -39,19 +39,19 @@ public class TextFieldCreator<T extends TextField> extends WidgetCreator<T> {
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("background")){
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("background")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("background")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("disabledbackground")){
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("disabledbackground")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("disabledbackground")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("focusedbackground")){
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("focusedbackground")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("focusedbackground")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("selection")){
-				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getFileName(styleAttributes.get("selection")), TextureAtlas.class);
+				AssetDescriptor<TextureAtlas> assetDescriptor = new AssetDescriptor<TextureAtlas>(AssetUtils.getAtlasFileName(styleAttributes.get("selection")), TextureAtlas.class);
 				dependencies.put(assetDescriptor.fileName, assetDescriptor);
 			}
 			if(styleAttributes.containsKey("messageFont")){
