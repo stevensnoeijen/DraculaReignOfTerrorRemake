@@ -1,5 +1,7 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.AnimationMap;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.AnimationMapLoader;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 
 import com.badlogic.gdx.Game;
@@ -8,8 +10,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -22,6 +22,7 @@ public class LoadScreen extends ActorScreen {
 		this.next = next;
 		assetManager = new AssetManager();
 		assetManager.setLoader(Actor.class, new ActorLoader(new InternalFileHandleResolver()));
+		assetManager.setLoader(AnimationMap.class, new AnimationMapLoader(new InternalFileHandleResolver()));
 		next.load(assetManager);
 	}
 	

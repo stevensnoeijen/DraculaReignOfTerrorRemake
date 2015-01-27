@@ -59,7 +59,6 @@ public class CouncilScreen extends ActorScreen {
 		super.load(assetManager);
 		AssetUtils.load(assets, assetManager);
 		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
-		assetManager.load("image/animations.json", AnimationMap.class);
 	}
 	
 	@Override

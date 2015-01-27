@@ -1,9 +1,9 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
+import nl.heretichammer.draculareignofterrorremake.AnimationMap;
 import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
-import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
 import aurelienribon.tweenengine.TweenManager;
 
 import com.badlogic.gdx.Gdx;
@@ -31,6 +31,12 @@ public class BattleScreen extends MapScreen {
 	public final static int POSITION_XY = 1;
 	public BattleScreen() {
 
+	}
+	
+	@Override
+	protected void load(AssetManager assetManager) {
+		super.load(assetManager);
+		assetManager.load("image/animations.json", AnimationMap.class);
 	}
 	
 	@Override
