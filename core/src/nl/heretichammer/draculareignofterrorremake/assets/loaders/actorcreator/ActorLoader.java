@@ -69,6 +69,9 @@ public class ActorLoader extends AsynchronousAssetLoader<Actor, ActorLoader.Acto
 	@Override
 	public void loadAsync(AssetManager assetManager, String fileName, FileHandle file, ActorLoaderParameter parameter) {
 		this.assetManager = assetManager;
+		if(parameter == null){
+			parameter = new ActorLoaderParameter(null);
+		}		
 		loaded = null;
 		loaded = load(file, parameter.context);
 		reset();

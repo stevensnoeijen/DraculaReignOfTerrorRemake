@@ -2,6 +2,7 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.beans.PropertyChangeEvent;
 
+import nl.heretichammer.draculareignofterrorremake.AnimationMap;
 import nl.heretichammer.draculareignofterrorremake.DRoTR;
 import nl.heretichammer.draculareignofterrorremake.Disposer;
 import nl.heretichammer.draculareignofterrorremake.assets.Asset;
@@ -16,6 +17,7 @@ import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.units.Swordsmen;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.view.View;
@@ -57,6 +59,7 @@ public class CouncilScreen extends ActorScreen {
 		super.load(assetManager);
 		AssetUtils.load(assets, assetManager);
 		assetManager.load("layout/CouncilScreen.xml", Actor.class, new ActorLoader.ActorLoaderParameter(ui));
+		assetManager.load("image/animations.json", AnimationMap.class);
 	}
 	
 	@Override
@@ -205,7 +208,7 @@ public class CouncilScreen extends ActorScreen {
 		Binder.bind(ui.foodIncome, selectedArea, "resourceIncome", Resource.FOOD);
 		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", Resource.MEN);
 		
-		//resources
+		//trainers
 		selectedArea.register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -415,6 +418,22 @@ public class CouncilScreen extends ActorScreen {
 			ui.trainerSpy.setVisible(false);
 		}
 		
+		//movement
+		ui.movementTroops.clear();
+		int column = 0;
+		for(Troop<?> troop : selectedArea.getTroops()){
+			if(troop.getType() == Swordsmen.class){
+				ImageButton button = new ImageButton( ((ImageButton)assets.swordsoldierSelector).getStyle() );
+				ui.movementTroops.add(button);
+				column++;
+				if(column == 4){
+					ui.movementTroops.row();
+					column = 0;
+				}			
+			}
+		}
+		
+		//upgraders
 		selectedArea.register(new Object(){
 			@Subscribe
 			public void on(PropertyChangeEvent e){
@@ -510,36 +529,38 @@ public class CouncilScreen extends ActorScreen {
 		@Asset("music/council1.mp3") private Music music;
 		
 		//sounds
-		@Asset("sound/click.ogg") private Sound sound_click;
+		@Asset("sound/click.ogg") private Sound click;
 		//upgrading
-		@Asset("sound/upgrading armerment.ogg") private Sound sound_upgradingArmerment;
-		@Asset("sound/upgrading architecture.ogg") private Sound sound_upgradingArchitecture;
-		@Asset("sound/training swordsoldiers.ogg") private Sound sound_trainingSwordsoldiers;
-		@Asset("sound/training crossbowsoldiers.ogg") private Sound sound_trainingCrossbowsoldiers;
-		@Asset("sound/building juggernaut.ogg") private Sound sound_trainingJuggernaut;
-		@Asset("sound/training a knight.ogg") private Sound sound_trainingKnight;
-		@Asset("sound/building a catapult.ogg") private Sound sound_trainingCatapult;
-		@Asset("sound/building a cannon.ogg") private Sound sound_trainingCannon;
-		@Asset("sound/training spies.ogg") private Sound sound_trainingSpies;
-		@Asset("sound/training cancelled.ogg") private Sound sound_trainingCancelled;
+		@Asset("sound/upgrading armerment.ogg") private Sound upgradingArmerment;
+		@Asset("sound/upgrading architecture.ogg") private Sound upgradingArchitecture;
+		@Asset("sound/training swordsoldiers.ogg") private Sound trainingSwordsoldiers;
+		@Asset("sound/training crossbowsoldiers.ogg") private Sound trainingCrossbowsoldiers;
+		@Asset("sound/building juggernaut.ogg") private Sound trainingJuggernaut;
+		@Asset("sound/training a knight.ogg") private Sound trainingKnight;
+		@Asset("sound/building a catapult.ogg") private Sound trainingCatapult;
+		@Asset("sound/building a cannon.ogg") private Sound trainingCannon;
+		@Asset("sound/training spies.ogg") private Sound trainingSpies;
+		@Asset("sound/training cancelled.ogg") private Sound trainingCancelled;
 		//construction
 		//repair
-		@Asset("sound/repairing bridge.ogg") private Sound sound_repairingBridge;
-		@Asset("sound/repairing tower.ogg") private Sound sound_repairingTower;
-		@Asset("sound/repairing stronghold.ogg") private Sound sound_repairingStronghold;
-		@Asset("sound/repairing fortification.ogg") private Sound sound_repairingFortification;
-		@Asset("sound/repairing cancelled.ogg") private Sound sound_repairingCancelled;
+		@Asset("sound/repairing bridge.ogg") private Sound repairingBridge;
+		@Asset("sound/repairing tower.ogg") private Sound repairingTower;
+		@Asset("sound/repairing stronghold.ogg") private Sound repairingStronghold;
+		@Asset("sound/repairing fortification.ogg") private Sound repairingFortification;
+		@Asset("sound/repairing cancelled.ogg") private Sound repairingCancelled;
 		//upgrade
-		@Asset("sound/upgrading stronghold.ogg") private Sound sound_upgradingStronghold;
-		@Asset("sound/upgrading fortification.ogg") private Sound sound_upgradingFortification;
-		@Asset("sound/upgrading cancelled.ogg") private Sound sound_upgradingCancelled;
+		@Asset("sound/upgrading stronghold.ogg") private Sound upgradingStronghold;
+		@Asset("sound/upgrading fortification.ogg") private Sound upgradingFortification;
+		@Asset("sound/upgrading cancelled.ogg") private Sound upgradingCancelled;
 		//build
-		@Asset("sound/building bridge.ogg") private Sound sound_buildingBridge;
-		@Asset("sound/building tower.ogg") private Sound sound_buildingTower;
-		@Asset("sound/building stronghold.ogg") private Sound sound_buildingStronghold;
-		@Asset("sound/building fortification.ogg") private Sound sound_buildingFortification;
-		@Asset("sound/building cancelled.ogg") private Sound sound_buildingCancelled;
-		@Asset("sound/building completed.ogg") private Sound sound_buildingCompleted;
+		@Asset("sound/building bridge.ogg") private Sound buildingBridge;
+		@Asset("sound/building tower.ogg") private Sound buildingTower;
+		@Asset("sound/building stronghold.ogg") private Sound buildingStronghold;
+		@Asset("sound/building fortification.ogg") private Sound buildingFortification;
+		@Asset("sound/building cancelled.ogg") private Sound buildingCancelled;
+		@Asset("sound/building completed.ogg") private Sound buildingCompleted;
+		
+		@Asset("layout/troopselectors/swordsoldier.xml") private Actor swordsoldierSelector;
 		
 		public Drawable getDrawable(String name){
 			if(name.startsWith("image/council.pack:")){
@@ -642,6 +663,8 @@ public class CouncilScreen extends ActorScreen {
 		@View("woodIncome") private Label woodIncome;
 		@View("foodIncome") private Label foodIncome;
 		@View("menIncome") private Label menIncome;
+		//movement
+		@View("movement.troops") private Table movementTroops;		
 		//trainers
 		@View("trainer.swordsoldiers") private ImageButton trainerSwordsoldiers;
 		@View("trainer.crossbowsoldiers") private ImageButton trainerCrossbowsoldiers;
@@ -671,7 +694,7 @@ public class CouncilScreen extends ActorScreen {
 		}
 		
 		public void week(InputEvent event){
-			assets.sound_click.play(DRoTR.options.sfx);
+			assets.click.play(DRoTR.options.sfx);
 			world.week();
 		}
 		
@@ -683,23 +706,7 @@ public class CouncilScreen extends ActorScreen {
 		
 		public void showMovementTab(InputEvent event){
 			hideAllTabs();
-			ui.tabBackground.setDrawable(assets.getDrawable("image/council.pack:ui-tab-movement"));
-			
-			Group root = stage.getRoot();
-			Table table = root.findActor("movement.troops");
-			table.clear();
-			table.row().align(Align.topLeft);
-			int column = 0;
-			for(Troop troop : player.getSelectedArea().getTroops()) {
-				column++;
-				ImageButton button = new ImageButton( createMovementImageButtonStyle(troop.getUnitName()) );
-				table.add(button).width(42).center();
-				if(column == 4) {
-					table.row().align(Align.topLeft);
-					column = 0;
-				}
-			}
-			
+			ui.tabBackground.setDrawable(assets.getDrawable("image/council.pack:ui-tab-movement"));			
 			ui.tabMovement.setVisible(true);
 		}
 		
@@ -727,23 +734,23 @@ public class CouncilScreen extends ActorScreen {
 			
 			if(!troopProducer.isStarted()){
 				if(name.equals("swordsoldier")){
-					assets.sound_trainingSwordsoldiers.play(DRoTR.options.sfx);
+					assets.trainingSwordsoldiers.play(DRoTR.options.sfx);
 				}else if(name.equals("crossbowsoldier")){
-					assets.sound_trainingCrossbowsoldiers.play(DRoTR.options.sfx);
+					assets.trainingCrossbowsoldiers.play(DRoTR.options.sfx);
 				}else if(name.equals("knight")){
-					assets.sound_trainingKnight.play(DRoTR.options.sfx);
+					assets.trainingKnight.play(DRoTR.options.sfx);
 				}else if(name.equals("juggernaut")){
-					assets.sound_trainingJuggernaut.play(DRoTR.options.sfx);
+					assets.trainingJuggernaut.play(DRoTR.options.sfx);
 				}else if(name.equals("catapult")){
-					assets.sound_trainingCatapult.play(DRoTR.options.sfx);
+					assets.trainingCatapult.play(DRoTR.options.sfx);
 				}else if(name.equals("cannon")){
-					assets.sound_trainingCannon.play(DRoTR.options.sfx);
+					assets.trainingCannon.play(DRoTR.options.sfx);
 				}else if(name.equals("spy")){
-					assets.sound_trainingSpies.play(DRoTR.options.sfx);
+					assets.trainingSpies.play(DRoTR.options.sfx);
 				}
 				troopProducer.start();
 			}else{//stop
-				assets.sound_trainingCancelled.play(DRoTR.options.sfx);
+				assets.trainingCancelled.play(DRoTR.options.sfx);
 				troopProducer.stop();
 			}
 		}
@@ -785,10 +792,10 @@ public class CouncilScreen extends ActorScreen {
 			ArmamentUpgrader armamentUpgrader = player.getTeam().getArmamentUpgrader();
 			if(!armamentUpgrader.isStarted()){
 				armamentUpgrader.getNext().start();;
-				assets.sound_upgradingArmerment.play(DRoTR.options.sfx);
+				assets.upgradingArmerment.play(DRoTR.options.sfx);
 			}else{//cancel
 				armamentUpgrader.getNext().cancel();
-				assets.sound_upgradingCancelled.play(DRoTR.options.sfx);
+				assets.upgradingCancelled.play(DRoTR.options.sfx);
 			}
 		}
 		
@@ -796,10 +803,10 @@ public class CouncilScreen extends ActorScreen {
 			ArchitectureUpgrader architectureUpgrader = player.getTeam().getArchitectureUpgrader();
 			if(!architectureUpgrader.isStarted()){
 				architectureUpgrader.getNext().start();
-				assets.sound_upgradingArchitecture.play(DRoTR.options.sfx);
+				assets.upgradingArchitecture.play(DRoTR.options.sfx);
 			}else{
 				architectureUpgrader.getNext().cancel();
-				assets.sound_upgradingCancelled.play(DRoTR.options.sfx);
+				assets.upgradingCancelled.play(DRoTR.options.sfx);
 			}
 		}
 	}
