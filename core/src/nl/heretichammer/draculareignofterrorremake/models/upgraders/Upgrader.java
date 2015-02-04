@@ -11,10 +11,10 @@ import java.util.Queue;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.InsufficientResourcesException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
-import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSuppliable;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
 
 public abstract class Upgrader extends Model implements ResourceSuppliable {	
@@ -102,27 +102,27 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		/**
 		 * All costs except {@link Resource#TIME}
 		 */
-		private Map<Resource, Integer> cost;
+		private Map<ResourceType, Integer> cost;
 		private int time = 0;
 		
 		private UpgradeMethod(Method method) {
 			this.method = method;
 			upgrade = method.getAnnotation(Upgrade.class);			
-			cost = new EnumMap<Resource, Integer>(Resource.class);
+			cost = new EnumMap<ResourceType, Integer>(ResourceType.class);
 			ResourceCost cost = upgrade.cost();
-			this.cost.put(Resource.GOLD, cost.gold());
-			this.cost.put(Resource.TIME, cost.time());
-			this.cost.put(Resource.FOOD, cost.food());
-			this.cost.put(Resource.WOOD, cost.wood());
+			this.cost.put(ResourceType.GOLD, cost.gold());
+			this.cost.put(ResourceType.TIME, cost.time());
+			this.cost.put(ResourceType.FOOD, cost.food());
+			this.cost.put(ResourceType.WOOD, cost.wood());
 		}
 		
-		public int getCost(Resource resource){
+		public int getCost(ResourceType resource){
 			return this.cost.get(resource);
 		}
 		
 		public boolean canPay(){
-			for(Resource resource : cost.keySet()){
-				if(resource != Resource.TIME){
+			for(ResourceType resource : cost.keySet()){
+				if(resource != ResourceType.TIME){
 					if(!resourceSupplier.hasResource(resource, cost.get(resource))){
 						return false;
 					}
@@ -143,8 +143,8 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		private void pay(){
 			if(canPay()){
-				for(Resource resource : cost.keySet()){
-					if(resource != Resource.TIME){
+				for(ResourceType resource : cost.keySet()){
+					if(resource != ResourceType.TIME){
 						resourceSupplier.decrementResource(resource, cost.get(resource));
 					}
 				}
@@ -154,9 +154,9 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		}
 		
 		private void refund(){
-			for(Resource resource : cost.keySet()){
+			for(ResourceType resource : cost.keySet()){
 				int amount = cost.get(resource);
-				if(resource != Resource.TIME && amount > 0){
+				if(resource != ResourceType.TIME && amount > 0){
 					resourceSupplier.incrementResource(resource, amount);
 				}
 			}
@@ -179,7 +179,7 @@ public abstract class Upgrader extends Model implements ResourceSuppliable {
 		
 		protected void week(){
 			setTime(time+1);
-			if(cost.get(Resource.TIME) == time){
+			if(cost.get(ResourceType.TIME) == time){
 				done();
 			}
 		}

@@ -10,14 +10,14 @@ import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
 import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.Player;
-import nl.heretichammer.draculareignofterrorremake.models.Resource;
-import nl.heretichammer.draculareignofterrorremake.models.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
+import nl.heretichammer.draculareignofterrorremake.models.units.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.units.UnitType;
 import nl.heretichammer.draculareignofterrorremake.models.World;
 import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
 import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
 import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
-import nl.heretichammer.draculareignofterrorremake.models.units.Swordsmen;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 import nl.heretichammer.draculareignofterrorremake.view.View;
@@ -93,8 +93,8 @@ public class CouncilScreen extends ActorScreen {
 					ui.armamentLevel.setText(armamentUpgrader.getCurrent().getLevel() + "/" + armamentUpgrader.getMaxLevel());
 					ui.armamentImage.setDrawable( assets.getDrawable(armamentUpgrader.getCurrent().getImage()) );
 					if(armamentUpgrader.hasNext()){
-						ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNext().getCost(Resource.GOLD)) );
-						ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNext().getCost(Resource.TIME)) );
+						ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNext().getCost(ResourceType.GOLD)) );
+						ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNext().getCost(ResourceType.TIME)) );
 					}else{
 						ui.armamentGold.setVisible(false);
 						ui.armamentTime.setVisible(false);
@@ -123,8 +123,8 @@ public class CouncilScreen extends ActorScreen {
 		});
 		ui.armamentLevel.setText(armamentUpgrader.getCurrent().getLevel() + "/" + armamentUpgrader.getMaxLevel());
 		ui.armamentImage.setDrawable( assets.getDrawable(armamentUpgrader.getCurrent().getImage()) );
-		ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNext().getCost(Resource.GOLD)) );
-		ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNext().getCost(Resource.TIME)) );
+		ui.armamentGold.setText( Integer.toString(armamentUpgrader.getNext().getCost(ResourceType.GOLD)) );
+		ui.armamentTime.setText( Integer.toString(armamentUpgrader.getNext().getCost(ResourceType.TIME)) );
 		if(armamentUpgrader.hasNext() && armamentUpgrader.getNext().canPay()){
 			ui.armamentButton.setTouchable(Touchable.enabled);
 			ui.armamentButton.setDisabled(false);
@@ -143,8 +143,8 @@ public class CouncilScreen extends ActorScreen {
 					ui.architectureLevel.setText(architectureUpgrader.getCurrent().getLevel() + "/" + architectureUpgrader.getMaxLevel());
 					ui.architectureImage.setDrawable( assets.getDrawable(architectureUpgrader.getCurrent().getImage()) );
 					if(architectureUpgrader.hasNext()){
-						ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNext().getCost(Resource.GOLD)) );
-						ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNext().getCost(Resource.TIME)) );
+						ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNext().getCost(ResourceType.GOLD)) );
+						ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNext().getCost(ResourceType.TIME)) );
 					}else{
 						ui.architectureGold.setVisible(false);
 						ui.architectureTime.setVisible(false);
@@ -173,8 +173,8 @@ public class CouncilScreen extends ActorScreen {
 		});
 		ui.architectureLevel.setText(architectureUpgrader.getCurrent().getLevel() + "/" + architectureUpgrader.getMaxLevel());
 		ui.architectureImage.setDrawable( assets.getDrawable(architectureUpgrader.getCurrent().getImage()) );
-		ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNext().getCost(Resource.GOLD)) );
-		ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNext().getCost(Resource.TIME)) );
+		ui.architectureGold.setText( Integer.toString(architectureUpgrader.getNext().getCost(ResourceType.GOLD)) );
+		ui.architectureTime.setText( Integer.toString(architectureUpgrader.getNext().getCost(ResourceType.TIME)) );
 		if(architectureUpgrader.hasNext() && architectureUpgrader.getNext().canPay()){
 			ui.architectureButton.setTouchable(Touchable.enabled);
 			ui.architectureButton.setDisabled(false);
@@ -196,16 +196,16 @@ public class CouncilScreen extends ActorScreen {
 		ui.location.setText( selectedArea.getName() );
 		
 		//resources
-		Binder.bind(ui.gold, selectedArea, "resource", Resource.GOLD);
-		Binder.bind(ui.wood, selectedArea, "resource", Resource.WOOD);
-		Binder.bind(ui.food, selectedArea, "resource", Resource.FOOD);
-		Binder.bind(ui.men, selectedArea, "resource", Resource.MEN);
+		Binder.bind(ui.gold, selectedArea, "resource", ResourceType.GOLD);
+		Binder.bind(ui.wood, selectedArea, "resource", ResourceType.WOOD);
+		Binder.bind(ui.food, selectedArea, "resource", ResourceType.FOOD);
+		Binder.bind(ui.men, selectedArea, "resource", ResourceType.MEN);
 		Binder.bind(ui.army, selectedArea, "army");
 		//income
-		Binder.bind(ui.goldIncome, selectedArea, "resourceIncome", Resource.GOLD);
-		Binder.bind(ui.woodIncome, selectedArea, "resourceIncome", Resource.WOOD);
-		Binder.bind(ui.foodIncome, selectedArea, "resourceIncome", Resource.FOOD);
-		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", Resource.MEN);
+		Binder.bind(ui.goldIncome, selectedArea, "resourceIncome", ResourceType.GOLD);
+		Binder.bind(ui.woodIncome, selectedArea, "resourceIncome", ResourceType.WOOD);
+		Binder.bind(ui.foodIncome, selectedArea, "resourceIncome", ResourceType.FOOD);
+		Binder.bind(ui.menIncome, selectedArea, "resourceIncome", ResourceType.MEN);
 		
 		//trainers
 		selectedArea.register(new Object(){
@@ -420,8 +420,8 @@ public class CouncilScreen extends ActorScreen {
 		//movement
 		ui.movementTroops.clear();
 		int column = 0;
-		for(Troop<?> troop : selectedArea.getTroops()){
-			if(troop.getType() == Swordsmen.class){
+		for(Troop troop : selectedArea.getTroops()){
+			if(troop.getType() == UnitType.SWORDSMEN){
 				ImageButton button = new ImageButton( ((ImageButton)assets.swordsoldierSelector).getStyle() );
 				ui.movementTroops.add(button);
 				column++;
@@ -729,7 +729,7 @@ public class CouncilScreen extends ActorScreen {
 		
 		public void trainTroop(InputEvent event){
 			String name = event.getTarget().getUserObject().toString();
-			TroopProducer<?> troopProducer = player.getSelectedArea().getTroopProducer(name);
+			TroopProducer troopProducer = player.getSelectedArea().getTroopProducer(name);
 			
 			if(!troopProducer.isStarted()){
 				if(name.equals("swordsoldier")){

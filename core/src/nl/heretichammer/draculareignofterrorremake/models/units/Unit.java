@@ -5,23 +5,24 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import nl.heretichammer.draculareignofterrorremake.models.Mappable;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
 import nl.heretichammer.draculareignofterrorremake.models.TeamableModel;
-import nl.heretichammer.draculareignofterrorremake.models.team.Team.TeamColor;
 import nl.heretichammer.draculareignofterrorremake.models.team.Teamable;
-
-import org.apache.commons.lang3.tuple.Triple;
 
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Unit extends TeamableModel implements Cloneable, Teamable, Mappable {
+public class Unit extends TeamableModel implements Teamable, Mappable {
 
+	private UnitData data;
 	private Vector2 position = new Vector2();
 	
-	public Unit() {
-		
+	public Unit(UnitData data) {
+		this.data = data;
 	}
 	
-	public abstract String getName();
+	public String getName() {
+		return data.name;
+	}
 	
 	@Override
 	public float getX() {
@@ -240,78 +241,12 @@ public abstract class Unit extends TeamableModel implements Cloneable, Teamable,
 	
 	public static class UnitData {
 		public String name;
-		public final Attributes attributes = new Attributes();
-		//public final Map<Triple<TeamColor, UnitMotionType, CardinalDirection>, UnitMotionDescriptor> motions = new HashMap<Triple<TeamColor, UnitMotionType,CardinalDirection>, UnitMotionDescriptor>();
-		
-		public static class UnitMotionDescriptor {
-			public String animation;
-			public String[] sounds;
-		}
-		
-		//public GraphicItemDescriptor graphic;
-		/*
-		public Array<AnimationEvent> animations = new Array<AnimationEvent>();
-		public Array<SoundEvent> sounds = new Array<SoundEvent>();
-		
-		public boolean hasAttributes;
-		
-		
-		public boolean canReceiveEffects;
-		
-		public AnimationEvent findAnimation(int facing, boolean moving, boolean attacking, boolean dying, boolean alive){
-			for(AnimationEvent animation : animations){
-				if(animation.facing == facing && animation.moving == moving && animation.attacking == attacking && animation.dying == dying && animation.alive == alive){
-					return animation;
-				}
-			}
-			return null;
-		}
-		
-		public SoundEvent findSound(int facing, boolean moving, boolean attacking, boolean dying, boolean alive, boolean select){
-			for(SoundEvent sound : sounds){
-				if((facing & sound.facing) > 1
-						&& sound.moving == moving
-						&& sound.attacking == attacking
-						&& sound.dying == dying
-						&& sound.alive == alive
-						&& sound.select == select){
-					return sound;
-				}
-			}
-			return null;
-		}
-		
-		public static abstract class Event{
-			public int facing;
-			public boolean moving;
-			public boolean attacking;
-			public boolean dying;
-			public boolean alive;
-		}
-		
-		public static class SoundEvent extends Event{
-			public Array<String> sounds = new Array<String>();
-			//public boolean miss;
-			public boolean select;
-		}
-		
-		public static class AnimationEvent extends Event {
-			public Array<String> animations = new Array<String>();
-		}
-		*/
+		public Map<AttributeType, Integer> attributes = new HashMap<AttributeType, Integer>();
+		public Map<ResourceType, Integer> costs = new HashMap<ResourceType, Integer>();
 	}
 	
 	public enum UnitMotionType {
 		ATTACK, MOVE, IDLE, DYING, DEAD
-	}
-	
-	public static class Attributes {
-		public int strenght;
-		public int accuracy;
-		public int defance;
-		public int stamina;
-		public int speed;
-		public int range;
 	}
 	
 	public enum AttributeType {

@@ -6,14 +6,15 @@ import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.exceptions.NotAccessableException;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
-import nl.heretichammer.draculareignofterrorremake.models.Resource;
 import nl.heretichammer.draculareignofterrorremake.models.ResourceSupplier;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
+import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
 
 public abstract class Producer<P> extends Model{
 	private boolean autoRestart = false;
 	private boolean started = false;
 	protected P produced;
-	protected Map<Resource, Integer> cost = new EnumMap<Resource, Integer>(Resource.class);
+	protected Map<ResourceType, Integer> cost = new EnumMap<ResourceType, Integer>(ResourceType.class);
 	private int time = 0;
 	private boolean done = false;
 	protected ResourceSupplier resourceSupplier;
@@ -21,6 +22,8 @@ public abstract class Producer<P> extends Model{
 	public Producer() {
 		
 	}
+	
+	public abstract String getName();
 
 	/**
 	 * Object that will produced.
@@ -68,7 +71,7 @@ public abstract class Producer<P> extends Model{
 		}		
 		if(started) {
 			setTime(time + 1);
-			if(time >= cost.get(Resource.TIME)) {
+			if(time >= cost.get(ResourceType.TIME)) {
 				//if done
 				produce();
 				done();
@@ -119,13 +122,13 @@ public abstract class Producer<P> extends Model{
 	
 	protected abstract boolean isAccessable();
 	
-	public int getCost(Resource resource){
+	public int getCost(ResourceType resource){
 		return cost.get(resource);
 	}
 
 	public boolean canSupplyCost() {
-		for(Resource resource : cost.keySet()){
-			if(resource != Resource.TIME){//check everything except time
+		for(ResourceType resource : cost.keySet()){
+			if(resource != ResourceType.TIME){//check everything except time
 				int amount = getCost(resource);
 				if(!resourceSupplier.hasResource(resource, -amount)){
 					return false;
@@ -136,16 +139,16 @@ public abstract class Producer<P> extends Model{
 	}
 	
 	private void pay() {
-		for(Resource resource : cost.keySet()){
-			if(resource != Resource.TIME){//all resources except time
+		for(ResourceType resource : cost.keySet()){
+			if(resource != ResourceType.TIME){//all resources except time
 				resourceSupplier.decrementResource(resource, cost.get(resource));
 			}
 		}
 	}
 	
 	private void refund(){
-		for(Resource resource : cost.keySet()){
-			if(resource != Resource.TIME){//all resources except time
+		for(ResourceType resource : cost.keySet()){
+			if(resource != ResourceType.TIME){//all resources except time
 				resourceSupplier.incrementResource(resource, cost.get(resource));
 			}
 		}
@@ -163,5 +166,11 @@ public abstract class Producer<P> extends Model{
 
 	protected void setAutoRestart(boolean autoRestart) {
 		this.autoRestart = autoRestart;
+	}
+	
+	public static class ProducerData {
+		public String name;
+		public Map<ResourceType, Integer> cost;
+		public Permission permission;
 	}
 }

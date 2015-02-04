@@ -9,8 +9,8 @@ import java.util.Map;
 
 import nl.heretichammer.draculareignofterrorremake.models.Area;
 import nl.heretichammer.draculareignofterrorremake.models.Model;
-import nl.heretichammer.draculareignofterrorremake.models.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.events.PermissionSetEvent;
+import nl.heretichammer.draculareignofterrorremake.models.units.Troop;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
 import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
 
@@ -23,7 +23,7 @@ public class Team extends Model {
 	private String name;
 	private TeamColor color;
 	private List<Area> ownedAreas;
-	private List<Troop<?>> troops;
+	private List<Troop> troops;
 	private ArmamentUpgrader armamentUpgrader = new ArmamentUpgrader();
 	private ArchitectureUpgrader architectureUpgrader = new ArchitectureUpgrader();
 	private Map<Permission, Boolean> permissions = new EnumMap<Permission, Boolean>(Permission.class);
@@ -33,7 +33,7 @@ public class Team extends Model {
 		this.color = color;
 		armamentUpgrader.setTeam(this);
 		architectureUpgrader.setTeam(this);
-		troops = new LinkedList<Troop<?>>();
+		troops = new LinkedList<Troop>();
 		ownedAreas = new ArrayList<Area>();
 		//add permissions
 		for(Permission permission : Permission.values()){//add all permissions

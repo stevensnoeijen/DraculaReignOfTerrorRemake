@@ -41,7 +41,7 @@ public class World extends Model {
 				
 				for(int i = 0; i < jsonData.size; i++){
 					JsonValue child = jsonData.get(i);
-					Object key = Resource.valueOf(child.name);
+					Object key = ResourceType.valueOf(child.name);
 					Object value = child.asInt();
 					map.put(key, value);
 				}

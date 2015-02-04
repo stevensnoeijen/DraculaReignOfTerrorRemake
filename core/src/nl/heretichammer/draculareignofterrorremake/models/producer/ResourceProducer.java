@@ -1,6 +1,6 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
-import nl.heretichammer.draculareignofterrorremake.models.Resource;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
 import nl.heretichammer.draculareignofterrorremake.models.events.ResourceProducedEvent;
 
 public class ResourceProducer extends Producer<Integer> {
@@ -8,17 +8,17 @@ public class ResourceProducer extends Producer<Integer> {
 	/**
 	 * Produces resource
 	 */
-	private Resource resource;
+	private ResourceType resource;
 	private int produces;
 	
-	public ResourceProducer(Resource resource, int produces) {
-		this.cost.put(Resource.TIME, 1);
+	public ResourceProducer(ResourceType resource, int produces) {
+		this.cost.put(ResourceType.TIME, 1);
 		this.resource = resource;
 		this.produces = produces;
 		setAutoRestart(true);
 	}
 
-	public Resource getResource() {
+	public ResourceType getResource() {
 		return this.resource;
 	}
 	
@@ -33,12 +33,17 @@ public class ResourceProducer extends Producer<Integer> {
 	}
 	
 	@Override
-	public int getCost(Resource resource) {
+	public int getCost(ResourceType resource) {
 		return 0;
 	}
 	
 	@Override
 	protected boolean isAccessable() {
 		return true;
+	}
+
+	@Override
+	public String getName() {
+		return resource.name();
 	}
 }

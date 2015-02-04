@@ -1,0 +1,9 @@
+{
+ 	CANNON: { costs: { GOLD: 8,	TIME: 7	}, permission: CANNON },
+ 	CATAPULT: { costs: { GOLD: 7, TIME: 6 }, permission: CATAPULT },
+ 	CROSSBOWSOLDIER: { costs: { GOLD: 5, TIME: 2 }, permission: CROSSBOWSOLDIERS },
+ 	JUGGERNAUT: { costs: { GOLD: 2, TIME: 3 }, permission: JUGGERNAUT },
+ 	KNIGHT: { costs: { GOLD: 4, TIME: 4 }, permission: KNIGHT },
+	SPY: { costs: { GOLD: 4, TIME: 5 }, permission: SPY },
+	SWORDSMEN: { costs: { GOLD: 4, TIME: 2 }, permission: SWORDSMEN }
+}

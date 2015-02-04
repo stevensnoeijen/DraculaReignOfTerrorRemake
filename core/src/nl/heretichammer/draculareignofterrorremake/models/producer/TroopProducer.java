@@ -1,68 +1,42 @@
 package nl.heretichammer.draculareignofterrorremake.models.producer;
 
-import java.util.EnumMap;
-
-import nl.heretichammer.draculareignofterrorremake.models.Resource;
-import nl.heretichammer.draculareignofterrorremake.models.ResourceCost;
-import nl.heretichammer.draculareignofterrorremake.models.Troop;
+import nl.heretichammer.draculareignofterrorremake.eventbus.PropertyChangeEvent;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
 import nl.heretichammer.draculareignofterrorremake.models.events.TeamChangedEvent;
-import nl.heretichammer.draculareignofterrorremake.models.events.TroopProducedEvent;
 import nl.heretichammer.draculareignofterrorremake.models.team.Team;
-import nl.heretichammer.draculareignofterrorremake.models.units.Trooper;
-import nl.heretichammer.draculareignofterrorremake.models.units.Unit;
+import nl.heretichammer.draculareignofterrorremake.models.units.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.units.Troop.TroopData;
+import nl.heretichammer.draculareignofterrorremake.models.units.TroopFactory;
 
-public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
-	private Class<T> clazz;
-	private Trooper trooper;
+public class TroopProducer extends Producer<Troop> {
+	private TroopProducerData data;
 	private Team team;
 	
-	public TroopProducer(Class<T> clazz) {
-		this.clazz = clazz;
-		trooper = clazz.getAnnotation(Trooper.class);
-		
-		//set cost
-		cost = new EnumMap<Resource, Integer>(Resource.class);
-		ResourceCost cost = trooper.cost();
-		this.cost.put(Resource.GOLD, cost.gold());
-		this.cost.put(Resource.TIME, cost.time());
-		if(cost.wood() != 0){
-			this.cost.put(Resource.WOOD, cost.wood());
-		}
-		if(cost.food() != 0){
-			this.cost.put(Resource.FOOD, cost.food());
-		}
+	protected TroopProducer(TroopProducerData data) {
+		this.data = data;
 	}
 	
 	@Override
 	protected void produce() {
-		produced = new Troop<T>(trooper.size());
-		for(int i = 0; i < trooper.size(); i++){
-			T unit;
-			try {
-				unit = clazz.newInstance();
-			} catch(Exception ex) {
-				throw new RuntimeException(ex);
-			}
-			unit.setTeam(team);
-			produced.addUnit(unit);
-		}
-		post(new TroopProducedEvent());
+		produced = TroopFactory.create(data.troopData.unitType);
+		produced.setTeam(team);
+		post(new PropertyChangeEvent(this, "produced", null, produced));
 	}
 	
-	public String getTroopName() {
-		return trooper.name();
-	}
+	public String getName() {
+		return data.name;
+	};
 
-	public int getCost(Resource resource) {
+	public int getCost(ResourceType resource) {
 		return cost.get(resource);
 	}
 	
-	public int getResourceCost(Resource resource){
+	public int getResourceCost(ResourceType resource){
 		return cost.get(resource);
 	}
 	
-	public Trooper getTroopDate(){
-		return trooper;
+	public TroopData getTroopData(){
+		return data.troopData;
 	}
 	
 	public Team getTeam() {
@@ -76,11 +50,10 @@ public class TroopProducer<T extends Unit> extends Producer<Troop<T>> {
 	
 	@Override
 	protected boolean isAccessable() {
-		return team.hasPermission(trooper.permission());
+		return team.hasPermission(data.permission);
 	};
 	
-	@Override
-	public String toString() {
-		return trooper.name();
+	public static class TroopProducerData extends Producer.ProducerData {
+		public Troop.TroopData troopData;
 	}
 }
