@@ -64,7 +64,7 @@ public class WindowCreator<T extends Window> extends TableCreator<T> {
 			window.setResizeBorder(Integer.parseInt(attributes.get("resizeborder")));
 		}
 		if(attributes.containsKey("titlealignment")){
-			window.setTitleAlignment(Integer.parseInt(attributes.get("titlealignment")));
+			window.getTitleLabel().setAlignment(Integer.parseInt(attributes.get("titlealignment")));
 		}
 	}
 	

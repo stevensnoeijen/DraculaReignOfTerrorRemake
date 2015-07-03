@@ -2,28 +2,6 @@ package nl.heretichammer.draculareignofterrorremake.screens;
 
 import java.beans.PropertyChangeEvent;
 
-import nl.heretichammer.draculareignofterrorremake.AnimationMap;
-import nl.heretichammer.draculareignofterrorremake.DRoTR;
-import nl.heretichammer.draculareignofterrorremake.Disposer;
-import nl.heretichammer.draculareignofterrorremake.assets.Asset;
-import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
-import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
-import nl.heretichammer.draculareignofterrorremake.models.Area;
-import nl.heretichammer.draculareignofterrorremake.models.Player;
-import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
-import nl.heretichammer.draculareignofterrorremake.models.units.Troop;
-import nl.heretichammer.draculareignofterrorremake.models.units.UnitType;
-import nl.heretichammer.draculareignofterrorremake.models.World;
-import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
-import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
-import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
-import nl.heretichammer.draculareignofterrorremake.models.team.Team;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
-import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
-import nl.heretichammer.draculareignofterrorremake.view.View;
-import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
-import nl.heretichammer.draculareignofterrorremake.view.binder.Binder;
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -36,11 +14,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.google.common.eventbus.Subscribe;
+
+import nl.heretichammer.draculareignofterrorremake.DRoTR;
+import nl.heretichammer.draculareignofterrorremake.Disposer;
+import nl.heretichammer.draculareignofterrorremake.assets.Asset;
+import nl.heretichammer.draculareignofterrorremake.assets.AssetUtils;
+import nl.heretichammer.draculareignofterrorremake.assets.loaders.actorcreator.ActorLoader;
+import nl.heretichammer.draculareignofterrorremake.models.Area;
+import nl.heretichammer.draculareignofterrorremake.models.Player;
+import nl.heretichammer.draculareignofterrorremake.models.ResourceType;
+import nl.heretichammer.draculareignofterrorremake.models.World;
+import nl.heretichammer.draculareignofterrorremake.models.buildings.Building;
+import nl.heretichammer.draculareignofterrorremake.models.producer.TroopProducer;
+import nl.heretichammer.draculareignofterrorremake.models.team.Permission;
+import nl.heretichammer.draculareignofterrorremake.models.team.Team;
+import nl.heretichammer.draculareignofterrorremake.models.units.Troop;
+import nl.heretichammer.draculareignofterrorremake.models.units.UnitType;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArchitectureUpgrader;
+import nl.heretichammer.draculareignofterrorremake.models.upgraders.ArmamentUpgrader;
+import nl.heretichammer.draculareignofterrorremake.view.View;
+import nl.heretichammer.draculareignofterrorremake.view.ViewUtils;
+import nl.heretichammer.draculareignofterrorremake.view.binder.Binder;
 
 public class CouncilScreen extends ActorScreen {
 	private Assets assets = new Assets();
