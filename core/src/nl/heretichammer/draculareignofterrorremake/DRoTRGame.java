@@ -1,18 +1,28 @@
 package nl.heretichammer.draculareignofterrorremake;
 
-import nl.heretichammer.draculareignofterrorremake.screens.ActorScreen;
-import nl.heretichammer.draculareignofterrorremake.screens.CouncilScreen;
-import nl.heretichammer.draculareignofterrorremake.screens.LoadScreen;
-
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+
+import nl.heretichammer.draculareignofterrorremake.screens.ActorScreen;
+import nl.heretichammer.draculareignofterrorremake.screens.BattleScreen;
+import nl.heretichammer.draculareignofterrorremake.screens.LoadScreen;
 
 public class DRoTRGame extends Game {
 	
 	@Override
 	public void create() {
 		DRoTR.options.load();
-		setScreen(new CouncilScreen());
+		setScreen(new BattleScreen());
+	}
+	
+	@Override
+	public void render() {
+		Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		super.render();
 	}
 	
 	@Override

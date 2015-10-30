@@ -1,182 +1,67 @@
 package nl.heretichammer.draculareignofterrorremake.screens;
 
-import nl.heretichammer.draculareignofterrorremake.AnimationMap;
-import nl.heretichammer.draculareignofterrorremake.Disposer;
-import nl.heretichammer.draculareignofterrorremake.assets.AssetHelper;
-import nl.heretichammer.draculareignofterrorremake.models.Area;
-import aurelienribon.tweenengine.TweenManager;
-
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class BattleScreen extends MapScreen {
-	private AreaMapScreenState state;
-	private Area area;
+public class BattleScreen extends ScreenAdapter {
 	
-	private Music music;
+	CameraInputController cameraController;
+	OrthographicCamera camera;
+	TiledMap map;
+	TiledMapRenderer mapRenderer;
+	private SpriteBatch batch;
+	private Sprite sprite;
+	private Engine engine;
 	
-	private AssetManager assetManager = new AssetManager();
-	private AssetHelper assetHelper = new AssetHelper(assetManager);
-	
-	private SpriteBatch spriteBatch;
-	
-	private final TweenManager tweenManager = new TweenManager();
-	
-	public final static int POSITION_XY = 1;
 	public BattleScreen() {
+		float w = Gdx.graphics.getWidth();
+		float h = Gdx.graphics.getHeight();
 
-	}
-	
-	@Override
-	protected void load(AssetManager assetManager) {
-		super.load(assetManager);
-		assetManager.load("image/animations.json", AnimationMap.class);
-	}
-	
-	@Override
-	public String getMapFilePath() {
-		return "data/maps/test2.tmx";
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, (w / h) * 10, 10);
+		camera.update();
+		cameraController = new CameraInputController(this.camera);
+		Gdx.input.setInputProcessor(new InputMultiplexer(cameraController));
+		
+		engine = new Engine();
+		
+		map = new TmxMapLoader().load("data/maps/test.tmx");
+		mapRenderer = new OrthogonalTiledMapRenderer(map, 1f / 32f);
+		sprite = new Sprite(new Texture(Gdx.files.internal("image/icon.png")));
 	}
 	
 	@Override
 	public void show() {
-		super.show();		
-		assetManager.load("image/battle-ui.pack", TextureAtlas.class);
-		assetManager.load("image/units.pack", TextureAtlas.class);
-		assetManager.load("music/war1.mp3", Music.class);
-		assetManager.finishLoading();
-		
-		music = assetManager.get("music/war1.mp3", Music.class);
-		
-		stage.addActor(new Image(assetHelper.getDrawable("image/battle-ui.pack:ui-panel-left")));
-		
-		spriteBatch = new SpriteBatch();
-		
-		setState(new AreaMapScreenPlayState());
+		super.show();
+		batch = new SpriteBatch();
 	}
 	
 	@Override
 	public void render(float delta) {
-		super.render(delta);
-		tweenManager.update(delta);
-		spriteBatch.setProjectionMatrix(camera.combined);
-		spriteBatch.begin();
-		spriteBatch.end();
-	}
-	
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector3 pos = camera.unproject(new Vector3(screenX, screenY, 0));
-
-		//sprite.setCenter(pos.x, pos.y);
-		return true;
-	}
-	
-	@Override
-	public boolean keyDown(int keycode) {
-		if(keycode == Input.Keys.ESCAPE) {
-			if(state instanceof AreaMapScreenPlayState) {//is playing
-				pause();
-			}else if(state instanceof AreaMapScreenPauseState) {
-				unpause();
-			}
-			
-			return true;
-		}
-		return false;
-	}
-	
-	protected void setState(AreaMapScreenState state) {
-		this.state = state;
-		this.state.create();
-	}
-	
-	@Override
-	public void pause() {
-		super.pause();
-		setState(new AreaMapScreenPauseState());
-	}
-	
-	public void unpause() {
-		setState(new AreaMapScreenPlayState());
-	}
-	
-	@Override
-	public void dispose() {
-		super.dispose();
-		spriteBatch.dispose();
-		Disposer.dispose(this);
-	}
-	
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		if(screenX < 15) {//mouse is left
-			camera.position.x--;
-			camera.update();
-			return true;
-		}
-		if(screenX > (Gdx.graphics.getWidth() - 15)) {//mouse is right
-			camera.position.x++;
-			camera.update();
-			return true;
-		}
-		if(screenY < 15){//mouse is top
-			camera.position.y++;
-			camera.update();
-		}
-		if(screenY > (Gdx.graphics.getHeight() - 15)) {//mouse is bottom
-			camera.position.y--;
-			camera.update();
-		}
+		camera.update();
+		cameraController.update();
+		mapRenderer.setView(camera);
+		mapRenderer.render();
 		
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		if(amount == 1) {//zoom in
-			if(camera.zoom > 1) {
-				camera.zoom -= 0.5;
-				camera.update();
-				return true;
-			}
-		} else {//zoom out
-			if(camera.zoom < 2) {
-				camera.zoom += 0.5;
-				camera.update();
-				return true;
-			}
-		}
-		return false;
+		batch.begin();
+		sprite.draw(batch);
+		batch.end();
+		
+		update(delta);
 	}
 	
-	private class UI {
-		private static final String TOOLTIP_TROOP_FORMATION_WALK = "Formation walk";
-	}
-	
-	private interface AreaMapScreenState {
-		public void create();
-	}
-	
-	public class AreaMapScreenPlayState implements AreaMapScreenState {
-		@Override
-		public void create() {
-			//music.play();
-			
-		}
-	}
-	
-	public class AreaMapScreenPauseState implements AreaMapScreenState {
-		@Override
-		public void create() {
-			music.pause();
-			
-		}
+	public void update (float delta) {
+		engine.update(delta);
 	}
 }

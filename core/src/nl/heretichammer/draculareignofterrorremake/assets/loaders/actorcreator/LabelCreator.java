@@ -51,7 +51,7 @@ public class LabelCreator extends WidgetCreator<Label> {
 				}
 			}
 			if(attributes.containsKey("ellipsis")){
-				label.setEllipsis(Boolean.parseBoolean(attributes.get("ellipsis")));
+				label.setEllipse(Boolean.parseBoolean(attributes.get("ellipsis")));
 			}
 			if(attributes.containsKey("fontscale")){
 				String[] args = attributes.get("fontscale").replaceAll(SPACE, "").split(SPACE);
