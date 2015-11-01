@@ -1,25 +1,23 @@
 package nl.heretichammer.draculareignofterrorremake;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
@@ -34,11 +32,18 @@ public class Main extends ApplicationAdapter {
 	float stateTime = 0;
 	Animation animation;
 	
-	Map<String, JsonValue> animationsData = new HashMap<String, JsonValue>();
+	Map<String, JsonValue> animationsData;
 	
 	@Override
 	public void create () {
 		Skin skin = new Skin(Gdx.files.internal("uiskin.json")); 
+		
+		animationsData = new TreeMap<String, JsonValue>(new Comparator<String>() {
+			@Override
+			public int compare(String o1, String o2) {
+				return o1.compareTo(o2);
+			}
+		});
 		
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -48,7 +53,7 @@ public class Main extends ApplicationAdapter {
 		
 		for(int i = 0; i < value.size; i++){
 			animationsData.put(value.get(i).getString("name"), value.get(i));		
-		}	
+		}
 		
 		final SelectBox select = new SelectBox<String>(skin);
 		select.addListener(new ChangeListener() {
