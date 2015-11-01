@@ -1,0 +1,283 @@
+
+mainmenu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui-screen-main
+  rotate: false
+  xy: 1, 523
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+ui-window-load
+  rotate: false
+  xy: 1, 41
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+ui-dialog-engage
+  rotate: false
+  xy: 643, 843
+  size: 226, 160
+  orig: 226, 160
+  offset: 0, 0
+  index: -1
+ui-border-selected
+  rotate: false
+  xy: 1, 8
+  size: 214, 31
+  orig: 214, 31
+  offset: 0, 0
+  index: -1
+ui-button-introduction-clicked
+  rotate: false
+  xy: 643, 809
+  size: 194, 32
+  orig: 194, 32
+  offset: 0, 0
+  index: -1
+ui-button-introduction-disabled
+  rotate: false
+  xy: 643, 775
+  size: 194, 32
+  orig: 194, 32
+  offset: 0, 0
+  index: -1
+ui-button-introduction-selected
+  rotate: false
+  xy: 643, 741
+  size: 194, 32
+  orig: 194, 32
+  offset: 0, 0
+  index: -1
+ui-label-save
+  rotate: false
+  xy: 871, 938
+  size: 130, 65
+  orig: 130, 65
+  offset: 0, 0
+  index: -1
+ui-button-cancel-clicked
+  rotate: false
+  xy: 643, 702
+  size: 143, 37
+  orig: 143, 37
+  offset: 0, 0
+  index: -1
+ui-button-cancel-selected
+  rotate: false
+  xy: 643, 663
+  size: 143, 37
+  orig: 143, 37
+  offset: 0, 0
+  index: -1
+ui-button-continue-clicked
+  rotate: false
+  xy: 643, 624
+  size: 143, 37
+  orig: 143, 37
+  offset: 0, 0
+  index: -1
+ui-button-continue-selected
+  rotate: false
+  xy: 643, 585
+  size: 143, 37
+  orig: 143, 37
+  offset: 0, 0
+  index: -1
+ui-button-newgame-clicked
+  rotate: false
+  xy: 643, 546
+  size: 143, 37
+  orig: 143, 37
+  offset: 0, 0
+  index: -1
+ui-button-newgame-selected
+  rotate: false
+  xy: 643, 507
+  size: 143, 37
+  orig: 143, 37
+  offset: 0, 0
+  index: -1
+ui-button-credits-clicked
+  rotate: false
+  xy: 871, 898
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-credits-disabled
+  rotate: false
+  xy: 643, 467
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-credits-selected
+  rotate: false
+  xy: 871, 858
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-engage-clicked
+  rotate: false
+  xy: 643, 427
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-engage-disabled
+  rotate: false
+  xy: 643, 387
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-engage-selected
+  rotate: false
+  xy: 643, 347
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-exit-clicked
+  rotate: false
+  xy: 643, 307
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-exit-disabled
+  rotate: false
+  xy: 643, 267
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-exit-selected
+  rotate: false
+  xy: 643, 227
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-load-clicked
+  rotate: false
+  xy: 643, 187
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-load-disabled
+  rotate: false
+  xy: 643, 147
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-load-selected
+  rotate: false
+  xy: 643, 107
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-options-clicked
+  rotate: false
+  xy: 643, 67
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-options-disabled
+  rotate: false
+  xy: 217, 1
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-options-selected
+  rotate: false
+  xy: 340, 1
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-save-clicked
+  rotate: false
+  xy: 463, 1
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-save-disabled
+  rotate: false
+  xy: 643, 27
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button-save-selected
+  rotate: false
+  xy: 871, 818
+  size: 121, 38
+  orig: 121, 38
+  offset: 0, 0
+  index: -1
+ui-button2-cancel-clicked
+  rotate: false
+  xy: 839, 767
+  size: 106, 49
+  orig: 106, 49
+  offset: 0, 0
+  index: -1
+ui-button2-default-clicked
+  rotate: false
+  xy: 839, 716
+  size: 106, 49
+  orig: 106, 49
+  offset: 0, 0
+  index: -1
+ui-button2-ok-clicked
+  rotate: false
+  xy: 788, 665
+  size: 106, 49
+  orig: 106, 49
+  offset: 0, 0
+  index: -1
+pointer
+  rotate: false
+  xy: 947, 777
+  size: 39, 39
+  orig: 39, 39
+  offset: 0, 0
+  index: -1
+ui-slider-knob
+  rotate: false
+  xy: 839, 829
+  size: 30, 12
+  orig: 30, 12
+  offset: 0, 0
+  index: -1
+ui-slider-afterbefore-disabled
+  rotate: false
+  xy: 1003, 992
+  size: 18, 11
+  orig: 18, 11
+  offset: 0, 0
+  index: -1
+
+mainmenu2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui-window-options
+  rotate: false
+  xy: 1, 1
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1

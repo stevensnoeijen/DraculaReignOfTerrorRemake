@@ -64,7 +64,3 @@ build/
 
 /.gradle
 /bin/
-
-android/assets/image
-android/assets/music
-android/assets/sound

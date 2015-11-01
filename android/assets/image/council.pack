@@ -1,0 +1,1891 @@
+
+council.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui-scroll
+  rotate: false
+  xy: 1, 543
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
+ui-scroll-accounts
+  rotate: false
+  xy: 643, 784
+  size: 319, 239
+  orig: 319, 239
+  offset: 0, 0
+  index: -1
+area-snagov-enemy-select
+  rotate: false
+  xy: 964, 952
+  size: 58, 71
+  orig: 58, 71
+  offset: 0, 0
+  index: -1
+area-snagov-enemy
+  rotate: false
+  xy: 964, 879
+  size: 58, 71
+  orig: 58, 71
+  offset: 0, 0
+  index: -1
+area-snagov-select
+  rotate: false
+  xy: 964, 806
+  size: 58, 71
+  orig: 58, 71
+  offset: 0, 0
+  index: -1
+area-snagov
+  rotate: false
+  xy: 964, 733
+  size: 58, 71
+  orig: 58, 71
+  offset: 0, 0
+  index: -1
+ui-tab-administration
+  rotate: false
+  xy: 643, 382
+  size: 251, 400
+  orig: 251, 400
+  offset: 0, 0
+  index: -1
+area-pitesti-enemy-select
+  rotate: false
+  xy: 896, 723
+  size: 63, 59
+  orig: 63, 59
+  offset: 0, 0
+  index: -1
+ui-button-build-click
+  rotate: false
+  xy: 961, 700
+  size: 50, 31
+  orig: 50, 31
+  offset: 0, 0
+  index: -1
+area-pitesti-enemy
+  rotate: false
+  xy: 896, 662
+  size: 63, 59
+  orig: 63, 59
+  offset: 0, 0
+  index: -1
+castle-1
+  rotate: false
+  xy: 1013, 720
+  size: 10, 11
+  orig: 10, 11
+  offset: 0, 0
+  index: -1
+bridge-red-horizontal
+  rotate: false
+  xy: 1013, 715
+  size: 9, 3
+  orig: 9, 3
+  offset: 0, 0
+  index: -1
+bridge-yellow-horizontal
+  rotate: false
+  xy: 1013, 710
+  size: 9, 3
+  orig: 9, 3
+  offset: 0, 0
+  index: -1
+tower-red
+  rotate: false
+  xy: 1013, 702
+  size: 5, 6
+  orig: 5, 6
+  offset: 0, 0
+  index: -1
+bridge-red-vertical
+  rotate: false
+  xy: 1020, 699
+  size: 3, 9
+  orig: 3, 9
+  offset: 0, 0
+  index: -1
+tower-yellow
+  rotate: false
+  xy: 1013, 694
+  size: 5, 6
+  orig: 5, 6
+  offset: 0, 0
+  index: -1
+ui-button-build
+  rotate: false
+  xy: 961, 668
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+bridge-yellow-vertical
+  rotate: false
+  xy: 1020, 688
+  size: 3, 9
+  orig: 3, 9
+  offset: 0, 0
+  index: -1
+ui-button-cancel-click
+  rotate: false
+  xy: 961, 636
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+area-pitesti-select
+  rotate: false
+  xy: 896, 601
+  size: 63, 59
+  orig: 63, 59
+  offset: 0, 0
+  index: -1
+ui-button-cancel
+  rotate: false
+  xy: 961, 604
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+ui-button-repair-click
+  rotate: false
+  xy: 961, 572
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+area-pitesti
+  rotate: false
+  xy: 896, 540
+  size: 63, 59
+  orig: 63, 59
+  offset: 0, 0
+  index: -1
+ui-button-repair
+  rotate: false
+  xy: 961, 540
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+upgrade-architecture-1
+  rotate: false
+  xy: 896, 423
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+ui-level-blue
+  rotate: false
+  xy: 1010, 515
+  size: 12, 23
+  orig: 12, 23
+  offset: 0, 0
+  index: -1
+ui-level-red
+  rotate: false
+  xy: 1010, 490
+  size: 12, 23
+  orig: 12, 23
+  offset: 0, 0
+  index: -1
+ui-scrollbar-thumb-down
+  rotate: false
+  xy: 1010, 479
+  size: 12, 9
+  orig: 12, 9
+  offset: 0, 0
+  index: -1
+ui-scrollbar-thumb-up
+  rotate: false
+  xy: 1010, 468
+  size: 12, 9
+  orig: 12, 9
+  offset: 0, 0
+  index: -1
+castle-1-select
+  rotate: false
+  xy: 1010, 455
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+upgrade-architecture-2
+  rotate: false
+  xy: 896, 306
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+training-empty
+  rotate: false
+  xy: 1, 46
+  size: 185, 258
+  orig: 185, 258
+  offset: 0, 0
+  index: -1
+area-hirsova-enemy-select
+  rotate: false
+  xy: 1, 1
+  size: 79, 43
+  orig: 79, 43
+  offset: 0, 0
+  index: -1
+area-hirsova-enemy
+  rotate: false
+  xy: 82, 1
+  size: 79, 43
+  orig: 79, 43
+  offset: 0, 0
+  index: -1
+area-hirsova-select
+  rotate: false
+  xy: 163, 1
+  size: 79, 43
+  orig: 79, 43
+  offset: 0, 0
+  index: -1
+ui-scrollbar
+  rotate: false
+  xy: 1, 307
+  size: 14, 234
+  orig: 14, 234
+  offset: 0, 0
+  index: -1
+administration-empty
+  rotate: false
+  xy: 188, 47
+  size: 185, 257
+  orig: 185, 257
+  offset: 0, 0
+  index: -1
+area-hirsova
+  rotate: false
+  xy: 244, 2
+  size: 79, 43
+  orig: 79, 43
+  offset: 0, 0
+  index: -1
+area-ostrov-enemy-select
+  rotate: false
+  xy: 325, 3
+  size: 92, 42
+  orig: 92, 42
+  offset: 0, 0
+  index: -1
+construction-empty
+  rotate: false
+  xy: 375, 47
+  size: 185, 257
+  orig: 185, 257
+  offset: 0, 0
+  index: -1
+bridge-preview-1
+  rotate: false
+  xy: 562, 463
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+bridge-preview-2
+  rotate: false
+  xy: 562, 383
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+bridge-preview-3
+  rotate: false
+  xy: 562, 303
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+area-ostrov-enemy
+  rotate: false
+  xy: 419, 3
+  size: 92, 42
+  orig: 92, 42
+  offset: 0, 0
+  index: -1
+area-ostrov-select
+  rotate: false
+  xy: 513, 3
+  size: 92, 42
+  orig: 92, 42
+  offset: 0, 0
+  index: -1
+movements-empty
+  rotate: false
+  xy: 607, 44
+  size: 185, 257
+  orig: 185, 257
+  offset: 0, 0
+  index: -1
+ui-waxseal
+  rotate: false
+  xy: 642, 304
+  size: 77, 76
+  orig: 77, 76
+  offset: 0, 0
+  index: -1
+ui-checkbox-cannon-disabled
+  rotate: false
+  xy: 562, 273
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-cannon
+  rotate: false
+  xy: 562, 243
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-crossbowsoldier-disabled
+  rotate: false
+  xy: 562, 213
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-crossbowsoldier
+  rotate: false
+  xy: 562, 183
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-juggernaut-disabled
+  rotate: false
+  xy: 562, 153
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-juggernaut
+  rotate: false
+  xy: 562, 123
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-knight-disabled
+  rotate: false
+  xy: 562, 93
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+ui-checkbox-knight
+  rotate: false
+  xy: 562, 63
+  size: 42, 28
+  orig: 42, 28
+  offset: 0, 0
+  index: -1
+castle-1-stone
+  rotate: false
+  xy: 562, 47
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+castle-6-select
+  rotate: false
+  xy: 607, 2
+  size: 41, 40
+  orig: 41, 40
+  offset: 0, 0
+  index: -1
+castle-6
+  rotate: false
+  xy: 650, 2
+  size: 41, 40
+  orig: 41, 40
+  offset: 0, 0
+  index: -1
+ui-scrollbar-down
+  rotate: false
+  xy: 578, 49
+  size: 14, 12
+  orig: 14, 12
+  offset: 0, 0
+  index: -1
+area-rasova-enemy-select
+  rotate: false
+  xy: 693, 4
+  size: 77, 38
+  orig: 77, 38
+  offset: 0, 0
+  index: -1
+area-rasova-enemy
+  rotate: false
+  xy: 772, 4
+  size: 77, 38
+  orig: 77, 38
+  offset: 0, 0
+  index: -1
+ui-checkbox-catapult-disabled
+  rotate: false
+  xy: 851, 353
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+castle-6-moat-select
+  rotate: false
+  xy: 721, 303
+  size: 49, 48
+  orig: 49, 48
+  offset: 0, 0
+  index: -1
+area-rasova-select
+  rotate: false
+  xy: 772, 342
+  size: 77, 38
+  orig: 77, 38
+  offset: 0, 0
+  index: -1
+ui-checkbox-catapult
+  rotate: false
+  xy: 721, 353
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-scout-disabled
+  rotate: false
+  xy: 851, 324
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+castle-3-grass
+  rotate: false
+  xy: 772, 303
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
+castle-3-select
+  rotate: false
+  xy: 792, 303
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
+arrow-blue-east
+  rotate: false
+  xy: 772, 325
+  size: 28, 15
+  orig: 28, 15
+  offset: 0, 0
+  index: -1
+arrow-blue-west
+  rotate: false
+  xy: 802, 325
+  size: 28, 15
+  orig: 28, 15
+  offset: 0, 0
+  index: -1
+pointer-wait
+  rotate: false
+  xy: 832, 309
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: 1
+ui-button-overlay-wait-empty
+  rotate: false
+  xy: 832, 309
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+castle-2-stone
+  rotate: false
+  xy: 812, 305
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ui-checkbox-scout
+  rotate: false
+  xy: 851, 295
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+minimap-braila
+  rotate: false
+  xy: 895, 176
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+pointer-wait
+  rotate: false
+  xy: 832, 276
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: 2
+ui-button-overlay-wait-full
+  rotate: false
+  xy: 832, 276
+  size: 17, 31
+  orig: 17, 31
+  offset: 0, 0
+  index: -1
+info-army
+  rotate: false
+  xy: 794, 251
+  size: 36, 50
+  orig: 36, 50
+  offset: 0, 0
+  index: -1
+ui-checkbox-spearmen-disabled
+  rotate: false
+  xy: 851, 266
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-spearmen
+  rotate: false
+  xy: 851, 237
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-spy-disabled
+  rotate: false
+  xy: 851, 208
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-spy
+  rotate: false
+  xy: 851, 179
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-swordsoldier-disabled
+  rotate: false
+  xy: 851, 150
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+minimap-brasov
+  rotate: false
+  xy: 895, 46
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ui-checkbox-swordsoldier
+  rotate: false
+  xy: 851, 121
+  size: 42, 27
+  orig: 42, 27
+  offset: 0, 0
+  index: -1
+area-ostrov
+  rotate: false
+  xy: 851, 2
+  size: 92, 42
+  orig: 92, 42
+  offset: 0, 0
+  index: -1
+area-rasova
+  rotate: false
+  xy: 945, 6
+  size: 77, 38
+  orig: 77, 38
+  offset: 0, 0
+  index: -1
+area-fagaras-enemy-select
+  rotate: false
+  xy: 794, 51
+  size: 97, 68
+  orig: 97, 68
+  offset: 0, 0
+  index: -1
+arrow-blue-north
+  rotate: false
+  xy: 832, 246
+  size: 15, 28
+  orig: 15, 28
+  offset: 0, 0
+  index: -1
+info-food
+  rotate: false
+  xy: 794, 199
+  size: 36, 50
+  orig: 36, 50
+  offset: 0, 0
+  index: -1
+arrow-blue-south
+  rotate: false
+  xy: 832, 216
+  size: 15, 28
+  orig: 15, 28
+  offset: 0, 0
+  index: -1
+arrow-red-north
+  rotate: false
+  xy: 832, 186
+  size: 15, 28
+  orig: 15, 28
+  offset: 0, 0
+  index: -1
+info-gold
+  rotate: false
+  xy: 794, 147
+  size: 36, 50
+  orig: 36, 50
+  offset: 0, 0
+  index: -1
+ui-scrollbar-thumb
+  rotate: false
+  xy: 832, 121
+  size: 14, 63
+  orig: 14, 63
+  offset: 0, 0
+  index: -1
+arrow-blue-northeast
+  rotate: false
+  xy: 794, 123
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+ui-panel-stats
+  rotate: false
+  xy: 17, 362
+  size: 202, 179
+  orig: 202, 179
+  offset: 0, 0
+  index: -1
+info-men
+  rotate: false
+  xy: 17, 310
+  size: 36, 50
+  orig: 36, 50
+  offset: 0, 0
+  index: -1
+info-wood
+  rotate: false
+  xy: 55, 310
+  size: 36, 50
+  orig: 36, 50
+  offset: 0, 0
+  index: -1
+castle-6-moat
+  rotate: false
+  xy: 93, 312
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+ui-button-bridge-click
+  rotate: false
+  xy: 143, 322
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+ui-scrollbar-up
+  rotate: false
+  xy: 143, 309
+  size: 14, 11
+  orig: 14, 11
+  offset: 0, 0
+  index: -1
+ui-button-bridge
+  rotate: false
+  xy: 183, 322
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+underattack
+  rotate: false
+  xy: 221, 371
+  size: 133, 170
+  orig: 133, 170
+  offset: 0, 0
+  index: -1
+ui-label-help
+  rotate: false
+  xy: 223, 309
+  size: 103, 60
+  orig: 103, 60
+  offset: 0, 0
+  index: -1
+area-braila-enemy-select
+  rotate: false
+  xy: 328, 310
+  size: 102, 59
+  orig: 102, 59
+  offset: 0, 0
+  index: -1
+minimap-curtea
+  rotate: false
+  xy: 432, 413
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ui-button-castle-click
+  rotate: false
+  xy: 356, 373
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+ui-button-castle
+  rotate: false
+  xy: 396, 373
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+ui-button-upgrade2-click
+  rotate: false
+  xy: 356, 511
+  size: 70, 30
+  orig: 70, 30
+  offset: 0, 0
+  index: -1
+ui-button-upgrade2
+  rotate: false
+  xy: 356, 479
+  size: 70, 30
+  orig: 70, 30
+  offset: 0, 0
+  index: -1
+area-braila-enemy
+  rotate: false
+  xy: 432, 312
+  size: 102, 59
+  orig: 102, 59
+  offset: 0, 0
+  index: -1
+ui-button-castle2-click
+  rotate: false
+  xy: 436, 373
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+ui-button-castle2
+  rotate: false
+  xy: 476, 373
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+ui-button-tower-click
+  rotate: false
+  xy: 516, 373
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+arrow-blue-northwest
+  rotate: false
+  xy: 536, 349
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+arrow-blue-southeast
+  rotate: false
+  xy: 536, 325
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+castle-2-select-stone
+  rotate: false
+  xy: 536, 306
+  size: 18, 17
+  orig: 18, 17
+  offset: 0, 0
+  index: -1
+ui-button-upgrade-click
+  rotate: false
+  xy: 356, 447
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+arrow-blue-southwest
+  rotate: false
+  xy: 408, 455
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+arrow-red-northeast
+  rotate: false
+  xy: 408, 431
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+ui-button-upgrade
+  rotate: false
+  xy: 356, 415
+  size: 50, 30
+  orig: 50, 30
+  offset: 0, 0
+  index: -1
+castle-2-select-grass
+  rotate: false
+  xy: 408, 414
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+
+council2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui-tab-construction
+  rotate: false
+  xy: 1, 623
+  size: 251, 400
+  orig: 251, 400
+  offset: 0, 0
+  index: -1
+ui-tab-information
+  rotate: false
+  xy: 1, 221
+  size: 251, 400
+  orig: 251, 400
+  offset: 0, 0
+  index: -1
+ui-tab-movement
+  rotate: false
+  xy: 254, 623
+  size: 251, 400
+  orig: 251, 400
+  offset: 0, 0
+  index: -1
+ui-tab-training
+  rotate: false
+  xy: 254, 221
+  size: 251, 400
+  orig: 251, 400
+  offset: 0, 0
+  index: -1
+ui-tab-empty
+  rotate: false
+  xy: 507, 623
+  size: 197, 400
+  orig: 197, 400
+  offset: 0, 0
+  index: -1
+minimap-fagaras
+  rotate: false
+  xy: 1, 91
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+area-giurgiu-enemy-select
+  rotate: false
+  xy: 1, 1
+  size: 104, 88
+  orig: 104, 88
+  offset: 0, 0
+  index: -1
+minimap-giurgiu
+  rotate: false
+  xy: 507, 493
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+minimap-hirsova
+  rotate: false
+  xy: 706, 895
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+minimap-ostrov
+  rotate: false
+  xy: 131, 91
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+area-giurgiu-enemy
+  rotate: false
+  xy: 107, 1
+  size: 104, 88
+  orig: 104, 88
+  offset: 0, 0
+  index: -1
+minimap-pitesti
+  rotate: false
+  xy: 507, 363
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+minimap-rasova
+  rotate: false
+  xy: 706, 765
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+minimap-sibiu
+  rotate: false
+  xy: 836, 895
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+minimap-snagov
+  rotate: false
+  xy: 261, 91
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+area-giurgiu-select
+  rotate: false
+  xy: 213, 1
+  size: 104, 88
+  orig: 104, 88
+  offset: 0, 0
+  index: -1
+area-giurgiu
+  rotate: false
+  xy: 319, 1
+  size: 104, 88
+  orig: 104, 88
+  offset: 0, 0
+  index: -1
+minimap-targo
+  rotate: false
+  xy: 391, 91
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+upgrade-architecture-3
+  rotate: false
+  xy: 706, 648
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+upgrade-architecture-4
+  rotate: false
+  xy: 836, 778
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+upgrade-armament-1
+  rotate: false
+  xy: 507, 246
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+upgrade-armament-2
+  rotate: false
+  xy: 521, 129
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+upgrade-armament-3
+  rotate: false
+  xy: 637, 506
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+upgrade-armament-4
+  rotate: false
+  xy: 637, 389
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+area-fagaras-enemy
+  rotate: false
+  xy: 425, 21
+  size: 97, 68
+  orig: 97, 68
+  offset: 0, 0
+  index: -1
+upgrade-armament-5
+  rotate: false
+  xy: 524, 12
+  size: 112, 115
+  orig: 112, 115
+  offset: 0, 0
+  index: -1
+area-curtea-enemy-select
+  rotate: false
+  xy: 637, 321
+  size: 137, 66
+  orig: 137, 66
+  offset: 0, 0
+  index: -1
+area-curtea-enemy
+  rotate: false
+  xy: 621, 253
+  size: 137, 66
+  orig: 137, 66
+  offset: 0, 0
+  index: -1
+area-curtea-select
+  rotate: false
+  xy: 635, 185
+  size: 137, 66
+  orig: 137, 66
+  offset: 0, 0
+  index: -1
+area-curtea
+  rotate: false
+  xy: 638, 117
+  size: 137, 66
+  orig: 137, 66
+  offset: 0, 0
+  index: -1
+area-brasov-enemy-select
+  rotate: false
+  xy: 638, 57
+  size: 109, 58
+  orig: 109, 58
+  offset: 0, 0
+  index: -1
+area-brasov-enemy
+  rotate: false
+  xy: 836, 718
+  size: 109, 58
+  orig: 109, 58
+  offset: 0, 0
+  index: -1
+area-brasov-select
+  rotate: false
+  xy: 820, 658
+  size: 109, 58
+  orig: 109, 58
+  offset: 0, 0
+  index: -1
+castle-preview-1
+  rotate: false
+  xy: 751, 568
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+castle-preview-2
+  rotate: false
+  xy: 751, 488
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+castle-preview-3
+  rotate: false
+  xy: 751, 408
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+area-fagaras-select
+  rotate: false
+  xy: 831, 588
+  size: 97, 68
+  orig: 97, 68
+  offset: 0, 0
+  index: -1
+area-fagaras
+  rotate: false
+  xy: 831, 518
+  size: 97, 68
+  orig: 97, 68
+  offset: 0, 0
+  index: -1
+area-tirgo-enemy-select
+  rotate: false
+  xy: 831, 449
+  size: 95, 67
+  orig: 95, 67
+  offset: 0, 0
+  index: -1
+area-tirgo-enemy
+  rotate: false
+  xy: 928, 449
+  size: 95, 67
+  orig: 95, 67
+  offset: 0, 0
+  index: -1
+area-brasov
+  rotate: false
+  xy: 831, 389
+  size: 109, 58
+  orig: 109, 58
+  offset: 0, 0
+  index: -1
+castle-preview-4-moat
+  rotate: false
+  xy: 942, 369
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+ui-label-annodomini-week
+  rotate: false
+  xy: 776, 331
+  size: 107, 56
+  orig: 107, 56
+  offset: 0, 0
+  index: -1
+area-braila-select
+  rotate: false
+  xy: 776, 270
+  size: 102, 59
+  orig: 102, 59
+  offset: 0, 0
+  index: -1
+area-tirgo-select
+  rotate: false
+  xy: 774, 201
+  size: 95, 67
+  orig: 95, 67
+  offset: 0, 0
+  index: -1
+area-tirgo
+  rotate: false
+  xy: 777, 132
+  size: 95, 67
+  orig: 95, 67
+  offset: 0, 0
+  index: -1
+area-braila
+  rotate: false
+  xy: 777, 71
+  size: 102, 59
+  orig: 102, 59
+  offset: 0, 0
+  index: -1
+info-bridge
+  rotate: false
+  xy: 749, 89
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui-button-spy-click
+  rotate: false
+  xy: 638, 25
+  size: 49, 30
+  orig: 49, 30
+  offset: 0, 0
+  index: -1
+ui-button-spy
+  rotate: false
+  xy: 966, 993
+  size: 49, 30
+  orig: 49, 30
+  offset: 0, 0
+  index: -1
+ui-button-cannon-click
+  rotate: false
+  xy: 885, 358
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+area-sibiu-enemy-select
+  rotate: false
+  xy: 936, 296
+  size: 85, 71
+  orig: 85, 71
+  offset: 0, 0
+  index: -1
+ui-button-cannon-disabled
+  rotate: false
+  xy: 885, 327
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-cannon
+  rotate: false
+  xy: 689, 26
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-catapult-click
+  rotate: false
+  xy: 966, 962
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-catapult-disabled
+  rotate: false
+  xy: 966, 931
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-catapult
+  rotate: false
+  xy: 966, 900
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+castle-preview-4
+  rotate: false
+  xy: 930, 578
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+ui-button-crossbowsoldiers-click
+  rotate: false
+  xy: 930, 547
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-checkbox-cannon-selected
+  rotate: false
+  xy: 930, 518
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-crossbowsoldier-selected
+  rotate: false
+  xy: 973, 518
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+castle-4-moat-select
+  rotate: false
+  xy: 981, 547
+  size: 30, 29
+  orig: 30, 29
+  offset: 0, 0
+  index: -1
+ui-button-crossbowsoldiers-disabled
+  rotate: false
+  xy: 880, 296
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+area-sibiu-enemy
+  rotate: false
+  xy: 880, 223
+  size: 85, 71
+  orig: 85, 71
+  offset: 0, 0
+  index: -1
+area-sibiu-select
+  rotate: false
+  xy: 874, 150
+  size: 85, 71
+  orig: 85, 71
+  offset: 0, 0
+  index: -1
+castle-preview-5-moat
+  rotate: false
+  xy: 881, 70
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+ui-button-crossbowsoldiers
+  rotate: false
+  xy: 967, 265
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-juggernaut-click
+  rotate: false
+  xy: 967, 234
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+info-canon
+  rotate: false
+  xy: 749, 61
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui-button-juggernaut-disabled
+  rotate: false
+  xy: 967, 203
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-juggernaut
+  rotate: false
+  xy: 961, 172
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-knight-click
+  rotate: false
+  xy: 961, 141
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-knight-disabled
+  rotate: false
+  xy: 961, 110
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-knight
+  rotate: false
+  xy: 961, 79
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+arrow-red-northwest
+  rotate: false
+  xy: 638, 1
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+arrow-red-southeast
+  rotate: false
+  xy: 662, 1
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+ui-button-scout-click
+  rotate: false
+  xy: 777, 40
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-scout-disabled
+  rotate: false
+  xy: 828, 40
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-scout
+  rotate: false
+  xy: 879, 39
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+castle-4-moat
+  rotate: false
+  xy: 930, 39
+  size: 30, 29
+  orig: 30, 29
+  offset: 0, 0
+  index: -1
+ui-button-spearmen-click
+  rotate: false
+  xy: 962, 48
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-spearmen-disabled
+  rotate: false
+  xy: 962, 17
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-spearmen
+  rotate: false
+  xy: 966, 869
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-spy-disabled
+  rotate: false
+  xy: 950, 838
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-swordsoldiers-click
+  rotate: false
+  xy: 950, 807
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-swordsoldiers-disabled
+  rotate: false
+  xy: 950, 776
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-button-swordsoldiers
+  rotate: false
+  xy: 947, 745
+  size: 49, 29
+  orig: 49, 29
+  offset: 0, 0
+  index: -1
+ui-checkbox-catapult-selected
+  rotate: false
+  xy: 947, 715
+  size: 41, 28
+  orig: 41, 28
+  offset: 0, 0
+  index: -1
+arrow-red-southwest
+  rotate: false
+  xy: 1001, 845
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+ui-button-tower
+  rotate: false
+  xy: 931, 675
+  size: 38, 38
+  orig: 38, 38
+  offset: 0, 0
+  index: -1
+arrow-red-east
+  rotate: false
+  xy: 931, 658
+  size: 28, 15
+  orig: 28, 15
+  offset: 0, 0
+  index: -1
+arrow-red-west
+  rotate: false
+  xy: 961, 658
+  size: 28, 15
+  orig: 28, 15
+  offset: 0, 0
+  index: -1
+castle-5-moat-select
+  rotate: false
+  xy: 971, 679
+  size: 39, 34
+  orig: 39, 34
+  offset: 0, 0
+  index: -1
+arrow-red-south
+  rotate: false
+  xy: 990, 715
+  size: 15, 28
+  orig: 15, 28
+  offset: 0, 0
+  index: -1
+ui-button-1-click
+  rotate: false
+  xy: 706, 626
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+info-castle1
+  rotate: false
+  xy: 749, 33
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+castle-1-select-stone
+  rotate: false
+  xy: 621, 346
+  size: 14, 15
+  orig: 14, 15
+  offset: 0, 0
+  index: -1
+ui-checkbox-juggernaut-selected
+  rotate: false
+  xy: 777, 11
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-knight-selected
+  rotate: false
+  xy: 820, 11
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-scout-selected
+  rotate: false
+  xy: 863, 10
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-spearmen-selected
+  rotate: false
+  xy: 906, 9
+  size: 41, 28
+  orig: 41, 28
+  offset: 0, 0
+  index: -1
+castle-3-stone-select
+  rotate: false
+  xy: 1001, 822
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+castle-3-stone
+  rotate: false
+  xy: 1001, 799
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+castle-4-select
+  rotate: false
+  xy: 1001, 776
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+castle-4
+  rotate: false
+  xy: 998, 753
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+castle-2
+  rotate: false
+  xy: 425, 4
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+ui-button-1
+  rotate: false
+  xy: 689, 4
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-10-click
+  rotate: false
+  xy: 721, 4
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+
+council3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+area-sibiu
+  rotate: false
+  xy: 1, 37
+  size: 85, 71
+  orig: 85, 71
+  offset: 0, 0
+  index: -1
+castle-preview-5
+  rotate: false
+  xy: 88, 30
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+castle-preview-6-moat
+  rotate: false
+  xy: 168, 30
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+castle-preview-6
+  rotate: false
+  xy: 248, 30
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+tower-preview
+  rotate: false
+  xy: 328, 30
+  size: 78, 78
+  orig: 78, 78
+  offset: 0, 0
+  index: -1
+ui-waxseal-select
+  rotate: false
+  xy: 408, 30
+  size: 77, 78
+  orig: 77, 78
+  offset: 0, 0
+  index: -1
+castle-5-moat
+  rotate: false
+  xy: 1, 1
+  size: 39, 34
+  orig: 39, 34
+  offset: 0, 0
+  index: -1
+ui-checkbox-spy-selected
+  rotate: false
+  xy: 487, 81
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+ui-checkbox-swordsoldier-selected
+  rotate: false
+  xy: 42, 8
+  size: 41, 27
+  orig: 41, 27
+  offset: 0, 0
+  index: -1
+castle-5-select
+  rotate: false
+  xy: 487, 53
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+castle-5
+  rotate: false
+  xy: 530, 82
+  size: 31, 26
+  orig: 31, 26
+  offset: 0, 0
+  index: -1
+info-castle2
+  rotate: false
+  xy: 563, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-catapult
+  rotate: false
+  xy: 591, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-crossbowsoldier
+  rotate: false
+  xy: 619, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-juggernaut
+  rotate: false
+  xy: 647, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-knight
+  rotate: false
+  xy: 675, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-scout
+  rotate: false
+  xy: 703, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-spy
+  rotate: false
+  xy: 731, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-swordsmen
+  rotate: false
+  xy: 759, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+info-tower
+  rotate: false
+  xy: 787, 82
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: -1
+ui-button-next
+  rotate: false
+  xy: 815, 83
+  size: 26, 25
+  orig: 26, 25
+  offset: 0, 0
+  index: -1
+ui-button-10
+  rotate: false
+  xy: 487, 31
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-2-click
+  rotate: false
+  xy: 843, 88
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-2
+  rotate: false
+  xy: 875, 88
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-3-click
+  rotate: false
+  xy: 907, 88
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-3
+  rotate: false
+  xy: 939, 88
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-4-click
+  rotate: false
+  xy: 971, 88
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-4
+  rotate: false
+  xy: 85, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-5-click
+  rotate: false
+  xy: 117, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-5
+  rotate: false
+  xy: 149, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-6-click
+  rotate: false
+  xy: 181, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-6
+  rotate: false
+  xy: 213, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-7-click
+  rotate: false
+  xy: 245, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-7
+  rotate: false
+  xy: 277, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-8-click
+  rotate: false
+  xy: 309, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-8
+  rotate: false
+  xy: 341, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-9-click
+  rotate: false
+  xy: 373, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+ui-button-9
+  rotate: false
+  xy: 405, 8
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1

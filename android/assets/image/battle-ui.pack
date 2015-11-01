@@ -1,0 +1,215 @@
+
+battle-ui.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ui-panel-left
+  rotate: false
+  xy: 1, 21
+  size: 160, 480
+  orig: 160, 480
+  offset: 0, 0
+  index: -1
+ui-button-leave
+  rotate: false
+  xy: 163, 451
+  size: 120, 50
+  orig: 120, 50
+  offset: 0, 0
+  index: -1
+ui-button-pause
+  rotate: false
+  xy: 163, 399
+  size: 120, 50
+  orig: 120, 50
+  offset: 0, 0
+  index: -1
+ui-button-council
+  rotate: false
+  xy: 285, 467
+  size: 82, 34
+  orig: 82, 34
+  offset: 0, 0
+  index: -1
+ui-button-council-clicked
+  rotate: false
+  xy: 163, 364
+  size: 82, 33
+  orig: 82, 33
+  offset: 0, 0
+  index: -1
+ui-empty
+  rotate: false
+  xy: 285, 435
+  size: 73, 30
+  orig: 73, 30
+  offset: 0, 0
+  index: -1
+ui-button-attack-clicked
+  rotate: false
+  xy: 163, 322
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-attack
+  rotate: false
+  xy: 163, 280
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-defend-clicked
+  rotate: false
+  xy: 205, 322
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-defend
+  rotate: false
+  xy: 163, 238
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-goto-clicked
+  rotate: false
+  xy: 205, 280
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-goto
+  rotate: false
+  xy: 163, 196
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-halt-clicked
+  rotate: false
+  xy: 205, 238
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-halt
+  rotate: false
+  xy: 163, 154
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-move-clicked
+  rotate: false
+  xy: 205, 196
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-move
+  rotate: false
+  xy: 163, 112
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-patrol-clicked
+  rotate: false
+  xy: 205, 154
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-patrol
+  rotate: false
+  xy: 163, 70
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-regroup-clicked
+  rotate: false
+  xy: 205, 112
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-regroup
+  rotate: false
+  xy: 163, 28
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-run-clicked
+  rotate: false
+  xy: 205, 70
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-button-run
+  rotate: false
+  xy: 205, 28
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-aggressive-checked
+  rotate: false
+  xy: 247, 357
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-aggressive
+  rotate: false
+  xy: 247, 315
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-defencive-checked
+  rotate: false
+  xy: 247, 273
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-defencive
+  rotate: false
+  xy: 247, 231
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-passive-checked
+  rotate: false
+  xy: 247, 189
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-passive
+  rotate: false
+  xy: 247, 147
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ui-checkbox-ruby-checked
+  rotate: false
+  xy: 1, 1
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ui-checkbox-ruby
+  rotate: false
+  xy: 369, 483
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
