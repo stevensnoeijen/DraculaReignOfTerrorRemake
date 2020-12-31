@@ -1,9 +1,0 @@
-{
-	CANNON: { name: "cannon", attributes: { STRENGHT: 6, ACCURACY: 3,	DEFANCE: 1,	STAMINA: 7,	SPEED: 1, RANGE: 4 } },
-	CATAPULT: { name: "catapult", attributes: {	STRENGHT: 4, ACCURACY: 4, DEFANCE: 1, STAMINA: 7, SPEED: 1, RANGE: 5 } },
-	CROSSBOWSOLDIER: { name: "crossbowsoldier", attributes: { STRENGHT: 2, ACCURACY: 6, DEFANCE: 3, STAMINA: 2, SPEED: 2, RANGE: 5 } },
-	JUGGERNAUT: { name: "juggernaut", attributes: { STRENGHT: 3, ACCURACY: 0, DEFANCE: 1, STAMINA: 5, SPEED: 2, RANGE: 1 } },	
-	KNIGHT: { name: "knight", attributes: { STRENGHT: 8, ACCURACY: 0, DEFANCE: 8, STAMINA: 4, SPEED: 4, RANGE: 1 } },
-	SPY: { name: "spy", attributes: { STRENGHT: 0, ACCURACY: 0,	DEFANCE: 0,	STAMINA: 0,	SPEED: 0, RANGE: 0 } },
-	SWORDSMEN: { name: "swordsoldier", attributes: { STRENGHT: 3, ACCURACY: 0, DEFANCE: 4, STAMINA: 3, SPEED: 2, RANGE: 1 } }
-}

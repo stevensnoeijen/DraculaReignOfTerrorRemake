@@ -1,9 +1,0 @@
-{
-	name: "men",
-	description: "",
-	category: "resource",
-	weight: 0,
-	image: "",
-	amountMax: 10000,
-	amountDefault: 0
-}

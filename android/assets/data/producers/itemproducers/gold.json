@@ -1,8 +1,0 @@
-{
-	autoStart: true,
-	turnCost: 1,
-	produces: {
-		name: "wood",
-		amount: 10
-	}
-}

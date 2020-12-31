@@ -1,9 +1,0 @@
-{
-	CANNON: { size: 1 },
-	CATAPULT: { size: 1 },
-	CROSSBOWSOLDIER: { size: 5 },
-	JUGGERNAUT: { size: 1 },
-	KNIGHT: { size: 1 },
-	SPY: { size: 1 },
-	SWORDSMEN: { size: 5 }
-}

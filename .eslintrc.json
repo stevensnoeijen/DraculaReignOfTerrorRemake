@@ -1,0 +1,54 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "unused-imports"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "google",
+    "prettier",
+    "prettier/react"
+  ],
+  "rules": {
+    "require-jsdoc": "off",
+    "unused-imports/no-unused-imports-ts": "warn",
+    "valid-jsdoc": [
+      "warn",
+      {
+        "prefer": {
+          "return": "returns"
+        }
+      }
+    ],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "{}": false
+        },
+        "extendDefaults": true
+      }
+    ],
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptions": [
+          "Color"
+        ]
+      }
+    ]
+  }
+}

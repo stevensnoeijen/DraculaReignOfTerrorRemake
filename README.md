@@ -1,6 +1,15 @@
-DraculaReignOfTerrorRemake
-==========================
+# Dracula: Reign of Terror Remake
 
-Remake Dracula Reign Of Terror
+# Requirements
 
-This is a hobby project and so development will probably not be to quick. Assets are not included becouse this can give copyright problems...
+- node
+- yarn
+
+# QuickStart
+
+```
+yarn install
+yarn web
+```
+
+A browser tab will open, click "Run in web browser".

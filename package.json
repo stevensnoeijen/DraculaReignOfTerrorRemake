@@ -1,0 +1,56 @@
+{
+  "main": "src/main.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "color": "^3.1.3",
+    "ecsy": "^0.4.2",
+    "expo": "~39.0.2",
+    "expo-status-bar": "~1.0.2",
+    "matter-js": "^0.14.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
+    "react-native-canvas": "^0.1.37",
+    "react-native-game-engine": "^1.2.0",
+    "react-native-svg": "12.1.0",
+    "react-native-web": "~0.13.12",
+    "react-native-webview": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/color": "^3.0.1",
+    "@types/matter-js": "^0.14.5",
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
+    "eslint": "^7.16.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-unused-imports": "^1.0.1",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "typescript": "~3.9.5"
+  },
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,css,md}": "prettier --write",
+    "*.ts": "eslint --fix"
+  }
+}
