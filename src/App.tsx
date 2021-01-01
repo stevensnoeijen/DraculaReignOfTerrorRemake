@@ -6,11 +6,11 @@ import { Position } from './components/Position';
 import { Renderable } from './components/Renderable';
 import { Selectable } from './components/Selectable';
 import { RendererSystem } from './systems/RendererSystem';
-import { Rect } from './components/Rect';
 import { Size } from './components/Size';
 import { EntityFactory } from './EntityFactory';
 import { PlayerControlSystem } from './systems/PlayerControlSystem';
 import { Selector } from './components/Selector';
+import { Shape } from './components/Shape';
 import { Movable } from './components/Movable';
 import { Text } from './components/Text';
 import { Fps } from './components/Fps';
@@ -41,7 +41,7 @@ export default class App extends Component<AppProps> {
 
 		this.world
 			.registerComponent(Position)
-			.registerComponent(Rect)
+			.registerComponent(Shape)
 			.registerComponent(Renderable)
 			.registerComponent(Size)
 			.registerComponent(Selectable)
@@ -83,27 +83,6 @@ export default class App extends Component<AppProps> {
 		EntityFactory.createUnit(this.world, {
 			position: { x: 100, y: 100 }
 		});
-	}
-
-	private generateRandomLevel(): number[][] {
-		const grid: number[][] = [];
-
-		// add starting blocks
-		const rowsToFill = 5;
-		Array.from(Array(Constants.BLOCK_MAX_ROWS)).forEach((value, row) => {
-			grid.push([]);
-			if (row >= Constants.BLOCK_MAX_ROWS - rowsToFill) {
-				Array.from(Array(Constants.BLOCK_MAX_COLUMNS)).forEach(() => {
-					grid[row].push(Constants.getRandomBlockType());
-				});
-			} else {
-				Array.from(Array(Constants.BLOCK_MAX_COLUMNS)).forEach(() => {
-					grid[row].push(0);
-				});
-			}
-		});
-
-		return grid;
 	}
 
 	private frame(): void {

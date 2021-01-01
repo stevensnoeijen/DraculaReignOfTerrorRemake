@@ -2,10 +2,10 @@ import { Text } from './../components/Text';
 import { Constants } from './../Constants';
 import { Size } from './../components/Size';
 import { Position } from './../components/Position';
-import { Rect } from '../components/Rect';
 import { System, World, Attributes, Entity } from 'ecsy';
 import { Renderable } from '../components/Renderable';
 import { Layered } from '../components/Layered';
+import { Shape } from '../components/Shape';
 
 export class RendererSystem extends System {
 	public static queries = {
@@ -33,8 +33,15 @@ export class RendererSystem extends System {
 
 		// Iterate through all the entities on the query
 		renderables.forEach((entity: Entity) => {
-			if (entity.hasComponent(Rect)) {
-				this.drawRect(entity);
+			if (entity.hasComponent(Shape)) {
+				const shape = entity.getComponent(Shape);
+				if (undefined === shape) {
+					return; // skip
+				}
+
+				if (shape.type === 'rectangle') {
+					this.drawRect(entity);
+				}
 			}
 			if (entity.hasComponent(Text)) {
 				this.renderText(entity);
@@ -43,21 +50,21 @@ export class RendererSystem extends System {
 	}
 
 	private drawRect(entity: Entity): void {
-		const rect = entity.getComponent(Rect)!;
+		const shape = entity.getComponent(Shape)!;
 		const position = entity.getComponent(Position)!;
 		const size = entity.getComponent(Size)!;
 
 		this.context.beginPath();
 
 		this.context.rect(position.x, position.y, size.width, size.height);
-		if (rect.fillStyle) {
-			this.context.fillStyle = rect.fillStyle;
+		if (shape.fillStyle) {
+			this.context.fillStyle = shape.fillStyle;
 			this.context.fill();
 		}
 
-		if (rect.lineWidth && rect.lineWidth > 0) {
-			this.context.lineWidth = rect.lineWidth;
-			this.context.strokeStyle = rect.lineStyle || '#000';
+		if (shape.lineWidth && shape.lineWidth > 0) {
+			this.context.lineWidth = shape.lineWidth;
+			this.context.strokeStyle = shape.lineStyle || '#000';
 			this.context.stroke();
 		}
 	}

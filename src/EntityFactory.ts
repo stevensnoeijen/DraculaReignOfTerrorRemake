@@ -5,7 +5,7 @@ import { Selector } from './components/Selector';
 import { Size } from './components/Size';
 import { Position, PositionOptions } from './components/Position';
 import { Constants } from './Constants';
-import { Rect } from './components/Rect';
+import { Shape } from './components/Shape';
 import { World } from 'ecsy';
 import { Renderable } from './components/Renderable';
 import { Layered } from './components/Layered';
@@ -34,7 +34,8 @@ export class EntityFactory {
 
 		world
 			.createEntity()
-			.addComponent(Rect, {
+			.addComponent(Shape, {
+				type: 'rectangle',
 				fillStyle: color.hex(),
 			})
 			.addComponent(Position, {
@@ -60,7 +61,8 @@ export class EntityFactory {
 	): void {
 		world
 			.createEntity()
-			.addComponent(Rect, {
+			.addComponent(Shape, {
+				type: 'rectangle',
 				lineWidth: 4,
 				lineStyle: '#FFF',
 			})
