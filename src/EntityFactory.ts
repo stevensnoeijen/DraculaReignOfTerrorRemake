@@ -12,40 +12,42 @@ import { TweenComponent } from './components/TweenComponent';
 import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
 
-interface UnitOptions {
+interface IUnitProps {
 	position: PositionComponentProps;
+	color: 'red' | 'blue';
 }
 
-interface SelectorCreateOptions {
+interface ISelectorProps {
 	position: PositionComponentProps;
 	static?: boolean;
 }
 
-interface FpsCounterOptions {
+interface IFpsCounterProps {
 	position: PositionComponentProps;
 }
 
 export class EntityFactory {
-	public static createUnit(world: World, options: UnitOptions): void {
+
+	public static createUnit(world: World, props: IUnitProps): void {
 		const width = Constants.BLOCK_SIZE;
 		const height = Constants.BLOCK_SIZE;
-		const color = Color('red');
+		const color = Color(props.color);
 
 		world
 			.createEntity()
+			.addComponent(RenderComponent)
 			.addComponent(ShapeComponent, {
 				type: 'rectangle',
 				fillStyle: color.hex(),
 			})
 			.addComponent(PositionComponent, {
-				x: options.position.x,
-				y: options.position.y,
+				x: props.position.x,
+				y: props.position.y,
 			})
 			.addComponent(SizeComponent, {
 				width: width,
 				height: height,
 			})
-			.addComponent(RenderComponent)
 			.addComponent(MovableComponent)
 			.addComponent(LayerComponent, {
 				layer: 1,
@@ -55,7 +57,7 @@ export class EntityFactory {
 
 	public static createSelector(
 		world: World,
-		options: SelectorCreateOptions
+		props: ISelectorProps
 	): void {
 		world
 			.createEntity()
@@ -64,7 +66,7 @@ export class EntityFactory {
 				lineWidth: 4,
 				lineStyle: '#FFF',
 			})
-			.addComponent(PositionComponent, { x: options.position.x, y: options.position.y })
+			.addComponent(PositionComponent, { x: props.position.x, y: props.position.y })
 			.addComponent(SizeComponent, {
 				width: Constants.BLOCK_SIZE * 2,
 				height: Constants.BLOCK_SIZE,
@@ -78,7 +80,7 @@ export class EntityFactory {
 
 	public static createFpsCouter(
 		world: World,
-		options: FpsCounterOptions
+		props: IFpsCounterProps
 	): void {
 		world
 			.createEntity()
@@ -89,7 +91,7 @@ export class EntityFactory {
 				color: '#FFF',
 			})
 			.addComponent(FpsComponent)
-			.addComponent(PositionComponent, options.position)
+			.addComponent(PositionComponent, props.position)
 			.addComponent(LayerComponent, {
 				layer: 3,
 			});
