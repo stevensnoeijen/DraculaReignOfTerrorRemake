@@ -18,4 +18,8 @@ export class Constants {
 	 */
 	public static readonly ANIMATION_SWITCH_SPEED = 100;
 	public static readonly ANIMATION_GRAVITY_SPEED = 50;
+
+	public static readonly LAYER_BACKGROUND = 1;
+	public static readonly LAYER_INTERMEDIATE = 2;
+	public static readonly LAYER_FOREGROUND = 3;
 }

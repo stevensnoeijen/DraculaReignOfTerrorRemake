@@ -11,6 +11,7 @@ import { LayerComponent } from './components/LayerComponent';
 import { TweenComponent } from './components/TweenComponent';
 import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
+import { VisibilityComponent } from './components/VisibilityComponent';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -50,7 +51,7 @@ export class EntityFactory {
 			})
 			.addComponent(MovableComponent)
 			.addComponent(LayerComponent, {
-				layer: 1,
+				layer: Constants.LAYER_INTERMEDIATE,
 			})
 			.addComponent(TweenComponent);
 	}
@@ -63,19 +64,22 @@ export class EntityFactory {
 			.createEntity()
 			.addComponent(ShapeComponent, {
 				type: 'rectangle',
-				lineWidth: 4,
+				lineWidth: 2,
 				lineStyle: '#FFF',
 			})
+			.addComponent(RenderComponent)
 			.addComponent(PositionComponent, { x: props.position.x, y: props.position.y })
 			.addComponent(SizeComponent, {
-				width: Constants.BLOCK_SIZE * 2,
-				height: Constants.BLOCK_SIZE,
+				width: 100,
+				height: 100,
 			})
 			.addComponent(SelectorComponent)
-			.addComponent(LayerComponent, {
-				layer: 2,
+			.addComponent(VisibilityComponent, {
+				visible: false,
 			})
-			.addComponent(TweenComponent);
+			.addComponent(LayerComponent, {
+				layer: Constants.LAYER_FOREGROUND,
+			});
 	}
 
 	public static createFpsCouter(
@@ -93,7 +97,7 @@ export class EntityFactory {
 			.addComponent(FpsComponent)
 			.addComponent(PositionComponent, props.position)
 			.addComponent(LayerComponent, {
-				layer: 3,
+				layer: Constants.LAYER_FOREGROUND,
 			});
 	}
 }

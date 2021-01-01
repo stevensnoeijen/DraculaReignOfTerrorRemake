@@ -18,6 +18,7 @@ import { TweenComponent } from './components/TweenComponent';
 import { TweenSystem } from './systems/TweenSystem';
 import { MovableComponent } from './components/MovableComponent';
 import { LayerComponent } from './components/LayerComponent';
+import { VisibilityComponent } from './components/VisibilityComponent';
 
 type AppProps = {};
 
@@ -50,6 +51,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(FpsComponent)
 			.registerComponent(LayerComponent)
 			.registerComponent(TweenComponent)
+			.registerComponent(VisibilityComponent)
 			.registerSystem(RenderSystem, { canvas: canvas, })
 			.registerSystem(PlayerControlSystem, { canvas: canvas, })
 			.registerSystem(FpsSystem)

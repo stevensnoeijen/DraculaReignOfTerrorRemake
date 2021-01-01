@@ -7,6 +7,7 @@ import { LayerComponent } from '../components/LayerComponent';
 import { ShapeRenderer } from '../renderers/ShapeRenderer';
 import { TextRenderer } from '../renderers/TextRenderer';
 import { IRenderer } from '../renderers/IRenderer';
+import { VisibilityComponent } from '../components/VisibilityComponent';
 
 export class RenderSystem extends System {
 	public static queries = {
@@ -43,6 +44,11 @@ export class RenderSystem extends System {
 
 		// Iterate through all the entities on the query
 		renderables.forEach((entity: Entity) => {
+			const visibility = entity.getComponent(VisibilityComponent);
+			if (visibility && false === visibility.visible) {
+				return;
+			}
+
 			const renderer = this.getRenderer(entity);
 			if (renderer) {
 				renderer.render(entity);
