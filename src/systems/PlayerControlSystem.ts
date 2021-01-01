@@ -5,6 +5,7 @@ import { SelectableComponent } from '../components/SelectableComponent';
 import { PositionComponent } from '../components/PositionComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SizeComponent } from '../components/SizeComponent';
+import { EntityHelper } from '../helpers/EntityHelper';
 
 export class PlayerControlSystem extends System {
 	public static queries = {
@@ -121,9 +122,53 @@ export class PlayerControlSystem extends System {
 		}
 
 		visibility.visible = false;
+
+		const size = selector.getComponent(SizeComponent);
+		if (!size) {
+			return;
+		}
+		if (0 === size.width && 0 === size.height) {
+			this.unselectSelectedEntity();
+			// get entity at click location
+			this.selectEntityAtPosition(event.offsetX, event.offsetY);
+		} else {
+			// get entities inside selector
+			// TODO
+		}
+
 	}
 
 	private handleKeyUp(event: KeyboardEvent): void {
 		this.inputEventsQueue.push(event);
+	}
+
+	private selectEntityAtPosition(x: number, y: number): void {
+		const entity = this.getEntityAtPosition(x, y);
+		if (null === entity) {
+			return;
+		}
+
+		const selectable = entity.getMutableComponent(SelectableComponent);
+		if (!selectable) {
+			return;
+		}
+		selectable.selected = true;
+	}
+
+	private getEntityAtPosition(x: number, y: number): Entity | null {
+		return this.queries.selectable.results
+			.find((entity) => EntityHelper.isPositionInsideEntity(entity, x, y)) || null;
+	}
+
+	private unselectSelectedEntity(): void {
+		this.queries.selectable.results
+			.filter((entity) => entity.getComponent(SelectableComponent)?.selected || false)
+			.forEach((entity) => {
+				const selectable = entity.getMutableComponent(SelectableComponent);
+				if (!selectable) {
+					return;
+				}
+				selectable.selected = false;
+			})
 	}
 }

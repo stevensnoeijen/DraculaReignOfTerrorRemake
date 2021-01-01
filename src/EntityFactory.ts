@@ -12,6 +12,7 @@ import { TweenComponent } from './components/TweenComponent';
 import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
+import { SelectableComponent } from './components/SelectableComponent';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -53,6 +54,7 @@ export class EntityFactory {
 			.addComponent(LayerComponent, {
 				layer: Constants.LAYER_INTERMEDIATE,
 			})
+			.addComponent(SelectableComponent)
 			.addComponent(TweenComponent);
 	}
 

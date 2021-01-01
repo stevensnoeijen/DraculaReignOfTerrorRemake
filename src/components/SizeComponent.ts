@@ -1,8 +1,8 @@
 import { Component, Types } from 'ecsy';
 
 interface ISizeComponentProps {
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
 }
 
 export class SizeComponent extends Component<ISizeComponentProps> {
@@ -11,6 +11,6 @@ export class SizeComponent extends Component<ISizeComponentProps> {
 }
 
 SizeComponent.schema = {
-	width: { type: Types.Number },
-	height: { type: Types.Number },
+	width: { type: Types.Number, default: 0, },
+	height: { type: Types.Number, default: 0, },
 };

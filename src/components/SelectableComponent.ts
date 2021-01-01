@@ -1,3 +1,13 @@
-import { TagComponent } from 'ecsy';
+import { Component, Types } from 'ecsy';
 
-export class SelectableComponent extends TagComponent { }
+export interface ISelectableComponentProps {
+    selected?: boolean;
+}
+
+export class SelectableComponent extends Component<ISelectableComponentProps> {
+    selected: boolean;
+}
+
+SelectableComponent.schema = {
+    selected: { type: Types.Boolean, default: false, },
+};
