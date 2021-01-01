@@ -24,7 +24,7 @@ export class PlayerControlSystem extends System {
 	private inputEventsQueue: (KeyboardEvent | MouseEvent)[] = [];
 	private inputHandler: InputHandler;
 
-	private drag = false;
+	private selecting = false;
 
 	constructor(world: World, attributes: Attributes) {
 		super(world, attributes);
@@ -44,11 +44,7 @@ export class PlayerControlSystem extends System {
 
 		this.inputHandler = new InputHandler(this);
 		// set commands
-		// this.inputHandler.setCommand('ArrowDown', MoveDownCommand);
-		// this.inputHandler.setCommand('ArrowLeft', MoveLeftCommand);
-		// this.inputHandler.setCommand('ArrowRight', MoveRightCommand);
-		// this.inputHandler.setCommand('ArrowUp', MoveUpCommand);
-		// this.inputHandler.setCommand('Space', SwitchCommand);
+		// TODO: add
 	}
 
 	public execute(delta: number, time: number): void {
@@ -69,7 +65,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleMouseDown(event: MouseEvent): void {
-		this.drag = true;
+		this.selecting = true;
 
 		const selector = this.getSelector();
 		const position = selector.getMutableComponent(PositionComponent);
@@ -96,7 +92,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleMouseMove(event: MouseEvent): void {
-		if (this.drag) {
+		if (this.selecting) {
 			const selector = this.getSelector();
 			const position = selector.getComponent(PositionComponent);
 			if (!position) {
@@ -116,7 +112,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleMouseUp(event: MouseEvent): void {
-		this.drag = false;
+		this.selecting = false;
 
 		const selector = this.getSelector();
 		const visibility = selector.getMutableComponent(VisibilityComponent);
