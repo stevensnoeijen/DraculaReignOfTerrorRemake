@@ -4,16 +4,16 @@ type Types = 'rectangle';
 
 interface IShapeComponentProps {
 	type: Types;
-	fillStyle: string;
-	lineWidth: number;
-	lineStyle: string;
+	fillStyle?: string;
+	lineWidth?: number;
+	lineStyle?: string;
 }
 
 export class ShapeComponent extends Component<IShapeComponentProps> {
 	type: Types;
-	fillStyle: string;
-	lineWidth: number;
-	lineStyle: string;
+	fillStyle?: string;
+	lineWidth?: number;
+	lineStyle?: string;
 }
 
 ShapeComponent.schema = {

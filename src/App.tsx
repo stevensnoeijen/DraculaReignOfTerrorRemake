@@ -5,7 +5,7 @@ import { World } from 'ecsy';
 import { PositionComponent } from './components/PositionComponent';
 import { RenderComponent as RenderComponent } from './components/RenderComponent';
 import { SelectableComponent } from './components/SelectableComponent';
-import { RendererSystem } from './systems/RendererSystem';
+import { RenderSystem } from './systems/RenderSystem';
 import { SizeComponent } from './components/SizeComponent';
 import { EntityFactory } from './EntityFactory';
 import { PlayerControlSystem } from './systems/PlayerControlSystem';
@@ -50,7 +50,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(FpsComponent)
 			.registerComponent(LayerComponent)
 			.registerComponent(TweenComponent)
-			.registerSystem(RendererSystem, { canvas: canvas, })
+			.registerSystem(RenderSystem, { canvas: canvas, })
 			.registerSystem(PlayerControlSystem, { canvas: canvas, })
 			.registerSystem(FpsSystem)
 			.registerSystem(TweenSystem);

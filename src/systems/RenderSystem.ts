@@ -1,5 +1,5 @@
 import { TextComponent } from '../components/TextComponent';
-import { Constants } from './../Constants';
+import { Constants } from '../Constants';
 import { System, World, Attributes, Entity, Component } from 'ecsy';
 import { RenderComponent } from '../components/RenderComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
@@ -8,7 +8,7 @@ import { ShapeRenderer } from '../renderers/ShapeRenderer';
 import { TextRenderer } from '../renderers/TextRenderer';
 import { IRenderer } from '../renderers/IRenderer';
 
-export class RendererSystem extends System {
+export class RenderSystem extends System {
 	public static queries = {
 		renderables: { components: [RenderComponent] },
 	};
