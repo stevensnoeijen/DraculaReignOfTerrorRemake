@@ -1,16 +1,16 @@
 import { Component, Types } from 'ecsy';
 
-export interface PositionOptions {
+export interface PositionComponentProps {
 	x: number;
 	y: number;
 }
 
-export class Position extends Component<PositionOptions> {
+export class PositionComponent extends Component<PositionComponentProps> {
 	public x: number;
 	public y: number;
 }
 
-Position.schema = {
+PositionComponent.schema = {
 	x: { type: Types.Number },
 	y: { type: Types.Number },
 };

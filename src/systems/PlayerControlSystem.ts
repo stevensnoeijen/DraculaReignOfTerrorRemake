@@ -1,4 +1,4 @@
-import { Selector } from './../components/Selector';
+import { SelectorComponent } from '../components/SelectorComponent';
 import { System, World, Attributes, Entity } from 'ecsy';
 import { InputHandler } from '../input/InputHandler';
 import { MoveDownCommand } from '../input/commands/MoveDownCommand';
@@ -6,18 +6,18 @@ import { MoveLeftCommand } from '../input/commands/MoveLeftCommand';
 import { MoveRightCommand } from '../input/commands/MoveRightCommand';
 import { MoveUpCommand } from '../input/commands/MoveUpCommand';
 import { SwitchCommand } from '../input/commands/SwitchCommand';
-import { Selectable } from '../components/Selectable';
+import { SelectableComponent } from '../components/SelectableComponent';
 
 export class PlayerControlSystem extends System {
 	public static queries = {
 		selectable: {
-			components: [Selectable],
+			components: [SelectableComponent],
 			listen: {
 				changed: true,
 			},
 		},
 		selector: {
-			components: [Selector],
+			components: [SelectorComponent],
 		},
 	};
 

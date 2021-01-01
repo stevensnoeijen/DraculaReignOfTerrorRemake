@@ -1,6 +1,6 @@
 import { Entity } from 'ecsy';
-import { Position } from '../components/Position';
-import { Size } from '../components/Size';
+import { PositionComponent } from '../components/PositionComponent';
+import { SizeComponent } from '../components/SizeComponent';
 
 type IsInsideOptions = {
 	offsetWidth?: number;
@@ -14,8 +14,8 @@ export class EntityHelper {
 		y: number,
 		options?: IsInsideOptions
 	): boolean {
-		const position = entity.getComponent(Position);
-		const size = entity.getComponent(Size);
+		const position = entity.getComponent(PositionComponent);
+		const size = entity.getComponent(SizeComponent);
 
 		if (!position || !size) {
 			// position or/and size isnt set
@@ -42,19 +42,19 @@ export class EntityHelper {
 		object: Entity,
 		container: Entity
 	): boolean {
-		const containerPosition = container.getComponent(Position)!;
-		const containerSize = container.getComponent(Size)!;
+		const containerPosition = container.getComponent(PositionComponent)!;
+		const containerSize = container.getComponent(SizeComponent)!;
 
-		const objectPosition = object.getComponent(Position)!;
-		const objectSize = object.getComponent(Size)!;
+		const objectPosition = object.getComponent(PositionComponent)!;
+		const objectSize = object.getComponent(SizeComponent)!;
 
 		return (
 			objectPosition.x >= containerPosition.x &&
 			objectPosition.x + objectSize.width <=
-				containerPosition.x + containerSize.width &&
+			containerPosition.x + containerSize.width &&
 			objectPosition.y >= containerPosition.y &&
 			objectPosition.y + objectSize.height <=
-				containerPosition.y + containerSize.height
+			containerPosition.y + containerSize.height
 		);
 	}
 }

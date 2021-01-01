@@ -2,23 +2,22 @@ import React, { Component, ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Constants } from './Constants';
 import { World } from 'ecsy';
-import { Position } from './components/Position';
-import { Renderable } from './components/Renderable';
-import { Selectable } from './components/Selectable';
+import { PositionComponent } from './components/PositionComponent';
+import { RenderComponent as RenderComponent } from './components/RenderComponent';
+import { SelectableComponent } from './components/SelectableComponent';
 import { RendererSystem } from './systems/RendererSystem';
-import { Size } from './components/Size';
+import { SizeComponent } from './components/SizeComponent';
 import { EntityFactory } from './EntityFactory';
 import { PlayerControlSystem } from './systems/PlayerControlSystem';
-import { Selector } from './components/Selector';
-import { Shape } from './components/Shape';
-import { Movable } from './components/Movable';
-import { Text } from './components/Text';
-import { Fps } from './components/Fps';
+import { SelectorComponent } from './components/SelectorComponent';
+import { ShapeComponent } from './components/ShapeComponent';
+import { TextComponent } from './components/TextComponent';
+import { FpsComponent } from './components/FpsComponent';
 import { FpsSystem } from './systems/FpsSystem';
-import { Layered } from './components/Layered';
-import { Tweenable } from './components/Tweenable';
+import { TweenComponent } from './components/TweenComponent';
 import { TweenSystem } from './systems/TweenSystem';
-import { GridPosition } from './components/GridPosition';
+import { MovableComponent } from './components/MovableComponent';
+import { LayerComponent } from './components/LayerComponent';
 
 type AppProps = {};
 
@@ -40,18 +39,17 @@ export default class App extends Component<AppProps> {
 		this.canvas = canvas;
 
 		this.world
-			.registerComponent(Position)
-			.registerComponent(Shape)
-			.registerComponent(Renderable)
-			.registerComponent(Size)
-			.registerComponent(Selectable)
-			.registerComponent(Selector)
-			.registerComponent(Movable)
-			.registerComponent(Text)
-			.registerComponent(Fps)
-			.registerComponent(Layered)
-			.registerComponent(Tweenable)
-			.registerComponent(GridPosition)
+			.registerComponent(PositionComponent)
+			.registerComponent(ShapeComponent)
+			.registerComponent(RenderComponent)
+			.registerComponent(SizeComponent)
+			.registerComponent(SelectableComponent)
+			.registerComponent(SelectorComponent)
+			.registerComponent(MovableComponent)
+			.registerComponent(TextComponent)
+			.registerComponent(FpsComponent)
+			.registerComponent(LayerComponent)
+			.registerComponent(TweenComponent)
 			.registerSystem(RendererSystem, { canvas: canvas, })
 			.registerSystem(PlayerControlSystem, { canvas: canvas, })
 			.registerSystem(FpsSystem)

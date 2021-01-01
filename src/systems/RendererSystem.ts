@@ -1,15 +1,15 @@
-import { Text } from './../components/Text';
+import { TextComponent } from '../components/TextComponent';
 import { Constants } from './../Constants';
-import { Size } from './../components/Size';
-import { Position } from './../components/Position';
+import { SizeComponent } from '../components/SizeComponent';
+import { PositionComponent } from '../components/PositionComponent';
 import { System, World, Attributes, Entity } from 'ecsy';
-import { Renderable } from '../components/Renderable';
-import { Layered } from '../components/Layered';
-import { Shape } from '../components/Shape';
+import { RenderComponent } from '../components/RenderComponent';
+import { ShapeComponent } from '../components/ShapeComponent';
+import { LayerComponent } from '../components/LayerComponent';
 
 export class RendererSystem extends System {
 	public static queries = {
-		renderables: { components: [Renderable, Position] },
+		renderables: { components: [RenderComponent, PositionComponent] },
 	};
 
 	private canvas: HTMLCanvasElement;
@@ -29,12 +29,12 @@ export class RendererSystem extends System {
 
 		this.context.canvas.removeEventListener;
 
-		const renderables = this.queries.renderables.results.sort(Layered.compare);
+		const renderables = this.queries.renderables.results.sort(LayerComponent.compare);
 
 		// Iterate through all the entities on the query
 		renderables.forEach((entity: Entity) => {
-			if (entity.hasComponent(Shape)) {
-				const shape = entity.getComponent(Shape);
+			if (entity.hasComponent(ShapeComponent)) {
+				const shape = entity.getComponent(ShapeComponent);
 				if (undefined === shape) {
 					return; // skip
 				}
@@ -43,16 +43,16 @@ export class RendererSystem extends System {
 					this.drawRect(entity);
 				}
 			}
-			if (entity.hasComponent(Text)) {
+			if (entity.hasComponent(TextComponent)) {
 				this.renderText(entity);
 			}
 		});
 	}
 
 	private drawRect(entity: Entity): void {
-		const shape = entity.getComponent(Shape)!;
-		const position = entity.getComponent(Position)!;
-		const size = entity.getComponent(Size)!;
+		const shape = entity.getComponent(ShapeComponent)!;
+		const position = entity.getComponent(PositionComponent)!;
+		const size = entity.getComponent(SizeComponent)!;
 
 		this.context.beginPath();
 
@@ -70,8 +70,8 @@ export class RendererSystem extends System {
 	}
 
 	private renderText(entity: Entity): void {
-		const text = entity.getComponent(Text)!;
-		const position = entity.getComponent(Position)!;
+		const text = entity.getComponent(TextComponent)!;
+		const position = entity.getComponent(PositionComponent)!;
 
 		this.context.font = text.font;
 		this.context.fillStyle = text.color;

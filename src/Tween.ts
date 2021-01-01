@@ -1,7 +1,7 @@
 import { Entity } from 'ecsy';
-import { Movable } from './components/Movable';
-import { Position } from './components/Position';
-import { Tweenable } from './components/Tweenable';
+import { MovableComponent } from './components/MovableComponent';
+import { PositionComponent } from './components/PositionComponent';
+import { TweenComponent } from './components/TweenComponent';
 
 type MoveToOptions = {
 	x?: number;
@@ -30,10 +30,10 @@ export class Tween {
 	private duration = 0;
 	private _after: (() => void) | null = null;
 
-	constructor(private readonly entity: Entity) {}
+	constructor(private readonly entity: Entity) { }
 
 	public moveTo(options: MoveToOptions): this {
-		const position = this.entity.getComponent(Position)!;
+		const position = this.entity.getComponent(PositionComponent)!;
 		// do in next #update
 		this.action = {
 			startPosition: {
@@ -43,10 +43,10 @@ export class Tween {
 			options: options,
 		};
 
-		if (this.entity.hasComponent(Movable)) {
-			this.entity.getMutableComponent(Movable)!.moving = true;
+		if (this.entity.hasComponent(MovableComponent)) {
+			this.entity.getMutableComponent(MovableComponent)!.moving = true;
 		}
-		this.entity.getMutableComponent(Tweenable)!.tween = this;
+		this.entity.getMutableComponent(TweenComponent)!.tween = this;
 
 		return this;
 	}
@@ -68,7 +68,7 @@ export class Tween {
 	private updatePosition(percentage: number): void {
 		if (percentage >= 1) {
 			// done, snap to end-position
-			const position = this.entity.getMutableComponent(Position)!;
+			const position = this.entity.getMutableComponent(PositionComponent)!;
 			if (undefined !== this.action.options.x) {
 				position.x = this.action.options.x;
 			}
@@ -85,7 +85,7 @@ export class Tween {
 		} else {
 			// calculate position accoring to the percentage
 			if (this.action.options.x || this.action.options.y) {
-				const position = this.entity.getMutableComponent(Position)!;
+				const position = this.entity.getMutableComponent(PositionComponent)!;
 				if (this.action.options.x) {
 					this.updateAxis(position, 'x', percentage);
 				}
@@ -97,7 +97,7 @@ export class Tween {
 	}
 
 	private updateAxis(
-		position: Position,
+		position: PositionComponent,
 		axis: 'x' | 'y',
 		percentage: number
 	): void {
@@ -106,12 +106,12 @@ export class Tween {
 	}
 
 	public remove(): void {
-		if (this.entity.hasComponent(Movable)) {
-			this.entity.getMutableComponent(Movable).moving = false;
+		if (this.entity.hasComponent(MovableComponent)) {
+			this.entity.getMutableComponent(MovableComponent)!.moving = false;
 			if (this._after) {
 				this._after();
 			}
 		}
-		this.entity.getMutableComponent(Tweenable)!.tween = undefined;
+		this.entity.getMutableComponent(TweenComponent)!.tween = undefined;
 	}
 }

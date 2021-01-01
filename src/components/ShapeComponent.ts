@@ -2,21 +2,21 @@ import { Component, Types } from 'ecsy';
 
 type Types = 'rectangle';
 
-interface IShapeProps {
+interface IShapeComponentProps {
 	type: Types;
 	fillStyle: string;
 	lineWidth: number;
 	lineStyle: string;
 }
 
-export class Shape extends Component<IShapeProps> {
+export class ShapeComponent extends Component<IShapeComponentProps> {
 	type: Types;
 	fillStyle: string;
 	lineWidth: number;
 	lineStyle: string;
 }
 
-Shape.schema = {
+ShapeComponent.schema = {
 	type: { type: Types.String },
 	fillStyle: { type: Types.String },
 	lineWidth: { type: Types.String },

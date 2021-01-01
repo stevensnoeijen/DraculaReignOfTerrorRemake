@@ -1,29 +1,28 @@
-import { Fps } from './components/Fps';
-import { Text } from './components/Text';
-import { Movable } from './components/Movable';
-import { Selector } from './components/Selector';
-import { Size } from './components/Size';
-import { Position, PositionOptions } from './components/Position';
+import { TextComponent } from './components/TextComponent';
+import { MovableComponent } from './components/MovableComponent';
+import { SelectorComponent } from './components/SelectorComponent';
+import { SizeComponent } from './components/SizeComponent';
+import { PositionComponent, PositionComponentProps } from './components/PositionComponent';
 import { Constants } from './Constants';
-import { Shape } from './components/Shape';
+import { ShapeComponent } from './components/ShapeComponent';
 import { World } from 'ecsy';
-import { Renderable } from './components/Renderable';
-import { Layered } from './components/Layered';
-import { Tweenable } from './components/Tweenable';
-import { GridPosition } from './components/GridPosition';
+import { RenderComponent } from './components/RenderComponent';
+import { LayerComponent } from './components/LayerComponent';
+import { TweenComponent } from './components/TweenComponent';
 import Color from 'color';
+import { FpsComponent } from './components/FpsComponent';
 
 interface UnitOptions {
-	position: PositionOptions;
+	position: PositionComponentProps;
 }
 
 interface SelectorCreateOptions {
-	position: PositionOptions;
+	position: PositionComponentProps;
 	static?: boolean;
 }
 
 interface FpsCounterOptions {
-	position: PositionOptions;
+	position: PositionComponentProps;
 }
 
 export class EntityFactory {
@@ -34,25 +33,24 @@ export class EntityFactory {
 
 		world
 			.createEntity()
-			.addComponent(Shape, {
+			.addComponent(ShapeComponent, {
 				type: 'rectangle',
 				fillStyle: color.hex(),
 			})
-			.addComponent(Position, {
+			.addComponent(PositionComponent, {
 				x: options.position.x,
 				y: options.position.y,
 			})
-			.addComponent(Size, {
+			.addComponent(SizeComponent, {
 				width: width,
 				height: height,
 			})
-			.addComponent(Renderable)
-			.addComponent(Movable)
-			.addComponent(Layered, {
+			.addComponent(RenderComponent)
+			.addComponent(MovableComponent)
+			.addComponent(LayerComponent, {
 				layer: 1,
 			})
-			.addComponent(GridPosition)
-			.addComponent(Tweenable);
+			.addComponent(TweenComponent);
 	}
 
 	public static createSelector(
@@ -61,21 +59,21 @@ export class EntityFactory {
 	): void {
 		world
 			.createEntity()
-			.addComponent(Shape, {
+			.addComponent(ShapeComponent, {
 				type: 'rectangle',
 				lineWidth: 4,
 				lineStyle: '#FFF',
 			})
-			.addComponent(Position, { x: options.position.x, y: options.position.y })
-			.addComponent(Size, {
+			.addComponent(PositionComponent, { x: options.position.x, y: options.position.y })
+			.addComponent(SizeComponent, {
 				width: Constants.BLOCK_SIZE * 2,
 				height: Constants.BLOCK_SIZE,
 			})
-			.addComponent(Selector)
-			.addComponent(Layered, {
+			.addComponent(SelectorComponent)
+			.addComponent(LayerComponent, {
 				layer: 2,
 			})
-			.addComponent(Tweenable);
+			.addComponent(TweenComponent);
 	}
 
 	public static createFpsCouter(
@@ -84,15 +82,15 @@ export class EntityFactory {
 	): void {
 		world
 			.createEntity()
-			.addComponent(Renderable)
-			.addComponent(Text, {
+			.addComponent(RenderComponent)
+			.addComponent(TextComponent, {
 				text: '0',
 				font: '12px Arial',
 				color: '#FFF',
 			})
-			.addComponent(Fps)
-			.addComponent(Position, options.position)
-			.addComponent(Layered, {
+			.addComponent(FpsComponent)
+			.addComponent(PositionComponent, options.position)
+			.addComponent(LayerComponent, {
 				layer: 3,
 			});
 	}

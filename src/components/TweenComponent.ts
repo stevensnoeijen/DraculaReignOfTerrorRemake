@@ -1,12 +1,14 @@
 import { Component, Types } from 'ecsy';
 import { Tween } from '../tween';
 
-type TweenableOptions = {};
+interface ITweenComponentProps {
 
-export class Tweenable extends Component<TweenableOptions> {
+}
+
+export class TweenComponent extends Component<ITweenComponentProps> {
 	tween?: Tween;
 }
 
-Tweenable.schema = {
+TweenComponent.schema = {
 	tween: { type: Types.Ref, default: false },
 };

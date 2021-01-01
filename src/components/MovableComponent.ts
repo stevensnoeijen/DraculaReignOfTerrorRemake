@@ -1,13 +1,13 @@
 import { Component, Types } from 'ecsy';
 
-type MovableOptions = {
+type MovableComponentProps = {
 	moving: boolean;
 };
 
-export class Movable extends Component<MovableOptions> {
+export class MovableComponent extends Component<MovableComponentProps> {
 	moving: boolean;
 }
 
-Movable.schema = {
+MovableComponent.schema = {
 	moving: { type: Types.Boolean, default: false },
 };

@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { Position } from '../../components/Position';
+import { PositionComponent } from '../../components/PositionComponent';
 import { Constants } from '../../Constants';
 import { EntityHelper } from '../../helpers/EntityHelper';
 import { PlayerControlSystem } from '../../systems/PlayerControlSystem';
@@ -17,7 +17,7 @@ export class SwitchCommand extends SelectorCommand {
 			return;
 		}
 
-		const selectorPosition = this.selector.getComponent(Position)!;
+		const selectorPosition = this.selector.getComponent(PositionComponent)!;
 
 		if (blocks.left) {
 			Tween.target(blocks.left).moveTo({
@@ -40,13 +40,13 @@ export class SwitchCommand extends SelectorCommand {
 			EntityHelper.isObjectInsideContainer(entity, selector)
 		);
 
-		const selectorPosition = selector.getComponent(Position)!;
+		const selectorPosition = selector.getComponent(PositionComponent)!;
 		const left = entities.find(
-			(entity) => entity.getComponent(Position)!.x === selectorPosition.x
+			(entity) => entity.getComponent(PositionComponent)!.x === selectorPosition.x
 		);
 		const right = entities.find(
 			(entity) =>
-				entity.getComponent(Position)!.x >=
+				entity.getComponent(PositionComponent)!.x >=
 				selectorPosition.x + Constants.BLOCK_SIZE
 		);
 

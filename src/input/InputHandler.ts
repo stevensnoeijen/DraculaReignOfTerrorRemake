@@ -5,8 +5,8 @@ import { MoveToCommand } from './commands/MoveToCommand';
 import { SwitchCommand } from './commands/SwitchCommand';
 import { ICommandConstructor } from './ICommandConstructor';
 import { EntityHelper } from '../helpers/EntityHelper';
-import { Movable } from '../components/Movable';
-import { Position } from '../components/Position';
+import { PositionComponent } from '../components/PositionComponent';
+import { MovableComponent } from '../components/MovableComponent';
 
 export class InputHandler {
 	private readonly commandFactory: CommandFactory;
@@ -76,13 +76,13 @@ export class InputHandler {
 	 */
 	private getYOffset(): number {
 		const entity = this.system.queries.selectable.results.find(
-			(entity) => !entity.getComponent(Movable)?.moving
+			(entity) => !entity.getComponent(MovableComponent)?.moving
 		);
 		if (!entity) {
 			return 0;
 		}
 
-		const position = entity.getComponent(Position);
+		const position = entity.getComponent(PositionComponent);
 		if (!position) {
 			return 0;
 		}
