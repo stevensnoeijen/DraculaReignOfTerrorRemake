@@ -1,6 +1,6 @@
 import { TextComponent } from '../components/TextComponent';
 import { Constants } from './../Constants';
-import { System, World, Attributes, Entity } from 'ecsy';
+import { System, World, Attributes, Entity, Component } from 'ecsy';
 import { RenderComponent } from '../components/RenderComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
 import { LayerComponent } from '../components/LayerComponent';
@@ -15,7 +15,7 @@ export class RendererSystem extends System {
 
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
-	private renderers: { [component: string]: IRenderer | undefined } = {};
+	private componentRenderers: { component: typeof Component, renderer: IRenderer }[] = [];
 
 	constructor(world: World, attributes: Attributes) {
 		super(world, attributes);
@@ -23,8 +23,15 @@ export class RendererSystem extends System {
 		this.canvas = attributes.canvas;
 		this.context = this.canvas.getContext('2d')!;
 
-		this.renderers[ShapeComponent.name] = new ShapeRenderer(this.context);
-		this.renderers[TextComponent.name] = new TextRenderer(this.context);
+		// define renderers by component type
+		this.componentRenderers.push({
+			component: ShapeComponent,
+			renderer: new ShapeRenderer(this.context),
+		});
+		this.componentRenderers.push({
+			component: TextComponent,
+			renderer: new TextRenderer(this.context),
+		});
 	}
 
 	// This method will get called on every frame by default
@@ -32,18 +39,24 @@ export class RendererSystem extends System {
 		// clear canvas
 		this.context.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
-		this.context.canvas.removeEventListener;
-
 		const renderables = this.queries.renderables.results.sort(LayerComponent.compare);
 
 		// Iterate through all the entities on the query
 		renderables.forEach((entity: Entity) => {
-			if (entity.hasComponent(ShapeComponent)) {
-				this.renderers[ShapeComponent.name]?.render(entity);
-			}
-			if (entity.hasComponent(TextComponent)) {
-				this.renderers[TextComponent.name]?.render(entity);
+			const renderer = this.getRenderer(entity);
+			if (renderer) {
+				renderer.render(entity);
 			}
 		});
+	}
+
+	private getRenderer(entity: Entity): IRenderer | null {
+		const componentRenderer = this.componentRenderers.find((componentRenderer) => entity.hasComponent(componentRenderer.component));
+
+		if (componentRenderer) {
+			return componentRenderer.renderer
+		} else {
+			return null;
+		}
 	}
 }
