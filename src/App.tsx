@@ -80,7 +80,7 @@ export default class App extends Component<AppProps> {
 	private startLevel(): void {
 		EntityFactory.createUnit(this.world, {
 			position: { x: 100, y: 100 },
-			color: 'red',
+			color: 'red'
 		});
 	}
 

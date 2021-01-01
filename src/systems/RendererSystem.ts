@@ -1,25 +1,30 @@
 import { TextComponent } from '../components/TextComponent';
 import { Constants } from './../Constants';
-import { SizeComponent } from '../components/SizeComponent';
-import { PositionComponent } from '../components/PositionComponent';
 import { System, World, Attributes, Entity } from 'ecsy';
 import { RenderComponent } from '../components/RenderComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
 import { LayerComponent } from '../components/LayerComponent';
+import { ShapeRenderer } from '../renderers/ShapeRenderer';
+import { TextRenderer } from '../renderers/TextRenderer';
+import { IRenderer } from '../renderers/IRenderer';
 
 export class RendererSystem extends System {
 	public static queries = {
-		renderables: { components: [RenderComponent, PositionComponent] },
+		renderables: { components: [RenderComponent] },
 	};
 
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
+	private renderers: { [component: string]: IRenderer | undefined } = {};
 
 	constructor(world: World, attributes: Attributes) {
 		super(world, attributes);
 
 		this.canvas = attributes.canvas;
 		this.context = this.canvas.getContext('2d')!;
+
+		this.renderers[ShapeComponent.name] = new ShapeRenderer(this.context);
+		this.renderers[TextComponent.name] = new TextRenderer(this.context);
 	}
 
 	// This method will get called on every frame by default
@@ -34,47 +39,11 @@ export class RendererSystem extends System {
 		// Iterate through all the entities on the query
 		renderables.forEach((entity: Entity) => {
 			if (entity.hasComponent(ShapeComponent)) {
-				const shape = entity.getComponent(ShapeComponent);
-				if (undefined === shape) {
-					return; // skip
-				}
-
-				if (shape.type === 'rectangle') {
-					this.drawRect(entity);
-				}
+				this.renderers[ShapeComponent.name]?.render(entity);
 			}
 			if (entity.hasComponent(TextComponent)) {
-				this.renderText(entity);
+				this.renderers[TextComponent.name]?.render(entity);
 			}
 		});
-	}
-
-	private drawRect(entity: Entity): void {
-		const shape = entity.getComponent(ShapeComponent)!;
-		const position = entity.getComponent(PositionComponent)!;
-		const size = entity.getComponent(SizeComponent)!;
-
-		this.context.beginPath();
-
-		this.context.rect(position.x, position.y, size.width, size.height);
-		if (shape.fillStyle) {
-			this.context.fillStyle = shape.fillStyle;
-			this.context.fill();
-		}
-
-		if (shape.lineWidth && shape.lineWidth > 0) {
-			this.context.lineWidth = shape.lineWidth;
-			this.context.strokeStyle = shape.lineStyle || '#000';
-			this.context.stroke();
-		}
-	}
-
-	private renderText(entity: Entity): void {
-		const text = entity.getComponent(TextComponent)!;
-		const position = entity.getComponent(PositionComponent)!;
-
-		this.context.font = text.font;
-		this.context.fillStyle = text.color;
-		this.context.fillText(text.text, position.x, position.y);
 	}
 }
