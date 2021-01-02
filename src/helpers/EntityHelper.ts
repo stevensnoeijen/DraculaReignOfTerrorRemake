@@ -8,6 +8,11 @@ type IsInsideOptions = {
 	offsetHeight?: number;
 };
 
+type Position = {
+	x: number;
+	y: number;
+}
+
 export class EntityHelper {
 	public static isPositionInsideEntity(
 		entity: Entity,
@@ -73,5 +78,13 @@ export class EntityHelper {
 			return;
 		}
 		selectable.selected = true;
+	}
+
+	public static distance(a: Position, b: Position): number {
+		const dx = a.x - b.x;
+		const dy = a.y - b.y;
+		const dist = Math.sqrt(dx * dx + dy * dy);
+
+		return dist;
 	}
 }

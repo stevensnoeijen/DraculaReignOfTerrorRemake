@@ -6,6 +6,8 @@ import { PositionComponent } from '../components/PositionComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SizeComponent } from '../components/SizeComponent';
 import { EntityHelper } from '../helpers/EntityHelper';
+import { Tween } from '../tween';
+import { Constants } from '../Constants';
 
 export class PlayerControlSystem extends System {
 	public static queries = {
@@ -145,12 +147,22 @@ export class PlayerControlSystem extends System {
 		} else if (2 === event.button) {
 			// move unit
 			this.getSelected().forEach((entity) => {
-				const position = entity.getMutableComponent(PositionComponent);
+				const position = entity.getComponent(PositionComponent);
 				if (!position) {
 					return;
 				}
-				position.x = event.offsetX;
-				position.y = event.offsetY;
+
+				const distance = EntityHelper.distance(position, {
+					x: event.offsetX,
+					y: event.offsetY,
+				})
+
+				Tween.target(entity)
+					.moveTo({
+						x: event.offsetX,
+						y: event.offsetY,
+						speed: distance * Constants.ANIMATION_UNIT_SPEED,
+					})
 			})
 		}
 	}
