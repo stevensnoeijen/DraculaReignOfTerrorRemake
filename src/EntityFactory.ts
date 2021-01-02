@@ -31,8 +31,8 @@ interface IFpsCounterProps {
 export class EntityFactory {
 
 	public static createUnit(world: World, props: IUnitProps): void {
-		const width = Constants.BLOCK_SIZE;
-		const height = Constants.BLOCK_SIZE;
+		const width = Constants.UNIT_SIZE;
+		const height = Constants.UNIT_SIZE;
 		const color = Color(props.color);
 
 		world

@@ -80,9 +80,14 @@ export default class App extends Component<AppProps> {
 	}
 
 	private startLevel(): void {
-		EntityFactory.createUnit(this.world, {
-			position: { x: 100, y: 100 },
-			color: 'red'
+		Array.from(Array(100)).forEach(() => {
+			const x = Math.round(Math.random() * Constants.GAME_WIDTH - Constants.UNIT_SIZE);
+			const y = Math.round(Math.random() * Constants.GAME_HEIGHT - Constants.UNIT_SIZE);
+
+			EntityFactory.createUnit(this.world, {
+				position: { x: x, y: y },
+				color: 'red'
+			});
 		});
 	}
 

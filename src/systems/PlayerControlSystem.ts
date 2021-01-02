@@ -27,7 +27,7 @@ export class PlayerControlSystem extends System {
 	private inputEventsQueue: (KeyboardEvent | MouseEvent)[] = [];
 	private inputHandler: InputHandler;
 
-	private selecting = false;
+	private dragging = false;
 
 	constructor(world: World, attributes: Attributes) {
 		super(world, attributes);
@@ -42,6 +42,10 @@ export class PlayerControlSystem extends System {
 		this.canvas.addEventListener('mousedown', this.handleMouseDown);
 		this.canvas.addEventListener('mousemove', this.handleMouseMove);
 		this.canvas.addEventListener('mouseup', this.handleMouseUp);
+		this.canvas.addEventListener('dblclick', () => {
+			console.log('double clicked');
+		});
+
 		// disable right button click inside canvas
 		this.canvas.addEventListener('contextmenu', (event) => {
 			event.preventDefault();
@@ -62,7 +66,12 @@ export class PlayerControlSystem extends System {
 		if (this.inputEventsQueue.length > 0) {
 			let event;
 			while ((event = this.inputEventsQueue.pop())) {
-				this.inputHandler.handle(event);
+				if ('key' in event) {
+					this.inputHandler.handle(event);
+				} else {
+					// mouse event
+
+				}
 			}
 		}
 	}
@@ -74,7 +83,7 @@ export class PlayerControlSystem extends System {
 	private handleMouseDown(event: MouseEvent): void {
 		if (0 === event.button) {
 			this.getSelected().forEach(EntityHelper.deselect);
-			this.selecting = true;
+			this.dragging = true;
 
 			const selector = this.getSelector();
 			const position = selector.getMutableComponent(PositionComponent);
@@ -102,7 +111,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleMouseMove(event: MouseEvent): void {
-		if (this.selecting) {
+		if (this.dragging) {
 			const selector = this.getSelector();
 			const position = selector.getComponent(PositionComponent);
 			if (!position) {
@@ -123,7 +132,7 @@ export class PlayerControlSystem extends System {
 
 	private handleMouseUp(event: MouseEvent): void {
 		if (0 === event.button) {
-			this.selecting = false;
+			this.dragging = false;
 
 			const selector = this.getSelector();
 			const visibility = selector.getMutableComponent(VisibilityComponent);
@@ -148,25 +157,29 @@ export class PlayerControlSystem extends System {
 			}
 		} else if (2 === event.button) {
 			// move unit
-			this.getSelected().forEach((entity) => {
-				const position = entity.getComponent(PositionComponent);
-				if (!position) {
-					return;
-				}
-
-				const distance = EntityHelper.distance(position, {
-					x: event.offsetX,
-					y: event.offsetY,
-				})
-
-				Tween.target(entity)
-					.moveTo({
-						x: event.offsetX,
-						y: event.offsetY,
-						speed: distance * Constants.ANIMATION_UNIT_SPEED,
-					})
-			})
+			this.moveUnits(event.offsetX, event.offsetY);
 		}
+	}
+
+	private moveUnits(x: number, y: number): void {
+		this.getSelected().forEach((entity) => {
+			const position = entity.getComponent(PositionComponent);
+			if (!position) {
+				return;
+			}
+
+			const distance = EntityHelper.distance(position, {
+				x: x,
+				y: y,
+			})
+
+			Tween.target(entity)
+				.moveTo({
+					x: x,
+					y: y,
+					speed: distance * Constants.ANIMATION_UNIT_SPEED,
+				})
+		})
 	}
 
 	private handleKeyUp(event: KeyboardEvent): void {
