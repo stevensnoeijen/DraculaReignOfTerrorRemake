@@ -40,6 +40,10 @@ export class PlayerControlSystem extends System {
 		this.canvas.addEventListener('mousedown', this.handleMouseDown);
 		this.canvas.addEventListener('mousemove', this.handleMouseMove);
 		this.canvas.addEventListener('mouseup', this.handleMouseUp);
+		// disable right button click inside canvas
+		this.canvas.addEventListener('contextmenu', (event) => {
+			event.preventDefault();
+		});
 
 		window.addEventListener('keyup', this.handleKeyUp);
 
@@ -66,30 +70,32 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleMouseDown(event: MouseEvent): void {
-		this.selecting = true;
+		if (0 === event.button) {
+			this.selecting = true;
 
-		const selector = this.getSelector();
-		const position = selector.getMutableComponent(PositionComponent);
-		if (undefined === position) {
-			return;
+			const selector = this.getSelector();
+			const position = selector.getMutableComponent(PositionComponent);
+			if (undefined === position) {
+				return;
+			}
+
+			position.x = event.offsetX;
+			position.y = event.offsetY;
+
+			const size = selector.getMutableComponent(SizeComponent);
+			if (undefined === size) {
+				return;
+			}
+			size.height = 0;
+			size.width = 0;
+
+			const visibility = selector.getMutableComponent(VisibilityComponent);
+			if (!visibility) {
+				return;
+			}
+
+			visibility.visible = true;
 		}
-
-		position.x = event.offsetX;
-		position.y = event.offsetY;
-
-		const size = selector.getMutableComponent(SizeComponent);
-		if (undefined === size) {
-			return;
-		}
-		size.height = 0;
-		size.width = 0;
-
-		const visibility = selector.getMutableComponent(VisibilityComponent);
-		if (!visibility) {
-			return;
-		}
-
-		visibility.visible = true;
 	}
 
 	private handleMouseMove(event: MouseEvent): void {
@@ -113,29 +119,40 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleMouseUp(event: MouseEvent): void {
-		this.selecting = false;
+		if (0 === event.button) {
+			this.selecting = false;
 
-		const selector = this.getSelector();
-		const visibility = selector.getMutableComponent(VisibilityComponent);
-		if (!visibility) {
-			return;
+			const selector = this.getSelector();
+			const visibility = selector.getMutableComponent(VisibilityComponent);
+			if (!visibility) {
+				return;
+			}
+
+			visibility.visible = false;
+
+			const size = selector.getComponent(SizeComponent);
+			if (!size) {
+				return;
+			}
+			if (0 === size.width && 0 === size.height) {
+				this.getSelected().forEach(EntityHelper.deselect);
+				// get entity at click location
+				this.selectEntityAtPosition(event.offsetX, event.offsetY);
+			} else {
+				// get entities inside selector
+				// TODO
+			}
+		} else if (2 === event.button) {
+			// move unit
+			this.getSelected().forEach((entity) => {
+				const position = entity.getMutableComponent(PositionComponent);
+				if (!position) {
+					return;
+				}
+				position.x = event.offsetX;
+				position.y = event.offsetY;
+			})
 		}
-
-		visibility.visible = false;
-
-		const size = selector.getComponent(SizeComponent);
-		if (!size) {
-			return;
-		}
-		if (0 === size.width && 0 === size.height) {
-			this.unselectSelectedEntity();
-			// get entity at click location
-			this.selectEntityAtPosition(event.offsetX, event.offsetY);
-		} else {
-			// get entities inside selector
-			// TODO
-		}
-
 	}
 
 	private handleKeyUp(event: KeyboardEvent): void {
@@ -148,11 +165,7 @@ export class PlayerControlSystem extends System {
 			return;
 		}
 
-		const selectable = entity.getMutableComponent(SelectableComponent);
-		if (!selectable) {
-			return;
-		}
-		selectable.selected = true;
+		EntityHelper.select(entity);
 	}
 
 	private getEntityAtPosition(x: number, y: number): Entity | null {
@@ -160,15 +173,8 @@ export class PlayerControlSystem extends System {
 			.find((entity) => EntityHelper.isPositionInsideEntity(entity, x, y)) || null;
 	}
 
-	private unselectSelectedEntity(): void {
-		this.queries.selectable.results
-			.filter((entity) => entity.getComponent(SelectableComponent)?.selected || false)
-			.forEach((entity) => {
-				const selectable = entity.getMutableComponent(SelectableComponent);
-				if (!selectable) {
-					return;
-				}
-				selectable.selected = false;
-			})
+	private getSelected(): Entity[] {
+		return this.queries.selectable.results
+			.filter((entity) => entity.getComponent(SelectableComponent)?.selected || false);
 	}
 }

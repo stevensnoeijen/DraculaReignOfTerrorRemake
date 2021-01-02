@@ -1,5 +1,6 @@
 import { Entity } from 'ecsy';
 import { PositionComponent } from '../components/PositionComponent';
+import { SelectableComponent } from '../components/SelectableComponent';
 import { SizeComponent } from '../components/SizeComponent';
 
 type IsInsideOptions = {
@@ -56,5 +57,21 @@ export class EntityHelper {
 			objectPosition.y + objectSize.height <=
 			containerPosition.y + containerSize.height
 		);
+	}
+
+	public static deselect(entity: Entity): void {
+		const selectable = entity.getMutableComponent(SelectableComponent);
+		if (!selectable) {
+			return;
+		}
+		selectable.selected = false;
+	}
+
+	public static select(entity: Entity): void {
+		const selectable = entity.getMutableComponent(SelectableComponent);
+		if (!selectable) {
+			return;
+		}
+		selectable.selected = true;
 	}
 }
