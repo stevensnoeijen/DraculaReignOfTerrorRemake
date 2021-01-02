@@ -73,6 +73,7 @@ export class PlayerControlSystem extends System {
 
 	private handleMouseDown(event: MouseEvent): void {
 		if (0 === event.button) {
+			this.getSelected().forEach(EntityHelper.deselect);
 			this.selecting = true;
 
 			const selector = this.getSelector();
@@ -137,12 +138,13 @@ export class PlayerControlSystem extends System {
 				return;
 			}
 			if (0 === size.width && 0 === size.height) {
-				this.getSelected().forEach(EntityHelper.deselect);
 				// get entity at click location
 				this.selectEntityAtPosition(event.offsetX, event.offsetY);
 			} else {
 				// get entities inside selector
-				// TODO
+				this.queries.selectable.results
+					.filter((entity) => EntityHelper.isObjectInsideContainer(entity, selector))
+					.forEach(EntityHelper.select);
 			}
 		} else if (2 === event.button) {
 			// move unit
