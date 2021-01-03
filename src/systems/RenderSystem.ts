@@ -8,6 +8,8 @@ import { ShapeRenderer } from '../renderers/ShapeRenderer';
 import { TextRenderer } from '../renderers/TextRenderer';
 import { IRenderer } from '../renderers/IRenderer';
 import { VisibilityComponent } from '../components/VisibilityComponent';
+import { SelectableComponent } from '../components/SelectableComponent';
+import { SelectionRenderer } from '../renderers/SelectionRenderer';
 
 export class RenderSystem extends System {
 	public static queries = {
@@ -36,6 +38,10 @@ export class RenderSystem extends System {
 			component: TextComponent,
 			renderer: new TextRenderer(this.context),
 		});
+		this.componentRenderers.push({
+			component: SelectableComponent,
+			renderer: new SelectionRenderer(this.context),
+		});
 	}
 
 	// This method will get called on every frame by default
@@ -54,22 +60,18 @@ export class RenderSystem extends System {
 				return;
 			}
 
-			const renderer = this.getRenderer(entity);
-			if (renderer) {
-				renderer.render(entity);
+			const renderers = this.getRenderersByEntityComponents(entity);
+			if (renderers.length > 0) {
+				renderers.forEach((renderer) => renderer.render(entity));
 			}
 		});
 	}
 
-	private getRenderer(entity: Entity): IRenderer | null {
-		const componentRenderer = this.componentRenderers.find(
+	private getRenderersByEntityComponents(entity: Entity): IRenderer[] {
+		const componentRenderers = this.componentRenderers.filter(
 			(componentRenderer) => entity.hasComponent(componentRenderer.component)
 		);
 
-		if (componentRenderer) {
-			return componentRenderer.renderer;
-		} else {
-			return null;
-		}
+		return componentRenderers.map((componentRenderer) => componentRenderer.renderer);
 	}
 }
