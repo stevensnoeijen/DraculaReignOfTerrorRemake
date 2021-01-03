@@ -8,6 +8,7 @@ import { SizeComponent } from '../components/SizeComponent';
 import { EntityHelper } from '../helpers/EntityHelper';
 import { Tween } from '../tween';
 import { Constants } from '../Constants';
+import { MouseEventAdapter } from '../input/MouseEventAdapter';
 
 export class PlayerControlSystem extends System {
 	public static queries = {
@@ -23,6 +24,7 @@ export class PlayerControlSystem extends System {
 	};
 
 	private canvas: HTMLCanvasElement;
+	private mouseEventAdapter: MouseEventAdapter;
 
 	private inputEventsQueue: (KeyboardEvent | MouseEvent)[] = [];
 	private inputHandler: InputHandler;
@@ -34,19 +36,21 @@ export class PlayerControlSystem extends System {
 
 		this.canvas = attributes.canvas;
 
-		this.handleMouseDown = this.handleMouseDown.bind(this);
-		this.handleMouseUp = this.handleMouseUp.bind(this);
-		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
+		this.handleLeftMouseClick = this.handleLeftMouseClick.bind(this);
+		this.handleLeftMouseDragStart = this.handleLeftMouseDragStart.bind(this);
+		this.handleLeftMouseDragMove = this.handleLeftMouseDragMove.bind(this);
+		this.handleLeftMouseDragEnd = this.handleLeftMouseDragEnd.bind(this);
+		this.handleRightMouseClick = this.handleRightMouseClick.bind(this);
+		this.handleLeftMouseDoubleClick = this.handleLeftMouseDoubleClick.bind(this);
 
-		this.canvas.addEventListener('mousedown', this.handleMouseDown);
-		this.canvas.addEventListener('mousemove', this.handleMouseMove);
-		this.canvas.addEventListener('mouseup', this.handleMouseUp);
-
-		// disable right button click inside canvas
-		this.canvas.addEventListener('contextmenu', (event) => {
-			event.preventDefault();
-		});
+		this.mouseEventAdapter = new MouseEventAdapter(this.canvas);
+		this.mouseEventAdapter.addEventListener('leftmouseclick', this.handleLeftMouseClick);
+		this.mouseEventAdapter.addEventListener('leftmousedragstart', this.handleLeftMouseDragStart);
+		this.mouseEventAdapter.addEventListener('leftmousedragmove', this.handleLeftMouseDragMove);
+		this.mouseEventAdapter.addEventListener('leftmousedragend', this.handleLeftMouseDragEnd);
+		this.mouseEventAdapter.addEventListener('rightmouseclick', this.handleRightMouseClick);
+		this.mouseEventAdapter.addEventListener('leftmousedoubleclick', this.handleLeftMouseDoubleClick);
 
 		window.addEventListener('keyup', this.handleKeyUp);
 
@@ -59,38 +63,104 @@ export class PlayerControlSystem extends System {
 		this.processInputEvents();
 	}
 
-	public getSelector(): Entity {
+	private getSelector(): Entity {
 		return this.queries.selector.results[0];
 	}
 
+	private handleLeftMouseClick(event: MouseEvent): void {
+		this.deselectUnits();
+
+		const entity = this.getEntityAtPosition(event.offsetX, event.offsetY);
+		if (entity) {
+			EntityHelper.select(entity);
+		}
+	}
+
+	private handleLeftMouseDragStart(event: MouseEvent): void {
+		const selector = this.getSelector();
+		const position = selector.getMutableComponent(PositionComponent);
+		if (undefined === position) {
+			return;
+		}
+
+		position.x = event.offsetX;
+		position.y = event.offsetY;
+
+		const size = selector.getMutableComponent(SizeComponent);
+		if (undefined === size) {
+			return;
+		}
+		size.height = 0;
+		size.width = 0;
+
+		const visibility = selector.getMutableComponent(VisibilityComponent);
+		if (!visibility) {
+			return;
+		}
+
+		visibility.visible = true;
+	}
+
+	private handleLeftMouseDragMove(event: MouseEvent): void {
+		const selector = this.getSelector();
+		const position = selector.getComponent(PositionComponent);
+		if (!position) {
+			return;
+		}
+
+		const width = event.offsetX - position.x;
+		const height = event.offsetY - position.y;
+
+		const size = selector.getMutableComponent(SizeComponent);
+		if (!size) {
+			return;
+		}
+		size.width = width;
+		size.height = height;
+	}
+
+	private handleLeftMouseDragEnd(event: MouseEvent): void {
+		const selector = this.getSelector();
+		const size = selector.getComponent(SizeComponent);
+		if (!size) {
+			return;
+		}
+
+		this.deselectUnits();
+		this.selectUnits();
+
+		const visibility = selector.getMutableComponent(VisibilityComponent);
+		if (!visibility) {
+			return;
+		}
+
+		visibility.visible = false;
+	}
+
+	private handleRightMouseClick(event: MouseEvent): void {
+		this.moveUnits(event.offsetX, event.offsetY);
+	}
+
+	private handleLeftMouseDoubleClick(event: MouseEvent): void {
+		this.moveUnits(event.offsetX, event.offsetY);
+	}
+
 	private deselectUnits(): void {
-		console.log('deselectin');
 		this.getSelected().forEach(EntityHelper.deselect);
 	}
 
-	private selectUnits(): boolean {
+	/**
+	 * By selector
+	 * 
+	 * @returns {void}
+	 */
+	private selectUnits(): void {
 		const selector = this.getSelector();
 
-		const size = selector.getComponent(SizeComponent);
-		if (!size) {
-			return false;
-		}
-		if (0 === size.width && 0 === size.height) {
-			console.log('select 1');
-			const position = selector.getComponent(PositionComponent);
-			if (!position) {
-				return false;
-			}
-
-			// get entity at click location
-			this.selectEntityAtPosition(position.x, position.y);
-		} else {
-			console.log('select multiple');
-			// get entities inside selector
-			this.queries.selectable.results
-				.filter((entity) => EntityHelper.isObjectInsideContainer(entity, selector))
-				.forEach(EntityHelper.select);
-		}
+		// get entities inside selector
+		this.queries.selectable.results
+			.filter((entity) => EntityHelper.isObjectInsideContainer(entity, selector))
+			.forEach(EntityHelper.select);
 	}
 
 	private processInputEvents(): void {
@@ -102,109 +172,8 @@ export class PlayerControlSystem extends System {
 		}
 	}
 
-	private handleMouseDown(event: MouseEvent): void {
-		if (0 === event.button) {
-			const selector = this.getSelector();
-			const position = selector.getMutableComponent(PositionComponent);
-			if (undefined === position) {
-				return;
-			}
-
-			position.x = event.offsetX;
-			position.y = event.offsetY;
-
-			const size = selector.getMutableComponent(SizeComponent);
-			if (undefined === size) {
-				return;
-			}
-			size.height = 0;
-			size.width = 0;
-
-			const visibility = selector.getMutableComponent(VisibilityComponent);
-			if (!visibility) {
-				return;
-			}
-
-			visibility.visible = true;
-		}
-	}
-
-	private handleMouseMove(event: MouseEvent): void {
-		if (1 === event.buttons) {
-			this.dragged = true;
-			const selector = this.getSelector();
-			const position = selector.getComponent(PositionComponent);
-			if (!position) {
-				return;
-			}
-
-			const width = event.offsetX - position.x;
-			const height = event.offsetY - position.y;
-
-			const size = selector.getMutableComponent(SizeComponent);
-			if (!size) {
-				return;
-			}
-			size.width = width;
-			size.height = height;
-		}
-	}
-
-	private handleMouseUp(event: MouseEvent): void {
-		console.log('up')
-		if (0 === event.button) {
-			if (this.lastClickedTimeStamp !== 0 && Date.now() - this.lastClickedTimeStamp <= 250) {
-				console.log('double');
-				this.moveUnits(event.offsetX, event.offsetY);
-			} else {
-				// check if selecting a unit
-				const selector = this.getSelector();
-				const size = selector.getComponent(SizeComponent);
-				if (!size) {
-					return;
-				}
-				if (size.width === 0 || size.height === 0) {
-					const position = selector.getComponent(PositionComponent);
-					if (!position) {
-						return;
-					}
-
-					const entity = this.getEntityAtPosition(position.x, position.y);
-					if (null === entity) {
-						if (0 !== this.lastClickedTimeStamp && Date.now() - this.lastClickedTimeStamp > 250) {
-							this.lastClickedTimeStamp = Date.now();
-						} else {
-							this.deselectUnits();
-							this.lastClickedTimeStamp = 0;
-						}
-						return;// do nothing, this might be a move action
-					}
-				}
-
-				this.deselectUnits();
-				console.log('selected units');
-				this.selectUnits();
-				this.lastClickedTimeStamp = 0;
-
-				const visibility = selector.getMutableComponent(VisibilityComponent);
-				if (!visibility) {
-					return;
-				}
-
-				visibility.visible = false;
-			}
-		} else if (2 === event.button) {
-			// move unit
-			this.moveUnits(event.offsetX, event.offsetY);
-		}
-		this.lastClickedTimeStamp = Date.now();
-		this.dragged = false;
-	}
-
 	private moveUnits(x: number, y: number): void {
 		this.getSelected().forEach((entity) => {
-			console.log('move unit');
-
 			const position = entity.getComponent(PositionComponent);
 			if (!position) {
 				return;
@@ -221,7 +190,7 @@ export class PlayerControlSystem extends System {
 					y: y,
 					speed: distance * Constants.ANIMATION_UNIT_SPEED,
 				})
-		})
+		});
 	}
 
 	private handleKeyUp(event: KeyboardEvent): void {
