@@ -11,6 +11,6 @@ export class SizeComponent extends Component<ISizeComponentProps> {
 }
 
 SizeComponent.schema = {
-	width: { type: Types.Number, default: 0, },
-	height: { type: Types.Number, default: 0, },
+	width: { type: Types.Number, default: 0 },
+	height: { type: Types.Number, default: 0 },
 };

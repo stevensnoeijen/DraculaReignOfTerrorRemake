@@ -11,7 +11,7 @@ type IsInsideOptions = {
 type Position = {
 	x: number;
 	y: number;
-}
+};
 
 export class EntityHelper {
 	public static isPositionInsideEntity(
@@ -57,10 +57,10 @@ export class EntityHelper {
 		return (
 			objectPosition.x >= containerPosition.x &&
 			objectPosition.x + objectSize.width <=
-			containerPosition.x + containerSize.width &&
+				containerPosition.x + containerSize.width &&
 			objectPosition.y >= containerPosition.y &&
 			objectPosition.y + objectSize.height <=
-			containerPosition.y + containerSize.height
+				containerPosition.y + containerSize.height
 		);
 	}
 

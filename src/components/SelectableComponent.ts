@@ -1,13 +1,13 @@
 import { Component, Types } from 'ecsy';
 
 export interface ISelectableComponentProps {
-    selected?: boolean;
+	selected?: boolean;
 }
 
 export class SelectableComponent extends Component<ISelectableComponentProps> {
-    selected: boolean;
+	selected: boolean;
 }
 
 SelectableComponent.schema = {
-    selected: { type: Types.Boolean, default: false, },
+	selected: { type: Types.Boolean, default: false },
 };

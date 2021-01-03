@@ -42,15 +42,35 @@ export class PlayerControlSystem extends System {
 		this.handleLeftMouseDragMove = this.handleLeftMouseDragMove.bind(this);
 		this.handleLeftMouseDragEnd = this.handleLeftMouseDragEnd.bind(this);
 		this.handleRightMouseClick = this.handleRightMouseClick.bind(this);
-		this.handleLeftMouseDoubleClick = this.handleLeftMouseDoubleClick.bind(this);
+		this.handleLeftMouseDoubleClick = this.handleLeftMouseDoubleClick.bind(
+			this
+		);
 
 		this.mouseEventAdapter = new MouseEventAdapter(this.canvas);
-		this.mouseEventAdapter.addEventListener('leftmouseclick', this.handleLeftMouseClick);
-		this.mouseEventAdapter.addEventListener('leftmousedragstart', this.handleLeftMouseDragStart);
-		this.mouseEventAdapter.addEventListener('leftmousedragmove', this.handleLeftMouseDragMove);
-		this.mouseEventAdapter.addEventListener('leftmousedragend', this.handleLeftMouseDragEnd);
-		this.mouseEventAdapter.addEventListener('rightmouseclick', this.handleRightMouseClick);
-		this.mouseEventAdapter.addEventListener('leftmousedoubleclick', this.handleLeftMouseDoubleClick);
+		this.mouseEventAdapter.addEventListener(
+			'leftmouseclick',
+			this.handleLeftMouseClick
+		);
+		this.mouseEventAdapter.addEventListener(
+			'leftmousedragstart',
+			this.handleLeftMouseDragStart
+		);
+		this.mouseEventAdapter.addEventListener(
+			'leftmousedragmove',
+			this.handleLeftMouseDragMove
+		);
+		this.mouseEventAdapter.addEventListener(
+			'leftmousedragend',
+			this.handleLeftMouseDragEnd
+		);
+		this.mouseEventAdapter.addEventListener(
+			'rightmouseclick',
+			this.handleRightMouseClick
+		);
+		this.mouseEventAdapter.addEventListener(
+			'leftmousedoubleclick',
+			this.handleLeftMouseDoubleClick
+		);
 
 		window.addEventListener('keyup', this.handleKeyUp);
 
@@ -68,8 +88,9 @@ export class PlayerControlSystem extends System {
 	}
 
 	private getSelected(): Entity[] {
-		return this.queries.selectable.results
-			.filter((entity) => entity.getComponent(SelectableComponent)?.selected || false);
+		return this.queries.selectable.results.filter(
+			(entity) => entity.getComponent(SelectableComponent)?.selected || false
+		);
 	}
 
 	private handleLeftMouseClick(event: MouseEvent): void {
@@ -162,7 +183,9 @@ export class PlayerControlSystem extends System {
 
 		// get entities inside selector
 		this.queries.selectable.results
-			.filter((entity) => EntityHelper.isObjectInsideContainer(entity, selector))
+			.filter((entity) =>
+				EntityHelper.isObjectInsideContainer(entity, selector)
+			)
 			.forEach(EntityHelper.select);
 	}
 
@@ -185,14 +208,13 @@ export class PlayerControlSystem extends System {
 			const distance = EntityHelper.distance(position, {
 				x: x,
 				y: y,
-			})
+			});
 
-			Tween.target(entity)
-				.moveTo({
-					x: x,
-					y: y,
-					speed: distance * Constants.ANIMATION_UNIT_SPEED,
-				})
+			Tween.target(entity).moveTo({
+				x: x,
+				y: y,
+				speed: distance * Constants.ANIMATION_UNIT_SPEED,
+			});
 		});
 	}
 
@@ -201,7 +223,10 @@ export class PlayerControlSystem extends System {
 	}
 
 	private getEntityAtPosition(x: number, y: number): Entity | null {
-		return this.queries.selectable.results
-			.find((entity) => EntityHelper.isPositionInsideEntity(entity, x, y)) || null;
+		return (
+			this.queries.selectable.results.find((entity) =>
+				EntityHelper.isPositionInsideEntity(entity, x, y)
+			) || null
+		);
 	}
 }

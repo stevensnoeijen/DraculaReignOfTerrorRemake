@@ -1,9 +1,7 @@
 import { Component, Types } from 'ecsy';
 import { Tween } from '../tween';
 
-interface ITweenComponentProps {
-
-}
+interface ITweenComponentProps {}
 
 export class TweenComponent extends Component<ITweenComponentProps> {
 	tween?: Tween;

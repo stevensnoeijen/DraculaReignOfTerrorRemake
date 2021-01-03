@@ -16,7 +16,10 @@ export class RenderSystem extends System {
 
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
-	private componentRenderers: { component: typeof Component, renderer: IRenderer }[] = [];
+	private componentRenderers: {
+		component: typeof Component;
+		renderer: IRenderer;
+	}[] = [];
 
 	constructor(world: World, attributes: Attributes) {
 		super(world, attributes);
@@ -40,7 +43,9 @@ export class RenderSystem extends System {
 		// clear canvas
 		this.context.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
-		const renderables = this.queries.renderables.results.sort(LayerComponent.compare);
+		const renderables = this.queries.renderables.results.sort(
+			LayerComponent.compare
+		);
 
 		// Iterate through all the entities on the query
 		renderables.forEach((entity: Entity) => {
@@ -57,10 +62,12 @@ export class RenderSystem extends System {
 	}
 
 	private getRenderer(entity: Entity): IRenderer | null {
-		const componentRenderer = this.componentRenderers.find((componentRenderer) => entity.hasComponent(componentRenderer.component));
+		const componentRenderer = this.componentRenderers.find(
+			(componentRenderer) => entity.hasComponent(componentRenderer.component)
+		);
 
 		if (componentRenderer) {
-			return componentRenderer.renderer
+			return componentRenderer.renderer;
 		} else {
 			return null;
 		}

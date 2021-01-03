@@ -1,5 +1,5 @@
-import { Entity } from "ecsy";
+import { Entity } from 'ecsy';
 
 export interface IRenderer {
-    render(entity: Entity): void;
+	render(entity: Entity): void;
 }

@@ -1,3 +1,3 @@
 import { TagComponent } from 'ecsy';
 
-export class SelectorComponent extends TagComponent { }
+export class SelectorComponent extends TagComponent {}

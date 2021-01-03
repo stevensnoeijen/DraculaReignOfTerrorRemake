@@ -2,7 +2,10 @@ import { TextComponent } from './components/TextComponent';
 import { MovableComponent } from './components/MovableComponent';
 import { SelectorComponent } from './components/SelectorComponent';
 import { SizeComponent } from './components/SizeComponent';
-import { PositionComponent, PositionComponentProps } from './components/PositionComponent';
+import {
+	PositionComponent,
+	PositionComponentProps,
+} from './components/PositionComponent';
 import { Constants } from './Constants';
 import { ShapeComponent } from './components/ShapeComponent';
 import { World } from 'ecsy';
@@ -29,7 +32,6 @@ interface IFpsCounterProps {
 }
 
 export class EntityFactory {
-
 	public static createUnit(world: World, props: IUnitProps): void {
 		const width = Constants.UNIT_SIZE;
 		const height = Constants.UNIT_SIZE;
@@ -58,10 +60,7 @@ export class EntityFactory {
 			.addComponent(TweenComponent);
 	}
 
-	public static createSelector(
-		world: World,
-		props: ISelectorProps
-	): void {
+	public static createSelector(world: World, props: ISelectorProps): void {
 		world
 			.createEntity()
 			.addComponent(ShapeComponent, {
@@ -70,7 +69,10 @@ export class EntityFactory {
 				lineStyle: '#FFF',
 			})
 			.addComponent(RenderComponent)
-			.addComponent(PositionComponent, { x: props.position.x, y: props.position.y })
+			.addComponent(PositionComponent, {
+				x: props.position.x,
+				y: props.position.y,
+			})
 			.addComponent(SizeComponent, {
 				width: 100,
 				height: 100,
@@ -84,10 +86,7 @@ export class EntityFactory {
 			});
 	}
 
-	public static createFpsCouter(
-		world: World,
-		props: IFpsCounterProps
-	): void {
+	public static createFpsCouter(world: World, props: IFpsCounterProps): void {
 		world
 			.createEntity()
 			.addComponent(RenderComponent)

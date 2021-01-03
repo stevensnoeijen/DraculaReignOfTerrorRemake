@@ -30,7 +30,7 @@ export class Tween {
 	private duration = 0;
 	private _after: (() => void) | null = null;
 
-	constructor(private readonly entity: Entity) { }
+	constructor(private readonly entity: Entity) {}
 
 	public moveTo(options: MoveToOptions): this {
 		const position = this.entity.getComponent(PositionComponent)!;
