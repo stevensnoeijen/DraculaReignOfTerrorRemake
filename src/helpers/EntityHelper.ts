@@ -39,10 +39,10 @@ export class EntityHelper {
 	/**
 	 * Based on {@link Position} and {@link Size}.
 	 *
-	 * @param container
-	 * @param object is contained in the container
+	 * @param {Entity} container
+	 * @param {Entity} object is contained in the container
 	 *
-	 * @returns true if the objects is inside the container
+	 * @returns {boolean} true if the objects is inside the container
 	 */
 	public static isObjectInsideContainer(
 		object: Entity,

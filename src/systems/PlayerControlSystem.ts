@@ -67,6 +67,11 @@ export class PlayerControlSystem extends System {
 		return this.queries.selector.results[0];
 	}
 
+	private getSelected(): Entity[] {
+		return this.queries.selectable.results
+			.filter((entity) => entity.getComponent(SelectableComponent)?.selected || false);
+	}
+
 	private handleLeftMouseClick(event: MouseEvent): void {
 		this.deselectUnits();
 
@@ -151,8 +156,6 @@ export class PlayerControlSystem extends System {
 
 	/**
 	 * By selector
-	 * 
-	 * @returns {void}
 	 */
 	private selectUnits(): void {
 		const selector = this.getSelector();
@@ -197,27 +200,8 @@ export class PlayerControlSystem extends System {
 		this.inputEventsQueue.push(event);
 	}
 
-	/**
-	 * @returns {boolean} if a entity is selected
-	 */
-	private selectEntityAtPosition(x: number, y: number): boolean {
-		const entity = this.getEntityAtPosition(x, y);
-		if (null === entity) {
-			return false;
-		}
-
-		EntityHelper.select(entity);
-
-		return true;
-	}
-
 	private getEntityAtPosition(x: number, y: number): Entity | null {
 		return this.queries.selectable.results
 			.find((entity) => EntityHelper.isPositionInsideEntity(entity, x, y)) || null;
-	}
-
-	private getSelected(): Entity[] {
-		return this.queries.selectable.results
-			.filter((entity) => entity.getComponent(SelectableComponent)?.selected || false);
 	}
 }

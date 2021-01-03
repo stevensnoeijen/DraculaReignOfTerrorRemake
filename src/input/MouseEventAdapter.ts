@@ -7,6 +7,16 @@ class CustomMouseEvent extends MouseEvent {
     }
 }
 
+interface EventListener {
+    (evt: Event | MouseEvent): void;
+}
+
+interface EventListenerObject {
+    handleEvent(evt: Event | MouseEvent): void;
+}
+
+type EventListenerOrEventListenerObject = EventListener | EventListenerObject;
+
 /**
  * Convert mouse events to usable mouse-events for the game.
  */
@@ -15,10 +25,13 @@ export class MouseEventAdapter {
      * in ms
      */
     private static readonly DOUBLECLICK_TIMEOUT = 250;
+    /**
+     * in px
+     */
     private static readonly DRAG_THRESHOLD = 1;
 
-    private static MOUSE_LEFT = 0;
-    private static MOUSE_RIGHT = 2;
+    private static MOUSE_BUTTON_LEFT = 0;
+    private static MOUSE_BUTTON_RIGHT = 2;
 
     private eventTarget: EventTarget;
     private dragged = false;
@@ -67,7 +80,7 @@ export class MouseEventAdapter {
     }
 
     public handleMouseUp(event: MouseEvent): void {
-        if (MouseEventAdapter.MOUSE_LEFT === event.button) {
+        if (MouseEventAdapter.MOUSE_BUTTON_LEFT === event.button) {
             if (this.lastClickedTimeStamp && Date.now() - this.lastClickedTimeStamp <= MouseEventAdapter.DOUBLECLICK_TIMEOUT) {
                 if (this.singleClickTimeout) {
                     this.cancelSingleClick();
@@ -78,7 +91,7 @@ export class MouseEventAdapter {
                     this.singleClickTimeout = setTimeout(this.createSingleClickHandler(new CustomMouseEvent('leftmouseclick', event)), MouseEventAdapter.DOUBLECLICK_TIMEOUT);
                 }
             }
-        } else if (MouseEventAdapter.MOUSE_RIGHT === event.button) {
+        } else if (MouseEventAdapter.MOUSE_BUTTON_RIGHT === event.button) {
             // right button
             this.eventTarget.dispatchEvent(new CustomMouseEvent('rightmouseclick', event));
         }

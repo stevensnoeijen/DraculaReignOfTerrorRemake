@@ -9,7 +9,8 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "unused-imports"
+    "unused-imports",
+    "jsdoc"
   ],
   "settings": {
     "react": {
@@ -20,19 +21,13 @@
     "plugin:@typescript-eslint/recommended",
     "google",
     "prettier",
-    "prettier/react"
+    "prettier/react",
+    "plugin:jsdoc/recommended"
   ],
   "rules": {
     "require-jsdoc": "off",
     "unused-imports/no-unused-imports-ts": "warn",
-    "valid-jsdoc": [
-      "warn",
-      {
-        "prefer": {
-          "return": "returns"
-        }
-      }
-    ],
+    "valid-jsdoc": "off",
     "@typescript-eslint/ban-types": [
       "error",
       {
@@ -53,6 +48,8 @@
     "quotes": [
       "warn",
       "single"
-    ]
+    ],
+    "@typescript-eslint/no-empty-interface": "off",
+    "jsdoc/require-param-description": "off"
   }
 }
