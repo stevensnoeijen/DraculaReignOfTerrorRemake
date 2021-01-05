@@ -19,6 +19,7 @@ import { TweenSystem } from './systems/TweenSystem';
 import { MovableComponent } from './components/MovableComponent';
 import { LayerComponent } from './components/LayerComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
+import { RotationComponent } from './components/RotationComponent';
 
 type AppProps = {};
 
@@ -52,6 +53,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(LayerComponent)
 			.registerComponent(TweenComponent)
 			.registerComponent(VisibilityComponent)
+			.registerComponent(RotationComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)

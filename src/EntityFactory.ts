@@ -16,6 +16,7 @@ import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
 import { SelectableComponent } from './components/SelectableComponent';
+import { RotationComponent } from './components/RotationComponent';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -55,6 +56,9 @@ export class EntityFactory {
 			.addComponent(MovableComponent)
 			.addComponent(LayerComponent, {
 				layer: Constants.LAYER_INTERMEDIATE,
+			})
+			.addComponent(RotationComponent, {
+				rotation: Math.random() * 360,
 			})
 			.addComponent(SelectableComponent)
 			.addComponent(TweenComponent);
