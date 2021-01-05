@@ -6,9 +6,10 @@ import { PositionComponent } from '../components/PositionComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SizeComponent } from '../components/SizeComponent';
 import { EntityHelper } from '../helpers/EntityHelper';
-import { Tween } from '../tween';
-import { Constants } from '../Constants';
 import { MouseEventAdapter } from '../input/MouseEventAdapter';
+import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
+import { SelectUnitsCommand } from '../input/commands/SelectUnitsCommand';
+import { DeselectUnitsCommand } from '../input/commands/DeselectUnitsCommand';
 
 export class PlayerControlSystem extends System {
 	public static queries = {
@@ -94,11 +95,11 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleLeftMouseClick(event: MouseEvent): void {
-		this.deselectUnits();
+		new DeselectUnitsCommand(this.getSelected()).execute();
 
 		const entity = this.getEntityAtPosition(event.offsetX, event.offsetY);
 		if (entity) {
-			EntityHelper.select(entity);
+			new SelectUnitsCommand([entity]).execute();
 		}
 	}
 
@@ -153,7 +154,7 @@ export class PlayerControlSystem extends System {
 		}
 
 		this.deselectUnits();
-		this.selectUnits();
+		this.selectUnitsInsideSelector();
 
 		const visibility = selector.getMutableComponent(VisibilityComponent);
 		if (!visibility) {
@@ -164,29 +165,23 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleRightMouseClick(event: MouseEvent): void {
-		this.moveUnits(event.offsetX, event.offsetY);
+		new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
 	}
 
 	private handleLeftMouseDoubleClick(event: MouseEvent): void {
-		this.moveUnits(event.offsetX, event.offsetY);
+		new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
 	}
 
-	private deselectUnits(): void {
-		this.getSelected().forEach(EntityHelper.deselect);
-	}
-
-	/**
-	 * By selector
-	 */
-	private selectUnits(): void {
+	private selectUnitsInsideSelector(): void {
 		const selector = this.getSelector();
 
 		// get entities inside selector
-		this.queries.selectable.results
+		const units = this.queries.selectable.results
 			.filter((entity) =>
 				EntityHelper.isObjectInsideContainer(entity, selector)
-			)
-			.forEach(EntityHelper.select);
+			);
+
+		new SelectUnitsCommand(units).execute();
 	}
 
 	private processInputEvents(): void {
@@ -196,26 +191,6 @@ export class PlayerControlSystem extends System {
 				this.inputHandler.handle(event);
 			}
 		}
-	}
-
-	private moveUnits(x: number, y: number): void {
-		this.getSelected().forEach((entity) => {
-			const position = entity.getComponent(PositionComponent);
-			if (!position) {
-				return;
-			}
-
-			const distance = EntityHelper.distance(position, {
-				x: x,
-				y: y,
-			});
-
-			Tween.target(entity).moveTo({
-				x: x,
-				y: y,
-				speed: distance * Constants.ANIMATION_UNIT_SPEED,
-			});
-		});
 	}
 
 	private handleKeyUp(event: KeyboardEvent): void {
