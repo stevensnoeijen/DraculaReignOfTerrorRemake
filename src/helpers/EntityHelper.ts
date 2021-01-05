@@ -48,19 +48,25 @@ export class EntityHelper {
 		object: Entity,
 		container: Entity
 	): boolean {
-		const containerPosition = container.getComponent(PositionComponent)!;
-		const containerSize = container.getComponent(SizeComponent)!;
+		const containerPosition = container.getComponent(PositionComponent);
+		if (!containerPosition) {
+			return false;
+		}
+		const containerSize = container.getComponent(SizeComponent);
+		if (!containerSize) {
+			return false;
+		}
 
-		const objectPosition = object.getComponent(PositionComponent)!;
-		const objectSize = object.getComponent(SizeComponent)!;
+		const objectPosition = object.getComponent(PositionComponent);
+		if (!objectPosition) {
+			return false;
+		}
 
 		return (
 			objectPosition.x >= containerPosition.x &&
-			objectPosition.x + objectSize.width <=
-				containerPosition.x + containerSize.width &&
+			objectPosition.x <= containerPosition.x + containerSize.width &&
 			objectPosition.y >= containerPosition.y &&
-			objectPosition.y + objectSize.height <=
-				containerPosition.y + containerSize.height
+			objectPosition.y <= containerPosition.y + containerSize.height
 		);
 	}
 
