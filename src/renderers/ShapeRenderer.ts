@@ -32,12 +32,16 @@ export class ShapeRenderer implements IRenderer {
 		this.context.beginPath();
 
 		this.context.translate(position.x, position.y);
+
 		if (rotation) {
 			this.context.rotate(rotation.rotation * Math.PI / 180);
 		}
 
+		const x = shape.renderOrigin === 'topleft' ? 0 : -(size.width / 2);
+		const y = shape.renderOrigin === 'topleft' ? 0 : -(size.height / 2);
+
 		this.context.beginPath();
-		this.context.rect(0, 0, size.width, size.height);
+		this.context.rect(x, y, size.width, size.height);
 		if (shape.fillStyle) {
 			this.context.fillStyle = shape.fillStyle;
 			this.context.fill();
@@ -52,6 +56,7 @@ export class ShapeRenderer implements IRenderer {
 		if (rotation) {
 			this.context.rotate(0 * Math.PI / 180);// reset rotate
 		}
+
 		this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
 	}
 }

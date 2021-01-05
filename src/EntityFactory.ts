@@ -44,6 +44,7 @@ export class EntityFactory {
 			.addComponent(ShapeComponent, {
 				type: 'rectangle',
 				fillStyle: color.hex(),
+				renderOrigin: 'center',
 			})
 			.addComponent(PositionComponent, {
 				x: props.position.x,
@@ -71,6 +72,7 @@ export class EntityFactory {
 				type: 'rectangle',
 				lineWidth: 2,
 				lineStyle: '#FFF',
+				renderOrigin: 'topleft',
 			})
 			.addComponent(RenderComponent)
 			.addComponent(PositionComponent, {

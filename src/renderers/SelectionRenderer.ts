@@ -25,28 +25,31 @@ export class SelectionRenderer implements IRenderer {
             return;
         }
 
+        this.context.translate(position.x, position.y);
+
         this.context.lineWidth = 1;
         this.context.strokeStyle = '#000';
         this.context.lineCap = 'square';
         this.context.lineJoin = 'round';
 
-        this.context.beginPath();
+        const left = -(size.width / 2);
+        const top = -(size.height / 2);
 
+        this.context.beginPath();
         // top left corner
-        this.context.moveTo(position.x - SelectionRenderer.OFFSET, position.y + 2);// bottom left
-        this.context.lineTo(position.x - SelectionRenderer.OFFSET, position.y - SelectionRenderer.OFFSET);// left top
-        this.context.lineTo(position.x + 2, position.y - SelectionRenderer.OFFSET);// right
-
+        this.context.moveTo(left - SelectionRenderer.OFFSET, top + 2);// bottom left
+        this.context.lineTo(left - SelectionRenderer.OFFSET, top - SelectionRenderer.OFFSET);// left top
+        this.context.lineTo(left + 2, top - SelectionRenderer.OFFSET);// right
         this.context.stroke();
 
         this.context.beginPath();
-
         // top right corner
-        this.context.moveTo(position.x + size.width + SelectionRenderer.OFFSET, position.y + 2);// bottom right
-        this.context.lineTo(position.x + size.width + SelectionRenderer.OFFSET, position.y - SelectionRenderer.OFFSET);// right top
-        this.context.lineTo(position.x + size.width - 2, position.y - SelectionRenderer.OFFSET);// left
-
+        this.context.moveTo(left + size.width + SelectionRenderer.OFFSET, top + 2);// bottom right
+        this.context.lineTo(left + size.width + SelectionRenderer.OFFSET, top - SelectionRenderer.OFFSET);// right top
+        this.context.lineTo(left + size.width - 2, top - SelectionRenderer.OFFSET);// left
         this.context.stroke();
+
+        this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
     }
 
 }
