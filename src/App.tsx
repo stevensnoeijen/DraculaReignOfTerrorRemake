@@ -20,6 +20,7 @@ import { MovableComponent } from './components/MovableComponent';
 import { LayerComponent } from './components/LayerComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
 import { RotationComponent } from './components/RotationComponent';
+import { HealthComponent } from './components/HealthComponent';
 
 type AppProps = {};
 
@@ -54,6 +55,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(TweenComponent)
 			.registerComponent(VisibilityComponent)
 			.registerComponent(RotationComponent)
+			.registerComponent(HealthComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)

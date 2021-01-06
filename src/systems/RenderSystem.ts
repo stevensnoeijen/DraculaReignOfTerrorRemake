@@ -10,6 +10,8 @@ import { IRenderer } from '../renderers/IRenderer';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { SelectionRenderer } from '../renderers/SelectionRenderer';
+import { HealthComponent } from '../components/HealthComponent';
+import { HealthRenderer } from '../renderers/HealthRenderer';
 
 export class RenderSystem extends System {
 	public static queries = {
@@ -41,6 +43,10 @@ export class RenderSystem extends System {
 		this.componentRenderers.push({
 			component: SelectableComponent,
 			renderer: new SelectionRenderer(this.context),
+		});
+		this.componentRenderers.push({
+			component: HealthComponent,
+			renderer: new HealthRenderer(this.context),
 		});
 	}
 

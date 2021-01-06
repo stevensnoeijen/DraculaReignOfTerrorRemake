@@ -17,6 +17,7 @@ import { FpsComponent } from './components/FpsComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
 import { SelectableComponent } from './components/SelectableComponent';
 import { RotationComponent } from './components/RotationComponent';
+import { HealthComponent } from './components/HealthComponent';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -62,7 +63,11 @@ export class EntityFactory {
 				rotation: Math.random() * 360,
 			})
 			.addComponent(SelectableComponent)
-			.addComponent(TweenComponent);
+			.addComponent(TweenComponent)
+			.addComponent(HealthComponent, {
+				points: 10,
+				maxPoints: 10,
+			});
 	}
 
 	public static createSelector(world: World, props: ISelectorProps): void {
