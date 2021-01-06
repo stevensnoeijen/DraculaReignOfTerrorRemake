@@ -16,14 +16,11 @@ export class InputHandler {
 		this.commandFactory.setCommand(keyCode, constructor);
 	}
 
-	public handle(event: KeyboardEvent | MouseEvent): void {
+	public handle(event: KeyboardEvent): void {
 		if ('key' in event) {
 			// KeyboardEvent
 			const command = this.commandFactory.createCommand(event, this.system);
 			command?.execute();
-		} else {
-			// MouseEvent
-			// TODO
 		}
 	}
 }

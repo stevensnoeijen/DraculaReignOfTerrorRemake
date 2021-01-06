@@ -27,10 +27,8 @@ export class PlayerControlSystem extends System {
 	private canvas: HTMLCanvasElement;
 	private mouseEventAdapter: MouseEventAdapter;
 
-	private inputEventsQueue: (KeyboardEvent | MouseEvent)[] = [];
+	private inputEventsQueue: KeyboardEvent[] = [];
 	private inputHandler: InputHandler;
-	private dragged = false;
-	private lastClickedTimeStamp = 0;
 
 	constructor(world: World, attributes: Attributes) {
 		super(world, attributes);
@@ -153,7 +151,7 @@ export class PlayerControlSystem extends System {
 			return;
 		}
 
-		this.deselectUnits();
+		new DeselectUnitsCommand(this.getSelected()).execute();
 		this.selectUnitsInsideSelector();
 
 		const visibility = selector.getMutableComponent(VisibilityComponent);
@@ -173,6 +171,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private selectUnitsInsideSelector(): void {
+
 		const selector = this.getSelector();
 
 		// get entities inside selector
