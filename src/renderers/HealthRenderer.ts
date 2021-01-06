@@ -40,11 +40,24 @@ export class HealthRenderer implements IRenderer {
         this.context.fillStyle = '#000';
         this.context.fill();
 
-        this.context.beginPath();
-        this.context.rect(healthbarProps.x + 1, healthbarProps.y + 1, healthbarProps.width - 2, healthbarProps.height - 2);
-        this.context.fillStyle = 'green';
-        this.context.fill();
+        const percentage = health.points / health.maxPoints;
+        if (percentage > 0) {
+            this.context.beginPath();
+            this.context.rect(healthbarProps.x + 1, healthbarProps.y + 1, percentage * (healthbarProps.width - 2), healthbarProps.height - 2);
+            this.context.fillStyle = this.healthColor(percentage);
+            this.context.fill();
+        }
 
         this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
+    }
+
+    private healthColor(percentage: number): string {
+        if (percentage >= .66) {
+            return 'green';
+        } else if (percentage >= .33) {
+            return 'orange';
+        } else {
+            return 'red';
+        }
     }
 }

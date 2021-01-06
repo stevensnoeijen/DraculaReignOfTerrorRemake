@@ -65,7 +65,7 @@ export class EntityFactory {
 			.addComponent(SelectableComponent)
 			.addComponent(TweenComponent)
 			.addComponent(HealthComponent, {
-				points: 10,
+				points: Math.round(Math.random() * 10),
 				maxPoints: 10,
 			});
 	}
