@@ -18,6 +18,7 @@ import { VisibilityComponent } from './components/VisibilityComponent';
 import { SelectableComponent } from './components/SelectableComponent';
 import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
+import { AliveComponent } from './components/AliveComponent';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -67,7 +68,8 @@ export class EntityFactory {
 			.addComponent(HealthComponent, {
 				points: Math.round(Math.random() * 10),
 				maxPoints: 10,
-			});
+			})
+			.addComponent(AliveComponent);
 	}
 
 	public static createSelector(world: World, props: ISelectorProps): void {

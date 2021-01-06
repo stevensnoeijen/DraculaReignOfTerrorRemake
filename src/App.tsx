@@ -21,6 +21,8 @@ import { LayerComponent } from './components/LayerComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
 import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
+import { AliveComponent } from './components/AliveComponent';
+import { HealthSystem } from './systems/HealthSystem';
 
 type AppProps = {};
 
@@ -56,10 +58,12 @@ export default class App extends Component<AppProps> {
 			.registerComponent(VisibilityComponent)
 			.registerComponent(RotationComponent)
 			.registerComponent(HealthComponent)
+			.registerComponent(AliveComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
-			.registerSystem(TweenSystem);
+			.registerSystem(TweenSystem)
+			.registerSystem(HealthSystem);
 
 		// add selector
 		EntityFactory.createSelector(this.world, {
