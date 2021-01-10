@@ -23,6 +23,7 @@ import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
+import { AliveSystem } from './systems/AliveSystem';
 
 type AppProps = {};
 
@@ -63,7 +64,8 @@ export default class App extends Component<AppProps> {
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
 			.registerSystem(TweenSystem)
-			.registerSystem(HealthSystem);
+			.registerSystem(HealthSystem)
+			.registerSystem(AliveSystem);
 
 		// add selector
 		EntityFactory.createSelector(this.world, {
