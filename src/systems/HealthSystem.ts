@@ -41,7 +41,10 @@ export class HealthSystem extends System {
             }
             alive.alive = false;
 
-            const shape = entity.getMutableComponent(ShapeComponent)!;
+            const shape = entity.getMutableComponent(ShapeComponent);
+            if (!shape) {
+                return;
+            }
             shape.fillStyle = 'black';
         }
     }
