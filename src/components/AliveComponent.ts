@@ -1,15 +1,15 @@
 import { Component, Types } from 'ecsy';
 
-type AliveStatus = 'alive' | 'dying' | 'dead';
+type AliveStatus = 'alive' | 'dead';
 
 export interface IAliveComponentProps {
-    status?: AliveStatus;
+    alive?: boolean;
 }
 
 export class AliveComponent extends Component<IAliveComponentProps> {
-    status: AliveStatus
+    alive: boolean
 }
 
 AliveComponent.schema = {
-    status: { type: Types.String, default: 'alive' },
+    alive: { type: Types.Boolean, default: true },
 };

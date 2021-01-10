@@ -16,6 +16,7 @@ export class HealthSystem extends System {
     };
 
     public execute(delta: number, time: number): void {
+
         if (this.queries.healthy.added !== undefined) {
             this.queries.healthy.added.forEach(this.updateStatus);
         }
@@ -38,20 +39,10 @@ export class HealthSystem extends System {
             if (!alive) {
                 return;
             }
-            alive.status = 'dying';
+            alive.alive = false;
 
             const shape = entity.getMutableComponent(ShapeComponent)!;
-            shape.fillStyle = 'gray';
-
-            setTimeout(() => {
-                shape.fillStyle = 'black';
-                alive.status = 'dead';
-            }, 1000);// FIXME: replace with below tween
-
-            // Tween.target(entity).waitFor(1000).then(() => {
-            //     shape.fillStyle = 'black';
-            //     alive.status = 'dead';
-            // });
+            shape.fillStyle = 'black';
         }
     }
 }
