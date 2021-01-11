@@ -25,9 +25,11 @@ export class MoveUnitsCommand implements ICommand {
             });
 
             Tween.target(entity).moveTo({
-                x: this.destination.x,
-                y: this.destination.y,
-                speed: distance * Constants.ANIMATION_UNIT_SPEED,
+                destination: {
+                    x: this.destination.x,
+                    y: this.destination.y,
+                },
+                duration: distance / Constants.UNIT_SIZE * Constants.ANIMATION_UNIT_SPEED,
             }).start();
         });
     }

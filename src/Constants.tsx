@@ -5,9 +5,9 @@ export class Constants {
 	public static readonly GAME_HEIGHT = 600;
 
 	/**
-	 * in ms
+	 * in ms, movement per cell
 	 */
-	public static readonly ANIMATION_UNIT_SPEED = 15;
+	public static readonly ANIMATION_UNIT_SPEED = 250;
 
 	public static readonly LAYER_BACKGROUND = 1;
 	public static readonly LAYER_INTERMEDIATE = 2;

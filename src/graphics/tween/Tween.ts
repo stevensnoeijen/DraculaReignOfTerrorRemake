@@ -1,21 +1,28 @@
 import { Entity } from 'ecsy';
 import { MovableComponent } from '../../components/MovableComponent';
 import { TweenComponent } from '../../components/TweenComponent';
-import { MoveTo, MoveToProps } from './MoveTo';
+import { ITweenAction } from './ITweenAction';
+import { MoveToAction, IMoveToActionProps } from './MoveToAction';
+import { IWaitActionProps, WaitAction } from './WaitAction';
 
 export class Tween {
 	public static target(entity: Entity): Tween {
 		return new Tween(entity);
 	}
 
-	private action: MoveTo | null = null;
+	private actions: ITweenAction[] = [];
 	private elapsedTime = 0;
 
 	constructor(private readonly entity: Entity) { }
 
-	public moveTo(props: MoveToProps): this {
-		this.action = new MoveTo(this.entity, props);
+	public moveTo(props: IMoveToActionProps): this {
+		this.actions.push(new MoveToAction(this.entity, props));
 
+		return this;
+	}
+
+	public wait(props: IWaitActionProps): this {
+		this.actions.push(new WaitAction(this.entity, props));
 		return this;
 	}
 
@@ -34,18 +41,36 @@ export class Tween {
 
 	public update(delta: number): void {
 		this.elapsedTime += delta;
-		this.action?.update(delta);
-		if (this.action?.done) {
+
+		const currentAction = this.actions[0];
+		if (!currentAction) {
 			this.remove();
+			return;
+		}
+
+		currentAction.update(delta);
+		if (currentAction.done) {
+			this.actions.shift();// remove current action
 		}
 	}
 
-	public remove(): void {
+	/**
+	 * Cancel tween whereby next frame the tween will be removed from the entity
+	 */
+	public cancel(): void {
+		this.actions = [];
+	}
+
+	private remove(): void {
 		const movable = this.entity.getMutableComponent(MovableComponent);
 		if (movable) {
 			movable.moving = false;
 		}
 
-		this.entity.getMutableComponent(TweenComponent)!.tween = null;
+		const tween = this.entity.getMutableComponent(TweenComponent);
+		if (!tween) {
+			return;
+		}
+		tween.tween = null;
 	}
 }
