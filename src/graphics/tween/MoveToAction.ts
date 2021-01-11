@@ -1,18 +1,21 @@
 import { Entity } from 'ecsy';
 import { PositionComponent } from '../../components/PositionComponent';
+import { IPosition } from '../IPosition';
 import { ITweenAction } from './ITweenAction';
 
 export interface IMoveToActionProps {
-    destination: Position;
+    /**
+     * if not set, position of entity will be used as start position
+     */
+    startPosition?: IPosition;
+    destination: IPosition;
     duration?: number;
 }
 
-type Position = { x: number; y: number };
-
 export class MoveToAction implements ITweenAction {
 
-    private readonly startPosition: Position;
-    private readonly destination: Position;
+    private readonly startPosition: IPosition;
+    private readonly destination: IPosition;
     /**
      * Time of the animation
      * Number is in miliseconds.
@@ -23,16 +26,20 @@ export class MoveToAction implements ITweenAction {
     private _done = false;
 
     constructor(private readonly entity: Entity, props: IMoveToActionProps) {
-        const position = this.entity.getComponent(PositionComponent);
-        if (!position) {
-            this._done = true;
-            return;
+        if (props.startPosition) {
+            this.startPosition = props.startPosition;
+        } else {
+            const position = this.entity.getComponent(PositionComponent);
+            if (!position) {
+                this._done = true;
+                return;
+            }
+            this.startPosition = {
+                x: position.x,
+                y: position.y,
+            };
         }
 
-        this.startPosition = {
-            x: position.x,
-            y: position.y,
-        };
         this.destination = props.destination;
         this.duration = props.duration || 0;
     }
@@ -60,6 +67,7 @@ export class MoveToAction implements ITweenAction {
             position.x = this.destination.x;
             position.y = this.destination.y;
             this._done = true;
+            console.log('done move to')
         } else {
             // calculate position accoring to the percentage
             if (this.destination.x || this.destination.y) {

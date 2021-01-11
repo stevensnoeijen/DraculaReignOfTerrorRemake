@@ -1,6 +1,5 @@
 import { Entity } from 'ecsy';
 import { PositionComponent } from '../../components/PositionComponent';
-import { Constants } from '../../Constants';
 import { EntityHelper } from '../../helpers/EntityHelper';
 import { Tween } from '../../graphics/tween/Tween';
 import { ICommand } from './ICommand';
@@ -29,7 +28,7 @@ export class MoveUnitsCommand implements ICommand {
                     x: this.destination.x,
                     y: this.destination.y,
                 },
-                duration: distance / Constants.UNIT_SIZE * Constants.ANIMATION_UNIT_SPEED,
+                duration: 250,
             }).start();
         });
     }

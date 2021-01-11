@@ -13,6 +13,7 @@ import { Grid, PathFinder } from '../helpers/PathFinder';
 import { Constants } from '../Constants';
 import { ColliderComponent } from '../components/ColliderComponent';
 import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
+import { Tween } from '../graphics/tween/Tween';
 
 export class PlayerControlSystem extends System {
 	public static queries: SystemQueries = {
@@ -202,11 +203,17 @@ export class PlayerControlSystem extends System {
 		return Math.floor(pos / Constants.UNIT_SIZE)
 	}
 
+	private translateGridToPosition(grid: number) {
+		return grid * Constants.UNIT_SIZE + (Constants.UNIT_SIZE / 2);
+	}
+
 	private handleRightMouseClick(event: MouseEvent): void {
 		const selected = this.getSelected();
 		if (selected.length === 0) {
 			return;
 		}
+
+		// TODO: move this to Command
 		const position = selected[0].getComponent(PositionComponent)!;
 
 		const start = {
@@ -219,8 +226,22 @@ export class PlayerControlSystem extends System {
 		};
 
 		const grid = this.createGrid();
-		const path = PathFinder.findPath(grid, start, destination);
+		const path = PathFinder.findPath(grid, start, destination).map((item) => ({
+			x: this.translateGridToPosition(item.x),
+			y: this.translateGridToPosition(item.y),
+		}));
+
 		console.log(path);
+
+		const distance = EntityHelper.distance(position, {
+			x: this.translateGridToPosition(destination.x),
+			y: this.translateGridToPosition(destination.y),
+		});
+
+		Tween.target(selected[0]).path({
+			path: path,
+			duration: distance / Constants.UNIT_SIZE * Constants.ANIMATION_UNIT_SPEED,
+		}).start();
 
 		// new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
 	}

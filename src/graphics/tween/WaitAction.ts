@@ -1,17 +1,18 @@
 import { Entity } from 'ecsy';
 import { ITweenAction } from './ITweenAction';
 
-export interface IWaitActionProps {
-    duration: number;
-}
-
 export class WaitAction implements ITweenAction {
     private readonly duration: number;
     private elapsedTime = 0;
     private _done = false;
 
-    constructor(private readonly entity: Entity, props: IWaitActionProps) {
-        this.duration = props.duration;
+    /**
+     * 
+     * @param {Entity} entity 
+     * @param {number} duration - in ms
+     */
+    constructor(private readonly entity: Entity, duration: number) {
+        this.duration = duration;
     }
 
     public update(delta: number): void {

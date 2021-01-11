@@ -2,8 +2,9 @@ import { Entity } from 'ecsy';
 import { MovableComponent } from '../../components/MovableComponent';
 import { TweenComponent } from '../../components/TweenComponent';
 import { ITweenAction } from './ITweenAction';
+import { WaitAction } from './WaitAction';
 import { MoveToAction, IMoveToActionProps } from './MoveToAction';
-import { IWaitActionProps, WaitAction } from './WaitAction';
+import { PathAction, IPathActionProps } from './PathAction';
 
 export class Tween {
 	public static target(entity: Entity): Tween {
@@ -21,10 +22,18 @@ export class Tween {
 		return this;
 	}
 
-	public wait(props: IWaitActionProps): this {
-		this.actions.push(new WaitAction(this.entity, props));
+	public wait(duration: number): this {
+		this.actions.push(new WaitAction(this.entity, duration));
+
 		return this;
 	}
+
+	public path(props: IPathActionProps): this {
+		this.actions.push(new PathAction(this.entity, props));
+
+		return this;
+	}
+
 
 	public start(): void {
 		const movable = this.entity.getMutableComponent(MovableComponent);
