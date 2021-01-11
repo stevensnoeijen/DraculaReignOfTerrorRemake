@@ -24,6 +24,7 @@ import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
 import { AliveSystem } from './systems/AliveSystem';
+import { ColliderComponent } from './components/ColliderComponent';
 
 type AppProps = {};
 
@@ -60,6 +61,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(RotationComponent)
 			.registerComponent(HealthComponent)
 			.registerComponent(AliveComponent)
+			.registerComponent(ColliderComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
@@ -91,12 +93,14 @@ export default class App extends Component<AppProps> {
 
 	private startLevel(): void {
 		Array.from(Array(100)).forEach(() => {
-			const x = Math.round(
-				Math.random() * Constants.GAME_WIDTH - Constants.UNIT_SIZE
+			let x = Math.round(
+				Math.random() * Constants.GAME_WIDTH
 			);
-			const y = Math.round(
-				Math.random() * Constants.GAME_HEIGHT - Constants.UNIT_SIZE
-			);
+			x = x - (x % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+			let y = Math.round(
+				Math.random() * Constants.GAME_HEIGHT
+			) + (Constants.UNIT_SIZE / 2);
+			y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
 
 			EntityFactory.createUnit(this.world, {
 				position: { x: x, y: y },

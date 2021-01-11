@@ -53,6 +53,13 @@ export class ShapeRenderer implements IRenderer {
 			this.context.stroke();
 		}
 
+		// render center dot
+		this.context.fillStyle = 'black'
+		this.context.beginPath();
+		this.context.arc(0, 0, 1, 0, 2 * Math.PI, true);
+		this.context.closePath();
+		this.context.fill();
+
 		if (rotation) {
 			this.context.rotate(0 * Math.PI / 180);// reset rotate
 		}

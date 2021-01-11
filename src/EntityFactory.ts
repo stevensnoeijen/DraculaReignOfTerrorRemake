@@ -19,6 +19,7 @@ import { SelectableComponent } from './components/SelectableComponent';
 import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
+import { ColliderComponent } from './components/ColliderComponent';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -39,6 +40,8 @@ export class EntityFactory {
 		const width = Constants.UNIT_SIZE;
 		const height = Constants.UNIT_SIZE;
 		const color = Color(props.color);
+		let rotation = Math.random() * 360;
+		rotation -= rotation % 45;
 
 		world
 			.createEntity()
@@ -61,7 +64,7 @@ export class EntityFactory {
 				layer: Constants.LAYER_INTERMEDIATE,
 			})
 			.addComponent(RotationComponent, {
-				rotation: Math.random() * 360,
+				rotation: rotation,
 			})
 			.addComponent(SelectableComponent)
 			.addComponent(TweenComponent)
@@ -69,7 +72,11 @@ export class EntityFactory {
 				points: Math.round(Math.random() * 10),
 				maxPoints: 10,
 			})
-			.addComponent(AliveComponent);
+			.addComponent(AliveComponent)
+			.addComponent(ColliderComponent, {
+				width: width,
+				height: height,
+			});
 	}
 
 	public static createSelector(world: World, props: ISelectorProps): void {

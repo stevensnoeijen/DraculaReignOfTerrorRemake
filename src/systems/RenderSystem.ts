@@ -57,6 +57,8 @@ export class RenderSystem extends System {
 		// clear canvas
 		this.context.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
+		this.drawGrid();
+
 		const renderables = this.queries.renderables.results.sort(
 			LayerComponentComparator.compare
 		);
@@ -73,6 +75,25 @@ export class RenderSystem extends System {
 				renderers.forEach((renderer) => renderer.render(entity));
 			}
 		});
+	}
+
+	private drawGrid(): void {
+		this.context.strokeStyle = 'gray';
+		this.context.lineWidth = 1;
+		this.context.beginPath();
+		// draw vertical lines
+		for (let x = Constants.UNIT_SIZE; x < Constants.GAME_WIDTH; x += Constants.UNIT_SIZE) {
+			this.context.moveTo(x, 0);
+			this.context.lineTo(x, Constants.GAME_HEIGHT);
+		}
+		// draw horizontal lines
+		for (let y = Constants.UNIT_SIZE; y < Constants.GAME_HEIGHT; y += Constants.UNIT_SIZE) {
+			this.context.moveTo(0, y);
+			this.context.lineTo(Constants.GAME_WIDTH, y);
+		}
+
+		this.context.closePath();
+		this.context.stroke();
 	}
 
 	private getRenderersByEntityComponents(entity: Entity): IRenderer[] {

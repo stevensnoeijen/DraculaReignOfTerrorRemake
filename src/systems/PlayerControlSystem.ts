@@ -1,5 +1,5 @@
 import { SelectorComponent } from '../components/SelectorComponent';
-import { System, World, Attributes, Entity } from 'ecsy';
+import { System, World, Attributes, Entity, SystemQueries } from 'ecsy';
 import { InputHandler } from '../input/InputHandler';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { PositionComponent } from '../components/PositionComponent';
@@ -7,12 +7,15 @@ import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SizeComponent } from '../components/SizeComponent';
 import { EntityHelper } from '../helpers/EntityHelper';
 import { MouseEventAdapter } from '../input/MouseEventAdapter';
-import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
 import { SelectUnitsCommand } from '../input/commands/SelectUnitsCommand';
 import { DeselectUnitsCommand } from '../input/commands/DeselectUnitsCommand';
+import { Grid, PathFinder } from '../helpers/PathFinder';
+import { Constants } from '../Constants';
+import { ColliderComponent } from '../components/ColliderComponent';
+import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
 
 export class PlayerControlSystem extends System {
-	public static queries = {
+	public static queries: SystemQueries = {
 		selectable: {
 			components: [SelectableComponent],
 			listen: {
@@ -22,6 +25,9 @@ export class PlayerControlSystem extends System {
 		selector: {
 			components: [SelectorComponent],
 		},
+		colliders: {
+			components: [ColliderComponent],
+		}
 	};
 
 	private canvas: HTMLCanvasElement;
@@ -162,12 +168,65 @@ export class PlayerControlSystem extends System {
 		visibility.visible = false;
 	}
 
+	/**
+	 * Create grid of the current state of the game,
+	 * used for pathfinding.
+	 */
+	private createGrid(): Grid {
+		// init with default values with map-size
+		const gridWidth = Math.ceil(Constants.GAME_WIDTH / Constants.UNIT_SIZE);
+		const gridHeight = Math.ceil(Constants.GAME_HEIGHT / Constants.UNIT_SIZE);
+		const grid: Grid = Array.from(Array(gridHeight)).map(() => Array.from(Array(gridWidth)).map(() => 0))
+
+		for (const entity of this.queries.colliders.results) {
+			const position = entity.getComponent(PositionComponent);
+			if (!position) {
+				continue;
+			}
+			// ToDo: add later for bigger units
+			// const collider = entity.getComponent(ColliderComponent);
+			// if (!collider) {
+			// 	continue;
+			// }
+
+			const x = Math.floor(position.x / Constants.UNIT_SIZE)
+			const y = Math.floor(position.y / Constants.UNIT_SIZE)
+
+			grid[y][x] = 1;// set position is blocked
+		}
+
+		return grid;
+	}
+
+	private translatePositionToGrid(pos: number): number {
+		return Math.floor(pos / Constants.UNIT_SIZE)
+	}
+
 	private handleRightMouseClick(event: MouseEvent): void {
-		new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
+		const selected = this.getSelected();
+		if (selected.length === 0) {
+			return;
+		}
+		const position = selected[0].getComponent(PositionComponent)!;
+
+		const start = {
+			x: this.translatePositionToGrid(position.x),
+			y: this.translatePositionToGrid(position.y),
+		}
+		const destination = {
+			x: this.translatePositionToGrid(event.offsetX),
+			y: this.translatePositionToGrid(event.offsetY),
+		};
+
+		const grid = this.createGrid();
+		const path = PathFinder.findPath(grid, start, destination);
+		console.log(path);
+
+		// new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
 	}
 
 	private handleLeftMouseDoubleClick(event: MouseEvent): void {
-		new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
+		new MoveUnitsCommand(this.getSelected(), { x: event.offsetX - (event.offsetX % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2), y: event.offsetY - (event.offsetY % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2) }).execute();
 	}
 
 	private selectUnitsInsideSelector(): void {
