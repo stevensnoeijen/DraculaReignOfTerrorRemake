@@ -17,10 +17,12 @@ export class PathAction implements ITweenAction {
     private moves: MoveToAction[];
 
     constructor(private readonly entity: Entity, props: IPathActionProps) {
-        let previousPosition = entity.getComponent(PositionComponent) as IPosition | undefined;
-        if (!previousPosition) {
+        const entityPosition = entity.getComponent(PositionComponent);
+        if (!entityPosition) {
             this.moves = [];
+            return;
         }
+        let previousPosition = { x: entityPosition.x, y: entityPosition.y, };
 
         this.moves = props.path.map((item) => {
             const move = new MoveToAction(this.entity, {
