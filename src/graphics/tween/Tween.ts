@@ -20,10 +20,16 @@ export class Tween {
 	}
 
 	public start(): void {
-		if (this.entity.hasComponent(MovableComponent)) {
-			this.entity.getMutableComponent(MovableComponent)!.moving = true;
+		const movable = this.entity.getMutableComponent(MovableComponent);
+		if (movable) {
+			movable.moving = true;
 		}
-		this.entity.getMutableComponent(TweenComponent)!.tween = this;
+
+		const tween = this.entity.getMutableComponent(TweenComponent);
+		if (!tween) {
+			throw new Error('entity requires TweenComponent to Tween!');
+		}
+		tween.tween = this;
 	}
 
 	public update(delta: number): void {
@@ -35,9 +41,11 @@ export class Tween {
 	}
 
 	public remove(): void {
-		if (this.entity.hasComponent(MovableComponent)) {
-			this.entity.getMutableComponent(MovableComponent)!.moving = false;
+		const movable = this.entity.getMutableComponent(MovableComponent);
+		if (movable) {
+			movable.moving = false;
 		}
-		this.entity.getMutableComponent(TweenComponent)!.tween = undefined;
+
+		this.entity.getMutableComponent(TweenComponent)!.tween = null;
 	}
 }

@@ -12,7 +12,7 @@ export class TweenSystem extends System {
 	public execute(delta: number, time: number): void {
 		for (const entity of this.queries.tweenable.results) {
 			const tweenable = entity.getComponent(TweenComponent);
-			if (tweenable && tweenable.tween) {
+			if (tweenable && tweenable.tween !== null) {
 				tweenable.tween.update(delta);
 			}
 		}
