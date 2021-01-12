@@ -26,22 +26,26 @@ export class MoveToAction implements ITweenAction {
     private _done = false;
 
     constructor(private readonly entity: Entity, props: IMoveToActionProps) {
+        this.destination = props.destination;
+        this.duration = props.duration || 0;
+
         if (props.startPosition) {
             this.startPosition = props.startPosition;
         } else {
             const position = this.entity.getComponent(PositionComponent);
             if (!position) {
+                this.startPosition = {
+                    x: 0,
+                    y: 0,
+                };
                 this._done = true;
-                return;
+            } else {
+                this.startPosition = {
+                    x: position.x,
+                    y: position.y,
+                };
             }
-            this.startPosition = {
-                x: position.x,
-                y: position.y,
-            };
         }
-
-        this.destination = props.destination;
-        this.duration = props.duration || 0;
     }
 
     public update(delta: number): void {
@@ -61,17 +65,21 @@ export class MoveToAction implements ITweenAction {
     }
 
     private updatePosition(percentage: number): void {
+        const position = this.entity.getMutableComponent(PositionComponent);
+        if (!position) {
+            // entity has no position anymore, done
+            this._done = true;
+            return;
+        }
+
         if (percentage >= 1) {
             // done, snap to end-position
-            const position = this.entity.getMutableComponent(PositionComponent)!;
             position.x = this.destination.x;
             position.y = this.destination.y;
             this._done = true;
-            console.log('done move to')
         } else {
             // calculate position accoring to the percentage
             if (this.destination.x || this.destination.y) {
-                const position = this.entity.getMutableComponent(PositionComponent)!;
                 this.updateAxis(position, 'x', percentage);
                 this.updateAxis(position, 'y', percentage);
             }
