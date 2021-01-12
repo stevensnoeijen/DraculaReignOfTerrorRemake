@@ -1,5 +1,7 @@
 import { Entity } from 'ecsy';
 import { PositionComponent } from '../../components/PositionComponent';
+import { RotationComponent } from '../../components/RotationComponent';
+import { Direction } from '../../helpers/Direction';
 import { IPosition } from '../IPosition';
 import { ITweenAction } from './ITweenAction';
 
@@ -49,9 +51,16 @@ export class MoveToAction implements ITweenAction {
     }
 
     public update(delta: number): void {
+        const firstFrame = 0 === this.elapsedTime;
         this.elapsedTime += delta;
         if (this.done) {
             return;
+        }
+        if (firstFrame) {
+            const rotation = this.entity.getMutableComponent(RotationComponent);
+            if (rotation) {
+                rotation.rotation = Direction.calculateDirection(this.startPosition.x, this.startPosition.y, this.destination.x, this.destination.y) - 90;
+            }
         }
 
         // calculate percentage done of the animation

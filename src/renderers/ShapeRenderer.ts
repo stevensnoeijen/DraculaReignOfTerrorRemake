@@ -59,6 +59,14 @@ export class ShapeRenderer implements IRenderer {
 		this.context.arc(0, 0, 1, 0, 2 * Math.PI, true);
 		this.context.closePath();
 		this.context.fill();
+		// draw direction line
+		this.context.strokeStyle = 'green';
+		this.context.lineWidth = 1;
+		this.context.beginPath();
+		this.context.moveTo(0, 0);
+		this.context.lineTo(0, 5);
+		this.context.closePath();
+		this.context.stroke();
 
 		if (rotation) {
 			this.context.rotate(0 * Math.PI / 180);// reset rotate

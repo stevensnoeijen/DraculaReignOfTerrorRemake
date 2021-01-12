@@ -1,7 +1,5 @@
 import { Component, Types } from 'ecsy';
 
-type AliveStatus = 'alive' | 'dead';
-
 export interface IAliveComponentProps {
     alive?: boolean;
 }
