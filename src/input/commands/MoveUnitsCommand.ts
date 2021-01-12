@@ -1,36 +1,21 @@
-import { Entity } from 'ecsy';
-import { PositionComponent } from '../../components/PositionComponent';
-import { EntityHelper } from '../../helpers/EntityHelper';
 import { Tween } from '../../graphics/tween/Tween';
 import { ICommand } from './ICommand';
+import { Path } from '../../helpers/PathFinder';
+import { Entity } from 'ecsy';
 
 type Destination = { x: number; y: number };
 
 export class MoveUnitsCommand implements ICommand {
-    constructor(private readonly entities: Entity[], private readonly destination: Destination) {
+    constructor(private readonly movements: { entity: Entity, path: Path, duration: number }[]) {
 
     }
 
     public execute(): void {
-        this.entities.forEach((entity) => {
-            const position = entity.getComponent(PositionComponent);
-            if (!position) {
-                return;
-            }
-
-            const distance = EntityHelper.distance(position, {
-                x: this.destination.x,
-                y: this.destination.y,
-            });
-
-            Tween.target(entity).moveTo({
-                destination: {
-                    x: this.destination.x,
-                    y: this.destination.y,
-                },
-                duration: 250,
+        this.movements.forEach((movement) => {
+            Tween.target(movement.entity).path({
+                path: movement.path,
+                duration: movement.duration,
             }).start();
         });
     }
-
 }

@@ -9,11 +9,10 @@ import { EntityHelper } from '../helpers/EntityHelper';
 import { MouseEventAdapter } from '../input/MouseEventAdapter';
 import { SelectUnitsCommand } from '../input/commands/SelectUnitsCommand';
 import { DeselectUnitsCommand } from '../input/commands/DeselectUnitsCommand';
-import { Grid, PathFinder } from '../helpers/PathFinder';
+import { Grid, Path, PathFinder } from '../helpers/PathFinder';
 import { Constants } from '../Constants';
 import { ColliderComponent } from '../components/ColliderComponent';
 import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
-import { Tween } from '../graphics/tween/Tween';
 
 export class PlayerControlSystem extends System {
 	public static queries: SystemQueries = {
@@ -208,46 +207,53 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleRightMouseClick(event: MouseEvent): void {
+		this.moveUnitsTo(event);
+	}
+
+	private handleLeftMouseDoubleClick(event: MouseEvent): void {
+		this.moveUnitsTo(event);
+	}
+
+	private moveUnitsTo(event: MouseEvent): void {
 		const selected = this.getSelected();
 		if (selected.length === 0) {
 			return;
 		}
 
-		// TODO: move this to Command
-		const position = selected[0].getComponent(PositionComponent)!;
-
-		const start = {
-			x: this.translatePositionToGrid(position.x),
-			y: this.translatePositionToGrid(position.y),
-		}
-		const destination = {
-			x: this.translatePositionToGrid(event.offsetX),
-			y: this.translatePositionToGrid(event.offsetY),
-		};
-
 		const grid = this.createGrid();
-		const path = PathFinder.findPath(grid, start, destination).map((item) => ({
-			x: this.translateGridToPosition(item.x),
-			y: this.translateGridToPosition(item.y),
-		}));
+		const movements = selected.map((entity) => {
+			const position = entity.getComponent(PositionComponent);
+			if (!position) {
+				return null;
+			}
 
-		console.log(path);
+			const start = {
+				x: this.translatePositionToGrid(position.x),
+				y: this.translatePositionToGrid(position.y),
+			}
+			const destination = {
+				x: this.translatePositionToGrid(event.offsetX),
+				y: this.translatePositionToGrid(event.offsetY),
+			};
 
-		const distance = EntityHelper.distance(position, {
-			x: this.translateGridToPosition(destination.x),
-			y: this.translateGridToPosition(destination.y),
-		});
+			const path = PathFinder.findPath(grid, start, destination).map((item) => ({
+				x: this.translateGridToPosition(item.x),
+				y: this.translateGridToPosition(item.y),
+			}));
 
-		Tween.target(selected[0]).path({
-			path: path,
-			duration: distance / Constants.UNIT_SIZE * Constants.ANIMATION_UNIT_SPEED,
-		}).start();
+			const distance = EntityHelper.distance(position, {
+				x: this.translateGridToPosition(destination.x),
+				y: this.translateGridToPosition(destination.y),
+			});
 
-		// new MoveUnitsCommand(this.getSelected(), { x: event.offsetX, y: event.offsetY }).execute();
-	}
+			return {
+				entity: entity,
+				path: path,
+				duration: distance / Constants.UNIT_SIZE * Constants.ANIMATION_UNIT_SPEED,
+			};
+		}).filter(Boolean) as { entity: Entity, path: Path, duration: number }[];// filter null values
 
-	private handleLeftMouseDoubleClick(event: MouseEvent): void {
-		new MoveUnitsCommand(this.getSelected(), { x: event.offsetX - (event.offsetX % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2), y: event.offsetY - (event.offsetY % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2) }).execute();
+		new MoveUnitsCommand(movements).execute();
 	}
 
 	private selectUnitsInsideSelector(): void {

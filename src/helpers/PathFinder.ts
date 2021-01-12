@@ -6,8 +6,10 @@ export type GridPosition = {
 
 export type Grid = number[][];
 
+export type Path = GridPosition[];
+
 export class PathFinder {
-    public static findPath(grid: Grid, start: GridPosition, destination: GridPosition): GridPosition[] {
+    public static findPath(grid: Grid, start: GridPosition, destination: GridPosition): Path {
         const path: GridPosition[] = [];
 
         const xDiff = destination.x - start.x;
