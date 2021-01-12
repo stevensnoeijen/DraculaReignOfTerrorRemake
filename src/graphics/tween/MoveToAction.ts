@@ -57,10 +57,7 @@ export class MoveToAction implements ITweenAction {
             return;
         }
         if (firstFrame) {
-            const rotation = this.entity.getMutableComponent(RotationComponent);
-            if (rotation) {
-                rotation.rotation = Direction.calculateDirection(this.startPosition.x, this.startPosition.y, this.destination.x, this.destination.y) - 90;
-            }
+            this.setRotation();
         }
 
         // calculate percentage done of the animation
@@ -71,6 +68,13 @@ export class MoveToAction implements ITweenAction {
 
     public get done(): boolean {
         return this._done;
+    }
+
+    private setRotation(): void {
+        const rotation = this.entity.getMutableComponent(RotationComponent);
+        if (rotation) {
+            rotation.rotation = Direction.calculateDirection(this.startPosition.x, this.startPosition.y, this.destination.x, this.destination.y) - 90;
+        }
     }
 
     private updatePosition(percentage: number): void {

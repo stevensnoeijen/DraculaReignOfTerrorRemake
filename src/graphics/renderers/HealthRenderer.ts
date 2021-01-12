@@ -1,8 +1,8 @@
 import { Entity } from 'ecsy';
-import { HealthComponent } from '../components/HealthComponent';
-import { PositionComponent } from '../components/PositionComponent';
-import { SelectableComponent } from '../components/SelectableComponent';
-import { SizeComponent } from '../components/SizeComponent';
+import { HealthComponent } from '../../components/HealthComponent';
+import { PositionComponent } from '../../components/PositionComponent';
+import { SelectableComponent } from '../../components/SelectableComponent';
+import { SizeComponent } from '../../components/SizeComponent';
 import { IRenderer } from './IRenderer';
 
 export class HealthRenderer implements IRenderer {

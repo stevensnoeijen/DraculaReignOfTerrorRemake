@@ -1,7 +1,7 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../components/PositionComponent';
-import { SelectableComponent } from '../components/SelectableComponent';
-import { SizeComponent } from '../components/SizeComponent';
+import { PositionComponent } from '../../components/PositionComponent';
+import { SelectableComponent } from '../../components/SelectableComponent';
+import { SizeComponent } from '../../components/SizeComponent';
 import { IRenderer } from './IRenderer';
 
 export class SelectionRenderer implements IRenderer {

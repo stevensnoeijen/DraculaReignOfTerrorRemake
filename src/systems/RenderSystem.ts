@@ -3,14 +3,14 @@ import { Constants } from '../Constants';
 import { System, World, Attributes, Entity, Component } from 'ecsy';
 import { RenderComponent } from '../components/RenderComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
-import { ShapeRenderer } from '../renderers/ShapeRenderer';
-import { TextRenderer } from '../renderers/TextRenderer';
-import { IRenderer } from '../renderers/IRenderer';
+import { ShapeRenderer } from '../graphics/renderers/ShapeRenderer';
+import { TextRenderer } from '../graphics/renderers/TextRenderer';
+import { IRenderer } from '../graphics/renderers/IRenderer';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
-import { SelectionRenderer } from '../renderers/SelectionRenderer';
+import { SelectionRenderer } from '../graphics/renderers/SelectionRenderer';
 import { HealthComponent } from '../components/HealthComponent';
-import { HealthRenderer } from '../renderers/HealthRenderer';
+import { HealthRenderer } from '../graphics/renderers/HealthRenderer';
 import { LayerComponentComparator } from '../helpers/LayerComponentComparator';
 
 type ComponentRenderer = {

@@ -1,8 +1,8 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../components/PositionComponent';
-import { RotationComponent } from '../components/RotationComponent';
-import { ShapeComponent } from '../components/ShapeComponent';
-import { SizeComponent } from '../components/SizeComponent';
+import { PositionComponent } from '../../components/PositionComponent';
+import { RotationComponent } from '../../components/RotationComponent';
+import { ShapeComponent } from '../../components/ShapeComponent';
+import { SizeComponent } from '../../components/SizeComponent';
 import { IRenderer } from './IRenderer';
 
 export class ShapeRenderer implements IRenderer {
