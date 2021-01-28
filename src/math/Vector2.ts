@@ -29,34 +29,6 @@ export class Vector2 {
         return Math.sqrt(Math.pow(to.x - from.x, 2) + Math.pow(to.y - from.y, 2));
     }
 
-    public static subtracts(vector: Vector2, subtractor: Vector2): Vector2 {
-        return new Vector2({
-            x: vector.x - subtractor.x,
-            y: vector.y - subtractor.y,
-        });
-    }
-
-    public static multiplies(a: Vector2, multiplier: number): Vector2 {
-        return new Vector2({
-            x: a.x * multiplier,
-            y: a.y * multiplier,
-        });
-    }
-
-    public static divides(a: Vector2, devider: number): Vector2 {
-        return new Vector2({
-            x: a.x / devider,
-            y: a.y / devider,
-        });
-    }
-
-    public static adds(a: Vector2, b: Vector2): Vector2 {
-        return new Vector2({
-            x: a.x + b.x,
-            y: a.y + b.y,
-        });
-    }
-
     public static scale(a: Vector2, b: Vector2): Vector2 {
         return new Vector2({
             x: a.x * b.x,
@@ -94,6 +66,34 @@ export class Vector2 {
         return new Vector2({
             x: from.x * (1 - percentage) + to.x * percentage,
             y: from.y * (1 - percentage) + to.y * percentage,
+        });
+    }
+
+    public static subtracts(vector: Vector2, subtractor: Vector2): Vector2 {
+        return new Vector2({
+            x: vector.x - subtractor.x,
+            y: vector.y - subtractor.y,
+        });
+    }
+
+    public static multiplies(a: Vector2, multiplier: number): Vector2 {
+        return new Vector2({
+            x: a.x * multiplier,
+            y: a.y * multiplier,
+        });
+    }
+
+    public static divides(a: Vector2, devider: number): Vector2 {
+        return new Vector2({
+            x: a.x / devider,
+            y: a.y / devider,
+        });
+    }
+
+    public static adds(a: Vector2, b: Vector2): Vector2 {
+        return new Vector2({
+            x: a.x + b.x,
+            y: a.y + b.y,
         });
     }
 

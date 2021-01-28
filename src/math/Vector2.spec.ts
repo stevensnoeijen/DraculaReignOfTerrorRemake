@@ -108,4 +108,47 @@ describe('Vector2', () => {
             expect(Vector2.angle(new Vector2({ x: 0, y: 0 }), new Vector2({ x: -1, y: -1 }))).toEqual(-135);
         });
     });
+    describe('scale', () => {
+        test('simple', () => {
+            expect(Vector2.scale(new Vector2({ x: 2, y: 2 }), new Vector2({ x: 2, y: 2 }))).toEqual({ x: 4, y: 4, });
+        });
+    });
+    describe('min', () => {
+        test('simple', () => {
+            expect(Vector2.min(new Vector2({ x: 1, y: 2 }), new Vector2({ x: 2, y: 1 }))).toEqual({ x: 1, y: 1, });
+        });
+    });
+    describe('max', () => {
+        test('simple', () => {
+            expect(Vector2.max(new Vector2({ x: 1, y: 2 }), new Vector2({ x: 2, y: 1 }))).toEqual({ x: 2, y: 2, });
+        });
+    });
+    describe('subtracts', () => {
+        test('simple', () => {
+            expect(Vector2.subtracts(new Vector2({ x: 1, y: 1 }), new Vector2({ x: 1, y: 1 }))).toEqual({ x: 0, y: 0, });
+        });
+    });
+    describe('multiplies', () => {
+        test('simple', () => {
+            expect(Vector2.multiplies(new Vector2({ x: 1, y: 1 }), 2)).toEqual({ x: 2, y: 2, });
+        });
+    });
+    describe('divides', () => {
+        test('simple', () => {
+            expect(Vector2.divides(new Vector2({ x: 2, y: 2 }), 2)).toEqual({ x: 1, y: 1, });
+        });
+    });
+    describe('adds', () => {
+        test('simple', () => {
+            expect(Vector2.subtracts(new Vector2({ x: 1, y: 1 }), new Vector2({ x: 1, y: 1 }))).toEqual({ x: 2, y: 2, });
+        });
+    });
+    describe('equals', () => {
+        test('false', () => {
+            expect(new Vector2({ x: 1, y: 1 }).equals(new Vector2({ x: 2, y: 2 }))).toBe(false);
+        });
+        test('true', () => {
+            expect(new Vector2({ x: 1, y: 1 }).equals(new Vector2({ x: 1, y: 1 }))).toBe(true);
+        });
+    });
 });
