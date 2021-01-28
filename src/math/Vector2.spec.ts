@@ -65,6 +65,20 @@ describe('Vector2', () => {
             expect(Vector2.distance(a, b)).toBeCloseTo(1.41);
         });
     });
+    describe('lerp', () => {
+        test('simple', () => {
+            const a = new Vector2({
+                x: 0,
+                y: 0,
+            });
+            const b = new Vector2({
+                x: 1,
+                y: 0,
+            });
+
+            expect(Vector2.lerp(a, b, .5)).toEqual({ x: .5, y: 0 });
+        });
+    });
     describe('angle', () => {
         test('same location', () => {
             expect(Vector2.angle(new Vector2({ x: 0, y: 0 }), new Vector2({ x: 0, y: 0 }))).toEqual(0);
@@ -93,5 +107,5 @@ describe('Vector2', () => {
         test('left-above', () => {
             expect(Vector2.angle(new Vector2({ x: 0, y: 0 }), new Vector2({ x: -1, y: -1 }))).toEqual(-135);
         });
-    })
+    });
 });

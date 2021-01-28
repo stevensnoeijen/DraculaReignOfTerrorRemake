@@ -90,6 +90,13 @@ export class Vector2 {
         });
     }
 
+    public static lerp(from: Vector2, to: Vector2, percentage: number): Vector2 {
+        return new Vector2({
+            x: from.x * (1 - percentage) + to.x * percentage,
+            y: from.y * (1 - percentage) + to.y * percentage,
+        });
+    }
+
     /**
      * @returns {number} length of the vector
      */
