@@ -20,6 +20,7 @@ import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { ColliderComponent } from './components/ColliderComponent';
+import { Vector2 } from './math/Vector2';
 
 interface IUnitProps {
 	position: PositionComponentProps;
@@ -52,8 +53,10 @@ export class EntityFactory {
 				renderOrigin: 'center',
 			})
 			.addComponent(PositionComponent, {
-				x: props.position.x,
-				y: props.position.y,
+				position: new Vector2({
+					x: props.position.position.x,
+					y: props.position.position.y,
+				}),
 			})
 			.addComponent(SizeComponent, {
 				width: width,
@@ -90,8 +93,10 @@ export class EntityFactory {
 			})
 			.addComponent(RenderComponent)
 			.addComponent(PositionComponent, {
-				x: props.position.x,
-				y: props.position.y,
+				position: new Vector2({
+					x: props.position.position.x,
+					y: props.position.position.y,
+				}),
 			})
 			.addComponent(SizeComponent, {
 				width: 100,
@@ -116,7 +121,12 @@ export class EntityFactory {
 				color: '#FFF',
 			})
 			.addComponent(FpsComponent)
-			.addComponent(PositionComponent, props.position)
+			.addComponent(PositionComponent, {
+				position: new Vector2({
+					x: props.position.position.x,
+					y: props.position.position.y,
+				}),
+			})
 			.addComponent(LayerComponent, {
 				layer: Constants.LAYER_FOREGROUND,
 			});

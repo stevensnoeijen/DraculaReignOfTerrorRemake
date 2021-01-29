@@ -43,8 +43,8 @@ export class MoveToAction implements ITweenAction {
                 this._done = true;
             } else {
                 this.startPosition = {
-                    x: position.x,
-                    y: position.y,
+                    x: position.position.x,
+                    y: position.position.y,
                 };
             }
         }
@@ -87,8 +87,8 @@ export class MoveToAction implements ITweenAction {
 
         if (percentage >= 1) {
             // done, snap to end-position
-            position.x = this.destination.x;
-            position.y = this.destination.y;
+            position.position.x = this.destination.x;
+            position.position.y = this.destination.y;
             this._done = true;
         } else {
             // calculate position accoring to the percentage
@@ -105,6 +105,6 @@ export class MoveToAction implements ITweenAction {
         percentage: number
     ): void {
         const length = this.destination[axis] - this.startPosition[axis];
-        position[axis] = this.startPosition[axis] + length * percentage;
+        position.position[axis] = this.startPosition[axis] + length * percentage;
     }
 }

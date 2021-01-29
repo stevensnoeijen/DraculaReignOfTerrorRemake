@@ -1,16 +1,14 @@
 import { Component, Types } from 'ecsy';
+import { Vector2 } from '../math/Vector2';
 
 export interface PositionComponentProps {
-	x: number;
-	y: number;
+	position: Vector2;
 }
 
 export class PositionComponent extends Component<PositionComponentProps> {
-	public x: number;
-	public y: number;
+	public position: Vector2;
 }
 
 PositionComponent.schema = {
-	x: { type: Types.Number },
-	y: { type: Types.Number },
+	position: { type: Types.JSON },
 };

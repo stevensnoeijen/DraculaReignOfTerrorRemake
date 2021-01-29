@@ -25,7 +25,7 @@ export class SelectionRenderer implements IRenderer {
             return;
         }
 
-        this.context.translate(position.x, position.y);
+        this.context.translate(position.position.x, position.position.y);
 
         this.context.lineWidth = 1;
         this.context.strokeStyle = '#000';

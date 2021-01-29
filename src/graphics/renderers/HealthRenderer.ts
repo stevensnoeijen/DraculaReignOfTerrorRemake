@@ -26,7 +26,7 @@ export class HealthRenderer implements IRenderer {
             return;
         }
 
-        this.context.translate(position.x, position.y + size.height - 5);
+        this.context.translate(position.position.x, position.position.y + size.height - 5);
 
         const healthbarProps = {
             x: -(size.width / 2),

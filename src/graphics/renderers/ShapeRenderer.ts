@@ -31,7 +31,7 @@ export class ShapeRenderer implements IRenderer {
 	): void {
 		this.context.beginPath();
 
-		this.context.translate(position.x, position.y);
+		this.context.translate(position.position.x, position.position.y);
 
 		if (rotation) {
 			this.context.rotate(rotation.rotation * Math.PI / 180);

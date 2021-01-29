@@ -22,7 +22,7 @@ export class PathAction implements ITweenAction {
             this.moves = [];
             return;
         }
-        let previousPosition = { x: entityPosition.x, y: entityPosition.y, };
+        let previousPosition = { x: entityPosition.position.x, y: entityPosition.position.y, };
 
         this.moves = props.path.map((item) => {
             const move = new MoveToAction(this.entity, {

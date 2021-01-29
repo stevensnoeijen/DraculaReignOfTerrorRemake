@@ -29,10 +29,10 @@ export class EntityHelper {
 		}
 
 		return (
-			x >= position.x &&
-			x <= position.x + size.width + (options?.offsetWidth || 0) &&
-			y >= position.y &&
-			y <= position.y + size.height + (options?.offsetHeight || 0)
+			x >= position.position.x &&
+			x <= position.position.x + size.width + (options?.offsetWidth || 0) &&
+			y >= position.position.y &&
+			y <= position.position.y + size.height + (options?.offsetHeight || 0)
 		);
 	}
 
@@ -63,10 +63,10 @@ export class EntityHelper {
 		}
 
 		return (
-			objectPosition.x >= containerPosition.x &&
-			objectPosition.x <= containerPosition.x + containerSize.width &&
-			objectPosition.y >= containerPosition.y &&
-			objectPosition.y <= containerPosition.y + containerSize.height
+			objectPosition.position.x >= containerPosition.position.x &&
+			objectPosition.position.x <= containerPosition.position.x + containerSize.width &&
+			objectPosition.position.y >= containerPosition.position.y &&
+			objectPosition.position.y <= containerPosition.position.y + containerSize.height
 		);
 	}
 

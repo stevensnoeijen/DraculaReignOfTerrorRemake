@@ -25,6 +25,7 @@ import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
 import { AliveSystem } from './systems/AliveSystem';
 import { ColliderComponent } from './components/ColliderComponent';
+import { Vector2 } from './math/Vector2';
 
 type AppProps = {};
 
@@ -72,15 +73,19 @@ export default class App extends Component<AppProps> {
 		// add selector
 		EntityFactory.createSelector(this.world, {
 			position: {
-				x: 100,
-				y: 100,
+				position: new Vector2({
+					x: 100,
+					y: 100,
+				}),
 			},
 		});
 
 		EntityFactory.createFpsCouter(this.world, {
 			position: {
-				x: Constants.GAME_WIDTH - 25,
-				y: 20,
+				position: new Vector2({
+					x: Constants.GAME_WIDTH - 25,
+					y: 20,
+				}),
 			},
 		});
 
@@ -103,7 +108,12 @@ export default class App extends Component<AppProps> {
 			y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
 
 			EntityFactory.createUnit(this.world, {
-				position: { x: x, y: y },
+				position: {
+					position: new Vector2({
+						x: x,
+						y: y
+					}),
+				},
 				color: 'red',
 			});
 		});

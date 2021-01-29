@@ -13,6 +13,7 @@ import { Grid, Path, PathFinder } from '../helpers/PathFinder';
 import { Constants } from '../Constants';
 import { ColliderComponent } from '../components/ColliderComponent';
 import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
+import { Vector2 } from '../math/Vector2';
 
 export class PlayerControlSystem extends System {
 	public static queries: SystemQueries = {
@@ -114,8 +115,10 @@ export class PlayerControlSystem extends System {
 			return;
 		}
 
-		position.x = event.offsetX;
-		position.y = event.offsetY;
+		position.position = new Vector2({
+			x: event.offsetX,
+			y: event.offsetY,
+		});
 
 		const size = selector.getMutableComponent(SizeComponent);
 		if (undefined === size) {
@@ -139,8 +142,8 @@ export class PlayerControlSystem extends System {
 			return;
 		}
 
-		const width = event.offsetX - position.x;
-		const height = event.offsetY - position.y;
+		const width = event.offsetX - position.position.x;
+		const height = event.offsetY - position.position.y;
 
 		const size = selector.getMutableComponent(SizeComponent);
 		if (!size) {
@@ -189,8 +192,8 @@ export class PlayerControlSystem extends System {
 			// 	continue;
 			// }
 
-			const x = Math.floor(position.x / Constants.UNIT_SIZE)
-			const y = Math.floor(position.y / Constants.UNIT_SIZE)
+			const x = Math.floor(position.position.x / Constants.UNIT_SIZE)
+			const y = Math.floor(position.position.y / Constants.UNIT_SIZE)
 
 			grid[y][x] = 1;// set position is blocked
 		}
@@ -228,8 +231,8 @@ export class PlayerControlSystem extends System {
 			}
 
 			const start = {
-				x: this.translatePositionToGrid(position.x),
-				y: this.translatePositionToGrid(position.y),
+				x: this.translatePositionToGrid(position.position.x),
+				y: this.translatePositionToGrid(position.position.y),
 			}
 			const destination = {
 				x: this.translatePositionToGrid(event.offsetX),
@@ -241,7 +244,7 @@ export class PlayerControlSystem extends System {
 				y: this.translateGridToPosition(item.y),
 			}));
 
-			const distance = EntityHelper.distance(position, {
+			const distance = EntityHelper.distance(position.position, {
 				x: this.translateGridToPosition(destination.x),
 				y: this.translateGridToPosition(destination.y),
 			});

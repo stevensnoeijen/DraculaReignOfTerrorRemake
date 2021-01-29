@@ -12,6 +12,6 @@ export class TextRenderer implements IRenderer {
 
 		this.context.font = text.font;
 		this.context.fillStyle = text.color;
-		this.context.fillText(text.text, position.x, position.y);
+		this.context.fillText(text.text, position.position.x, position.position.y);
 	}
 }
