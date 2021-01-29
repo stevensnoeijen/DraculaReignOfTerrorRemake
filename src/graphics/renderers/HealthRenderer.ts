@@ -1,6 +1,6 @@
 import { Entity } from 'ecsy';
 import { HealthComponent } from '../../components/HealthComponent';
-import { PositionComponent } from '../../components/PositionComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { SelectableComponent } from '../../components/SelectableComponent';
 import { SizeComponent } from '../../components/SizeComponent';
 import { IRenderer } from './IRenderer';
@@ -17,8 +17,8 @@ export class HealthRenderer implements IRenderer {
         if (!health) {
             return;
         }
-        const position = entity.getComponent(PositionComponent);
-        if (!position) {
+        const transform = entity.getComponent(TransformComponent);
+        if (!transform) {
             return;
         }
         const size = entity.getComponent(SizeComponent);
@@ -26,7 +26,7 @@ export class HealthRenderer implements IRenderer {
             return;
         }
 
-        this.context.translate(position.position.x, position.position.y + size.height - 5);
+        this.context.translate(transform.position.x, transform.position.y + size.height - 5);
 
         const healthbarProps = {
             x: -(size.width / 2),

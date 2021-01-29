@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../../components/PositionComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { IPosition } from '../IPosition';
 import { ITweenAction } from './ITweenAction';
 import { MoveToAction } from './MoveToAction';
@@ -17,12 +17,12 @@ export class PathAction implements ITweenAction {
     private moves: MoveToAction[];
 
     constructor(private readonly entity: Entity, props: IPathActionProps) {
-        const entityPosition = entity.getComponent(PositionComponent);
-        if (!entityPosition) {
+        const entityTransform = entity.getComponent(TransformComponent);
+        if (!entityTransform) {
             this.moves = [];
             return;
         }
-        let previousPosition = { x: entityPosition.position.x, y: entityPosition.position.y, };
+        let previousPosition = { x: entityTransform.position.x, y: entityTransform.position.y, };
 
         this.moves = props.path.map((item) => {
             const move = new MoveToAction(this.entity, {

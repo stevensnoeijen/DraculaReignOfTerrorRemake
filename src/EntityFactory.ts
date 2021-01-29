@@ -3,9 +3,8 @@ import { MovableComponent } from './components/MovableComponent';
 import { SelectorComponent } from './components/SelectorComponent';
 import { SizeComponent } from './components/SizeComponent';
 import {
-	PositionComponent,
-	PositionComponentProps,
-} from './components/PositionComponent';
+	TransformComponent,
+} from './components/TransformComponent';
 import { Constants } from './Constants';
 import { ShapeComponent } from './components/ShapeComponent';
 import { World } from 'ecsy';
@@ -22,18 +21,20 @@ import { AliveComponent } from './components/AliveComponent';
 import { ColliderComponent } from './components/ColliderComponent';
 import { Vector2 } from './math/Vector2';
 
+type Position = { x: number, y: number };
+
 interface IUnitProps {
-	position: PositionComponentProps;
+	position: Position;
 	color: 'red' | 'blue';
 }
 
 interface ISelectorProps {
-	position: PositionComponentProps;
+	position: Position;
 	static?: boolean;
 }
 
 interface IFpsCounterProps {
-	position: PositionComponentProps;
+	position: Position;
 }
 
 export class EntityFactory {
@@ -52,10 +53,10 @@ export class EntityFactory {
 				fillStyle: color.hex(),
 				renderOrigin: 'center',
 			})
-			.addComponent(PositionComponent, {
+			.addComponent(TransformComponent, {
 				position: new Vector2({
-					x: props.position.position.x,
-					y: props.position.position.y,
+					x: props.position.x,
+					y: props.position.y,
 				}),
 			})
 			.addComponent(SizeComponent, {
@@ -92,10 +93,10 @@ export class EntityFactory {
 				renderOrigin: 'topleft',
 			})
 			.addComponent(RenderComponent)
-			.addComponent(PositionComponent, {
+			.addComponent(TransformComponent, {
 				position: new Vector2({
-					x: props.position.position.x,
-					y: props.position.position.y,
+					x: props.position.x,
+					y: props.position.y,
 				}),
 			})
 			.addComponent(SizeComponent, {
@@ -121,10 +122,10 @@ export class EntityFactory {
 				color: '#FFF',
 			})
 			.addComponent(FpsComponent)
-			.addComponent(PositionComponent, {
+			.addComponent(TransformComponent, {
 				position: new Vector2({
-					x: props.position.position.x,
-					y: props.position.position.y,
+					x: props.position.x,
+					y: props.position.y,
 				}),
 			})
 			.addComponent(LayerComponent, {

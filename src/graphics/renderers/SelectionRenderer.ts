@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../../components/PositionComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { SelectableComponent } from '../../components/SelectableComponent';
 import { SizeComponent } from '../../components/SizeComponent';
 import { IRenderer } from './IRenderer';
@@ -16,8 +16,8 @@ export class SelectionRenderer implements IRenderer {
             return;
         }
 
-        const position = entity.getComponent(PositionComponent);
-        if (!position) {
+        const transform = entity.getComponent(TransformComponent);
+        if (!transform) {
             return;
         }
         const size = entity.getComponent(SizeComponent);
@@ -25,7 +25,7 @@ export class SelectionRenderer implements IRenderer {
             return;
         }
 
-        this.context.translate(position.position.x, position.position.y);
+        this.context.translate(transform.position.x, transform.position.y);
 
         this.context.lineWidth = 1;
         this.context.strokeStyle = '#000';

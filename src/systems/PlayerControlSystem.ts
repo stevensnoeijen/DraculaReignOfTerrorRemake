@@ -2,7 +2,7 @@ import { SelectorComponent } from '../components/SelectorComponent';
 import { System, World, Attributes, Entity, SystemQueries } from 'ecsy';
 import { InputHandler } from '../input/InputHandler';
 import { SelectableComponent } from '../components/SelectableComponent';
-import { PositionComponent } from '../components/PositionComponent';
+import { TransformComponent } from '../components/TransformComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SizeComponent } from '../components/SizeComponent';
 import { EntityHelper } from '../helpers/EntityHelper';
@@ -110,12 +110,12 @@ export class PlayerControlSystem extends System {
 
 	private handleLeftMouseDragStart(event: MouseEvent): void {
 		const selector = this.getSelector();
-		const position = selector.getMutableComponent(PositionComponent);
-		if (undefined === position) {
+		const transform = selector.getMutableComponent(TransformComponent);
+		if (undefined === transform) {
 			return;
 		}
 
-		position.position = new Vector2({
+		transform.position = new Vector2({
 			x: event.offsetX,
 			y: event.offsetY,
 		});
@@ -137,13 +137,13 @@ export class PlayerControlSystem extends System {
 
 	private handleLeftMouseDragMove(event: MouseEvent): void {
 		const selector = this.getSelector();
-		const position = selector.getComponent(PositionComponent);
-		if (!position) {
+		const transform = selector.getComponent(TransformComponent);
+		if (!transform) {
 			return;
 		}
 
-		const width = event.offsetX - position.position.x;
-		const height = event.offsetY - position.position.y;
+		const width = event.offsetX - transform.position.x;
+		const height = event.offsetY - transform.position.y;
 
 		const size = selector.getMutableComponent(SizeComponent);
 		if (!size) {
@@ -174,6 +174,8 @@ export class PlayerControlSystem extends System {
 	/**
 	 * Create grid of the current state of the game,
 	 * used for pathfinding.
+	 * 
+	 * @returns {Grid}
 	 */
 	private createGrid(): Grid {
 		// init with default values with map-size
@@ -182,8 +184,8 @@ export class PlayerControlSystem extends System {
 		const grid: Grid = Array.from(Array(gridHeight)).map(() => Array.from(Array(gridWidth)).map(() => 0))
 
 		for (const entity of this.queries.colliders.results) {
-			const position = entity.getComponent(PositionComponent);
-			if (!position) {
+			const transform = entity.getComponent(TransformComponent);
+			if (!transform) {
 				continue;
 			}
 			// ToDo: add later for bigger units
@@ -192,8 +194,8 @@ export class PlayerControlSystem extends System {
 			// 	continue;
 			// }
 
-			const x = Math.floor(position.position.x / Constants.UNIT_SIZE)
-			const y = Math.floor(position.position.y / Constants.UNIT_SIZE)
+			const x = Math.floor(transform.position.x / Constants.UNIT_SIZE)
+			const y = Math.floor(transform.position.y / Constants.UNIT_SIZE)
 
 			grid[y][x] = 1;// set position is blocked
 		}
@@ -225,14 +227,14 @@ export class PlayerControlSystem extends System {
 
 		const grid = this.createGrid();
 		const movements = selected.map((entity) => {
-			const position = entity.getComponent(PositionComponent);
-			if (!position) {
+			const transform = entity.getComponent(TransformComponent);
+			if (!transform) {
 				return null;
 			}
 
 			const start = {
-				x: this.translatePositionToGrid(position.position.x),
-				y: this.translatePositionToGrid(position.position.y),
+				x: this.translatePositionToGrid(transform.position.x),
+				y: this.translatePositionToGrid(transform.position.y),
 			}
 			const destination = {
 				x: this.translatePositionToGrid(event.offsetX),
@@ -244,7 +246,7 @@ export class PlayerControlSystem extends System {
 				y: this.translateGridToPosition(item.y),
 			}));
 
-			const distance = EntityHelper.distance(position.position, {
+			const distance = EntityHelper.distance(transform.position, {
 				x: this.translateGridToPosition(destination.x),
 				y: this.translateGridToPosition(destination.y),
 			});

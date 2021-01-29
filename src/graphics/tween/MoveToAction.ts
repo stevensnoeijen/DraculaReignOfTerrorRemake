@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../../components/PositionComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { RotationComponent } from '../../components/RotationComponent';
 import { Vector2 } from '../../math/Vector2';
 import { IPosition } from '../IPosition';
@@ -34,8 +34,8 @@ export class MoveToAction implements ITweenAction {
         if (props.startPosition) {
             this.startPosition = props.startPosition;
         } else {
-            const position = this.entity.getComponent(PositionComponent);
-            if (!position) {
+            const transform = this.entity.getComponent(TransformComponent);
+            if (!transform) {
                 this.startPosition = {
                     x: 0,
                     y: 0,
@@ -43,8 +43,8 @@ export class MoveToAction implements ITweenAction {
                 this._done = true;
             } else {
                 this.startPosition = {
-                    x: position.position.x,
-                    y: position.position.y,
+                    x: transform.position.x,
+                    y: transform.position.y,
                 };
             }
         }
@@ -78,8 +78,8 @@ export class MoveToAction implements ITweenAction {
     }
 
     private updatePosition(percentage: number): void {
-        const position = this.entity.getMutableComponent(PositionComponent);
-        if (!position) {
+        const transform = this.entity.getMutableComponent(TransformComponent);
+        if (!transform) {
             // entity has no position anymore, done
             this._done = true;
             return;
@@ -87,24 +87,24 @@ export class MoveToAction implements ITweenAction {
 
         if (percentage >= 1) {
             // done, snap to end-position
-            position.position.x = this.destination.x;
-            position.position.y = this.destination.y;
+            transform.position.x = this.destination.x;
+            transform.position.y = this.destination.y;
             this._done = true;
         } else {
             // calculate position accoring to the percentage
             if (this.destination.x || this.destination.y) {
-                this.updateAxis(position, 'x', percentage);
-                this.updateAxis(position, 'y', percentage);
+                this.updateAxis(transform, 'x', percentage);
+                this.updateAxis(transform, 'y', percentage);
             }
         }
     }
 
     private updateAxis(
-        position: PositionComponent,
+        transform: TransformComponent,
         axis: 'x' | 'y',
         percentage: number
     ): void {
         const length = this.destination[axis] - this.startPosition[axis];
-        position.position[axis] = this.startPosition[axis] + length * percentage;
+        transform.position[axis] = this.startPosition[axis] + length * percentage;
     }
 }

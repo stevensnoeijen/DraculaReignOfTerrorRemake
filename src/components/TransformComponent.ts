@@ -1,14 +1,14 @@
 import { Component, Types } from 'ecsy';
 import { Vector2 } from '../math/Vector2';
 
-export interface PositionComponentProps {
+export interface TransformComponentProps {
 	position: Vector2;
 }
 
-export class PositionComponent extends Component<PositionComponentProps> {
+export class TransformComponent extends Component<TransformComponentProps> {
 	public position: Vector2;
 }
 
-PositionComponent.schema = {
+TransformComponent.schema = {
 	position: { type: Types.JSON },
 };

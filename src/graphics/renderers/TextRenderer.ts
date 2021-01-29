@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../../components/PositionComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { TextComponent } from '../../components/TextComponent';
 import { IRenderer } from './IRenderer';
 
@@ -8,10 +8,10 @@ export class TextRenderer implements IRenderer {
 
 	public render(entity: Entity): void {
 		const text = entity.getComponent(TextComponent)!;
-		const position = entity.getComponent(PositionComponent)!;
+		const transform = entity.getComponent(TransformComponent)!;
 
 		this.context.font = text.font;
 		this.context.fillStyle = text.color;
-		this.context.fillText(text.text, position.position.x, position.position.y);
+		this.context.fillText(text.text, transform.position.x, transform.position.y);
 	}
 }

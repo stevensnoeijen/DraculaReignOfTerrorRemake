@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../../components/PositionComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { RotationComponent } from '../../components/RotationComponent';
 import { ShapeComponent } from '../../components/ShapeComponent';
 import { SizeComponent } from '../../components/SizeComponent';
@@ -15,23 +15,23 @@ export class ShapeRenderer implements IRenderer {
 		}
 
 		if (shape.type === 'rectangle') {
-			const position = entity.getComponent(PositionComponent)!;
+			const transform = entity.getComponent(TransformComponent)!;
 			const size = entity.getComponent(SizeComponent)!;
 			const rotation = entity.getComponent(RotationComponent);
 
-			this.renderRectangle(shape, position, size, rotation);
+			this.renderRectangle(shape, transform, size, rotation);
 		}
 	}
 
 	private renderRectangle(
 		shape: ShapeComponent,
-		position: PositionComponent,
+		transform: TransformComponent,
 		size: SizeComponent,
 		rotation?: RotationComponent
 	): void {
 		this.context.beginPath();
 
-		this.context.translate(position.position.x, position.position.y);
+		this.context.translate(transform.position.x, transform.position.y);
 
 		if (rotation) {
 			this.context.rotate(rotation.rotation * Math.PI / 180);

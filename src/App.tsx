@@ -2,7 +2,7 @@ import React, { Component, ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Constants } from './Constants';
 import { World } from 'ecsy';
-import { PositionComponent } from './components/PositionComponent';
+import { TransformComponent } from './components/TransformComponent';
 import { RenderComponent as RenderComponent } from './components/RenderComponent';
 import { SelectableComponent } from './components/SelectableComponent';
 import { RenderSystem } from './systems/RenderSystem';
@@ -25,7 +25,6 @@ import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
 import { AliveSystem } from './systems/AliveSystem';
 import { ColliderComponent } from './components/ColliderComponent';
-import { Vector2 } from './math/Vector2';
 
 type AppProps = {};
 
@@ -47,7 +46,7 @@ export default class App extends Component<AppProps> {
 		this.canvas = canvas;
 
 		this.world
-			.registerComponent(PositionComponent)
+			.registerComponent(TransformComponent)
 			.registerComponent(ShapeComponent)
 			.registerComponent(RenderComponent)
 			.registerComponent(SizeComponent)
@@ -73,19 +72,15 @@ export default class App extends Component<AppProps> {
 		// add selector
 		EntityFactory.createSelector(this.world, {
 			position: {
-				position: new Vector2({
-					x: 100,
-					y: 100,
-				}),
+				x: 100,
+				y: 100,
 			},
 		});
 
 		EntityFactory.createFpsCouter(this.world, {
 			position: {
-				position: new Vector2({
-					x: Constants.GAME_WIDTH - 25,
-					y: 20,
-				}),
+				x: Constants.GAME_WIDTH - 25,
+				y: 20,
 			},
 		});
 
@@ -109,10 +104,8 @@ export default class App extends Component<AppProps> {
 
 			EntityFactory.createUnit(this.world, {
 				position: {
-					position: new Vector2({
-						x: x,
-						y: y
-					}),
+					x: x,
+					y: y
 				},
 				color: 'red',
 			});

@@ -1,5 +1,5 @@
 import { Entity } from 'ecsy';
-import { PositionComponent } from '../components/PositionComponent';
+import { TransformComponent } from '../components/TransformComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { SizeComponent } from '../components/SizeComponent';
 
@@ -20,19 +20,19 @@ export class EntityHelper {
 		y: number,
 		options?: IsInsideOptions
 	): boolean {
-		const position = entity.getComponent(PositionComponent);
+		const transform = entity.getComponent(TransformComponent);
 		const size = entity.getComponent(SizeComponent);
 
-		if (!position || !size) {
+		if (!transform || !size) {
 			// position or/and size isnt set
 			return false;
 		}
 
 		return (
-			x >= position.position.x &&
-			x <= position.position.x + size.width + (options?.offsetWidth || 0) &&
-			y >= position.position.y &&
-			y <= position.position.y + size.height + (options?.offsetHeight || 0)
+			x >= transform.position.x &&
+			x <= transform.position.x + size.width + (options?.offsetWidth || 0) &&
+			y >= transform.position.y &&
+			y <= transform.position.y + size.height + (options?.offsetHeight || 0)
 		);
 	}
 
@@ -48,8 +48,8 @@ export class EntityHelper {
 		object: Entity,
 		container: Entity
 	): boolean {
-		const containerPosition = container.getComponent(PositionComponent);
-		if (!containerPosition) {
+		const containerTransform = container.getComponent(TransformComponent);
+		if (!containerTransform) {
 			return false;
 		}
 		const containerSize = container.getComponent(SizeComponent);
@@ -57,16 +57,16 @@ export class EntityHelper {
 			return false;
 		}
 
-		const objectPosition = object.getComponent(PositionComponent);
-		if (!objectPosition) {
+		const objectTransform = object.getComponent(TransformComponent);
+		if (!objectTransform) {
 			return false;
 		}
 
 		return (
-			objectPosition.position.x >= containerPosition.position.x &&
-			objectPosition.position.x <= containerPosition.position.x + containerSize.width &&
-			objectPosition.position.y >= containerPosition.position.y &&
-			objectPosition.position.y <= containerPosition.position.y + containerSize.height
+			objectTransform.position.x >= containerTransform.position.x &&
+			objectTransform.position.x <= containerTransform.position.x + containerSize.width &&
+			objectTransform.position.y >= containerTransform.position.y &&
+			objectTransform.position.y <= containerTransform.position.y + containerSize.height
 		);
 	}
 
