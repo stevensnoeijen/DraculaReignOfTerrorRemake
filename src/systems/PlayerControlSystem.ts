@@ -246,10 +246,10 @@ export class PlayerControlSystem extends System {
 				y: this.translateGridToPosition(item.y),
 			}));
 
-			const distance = EntityHelper.distance(transform.position, {
+			const distance = Vector2.distance(transform.position, new Vector2({
 				x: this.translateGridToPosition(destination.x),
 				y: this.translateGridToPosition(destination.y),
-			});
+			}));
 
 			return {
 				entity: entity,

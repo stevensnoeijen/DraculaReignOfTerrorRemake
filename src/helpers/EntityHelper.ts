@@ -85,12 +85,4 @@ export class EntityHelper {
 		}
 		selectable.selected = true;
 	}
-
-	public static distance(a: Position, b: Position): number {
-		const dx = a.x - b.x;
-		const dy = a.y - b.y;
-		const dist = Math.sqrt(dx * dx + dy * dy);
-
-		return dist;
-	}
 }
