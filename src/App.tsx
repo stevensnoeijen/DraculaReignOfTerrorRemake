@@ -19,7 +19,6 @@ import { TweenSystem } from './systems/TweenSystem';
 import { MovableComponent } from './components/MovableComponent';
 import { LayerComponent } from './components/LayerComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
-import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
@@ -58,7 +57,6 @@ export default class App extends Component<AppProps> {
 			.registerComponent(LayerComponent)
 			.registerComponent(TweenComponent)
 			.registerComponent(VisibilityComponent)
-			.registerComponent(RotationComponent)
 			.registerComponent(HealthComponent)
 			.registerComponent(AliveComponent)
 			.registerComponent(ColliderComponent)

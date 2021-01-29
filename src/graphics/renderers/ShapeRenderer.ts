@@ -1,6 +1,5 @@
 import { Entity } from 'ecsy';
 import { TransformComponent } from '../../components/TransformComponent';
-import { RotationComponent } from '../../components/RotationComponent';
 import { ShapeComponent } from '../../components/ShapeComponent';
 import { SizeComponent } from '../../components/SizeComponent';
 import { IRenderer } from './IRenderer';
@@ -17,24 +16,22 @@ export class ShapeRenderer implements IRenderer {
 		if (shape.type === 'rectangle') {
 			const transform = entity.getComponent(TransformComponent)!;
 			const size = entity.getComponent(SizeComponent)!;
-			const rotation = entity.getComponent(RotationComponent);
 
-			this.renderRectangle(shape, transform, size, rotation);
+			this.renderRectangle(shape, transform, size);
 		}
 	}
 
 	private renderRectangle(
 		shape: ShapeComponent,
 		transform: TransformComponent,
-		size: SizeComponent,
-		rotation?: RotationComponent
+		size: SizeComponent
 	): void {
 		this.context.beginPath();
 
 		this.context.translate(transform.position.x, transform.position.y);
 
-		if (rotation) {
-			this.context.rotate(rotation.rotation * Math.PI / 180);
+		if (transform.rotation !== 0) {
+			this.context.rotate(transform.rotation * Math.PI / 180);
 		}
 
 		const x = shape.renderOrigin === 'topleft' ? 0 : -(size.width / 2);
@@ -68,7 +65,7 @@ export class ShapeRenderer implements IRenderer {
 		this.context.closePath();
 		this.context.stroke();
 
-		if (rotation) {
+		if (transform.rotation !== 0) {
 			this.context.rotate(0 * Math.PI / 180);// reset rotate
 		}
 

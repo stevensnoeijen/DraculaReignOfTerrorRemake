@@ -15,7 +15,6 @@ import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
 import { SelectableComponent } from './components/SelectableComponent';
-import { RotationComponent } from './components/RotationComponent';
 import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { ColliderComponent } from './components/ColliderComponent';
@@ -58,6 +57,7 @@ export class EntityFactory {
 					x: props.position.x,
 					y: props.position.y,
 				}),
+				rotation: rotation,
 			})
 			.addComponent(SizeComponent, {
 				width: width,
@@ -66,9 +66,6 @@ export class EntityFactory {
 			.addComponent(MovableComponent)
 			.addComponent(LayerComponent, {
 				layer: Constants.LAYER_INTERMEDIATE,
-			})
-			.addComponent(RotationComponent, {
-				rotation: rotation,
 			})
 			.addComponent(SelectableComponent)
 			.addComponent(TweenComponent)

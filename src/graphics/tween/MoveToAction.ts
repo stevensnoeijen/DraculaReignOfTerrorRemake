@@ -1,6 +1,5 @@
 import { Entity } from 'ecsy';
 import { TransformComponent } from '../../components/TransformComponent';
-import { RotationComponent } from '../../components/RotationComponent';
 import { Vector2 } from '../../math/Vector2';
 import { IPosition } from '../IPosition';
 import { ITweenAction } from './ITweenAction';
@@ -71,9 +70,9 @@ export class MoveToAction implements ITweenAction {
     }
 
     private setRotation(): void {
-        const rotation = this.entity.getMutableComponent(RotationComponent);
-        if (rotation) {
-            rotation.rotation = Vector2.angle(new Vector2({ x: this.startPosition.x, y: this.startPosition.y }), new Vector2({ x: this.destination.x, y: this.destination.y })) - 90;
+        const transform = this.entity.getMutableComponent(TransformComponent);
+        if (transform) {
+            transform.rotation = Vector2.angle(new Vector2({ x: this.startPosition.x, y: this.startPosition.y }), new Vector2({ x: this.destination.x, y: this.destination.y })) - 90;
         }
     }
 
