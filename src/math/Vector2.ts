@@ -1,4 +1,4 @@
-interface Vector2Props {
+export interface Vector2Props {
     x: number;
     y: number;
 }
@@ -9,9 +9,9 @@ export class Vector2 {
     public readonly x: number;
     public readonly y: number;
 
-    public constructor(props?: Vector2Props) {
-        this.x = props?.x || 0;
-        this.y = props?.y || 0;
+    public constructor(props: Vector2Props) {
+        this.x = props.x;
+        this.y = props.y;
     }
 
     /**

@@ -8,12 +8,6 @@ describe('Vector2', () => {
         })
     });
     describe('constructor', () => {
-        test('empty', () => {
-            const vector = new Vector2();
-
-            expect(vector.x).toEqual(0);
-            expect(vector.y).toEqual(0);
-        });
         test('set values', () => {
             const vector = new Vector2({
                 x: 100,
