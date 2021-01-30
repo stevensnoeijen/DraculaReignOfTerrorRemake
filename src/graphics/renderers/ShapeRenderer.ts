@@ -66,7 +66,7 @@ export class ShapeRenderer implements IRenderer {
 		this.context.stroke();
 
 		if (transform.rotation !== 0) {
-			this.context.rotate(0 * Math.PI / 180);// reset rotate
+			this.context.rotate(0);// reset rotate
 		}
 
 		this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
