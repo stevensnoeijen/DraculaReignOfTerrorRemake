@@ -1,24 +1,39 @@
+import { Debug } from './Debug';
 import { Vector2 } from './math/Vector2';
 
+export interface GridProps {
+    readonly width: number;
+    readonly height: number;
+    readonly cellSize: number;
+    readonly originPosition: Vector2;
+}
+
 export class Grid {
+    public readonly width!: number;
+    public readonly height!: number;
+    public readonly cellSize!: number;
+    public readonly originPosition!: Vector2;
     private readonly content: number[][];
 
-    constructor(
-        public readonly width: number,
-        public readonly height: number,
-        public readonly cellSize: number,
-        public readonly originPosition: Vector2) {
+    constructor(props: GridProps) {
+        Object.assign(this, props);
 
-        this.content = Array.from({ length: height }).map((yValue, y) => {
-            return Array.from({ length: width }).map((xValue, x) => 0);
-        })
+        this.content = Array.from({ length: this.height }).map((yValue, y) => {
+            return Array.from({ length: this.width }).map((xValue, x) => 0);
+        });
+
+        this.drawDebug();
     }
 
-    public getWorldPosition(x: number, y: number): Vector2 {
-        return Vector2.adds(Vector2.multiplies(new Vector2({
-            x: x,
-            y: y,
-        }), this.cellSize), this.originPosition);
+    private drawDebug(): void {
+        Array.from({ length: this.height + 1 }).forEach((yValue, y) => Debug.drawLine({ start: this.getWorldPosition(0, y), end: this.getWorldPosition(this.width, y) }));
+        Array.from({ length: this.width + 1 }).forEach((xValue, x) => Debug.drawLine({ start: this.getWorldPosition(x, 0), end: this.getWorldPosition(x, this.height) }));
+
+        Array.from({ length: this.height }).forEach((yValue, y) => {
+            Array.from({ length: this.width }).forEach((xValue, x) => {
+
+            }, this);
+        }, this);
     }
 
     private getPosition(worldPosition: Vector2): { x: number; y: number } {
@@ -41,6 +56,14 @@ export class Grid {
             throw new Error(`y must be between 0 and ${this.height}`);
         }
     }
+
+    public getWorldPosition(x: number, y: number): Vector2 {
+        return Vector2.adds(Vector2.multiplies(new Vector2({
+            x: x,
+            y: y,
+        }), this.cellSize), this.originPosition);
+    }
+
 
     public setValue(x: number, y: number, value: number): void;
     public setValue(worldPosition: Vector2, value: number): void

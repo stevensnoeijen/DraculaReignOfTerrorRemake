@@ -12,6 +12,8 @@ import { SelectionRenderer } from '../graphics/renderers/SelectionRenderer';
 import { HealthComponent } from '../components/HealthComponent';
 import { HealthRenderer } from '../graphics/renderers/HealthRenderer';
 import { LayerComponentComparator } from '../helpers/LayerComponentComparator';
+import { DebugComponent } from '../components/DebugComponent';
+import { DebugRenderer } from '../graphics/renderers/DebugRenderer';
 
 type ComponentRenderer = {
 	component: typeof Component;
@@ -50,14 +52,16 @@ export class RenderSystem extends System {
 			component: TextComponent,
 			renderer: new TextRenderer(this.context),
 		});
+		this.componentRenderers.push({
+			component: DebugComponent,
+			renderer: new DebugRenderer(this.context),
+		})
 	}
 
 	// This method will get called on every frame by default
 	public execute(delta: number, time: number): void {
 		// clear canvas
 		this.context.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-
-		this.drawGrid();
 
 		const renderables = this.queries.renderables.results.sort(
 			LayerComponentComparator.compare
@@ -71,29 +75,13 @@ export class RenderSystem extends System {
 			}
 
 			const renderers = this.getRenderersByEntityComponents(entity);
-			if (renderers.length > 0) {
-				renderers.forEach((renderer) => renderer.render(entity));
+			if (renderers.length === 0) {
+				console.warn(`no renderer found for entity #${entity.id}, removing RenderComponent`);
+				entity.removeComponent(RenderComponent);
+				return;
 			}
+			renderers.forEach((renderer) => renderer.render(entity));
 		});
-	}
-
-	private drawGrid(): void {
-		this.context.strokeStyle = 'gray';
-		this.context.lineWidth = 1;
-		this.context.beginPath();
-		// draw vertical lines
-		for (let x = Constants.UNIT_SIZE; x < Constants.GAME_WIDTH; x += Constants.UNIT_SIZE) {
-			this.context.moveTo(x, 0);
-			this.context.lineTo(x, Constants.GAME_HEIGHT);
-		}
-		// draw horizontal lines
-		for (let y = Constants.UNIT_SIZE; y < Constants.GAME_HEIGHT; y += Constants.UNIT_SIZE) {
-			this.context.moveTo(0, y);
-			this.context.lineTo(Constants.GAME_WIDTH, y);
-		}
-
-		this.context.closePath();
-		this.context.stroke();
 	}
 
 	private getRenderersByEntityComponents(entity: Entity): IRenderer[] {

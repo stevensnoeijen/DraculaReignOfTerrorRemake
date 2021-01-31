@@ -4,7 +4,7 @@ export interface Vector2Props {
 }
 
 export class Vector2 {
-    public static ZERO: Vector2 = new Vector2({ x: 0, y: 0, });
+    public static ZERO: Vector2 = Object.seal(new Vector2({ x: 0, y: 0, }));
 
     public readonly x: number;
     public readonly y: number;

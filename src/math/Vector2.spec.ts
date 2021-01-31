@@ -134,7 +134,7 @@ describe('Vector2', () => {
     });
     describe('adds', () => {
         test('simple', () => {
-            expect(Vector2.subtracts(new Vector2({ x: 1, y: 1 }), new Vector2({ x: 1, y: 1 }))).toEqual({ x: 2, y: 2, });
+            expect(Vector2.subtracts(new Vector2({ x: 1, y: 1 }), new Vector2({ x: 1, y: 1 }))).toEqual({ x: 0, y: 0, });
         });
     });
     describe('equals', () => {

@@ -24,6 +24,9 @@ import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
 import { AliveSystem } from './systems/AliveSystem';
 import { ColliderComponent } from './components/ColliderComponent';
+import { Grid } from './Grid';
+import { Vector2 } from './math/Vector2';
+import { DebugComponent } from './components/DebugComponent';
 
 type AppProps = {};
 
@@ -60,6 +63,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(HealthComponent)
 			.registerComponent(AliveComponent)
 			.registerComponent(ColliderComponent)
+			.registerComponent(DebugComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
@@ -67,19 +71,28 @@ export default class App extends Component<AppProps> {
 			.registerSystem(HealthSystem)
 			.registerSystem(AliveSystem);
 
-		// add selector
 		EntityFactory.createSelector(this.world, {
 			position: {
 				x: 100,
 				y: 100,
 			},
 		});
-
 		EntityFactory.createFpsCouter(this.world, {
 			position: {
 				x: Constants.GAME_WIDTH - 25,
 				y: 20,
 			},
+		});
+
+		this.world.createEntity()
+			.addComponent(RenderComponent)
+			.addComponent(DebugComponent);
+
+		const grid = new Grid({
+			width: Constants.GAME_WIDTH / Constants.UNIT_SIZE,
+			height: Constants.GAME_HEIGHT / Constants.UNIT_SIZE,
+			cellSize: Constants.UNIT_SIZE,
+			originPosition: Vector2.ZERO,
 		});
 
 		this.startLevel();
