@@ -1,4 +1,5 @@
 import { Debug } from './Debug';
+import { Text } from './graphics/Text';
 import { Vector2 } from './math/Vector2';
 
 export interface GridProps {
@@ -14,6 +15,7 @@ export class Grid {
     public readonly cellSize!: number;
     public readonly originPosition!: Vector2;
     private readonly content: number[][];
+    private readonly debugTexts: (Text | null)[][] | null;
 
     constructor(props: GridProps) {
         Object.assign(this, props);
@@ -23,7 +25,10 @@ export class Grid {
         });
 
         if (Debug.isEnabled('grid')) {
+            this.debugTexts = [];
             this.drawDebug();
+        } else {
+            this.debugTexts = null;
         }
     }
 
@@ -38,11 +43,15 @@ export class Grid {
         }));
 
         Array.from({ length: this.height }).forEach((yValue, y) => {
+            this.debugTexts![y] = [];
             Array.from({ length: this.width }).forEach((xValue, x) => {
-                Debug.drawText({
+                const text = Debug.drawText({
                     position: Vector2.adds(this.getWorldPosition(x, y), new Vector2({ x: this.cellSize / 2, y: this.cellSize / 2, })),
                     text: '' + this.getValue(x, y),
                 });
+                if (null !== text) {
+                    this.debugTexts![y][x] = text;
+                }
             }, this);
         }, this);
     }
@@ -66,6 +75,17 @@ export class Grid {
         if (y < 0 || y >= this.height) {
             throw new Error(`y must be between 0 and ${this.height}`);
         }
+    }
+
+    private updateDebugValue(x: number, y: number, value: number): void {
+        if (this.debugTexts === null) {
+            throw new Error('debugTexts is null');
+        }
+        if (this.debugTexts[y][x] === null) {
+            throw new Error(`debugTexts[${y}][${x}] is null`);
+        }
+
+        this.debugTexts[y][x].text = '' + value;
     }
 
     public getWorldPosition(x: number, y: number): Vector2 {
@@ -92,6 +112,9 @@ export class Grid {
             throw new Error('value was undefined');
         }
         this.content[y][x] = value;
+        if (Debug.isEnabled('grid')) {
+            this.updateDebugValue(x, y, value);
+        }
     }
 
     public getValue(x: number, y: number): number;

@@ -17,7 +17,7 @@ export class Debug {
             color: Colors.WHITE
         }
     };
-    public static options: string[];
+    public static options: string[] = [];
     public static readonly shapes: Shape[] = [];
     public static readonly texts: Text[] = [];
 
@@ -29,25 +29,31 @@ export class Debug {
         return this.options.includes(option);
     }
 
-    public static drawLine(props: Optional<ILineProps, 'lineColor' | 'lineWidth'>): void {
+    public static drawLine(props: Optional<ILineProps, 'lineColor' | 'lineWidth'>): Line | null {
         if (!this.isEnabled('line')) {
-            return;
+            return null;
         }
 
         props = Object.assign({
             ...this.DEFAULTS.shapes.line,
         }, props);
-        this.shapes.push(new Line(props as ILineProps));
+        const line = new Line(props as ILineProps);
+        this.shapes.push(line);
+
+        return line;
     }
 
-    public static drawText(props: Optional<ITextProps, 'font' | 'color'>): void {
+    public static drawText(props: Optional<ITextProps, 'font' | 'color'>): Text | null {
         if (!this.isEnabled('text')) {
-            return;
+            return null;
         }
 
         props = Object.assign({
             ...this.DEFAULTS.text,
         }, props);
-        this.texts.push(new Text(props as ITextProps));
+        const text = new Text(props as ITextProps);
+        this.texts.push(text);
+
+        return text;
     }
 }
