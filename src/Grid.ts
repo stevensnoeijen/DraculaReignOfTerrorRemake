@@ -1,35 +1,46 @@
 import { Debug } from './Debug';
-import { Text } from './graphics/Text';
+import { EventBus } from './EventBus';
 import { Vector2 } from './math/Vector2';
 
-export interface GridProps {
-    readonly width: number;
-    readonly height: number;
-    readonly cellSize: number;
-    readonly originPosition: Vector2;
+type BaseGridObject = { toString: () => string };
+
+type GridObjectCreator<GridObject> = (x: number, y: number) => GridObject;
+
+export interface GridProps<GridObject> {
+    width: number;
+    height: number;
+    cellSize: number;
+    originPosition: Vector2;
+    initGridObject: GridObjectCreator<GridObject>;
 }
 
-export class Grid {
+export type GridChangedEvent<GridObject> = CustomEvent<{ x: number, y: number; object: GridObject }>;
+
+export class Grid<GridObject extends BaseGridObject> {
     public readonly width!: number;
     public readonly height!: number;
     public readonly cellSize!: number;
     public readonly originPosition!: Vector2;
-    private readonly content: number[][];
-    private readonly debugTexts: (Text | null)[][] | null;
+    private readonly initGridObject!: GridObjectCreator<GridObject>;
+    public readonly eventBus: EventBus<GridChangedEvent<GridObject>>;
 
-    constructor(props: GridProps) {
+    private readonly content: GridObject[][];
+
+    constructor(props: GridProps<GridObject>) {
         Object.assign(this, props);
+        this.eventBus = new EventBus('Grid');
 
         this.content = Array.from({ length: this.height }).map((yValue, y) => {
-            return Array.from({ length: this.width }).map((xValue, x) => 0);
+            return Array.from({ length: this.width }).map((xValue, x) => this.createGridObject(x, y));
         });
 
         if (Debug.isEnabled('grid')) {
-            this.debugTexts = [];
             this.drawDebug();
-        } else {
-            this.debugTexts = null;
         }
+    }
+
+    private createGridObject(x: number, y: number): GridObject {
+        return this.initGridObject(x, y);
     }
 
     private drawDebug(): void {
@@ -41,19 +52,6 @@ export class Grid {
             start: this.getWorldPosition(x, 0),
             end: this.getWorldPosition(x, this.height),
         }));
-
-        Array.from({ length: this.height }).forEach((yValue, y) => {
-            this.debugTexts![y] = [];
-            Array.from({ length: this.width }).forEach((xValue, x) => {
-                const text = Debug.drawText({
-                    position: Vector2.adds(this.getWorldPosition(x, y), new Vector2({ x: this.cellSize / 2, y: this.cellSize / 2, })),
-                    text: '' + this.getValue(x, y),
-                });
-                if (null !== text) {
-                    this.debugTexts![y][x] = text;
-                }
-            }, this);
-        }, this);
     }
 
     private getPosition(worldPosition: Vector2): { x: number; y: number } {
@@ -77,17 +75,6 @@ export class Grid {
         }
     }
 
-    private updateDebugValue(x: number, y: number, value: number): void {
-        if (this.debugTexts === null) {
-            throw new Error('debugTexts is null');
-        }
-        if (this.debugTexts[y][x] === null) {
-            throw new Error(`debugTexts[${y}][${x}] is null`);
-        }
-
-        this.debugTexts[y][x].text = '' + value;
-    }
-
     public getWorldPosition(x: number, y: number): Vector2 {
         return Vector2.adds(Vector2.multiplies(new Vector2({
             x: x,
@@ -95,31 +82,39 @@ export class Grid {
         }), this.cellSize), this.originPosition);
     }
 
+    static isNumber(value: unknown): value is number {
+        return typeof value === 'number';
+    }
 
-    public setValue(x: number, y: number, value: number): void;
-    public setValue(worldPosition: Vector2, value: number): void
-    public setValue(x: number | Vector2, y: number, value?: number): void {
+    public setGridObject(x: number, y: number, gridObject: GridObject): void;
+    public setGridObject(worldPosition: Vector2, gridObject: GridObject): void
+    public setGridObject(x: number | Vector2, y: number | GridObject, gridObject?: GridObject): void {
         if (x instanceof Vector2) {
             const position = this.getPosition(x);
             // move value to correct value var
-            value = y;
+            gridObject = y as GridObject;
             x = position.x;
             y = position.y;
         }
+        if (typeof x !== 'number' || typeof y !== 'number') {
+            throw new Error(`setValue(${x}, ${y}, ${gridObject}) is called incorrectly`);
+        }
 
         this.checkPosition(x, y);
-        if (undefined === value) {
+        if (undefined === gridObject) {
             throw new Error('value was undefined');
         }
-        this.content[y][x] = value;
-        if (Debug.isEnabled('grid')) {
-            this.updateDebugValue(x, y, value);
-        }
+        this.content[y as number][x] = gridObject;
+        this.eventBus.emit('gridChanged', {
+            x: x,
+            y: y,
+            object: gridObject,
+        });
     }
 
-    public getValue(x: number, y: number): number;
-    public getValue(worldPosition: Vector2): number;
-    public getValue(x: number | Vector2, y?: number): number {
+    public getGridObject(x: number, y: number): GridObject;
+    public getGridObject(worldPosition: Vector2): GridObject;
+    public getGridObject(x: number | Vector2, y?: number): GridObject {
         if (x instanceof Vector2) {
             const position = this.getPosition(x);
             x = position.x;

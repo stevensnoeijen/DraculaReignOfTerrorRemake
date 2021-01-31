@@ -29,6 +29,7 @@ import { Vector2 } from './math/Vector2';
 import { DebugComponent } from './components/DebugComponent';
 import * as QueryString from 'query-string';
 import { Debug } from './Debug';
+import { GridView } from './GridView';
 
 type AppProps = {};
 
@@ -96,12 +97,18 @@ export default class App extends Component<AppProps> {
 			.addComponent(RenderComponent)
 			.addComponent(DebugComponent);
 
-		const grid = new Grid({
+		const grid = new Grid<number>({
 			width: Math.ceil(Constants.GAME_WIDTH / Constants.UNIT_SIZE),
 			height: Math.ceil(Constants.GAME_HEIGHT / Constants.UNIT_SIZE),
 			cellSize: Constants.UNIT_SIZE,
 			originPosition: Vector2.ZERO,
+			initGridObject: () => 0
 		});
+		new GridView(grid);
+		// TODO: temp test
+		setTimeout(() => {
+			grid.setGridObject(1, 1, 10);
+		}, 1000);
 
 		this.startLevel();
 
