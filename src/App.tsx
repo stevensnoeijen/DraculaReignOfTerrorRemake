@@ -27,6 +27,8 @@ import { ColliderComponent } from './components/ColliderComponent';
 import { Grid } from './Grid';
 import { Vector2 } from './math/Vector2';
 import { DebugComponent } from './components/DebugComponent';
+import * as QueryString from 'query-string';
+import { Debug } from './Debug';
 
 type AppProps = {};
 
@@ -34,9 +36,15 @@ export default class App extends Component<AppProps> {
 	private canvas: HTMLCanvasElement;
 	private world: World;
 	private lastFrameTime = 0;
+	private options: { [key: string]: string | string[] | null; }
 
 	constructor(props: AppProps) {
 		super(props);
+
+		this.options = QueryString.parse(location.hash);
+		if (typeof this.options?.debug === 'string') {
+			Debug.options = this.options.debug.split(',');
+		}
 
 		this.world = new World();
 
@@ -89,8 +97,8 @@ export default class App extends Component<AppProps> {
 			.addComponent(DebugComponent);
 
 		const grid = new Grid({
-			width: Constants.GAME_WIDTH / Constants.UNIT_SIZE,
-			height: Constants.GAME_HEIGHT / Constants.UNIT_SIZE,
+			width: Math.ceil(Constants.GAME_WIDTH / Constants.UNIT_SIZE),
+			height: Math.ceil(Constants.GAME_HEIGHT / Constants.UNIT_SIZE),
 			cellSize: Constants.UNIT_SIZE,
 			originPosition: Vector2.ZERO,
 		});

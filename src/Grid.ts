@@ -22,7 +22,9 @@ export class Grid {
             return Array.from({ length: this.width }).map((xValue, x) => 0);
         });
 
-        this.drawDebug();
+        if (Debug.isEnabled('grid')) {
+            this.drawDebug();
+        }
     }
 
     private drawDebug(): void {
