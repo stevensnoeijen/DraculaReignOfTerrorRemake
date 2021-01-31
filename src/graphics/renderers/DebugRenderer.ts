@@ -2,6 +2,7 @@ import { Entity } from 'ecsy';
 import { IRenderer } from './IRenderer';
 import { Debug } from '../../Debug';
 import { Line } from '../shapes/Line';
+import { Text } from '../Text';
 
 export class DebugRenderer implements IRenderer {
     constructor(private readonly context: CanvasRenderingContext2D) { }
@@ -11,6 +12,9 @@ export class DebugRenderer implements IRenderer {
             if (shape instanceof Line) {
                 this.renderLine(shape);
             }
+        }
+        for (const text of Debug.texts) {
+            this.renderText(text);
         }
     }
 
@@ -22,5 +26,13 @@ export class DebugRenderer implements IRenderer {
         this.context.lineTo(line.end.x, line.end.y);
         this.context.closePath();
         this.context.stroke();
+    }
+
+    private renderText(text: Text): void {
+        this.context.font = text.font;
+        this.context.fillStyle = text.color.toString();
+        this.context.textAlign = text.align;
+        this.context.textBaseline = text.baseline;
+        this.context.fillText(text.text, text.position.x, text.position.y);
     }
 }

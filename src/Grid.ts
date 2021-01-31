@@ -26,12 +26,21 @@ export class Grid {
     }
 
     private drawDebug(): void {
-        Array.from({ length: this.height + 1 }).forEach((yValue, y) => Debug.drawLine({ start: this.getWorldPosition(0, y), end: this.getWorldPosition(this.width, y) }));
-        Array.from({ length: this.width + 1 }).forEach((xValue, x) => Debug.drawLine({ start: this.getWorldPosition(x, 0), end: this.getWorldPosition(x, this.height) }));
+        Array.from({ length: this.height + 1 }).forEach((yValue, y) => Debug.drawLine({
+            start: this.getWorldPosition(0, y),
+            end: this.getWorldPosition(this.width, y),
+        }));
+        Array.from({ length: this.width + 1 }).forEach((xValue, x) => Debug.drawLine({
+            start: this.getWorldPosition(x, 0),
+            end: this.getWorldPosition(x, this.height),
+        }));
 
         Array.from({ length: this.height }).forEach((yValue, y) => {
             Array.from({ length: this.width }).forEach((xValue, x) => {
-
+                Debug.drawText({
+                    position: Vector2.adds(this.getWorldPosition(x, y), new Vector2({ x: this.cellSize / 2, y: this.cellSize / 2, })),
+                    text: '' + this.getValue(x, y),
+                });
             }, this);
         }, this);
     }
