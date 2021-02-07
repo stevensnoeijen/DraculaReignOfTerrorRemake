@@ -29,6 +29,8 @@ import { Vector2 } from './math/Vector2';
 import { DebugComponent } from './components/DebugComponent';
 import * as QueryString from 'query-string';
 import { Debug } from './Debug';
+import { GridComponent } from './components/GridComponent';
+import { GridViewComponent } from './components/GridViewComponent';
 import { GridView } from './GridView';
 
 type AppProps = {};
@@ -73,6 +75,8 @@ export default class App extends Component<AppProps> {
 			.registerComponent(AliveComponent)
 			.registerComponent(ColliderComponent)
 			.registerComponent(DebugComponent)
+			.registerComponent(GridComponent)
+			.registerComponent(GridViewComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
@@ -104,7 +108,11 @@ export default class App extends Component<AppProps> {
 			originPosition: Vector2.ZERO,
 			initGridObject: () => 0
 		});
-		new GridView(grid);
+		this.world.createEntity()
+			.addComponent(RenderComponent)
+			.addComponent(GridComponent, { grid: grid })
+			.addComponent(GridViewComponent, { view: new GridView(grid) });
+
 		// TODO: temp test
 		setTimeout(() => {
 			grid.setGridObject(1, 1, 10);

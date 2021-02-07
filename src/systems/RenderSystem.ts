@@ -14,6 +14,8 @@ import { HealthRenderer } from '../graphics/renderers/HealthRenderer';
 import { LayerComponentComparator } from '../helpers/LayerComponentComparator';
 import { DebugComponent } from '../components/DebugComponent';
 import { DebugRenderer } from '../graphics/renderers/DebugRenderer';
+import { GridViewRenderer } from '../graphics/renderers/GridViewRenderer';
+import { GridViewComponent } from '../components/GridViewComponent';
 
 type ComponentRenderer = {
 	component: typeof Component;
@@ -55,7 +57,11 @@ export class RenderSystem extends System {
 		this.componentRenderers.push({
 			component: DebugComponent,
 			renderer: new DebugRenderer(this.context),
-		})
+		});
+		this.componentRenderers.push({
+			component: GridViewComponent,
+			renderer: new GridViewRenderer(this.context),
+		});
 	}
 
 	// This method will get called on every frame by default
