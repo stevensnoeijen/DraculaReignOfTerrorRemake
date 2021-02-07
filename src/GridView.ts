@@ -23,7 +23,7 @@ export class GridView {
 
 
         grid.eventBus.on('gridChanged', (event: GridChangedEvent<number>) => {
-            this.texts[event.detail.y][event.detail.x]!.text = event.detail.object.toString();
+            this.texts[event.detail.y][event.detail.x].text = event.detail.object.toString();
         });
     }
 

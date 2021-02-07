@@ -1,19 +1,14 @@
 import { Component, Types } from 'ecsy';
+import { Text } from '../graphics/Text';
 
 export interface ITextComponentProps {
-	text: string;
-	font: string;
-	color: string;
+	text: Text;
 }
 
 export class TextComponent extends Component<ITextComponentProps> {
-	text: string;
-	font: string;
-	color: string;
+	text: Text;
 }
 
 TextComponent.schema = {
-	text: { type: Types.String },
-	font: { type: Types.String },
-	color: { type: Types.String },
+	text: { type: Types.JSON },
 };

@@ -3,23 +3,23 @@ import { Constants } from '../Constants';
 import { System, World, Attributes, Entity, Component } from 'ecsy';
 import { RenderComponent } from '../components/RenderComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
-import { ShapeRenderer } from '../graphics/renderers/ShapeRenderer';
-import { TextRenderer } from '../graphics/renderers/TextRenderer';
-import { IRenderer } from '../graphics/renderers/IRenderer';
+import { ShapeComponentRenderer } from '../graphics/renderers/component/ShapeComponentRenderer';
+import { TextComponentRenderer } from '../graphics/renderers/component/TextComponentRenderer';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
-import { SelectionRenderer } from '../graphics/renderers/SelectionRenderer';
+import { SelectionComponentRenderer } from '../graphics/renderers/component/SelectionComponentRenderer';
 import { HealthComponent } from '../components/HealthComponent';
-import { HealthRenderer } from '../graphics/renderers/HealthRenderer';
+import { HealthComponentRenderer } from '../graphics/renderers/component/HealthComponentRenderer';
 import { LayerComponentComparator } from '../helpers/LayerComponentComparator';
 import { DebugComponent } from '../components/DebugComponent';
-import { DebugRenderer } from '../graphics/renderers/DebugRenderer';
-import { GridViewRenderer } from '../graphics/renderers/GridViewRenderer';
+import { DebugComponentRenderer } from '../graphics/renderers/component/DebugComponentRenderer';
+import { GridViewComponentRenderer } from '../graphics/renderers/component/GridViewComponentRenderer';
 import { GridViewComponent } from '../components/GridViewComponent';
+import { IEntityRenderer } from '../graphics/renderers/IEntityRenderer';
 
 type ComponentRenderer = {
 	component: typeof Component;
-	renderer: IRenderer;
+	renderer: IEntityRenderer;
 };
 
 export class RenderSystem extends System {
@@ -40,27 +40,27 @@ export class RenderSystem extends System {
 		// define renderers by component type
 		this.componentRenderers.push({
 			component: ShapeComponent,
-			renderer: new ShapeRenderer(this.context),
+			renderer: new ShapeComponentRenderer(this.context),
 		});
 		this.componentRenderers.push({
 			component: SelectableComponent,
-			renderer: new SelectionRenderer(this.context),
+			renderer: new SelectionComponentRenderer(this.context),
 		});
 		this.componentRenderers.push({
 			component: HealthComponent,
-			renderer: new HealthRenderer(this.context),
+			renderer: new HealthComponentRenderer(this.context),
 		});
 		this.componentRenderers.push({
 			component: TextComponent,
-			renderer: new TextRenderer(this.context),
+			renderer: new TextComponentRenderer(this.context),
 		});
 		this.componentRenderers.push({
 			component: DebugComponent,
-			renderer: new DebugRenderer(this.context),
+			renderer: new DebugComponentRenderer(this.context),
 		});
 		this.componentRenderers.push({
 			component: GridViewComponent,
-			renderer: new GridViewRenderer(this.context),
+			renderer: new GridViewComponentRenderer(this.context),
 		});
 	}
 
@@ -90,7 +90,7 @@ export class RenderSystem extends System {
 		});
 	}
 
-	private getRenderersByEntityComponents(entity: Entity): IRenderer[] {
+	private getRenderersByEntityComponents(entity: Entity): IEntityRenderer[] {
 		const componentRenderers = this.componentRenderers.filter(
 			(componentRenderer) => entity.hasComponent(componentRenderer.component)
 		);

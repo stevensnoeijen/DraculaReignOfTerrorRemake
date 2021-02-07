@@ -1,10 +1,10 @@
 import { Entity } from 'ecsy';
-import { TransformComponent } from '../../components/TransformComponent';
-import { SelectableComponent } from '../../components/SelectableComponent';
-import { SizeComponent } from '../../components/SizeComponent';
-import { IRenderer } from './IRenderer';
+import { TransformComponent } from '../../../components/TransformComponent';
+import { SelectableComponent } from '../../../components/SelectableComponent';
+import { SizeComponent } from '../../../components/SizeComponent';
+import { IEntityRenderer } from '../IEntityRenderer';
 
-export class SelectionRenderer implements IRenderer {
+export class SelectionComponentRenderer implements IEntityRenderer {
 
     private static readonly OFFSET = 2;
 
@@ -37,16 +37,16 @@ export class SelectionRenderer implements IRenderer {
 
         this.context.beginPath();
         // top left corner
-        this.context.moveTo(left - SelectionRenderer.OFFSET, top + 2);// bottom left
-        this.context.lineTo(left - SelectionRenderer.OFFSET, top - SelectionRenderer.OFFSET);// left top
-        this.context.lineTo(left + 2, top - SelectionRenderer.OFFSET);// right
+        this.context.moveTo(left - SelectionComponentRenderer.OFFSET, top + 2);// bottom left
+        this.context.lineTo(left - SelectionComponentRenderer.OFFSET, top - SelectionComponentRenderer.OFFSET);// left top
+        this.context.lineTo(left + 2, top - SelectionComponentRenderer.OFFSET);// right
         this.context.stroke();
 
         this.context.beginPath();
         // top right corner
-        this.context.moveTo(left + size.width + SelectionRenderer.OFFSET, top + 2);// bottom right
-        this.context.lineTo(left + size.width + SelectionRenderer.OFFSET, top - SelectionRenderer.OFFSET);// right top
-        this.context.lineTo(left + size.width - 2, top - SelectionRenderer.OFFSET);// left
+        this.context.moveTo(left + size.width + SelectionComponentRenderer.OFFSET, top + 2);// bottom right
+        this.context.lineTo(left + size.width + SelectionComponentRenderer.OFFSET, top - SelectionComponentRenderer.OFFSET);// right top
+        this.context.lineTo(left + size.width - 2, top - SelectionComponentRenderer.OFFSET);// left
         this.context.stroke();
 
         this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform

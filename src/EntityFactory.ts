@@ -19,6 +19,8 @@ import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { ColliderComponent } from './components/ColliderComponent';
 import { Vector2 } from './math/Vector2';
+import { Text } from './graphics/Text';
+import { Colors } from './graphics/Colors';
 
 type Position = { x: number, y: number };
 
@@ -114,9 +116,11 @@ export class EntityFactory {
 			.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(TextComponent, {
-				text: '0',
-				font: '12px Arial',
-				color: '#FFF',
+				text: new Text({
+					text: '0',
+					font: '12px Arial',
+					color: Colors.BLACK,
+				}),
 			})
 			.addComponent(FpsComponent)
 			.addComponent(TransformComponent, {

@@ -18,9 +18,9 @@ export class FpsSystem extends System {
 		if (this.update > FpsSystem.UPDATE_TIME) {
 			// Iterate through all the entities on the query
 			this.queries.fps.results.forEach((entity) => {
-				const text = entity.getMutableComponent(TextComponent);
-				if (text) {
-					text.text = '' + Math.round(delta);
+				const textComponent = entity.getMutableComponent(TextComponent);
+				if (textComponent) {
+					textComponent.text.text = '' + Math.round(delta);
 				}
 			});
 			this.update = 0;

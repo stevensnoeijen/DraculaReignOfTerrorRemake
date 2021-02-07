@@ -1,5 +1,6 @@
 import Color from 'color';
 
 export class Colors {
-    static WHITE = Color.rgb(255, 255, 255);
+    public static WHITE = Color('#FFFFFF');
+    public static BLACK = Color('#000000');
 }

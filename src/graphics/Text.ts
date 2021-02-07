@@ -2,7 +2,7 @@ import Color from 'color';
 import { Vector2 } from '../math/Vector2';
 
 export interface ITextProps {
-    position: Vector2;
+    position?: Vector2;
     text: string;
     font: string;
     color: Color;
@@ -11,6 +11,7 @@ export interface ITextProps {
 }
 
 const defaultProps: Partial<ITextProps> = {
+    position: Vector2.ZERO,
     align: 'center',
     baseline: 'middle',
 }

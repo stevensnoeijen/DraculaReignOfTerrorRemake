@@ -1,11 +1,11 @@
 import { Entity } from 'ecsy';
-import { HealthComponent } from '../../components/HealthComponent';
-import { TransformComponent } from '../../components/TransformComponent';
-import { SelectableComponent } from '../../components/SelectableComponent';
-import { SizeComponent } from '../../components/SizeComponent';
-import { IRenderer } from './IRenderer';
+import { HealthComponent } from '../../../components/HealthComponent';
+import { TransformComponent } from '../../../components/TransformComponent';
+import { SelectableComponent } from '../../../components/SelectableComponent';
+import { SizeComponent } from '../../../components/SizeComponent';
+import { IEntityRenderer } from '../IEntityRenderer';
 
-export class HealthRenderer implements IRenderer {
+export class HealthComponentRenderer implements IEntityRenderer {
     constructor(private readonly context: CanvasRenderingContext2D) { }
 
     public render(entity: Entity): void {
