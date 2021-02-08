@@ -47,6 +47,7 @@ export default class App extends Component<AppProps> {
 		this.options = QueryString.parse(location.hash);
 		if (typeof this.options?.debug === 'string') {
 			Debug.options = this.options.debug.split(',');
+			console.log('debug loaded with options ' + Debug.options);
 		}
 
 		this.world = new World();

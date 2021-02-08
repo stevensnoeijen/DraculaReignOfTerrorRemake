@@ -26,11 +26,9 @@ export class HealthComponentRenderer implements IComponentRenderer {
             return;
         }
 
-        this.context.translate(transform.position.x, transform.position.y + size.height - 5);
-
         const healthbarProps = {
             x: -(size.width / 2),
-            y: 0,
+            y: size.height / 2 + 5,
             width: size.width,
             height: 5,
         };
@@ -47,8 +45,6 @@ export class HealthComponentRenderer implements IComponentRenderer {
             this.context.fillStyle = this.healthColor(percentage);
             this.context.fill();
         }
-
-        this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
     }
 
     private healthColor(percentage: number): string {

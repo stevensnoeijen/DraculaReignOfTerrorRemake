@@ -22,10 +22,6 @@ export class TextComponentRenderer implements IComponentRenderer {
 			return;
 		}
 
-		this.context.translate(transformComponent.position.x, transformComponent.position.y);
-
 		this.textRenderer.render(textComponent.text);
-
-		this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
 	}
 }

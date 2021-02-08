@@ -21,6 +21,7 @@ import { ColliderComponent } from './components/ColliderComponent';
 import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Colors } from './graphics/Colors';
+import { Rectangle } from './graphics/shapes/Rectangle';
 
 type Position = { x: number, y: number };
 
@@ -50,9 +51,16 @@ export class EntityFactory {
 			.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(ShapeComponent, {
-				type: 'rectangle',
-				fillStyle: color.hex(),
-				renderOrigin: 'center',
+				shape: new Rectangle({
+					lineStyle: Color('#000'),
+					fillStyle: color,
+					renderOrigin: 'center',
+					lineWidth: 1,
+					size: {
+						width: width,
+						height: height,
+					}
+				})
 			})
 			.addComponent(TransformComponent, {
 				position: new Vector2({
@@ -86,10 +94,15 @@ export class EntityFactory {
 		world
 			.createEntity()
 			.addComponent(ShapeComponent, {
-				type: 'rectangle',
-				lineWidth: 2,
-				lineStyle: '#FFF',
-				renderOrigin: 'topleft',
+				shape: new Rectangle({
+					lineStyle: Color('#FFF'),
+					renderOrigin: 'topleft',
+					lineWidth: 2,
+					size: {
+						width: 0,
+						height: 0,
+					}
+				}),
 			})
 			.addComponent(RenderComponent)
 			.addComponent(TransformComponent, {

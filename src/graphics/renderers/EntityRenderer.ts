@@ -6,6 +6,7 @@ import { RenderComponent } from '../../components/RenderComponent';
 import { SelectableComponent } from '../../components/SelectableComponent';
 import { ShapeComponent } from '../../components/ShapeComponent';
 import { TextComponent } from '../../components/TextComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { EntityHelper } from '../../helpers/EntityHelper';
 import { DebugComponentRenderer } from './component/DebugComponentRenderer';
 import { GridViewComponentRenderer } from './component/GridViewComponentRenderer';
@@ -67,6 +68,10 @@ export class EntityRenderer {
         if (!EntityHelper.isVisible(entity)) {
             return;
         }
+        const transformComponent = entity.getComponent(TransformComponent);
+        if (!transformComponent) {
+            return;
+        }
 
         const renderers = this.getRenderersByEntityComponents(entity);
         if (renderers.length === 0) {
@@ -74,6 +79,11 @@ export class EntityRenderer {
             entity.removeComponent(RenderComponent);
             return;
         }
-        renderers.forEach((renderer) => renderer.render(entity));
+
+        renderers.forEach((renderer) => {
+            this.context.translate(transformComponent.position.x, transformComponent.position.y);
+            renderer.render(entity);
+            this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
+        });
     }
 }

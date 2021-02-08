@@ -2,6 +2,7 @@ import { Entity, System, SystemQueries } from 'ecsy';
 import { AliveComponent } from '../components/AliveComponent';
 import { HealthComponent } from '../components/HealthComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
+import { Rectangle } from '../graphics/shapes/Rectangle';
 
 export class HealthSystem extends System {
     // Define a query of entities that have "Velocity" and "Position" components
@@ -35,17 +36,17 @@ export class HealthSystem extends System {
         }
 
         if (health.points === 0) {
-            const alive = entity.getMutableComponent(AliveComponent);
-            if (!alive) {
+            const aliveComponent = entity.getMutableComponent(AliveComponent);
+            if (!aliveComponent) {
                 return;
             }
-            alive.alive = false;
+            aliveComponent.alive = false;
 
-            const shape = entity.getMutableComponent(ShapeComponent);
-            if (!shape) {
+            const shapeComponent = entity.getMutableComponent(ShapeComponent);
+            if (!shapeComponent) {
                 return;
             }
-            shape.fillStyle = 'black';
+            (shapeComponent.shape as Rectangle).fillStyle = 'black';
         }
     }
 }

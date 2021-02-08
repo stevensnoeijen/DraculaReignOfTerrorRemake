@@ -14,6 +14,8 @@ import { Constants } from '../Constants';
 import { ColliderComponent } from '../components/ColliderComponent';
 import { MoveUnitsCommand } from '../input/commands/MoveUnitsCommand';
 import { Vector2 } from '../math/Vector2';
+import { ShapeComponent } from '../components/ShapeComponent';
+import { Rectangle } from '../graphics/shapes/Rectangle';
 
 export class PlayerControlSystem extends System {
 	public static queries: SystemQueries = {
@@ -145,12 +147,21 @@ export class PlayerControlSystem extends System {
 		const width = event.offsetX - transform.position.x;
 		const height = event.offsetY - transform.position.y;
 
-		const size = selector.getMutableComponent(SizeComponent);
-		if (!size) {
+		const sizeComponent = selector.getMutableComponent(SizeComponent);
+		if (!sizeComponent) {
 			return;
 		}
-		size.width = width;
-		size.height = height;
+		sizeComponent.width = width;
+		sizeComponent.height = height;
+
+		const shapeComponent = selector.getMutableComponent(ShapeComponent);
+		if (!shapeComponent) {
+			return;
+		}
+		if (shapeComponent.shape instanceof Rectangle) {
+			shapeComponent.shape.size.width = width;
+			shapeComponent.shape.size.height = height;
+		}
 	}
 
 	private handleLeftMouseDragEnd(event: MouseEvent): void {
