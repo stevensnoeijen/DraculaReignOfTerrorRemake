@@ -3,9 +3,9 @@ import { HealthComponent } from '../../../components/HealthComponent';
 import { TransformComponent } from '../../../components/TransformComponent';
 import { SelectableComponent } from '../../../components/SelectableComponent';
 import { SizeComponent } from '../../../components/SizeComponent';
-import { IEntityRenderer } from '../IEntityRenderer';
+import { IComponentRenderer } from '../IComponentRenderer';
 
-export class HealthComponentRenderer implements IEntityRenderer {
+export class HealthComponentRenderer implements IComponentRenderer {
     constructor(private readonly context: CanvasRenderingContext2D) { }
 
     public render(entity: Entity): void {

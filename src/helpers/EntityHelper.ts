@@ -2,6 +2,7 @@ import { Entity } from 'ecsy';
 import { TransformComponent } from '../components/TransformComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { SizeComponent } from '../components/SizeComponent';
+import { VisibilityComponent } from '../components/VisibilityComponent';
 
 type IsInsideOptions = {
 	offsetWidth?: number;
@@ -14,6 +15,14 @@ type Position = {
 };
 
 export class EntityHelper {
+	public static isVisible(entity: Entity): boolean {
+		const visibilityComponent = entity.getComponent(VisibilityComponent);
+		if (visibilityComponent && false === visibilityComponent.visible) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	public static isPositionInsideEntity(
 		entity: Entity,
 		x: number,

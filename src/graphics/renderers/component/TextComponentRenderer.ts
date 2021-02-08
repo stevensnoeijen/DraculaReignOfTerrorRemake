@@ -1,10 +1,10 @@
 import { Entity } from 'ecsy';
 import { TransformComponent } from '../../../components/TransformComponent';
 import { TextComponent } from '../../../components/TextComponent';
-import { IEntityRenderer } from './../IEntityRenderer';
+import { IComponentRenderer } from '../IComponentRenderer';
 import { TextRenderer } from './../shape/TextRenderer';
 
-export class TextComponentRenderer implements IEntityRenderer {
+export class TextComponentRenderer implements IComponentRenderer {
 	private readonly textRenderer: TextRenderer;
 
 	constructor(private readonly context: CanvasRenderingContext2D) {

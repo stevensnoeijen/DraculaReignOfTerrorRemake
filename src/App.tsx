@@ -113,11 +113,6 @@ export default class App extends Component<AppProps> {
 			.addComponent(GridComponent, { grid: grid })
 			.addComponent(GridViewComponent, { view: new GridView(grid) });
 
-		// TODO: temp test
-		setTimeout(() => {
-			grid.setGridObject(1, 1, 10);
-		}, 1000);
-
 		this.startLevel();
 
 		// Run!

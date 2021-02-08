@@ -1,10 +1,10 @@
 import { Entity } from 'ecsy';
 import { GridComponent } from '../../../components/GridComponent';
 import { GridViewComponent } from '../../../components/GridViewComponent';
-import { IEntityRenderer } from '../IEntityRenderer';
+import { IComponentRenderer } from '../IComponentRenderer';
 import { TextRenderer } from '../shape/TextRenderer';
 
-export class GridViewComponentRenderer implements IEntityRenderer {
+export class GridViewComponentRenderer implements IComponentRenderer {
     private readonly textRenderer: TextRenderer;
 
     constructor(private readonly context: CanvasRenderingContext2D) {

@@ -2,9 +2,9 @@ import { Entity } from 'ecsy';
 import { TransformComponent } from '../../../components/TransformComponent';
 import { ShapeComponent } from '../../../components/ShapeComponent';
 import { SizeComponent } from '../../../components/SizeComponent';
-import { IEntityRenderer } from '../IEntityRenderer';
+import { IComponentRenderer } from '../IComponentRenderer';
 
-export class ShapeComponentRenderer implements IEntityRenderer {
+export class ShapeComponentRenderer implements IComponentRenderer {
 	constructor(private readonly context: CanvasRenderingContext2D) { }
 
 	public render(entity: Entity): void {

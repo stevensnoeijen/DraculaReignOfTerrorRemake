@@ -2,9 +2,9 @@ import { Entity } from 'ecsy';
 import { TransformComponent } from '../../../components/TransformComponent';
 import { SelectableComponent } from '../../../components/SelectableComponent';
 import { SizeComponent } from '../../../components/SizeComponent';
-import { IEntityRenderer } from '../IEntityRenderer';
+import { IComponentRenderer } from '../IComponentRenderer';
 
-export class SelectionComponentRenderer implements IEntityRenderer {
+export class SelectionComponentRenderer implements IComponentRenderer {
 
     private static readonly OFFSET = 2;
 

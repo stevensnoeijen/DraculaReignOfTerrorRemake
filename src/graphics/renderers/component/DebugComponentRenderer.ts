@@ -1,11 +1,11 @@
 import { Entity } from 'ecsy';
 import { Debug } from '../../../Debug';
 import { Line } from '../../shapes/Line';
-import { IEntityRenderer } from '../IEntityRenderer';
+import { IComponentRenderer } from '../IComponentRenderer';
 import { LineRenderer } from '../shape/LineRenderer';
 import { TextRenderer } from '../shape/TextRenderer';
 
-export class DebugComponentRenderer implements IEntityRenderer {
+export class DebugComponentRenderer implements IComponentRenderer {
     private readonly textRenderer: TextRenderer;
     private readonly lineRenderer: LineRenderer;
 
