@@ -5,8 +5,8 @@ export class RectangleRenderer implements IRenderer<Rectangle> {
     constructor(private readonly context: CanvasRenderingContext2D) { }
 
     public render(rectangle: Rectangle): void {
-        const x = rectangle.renderOrigin === 'topleft' ? 0 : -(rectangle.size.width / 2);
-        const y = rectangle.renderOrigin === 'topleft' ? 0 : -(rectangle.size.height / 2);
+        const x = rectangle.anchor === 'top-left' ? 0 : -(rectangle.size.width / 2);
+        const y = rectangle.anchor === 'top-left' ? 0 : -(rectangle.size.height / 2);
 
         this.context.rect(x, y, rectangle.size.width, rectangle.size.height);
         if (rectangle.fillStyle) {
@@ -14,7 +14,7 @@ export class RectangleRenderer implements IRenderer<Rectangle> {
             this.context.fill();
         }
 
-        if (rectangle.lineWidth && rectangle.lineWidth > 0) {
+        if (rectangle.lineWidth > 0) {
             this.context.lineWidth = rectangle.lineWidth;
             this.context.strokeStyle = rectangle.lineStyle?.toString() || '#000';
             this.context.stroke();

@@ -14,7 +14,7 @@ export class Debug {
         },
         text: {
             font: '10px Arial',
-            color: Colors.WHITE
+            color: Colors.WHITE,
         }
     };
     public static options: string[] = [];

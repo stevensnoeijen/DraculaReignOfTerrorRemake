@@ -4,17 +4,19 @@ import { IPosition } from '../IPosition';
 import { ISize } from '../ISize';
 import { IShape } from './IShape';
 
+type Anchor = 'middle-center' | 'top-left';
+
 interface IRectangleProps {
     position?: IPosition;
     size: ISize;
     fillStyle?: Color;
     lineWidth?: number;
     lineStyle?: Color;
-    renderOrigin: 'center' | 'topleft';// TODO: change this to anchor
+    anchor: Anchor
 }
 
 const defaultRectangleProps: Partial<IRectangleProps> = {
-    position: Vector2.ZERO,
+    position: Vector2.ZERO
 }
 
 export class Rectangle implements IShape {
@@ -23,7 +25,7 @@ export class Rectangle implements IShape {
     public readonly fillStyle!: Color | null;
     public readonly lineWidth!: number;
     public readonly lineStyle!: Color | null;
-    public readonly renderOrigin!: 'center' | 'topleft';
+    public readonly anchor!: Anchor;
 
     constructor(props: IRectangleProps) {
         Object.assign(this, defaultRectangleProps, props);

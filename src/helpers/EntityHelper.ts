@@ -9,15 +9,12 @@ type IsInsideOptions = {
 	offsetHeight?: number;
 };
 
-type Position = {
-	x: number;
-	y: number;
-};
-
 export class EntityHelper {
-	public static isVisible(entity: Entity): boolean {
+	public static isVisible(entity: Entity, undefinedComponent = false): boolean {
 		const visibilityComponent = entity.getComponent(VisibilityComponent);
-		if (visibilityComponent && false === visibilityComponent.visible) {
+		if (!visibilityComponent && undefinedComponent) {
+			return true;
+		} else if (visibilityComponent && false === visibilityComponent.visible) {
 			return false;
 		} else {
 			return true;

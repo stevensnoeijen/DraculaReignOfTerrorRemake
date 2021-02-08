@@ -1,6 +1,7 @@
 import { Entity } from 'ecsy';
 import { GridComponent } from '../../../components/GridComponent';
 import { GridViewComponent } from '../../../components/GridViewComponent';
+import { Debug } from '../../../Debug';
 import { IComponentRenderer } from '../IComponentRenderer';
 import { TextRenderer } from '../shape/TextRenderer';
 
@@ -12,6 +13,10 @@ export class GridViewComponentRenderer implements IComponentRenderer {
     }
 
     public render(entity: Entity): void {
+        if (!Debug.isEnabled('gridview')) {
+            return;
+        }
+
         const gridComponent = entity.getComponent(GridComponent);
         if (!gridComponent) {
             return;

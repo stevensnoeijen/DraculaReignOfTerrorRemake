@@ -1,3 +1,4 @@
+import Color from 'color';
 import { Debug } from './Debug';
 import { EventBus } from './EventBus';
 import { Vector2 } from './math/Vector2';
@@ -47,10 +48,12 @@ export class Grid<GridObject extends BaseGridObject> {
         Array.from({ length: this.height + 1 }).forEach((yValue, y) => Debug.drawLine({
             start: this.getWorldPosition(0, y),
             end: this.getWorldPosition(this.width, y),
+            lineColor: Color('gray'),
         }));
         Array.from({ length: this.width + 1 }).forEach((xValue, x) => Debug.drawLine({
             start: this.getWorldPosition(x, 0),
             end: this.getWorldPosition(x, this.height),
+            lineColor: Color('gray'),
         }));
     }
 

@@ -129,6 +129,15 @@ export class PlayerControlSystem extends System {
 		size.height = 0;
 		size.width = 0;
 
+		const shapeComponent = selector.getMutableComponent(ShapeComponent);
+		if (!shapeComponent) {
+			return;
+		}
+		if (shapeComponent) {
+			(shapeComponent.shape as Rectangle).size.height = 0;
+			(shapeComponent.shape as Rectangle).size.width = 0;
+		}
+
 		const visibility = selector.getMutableComponent(VisibilityComponent);
 		if (!visibility) {
 			return;

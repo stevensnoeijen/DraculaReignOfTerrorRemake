@@ -100,6 +100,9 @@ export default class App extends Component<AppProps> {
 
 		this.world.createEntity()
 			.addComponent(RenderComponent)
+			.addComponent(LayerComponent, {
+				layer: Constants.LAYER_BACKGROUND - 1,
+			})
 			.addComponent(DebugComponent);
 
 		const grid = new Grid<number>({

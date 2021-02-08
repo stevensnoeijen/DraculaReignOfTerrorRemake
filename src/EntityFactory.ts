@@ -54,7 +54,7 @@ export class EntityFactory {
 				shape: new Rectangle({
 					lineStyle: Color('#000'),
 					fillStyle: color,
-					renderOrigin: 'center',
+					anchor: 'middle-center',
 					lineWidth: 1,
 					size: {
 						width: width,
@@ -96,7 +96,7 @@ export class EntityFactory {
 			.addComponent(ShapeComponent, {
 				shape: new Rectangle({
 					lineStyle: Color('#FFF'),
-					renderOrigin: 'topleft',
+					anchor: 'top-left',
 					lineWidth: 2,
 					size: {
 						width: 0,
@@ -143,7 +143,7 @@ export class EntityFactory {
 				}),
 			})
 			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_FOREGROUND,
+				layer: Constants.LAYER_FOREGROUND + 1,
 			});
 	}
 }

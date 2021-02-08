@@ -57,21 +57,16 @@ export class EntityRenderer {
     }
 
     private getRenderersByEntityComponents(entity: Entity): IComponentRenderer[] {
-        const componentRenderers = this.componentRenderers.filter(
+        return this.componentRenderers.filter(
             (componentRenderer) => entity.hasComponent(componentRenderer.component)
-        );
-
-        return componentRenderers.map((componentRenderer) => componentRenderer.renderer);
+        ).map((componentRenderer) => componentRenderer.renderer);
     }
 
     public render(entity: Entity): void {
-        if (!EntityHelper.isVisible(entity)) {
+        if (!EntityHelper.isVisible(entity, true)) {
             return;
         }
         const transformComponent = entity.getComponent(TransformComponent);
-        if (!transformComponent) {
-            return;
-        }
 
         const renderers = this.getRenderersByEntityComponents(entity);
         if (renderers.length === 0) {
@@ -81,8 +76,11 @@ export class EntityRenderer {
         }
 
         renderers.forEach((renderer) => {
-            this.context.translate(transformComponent.position.x, transformComponent.position.y);
+            if (transformComponent) {
+                this.context.translate(transformComponent.position.x, transformComponent.position.y);
+            }
             renderer.render(entity);
+
             this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
         });
     }

@@ -13,7 +13,7 @@ export class Line implements IShape {
     public readonly start!: Vector2;
     public readonly end!: Vector2;
     public readonly lineColor!: Color<string>;
-    public readonly lineWidth!: number;
+    public lineWidth!: number;
 
     constructor(props: ILineProps) {
         Object.assign(this, props);

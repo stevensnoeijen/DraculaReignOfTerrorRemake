@@ -17,6 +17,7 @@ export class DebugComponentRenderer implements IComponentRenderer {
     public render(entity: Entity): void {
         for (const shape of Debug.shapes) {
             if (shape instanceof Line) {
+                shape.lineWidth = 1;
                 this.lineRenderer.render(shape);
             }
         }
