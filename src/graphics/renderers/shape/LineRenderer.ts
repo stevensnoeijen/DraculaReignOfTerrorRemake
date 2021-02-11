@@ -1,7 +1,7 @@
 import { Line } from '../../shapes/Line';
-import { ShapeRenderer } from './ShapeRenderer';
+import { AbstractShapeRenderer } from './AbstractShapeRenderer';
 
-export class LineRenderer extends ShapeRenderer<Line> {
+export class LineRenderer extends AbstractShapeRenderer<Line> {
     public render(line: Line): void {
         super.render(line);
 

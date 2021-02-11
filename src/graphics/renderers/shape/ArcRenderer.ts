@@ -1,11 +1,11 @@
 
 import { Arc } from '../../shapes/Arc';
-import { ShapeRenderer } from './ShapeRenderer';
+import { AbstractShapeRenderer } from './AbstractShapeRenderer';
 
 /**
  * Renders {@link Arc} and {@link Circle}
  */
-export class ArcRenderer extends ShapeRenderer<Arc> {
+export class ArcRenderer extends AbstractShapeRenderer<Arc> {
     public render(arc: Arc): void {
         super.render(arc);
 

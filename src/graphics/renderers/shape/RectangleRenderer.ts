@@ -1,7 +1,7 @@
 import { Rectangle } from '../../shapes/Rectangle';
-import { ShapeRenderer } from './ShapeRenderer';
+import { AbstractShapeRenderer } from './AbstractShapeRenderer';
 
-export class RectangleRenderer extends ShapeRenderer<Rectangle> {
+export class RectangleRenderer extends AbstractShapeRenderer<Rectangle> {
     public render(rectangle: Rectangle): void {
         super.render(rectangle);
 
