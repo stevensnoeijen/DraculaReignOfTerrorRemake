@@ -1,21 +1,21 @@
 import Color from 'color';
 import { Vector2 } from '../../math/Vector2';
-import { IShape } from './IShape';
+import { IShapeProps, Shape } from './Shape';
 
-export interface ILineProps {
+export interface ILineProps extends IShapeProps {
     start: Vector2;
     end: Vector2;
     lineColor: Color<string>;
     lineWidth: number;
 }
 
-export class Line implements IShape {
-    public readonly start!: Vector2;
-    public readonly end!: Vector2;
-    public readonly lineColor!: Color<string>;
+export class Line extends Shape {
+    public start!: Vector2;
+    public end!: Vector2;
+    public lineColor!: Color<string>;
     public lineWidth!: number;
 
     constructor(props: ILineProps) {
-        Object.assign(this, props);
+        super(props);
     }
 }

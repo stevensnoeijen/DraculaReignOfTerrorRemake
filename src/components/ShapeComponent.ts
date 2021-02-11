@@ -1,11 +1,11 @@
 import { Component, Types } from 'ecsy';
-import { IShape } from '../graphics/shapes/IShape';
+import { Shape } from '../graphics/shapes/Shape';
 
 interface IShapeComponentProps<Shape> {
 	shape: Shape;
 }
 
-export class ShapeComponent<Shape extends IShape = IShape> extends Component<IShapeComponentProps<Shape>> {
+export class ShapeComponent extends Component<IShapeComponentProps> {
 	shape: Shape;
 }
 

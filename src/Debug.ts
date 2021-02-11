@@ -1,8 +1,8 @@
-import { IShape } from './graphics/shapes/IShape';
-import { ILineProps, Line } from './graphics/shapes/Line';
 import { Colors } from './graphics/Colors';
 import { Optional } from './Optional';
 import { ITextProps, Text } from './graphics/Text';
+import { ILineProps, Line } from './graphics/shapes/Line';
+import { Shape } from './graphics/shapes/Shape';
 
 export class Debug {
     public static readonly DEFAULTS = {
@@ -18,7 +18,7 @@ export class Debug {
         }
     };
     public static options: string[] = [];
-    public static readonly shapes: IShape[] = [];
+    public static readonly shapes: Shape[] = [];
     public static readonly texts: Text[] = [];
 
     public static isEnabled(option: string): boolean {

@@ -1,10 +1,11 @@
 import { Rectangle } from '../../shapes/Rectangle';
-import { IRenderer } from '../IRenderer';
+import { ShapeRenderer } from './ShapeRenderer';
 
-export class RectangleRenderer implements IRenderer<Rectangle> {
-    constructor(private readonly context: CanvasRenderingContext2D) { }
-
+export class RectangleRenderer extends ShapeRenderer<Rectangle> {
     public render(rectangle: Rectangle): void {
+        super.render(rectangle);
+
+        // TODO: move to ShapeRenderer
         const x = rectangle.anchor === 'top-left' ? 0 : -(rectangle.size.width / 2);
         const y = rectangle.anchor === 'top-left' ? 0 : -(rectangle.size.height / 2);
 

@@ -22,6 +22,7 @@ import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Colors } from './graphics/Colors';
 import { Rectangle } from './graphics/shapes/Rectangle';
+import { Circle } from './graphics/shapes/Circle';
 
 type Position = { x: number, y: number };
 
@@ -51,15 +52,10 @@ export class EntityFactory {
 			.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(ShapeComponent, {
-				shape: new Rectangle({
-					lineStyle: Color('#000'),
-					fillStyle: color,
-					anchor: 'middle-center',
+				shape: new Circle({
+					radius: 10,
 					lineWidth: 1,
-					size: {
-						width: width,
-						height: height,
-					}
+					fillStyle: color.toString(),
 				})
 			})
 			.addComponent(TransformComponent, {

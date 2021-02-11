@@ -1,10 +1,10 @@
 import { Line } from '../../shapes/Line';
-import { IRenderer } from '../IRenderer';
+import { ShapeRenderer } from './ShapeRenderer';
 
-export class LineRenderer implements IRenderer<Line> {
-    constructor(private readonly context: CanvasRenderingContext2D) { }
-
+export class LineRenderer extends ShapeRenderer<Line> {
     public render(line: Line): void {
+        super.render(line);
+
         this.context.strokeStyle = line.lineColor.toString();
         this.context.lineWidth = line.lineWidth;
         this.context.beginPath();

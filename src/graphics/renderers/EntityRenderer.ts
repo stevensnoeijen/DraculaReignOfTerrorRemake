@@ -25,7 +25,6 @@ type RendererByComponent = {
  * Facade for rendering a entity.
  */
 export class EntityRenderer {
-
     private readonly componentRenderers: RendererByComponent[] = [];
 
     constructor(private readonly context: CanvasRenderingContext2D) {
