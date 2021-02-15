@@ -6,11 +6,16 @@ type Anchor = 'middle-center' | 'top-left';
 
 interface IRectangleProps extends IShapeProps {
     size: ISize;
-    fillStyle?: Color;
+    fillStyle?: Color | null;
     lineWidth?: number;
-    lineStyle?: Color;
+    lineStyle?: Color | null;
     anchor: Anchor
 }
+
+const defaultProps: Partial<IRectangleProps> = Object.seal({
+    fillStyle: null,
+    lineStyle: null,
+});
 
 export class Rectangle extends Shape {
     public size!: ISize;
@@ -21,5 +26,6 @@ export class Rectangle extends Shape {
 
     constructor(props: IRectangleProps) {
         super(props);
+        Object.assign(this, defaultProps, props);
     }
 }

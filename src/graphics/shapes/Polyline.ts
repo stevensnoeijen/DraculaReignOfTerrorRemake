@@ -5,17 +5,17 @@ import { Shape, IShapeProps } from './Shape';
 export interface IPolylineProps extends IShapeProps {
     points: Vector2[];
     closePath?: boolean;
-    fillStyle?: string;
+    fillStyle?: string | null;
     lineWidth?: number;
-    lineStyle?: string;
+    lineStyle?: string | null;
 }
 
-const defaultProps: Partial<IPolylineProps> = {
+const defaultProps: Partial<IPolylineProps> = Object.seal({
     closePath: false,
     fillStyle: null,
     lineStyle: null,
     lineWidth: 0,
-}
+});
 
 export class Polyline extends Shape {
     public readonly points!: Vector2[];

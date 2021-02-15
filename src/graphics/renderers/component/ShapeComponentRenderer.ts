@@ -2,24 +2,14 @@ import { Entity } from 'ecsy';
 import { TransformComponent } from '../../../components/TransformComponent';
 import { ShapeComponent } from '../../../components/ShapeComponent';
 import { IComponentRenderer } from '../IComponentRenderer';
-import { Rectangle } from '../../shapes/Rectangle';
-import { RectangleRenderer } from '../shape/RectangleRenderer';
-import { ArcRenderer } from '../shape/ArcRenderer';
-import { Arc } from '../../shapes/Arc';
-import { Circle } from '../../shapes/Circle';
-import { PolylineRenderer } from '../shape/PolylineRenderer';
-import { Polyline } from '../../shapes/Polyline';
+import { ShapeRenderer } from '../shape/ShapeRenderer';
 
 export class ShapeComponentRenderer implements IComponentRenderer {
-	private readonly ractangleRenderer: RectangleRenderer;
-	private readonly arcRenderer: ArcRenderer;
-	private readonly polylineRenderer: PolylineRenderer;
-	// TODO: add linerenderer
+
+	private readonly shapeRenderer: ShapeRenderer;
 
 	constructor(private readonly context: CanvasRenderingContext2D) {
-		this.ractangleRenderer = new RectangleRenderer(this.context);
-		this.arcRenderer = new ArcRenderer(this.context);
-		this.polylineRenderer = new PolylineRenderer(this.context);
+		this.shapeRenderer = new ShapeRenderer(this.context);
 	}
 
 	public render(entity: Entity): void {
@@ -34,15 +24,7 @@ export class ShapeComponentRenderer implements IComponentRenderer {
 			this.context.rotate(transformComponent.rotation * Math.PI / 180);
 		}
 
-		if (shapeComponent.shape instanceof Rectangle) {
-			this.ractangleRenderer.render(shapeComponent.shape);
-		}
-		if (shapeComponent.shape instanceof Arc || shapeComponent.shape instanceof Circle) {
-			this.arcRenderer.render(shapeComponent.shape);
-		}
-		if (shapeComponent.shape instanceof Polyline) {
-			this.polylineRenderer.render(shapeComponent.shape);
-		}
+		this.shapeRenderer.render(shapeComponent.shape);
 
 		this.context.restore();
 	}
