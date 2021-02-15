@@ -10,42 +10,54 @@ import { LineRenderer } from './LineRenderer';
 import { PolylineRenderer } from './PolylineRenderer';
 import { RectangleRenderer } from './RectangleRenderer';
 
+type RendererByShape = {
+    shape: typeof Shape;
+    renderer: IRenderer<Shape>;
+};
+
 /**
  * Facade class for all shapes to be rendered
  */
 export class ShapeRenderer implements IRenderer<Shape> {
-    private readonly ractangleRenderer: RectangleRenderer;
-    private readonly arcRenderer: ArcRenderer;
-    private readonly polylineRenderer: PolylineRenderer;
-    private readonly lineRenderer: LineRenderer;
+    private readonly shapeRenderers: RendererByShape[] = [];
 
     constructor(private readonly context: CanvasRenderingContext2D) {
-        this.ractangleRenderer = new RectangleRenderer(this.context);
-        this.arcRenderer = new ArcRenderer(this.context);
-        this.polylineRenderer = new PolylineRenderer(this.context);
-        this.lineRenderer = new LineRenderer(this.context);
+        this.shapeRenderers.push({
+            shape: Rectangle,
+            renderer: new RectangleRenderer(this.context),
+        });
+        const arcRenderer = new ArcRenderer(this.context);
+        this.shapeRenderers.push({
+            shape: Arc,
+            renderer: arcRenderer,
+        });
+        this.shapeRenderers.push({
+            shape: Circle,
+            renderer: arcRenderer,
+        });
+        this.shapeRenderers.push({
+            shape: Polyline,
+            renderer: new PolylineRenderer(this.context),
+        });
+        this.shapeRenderers.push({
+            shape: Line,
+            renderer: new LineRenderer(this.context),
+        });
+    }
+
+    private getRendererByShape(shape: Shape): IRenderer<Shape> | null {
+        const shapeRenderer = this.shapeRenderers.find((shapeRenderer) => shape instanceof shapeRenderer.shape);
+        if (!shapeRenderer) {
+            return null;
+        }
+
+        return shapeRenderer.renderer;
     }
 
     public render(shape: Shape): void {
-        if (shape instanceof Rectangle) {
-            this.ractangleRenderer.render(shape);
-
-            return;
-        }
-        if (shape instanceof Arc || shape instanceof Circle) {
-            this.arcRenderer.render(shape);
-
-            return;
-        }
-        if (shape instanceof Polyline) {
-            this.polylineRenderer.render(shape);
-
-            return;
-        }
-        if (shape instanceof Line) {
-            this.lineRenderer.render(shape);
-
-            return;
+        const renderer = this.getRendererByShape(shape);
+        if (renderer) {
+            renderer.render(shape);
         }
     }
 
