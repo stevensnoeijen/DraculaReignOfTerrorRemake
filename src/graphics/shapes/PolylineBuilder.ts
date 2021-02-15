@@ -5,7 +5,7 @@ import { Polyline, IPolylineProps } from './Polyline';
 export interface IPolylineBuilderProps extends Optional<IPolylineProps, 'points' | 'closed'> { }
 
 const defaultProps: Partial<IPolylineBuilderProps> = {
-    closePath: false,
+    closed: false,
 }
 
 export class PolylineBuilder {
@@ -21,8 +21,8 @@ export class PolylineBuilder {
         return this;
     }
 
-    public setPolygon(): this {
-        this.props.closePath = true;
+    public closed(): this {
+        this.props.closed = true;
         return this;
     }
 

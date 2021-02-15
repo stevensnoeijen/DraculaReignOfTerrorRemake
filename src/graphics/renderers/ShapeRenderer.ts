@@ -1,14 +1,14 @@
-import { Arc } from '../../shapes/Arc';
-import { Circle } from '../../shapes/Circle';
-import { Line } from '../../shapes/Line';
-import { Polyline } from '../../shapes/Polyline';
-import { Rectangle } from '../../shapes/Rectangle';
-import { Shape } from '../../shapes/Shape';
-import { IRenderer } from '../IRenderer';
-import { ArcRenderer } from './ArcRenderer';
-import { LineRenderer } from './LineRenderer';
-import { PolylineRenderer } from './PolylineRenderer';
-import { RectangleRenderer } from './RectangleRenderer';
+import { Arc } from '../shapes/Arc';
+import { Circle } from '../shapes/Circle';
+import { Line } from '../shapes/Line';
+import { Polyline } from '../shapes/Polyline';
+import { Rectangle } from '../shapes/Rectangle';
+import { Shape } from '../shapes/Shape';
+import { IRenderer } from './IRenderer';
+import { ArcRenderer } from './shape/ArcRenderer';
+import { LineRenderer } from './shape/LineRenderer';
+import { PolylineRenderer } from './shape/PolylineRenderer';
+import { RectangleRenderer } from './shape/RectangleRenderer';
 
 type RendererByShape = {
     shape: typeof Shape;

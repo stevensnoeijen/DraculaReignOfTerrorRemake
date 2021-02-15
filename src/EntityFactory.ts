@@ -20,7 +20,6 @@ import { AliveComponent } from './components/AliveComponent';
 import { ColliderComponent } from './components/ColliderComponent';
 import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
-import { Colors } from './graphics/Colors';
 import { Rectangle } from './graphics/shapes/Rectangle';
 import { ShapeFactory } from './graphics/shapes/ShapeFactory';
 
@@ -125,7 +124,7 @@ export class EntityFactory {
 				text: new Text({
 					text: '0',
 					font: '12px Arial',
-					color: Colors.BLACK,
+					color: 'black',
 				}),
 			})
 			.addComponent(FpsComponent)

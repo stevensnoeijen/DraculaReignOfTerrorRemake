@@ -10,7 +10,7 @@ export interface IArcProps {
     strokeStyle?: string;
 }
 
-const defaultArcProps: Partial<IArcProps> = {
+const defaultProps: Partial<IArcProps> = {
     position: Vector2.ZERO,
 }
 
@@ -24,7 +24,7 @@ export class Arc extends Shape {
 
     constructor(props: IArcProps) {
         super({
-            ...defaultArcProps,
+            ...defaultProps,
             ...props,
         })
     }

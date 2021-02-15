@@ -2,7 +2,7 @@ import { Entity } from 'ecsy';
 import { TransformComponent } from '../../../components/TransformComponent';
 import { ShapeComponent } from '../../../components/ShapeComponent';
 import { IComponentRenderer } from '../IComponentRenderer';
-import { ShapeRenderer } from '../shape/ShapeRenderer';
+import { ShapeRenderer } from '../ShapeRenderer';
 
 export class ShapeComponentRenderer implements IComponentRenderer {
 

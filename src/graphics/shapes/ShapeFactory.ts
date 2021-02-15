@@ -18,7 +18,7 @@ export class ShapeFactory {
                 x: 0,
                 y: half,
             }))
-            .setPolygon()
+            .closed()
             .build();
     }
 }

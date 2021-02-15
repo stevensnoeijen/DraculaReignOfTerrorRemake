@@ -4,7 +4,7 @@ import { Shape, IShapeProps } from './Shape';
 
 export interface IPolylineProps extends IShapeProps {
     points: Vector2[];
-    closePath?: boolean;
+    closed?: boolean;
     fillStyle?: string | null;
     lineWidth?: number;
     lineStyle?: string | null;

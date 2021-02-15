@@ -1,11 +1,10 @@
-import Color from 'color';
 import { Vector2 } from '../math/Vector2';
 
 export interface ITextProps {
     position?: Vector2;
     text: string;
     font: string;
-    color: Color;
+    color: string;
     align?: CanvasTextAlign;
     baseline?: CanvasTextBaseline;
 }
@@ -20,7 +19,7 @@ export class Text {
     public position!: Vector2;
     public text!: string;
     public font!: string;
-    public color!: Color;
+    public color!: string;
     public align!: CanvasTextAlign;
     public baseline!: CanvasTextBaseline;
 
