@@ -22,7 +22,7 @@ import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Colors } from './graphics/Colors';
 import { Rectangle } from './graphics/shapes/Rectangle';
-import { Circle } from './graphics/shapes/Circle';
+import { ShapeFactory } from './graphics/shapes/ShapeFactory';
 
 type Position = { x: number, y: number };
 
@@ -44,19 +44,16 @@ export class EntityFactory {
 	public static createUnit(world: World, props: IUnitProps): void {
 		const width = Constants.UNIT_SIZE;
 		const height = Constants.UNIT_SIZE;
-		const color = Color(props.color);
 		let rotation = Math.random() * 360;
-		rotation -= rotation % 45;
+		rotation -= rotation % 90;
+		const triangle = ShapeFactory.triangle(Constants.UNIT_SIZE);
+		triangle.fillStyle = props.color;
 
 		world
 			.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(ShapeComponent, {
-				shape: new Circle({
-					radius: 10,
-					lineWidth: 1,
-					fillStyle: color.toString(),
-				})
+				shape: triangle,
 			})
 			.addComponent(TransformComponent, {
 				position: new Vector2({

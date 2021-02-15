@@ -10,6 +10,9 @@ const defaultShapeProps: Partial<IShapeProps> = {
 }
 
 export abstract class Shape {
+    /**
+     * Position (origin) where the shape is drawn from
+     */
     public position!: Vector2;
     public lineWidth!: number | null;
 

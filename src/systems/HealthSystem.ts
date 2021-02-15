@@ -2,7 +2,7 @@ import { Entity, System, SystemQueries } from 'ecsy';
 import { AliveComponent } from '../components/AliveComponent';
 import { HealthComponent } from '../components/HealthComponent';
 import { ShapeComponent } from '../components/ShapeComponent';
-import { Rectangle } from '../graphics/shapes/Rectangle';
+import { Polyline } from '../graphics/shapes/Polyline';
 
 export class HealthSystem extends System {
     // Define a query of entities that have "Velocity" and "Position" components
@@ -46,7 +46,7 @@ export class HealthSystem extends System {
             if (!shapeComponent) {
                 return;
             }
-            (shapeComponent.shape as Rectangle).fillStyle = 'black';
+            (shapeComponent.shape as Polyline).fillStyle = 'black';
         }
     }
 }
