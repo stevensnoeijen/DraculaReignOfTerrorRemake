@@ -22,7 +22,7 @@ type RendererByComponent = {
 };
 
 /**
- * Facade for rendering a entity.
+ * Facade for rendering an entity.
  */
 export class EntityRenderer {
     private readonly componentRenderers: RendererByComponent[] = [];

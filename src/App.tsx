@@ -32,6 +32,9 @@ import { Debug } from './Debug';
 import { GridComponent } from './components/GridComponent';
 import { GridViewComponent } from './components/GridViewComponent';
 import { GridView } from './GridView';
+import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
+import { MoveTransformVelocitySystem } from './systems/MoveTransformVelocitySystem';
+import { InputSystem } from './systems/InputSystem';
 
 type AppProps = {};
 
@@ -78,12 +81,15 @@ export default class App extends Component<AppProps> {
 			.registerComponent(DebugComponent)
 			.registerComponent(GridComponent)
 			.registerComponent(GridViewComponent)
+			.registerComponent(MoveTransformVelocityComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
 			.registerSystem(TweenSystem)
 			.registerSystem(HealthSystem)
-			.registerSystem(AliveSystem);
+			.registerSystem(AliveSystem)
+			.registerSystem(MoveTransformVelocitySystem)
+			.registerSystem(InputSystem);
 
 		EntityFactory.createSelector(this.world, {
 			position: {

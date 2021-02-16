@@ -1,0 +1,32 @@
+import { System, SystemQueries } from 'ecsy';
+import { MoveTransformVelocityComponent } from '../components/MoveTransformVelocityComponent';
+import { TransformComponent } from '../components/TransformComponent';
+import { Input } from '../input/Input';
+import { Vector2 } from '../math/Vector2';
+
+export class MoveTransformVelocitySystem extends System {
+	public static queries: SystemQueries = {
+		movables: {
+			components: [MoveTransformVelocityComponent, TransformComponent],
+		},
+	};
+
+	public execute(delta: number, time: number): void {
+		if (Input.isKeyUp('a')) {
+			console.log('a up');
+		}
+
+		for (const entity of this.queries.movables.results) {
+			const moveTransformVelocityComponent = entity.getComponent(MoveTransformVelocityComponent);
+			if (!moveTransformVelocityComponent) {
+				continue;
+			}
+			const transformComponent = entity.getMutableComponent(TransformComponent);
+			if (!transformComponent) {
+				continue;
+			}
+
+			transformComponent.position = Vector2.adds(transformComponent.position, Vector2.multiplies(transformComponent.position, moveTransformVelocityComponent.moveSpeed * delta));
+		}
+	}
+}
