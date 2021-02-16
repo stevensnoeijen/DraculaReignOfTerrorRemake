@@ -22,6 +22,8 @@ import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Rectangle } from './graphics/shapes/Rectangle';
 import { ShapeFactory } from './graphics/shapes/ShapeFactory';
+import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
+import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
 
 type Position = { x: number, y: number };
 
@@ -40,6 +42,8 @@ interface IFpsCounterProps {
 }
 
 export class EntityFactory {
+	static first = true;
+
 	public static createUnit(world: World, props: IUnitProps): void {
 		const width = Constants.UNIT_SIZE;
 		const height = Constants.UNIT_SIZE;
@@ -48,8 +52,7 @@ export class EntityFactory {
 		const triangle = ShapeFactory.triangle(Constants.UNIT_SIZE);
 		triangle.fillStyle = props.color;
 
-		world
-			.createEntity()
+		world.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(ShapeComponent, {
 				shape: triangle,
@@ -79,7 +82,9 @@ export class EntityFactory {
 			.addComponent(ColliderComponent, {
 				width: width,
 				height: height,
-			});
+			})
+			.addComponent(PlayerMovementKeysComponent)
+			.addComponent(MoveTransformVelocityComponent);
 	}
 
 	public static createSelector(world: World, props: ISelectorProps): void {

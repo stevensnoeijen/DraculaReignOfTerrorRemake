@@ -1,5 +1,5 @@
 import { Attributes, System, World } from 'ecsy';
-import { Input } from '../input/Input';
+import { Input, KeyType } from '../input/Input';
 
 export class InputSystem extends System {
     private keyQueue: KeyboardEvent[] = [];
@@ -19,9 +19,12 @@ export class InputSystem extends System {
     }
 
     public execute(delta: number, time: number): void {
-        Input.clearKeyEvents();
+        Input.clearKeysStatus();
         if (this.keyQueue.length > 0) {
-            Input.addKeyEvents(this.keyQueue);
+            let event;
+            while ((event = this.keyQueue.pop())) {
+                Input.addKeyStatus(event.key, event.type as KeyType);
+            }
             this.keyQueue = [];
         }
     }

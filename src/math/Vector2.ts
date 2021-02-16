@@ -108,8 +108,8 @@ export class Vector2 {
         const magnitude = this.magnitude();
 
         return new Vector2({
-            x: this.x / magnitude,
-            y: this.y / magnitude,
+            x: this.x !== 0 ? this.x / magnitude : 0,
+            y: this.y !== 0 ? this.y / magnitude : 0,
         })
     }
 

@@ -35,6 +35,8 @@ import { GridView } from './GridView';
 import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
 import { MoveTransformVelocitySystem } from './systems/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
+import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
+import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
 
 type AppProps = {};
 
@@ -82,6 +84,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(GridComponent)
 			.registerComponent(GridViewComponent)
 			.registerComponent(MoveTransformVelocityComponent)
+			.registerComponent(PlayerMovementKeysComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
 			.registerSystem(FpsSystem)
@@ -89,7 +92,8 @@ export default class App extends Component<AppProps> {
 			.registerSystem(HealthSystem)
 			.registerSystem(AliveSystem)
 			.registerSystem(MoveTransformVelocitySystem)
-			.registerSystem(InputSystem);
+			.registerSystem(InputSystem)
+			.registerSystem(PlayerMovementKeysSystem);
 
 		EntityFactory.createSelector(this.world, {
 			position: {
@@ -131,24 +135,24 @@ export default class App extends Component<AppProps> {
 	}
 
 	private startLevel(): void {
-		Array.from(Array(100)).forEach(() => {
-			let x = Math.round(
-				Math.random() * Constants.GAME_WIDTH
-			);
-			x = x - (x % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
-			let y = Math.round(
-				Math.random() * Constants.GAME_HEIGHT
-			) + (Constants.UNIT_SIZE / 2);
-			y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+		// Array.from(Array(100)).forEach(() => {
+		let x = Math.round(
+			Math.random() * Constants.GAME_WIDTH
+		);
+		x = x - (x % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+		let y = Math.round(
+			Math.random() * Constants.GAME_HEIGHT
+		) + (Constants.UNIT_SIZE / 2);
+		y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
 
-			EntityFactory.createUnit(this.world, {
-				position: {
-					x: x,
-					y: y
-				},
-				color: 'red',
-			});
+		EntityFactory.createUnit(this.world, {
+			position: {
+				x: x,
+				y: y
+			},
+			color: 'red',
 		});
+		// });
 	}
 
 	private frame(): void {

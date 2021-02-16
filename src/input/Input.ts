@@ -1,16 +1,26 @@
+export type KeyType = 'keydown' | 'keypress' | 'keyup';
+type KeysStatus = { [key: string]: KeyType | undefined };
+
 export class Input {
-    private static keyEvents: KeyboardEvent[] = [];
+    private static keysStatus: KeysStatus = {};
 
-    public static addKeyEvents(keyEvents: KeyboardEvent[]): void {
-        this.keyEvents.push(...keyEvents);
+    public static addKeyStatus(key: string, type: KeyType): void {
+        this.keysStatus[key] = type;
     }
 
-    public static clearKeyEvents(): void {
-        this.keyEvents = [];
+    /**
+     * Cleans up key statussen that should be cleaned after a frame.
+     */
+    public static clearKeysStatus(): void {
+        for (const key of Object.keys(this.keysStatus)) {
+            if (this.keysStatus[key] === 'keyup') {
+                this.keysStatus[key] = undefined;
+            }
+        }
     }
 
-    private static isKey(key: string, type: string): boolean {
-        return undefined !== this.keyEvents.find((event) => event.key === key && type === event.type);
+    private static isKey(key: string, type: KeyType): boolean {
+        return this.keysStatus[key] === type;
     }
 
     public static isKeyPressed(key: string): boolean {
