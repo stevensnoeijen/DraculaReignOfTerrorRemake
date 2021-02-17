@@ -8,7 +8,6 @@ import { SelectableComponent } from './components/SelectableComponent';
 import { RenderSystem } from './systems/RenderSystem';
 import { SizeComponent } from './components/SizeComponent';
 import { EntityFactory } from './EntityFactory';
-import { PlayerControlSystem } from './systems/PlayerControlSystem';
 import { SelectorComponent } from './components/SelectorComponent';
 import { ShapeComponent } from './components/ShapeComponent';
 import { TextComponent } from './components/TextComponent';
@@ -35,8 +34,13 @@ import { GridView } from './GridView';
 import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
 import { MoveTransformVelocitySystem } from './systems/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
-import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
+import { MovePositionDirectSystem } from './systems/MovePositionDirectSystem';
 import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
+import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
+import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
+import { PlayerMovementMouseSystem } from './systems/PlayerMovementMouseSystem';
+import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
+import { PlayerControlSystem } from './systems/PlayerControlSystem';
 
 type AppProps = {};
 
@@ -84,6 +88,8 @@ export default class App extends Component<AppProps> {
 			.registerComponent(GridComponent)
 			.registerComponent(GridViewComponent)
 			.registerComponent(MoveTransformVelocityComponent)
+			.registerComponent(MovePositionDirectComponent)
+			.registerComponent(PlayerMovementMouseComponent)
 			.registerComponent(PlayerMovementKeysComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerControlSystem, { canvas: canvas })
@@ -92,8 +98,10 @@ export default class App extends Component<AppProps> {
 			.registerSystem(HealthSystem)
 			.registerSystem(AliveSystem)
 			.registerSystem(MoveTransformVelocitySystem)
-			.registerSystem(InputSystem)
-			.registerSystem(PlayerMovementKeysSystem);
+			.registerSystem(InputSystem, { canvas: canvas })
+			.registerSystem(PlayerMovementKeysSystem)
+			.registerSystem(MovePositionDirectSystem)
+			.registerSystem(PlayerMovementMouseSystem);
 
 		EntityFactory.createSelector(this.world, {
 			position: {

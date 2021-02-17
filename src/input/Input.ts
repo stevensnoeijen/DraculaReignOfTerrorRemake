@@ -1,10 +1,17 @@
-export type KeyType = 'keydown' | 'keypress' | 'keyup';
-type KeysStatus = { [key: string]: KeyType | undefined };
+import { Vector2 } from '../math/Vector2';
+
+export type KeyStatus = 'keydown' | 'keypress' | 'keyup';
+type KeysStatus = { [key: string]: KeyStatus | undefined };
+export type MouseStatus = 'down' | 'up' | undefined;
+type MouseStatuses = { [button: number]: MouseStatus };
+
 
 export class Input {
     private static keysStatus: KeysStatus = {};
+    public static mousePosition: Vector2 = Vector2.ZERO;
+    public static mouseStatuses: MouseStatuses = {};// FIXME: clickup clear
 
-    public static addKeyStatus(key: string, type: KeyType): void {
+    public static addKeyStatus(key: string, type: KeyStatus): void {
         this.keysStatus[key] = type;
     }
 
@@ -19,7 +26,11 @@ export class Input {
         }
     }
 
-    private static isKey(key: string, type: KeyType): boolean {
+    public static clearMouseStatuses(): void {
+        this.mouseStatuses = {};
+    }
+
+    private static isKey(key: string, type: KeyStatus): boolean {
         return this.keysStatus[key] === type;
     }
 
@@ -33,5 +44,13 @@ export class Input {
 
     public static isKeyUp(key: string): boolean {
         return this.isKey(key, 'keyup');
+    }
+
+    public static isMouseButtonUp(button: number): boolean {
+        return this.mouseStatuses[button] === 'up';
+    }
+
+    public static isMouseButtonDown(button: number): boolean {
+        return this.mouseStatuses[button] === 'down';
     }
 }

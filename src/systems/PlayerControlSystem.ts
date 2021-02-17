@@ -232,7 +232,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private handleRightMouseClick(event: MouseEvent): void {
-		this.moveUnitsTo(event);
+		// this.moveUnitsTo(event);
 	}
 
 	private handleLeftMouseDoubleClick(event: MouseEvent): void {

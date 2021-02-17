@@ -22,8 +22,9 @@ import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Rectangle } from './graphics/shapes/Rectangle';
 import { ShapeFactory } from './graphics/shapes/ShapeFactory';
-import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
 import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
+import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
+import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
 
 type Position = { x: number, y: number };
 
@@ -83,8 +84,10 @@ export class EntityFactory {
 				width: width,
 				height: height,
 			})
-			.addComponent(PlayerMovementKeysComponent)
-			.addComponent(MoveTransformVelocityComponent);
+			.addComponent(MoveTransformVelocityComponent)
+			// .addComponent(PlayerMovementKeysComponent)
+			.addComponent(MovePositionDirectComponent)
+			.addComponent(PlayerMovementMouseComponent);
 	}
 
 	public static createSelector(world: World, props: ISelectorProps): void {
