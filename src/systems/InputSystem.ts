@@ -1,5 +1,5 @@
 import { Attributes, System, World } from 'ecsy';
-import { Input, KeyStatus, MouseStatus } from '../input/Input';
+import { Input, KeyStatus, MouseButtonStatus } from '../input/Input';
 import { Vector2 } from '../math/Vector2';
 
 export class InputSystem extends System {
@@ -17,6 +17,13 @@ export class InputSystem extends System {
         this.canvas.addEventListener('mouseup', (event: MouseEvent) => {
             this.mouseEvents.push(event);
         });
+        this.canvas.addEventListener('click', (event: MouseEvent) => {
+            this.mouseEvents.push(event);
+        });
+        this.canvas.addEventListener('dblclick', (event: MouseEvent) => {
+            this.mouseEvents.push(event);
+        });
+
         this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
             Input.mousePosition = new Vector2({
                 x: event.offsetX,
@@ -38,15 +45,9 @@ export class InputSystem extends System {
     public execute(delta: number, time: number): void {
         Input.clearMouseStatuses();
         if (this.mouseEvents.length > 0) {
-            for (const mouseEvent of this.mouseEvents) {
-                let status: MouseStatus = undefined;
-                if (mouseEvent.type === 'mousedown') {
-                    status = 'down';
-                }
-                if (mouseEvent.type === 'mouseup') {
-                    status = 'up';
-                }
-                Input.mouseStatuses[mouseEvent.button] = status;
+            let mouseEvent;
+            while ((mouseEvent = this.mouseEvents.shift())) {
+                Input.setMouseButton(mouseEvent.button, mouseEvent.type as MouseButtonStatus);
             }
         }
 
@@ -58,5 +59,7 @@ export class InputSystem extends System {
             }
             this.keyQueue = [];
         }
+
+
     }
 }

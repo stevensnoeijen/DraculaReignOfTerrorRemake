@@ -25,6 +25,7 @@ import { ShapeFactory } from './graphics/shapes/ShapeFactory';
 import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
 import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
+import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
 
 type Position = { x: number, y: number };
 
@@ -85,7 +86,7 @@ export class EntityFactory {
 				height: height,
 			})
 			.addComponent(MoveTransformVelocityComponent)
-			// .addComponent(PlayerMovementKeysComponent)
+			.addComponent(PlayerMovementKeysComponent)
 			.addComponent(MovePositionDirectComponent)
 			.addComponent(PlayerMovementMouseComponent);
 	}
