@@ -12,6 +12,6 @@ export class MoveTransformVelocityComponent extends Component<IMoveTransformVelo
 }
 
 MoveTransformVelocityComponent.schema = {
-    moveSpeed: { type: Types.Number, default: .3 },
+    moveSpeed: { type: Types.Number, default: 100 },
     velocity: { type: Types.Ref, default: Vector2.ZERO },
 };
