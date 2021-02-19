@@ -1,6 +1,7 @@
 import { System } from 'ecsy';
 import { MoveTransformVelocityComponent } from '../components/MoveTransformVelocityComponent';
 import { PlayerMovementKeysComponent } from '../components/PlayerMovementKeysComponent';
+import { TransformComponent } from '../components/TransformComponent';
 import { Input } from '../input/Input';
 import { Vector2 } from '../math/Vector2';
 
@@ -40,6 +41,15 @@ export class PlayerMovementKeysSystem extends System {
 			}
 
 			moveTransformVelocityComponent.velocity = moveVector;
+
+			const transformComponent = entity.getMutableComponent(TransformComponent);
+			if (!transformComponent) {
+				continue;
+			}
+
+			if (!moveVector.equals(Vector2.ZERO)) {
+				transformComponent.rotation = Vector2.angle(Vector2.ZERO, moveVector) - 90;
+			}
 		}
 	}
 }

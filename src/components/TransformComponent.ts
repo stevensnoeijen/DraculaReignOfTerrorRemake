@@ -7,14 +7,14 @@ export interface TransformComponentProps {
 }
 
 export class TransformComponent extends Component<TransformComponentProps> {
-	public position: Vector2;
+	position!: Vector2;
 	/**
 	 * in degrees (-180 to 180)
 	 */
-	public rotation: number;
+	rotation!: number;
 }
 
 TransformComponent.schema = {
-	position: { type: Types.JSON },
+	position: { type: Types.Ref },
 	rotation: { type: Types.Number, default: 0 },
 };

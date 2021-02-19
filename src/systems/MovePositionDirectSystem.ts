@@ -17,7 +17,7 @@ export class MovePositionDirectSystem extends System {
 			if (undefined === movePositionDirectComponent || null === movePositionDirectComponent.movePosition) {
 				continue;
 			}
-			const transformComponent = entity.getComponent(TransformComponent);
+			const transformComponent = entity.getMutableComponent(TransformComponent);
 			if (!transformComponent) {
 				continue;
 			}
@@ -33,6 +33,7 @@ export class MovePositionDirectSystem extends System {
 			}
 
 			moveTransformVelocityComponent.velocity = Vector2.subtracts(movePositionDirectComponent.movePosition, transformComponent.position).normalized();
+			transformComponent.rotation = Vector2.angle(transformComponent.position, movePositionDirectComponent.movePosition) - 90;
 		}
 	}
 }
