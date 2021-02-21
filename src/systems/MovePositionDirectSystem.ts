@@ -13,7 +13,7 @@ export class MovePositionDirectSystem extends System {
 
 	public execute(delta: number, time: number): void {
 		for (const entity of this.queries.entities.results) {
-			const movePositionDirectComponent = entity.getComponent(MovePositionDirectComponent);
+			const movePositionDirectComponent = entity.getMutableComponent(MovePositionDirectComponent);
 			if (undefined === movePositionDirectComponent || null === movePositionDirectComponent.movePosition) {
 				continue;
 			}
@@ -27,7 +27,7 @@ export class MovePositionDirectSystem extends System {
 			}
 			if (Vector2.distance(transformComponent.position, movePositionDirectComponent.movePosition) < 5) {
 				// stop
-				entity.getMutableComponent(MovePositionDirectComponent)!.movePosition = null;
+				movePositionDirectComponent.movePosition = null;
 				moveTransformVelocityComponent.velocity = Vector2.ZERO;
 				continue;
 			}
