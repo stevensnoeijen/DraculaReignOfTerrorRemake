@@ -5,6 +5,7 @@ import { AliveComponent } from '../components/AliveComponent';
 import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
 import { SizeComponent } from '../components/SizeComponent';
 import { TransformComponent } from '../components/TransformComponent';
+import { Constants } from '../Constants';
 import { EntityHelper } from '../helpers/EntityHelper';
 import { Bounds } from '../math/collision/Bounds';
 import { Vector2 } from '../math/Vector2';
@@ -32,6 +33,23 @@ export class MoveVelocitySystem extends System {
 
 		this.engine = Matter.Engine.create();
 		this.engine.world.gravity.y = 0;
+		// add walls to the map
+		// top
+		Matter.World.add(this.engine.world, Matter.Bodies.rectangle(Constants.GAME_WIDTH / 2, -1, Constants.GAME_WIDTH, 1, {
+			isStatic: true,
+		}));
+		// left
+		Matter.World.add(this.engine.world, Matter.Bodies.rectangle(0, Constants.GAME_HEIGHT / 2, 1, Constants.GAME_HEIGHT, {
+			isStatic: true,
+		}));
+		// right
+		Matter.World.add(this.engine.world, Matter.Bodies.rectangle(Constants.GAME_WIDTH, Constants.GAME_HEIGHT / 2, 1, Constants.GAME_HEIGHT, {
+			isStatic: true,
+		}));
+		// bottom
+		Matter.World.add(this.engine.world, Matter.Bodies.rectangle(Constants.GAME_WIDTH / 2, Constants.GAME_HEIGHT, Constants.GAME_WIDTH, 1, {
+			isStatic: true,
+		}))
 	}
 
 	public execute(delta: number, time: number): void {
