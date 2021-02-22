@@ -67,6 +67,9 @@ export default class App extends Component<AppProps> {
 
 	private handleCanvas(canvas: HTMLCanvasElement): void {
 		this.canvas = canvas;
+		this.canvas.addEventListener('contextmenu', (event) => {
+			event.preventDefault();
+		});
 
 		this.world
 			.registerComponent(TransformComponent)
@@ -92,7 +95,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(PlayerMovementMouseComponent)
 			.registerComponent(PlayerMovementKeysComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
-			.registerSystem(PlayerControlSystem, { canvas: canvas })
+			.registerSystem(PlayerControlSystem)
 			.registerSystem(FpsSystem)
 			.registerSystem(TweenSystem)
 			.registerSystem(HealthSystem)

@@ -3,6 +3,9 @@ import { TransformComponent } from '../components/TransformComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { SizeComponent } from '../components/SizeComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
+import { MovePositionDirectComponent } from '../components/MovePositionDirectComponent';
+import { Bounds } from '../math/collision/Bounds';
+import { Vector2 } from '../math/Vector2';
 
 type IsInsideOptions = {
 	offsetWidth?: number;
@@ -23,8 +26,7 @@ export class EntityHelper {
 	public static isPositionInsideEntity(
 		entity: Entity,
 		x: number,
-		y: number,
-		options?: IsInsideOptions
+		y: number
 	): boolean {
 		const transform = entity.getComponent(TransformComponent);
 		const size = entity.getComponent(SizeComponent);
@@ -34,12 +36,14 @@ export class EntityHelper {
 			return false;
 		}
 
-		return (
-			x >= transform.position.x &&
-			x <= transform.position.x + size.width + (options?.offsetWidth || 0) &&
-			y >= transform.position.y &&
-			y <= transform.position.y + size.height + (options?.offsetHeight || 0)
-		);
+		const bounds = new Bounds(transform.position, new Vector2({
+			x: size.width,
+			y: size.height,
+		}));
+		return bounds.contains(new Vector2({
+			x: x,
+			y: y,
+		}))
 	}
 
 	/**
@@ -90,5 +94,14 @@ export class EntityHelper {
 			return;
 		}
 		selectable.selected = true;
+	}
+
+	public static isMoving(entity: Entity): boolean {
+		const movePositionDirectComponent = entity.getComponent(MovePositionDirectComponent);
+		if (!movePositionDirectComponent) {
+			return false;
+		}
+
+		return movePositionDirectComponent.movePosition !== null;
 	}
 }

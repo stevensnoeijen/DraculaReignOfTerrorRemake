@@ -12,13 +12,13 @@ export class PlayerMovementMouseSystem extends System {
 	};
 
 	public execute(delta: number, time: number): void {
-		for (const entity of this.queries.entities.results) {
-			const selectableComponent = entity.getComponent(SelectableComponent);
-			if (!selectableComponent || !selectableComponent.selected) {
-				continue;
-			}
+		if (Input.isMouseButtonUp(2) || Input.isMouseDblClick()) {
+			for (const entity of this.queries.entities.results) {
+				const selectableComponent = entity.getComponent(SelectableComponent);
+				if (!selectableComponent || !selectableComponent.selected) {
+					continue;
+				}
 
-			if (Input.isMouseButtonUp(2)) {
 				const movePositionDirectComponent = entity.getMutableComponent(MovePositionDirectComponent);
 				if (!movePositionDirectComponent) {
 					continue;
