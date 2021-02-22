@@ -16,7 +16,6 @@ import { VisibilityComponent } from './components/VisibilityComponent';
 import { SelectableComponent } from './components/SelectableComponent';
 import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
-import { ColliderComponent } from './components/ColliderComponent';
 import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Rectangle } from './graphics/shapes/Rectangle';
@@ -79,10 +78,6 @@ export class EntityFactory {
 				maxPoints: 10,
 			})
 			.addComponent(AliveComponent)
-			.addComponent(ColliderComponent, {
-				width: width,
-				height: height,
-			})
 			.addComponent(MoveTransformVelocityComponent, {
 				moveSpeed: 50
 			})

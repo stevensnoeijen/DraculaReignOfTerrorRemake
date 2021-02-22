@@ -22,7 +22,6 @@ import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
 import { AliveSystem } from './systems/AliveSystem';
-import { ColliderComponent } from './components/ColliderComponent';
 import { Grid } from './Grid';
 import { Vector2 } from './math/Vector2';
 import { DebugComponent } from './components/DebugComponent';
@@ -86,7 +85,6 @@ export default class App extends Component<AppProps> {
 			.registerComponent(VisibilityComponent)
 			.registerComponent(HealthComponent)
 			.registerComponent(AliveComponent)
-			.registerComponent(ColliderComponent)
 			.registerComponent(DebugComponent)
 			.registerComponent(GridComponent)
 			.registerComponent(GridViewComponent)
