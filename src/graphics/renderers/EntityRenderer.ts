@@ -2,7 +2,6 @@ import { Component, Entity } from 'ecsy';
 import { DebugComponent } from '../../components/DebugComponent';
 import { GridViewComponent } from '../../components/GridViewComponent';
 import { HealthComponent } from '../../components/HealthComponent';
-import { RenderComponent } from '../../components/RenderComponent';
 import { SelectableComponent } from '../../components/SelectableComponent';
 import { ShapeComponent } from '../../components/ShapeComponent';
 import { TextComponent } from '../../components/TextComponent';
@@ -16,8 +15,10 @@ import { ShapeComponentRenderer } from './component/ShapeComponentRenderer';
 import { TextComponentRenderer } from './component/TextComponentRenderer';
 import { IComponentRenderer } from './IComponentRenderer';
 
+export type ComponentType = typeof Component;
+
 type RendererByComponent = {
-    component: typeof Component;
+    component: ComponentType;
     renderer: IComponentRenderer;
 };
 
@@ -55,32 +56,38 @@ export class EntityRenderer {
         });
     }
 
-    private getRenderersByEntityComponents(entity: Entity): IComponentRenderer[] {
-        return this.componentRenderers.filter(
-            (componentRenderer) => entity.hasComponent(componentRenderer.component)
-        ).map((componentRenderer) => componentRenderer.renderer);
-    }
-
-    public render(entity: Entity): void {
+    /**
+     * 
+     * @param {Entity} entity 
+     * @param {ComponentType} componentType to render
+     */
+    public render(entity: Entity, componentType: ComponentType): void {
         if (!EntityHelper.isVisible(entity, true)) {
             return;
         }
-        const transformComponent = entity.getComponent(TransformComponent);
-
-        const renderers = this.getRenderersByEntityComponents(entity);
-        if (renderers.length === 0) {
-            console.warn(`no renderer found for entity #${entity.id}, removing RenderComponent`);
-            entity.removeComponent(RenderComponent);
+        if (!entity.hasComponent(componentType)) {
             return;
         }
 
-        renderers.forEach((renderer) => {
-            if (transformComponent) {
-                this.context.translate(transformComponent.position.x, transformComponent.position.y);
-            }
-            renderer.render(entity);
+        const transformComponent = entity.getComponent(TransformComponent);
+        const renderer = this.getComponentRender(componentType);
+        if (null === renderer) {
+            return;
+        }
 
-            this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
-        });
+        if (transformComponent) {
+            this.context.translate(transformComponent.position.x, transformComponent.position.y);
+        }
+        renderer.render(entity);
+
+        this.context.setTransform(1, 0, 0, 1, 0, 0);// reset transform
+    }
+
+    private getComponentRender(componentType: ComponentType): IComponentRenderer | null {
+        const componentRenderer = this.componentRenderers.find(
+            (componentRenderer) => componentType === componentRenderer.component
+        );
+
+        return componentRenderer !== undefined ? componentRenderer.renderer : null;
     }
 }

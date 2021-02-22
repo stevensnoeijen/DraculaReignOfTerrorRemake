@@ -139,7 +139,7 @@ export class EntityFactory {
 				}),
 			})
 			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_UI + 1,
+				layer: Constants.LAYER_UI,
 			});
 	}
 }
