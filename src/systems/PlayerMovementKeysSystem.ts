@@ -1,5 +1,6 @@
 import { System } from 'ecsy';
 import { MoveTransformVelocityComponent } from '../components/MoveTransformVelocityComponent';
+import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
 import { PlayerMovementKeysComponent } from '../components/PlayerMovementKeysComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { TransformComponent } from '../components/TransformComponent';
@@ -42,11 +43,13 @@ export class PlayerMovementKeysSystem extends System {
 			}).normalized();
 
 			const moveTransformVelocityComponent = entity.getMutableComponent(MoveTransformVelocityComponent);
-			if (!moveTransformVelocityComponent) {
-				continue;
+			if (moveTransformVelocityComponent) {
+				moveTransformVelocityComponent.velocity = moveVector;
 			}
-
-			moveTransformVelocityComponent.velocity = moveVector;
+			const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
+			if (moveVelocityComponent) {
+				moveVelocityComponent.velocity = moveVector;
+			}
 
 			const transformComponent = entity.getMutableComponent(TransformComponent);
 			if (!transformComponent) {

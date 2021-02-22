@@ -40,6 +40,8 @@ import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseCo
 import { PlayerMovementMouseSystem } from './systems/PlayerMovementMouseSystem';
 import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
 import { PlayerSelectionSystem } from './systems/PlayerSelectionSystem';
+import { MoveVelocityComponent } from './components/MoveVelocityComponent';
+import { MoveVelocitySystem } from './systems/MoveVelocitySystem';
 
 type AppProps = {};
 
@@ -92,6 +94,8 @@ export default class App extends Component<AppProps> {
 			.registerComponent(MovePositionDirectComponent)
 			.registerComponent(PlayerMovementMouseComponent)
 			.registerComponent(PlayerMovementKeysComponent)
+			// .registerComponent(PhysicsMatterjsComponent)
+			.registerComponent(MoveVelocityComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerSelectionSystem)
 			.registerSystem(FpsSystem)
@@ -102,7 +106,9 @@ export default class App extends Component<AppProps> {
 			.registerSystem(InputSystem, { canvas: canvas })
 			.registerSystem(PlayerMovementKeysSystem)
 			.registerSystem(MovePositionDirectSystem)
-			.registerSystem(PlayerMovementMouseSystem);
+			.registerSystem(PlayerMovementMouseSystem)
+			// .registerSystem(PhysicsMatterjsSystem)
+			.registerSystem(MoveVelocitySystem);
 
 		EntityFactory.createSelector(this.world, {
 			position: {
@@ -144,24 +150,24 @@ export default class App extends Component<AppProps> {
 	}
 
 	private startLevel(): void {
-		// Array.from(Array(100)).forEach(() => {
-		let x = Math.round(
-			Math.random() * Constants.GAME_WIDTH
-		);
-		x = x - (x % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
-		let y = Math.round(
-			Math.random() * Constants.GAME_HEIGHT
-		) + (Constants.UNIT_SIZE / 2);
-		y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+		Array.from(Array(100)).forEach(() => {
+			let x = Math.round(
+				Math.random() * Constants.GAME_WIDTH
+			);
+			x = x - (x % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+			let y = Math.round(
+				Math.random() * Constants.GAME_HEIGHT
+			) + (Constants.UNIT_SIZE / 2);
+			y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
 
-		EntityFactory.createUnit(this.world, {
-			position: {
-				x: x,
-				y: y
-			},
-			color: 'red',
+			EntityFactory.createUnit(this.world, {
+				position: {
+					x: x,
+					y: y
+				},
+				color: 'red',
+			});
 		});
-		// });
 	}
 
 	private frame(): void {

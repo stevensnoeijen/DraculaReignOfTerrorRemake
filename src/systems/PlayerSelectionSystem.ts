@@ -1,5 +1,5 @@
 import { SelectorComponent } from '../components/SelectorComponent';
-import { System, World, Attributes, Entity, SystemQueries } from 'ecsy';
+import { System, Entity, SystemQueries } from 'ecsy';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { TransformComponent } from '../components/TransformComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
@@ -34,10 +34,6 @@ export class PlayerSelectionSystem extends System {
 	 * but can be cancelled when dblclick-ing for moving entities.
 	 */
 	private deselectEntitiesTimeout: NodeJS.Timeout | null = null;
-
-	constructor(world: World, attributes: Attributes) {
-		super(world, attributes);
-	}
 
 	private getSelector(): Entity {
 		return this.queries.selector.results[0];

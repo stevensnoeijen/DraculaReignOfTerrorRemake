@@ -20,10 +20,10 @@ import { Vector2 } from './math/Vector2';
 import { Text } from './graphics/Text';
 import { Rectangle } from './graphics/shapes/Rectangle';
 import { ShapeFactory } from './graphics/shapes/ShapeFactory';
-import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
 import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
 import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
+import { MoveVelocityComponent } from './components/MoveVelocityComponent';
 
 type Position = { x: number, y: number };
 
@@ -78,7 +78,7 @@ export class EntityFactory {
 				maxPoints: 10,
 			})
 			.addComponent(AliveComponent)
-			.addComponent(MoveTransformVelocityComponent, {
+			.addComponent(MoveVelocityComponent, {
 				moveSpeed: 50
 			})
 			.addComponent(PlayerMovementKeysComponent)
