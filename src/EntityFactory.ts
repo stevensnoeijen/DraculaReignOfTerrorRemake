@@ -10,7 +10,6 @@ import { ShapeComponent } from './components/ShapeComponent';
 import { World } from 'ecsy';
 import { RenderComponent } from './components/RenderComponent';
 import { LayerComponent } from './components/LayerComponent';
-import { TweenComponent } from './components/TweenComponent';
 import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
@@ -75,7 +74,6 @@ export class EntityFactory {
 				layer: Constants.LAYER_INTERMEDIATE,
 			})
 			.addComponent(SelectableComponent)
-			.addComponent(TweenComponent)
 			.addComponent(HealthComponent, {
 				points: Math.round(Math.random() * 10),
 				maxPoints: 10,
