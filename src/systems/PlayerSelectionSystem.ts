@@ -10,7 +10,10 @@ import { ShapeComponent } from '../components/ShapeComponent';
 import { Rectangle } from '../graphics/shapes/Rectangle';
 import { Input } from '../input/Input';
 
-export class PlayerControlSystem extends System {
+/**
+ * System for selecting units with {@link Input}'s' mouse.
+ */
+export class PlayerSelectionSystem extends System {
 	public static queries: SystemQueries = {
 		selectable: {
 			components: [SelectableComponent],
@@ -20,10 +23,6 @@ export class PlayerControlSystem extends System {
 		}
 	};
 	private static readonly SINGLE_UNIT_DISTANCE = 5;
-
-	constructor(world: World, attributes: Attributes) {
-		super(world, attributes);
-	}
 
 	/**
 	 * Start selection.
@@ -35,6 +34,10 @@ export class PlayerControlSystem extends System {
 	 * but can be cancelled when dblclick-ing for moving entities.
 	 */
 	private deselectEntitiesTimeout: NodeJS.Timeout | null = null;
+
+	constructor(world: World, attributes: Attributes) {
+		super(world, attributes);
+	}
 
 	private getSelector(): Entity {
 		return this.queries.selector.results[0];
@@ -122,7 +125,7 @@ export class PlayerControlSystem extends System {
 	}
 
 	private selectEntities(): void {
-		if (Vector2.distance(this.startPosition!, Input.mousePosition) < PlayerControlSystem.SINGLE_UNIT_DISTANCE) {
+		if (Vector2.distance(this.startPosition!, Input.mousePosition) < PlayerSelectionSystem.SINGLE_UNIT_DISTANCE) {
 			// single unit select
 			const entity = this.getEntityAtPosition(Input.mousePosition.x, Input.mousePosition.y);
 			if (entity) {
@@ -172,7 +175,7 @@ export class PlayerControlSystem extends System {
 			// selector is active
 			if (Input.isMouseButtonUp(0)) {
 				this.endSelect();
-			} else if (Vector2.distance(this.startPosition, Input.mousePosition) > PlayerControlSystem.SINGLE_UNIT_DISTANCE) {
+			} else if (Vector2.distance(this.startPosition, Input.mousePosition) > PlayerSelectionSystem.SINGLE_UNIT_DISTANCE) {
 				// mouse is dragging
 				this.updateSelect();
 			}

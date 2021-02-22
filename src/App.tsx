@@ -40,7 +40,7 @@ import { MovePositionDirectComponent } from './components/MovePositionDirectComp
 import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
 import { PlayerMovementMouseSystem } from './systems/PlayerMovementMouseSystem';
 import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
-import { PlayerControlSystem } from './systems/PlayerControlSystem';
+import { PlayerSelectionSystem } from './systems/PlayerSelectionSystem';
 
 type AppProps = {};
 
@@ -95,7 +95,7 @@ export default class App extends Component<AppProps> {
 			.registerComponent(PlayerMovementMouseComponent)
 			.registerComponent(PlayerMovementKeysComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
-			.registerSystem(PlayerControlSystem)
+			.registerSystem(PlayerSelectionSystem)
 			.registerSystem(FpsSystem)
 			.registerSystem(TweenSystem)
 			.registerSystem(HealthSystem)

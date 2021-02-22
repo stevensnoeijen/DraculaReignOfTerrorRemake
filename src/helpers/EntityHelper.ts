@@ -7,11 +7,6 @@ import { MovePositionDirectComponent } from '../components/MovePositionDirectCom
 import { Bounds } from '../math/collision/Bounds';
 import { Vector2 } from '../math/Vector2';
 
-type IsInsideOptions = {
-	offsetWidth?: number;
-	offsetHeight?: number;
-};
-
 export class EntityHelper {
 	public static isVisible(entity: Entity, undefinedComponent = false): boolean {
 		const visibilityComponent = entity.getComponent(VisibilityComponent);

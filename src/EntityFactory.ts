@@ -85,7 +85,9 @@ export class EntityFactory {
 				width: width,
 				height: height,
 			})
-			.addComponent(MoveTransformVelocityComponent)
+			.addComponent(MoveTransformVelocityComponent, {
+				moveSpeed: 50
+			})
 			.addComponent(PlayerMovementKeysComponent)
 			.addComponent(MovePositionDirectComponent)
 			.addComponent(PlayerMovementMouseComponent);
