@@ -2,15 +2,12 @@ import { TextComponent } from './components/TextComponent';
 import { MovableComponent } from './components/MovableComponent';
 import { SelectorComponent } from './components/SelectorComponent';
 import { SizeComponent } from './components/SizeComponent';
-import {
-	TransformComponent,
-} from './components/TransformComponent';
+import { TransformComponent } from './components/TransformComponent';
 import { Constants } from './Constants';
 import { ShapeComponent } from './components/ShapeComponent';
 import { World } from 'ecsy';
 import { RenderComponent } from './components/RenderComponent';
 import { LayerComponent } from './components/LayerComponent';
-import Color from 'color';
 import { FpsComponent } from './components/FpsComponent';
 import { VisibilityComponent } from './components/VisibilityComponent';
 import { SelectableComponent } from './components/SelectableComponent';
@@ -25,7 +22,7 @@ import { MovePositionDirectComponent } from './components/MovePositionDirectComp
 import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './components/MoveVelocityComponent';
 
-type Position = { x: number, y: number };
+type Position = { x: number; y: number };
 
 interface IUnitProps {
 	position: Position;
@@ -52,7 +49,8 @@ export class EntityFactory {
 		const triangle = ShapeFactory.triangle(Constants.UNIT_SIZE);
 		triangle.fillStyle = props.color;
 
-		world.createEntity()
+		world
+			.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(ShapeComponent, {
 				shape: triangle,
@@ -76,7 +74,7 @@ export class EntityFactory {
 			})
 			.addComponent(AliveComponent)
 			.addComponent(MoveVelocityComponent, {
-				moveSpeed: 50
+				moveSpeed: 50,
 			})
 			.addComponent(PlayerMovementKeysComponent)
 			.addComponent(MovePositionDirectComponent)
@@ -88,13 +86,13 @@ export class EntityFactory {
 			.createEntity()
 			.addComponent(ShapeComponent, {
 				shape: new Rectangle({
-					lineStyle: Color('#FFF'),
+					lineStyle: 'black',
 					anchor: 'top-left',
 					lineWidth: 2,
 					size: {
 						width: 0,
 						height: 0,
-					}
+					},
 				}),
 			})
 			.addComponent(RenderComponent)
