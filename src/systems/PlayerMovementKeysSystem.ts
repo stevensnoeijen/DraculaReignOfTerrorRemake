@@ -37,15 +37,15 @@ export class PlayerMovementKeysSystem extends System {
 				moveX += 1;
 			}
 
-			const moveVector = new Vector2(moveX, moveY).normalized();
+			const moveVelocity = new Vector2(moveX, moveY).normalized();
 
 			const moveTransformVelocityComponent = entity.getMutableComponent(MoveTransformVelocityComponent);
 			if (moveTransformVelocityComponent) {
-				moveTransformVelocityComponent.velocity = moveVector;
+				moveTransformVelocityComponent.velocity = moveVelocity;
 			}
 			const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
 			if (moveVelocityComponent) {
-				moveVelocityComponent.velocity = moveVector;
+				moveVelocityComponent.velocity = moveVelocity;
 			}
 
 			const transformComponent = entity.getMutableComponent(TransformComponent);
@@ -53,8 +53,8 @@ export class PlayerMovementKeysSystem extends System {
 				continue;
 			}
 
-			if (!moveVector.equals(Vector2.ZERO)) {
-				transformComponent.rotation = Vector2.angle(Vector2.ZERO, moveVector) - 90;
+			if (!moveVelocity.equals(Vector2.ZERO)) {
+				transformComponent.rotation = Vector2.angle(Vector2.ZERO, moveVelocity) - 90;
 			}
 		}
 	}
