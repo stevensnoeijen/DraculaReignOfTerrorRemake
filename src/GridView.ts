@@ -12,7 +12,7 @@ export class GridView {
             Array.from({ length: this.grid.width }).forEach((xValue, x) => {
 
                 const text = new Text({
-                    position: Vector2.adds(this.grid.getWorldPosition(x, y), new Vector2({ x: this.grid.cellSize / 2, y: this.grid.cellSize / 2, })),
+                    position: Vector2.adds(this.grid.getWorldPosition(x, y), new Vector2(this.grid.cellSize / 2, this.grid.cellSize / 2)),
                     text: '' + this.grid.getGridObject(x, y),
                     font: '10px Arial',
                     color: Colors.WHITE,

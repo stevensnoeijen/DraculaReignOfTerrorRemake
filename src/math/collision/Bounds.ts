@@ -22,10 +22,7 @@ export class Bounds {
 
     constructor(public readonly center: Vector2,
         public readonly size: Vector2) {
-        this.extends = new Vector2({
-            x: size.x / 2,
-            y: size.y / 2,
-        });
+        this.extends = new Vector2(size.x / 2, size.y / 2);
         this.min = Vector2.subtracts(this.center, this.extends);
         this.max = Vector2.adds(this.center, this.extends);
     }

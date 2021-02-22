@@ -25,10 +25,7 @@ export class InputSystem extends System {
         });
 
         this.canvas.addEventListener('mousemove', (event: MouseEvent) => {
-            Input.mousePosition = new Vector2({
-                x: event.offsetX,
-                y: event.offsetY,
-            });
+            Input.mousePosition = new Vector2(event.offsetX, event.offsetY);
         });
 
         window.addEventListener('keydown', (event: KeyboardEvent) => {

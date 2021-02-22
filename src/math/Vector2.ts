@@ -1,17 +1,8 @@
-export interface Vector2Props {
-    x: number;
-    y: number;
-}
-
 export class Vector2 {
-    public static ZERO: Vector2 = Object.seal(new Vector2({ x: 0, y: 0, }));
+    public static ZERO: Vector2 = Object.seal(new Vector2(0, 0));
 
-    public readonly x: number;
-    public readonly y: number;
-
-    public constructor(props: Vector2Props) {
-        this.x = props.x;
-        this.y = props.y;
+    public constructor(public x: number,
+        public y: number) {
     }
 
     /**
@@ -30,10 +21,7 @@ export class Vector2 {
     }
 
     public static scale(a: Vector2, b: Vector2): Vector2 {
-        return new Vector2({
-            x: a.x * b.x,
-            y: a.y * b.y,
-        });
+        return new Vector2(a.x * b.x, a.y * b.y);
     }
 
     /**
@@ -43,10 +31,7 @@ export class Vector2 {
      * @returns {Vector2} made from the smallest components of two vectors
      */
     public static min(a: Vector2, b: Vector2): Vector2 {
-        return new Vector2({
-            x: Math.min(a.x, b.x),
-            y: Math.min(a.y, b.y),
-        });
+        return new Vector2(Math.min(a.x, b.x), Math.min(a.y, b.y));
     }
 
     /**
@@ -56,45 +41,27 @@ export class Vector2 {
      * @returns {Vector2} made from the largest components of two vectors.
      */
     public static max(a: Vector2, b: Vector2): Vector2 {
-        return new Vector2({
-            x: Math.max(a.x, b.x),
-            y: Math.max(a.y, b.y),
-        });
+        return new Vector2(Math.max(a.x, b.x), Math.max(a.y, b.y));
     }
 
     public static lerp(from: Vector2, to: Vector2, percentage: number): Vector2 {
-        return new Vector2({
-            x: from.x * (1 - percentage) + to.x * percentage,
-            y: from.y * (1 - percentage) + to.y * percentage,
-        });
+        return new Vector2(from.x * (1 - percentage) + to.x * percentage, from.y * (1 - percentage) + to.y * percentage);
     }
 
     public static subtracts(vector: Vector2, subtractor: Vector2): Vector2 {
-        return new Vector2({
-            x: vector.x - subtractor.x,
-            y: vector.y - subtractor.y,
-        });
+        return new Vector2(vector.x - subtractor.x, vector.y - subtractor.y);
     }
 
     public static multiplies(a: Vector2, multiplier: number): Vector2 {
-        return new Vector2({
-            x: a.x * multiplier,
-            y: a.y * multiplier,
-        });
+        return new Vector2(a.x * multiplier, a.y * multiplier);
     }
 
     public static divides(a: Vector2, devider: number): Vector2 {
-        return new Vector2({
-            x: a.x / devider,
-            y: a.y / devider,
-        });
+        return new Vector2(a.x / devider, a.y / devider);
     }
 
     public static adds(a: Vector2, b: Vector2): Vector2 {
-        return new Vector2({
-            x: a.x + b.x,
-            y: a.y + b.y,
-        });
+        return new Vector2(a.x + b.x, a.y + b.y);
     }
 
     /**
@@ -107,10 +74,7 @@ export class Vector2 {
     public normalized(): Vector2 {
         const magnitude = this.magnitude();
 
-        return new Vector2({
-            x: this.x !== 0 ? this.x / magnitude : 0,
-            y: this.y !== 0 ? this.y / magnitude : 0,
-        })
+        return new Vector2(this.x !== 0 ? this.x / magnitude : 0, this.y !== 0 ? this.y / magnitude : 0)
     }
 
     public equals(other: Vector2): boolean {

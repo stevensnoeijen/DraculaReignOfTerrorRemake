@@ -37,10 +37,7 @@ export class PlayerMovementKeysSystem extends System {
 				moveX += 1;
 			}
 
-			const moveVector = new Vector2({
-				x: moveX,
-				y: moveY,
-			}).normalized();
+			const moveVector = new Vector2(moveX, moveY).normalized();
 
 			const moveTransformVelocityComponent = entity.getMutableComponent(MoveTransformVelocityComponent);
 			if (moveTransformVelocityComponent) {

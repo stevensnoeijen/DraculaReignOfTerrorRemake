@@ -46,7 +46,7 @@ import { MoveVelocitySystem } from './systems/MoveVelocitySystem';
 type AppProps = {};
 
 export default class App extends Component<AppProps> {
-	private canvas: HTMLCanvasElement;
+	private canvas!: HTMLCanvasElement;
 	private world: World;
 	private lastFrameTime = 0;
 	private options: { [key: string]: string | string[] | null; }

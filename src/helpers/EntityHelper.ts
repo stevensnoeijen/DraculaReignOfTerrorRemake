@@ -39,14 +39,8 @@ export class EntityHelper {
 			return false;
 		}
 
-		const bounds = new Bounds(transform.position, new Vector2({
-			x: size.width,
-			y: size.height,
-		}));
-		return bounds.contains(new Vector2({
-			x: x,
-			y: y,
-		}))
+		const bounds = new Bounds(transform.position, new Vector2(size.width, size.height));
+		return bounds.contains(new Vector2(x, y));
 	}
 
 	/**

@@ -58,10 +58,7 @@ export class EntityFactory {
 				shape: triangle,
 			})
 			.addComponent(TransformComponent, {
-				position: new Vector2({
-					x: props.position.x,
-					y: props.position.y,
-				}),
+				position: new Vector2(props.position.x, props.position.y),
 				rotation: rotation,
 			})
 			.addComponent(SizeComponent, {
@@ -102,10 +99,7 @@ export class EntityFactory {
 			})
 			.addComponent(RenderComponent)
 			.addComponent(TransformComponent, {
-				position: new Vector2({
-					x: props.position.x,
-					y: props.position.y,
-				}),
+				position: new Vector2(props.position.x, props.position.y),
 			})
 			.addComponent(SizeComponent, {
 				width: 100,
@@ -133,10 +127,7 @@ export class EntityFactory {
 			})
 			.addComponent(FpsComponent)
 			.addComponent(TransformComponent, {
-				position: new Vector2({
-					x: props.position.x,
-					y: props.position.y,
-				}),
+				position: new Vector2(props.position.x, props.position.y),
 			})
 			.addComponent(LayerComponent, {
 				layer: Constants.LAYER_UI,

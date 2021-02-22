@@ -59,7 +59,7 @@ export class Grid<GridObject extends BaseGridObject> {
 
     private getPosition(worldPosition: Vector2): { x: number; y: number } {
         return {
-            ...Vector2.divides(Vector2.subtracts(worldPosition, this.originPosition), this.cellSize)
+            ...Vector2.divides(Vector2.subtracts(worldPosition, this.originPosition), this.cellSize),
         };
     }
 
@@ -79,10 +79,7 @@ export class Grid<GridObject extends BaseGridObject> {
     }
 
     public getWorldPosition(x: number, y: number): Vector2 {
-        return Vector2.adds(Vector2.multiplies(new Vector2({
-            x: x,
-            y: y,
-        }), this.cellSize), this.originPosition);
+        return Vector2.adds(Vector2.multiplies(new Vector2(x, y), this.cellSize), this.originPosition);
     }
 
     static isNumber(value: unknown): value is number {
@@ -109,9 +106,11 @@ export class Grid<GridObject extends BaseGridObject> {
         }
         this.content[y as number][x] = gridObject;
         this.eventBus.emit('gridChanged', {
-            x: x,
-            y: y,
-            object: gridObject,
+            detail: {
+                x: x,
+                y: y,
+                object: gridObject,
+            }
         });
     }
 

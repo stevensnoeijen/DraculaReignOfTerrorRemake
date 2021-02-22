@@ -6,18 +6,9 @@ export class ShapeFactory {
         const half = size / 2;
 
         return Polyline.builder({})
-            .addPoint(new Vector2({
-                x: -half,
-                y: -half
-            }))
-            .addPoint(new Vector2({
-                x: half,
-                y: -half,
-            }))
-            .addPoint(new Vector2({
-                x: 0,
-                y: half,
-            }))
+            .addPoint(new Vector2(-half, -half))
+            .addPoint(new Vector2(half, -half))
+            .addPoint(new Vector2(0, half))
             .closed()
             .build();
     }

@@ -72,7 +72,7 @@ export class MoveToAction implements ITweenAction {
     private setRotation(): void {
         const transform = this.entity.getMutableComponent(TransformComponent);
         if (transform) {
-            transform.rotation = Vector2.angle(new Vector2({ x: this.startPosition.x, y: this.startPosition.y }), new Vector2({ x: this.destination.x, y: this.destination.y })) - 90;
+            transform.rotation = Vector2.angle(new Vector2(this.startPosition.x, this.startPosition.y), new Vector2(this.destination.x, this.destination.y)) - 90;
         }
     }
 

@@ -24,7 +24,7 @@ export class EventBus<Event> {
         this.eventTarget.removeEventListener(type, listener);
     }
 
-    public emit(type: string, detail?: Event): boolean {
+    public emit(type: string, detail?: CustomEventInit): boolean {
         return this.eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
     }
 }

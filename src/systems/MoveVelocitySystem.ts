@@ -90,10 +90,7 @@ export class MoveVelocitySystem extends System {
 		}
 		Matter.Body.setVelocity(moveVelocityComponent.body, Matter.Vector.mult(Matter.Vector.create(moveVelocityComponent.velocity.x, moveVelocityComponent.velocity.y), moveVelocityComponent.moveSpeed * (delta / 1000)));
 
-		transformComponent.position = new Vector2({
-			x: moveVelocityComponent.body.position.x,
-			y: moveVelocityComponent.body.position.y,
-		});
+		transformComponent.position = new Vector2(moveVelocityComponent.body.position.x, moveVelocityComponent.body.position.y);
 	}
 
 	private handleEntityBodyAdded(entity: Entity): void {
@@ -114,10 +111,7 @@ export class MoveVelocitySystem extends System {
 			return;
 		}
 
-		const bounds = new Bounds(transformComponent.position, new Vector2({
-			x: sizeComponent.width,
-			y: sizeComponent.height
-		}));
+		const bounds = new Bounds(transformComponent.position, new Vector2(sizeComponent.width, sizeComponent.height));
 
 		const body = Matter.Bodies.rectangle(transformComponent.position.x - bounds.extends.x, transformComponent.position.y - bounds.extends.y, sizeComponent.width, sizeComponent.height);
 		Matter.World.add(this.engine.world, body);
