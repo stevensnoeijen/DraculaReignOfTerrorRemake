@@ -9,7 +9,8 @@ export class Constants {
 	 */
 	public static readonly ANIMATION_UNIT_SPEED = 250;
 
-	public static readonly LAYER_BACKGROUND = 1;
-	public static readonly LAYER_INTERMEDIATE = 2;
-	public static readonly LAYER_FOREGROUND = 3;
+	public static readonly LAYER_TILES = 0;
+	public static readonly LAYER_DEAD = 30;
+	public static readonly LAYER_UNITS = 50;
+	public static readonly LAYER_UI = 100;
 }

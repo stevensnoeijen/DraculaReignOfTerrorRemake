@@ -6,8 +6,15 @@ import { VisibilityComponent } from '../components/VisibilityComponent';
 import { MovePositionDirectComponent } from '../components/MovePositionDirectComponent';
 import { Bounds } from '../math/collision/Bounds';
 import { Vector2 } from '../math/Vector2';
+import { AliveComponent } from '../components/AliveComponent';
 
 export class EntityHelper {
+	public static isAlive(entity: Entity): boolean {
+		const aliveComponent = entity.getComponent(AliveComponent);
+
+		return aliveComponent?.alive || false;
+	}
+
 	public static isVisible(entity: Entity, undefinedComponent = false): boolean {
 		const visibilityComponent = entity.getComponent(VisibilityComponent);
 		if (!visibilityComponent && undefinedComponent) {
@@ -18,6 +25,7 @@ export class EntityHelper {
 			return true;
 		}
 	}
+
 	public static isPositionInsideEntity(
 		entity: Entity,
 		x: number,

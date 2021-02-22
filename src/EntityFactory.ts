@@ -70,7 +70,7 @@ export class EntityFactory {
 			})
 			.addComponent(MovableComponent)
 			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_INTERMEDIATE,
+				layer: Constants.LAYER_UNITS,
 			})
 			.addComponent(SelectableComponent)
 			.addComponent(HealthComponent, {
@@ -116,7 +116,7 @@ export class EntityFactory {
 				visible: false,
 			})
 			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_FOREGROUND,
+				layer: Constants.LAYER_UI,
 			});
 	}
 
@@ -139,7 +139,7 @@ export class EntityFactory {
 				}),
 			})
 			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_FOREGROUND + 1,
+				layer: Constants.LAYER_UI + 1,
 			});
 	}
 }

@@ -126,7 +126,7 @@ export default class App extends Component<AppProps> {
 		this.world.createEntity()
 			.addComponent(RenderComponent)
 			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_BACKGROUND - 1,
+				layer: Constants.LAYER_TILES + 1,
 			})
 			.addComponent(DebugComponent);
 

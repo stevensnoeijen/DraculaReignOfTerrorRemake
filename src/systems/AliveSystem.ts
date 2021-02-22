@@ -1,7 +1,9 @@
 import { System, SystemQueries, Entity } from 'ecsy';
 import { AliveComponent } from '../components/AliveComponent';
 import { HealthComponent } from '../components/HealthComponent';
+import { LayerComponent } from '../components/LayerComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
+import { Constants } from '../Constants';
 
 export class AliveSystem extends System {
 	public static queries: SystemQueries = {
@@ -35,5 +37,9 @@ export class AliveSystem extends System {
 	private handleDead(entity: Entity): void {
 		entity.removeComponent(SelectableComponent);
 		entity.removeComponent(HealthComponent);
+		const layerComponent = entity.getMutableComponent(LayerComponent);
+		if (layerComponent) {
+			layerComponent.layer = Constants.LAYER_DEAD;
+		}
 	}
 }
