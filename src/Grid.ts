@@ -76,21 +76,6 @@ export class Grid<O extends BaseGridObject> {
 		};
 	}
 
-	private checkPosition(x: number, y: number): void {
-		if (!Number.isInteger(x)) {
-			throw new Error(`x must be an integer, it was ${x}`);
-		}
-		if (!Number.isInteger(y)) {
-			throw new Error(`y must be an integer, it was ${y}`);
-		}
-		if (x < 0 || x >= this.width) {
-			throw new Error(`x must be between 0 and ${this.width}`);
-		}
-		if (y < 0 || y >= this.height) {
-			throw new Error(`y must be between 0 and ${this.height}`);
-		}
-	}
-
 	public getWorldPosition(x: number, y: number): Vector2 {
 		return Vector2.adds(
 			Vector2.multiplies(new Vector2(x, y), this.cellSize),
@@ -104,6 +89,14 @@ export class Grid<O extends BaseGridObject> {
 
 	public setGridObject(x: number, y: number, gridObject: O): void;
 	public setGridObject(worldPosition: Vector2, gridObject: O): void;
+
+	/**
+	 * Sets grid object to position, if position is legit.
+	 *
+	 * @param {number} x
+	 * @param {number} y
+	 * @param {O} gridObject
+	 */
 	public setGridObject(
 		x: number | Vector2,
 		y: number | O,
@@ -121,10 +114,12 @@ export class Grid<O extends BaseGridObject> {
 				`setValue(${x}, ${y}, ${gridObject}) is called incorrectly`
 			);
 		}
-
-		this.checkPosition(x, y);
 		if (undefined === gridObject) {
 			throw new Error('value was undefined');
+		}
+
+		if (this.content[y] === undefined || this.content[y][x] === undefined) {
+			return;
 		}
 		this.content[y as number][x] = gridObject;
 		this.eventBus.emit('gridChanged', {
@@ -136,9 +131,16 @@ export class Grid<O extends BaseGridObject> {
 		});
 	}
 
-	public getGridObject(x: number, y: number): O;
-	public getGridObject(worldPosition: Vector2): O;
-	public getGridObject(x: number | Vector2, y?: number): O {
+	public getGridObject(x: number, y: number): O | null;
+	public getGridObject(worldPosition: Vector2): O | null;
+
+	/**
+	 *
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {O|null} if coordinates are valid a GridObject is returned, else null.
+	 */
+	public getGridObject(x: number | Vector2, y?: number): O | null {
 		if (x instanceof Vector2) {
 			const position = this.getPosition(x);
 			x = position.x;
@@ -148,7 +150,10 @@ export class Grid<O extends BaseGridObject> {
 			throw new Error('y was undefined');
 		}
 
-		this.checkPosition(x, y);
+		if (this.content[y] === undefined || this.content[y][x] === undefined) {
+			return null;
+		}
+
 		return this.content[y][x];
 	}
 }
