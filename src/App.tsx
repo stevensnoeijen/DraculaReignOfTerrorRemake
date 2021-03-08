@@ -22,14 +22,11 @@ import { HealthComponent } from './components/HealthComponent';
 import { AliveComponent } from './components/AliveComponent';
 import { HealthSystem } from './systems/HealthSystem';
 import { AliveSystem } from './systems/AliveSystem';
-import { Grid } from './Grid';
-import { Vector2 } from './math/Vector2';
 import { DebugComponent } from './components/DebugComponent';
 import * as QueryString from 'query-string';
 import { Debug } from './Debug';
 import { GridComponent } from './components/GridComponent';
 import { GridViewComponent } from './components/GridViewComponent';
-import { GridView } from './GridView';
 import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
 import { MoveTransformVelocitySystem } from './systems/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
@@ -42,6 +39,10 @@ import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
 import { PlayerSelectionSystem } from './systems/PlayerSelectionSystem';
 import { MoveVelocityComponent } from './components/MoveVelocityComponent';
 import { MoveVelocitySystem } from './systems/MoveVelocitySystem';
+import { GridView } from './GridView';
+import { Pathfinding } from './ai/Pathfinding';
+import { PathNode } from './ai/PAthNode';
+import { PathfindingComponent } from './components/PathfindingComponent';
 
 type AppProps = {};
 
@@ -94,8 +95,8 @@ export default class App extends Component<AppProps> {
 			.registerComponent(MovePositionDirectComponent)
 			.registerComponent(PlayerMovementMouseComponent)
 			.registerComponent(PlayerMovementKeysComponent)
-			// .registerComponent(PhysicsMatterjsComponent)
 			.registerComponent(MoveVelocityComponent)
+			.registerComponent(PathfindingComponent)
 			.registerSystem(RenderSystem, { canvas: canvas })
 			.registerSystem(PlayerSelectionSystem)
 			.registerSystem(FpsSystem)
@@ -107,7 +108,6 @@ export default class App extends Component<AppProps> {
 			.registerSystem(PlayerMovementKeysSystem)
 			.registerSystem(MovePositionDirectSystem)
 			.registerSystem(PlayerMovementMouseSystem)
-			// .registerSystem(PhysicsMatterjsSystem)
 			.registerSystem(MoveVelocitySystem);
 
 		EntityFactory.createSelector(this.world, {
@@ -130,17 +130,29 @@ export default class App extends Component<AppProps> {
 			})
 			.addComponent(DebugComponent);
 
-		const grid = new Grid<number>({
-			width: Math.ceil(Constants.GAME_WIDTH / Constants.UNIT_SIZE),
-			height: Math.ceil(Constants.GAME_HEIGHT / Constants.UNIT_SIZE),
-			cellSize: Constants.UNIT_SIZE,
-			originPosition: Vector2.ZERO,
-			initGridObject: () => 0
-		});
+
+
+		// const grid = new Grid<number>({
+		// 	width: Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE),
+		// 	height: Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE),
+		// 	cellSize: Constants.CELL_SIZE,
+		// 	originPosition: Vector2.ZERO,
+		// 	initGridObject: () => 0
+		// });
+		// this.world.createEntity()
+		// 	.addComponent(RenderComponent)
+		// 	.addComponent(GridComponent, { grid: grid })
+		// 	.addComponent(GridViewComponent, { view: new GridView<number>(grid) });
+
+		const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
+
 		this.world.createEntity()
 			.addComponent(RenderComponent)
-			.addComponent(GridComponent, { grid: grid })
-			.addComponent(GridViewComponent, { view: new GridView(grid) });
+			.addComponent(PathfindingComponent, {
+				pathfinding: pathfinding,
+			})
+			.addComponent(GridComponent, { grid: pathfinding.grid })
+			.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
 
 		this.startLevel();
 
@@ -154,11 +166,11 @@ export default class App extends Component<AppProps> {
 			let x = Math.round(
 				Math.random() * Constants.GAME_WIDTH
 			);
-			x = x - (x % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+			x -= (x % Constants.CELL_SIZE);
 			let y = Math.round(
 				Math.random() * Constants.GAME_HEIGHT
-			) + (Constants.UNIT_SIZE / 2);
-			y = y - (y % Constants.UNIT_SIZE) + (Constants.UNIT_SIZE / 2);
+			) + (Constants.CELL_SIZE / 2);
+			y -= (y % Constants.CELL_SIZE);
 
 			EntityFactory.createUnit(this.world, {
 				position: {
@@ -188,7 +200,7 @@ export default class App extends Component<AppProps> {
 				<canvas
 					width={Constants.GAME_WIDTH}
 					height={Constants.GAME_HEIGHT}
-					style={{ backgroundColor: '#d4d4d4' }}
+					style={{ backgroundColor: '#d4d4d4', height: '' }}
 					ref={this.handleCanvas}
 				/>
 			</View>

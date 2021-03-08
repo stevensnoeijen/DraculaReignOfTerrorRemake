@@ -11,7 +11,7 @@ export class FpsSystem extends System {
 	};
 	private static readonly UPDATE_TIME = 1000;
 
-	private update = 1000;
+	private update = 0;
 
 	public execute(delta: number, time: number): void {
 		this.update += delta;
@@ -20,7 +20,7 @@ export class FpsSystem extends System {
 			this.queries.fps.results.forEach((entity) => {
 				const textComponent = entity.getMutableComponent(TextComponent);
 				if (textComponent) {
-					textComponent.text.text = '' + Math.round(delta);
+					textComponent.text.text = '' + Math.round(1000 / delta);
 				}
 			});
 			this.update = 0;

@@ -2,13 +2,17 @@ import { Constants } from '../Constants';
 import { System, World, Attributes, Entity } from 'ecsy';
 import { RenderComponent } from '../components/RenderComponent';
 import { LayerComponentComparator } from '../helpers/LayerComponentComparator';
-import { EntityRenderer, ComponentType } from '../graphics/renderers/EntityRenderer';
+import {
+	EntityRenderer,
+	ComponentType,
+} from '../graphics/renderers/EntityRenderer';
 import { ShapeComponent } from '../components/ShapeComponent';
 import { HealthComponent } from '../components/HealthComponent';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { DebugComponent } from '../components/DebugComponent';
 import { TextComponent } from '../components/TextComponent';
 import { AliveComponent } from '../components/AliveComponent';
+import { GridViewComponent } from '../components/GridViewComponent';
 
 export class RenderSystem extends System {
 	public static queries = {
@@ -17,10 +21,11 @@ export class RenderSystem extends System {
 
 	private static readonly RENDER_ORDER: ComponentType[] = [
 		DebugComponent,
+		GridViewComponent,
 		ShapeComponent,
 		HealthComponent,
 		SelectableComponent,
-		TextComponent
+		TextComponent,
 	];
 
 	private readonly canvas: HTMLCanvasElement;
@@ -41,11 +46,15 @@ export class RenderSystem extends System {
 		// clear canvas
 		this.context.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
-		const renderables = this.queries.renderables.results.sort(this.compareEntity);
+		const renderables = this.queries.renderables.results.sort(
+			this.compareEntity
+		);
 
 		// Iterate through all the entities on the query
 		for (const componentType of RenderSystem.RENDER_ORDER) {
-			renderables.forEach((entity: Entity) => this.entityRenderer.render(entity, componentType));
+			renderables.forEach((entity: Entity) =>
+				this.entityRenderer.render(entity, componentType)
+			);
 		}
 	}
 

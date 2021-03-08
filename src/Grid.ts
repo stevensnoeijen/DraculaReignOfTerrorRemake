@@ -4,33 +4,33 @@ import { Vector2 } from './math/Vector2';
 
 type BaseGridObject = { toString: () => string };
 
-type GridObjectCreator<GridObject> = (x: number, y: number) => GridObject;
+type GridObjectCreator<O> = (grid: Grid<O>, x: number, y: number) => O;
 
-export interface GridProps<GridObject> {
+export interface GridProps<O> {
 	width: number;
 	height: number;
 	cellSize: number;
 	originPosition: Vector2;
-	initGridObject: GridObjectCreator<GridObject>;
+	initGridObject: GridObjectCreator<O>;
 }
 
-export type GridChangedEvent<GridObject> = CustomEvent<{
+export type GridChangedEvent<O extends unknown> = CustomEvent<{
 	x: number;
 	y: number;
-	object: GridObject;
+	object: O;
 }>;
 
-export class Grid<GridObject extends BaseGridObject> {
+export class Grid<O extends BaseGridObject> {
 	public readonly width!: number;
 	public readonly height!: number;
 	public readonly cellSize!: number;
 	public readonly originPosition!: Vector2;
-	private readonly initGridObject!: GridObjectCreator<GridObject>;
-	public readonly eventBus: EventBus<GridChangedEvent<GridObject>>;
+	private readonly initGridObject!: GridObjectCreator<O>;
+	public readonly eventBus: EventBus<GridChangedEvent<O>>;
 
-	private readonly content: GridObject[][];
+	private readonly content: O[][];
 
-	constructor(props: GridProps<GridObject>) {
+	constructor(props: GridProps<O>) {
 		Object.assign(this, props);
 		this.eventBus = new EventBus('Grid');
 
@@ -45,8 +45,8 @@ export class Grid<GridObject extends BaseGridObject> {
 		}
 	}
 
-	private createGridObject(x: number, y: number): GridObject {
-		return this.initGridObject(x, y);
+	private createGridObject(x: number, y: number): O {
+		return this.initGridObject(this, x, y);
 	}
 
 	private drawDebug(): void {
@@ -66,11 +66,12 @@ export class Grid<GridObject extends BaseGridObject> {
 		);
 	}
 
-	private getPosition(worldPosition: Vector2): { x: number; y: number } {
+	public getPosition(worldPosition: Vector2): { x: number; y: number } {
 		return {
 			...Vector2.divides(
 				Vector2.subtracts(worldPosition, this.originPosition),
-				this.cellSize
+				this.cellSize,
+				'floor'
 			),
 		};
 	}
@@ -101,17 +102,17 @@ export class Grid<GridObject extends BaseGridObject> {
 		return typeof value === 'number';
 	}
 
-	public setGridObject(x: number, y: number, gridObject: GridObject): void;
-	public setGridObject(worldPosition: Vector2, gridObject: GridObject): void;
+	public setGridObject(x: number, y: number, gridObject: O): void;
+	public setGridObject(worldPosition: Vector2, gridObject: O): void;
 	public setGridObject(
 		x: number | Vector2,
-		y: number | GridObject,
-		gridObject?: GridObject
+		y: number | O,
+		gridObject?: O
 	): void {
 		if (x instanceof Vector2) {
 			const position = this.getPosition(x);
 			// move value to correct value var
-			gridObject = y as GridObject;
+			gridObject = y as O;
 			x = position.x;
 			y = position.y;
 		}
@@ -135,9 +136,9 @@ export class Grid<GridObject extends BaseGridObject> {
 		});
 	}
 
-	public getGridObject(x: number, y: number): GridObject;
-	public getGridObject(worldPosition: Vector2): GridObject;
-	public getGridObject(x: number | Vector2, y?: number): GridObject {
+	public getGridObject(x: number, y: number): O;
+	public getGridObject(worldPosition: Vector2): O;
+	public getGridObject(x: number | Vector2, y?: number): O {
 		if (x instanceof Vector2) {
 			const position = this.getPosition(x);
 			x = position.x;

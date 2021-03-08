@@ -42,11 +42,11 @@ export class EntityFactory {
 	static first = true;
 
 	public static createUnit(world: World, props: IUnitProps): void {
-		const width = Constants.UNIT_SIZE;
-		const height = Constants.UNIT_SIZE;
+		const width = Constants.CELL_SIZE;
+		const height = Constants.CELL_SIZE;
 		let rotation = Math.random() * 360;
 		rotation -= rotation % 90;
-		const triangle = ShapeFactory.triangle(Constants.UNIT_SIZE);
+		const triangle = ShapeFactory.triangle(Constants.CELL_SIZE);
 		triangle.fillStyle = props.color;
 
 		world
@@ -88,7 +88,7 @@ export class EntityFactory {
 				shape: new Rectangle({
 					lineStyle: 'black',
 					anchor: 'top-left',
-					lineWidth: 2,
+					lineWidth: 1,
 					size: {
 						width: 0,
 						height: 0,
