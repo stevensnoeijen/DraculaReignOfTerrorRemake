@@ -15,7 +15,7 @@ export class MovePositionDirectSystem extends System {
 	public execute(delta: number, time: number): void {
 		for (const entity of this.queries.entities.results) {
 			const movePositionDirectComponent = entity.getMutableComponent(MovePositionDirectComponent);
-			if (undefined === movePositionDirectComponent || null === movePositionDirectComponent.movePosition) {
+			if (null == movePositionDirectComponent?.movePosition) {
 				continue;
 			}
 			const transformComponent = entity.getMutableComponent(TransformComponent);

@@ -71,7 +71,7 @@ export class MoveVelocitySystem extends System {
 		// if dead
 
 		const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
-		if (!moveVelocityComponent || null === moveVelocityComponent.body) {
+		if (null == moveVelocityComponent?.body) {
 			return;
 		}
 
@@ -80,7 +80,7 @@ export class MoveVelocitySystem extends System {
 
 	private updateEntityBody(entity: Entity, delta: number): void {
 		const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
-		if (!moveVelocityComponent || null === moveVelocityComponent.body) {
+		if (null == moveVelocityComponent?.body || null == moveVelocityComponent?.velocity) {
 			return;
 		}
 
@@ -94,9 +94,9 @@ export class MoveVelocitySystem extends System {
 	}
 
 	private handleEntityBodyAdded(entity: Entity): void {
-		if (!EntityHelper.isAlive(entity)) {
-			return;// dont add a dead entity
-		}
+		// if (!EntityHelper.isAlive(entity)) {
+		// 	return;// dont add a dead entity
+		// }
 
 		const transformComponent = entity.getComponent(TransformComponent);
 		if (!transformComponent) {
