@@ -5,15 +5,21 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
+    "ecsy": "^0.4.2",
     "matter-js": "^0.18.0",
-    "vue": "^3.2.25",
-    "ecsy": "^0.4.2"
+    "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@swc/jest": "^0.2.20",
+    "@types/jest": "^27.4.1",
+    "@types/matter-js": "^0.17.7",
     "@vitejs/plugin-vue": "^2.3.1",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4",
     "typescript": "^4.5.4",
     "vite": "^2.9.2",
     "vue-tsc": "^0.29.8"

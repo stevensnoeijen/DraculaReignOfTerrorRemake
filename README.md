@@ -9,13 +9,13 @@ I do not own any of the rights of the original game!
 # Requirements
 
 - node
-- yarn
 
 # QuickStart
 
 ```
-yarn install
-yarn dev
+npm install
+npm run dev
+npm run test
 ```
 
 A browser tab will open, click "Run in web browser".

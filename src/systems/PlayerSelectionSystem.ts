@@ -33,7 +33,7 @@ export class PlayerSelectionSystem extends System {
 	 * Used for deselecting units when clicking,
 	 * but can be cancelled when dblclick-ing for moving entities.
 	 */
-	private deselectEntitiesTimeout: NodeJS.Timeout | null = null;
+	private deselectEntitiesTimeout: number | null = null;
 
 	private getSelector(): Entity {
 		return this.queries.selector.results[0];

@@ -1,6 +1,5 @@
-import { Entity, System, SystemQueries, World } from 'ecsy';
+import { Attributes, Entity, System, SystemQueries, World } from 'ecsy';
 import Matter from 'matter-js';
-import { Attributes } from 'react';
 import { AliveComponent } from '../components/AliveComponent';
 import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
 import { SizeComponent } from '../components/SizeComponent';
