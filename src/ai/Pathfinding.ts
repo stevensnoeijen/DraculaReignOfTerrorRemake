@@ -1,7 +1,7 @@
 import { Constants } from '../Constants';
 import { Grid } from '../Grid';
 import { Vector2 } from '../math/Vector2';
-import { PathNode } from './PAthNode';
+import { PathNode } from './PathNode';
 
 export class Pathfinding {
 	private static readonly MOVE_STRAIGHT_COST = 10;
