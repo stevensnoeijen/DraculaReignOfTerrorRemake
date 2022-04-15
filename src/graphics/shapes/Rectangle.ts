@@ -20,7 +20,7 @@ const defaultProps: Partial<IRectangleProps> = Object.seal({
 export class Rectangle extends Shape {
 	public size!: ISize;
 	public fillStyle!: Color | null;
-	public lineWidth!: number;
+	declare public lineWidth: number;
 	public lineStyle!: Color | null;
 
 	public anchor!: Anchor;

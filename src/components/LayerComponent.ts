@@ -5,7 +5,7 @@ export interface ILayerComponentProps {
 }
 
 export class LayerComponent extends Component<ILayerComponentProps> {
-	layer: number;
+	declare layer: number;
 }
 
 LayerComponent.schema = {

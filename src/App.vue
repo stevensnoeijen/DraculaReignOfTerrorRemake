@@ -117,7 +117,9 @@ onMounted(() => {
 			.addComponent(PathfindingComponent, {
 				pathfinding: pathfinding,
 			})
+			// @ts-ignore
 			.addComponent(GridComponent, { grid: pathfinding.grid })
+			// @ts-ignore
 			.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
 
 		startLevel();

@@ -6,8 +6,8 @@ export interface IHealthComponentProps {
 }
 
 export class HealthComponent extends Component<IHealthComponentProps> {
-	points: number;
-	maxPoints: number;
+	declare points: number;
+	declare maxPoints: number;
 }
 
 HealthComponent.schema = {

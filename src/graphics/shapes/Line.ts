@@ -13,7 +13,7 @@ export class Line extends Shape {
 	public start!: Vector2;
 	public end!: Vector2;
 	public lineColor!: Color;
-	public lineWidth!: number;
+	declare public lineWidth: number;
 
 	constructor(props: ILineProps) {
 		super(props);

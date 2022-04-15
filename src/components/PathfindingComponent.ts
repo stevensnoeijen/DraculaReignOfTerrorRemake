@@ -6,7 +6,7 @@ export interface IPathfindingComponentProps {
 }
 
 export class PathfindingComponent extends Component<IPathfindingComponentProps> {
-	pathfinding: Pathfinding;
+	declare pathfinding: Pathfinding;
 }
 
 PathfindingComponent.schema = {

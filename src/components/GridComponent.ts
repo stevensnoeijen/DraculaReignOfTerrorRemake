@@ -6,7 +6,7 @@ export interface IGridComponentProps<GridObject> {
 }
 
 export class GridComponent<GridObject> extends Component<IGridComponentProps<GridObject>> {
-    grid: Grid<GridObject>;
+    declare grid: Grid<GridObject>;
 }
 
 GridComponent.schema = {

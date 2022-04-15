@@ -6,8 +6,8 @@ interface ISizeComponentProps {
 }
 
 export class SizeComponent extends Component<ISizeComponentProps> {
-	width: number;
-	height: number;
+	declare width: number;
+	declare height: number;
 }
 
 SizeComponent.schema = {

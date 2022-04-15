@@ -5,7 +5,7 @@ export interface ISelectableComponentProps {
 }
 
 export class SelectableComponent extends Component<ISelectableComponentProps> {
-	selected: boolean;
+	declare selected: boolean;
 }
 
 SelectableComponent.schema = {

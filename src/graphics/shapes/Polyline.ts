@@ -21,7 +21,7 @@ export class Polyline extends Shape {
     public readonly points!: Vector2[];
     public closed = false;
     public fillStyle!: string | null;
-    public lineWidth!: number;
+    declare public lineWidth: number;
     public lineStyle!: string | null;
 
     constructor(props: IPolylineProps) {

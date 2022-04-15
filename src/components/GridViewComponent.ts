@@ -6,7 +6,7 @@ export interface IGridViewComponentProps {
 }
 
 export class GridViewComponent extends Component<IGridViewComponentProps> {
-    view: GridView;
+    declare view: GridView;
 }
 
 GridViewComponent.schema = {

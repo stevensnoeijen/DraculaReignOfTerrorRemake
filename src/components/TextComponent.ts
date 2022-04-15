@@ -6,7 +6,7 @@ export interface ITextComponentProps {
 }
 
 export class TextComponent extends Component<ITextComponentProps> {
-	text: Text;
+	declare text: Text;
 }
 
 TextComponent.schema = {

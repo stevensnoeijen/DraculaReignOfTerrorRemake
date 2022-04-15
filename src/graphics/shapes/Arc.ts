@@ -15,7 +15,7 @@ const defaultProps: Partial<IArcProps> = {
 }
 
 export class Arc extends Shape {
-    public position!: Vector2;
+    declare public position: Vector2;
     public radius!: number;
     public startAngle!: number;
     public endAngle!: number;

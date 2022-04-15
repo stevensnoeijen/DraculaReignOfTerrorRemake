@@ -5,7 +5,7 @@ export interface IAliveComponentProps {
 }
 
 export class AliveComponent extends Component<IAliveComponentProps> {
-    alive: boolean
+    declare alive: boolean
 }
 
 AliveComponent.schema = {

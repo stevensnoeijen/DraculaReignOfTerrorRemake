@@ -5,8 +5,8 @@ interface IShapeComponentProps<Shape> {
 	shape: Shape;
 }
 
-export class ShapeComponent extends Component<IShapeComponentProps> {
-	shape: Shape;
+export class ShapeComponent extends Component<IShapeComponentProps<unknown>> {
+	shape!: Shape;
 }
 
 ShapeComponent.schema = {

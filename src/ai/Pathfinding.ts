@@ -29,8 +29,8 @@ export class Pathfinding {
 		endX: number,
 		endY: number
 	): PathNode[] | null {
-		const startNode = this.grid.getGridObject(startX, startY);
-		const endNode = this.grid.getGridObject(endX, endY);
+		const startNode = this.grid.getGridObject(startX, startY)!;
+		const endNode = this.grid.getGridObject(endX, endY)!;
 
 		this.openList = [];
 		this.closedList = [];
@@ -40,7 +40,7 @@ export class Pathfinding {
 		// reset all nodes
 		Array.from({ length: this.grid.width }, (i, x) => {
 			Array.from({ length: this.grid.height }, (j, y) => {
-				const pathNode = this.grid.getGridObject(x, y);
+				const pathNode = this.grid.getGridObject(x, y)!;
 				pathNode.gCost = Number.MAX_VALUE;
 				pathNode.calculateFCost();
 				pathNode.cameFromNode = null;
@@ -134,49 +134,49 @@ export class Pathfinding {
 		if (currentNode.x - 1 >= 0) {
 			// left
 			neighbours.push(
-				this.grid.getGridObject(currentNode.x - 1, currentNode.y)
+				this.grid.getGridObject(currentNode.x - 1, currentNode.y)!
 			);
 			// left down
 			if (currentNode.y - 1 >= 0) {
 				neighbours.push(
-					this.grid.getGridObject(currentNode.x - 1, currentNode.y - 1)
+					this.grid.getGridObject(currentNode.x - 1, currentNode.y - 1)!
 				);
 			}
 			// left up
 			if (currentNode.y + 1 < this.grid.height) {
 				neighbours.push(
-					this.grid.getGridObject(currentNode.x - 1, currentNode.y + 1)
+					this.grid.getGridObject(currentNode.x - 1, currentNode.y + 1)!
 				);
 			}
 		}
 		if (currentNode.x + 1 >= 0) {
 			// right
 			neighbours.push(
-				this.grid.getGridObject(currentNode.x + 1, currentNode.y)
+				this.grid.getGridObject(currentNode.x + 1, currentNode.y)!
 			);
 			// right down
 			if (currentNode.y - 1 >= 0) {
 				neighbours.push(
-					this.grid.getGridObject(currentNode.x + 1, currentNode.y - 1)
+					this.grid.getGridObject(currentNode.x + 1, currentNode.y - 1)!
 				);
 			}
 			// right up
 			if (currentNode.y + 1 < this.grid.height) {
 				neighbours.push(
-					this.grid.getGridObject(currentNode.x + 1, currentNode.y + 1)
+					this.grid.getGridObject(currentNode.x + 1, currentNode.y + 1)!
 				);
 			}
 		}
 		// down
 		if (currentNode.y - 1 >= 0) {
 			neighbours.push(
-				this.grid.getGridObject(currentNode.x, currentNode.y - 1)
+				this.grid.getGridObject(currentNode.x, currentNode.y - 1)!
 			);
 		}
 		// up
 		if (currentNode.y + 1 < this.grid.height) {
 			neighbours.push(
-				this.grid.getGridObject(currentNode.x, currentNode.y + 1)
+				this.grid.getGridObject(currentNode.x, currentNode.y + 1)!
 			);
 		}
 

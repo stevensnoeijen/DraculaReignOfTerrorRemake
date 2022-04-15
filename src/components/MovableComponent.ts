@@ -5,7 +5,7 @@ type MovableComponentProps = {
 };
 
 export class MovableComponent extends Component<MovableComponentProps> {
-	moving: boolean;
+	declare moving: boolean;
 }
 
 MovableComponent.schema = {

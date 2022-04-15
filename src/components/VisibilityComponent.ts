@@ -5,7 +5,7 @@ interface IVisibilityComponentProps {
 }
 
 export class VisibilityComponent extends Component<IVisibilityComponentProps> {
-	visible: boolean;
+	declare visible: boolean;
 }
 
 VisibilityComponent.schema = {

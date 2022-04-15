@@ -2,7 +2,7 @@ import { Debug } from './Debug';
 import { EventBus } from './EventBus';
 import { Vector2 } from './math/Vector2';
 
-type BaseGridObject = { toString: () => string };
+export type BaseGridObject = { toString: () => string };
 
 type GridObjectCreator<O> = (grid: Grid<O>, x: number, y: number) => O;
 
@@ -14,7 +14,7 @@ export interface GridProps<O> {
 	initGridObject: GridObjectCreator<O>;
 }
 
-export type GridChangedEvent<O extends unknown> = CustomEvent<{
+export type GridChangedEvent<O = unknown> = CustomEvent<{
 	x: number;
 	y: number;
 	object: O;

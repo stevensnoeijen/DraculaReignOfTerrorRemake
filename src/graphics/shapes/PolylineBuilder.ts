@@ -9,7 +9,7 @@ const defaultProps: Partial<IPolylineBuilderProps> = {
 }
 
 export class PolylineBuilder {
-    private props: IPolylineBuilderProps;
+    declare private props: IPolylineBuilderProps;
 
     constructor(props: IPolylineBuilderProps) {
         this.props = Object.assign({}, props, defaultProps);
@@ -27,6 +27,6 @@ export class PolylineBuilder {
     }
 
     public build(): Polyline {
-        return new Polyline(this.props!);
+        return new Polyline(this.props as IPolylineProps);
     }
 }
