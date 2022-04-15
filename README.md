@@ -6,6 +6,8 @@ This game is in development, but not every actively.
 
 I do not own any of the rights of the original game!
 
+Take a peek of the current state of the game [here](https://stevensnoeijen.github.io/drotr/).
+
 # Requirements
 
 - node

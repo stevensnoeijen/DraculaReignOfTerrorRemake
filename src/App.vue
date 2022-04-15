@@ -171,6 +171,7 @@ const frame = (): void => {
     :height="Constants.GAME_HEIGHT"
     style="background-color: #d4d4d4;"
   />
+  test
 </template>
 
 <style>
