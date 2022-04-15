@@ -1,3 +1,7 @@
+import { World } from 'ecsy';
+import * as PIXI from 'pixi.js';
+
+import { SpriteComponent } from './components/SpriteComponent';
 import { TextComponent } from './components/TextComponent';
 import { MovableComponent } from './components/MovableComponent';
 import { SelectorComponent } from './components/SelectorComponent';
@@ -5,7 +9,6 @@ import { SizeComponent } from './components/SizeComponent';
 import { TransformComponent } from './components/TransformComponent';
 import { Constants } from './Constants';
 import { ShapeComponent } from './components/ShapeComponent';
-import { World } from 'ecsy';
 import { RenderComponent } from './components/RenderComponent';
 import { LayerComponent } from './components/LayerComponent';
 import { FpsComponent } from './components/FpsComponent';
@@ -27,6 +30,7 @@ type Position = { x: number; y: number };
 interface IUnitProps {
 	position: Position;
 	color: 'red' | 'blue';
+	texture: PIXI.Texture<PIXI.Resource>;
 }
 
 interface ISelectorProps {
@@ -48,6 +52,10 @@ export class EntityFactory {
 		rotation -= rotation % 90;
 		const triangle = ShapeFactory.triangle(Constants.CELL_SIZE);
 		triangle.fillStyle = props.color;
+
+		const sprite = new PIXI.Sprite(props.texture);
+		sprite.anchor.set(0.5);
+		sprite.position.set(props.position.x, props.position.y);
 
 		world
 			.createEntity()
@@ -78,7 +86,11 @@ export class EntityFactory {
 			})
 			.addComponent(PlayerMovementKeysComponent)
 			.addComponent(MovePositionDirectComponent)
-			.addComponent(PlayerMovementMouseComponent);
+			.addComponent(PlayerMovementMouseComponent)
+			.addComponent(SpriteComponent, {
+				sprite: sprite,
+			})
+
 	}
 
 	public static createSelector(world: World, props: ISelectorProps): void {

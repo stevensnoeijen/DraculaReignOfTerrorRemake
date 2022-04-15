@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { World } from 'ecsy';
+import * as PIXI from 'pixi.js'
 
 import { Constants } from './Constants';
 import { TransformComponent } from './components/TransformComponent';
@@ -42,11 +43,40 @@ import { EntityFactory } from './EntityFactory';
 import { Pathfinding } from './ai/Pathfinding';
 import { GridView } from './GridView';
 import { PathNode } from './ai/PathNode';
+import { SpriteComponent } from './components/SpriteComponent';
+import { SpriteSystem } from './systems/SpriteSystem';
+
+const app = new PIXI.Application();
 
 const world = new World();
 let lastFrameTime = 0;
 
 onMounted(() => {
+	document.body.appendChild(app.view);
+
+	lastFrameTime = performance.now();
+	app.ticker.add(() => {
+		frame();
+	});
+
+	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load((loader, resources) => {
+		const swordsmen = new PIXI.Sprite(resources.swordsmen.texture);
+
+		swordsmen.x = app.renderer.width / 2;
+		swordsmen.y = app.renderer.height / 2;
+
+		// Rotate around the center
+		swordsmen.anchor.x = 0.5;
+		swordsmen.anchor.y = 0.5;
+
+		// Add the bunny to the scene we are building.
+		app.stage.addChild(swordsmen);
+
+		startLevel(resources);
+	});
+
+	// -----
+
 	const canvas = document.getElementById('game')!;
 
   canvas.addEventListener('contextmenu', (event) => {
@@ -77,18 +107,20 @@ onMounted(() => {
     .registerComponent(PlayerMovementKeysComponent)
     .registerComponent(MoveVelocityComponent)
     .registerComponent(PathfindingComponent)
+	.registerComponent(SpriteComponent)
     .registerSystem(RenderSystem, { canvas: canvas })
     .registerSystem(PlayerSelectionSystem)
     .registerSystem(FpsSystem)
     .registerSystem(TweenSystem)
     .registerSystem(HealthSystem)
-    // .registerSystem(AliveSystem)
+    .registerSystem(AliveSystem)
     .registerSystem(MoveTransformVelocitySystem)
     .registerSystem(InputSystem, { canvas: canvas })
     .registerSystem(PlayerMovementKeysSystem)
     .registerSystem(MovePositionDirectSystem)
     .registerSystem(PlayerMovementMouseSystem)
-    .registerSystem(MoveVelocitySystem);
+    .registerSystem(MoveVelocitySystem)
+	.registerSystem(SpriteSystem, { app });
 
     EntityFactory.createSelector(world, {
 			position: {
@@ -121,15 +153,9 @@ onMounted(() => {
 			.addComponent(GridComponent, { grid: pathfinding.grid })
 			// @ts-ignore
 			.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
-
-		startLevel();
-
-		// Run!
-		lastFrameTime = performance.now();
-		frame();
 });
 
-const startLevel = (): void => {
+const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
 		Array.from(Array(100)).forEach(() => {
 			let x = Math.round(
 				Math.random() * Constants.GAME_WIDTH
@@ -146,21 +172,21 @@ const startLevel = (): void => {
 					y: y
 				},
 				color: 'red',
+				texture: resources.swordsmen.texture!,
 			});
 		});
 	}
 
 const frame = (): void => {
-		// Compute delta and elapsed time
-		const time = performance.now();
-		const delta = time - lastFrameTime;
+	// Compute delta and elapsed time
+	const time = performance.now();
+	const delta = time - lastFrameTime;
 
-		// Run all the systems
-		world.execute(delta, time);
+	// Run all the systems
+	world.execute(delta, time);
 
-		lastFrameTime = time;
-		requestAnimationFrame(frame);
-	}
+	lastFrameTime = time;
+}
 
 </script>
 

@@ -3,6 +3,7 @@ import Matter from 'matter-js';
 import { AliveComponent } from '../components/AliveComponent';
 import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
 import { SizeComponent } from '../components/SizeComponent';
+import { SpriteComponent } from '../components/SpriteComponent';
 import { TransformComponent } from '../components/TransformComponent';
 import { Constants } from '../Constants';
 import { EntityHelper } from '../helpers/EntityHelper';
@@ -90,6 +91,11 @@ export class MoveVelocitySystem extends System {
 		Matter.Body.setVelocity(moveVelocityComponent.body, Matter.Vector.mult(Matter.Vector.create(moveVelocityComponent.velocity.x, moveVelocityComponent.velocity.y), moveVelocityComponent.moveSpeed * (delta / 1000)));
 
 		transformComponent.position = new Vector2(moveVelocityComponent.body.position.x, moveVelocityComponent.body.position.y);
+
+		const spriteComponent = entity.getComponent(SpriteComponent);
+		if (spriteComponent != null){
+			spriteComponent.sprite.position.set(moveVelocityComponent.body.position.x, moveVelocityComponent.body.position.y);
+		}
 	}
 
 	private handleEntityBodyAdded(entity: Entity): void {
