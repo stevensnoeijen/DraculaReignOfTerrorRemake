@@ -45,14 +45,21 @@ import { GridView } from './GridView';
 import { PathNode } from './ai/PathNode';
 import { SpriteComponent } from './components/SpriteComponent';
 import { SpriteSystem } from './systems/SpriteSystem';
+import { GraphicsComponent } from './components/GraphicsComponent';
+import { GraphicsSystem } from './systems/GraphicsSystem';
 
 const app = new PIXI.Application();
+app.renderer.backgroundColor = 0xFFFFFF;
 
 const world = new World();
 let lastFrameTime = 0;
 
 onMounted(() => {
-	document.body.appendChild(app.view);
+	document.getElementById('App')!.appendChild(app.view);
+
+	app.view.addEventListener('contextmenu', (event) => {
+		event.preventDefault();
+	});
 
 	lastFrameTime = performance.now();
 	app.ticker.add(() => {
@@ -60,28 +67,8 @@ onMounted(() => {
 	});
 
 	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load((loader, resources) => {
-		const swordsmen = new PIXI.Sprite(resources.swordsmen.texture);
-
-		swordsmen.x = app.renderer.width / 2;
-		swordsmen.y = app.renderer.height / 2;
-
-		// Rotate around the center
-		swordsmen.anchor.x = 0.5;
-		swordsmen.anchor.y = 0.5;
-
-		// Add the bunny to the scene we are building.
-		app.stage.addChild(swordsmen);
-
 		startLevel(resources);
 	});
-
-	// -----
-
-	const canvas = document.getElementById('game')!;
-
-  canvas.addEventListener('contextmenu', (event) => {
-    event.preventDefault();
-  });
 
   world
     .registerComponent(TransformComponent)
@@ -108,39 +95,28 @@ onMounted(() => {
     .registerComponent(MoveVelocityComponent)
     .registerComponent(PathfindingComponent)
 	.registerComponent(SpriteComponent)
-    .registerSystem(RenderSystem, { canvas: canvas })
-    .registerSystem(PlayerSelectionSystem)
+	.registerComponent(GraphicsComponent)
+    .registerSystem(RenderSystem, { app })
+    .registerSystem(PlayerSelectionSystem, { app })
     .registerSystem(FpsSystem)
     .registerSystem(TweenSystem)
     .registerSystem(HealthSystem)
     .registerSystem(AliveSystem)
     .registerSystem(MoveTransformVelocitySystem)
-    .registerSystem(InputSystem, { canvas: canvas })
+    .registerSystem(InputSystem, { canvas: app.view })
     .registerSystem(PlayerMovementKeysSystem)
     .registerSystem(MovePositionDirectSystem)
     .registerSystem(PlayerMovementMouseSystem)
     .registerSystem(MoveVelocitySystem)
-	.registerSystem(SpriteSystem, { app });
+	.registerSystem(SpriteSystem, { app })
+	.registerSystem(GraphicsSystem, { app });
 
-    EntityFactory.createSelector(world, {
-			position: {
-				x: 100,
-				y: 100,
-			},
-		});
-		EntityFactory.createFpsCouter(world, {
-			position: {
-				x: Constants.GAME_WIDTH - 25,
-				y: 20,
-			},
-		});
-
-		world.createEntity()
-			.addComponent(RenderComponent)
-			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_TILES + 1,
-			})
-			.addComponent(DebugComponent);
+	world.createEntity()
+		.addComponent(RenderComponent)
+		.addComponent(LayerComponent, {
+			layer: Constants.LAYER_TILES + 1,
+		})
+		.addComponent(DebugComponent);
 
     const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
 
@@ -191,10 +167,8 @@ const frame = (): void => {
 </script>
 
 <template>
-  <canvas
-    id="game"
-    :width="Constants.GAME_WIDTH"
-    :height="Constants.GAME_HEIGHT"
+  <div
+    id="App"
     style="background-color: #d4d4d4;"
   />
 </template>

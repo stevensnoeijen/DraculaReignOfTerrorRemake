@@ -27,10 +27,6 @@ export class SpriteSystem extends System {
 					component.addedToStage = true;
 				}
 			}
-			if (this.queries.sprites.results.length) {
-
-				
-			}
 		}
 	}
 }

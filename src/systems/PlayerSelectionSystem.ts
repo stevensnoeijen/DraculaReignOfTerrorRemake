@@ -1,5 +1,7 @@
+import { System, Entity, SystemQueries, World, Attributes } from 'ecsy';
+import * as PIXI from 'pixi.js';
+
 import { SelectorComponent } from '../components/SelectorComponent';
-import { System, Entity, SystemQueries } from 'ecsy';
 import { SelectableComponent } from '../components/SelectableComponent';
 import { TransformComponent } from '../components/TransformComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
@@ -18,9 +20,6 @@ export class PlayerSelectionSystem extends System {
 		selectable: {
 			components: [SelectableComponent],
 		},
-		selector: {
-			components: [SelectorComponent],
-		}
 	};
 	private static readonly SINGLE_UNIT_DISTANCE = 5;
 
@@ -35,8 +34,16 @@ export class PlayerSelectionSystem extends System {
 	 */
 	private deselectEntitiesTimeout: NodeJS.Timeout | null = null;
 
-	private getSelector(): Entity {
-		return this.queries.selector.results[0];
+	private readonly app: PIXI.Application;
+	private rectangle: PIXI.Graphics;
+
+	constructor(world: World, attributes: Attributes) {
+        super(world, attributes);
+        this.app = attributes.app;
+			
+		this.rectangle = new PIXI.Graphics();
+		this.rectangle.visible = false;
+		this.app.stage.addChild(this.rectangle);
 	}
 
 	private getSelected(): Entity[] {
@@ -46,78 +53,27 @@ export class PlayerSelectionSystem extends System {
 	}
 
 	private startSelect(): void {
-		const selector = this.getSelector();
-		const transform = selector.getMutableComponent(TransformComponent);
-		if (undefined === transform) {
-			return;
-		}
-
-		transform.position = this.startPosition!;
-
-		const sizeComponent = selector.getMutableComponent(SizeComponent);
-		if (undefined === sizeComponent) {
-			return;
-		}
-		sizeComponent.height = 0;
-		sizeComponent.width = 0;
-
-		const shapeComponent = selector.getMutableComponent(ShapeComponent);
-		if (!shapeComponent) {
-			return;
-		}
-		if (shapeComponent) {
-			(shapeComponent.shape as Rectangle).size.height = 0;
-			(shapeComponent.shape as Rectangle).size.width = 0;
-		}
-
-		const visibilityComponent = selector.getMutableComponent(VisibilityComponent);
-		if (!visibilityComponent) {
-			return;
-		}
-
-		visibilityComponent.visible = true;
+		this.rectangle.visible = true;
 	}
 
 	private updateSelect(): void {
-		const selector = this.getSelector();
-		const transformComponent = selector.getComponent(TransformComponent);
-		if (!transformComponent) {
-			return;
-		}
-
-		const width = Input.mousePosition.x - transformComponent.position.x;
-		const height = Input.mousePosition.y - transformComponent.position.y;
+		const width = Input.mousePosition.x - this.startPosition!.x;
+		const height = Input.mousePosition.y - this.startPosition!.y;
 
 		this.getSelected().forEach(EntityHelper.deselect);
 
-		const sizeComponent = selector.getMutableComponent(SizeComponent);
-		if (!sizeComponent) {
-			return;
-		}
-		sizeComponent.width = width;
-		sizeComponent.height = height;
-
-		const shapeComponent = selector.getMutableComponent(ShapeComponent);
-		if (!shapeComponent) {
-			return;
-		}
-		if (shapeComponent.shape instanceof Rectangle) {
-			shapeComponent.shape.size.width = width;
-			shapeComponent.shape.size.height = height;
-		}
+		this.rectangle.clear();
+		this.rectangle.lineStyle(1, 0x000000);
+		this.rectangle.drawRect(this.startPosition!.x, this.startPosition!.y, width, height);
 	}
 
 	private endSelect(): void {
 		this.selectEntities();
 
-		const selector = this.getSelector();
-		const visibility = selector.getMutableComponent(VisibilityComponent);
-		if (!visibility) {
-			return;
-		}
-
-		visibility.visible = false;
 		this.startPosition = null;
+
+		this.rectangle.visible = false;
+		this.rectangle.clear();
 	}
 
 	private selectEntities(): void {
@@ -141,11 +97,17 @@ export class PlayerSelectionSystem extends System {
 	}
 
 	private selectEntitiesInsideSelector(): void {
-		const selector = this.getSelector();
+		const width = Input.mousePosition.x - this.startPosition!.x;
+		const height = Input.mousePosition.y - this.startPosition!.y;
 
 		// get entities inside selector
 		this.queries.selectable.results.filter((entity) =>
-			EntityHelper.isObjectInsideContainer(entity, selector)
+			EntityHelper.isObjectInsideContainer(entity, {
+				x: this.startPosition!.x,
+				y: this.startPosition!.y,
+				width,
+				height,
+			})
 		).forEach((entity) => EntityHelper.select(entity));
 	}
 

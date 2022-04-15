@@ -53,27 +53,18 @@ export class EntityHelper {
 	 */
 	public static isObjectInsideContainer(
 		object: Entity,
-		container: Entity
+		container: { x: number; y: number; width: number; height: number; }
 	): boolean {
-		const containerTransform = container.getComponent(TransformComponent);
-		if (!containerTransform) {
-			return false;
-		}
-		const containerSize = container.getComponent(SizeComponent);
-		if (!containerSize) {
-			return false;
-		}
-
 		const objectTransform = object.getComponent(TransformComponent);
 		if (!objectTransform) {
 			return false;
 		}
 
 		return (
-			objectTransform.position.x >= containerTransform.position.x &&
-			objectTransform.position.x <= containerTransform.position.x + containerSize.width &&
-			objectTransform.position.y >= containerTransform.position.y &&
-			objectTransform.position.y <= containerTransform.position.y + containerSize.height
+			objectTransform.position.x >= container.x &&
+			objectTransform.position.x <= container.x + container.width &&
+			objectTransform.position.y >= container.y &&
+			objectTransform.position.y <= container.y + container.height
 		);
 	}
 

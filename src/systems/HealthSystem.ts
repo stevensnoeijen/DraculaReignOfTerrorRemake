@@ -17,7 +17,6 @@ export class HealthSystem extends System {
     };
 
     public execute(delta: number, time: number): void {
-
         if (this.queries.healthy.added !== undefined) {
             this.queries.healthy.added.forEach(this.updateStatus);
         }
