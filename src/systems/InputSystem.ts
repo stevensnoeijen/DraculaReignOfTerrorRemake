@@ -1,5 +1,5 @@
 import { Attributes, System, World } from 'ecsy';
-import { Input, KeyStatus, MouseButtonStatus } from '../input/Input';
+import { Input, KeyStatus, MouseButtonStatus } from '../Input';
 import { Vector2 } from '../math/Vector2';
 
 export class InputSystem extends System {
@@ -56,7 +56,5 @@ export class InputSystem extends System {
             }
             this.keyQueue = [];
         }
-
-
     }
 }

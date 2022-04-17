@@ -1,135 +1,99 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { World } from 'ecsy';
+import * as PIXI from 'pixi.js'
 
 import { Constants } from './Constants';
-import { TransformComponent } from './components/TransformComponent';
-import { ShapeComponent } from './components/ShapeComponent';
-import { RenderComponent } from './components/RenderComponent';
-import { SizeComponent } from './components/SizeComponent';
-import { SelectableComponent } from './components/SelectableComponent';
-import { SelectorComponent } from './components/SelectorComponent';
-import { MovableComponent } from './components/MovableComponent';
-import { TextComponent } from './components/TextComponent';
-import { FpsComponent } from './components/FpsComponent';
-import { LayerComponent } from './components/LayerComponent';
-import { TweenComponent } from './components/TweenComponent';
-import { VisibilityComponent } from './components/VisibilityComponent';
-import { HealthComponent } from './components/HealthComponent';
-import { AliveComponent } from './components/AliveComponent';
-import { DebugComponent } from './components/DebugComponent';
-import { GridComponent } from './components/GridComponent';
-import { GridViewComponent } from './components/GridViewComponent';
-import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
-import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
-import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
-import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
-import { MoveVelocityComponent } from './components/MoveVelocityComponent';
-import { PathfindingComponent } from './components/PathfindingComponent';
-import { RenderSystem } from './systems/RenderSystem';
-import { PlayerSelectionSystem } from './systems/PlayerSelectionSystem';
-import { FpsSystem } from './systems/FpsSystem';
-import { TweenSystem } from './systems/TweenSystem';
-import { HealthSystem } from './systems/HealthSystem';
-import { AliveSystem } from './systems/AliveSystem';
-import { MoveTransformVelocitySystem } from './systems/MoveTransformVelocitySystem';
+import { TransformComponent } from './systems/TransformComponent';
+import { SizeComponent } from './systems/SizeComponent';
+import { SelectableComponent } from './systems/selection/SelectableComponent';
+import { MovableComponent } from './systems/movement/MovableComponent';
+import { HealthComponent } from './systems/health/HealthComponent';
+import { GridComponent } from './systems/GridComponent';
+import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
+import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
+import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
+import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
+import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
+import { PathfindingComponent } from './systems/PathfindingComponent';
+import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
+import { HealthSystem } from './systems/health/HealthSystem';
+import { AliveSystem } from './systems/alive/AliveSystem';
+import { MoveTransformVelocitySystem } from './systems/movement/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
-import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
-import { MovePositionDirectSystem } from './systems/MovePositionDirectSystem';
-import { PlayerMovementMouseSystem } from './systems/PlayerMovementMouseSystem';
-import { MoveVelocitySystem } from './systems/MoveVelocitySystem';
+import { PlayerMovementKeysSystem } from './systems/player/PlayerMovementKeysSystem';
+import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
+import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
+import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { EntityFactory } from './EntityFactory';
 import { Pathfinding } from './ai/Pathfinding';
-import { GridView } from './GridView';
-import { PathNode } from './ai/PathNode';
+import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
+import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
+import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
+import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
+import { AliveComponent } from './systems/alive/AliveComponent';
+
+const app = new PIXI.Application();
+app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
 let lastFrameTime = 0;
 
 onMounted(() => {
-	const canvas = document.getElementById('game')!;
+	document.getElementById('App')!.appendChild(app.view);
 
-  canvas.addEventListener('contextmenu', (event) => {
-    event.preventDefault();
-  });
+	app.view.addEventListener('contextmenu', (event) => {
+		event.preventDefault();
+	});
 
-  world
-    .registerComponent(TransformComponent)
-    .registerComponent(ShapeComponent)
-    .registerComponent(RenderComponent)
-    .registerComponent(SizeComponent)
-    .registerComponent(SelectableComponent)
-    .registerComponent(SelectorComponent)
-    .registerComponent(MovableComponent)
-    .registerComponent(TextComponent)
-    .registerComponent(FpsComponent)
-    .registerComponent(LayerComponent)
-    .registerComponent(TweenComponent)
-    .registerComponent(VisibilityComponent)
-    .registerComponent(HealthComponent)
-    .registerComponent(AliveComponent)
-    .registerComponent(DebugComponent)
-    .registerComponent(GridComponent)
-    .registerComponent(GridViewComponent)
-    .registerComponent(MoveTransformVelocityComponent)
-    .registerComponent(MovePositionDirectComponent)
-    .registerComponent(PlayerMovementMouseComponent)
-    .registerComponent(PlayerMovementKeysComponent)
-    .registerComponent(MoveVelocityComponent)
-    .registerComponent(PathfindingComponent)
-    .registerSystem(RenderSystem, { canvas: canvas })
-    .registerSystem(PlayerSelectionSystem)
-    .registerSystem(FpsSystem)
-    .registerSystem(TweenSystem)
-    .registerSystem(HealthSystem)
-    // .registerSystem(AliveSystem)
-    .registerSystem(MoveTransformVelocitySystem)
-    .registerSystem(InputSystem, { canvas: canvas })
-    .registerSystem(PlayerMovementKeysSystem)
-    .registerSystem(MovePositionDirectSystem)
-    .registerSystem(PlayerMovementMouseSystem)
-    .registerSystem(MoveVelocitySystem);
+	lastFrameTime = performance.now();
+	app.ticker.add(() => {
+		frame();
+	});
 
-    EntityFactory.createSelector(world, {
-			position: {
-				x: 100,
-				y: 100,
-			},
-		});
-		EntityFactory.createFpsCouter(world, {
-			position: {
-				x: Constants.GAME_WIDTH - 25,
-				y: 20,
-			},
-		});
+	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load((loader, resources) => {
+		startLevel(resources);
+	});
 
-		world.createEntity()
-			.addComponent(RenderComponent)
-			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_TILES + 1,
-			})
-			.addComponent(DebugComponent);
+	world
+		.registerComponent(TransformComponent)
+		.registerComponent(SizeComponent)
+		.registerComponent(SelectableComponent)
+		.registerComponent(MovableComponent)
+		.registerComponent(HealthComponent)
+		.registerComponent(AliveComponent)
+		.registerComponent(MoveTransformVelocityComponent)
+		.registerComponent(MovePositionDirectComponent)
+		.registerComponent(PlayerMovementMouseComponent)
+		.registerComponent(PlayerMovementKeysComponent)
+		.registerComponent(MoveVelocityComponent)
+		.registerComponent(PathfindingComponent)
+		.registerComponent(SpriteComponent)
+		.registerComponent(GraphicsComponent)
+		.registerComponent(GridComponent)
+		.registerSystem(PlayerSelectionSystem, { app })
+		.registerSystem(HealthSystem)
+		.registerSystem(AliveSystem)
+		.registerSystem(MoveTransformVelocitySystem)
+		.registerSystem(InputSystem, { canvas: app.view })
+		.registerSystem(PlayerMovementKeysSystem)
+		.registerSystem(MovePositionDirectSystem)
+		.registerSystem(PlayerMovementMouseSystem)
+		.registerSystem(MoveVelocitySystem)
+		.registerSystem(SpriteSystem, { app })
+		.registerSystem(GraphicsSystem, { app });
 
     const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
 
-		world.createEntity()
-			.addComponent(RenderComponent)
-			.addComponent(PathfindingComponent, {
-				pathfinding: pathfinding,
-			})
-			// @ts-ignore
-			.addComponent(GridComponent, { grid: pathfinding.grid })
-			// @ts-ignore
-			.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
-
-		startLevel();
-
-		// Run!
-		lastFrameTime = performance.now();
-		frame();
+	world.createEntity()
+		.addComponent(PathfindingComponent, {
+			pathfinding: pathfinding,
+		})
+		// @ts-ignore
+		.addComponent(GridComponent, { grid: pathfinding.grid });
 });
 
-const startLevel = (): void => {
+const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
 		Array.from(Array(100)).forEach(() => {
 			let x = Math.round(
 				Math.random() * Constants.GAME_WIDTH
@@ -146,29 +110,27 @@ const startLevel = (): void => {
 					y: y
 				},
 				color: 'red',
+				texture: resources.swordsmen.texture!,
 			});
 		});
 	}
 
 const frame = (): void => {
-		// Compute delta and elapsed time
-		const time = performance.now();
-		const delta = time - lastFrameTime;
+	// Compute delta and elapsed time
+	const time = performance.now();
+	const delta = time - lastFrameTime;
 
-		// Run all the systems
-		world.execute(delta, time);
+	// Run all the systems
+	world.execute(delta, time);
 
-		lastFrameTime = time;
-		requestAnimationFrame(frame);
-	}
+	lastFrameTime = time;
+}
 
 </script>
 
 <template>
-  <canvas
-    id="game"
-    :width="Constants.GAME_WIDTH"
-    :height="Constants.GAME_HEIGHT"
+  <div
+    id="App"
     style="background-color: #d4d4d4;"
   />
 </template>

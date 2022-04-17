@@ -1,4 +1,3 @@
-import { Debug } from './Debug';
 import { EventBus } from './EventBus';
 import { Vector2 } from './math/Vector2';
 
@@ -39,31 +38,10 @@ export class Grid<O extends BaseGridObject> {
 				this.createGridObject(x, y)
 			);
 		});
-
-		if (Debug.isEnabled('grid')) {
-			this.drawDebug();
-		}
 	}
 
 	private createGridObject(x: number, y: number): O {
 		return this.initGridObject(this, x, y);
-	}
-
-	private drawDebug(): void {
-		Array.from({ length: this.height + 1 }).forEach((yValue, y) =>
-			Debug.drawLine({
-				start: this.getWorldPosition(0, y),
-				end: this.getWorldPosition(this.width, y),
-				lineColor: 'gray',
-			})
-		);
-		Array.from({ length: this.width + 1 }).forEach((xValue, x) =>
-			Debug.drawLine({
-				start: this.getWorldPosition(x, 0),
-				end: this.getWorldPosition(x, this.height),
-				lineColor: 'gray',
-			})
-		);
 	}
 
 	public getPosition(worldPosition: Vector2): { x: number; y: number } {
