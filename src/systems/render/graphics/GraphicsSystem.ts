@@ -1,4 +1,3 @@
-import { SizeComponent } from '../../components/SizeComponent';
 import { EntityHelper } from '../../../EntityHelper';
 import { Attributes, Entity, System, World } from "ecsy";
 import * as PIXI from 'pixi.js';
@@ -7,6 +6,7 @@ import { HealthComponent } from '../../health/HealthComponent';
 import { getHealthColor } from '../../health/utils';
 import { SpriteComponent } from '../sprite/SpriteComponent';
 import { GraphicsComponent } from './GraphicsComponent';
+import { SizeComponent } from '../../SizeComponent';
 
 export class GraphicsSystem extends System {
 	public static queries = {
@@ -35,16 +35,16 @@ export class GraphicsSystem extends System {
 	}
 
 	private drawSelectionIndicators(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
-		const spriteComponent = entity.getComponent(SpriteComponent)!;
+		const sizeComponent = entity.getComponent(SizeComponent)!;
 
-		const offset = 2;
-		const left = -spriteComponent.sprite.width / 2;
-		const top = -spriteComponent.sprite.height / 2;
-		const right = spriteComponent.sprite.width / 2;
+		const offset = 4;
+		const left = -sizeComponent.width / 2 - offset;
+		const top = -sizeComponent.height / 2 - offset;
+		const right = sizeComponent.width / 2 + offset;
 
 		// top left
 		graphics.lineStyle(1, 0x000000)
-			.moveTo(left, -4)
+			.moveTo(left, -6)
        		.lineTo(left, top)
 			.lineTo(left / 2, top);
 
@@ -52,7 +52,7 @@ export class GraphicsSystem extends System {
 		graphics.lineStyle(1, 0x000000)
 			.moveTo(right / 2, top)
 			.lineTo(right, top)
-			.lineTo(right, -4);
+			.lineTo(right, -6);
 	}
 
 	public execute(delta: number, time: number): void {
