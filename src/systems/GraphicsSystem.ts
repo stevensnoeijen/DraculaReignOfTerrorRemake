@@ -1,4 +1,6 @@
-import { Attributes, System, World } from "ecsy";
+import { SizeComponent } from './../components/SizeComponent';
+import { EntityHelper } from './../helpers/EntityHelper';
+import { Attributes, Entity, System, World } from "ecsy";
 import * as PIXI from 'pixi.js';
 
 import { HealthComponent } from './../components/HealthComponent';
@@ -18,7 +20,39 @@ export class GraphicsSystem extends System {
         this.app = attributes.app;
 	}
 
-	// This method will get called on every frame by default
+	private drawHealthBar(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
+		graphics.beginFill(0x000000);
+		graphics.drawRect(-8, 12, 16, 5);
+		graphics.endFill();
+
+		const health = entity.getComponent(HealthComponent);
+		if(health){
+			const percentage = health.points / health.maxPoints;
+			graphics.beginFill(getHealthColor(percentage));
+			graphics.drawRect(-7, 13, 14 * percentage, 3);
+			graphics.endFill();
+		}
+	}
+
+	private drawSelectionIndicators(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
+		const size = entity.getComponent(SizeComponent)!;
+
+		const offset = 2;
+		const left = -size.width / 2 - offset;
+		const top = -size.height / 2 - offset;
+		const right = size.width / 2 + offset;
+
+		graphics.lineStyle(1, 0x000000)
+			.moveTo(left, -4)
+       		.lineTo(left, top)
+			.lineTo(left / 2, top);
+
+		graphics.lineStyle(1, 0x000000)
+			.moveTo(right / 2, top)
+			.lineTo(right, top)
+			.lineTo(right, -4);
+	}
+
 	public execute(delta: number, time: number): void {
 		if ((this.queries.graphics.results?.length ?? 0) > 0) {
 			for (const entity of this.queries.graphics.results) {
@@ -30,22 +64,14 @@ export class GraphicsSystem extends System {
 					component.addedToStage = true;
 				}
 
-				if (entity.hasComponent(SpriteComponent)) {
+				if (entity.hasComponent(SpriteComponent) && EntityHelper.isSelected(entity)) {
 					const sprite = entity.getComponent(SpriteComponent)!.sprite;
 
-					// healthbar
 					component.graphics.clear();
-					component.graphics.beginFill(0x000000);
-					component.graphics.drawRect(sprite.position.x - 8, sprite.position.y + 10, 16, 5);
-					component.graphics.endFill();
+					component.graphics.position.set(sprite.position.x, sprite.position.y);
 
-					const health = entity.getComponent(HealthComponent);
-					if(health){
-						const percentage = health.points / health.maxPoints;
-						component.graphics.beginFill(getHealthColor(percentage));
-						component.graphics.drawRect(sprite.position.x - 7, sprite.position.y + 11, 14 * percentage, 3);
-						component.graphics.endFill();
-					}
+					this.drawSelectionIndicators(entity, component.graphics, sprite);
+					this.drawHealthBar(entity, component.graphics, sprite);
 				}
 			}
 		}

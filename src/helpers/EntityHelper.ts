@@ -84,6 +84,15 @@ export class EntityHelper {
 		selectable.selected = true;
 	}
 
+	public static isSelected(entity: Entity): boolean {
+		const selectable = entity.getComponent(SelectableComponent);
+		if (!selectable) {
+			return false;
+		}
+
+		return selectable.selected;
+	}
+
 	public static isMoving(entity: Entity): boolean {
 		const movePositionDirectComponent = entity.getComponent(MovePositionDirectComponent);
 		if (!movePositionDirectComponent) {
