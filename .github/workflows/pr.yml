@@ -1,0 +1,24 @@
+name: Test Pr
+
+on:  
+  push:
+  pull_request:
+    branches:
+      - master
+
+jobs:  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+      with:
+        ref: ${{ github.ref }}
+
+    - name: Install & Build
+      run: |
+        npm ci
+        npm run build
+
+    - name: Test
+      run: npm test
