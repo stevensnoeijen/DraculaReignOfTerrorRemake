@@ -97,7 +97,7 @@ export class PlayerSelectionSystem extends System {
 			if (!Input.isMouseDblClick()) {
 				// deselect entities in .3 sec, or do double-click action
 				this.deselectEntitiesTimeout = setTimeout(() => {
-					this.getSelected().filter((entity) => !EntityHelper.isMoving(entity)).forEach(EntityHelper.deselect);
+					this.getSelected().forEach(EntityHelper.deselect);
 				}, 300);
 			}
 			return;

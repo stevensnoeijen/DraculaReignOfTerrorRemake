@@ -72,6 +72,8 @@ export class GraphicsSystem extends System {
 
 					this.drawSelectionIndicators(entity, component.graphics, sprite);
 					this.drawHealthBar(entity, component.graphics, sprite);
+				} else {
+					component.graphics.clear();
 				}
 			}
 		}
