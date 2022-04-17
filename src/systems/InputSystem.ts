@@ -56,7 +56,5 @@ export class InputSystem extends System {
             }
             this.keyQueue = [];
         }
-
-
     }
 }

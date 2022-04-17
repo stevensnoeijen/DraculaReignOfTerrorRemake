@@ -6,7 +6,6 @@ import * as PIXI from 'pixi.js'
 import { Constants } from './Constants';
 import { TransformComponent } from './components/TransformComponent';
 import { ShapeComponent } from './components/ShapeComponent';
-import { RenderComponent } from './components/RenderComponent';
 import { SizeComponent } from './components/SizeComponent';
 import { SelectableComponent } from './components/SelectableComponent';
 import { SelectorComponent } from './components/SelectorComponent';
@@ -27,7 +26,6 @@ import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseCo
 import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './components/MoveVelocityComponent';
 import { PathfindingComponent } from './components/PathfindingComponent';
-import { RenderSystem } from './systems/RenderSystem';
 import { PlayerSelectionSystem } from './systems/PlayerSelectionSystem';
 import { FpsSystem } from './systems/FpsSystem';
 import { TweenSystem } from './systems/TweenSystem';
@@ -73,7 +71,6 @@ onMounted(() => {
   world
     .registerComponent(TransformComponent)
     .registerComponent(ShapeComponent)
-    .registerComponent(RenderComponent)
     .registerComponent(SizeComponent)
     .registerComponent(SelectableComponent)
     .registerComponent(SelectorComponent)
@@ -96,7 +93,6 @@ onMounted(() => {
     .registerComponent(PathfindingComponent)
 	.registerComponent(SpriteComponent)
 	.registerComponent(GraphicsComponent)
-    .registerSystem(RenderSystem, { app })
     .registerSystem(PlayerSelectionSystem, { app })
     .registerSystem(FpsSystem)
     .registerSystem(TweenSystem)
@@ -112,7 +108,6 @@ onMounted(() => {
 	.registerSystem(GraphicsSystem, { app });
 
 	world.createEntity()
-		.addComponent(RenderComponent)
 		.addComponent(LayerComponent, {
 			layer: Constants.LAYER_TILES + 1,
 		})
@@ -121,7 +116,6 @@ onMounted(() => {
     const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
 
 		world.createEntity()
-			.addComponent(RenderComponent)
 			.addComponent(PathfindingComponent, {
 				pathfinding: pathfinding,
 			})
