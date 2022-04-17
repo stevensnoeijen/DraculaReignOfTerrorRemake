@@ -78,13 +78,10 @@ onMounted(() => {
 		.registerComponent(TextComponent)
 		.registerComponent(FpsComponent)
 		.registerComponent(LayerComponent)
-		.registerComponent(TweenComponent)
 		.registerComponent(VisibilityComponent)
 		.registerComponent(HealthComponent)
 		.registerComponent(AliveComponent)
 		.registerComponent(DebugComponent)
-		.registerComponent(GridComponent)
-		.registerComponent(GridViewComponent)
 		.registerComponent(MoveTransformVelocityComponent)
 		.registerComponent(MovePositionDirectComponent)
 		.registerComponent(PlayerMovementMouseComponent)
@@ -93,9 +90,8 @@ onMounted(() => {
 		.registerComponent(PathfindingComponent)
 		.registerComponent(SpriteComponent)
 		.registerComponent(GraphicsComponent)
+		.registerComponent(GridComponent)
 		.registerSystem(PlayerSelectionSystem, { app })
-		.registerSystem(FpsSystem)
-		.registerSystem(TweenSystem)
 		.registerSystem(HealthSystem)
 		.registerSystem(AliveSystem)
 		.registerSystem(MoveTransformVelocitySystem)
@@ -120,9 +116,7 @@ onMounted(() => {
 			pathfinding: pathfinding,
 		})
 		// @ts-ignore
-		.addComponent(GridComponent, { grid: pathfinding.grid })
-		// @ts-ignore
-		.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
+		.addComponent(GridComponent, { grid: pathfinding.grid });
 });
 
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
