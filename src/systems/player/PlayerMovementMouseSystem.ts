@@ -1,10 +1,11 @@
 import { System } from 'ecsy';
-import { MovePositionDirectComponent } from '../components/MovePositionDirectComponent';
-import { PathfindingComponent } from '../components/PathfindingComponent';
-import { PlayerMovementMouseComponent } from '../components/PlayerMovementMouseComponent';
-import { SelectableComponent } from '../components/SelectableComponent';
-import { TransformComponent } from '../components/TransformComponent';
-import { Input } from '../input/Input';
+
+import { Input } from '../../Input';
+import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
+import { PathfindingComponent } from '../PathfindingComponent';
+import { SelectableComponent } from '../selection/SelectableComponent';
+import { MovePositionDirectComponent } from '../movement/MovePositionDirectComponent';
+import { TransformComponent } from '../TransformComponent';
 
 export class PlayerMovementMouseSystem extends System {
 	public static queries = {

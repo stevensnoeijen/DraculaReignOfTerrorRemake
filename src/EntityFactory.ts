@@ -1,21 +1,20 @@
-import { GraphicsComponent } from './components/GraphicsComponent';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { SpriteComponent } from './components/SpriteComponent';
-import { MovableComponent } from './components/MovableComponent';
-import { SizeComponent } from './components/SizeComponent';
-import { TransformComponent } from './components/TransformComponent';
+import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
+import { MovableComponent } from './systems/movement/MovableComponent';
+import { SizeComponent } from './systems/SizeComponent';
+import { TransformComponent } from './systems//TransformComponent';
 import { Constants } from './Constants';
-import { LayerComponent } from './components/LayerComponent';
-import { SelectableComponent } from './components/SelectableComponent';
-import { HealthComponent } from './components/HealthComponent';
-import { AliveComponent } from './components/AliveComponent';
+import { SelectableComponent } from './systems/selection/SelectableComponent';
+import { HealthComponent } from './systems/health/HealthComponent';
+import { AliveComponent } from './systems/alive/AliveComponent';
 import { Vector2 } from './math/Vector2';
-import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
-import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
-import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
-import { MoveVelocityComponent } from './components/MoveVelocityComponent';
+import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
+import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
+import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
+import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
+import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 
 type Position = { x: number; y: number };
 
@@ -58,9 +57,6 @@ export class EntityFactory {
 				height: height,
 			})
 			.addComponent(MovableComponent)
-			.addComponent(LayerComponent, {
-				layer: Constants.LAYER_UNITS,
-			})
 			.addComponent(SelectableComponent)
 			.addComponent(HealthComponent, {
 				points: Math.round(Math.random() * 10),

@@ -1,4 +1,4 @@
-import { Vector2 } from '../math/Vector2';
+import { Vector2 } from './math/Vector2';
 
 export type KeyStatus = 'keydown' | 'keypress' | 'keyup';
 type KeysStatus = { [key: string]: KeyStatus | undefined };

@@ -1,7 +1,7 @@
 import { Attributes, System, World } from "ecsy";
 import * as PIXI from 'pixi.js';
 
-import { SpriteComponent } from './../components/SpriteComponent';
+import { SpriteComponent } from './SpriteComponent';
 
 export class SpriteSystem extends System {
 	public static queries = {

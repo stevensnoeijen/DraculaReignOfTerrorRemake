@@ -1,11 +1,12 @@
 import { System } from 'ecsy';
-import { MoveTransformVelocityComponent } from '../components/MoveTransformVelocityComponent';
-import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
-import { PlayerMovementKeysComponent } from '../components/PlayerMovementKeysComponent';
-import { SelectableComponent } from '../components/SelectableComponent';
-import { TransformComponent } from '../components/TransformComponent';
-import { Input } from '../input/Input';
-import { Vector2 } from '../math/Vector2';
+
+import { Input } from '../../Input';
+import { Vector2 } from '../../math/Vector2';
+import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
+import { SelectableComponent } from '../selection/SelectableComponent';
+import { MoveTransformVelocityComponent } from '../movement/MoveTransformVelocityComponent';
+import { MoveVelocityComponent } from '../movement/MoveVelocityComponent';
+import { TransformComponent } from '../TransformComponent';
 
 export class PlayerMovementKeysSystem extends System {
 	public static queries = {

@@ -1,16 +1,10 @@
 import { System, Entity, SystemQueries, World, Attributes } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { SelectorComponent } from '../components/SelectorComponent';
-import { SelectableComponent } from '../components/SelectableComponent';
-import { TransformComponent } from '../components/TransformComponent';
-import { VisibilityComponent } from '../components/VisibilityComponent';
-import { SizeComponent } from '../components/SizeComponent';
-import { EntityHelper } from '../EntityHelper';
-import { Vector2 } from '../math/Vector2';
-import { ShapeComponent } from '../components/ShapeComponent';
-import { Rectangle } from '../graphics/shapes/Rectangle';
-import { Input } from '../input/Input';
+import { SelectableComponent } from './SelectableComponent';
+import { EntityHelper } from '../../EntityHelper';
+import { Vector2 } from '../../math/Vector2';
+import { Input } from '../../Input';
 
 /**
  * System for selecting units with {@link Input}'s' mouse.

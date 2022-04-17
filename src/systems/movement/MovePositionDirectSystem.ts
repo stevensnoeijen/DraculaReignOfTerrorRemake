@@ -1,9 +1,10 @@
 import { System } from 'ecsy';
-import { MovePositionDirectComponent } from '../components/MovePositionDirectComponent';
-import { MoveTransformVelocityComponent } from '../components/MoveTransformVelocityComponent';
-import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
-import { TransformComponent } from '../components/TransformComponent';
-import { Vector2 } from '../math/Vector2';
+
+import { MovePositionDirectComponent } from './MovePositionDirectComponent';
+import { MoveTransformVelocityComponent } from './MoveTransformVelocityComponent';
+import { MoveVelocityComponent } from './MoveVelocityComponent';
+import { TransformComponent } from '../TransformComponent';
+import { Vector2 } from '../../math/Vector2';
 
 export class MovePositionDirectSystem extends System {
 	public static queries = {

@@ -4,47 +4,34 @@ import { World } from 'ecsy';
 import * as PIXI from 'pixi.js'
 
 import { Constants } from './Constants';
-import { TransformComponent } from './components/TransformComponent';
-import { ShapeComponent } from './components/ShapeComponent';
-import { SizeComponent } from './components/SizeComponent';
-import { SelectableComponent } from './components/SelectableComponent';
-import { SelectorComponent } from './components/SelectorComponent';
-import { MovableComponent } from './components/MovableComponent';
-import { TextComponent } from './components/TextComponent';
-import { FpsComponent } from './components/FpsComponent';
-import { LayerComponent } from './components/LayerComponent';
-import { TweenComponent } from './components/TweenComponent';
-import { VisibilityComponent } from './components/VisibilityComponent';
-import { HealthComponent } from './components/HealthComponent';
-import { AliveComponent } from './components/AliveComponent';
-import { DebugComponent } from './components/DebugComponent';
-import { GridComponent } from './components/GridComponent';
-import { GridViewComponent } from './components/GridViewComponent';
-import { MoveTransformVelocityComponent } from './components/MoveTransformVelocityComponent';
-import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
-import { PlayerMovementMouseComponent } from './components/PlayerMovementMouseComponent';
-import { PlayerMovementKeysComponent } from './components/PlayerMovementKeysComponent';
-import { MoveVelocityComponent } from './components/MoveVelocityComponent';
-import { PathfindingComponent } from './components/PathfindingComponent';
-import { PlayerSelectionSystem } from './systems/PlayerSelectionSystem';
-import { FpsSystem } from './systems/FpsSystem';
-import { TweenSystem } from './systems/TweenSystem';
-import { HealthSystem } from './systems/HealthSystem';
-import { AliveSystem } from './systems/AliveSystem';
-import { MoveTransformVelocitySystem } from './systems/MoveTransformVelocitySystem';
+import { TransformComponent } from './systems/TransformComponent';
+import { SizeComponent } from './systems/SizeComponent';
+import { SelectableComponent } from './systems/selection/SelectableComponent';
+import { MovableComponent } from './systems/movement/MovableComponent';
+import { HealthComponent } from './systems/health/HealthComponent';
+import { GridComponent } from './systems/GridComponent';
+import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
+import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
+import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
+import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
+import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
+import { PathfindingComponent } from './systems/PathfindingComponent';
+import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
+import { HealthSystem } from './systems/health/HealthSystem';
+import { AliveSystem } from './systems/alive/AliveSystem';
+import { MoveTransformVelocitySystem } from './systems/movement/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
-import { PlayerMovementKeysSystem } from './systems/PlayerMovementKeysSystem';
-import { MovePositionDirectSystem } from './systems/MovePositionDirectSystem';
-import { PlayerMovementMouseSystem } from './systems/PlayerMovementMouseSystem';
-import { MoveVelocitySystem } from './systems/MoveVelocitySystem';
+import { PlayerMovementKeysSystem } from './systems/player/PlayerMovementKeysSystem';
+import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
+import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
+import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { EntityFactory } from './EntityFactory';
 import { Pathfinding } from './ai/Pathfinding';
-import { GridView } from './GridView';
-import { PathNode } from './ai/PathNode';
-import { SpriteComponent } from './components/SpriteComponent';
-import { SpriteSystem } from './systems/SpriteSystem';
-import { GraphicsComponent } from './components/GraphicsComponent';
-import { GraphicsSystem } from './systems/GraphicsSystem';
+import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
+import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
+import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
+import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
+import { AliveComponent } from './systems/alive/AliveComponent';
 
 const app = new PIXI.Application();
 app.renderer.backgroundColor = 0x008800;
@@ -70,18 +57,11 @@ onMounted(() => {
 
 	world
 		.registerComponent(TransformComponent)
-		.registerComponent(ShapeComponent)
 		.registerComponent(SizeComponent)
 		.registerComponent(SelectableComponent)
-		.registerComponent(SelectorComponent)
 		.registerComponent(MovableComponent)
-		.registerComponent(TextComponent)
-		.registerComponent(FpsComponent)
-		.registerComponent(LayerComponent)
-		.registerComponent(VisibilityComponent)
 		.registerComponent(HealthComponent)
 		.registerComponent(AliveComponent)
-		.registerComponent(DebugComponent)
 		.registerComponent(MoveTransformVelocityComponent)
 		.registerComponent(MovePositionDirectComponent)
 		.registerComponent(PlayerMovementMouseComponent)
@@ -102,12 +82,6 @@ onMounted(() => {
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app });
-
-	world.createEntity()
-		.addComponent(LayerComponent, {
-			layer: Constants.LAYER_TILES + 1,
-		})
-		.addComponent(DebugComponent);
 
     const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
 

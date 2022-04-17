@@ -1,8 +1,6 @@
 import { Entity, System, SystemQueries } from 'ecsy';
-import { AliveComponent } from '../components/AliveComponent';
-import { HealthComponent } from '../components/HealthComponent';
-import { ShapeComponent } from '../components/ShapeComponent';
-import { Polyline } from '../graphics/shapes/Polyline';
+import { AliveComponent } from '../alive/AliveComponent';
+import { HealthComponent } from './HealthComponent';
 
 export class HealthSystem extends System {
     // Define a query of entities that have "Velocity" and "Position" components
@@ -40,12 +38,6 @@ export class HealthSystem extends System {
                 return;
             }
             aliveComponent.alive = false;
-
-            const shapeComponent = entity.getMutableComponent(ShapeComponent);
-            if (!shapeComponent) {
-                return;
-            }
-            (shapeComponent.shape as Polyline).fillStyle = 'black';
         }
     }
 }

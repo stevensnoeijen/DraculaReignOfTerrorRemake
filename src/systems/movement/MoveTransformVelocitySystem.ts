@@ -1,7 +1,7 @@
 import { System, SystemQueries } from 'ecsy';
-import { MoveTransformVelocityComponent } from '../components/MoveTransformVelocityComponent';
-import { TransformComponent } from '../components/TransformComponent';
-import { Vector2 } from '../math/Vector2';
+import { MoveTransformVelocityComponent } from './MoveTransformVelocityComponent';
+import { TransformComponent } from '../TransformComponent';
+import { Vector2 } from '../../math/Vector2';
 
 export class MoveTransformVelocitySystem extends System {
 	public static queries: SystemQueries = {

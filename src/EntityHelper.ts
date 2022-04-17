@@ -1,29 +1,17 @@
 import { Entity } from 'ecsy';
-import { TransformComponent } from './components/TransformComponent';
-import { SelectableComponent } from './components/SelectableComponent';
-import { SizeComponent } from './components/SizeComponent';
-import { VisibilityComponent } from './components/VisibilityComponent';
-import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
+import { TransformComponent } from './systems/TransformComponent';
+import { SelectableComponent } from './systems/selection/SelectableComponent';
+import { SizeComponent } from './systems/SizeComponent';
+import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { Bounds } from './math/collision/Bounds';
 import { Vector2 } from './math/Vector2';
-import { AliveComponent } from './components/AliveComponent';
+import { AliveComponent } from './systems/alive/AliveComponent';
 
 export class EntityHelper {
 	public static isAlive(entity: Entity): boolean {
 		const aliveComponent = entity.getComponent(AliveComponent);
 
 		return aliveComponent?.alive || false;
-	}
-
-	public static isVisible(entity: Entity, undefinedComponent = false): boolean {
-		const visibilityComponent = entity.getComponent(VisibilityComponent);
-		if (!visibilityComponent && undefinedComponent) {
-			return true;
-		} else if (visibilityComponent && false === visibilityComponent.visible) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	public static isPositionInsideEntity(

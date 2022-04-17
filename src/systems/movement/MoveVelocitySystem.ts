@@ -1,13 +1,9 @@
 import { Attributes, Entity, System, SystemQueries, World } from 'ecsy';
-import { AliveComponent } from '../components/AliveComponent';
-import { MoveVelocityComponent } from '../components/MoveVelocityComponent';
-import { SizeComponent } from '../components/SizeComponent';
-import { SpriteComponent } from '../components/SpriteComponent';
-import { TransformComponent } from '../components/TransformComponent';
-import { Constants } from '../Constants';
-import { EntityHelper } from '../EntityHelper';
-import { Bounds } from '../math/collision/Bounds';
-import { Vector2 } from '../math/Vector2';
+
+import { AliveComponent } from '../alive/AliveComponent';
+import { MoveVelocityComponent } from './MoveVelocityComponent';
+import { SpriteComponent } from '../render/sprite/SpriteComponent';
+import { TransformComponent } from '../TransformComponent';
 
 export class MoveVelocitySystem extends System {
 	public static queries: SystemQueries = {

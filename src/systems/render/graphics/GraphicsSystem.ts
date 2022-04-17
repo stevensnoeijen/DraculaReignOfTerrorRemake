@@ -1,12 +1,12 @@
-import { SizeComponent } from './../components/SizeComponent';
-import { EntityHelper } from '../EntityHelper';
+import { SizeComponent } from '../../components/SizeComponent';
+import { EntityHelper } from '../../../EntityHelper';
 import { Attributes, Entity, System, World } from "ecsy";
 import * as PIXI from 'pixi.js';
 
-import { HealthComponent } from './../components/HealthComponent';
-import { getHealthColor } from './health/utils';
-import { SpriteComponent } from './../components/SpriteComponent';
-import { GraphicsComponent } from '../components/GraphicsComponent';
+import { HealthComponent } from '../../health/HealthComponent';
+import { getHealthColor } from '../../health/utils';
+import { SpriteComponent } from '../sprite/SpriteComponent';
+import { GraphicsComponent } from './GraphicsComponent';
 
 export class GraphicsSystem extends System {
 	public static queries = {
@@ -35,18 +35,20 @@ export class GraphicsSystem extends System {
 	}
 
 	private drawSelectionIndicators(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
-		const size = entity.getComponent(SizeComponent)!;
+		const spriteComponent = entity.getComponent(SpriteComponent)!;
 
 		const offset = 2;
-		const left = -size.width / 2 - offset;
-		const top = -size.height / 2 - offset;
-		const right = size.width / 2 + offset;
+		const left = -spriteComponent.sprite.width / 2;
+		const top = -spriteComponent.sprite.height / 2;
+		const right = spriteComponent.sprite.width / 2;
 
+		// top left
 		graphics.lineStyle(1, 0x000000)
 			.moveTo(left, -4)
        		.lineTo(left, top)
 			.lineTo(left / 2, top);
 
+		// top right
 		graphics.lineStyle(1, 0x000000)
 			.moveTo(right / 2, top)
 			.lineTo(right, top)
