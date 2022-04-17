@@ -6,7 +6,7 @@ import { SelectableComponent } from '../components/SelectableComponent';
 import { TransformComponent } from '../components/TransformComponent';
 import { VisibilityComponent } from '../components/VisibilityComponent';
 import { SizeComponent } from '../components/SizeComponent';
-import { EntityHelper } from '../helpers/EntityHelper';
+import { EntityHelper } from '../EntityHelper';
 import { Vector2 } from '../math/Vector2';
 import { ShapeComponent } from '../components/ShapeComponent';
 import { Rectangle } from '../graphics/shapes/Rectangle';

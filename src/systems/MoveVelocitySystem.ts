@@ -5,7 +5,7 @@ import { SizeComponent } from '../components/SizeComponent';
 import { SpriteComponent } from '../components/SpriteComponent';
 import { TransformComponent } from '../components/TransformComponent';
 import { Constants } from '../Constants';
-import { EntityHelper } from '../helpers/EntityHelper';
+import { EntityHelper } from '../EntityHelper';
 import { Bounds } from '../math/collision/Bounds';
 import { Vector2 } from '../math/Vector2';
 

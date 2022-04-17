@@ -1,12 +1,12 @@
 import { Entity } from 'ecsy';
-import { TransformComponent } from '../components/TransformComponent';
-import { SelectableComponent } from '../components/SelectableComponent';
-import { SizeComponent } from '../components/SizeComponent';
-import { VisibilityComponent } from '../components/VisibilityComponent';
-import { MovePositionDirectComponent } from '../components/MovePositionDirectComponent';
-import { Bounds } from '../math/collision/Bounds';
-import { Vector2 } from '../math/Vector2';
-import { AliveComponent } from '../components/AliveComponent';
+import { TransformComponent } from './components/TransformComponent';
+import { SelectableComponent } from './components/SelectableComponent';
+import { SizeComponent } from './components/SizeComponent';
+import { VisibilityComponent } from './components/VisibilityComponent';
+import { MovePositionDirectComponent } from './components/MovePositionDirectComponent';
+import { Bounds } from './math/collision/Bounds';
+import { Vector2 } from './math/Vector2';
+import { AliveComponent } from './components/AliveComponent';
 
 export class EntityHelper {
 	public static isAlive(entity: Entity): boolean {

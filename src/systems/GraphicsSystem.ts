@@ -1,5 +1,5 @@
 import { SizeComponent } from './../components/SizeComponent';
-import { EntityHelper } from './../helpers/EntityHelper';
+import { EntityHelper } from '../EntityHelper';
 import { Attributes, Entity, System, World } from "ecsy";
 import * as PIXI from 'pixi.js';
 
