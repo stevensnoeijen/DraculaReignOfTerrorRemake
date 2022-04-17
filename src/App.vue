@@ -47,7 +47,7 @@ import { GraphicsComponent } from './components/GraphicsComponent';
 import { GraphicsSystem } from './systems/GraphicsSystem';
 
 const app = new PIXI.Application();
-app.renderer.backgroundColor = 0xFFFFFF;
+app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
 let lastFrameTime = 0;
@@ -68,44 +68,44 @@ onMounted(() => {
 		startLevel(resources);
 	});
 
-  world
-    .registerComponent(TransformComponent)
-    .registerComponent(ShapeComponent)
-    .registerComponent(SizeComponent)
-    .registerComponent(SelectableComponent)
-    .registerComponent(SelectorComponent)
-    .registerComponent(MovableComponent)
-    .registerComponent(TextComponent)
-    .registerComponent(FpsComponent)
-    .registerComponent(LayerComponent)
-    .registerComponent(TweenComponent)
-    .registerComponent(VisibilityComponent)
-    .registerComponent(HealthComponent)
-    .registerComponent(AliveComponent)
-    .registerComponent(DebugComponent)
-    .registerComponent(GridComponent)
-    .registerComponent(GridViewComponent)
-    .registerComponent(MoveTransformVelocityComponent)
-    .registerComponent(MovePositionDirectComponent)
-    .registerComponent(PlayerMovementMouseComponent)
-    .registerComponent(PlayerMovementKeysComponent)
-    .registerComponent(MoveVelocityComponent)
-    .registerComponent(PathfindingComponent)
-	.registerComponent(SpriteComponent)
-	.registerComponent(GraphicsComponent)
-    .registerSystem(PlayerSelectionSystem, { app })
-    .registerSystem(FpsSystem)
-    .registerSystem(TweenSystem)
-    .registerSystem(HealthSystem)
-    .registerSystem(AliveSystem)
-    .registerSystem(MoveTransformVelocitySystem)
-    .registerSystem(InputSystem, { canvas: app.view })
-    .registerSystem(PlayerMovementKeysSystem)
-    .registerSystem(MovePositionDirectSystem)
-    .registerSystem(PlayerMovementMouseSystem)
-    .registerSystem(MoveVelocitySystem)
-	.registerSystem(SpriteSystem, { app })
-	.registerSystem(GraphicsSystem, { app });
+	world
+		.registerComponent(TransformComponent)
+		.registerComponent(ShapeComponent)
+		.registerComponent(SizeComponent)
+		.registerComponent(SelectableComponent)
+		.registerComponent(SelectorComponent)
+		.registerComponent(MovableComponent)
+		.registerComponent(TextComponent)
+		.registerComponent(FpsComponent)
+		.registerComponent(LayerComponent)
+		.registerComponent(TweenComponent)
+		.registerComponent(VisibilityComponent)
+		.registerComponent(HealthComponent)
+		.registerComponent(AliveComponent)
+		.registerComponent(DebugComponent)
+		.registerComponent(GridComponent)
+		.registerComponent(GridViewComponent)
+		.registerComponent(MoveTransformVelocityComponent)
+		.registerComponent(MovePositionDirectComponent)
+		.registerComponent(PlayerMovementMouseComponent)
+		.registerComponent(PlayerMovementKeysComponent)
+		.registerComponent(MoveVelocityComponent)
+		.registerComponent(PathfindingComponent)
+		.registerComponent(SpriteComponent)
+		.registerComponent(GraphicsComponent)
+		.registerSystem(PlayerSelectionSystem, { app })
+		.registerSystem(FpsSystem)
+		.registerSystem(TweenSystem)
+		.registerSystem(HealthSystem)
+		.registerSystem(AliveSystem)
+		.registerSystem(MoveTransformVelocitySystem)
+		.registerSystem(InputSystem, { canvas: app.view })
+		.registerSystem(PlayerMovementKeysSystem)
+		.registerSystem(MovePositionDirectSystem)
+		.registerSystem(PlayerMovementMouseSystem)
+		.registerSystem(MoveVelocitySystem)
+		.registerSystem(SpriteSystem, { app })
+		.registerSystem(GraphicsSystem, { app });
 
 	world.createEntity()
 		.addComponent(LayerComponent, {
@@ -115,14 +115,14 @@ onMounted(() => {
 
     const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
 
-		world.createEntity()
-			.addComponent(PathfindingComponent, {
-				pathfinding: pathfinding,
-			})
-			// @ts-ignore
-			.addComponent(GridComponent, { grid: pathfinding.grid })
-			// @ts-ignore
-			.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
+	world.createEntity()
+		.addComponent(PathfindingComponent, {
+			pathfinding: pathfinding,
+		})
+		// @ts-ignore
+		.addComponent(GridComponent, { grid: pathfinding.grid })
+		// @ts-ignore
+		.addComponent(GridViewComponent, { view: new GridView<PathNode>(pathfinding.grid) });
 });
 
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {

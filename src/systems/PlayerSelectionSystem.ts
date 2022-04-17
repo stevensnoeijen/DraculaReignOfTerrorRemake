@@ -77,26 +77,34 @@ export class PlayerSelectionSystem extends System {
 	}
 
 	private selectEntities(): void {
-		if (Vector2.distance(this.startPosition!, Input.mousePosition) < PlayerSelectionSystem.SINGLE_UNIT_DISTANCE) {
-			// single unit select
-			const entity = this.getEntityAtPosition(Input.mousePosition.x, Input.mousePosition.y);
-			if (entity) {
-				EntityHelper.select(entity);
-			} else {
-				if (!Input.isMouseDblClick()) {
-					// deselect entities in .3 sec, or do double-click action
-					this.deselectEntitiesTimeout = setTimeout(() => {
-						this.getSelected().filter((entity) => !EntityHelper.isMoving(entity)).forEach(EntityHelper.deselect);
-					}, 300);
-				}
-				return;
-			}
+		if (this.isSimpleClick()) {
+			this.selectOneEntity();
 		} else {
-			this.selectEntitiesInsideSelector();
+			this.selectMultipleEntities();
 		}
 	}
 
-	private selectEntitiesInsideSelector(): void {
+	private isSimpleClick(): boolean {
+		return Vector2.distance(this.startPosition!, Input.mousePosition) < PlayerSelectionSystem.SINGLE_UNIT_DISTANCE;
+	}
+
+	private selectOneEntity(): void {
+		// single unit select
+		const entity = this.getEntityAtPosition(Input.mousePosition.x, Input.mousePosition.y);
+		if (entity) {
+			EntityHelper.select(entity);
+		} else {
+			if (!Input.isMouseDblClick()) {
+				// deselect entities in .3 sec, or do double-click action
+				this.deselectEntitiesTimeout = setTimeout(() => {
+					this.getSelected().filter((entity) => !EntityHelper.isMoving(entity)).forEach(EntityHelper.deselect);
+				}, 300);
+			}
+			return;
+		}
+	}
+
+	private selectMultipleEntities(): void {
 		const width = Input.mousePosition.x - this.startPosition!.x;
 		const height = Input.mousePosition.y - this.startPosition!.y;
 
