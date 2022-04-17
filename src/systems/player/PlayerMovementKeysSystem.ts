@@ -1,6 +1,6 @@
 import { System } from 'ecsy';
 
-import { Input } from '../../Input';
+import { Input } from '../../Input2';
 import { Vector2 } from '../../math/Vector2';
 import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
