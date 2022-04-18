@@ -33,7 +33,10 @@ import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { AliveComponent } from './systems/alive/AliveComponent';
 
-const app = new PIXI.Application();
+const app = new PIXI.Application({
+	resizeTo: window,
+});
+
 app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
@@ -83,7 +86,7 @@ onMounted(() => {
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app });
 
-    const pathfinding = new Pathfinding(Math.ceil(Constants.GAME_WIDTH / Constants.CELL_SIZE), Math.ceil(Constants.GAME_HEIGHT / Constants.CELL_SIZE));
+    const pathfinding = new Pathfinding(Math.ceil(app.renderer.width / Constants.CELL_SIZE), Math.ceil(app.renderer.height / Constants.CELL_SIZE));
 
 	world.createEntity()
 		.addComponent(PathfindingComponent, {
@@ -96,11 +99,11 @@ onMounted(() => {
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
 		Array.from(Array(100)).forEach(() => {
 			let x = Math.round(
-				Math.random() * Constants.GAME_WIDTH
+				Math.random() * window.innerWidth,
 			);
 			x -= (x % Constants.CELL_SIZE);
 			let y = Math.round(
-				Math.random() * Constants.GAME_HEIGHT
+				Math.random() * window.innerHeight,
 			) + (Constants.CELL_SIZE / 2);
 			y -= (y % Constants.CELL_SIZE);
 
@@ -129,12 +132,12 @@ const frame = (): void => {
 </script>
 
 <template>
-  <div
-    id="App"
-    style="background-color: #d4d4d4;"
-  />
+  <div id="App"/>
 </template>
 
 <style>
-
+	body {
+		margin: 0;
+		overflow: hidden;
+	}
 </style>
