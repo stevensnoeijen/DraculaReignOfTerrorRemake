@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { World } from 'ecsy';
-import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js';
 
 import { Constants } from './Constants';
 import { TransformComponent } from './systems/TransformComponent';
@@ -32,15 +32,21 @@ import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { AliveComponent } from './systems/alive/AliveComponent';
+import { Vector2 } from './math/Vector2';
+import { toGridPosition } from './systems/player/utils';
+import { GridSystem } from './systems/render/GridSystem';
+import { getOptions } from './utils';
 
 const app = new PIXI.Application({
 	resizeTo: window,
 });
-
 app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
+
 let lastFrameTime = 0;
+
+const options = getOptions();
 
 onMounted(() => {
 	document.getElementById('App')!.appendChild(app.view);
@@ -81,10 +87,11 @@ onMounted(() => {
 		.registerSystem(InputSystem, { canvas: app.view })
 		.registerSystem(PlayerMovementKeysSystem)
 		.registerSystem(MovePositionDirectSystem)
-		.registerSystem(PlayerMovementMouseSystem)
+		.registerSystem(PlayerMovementMouseSystem, { app })
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
-		.registerSystem(GraphicsSystem, { app });
+		.registerSystem(GraphicsSystem, { app })
+		.registerSystem(GridSystem, { app, options });
 
     const pathfinding = new Pathfinding(Math.ceil(app.renderer.width / Constants.CELL_SIZE), Math.ceil(app.renderer.height / Constants.CELL_SIZE));
 
@@ -97,26 +104,23 @@ onMounted(() => {
 });
 
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
-		Array.from(Array(100)).forEach(() => {
-			let x = Math.round(
-				Math.random() * window.innerWidth,
-			);
-			x -= (x % Constants.CELL_SIZE);
-			let y = Math.round(
-				Math.random() * window.innerHeight,
-			) + (Constants.CELL_SIZE / 2);
-			y -= (y % Constants.CELL_SIZE);
+	Array.from(Array(100)).forEach(() => {
+		const vector = toGridPosition(new Vector2(
+			Math.round(
+				Math.random() * app.screen.width,
+			), 
+			Math.round(
+				Math.random() * app.screen.height,
+			) + (Constants.CELL_SIZE / 2)
+		));
 
-			EntityFactory.createUnit(world, {
-				position: {
-					x: x,
-					y: y
-				},
-				color: 'red',
-				texture: resources.swordsmen.texture!,
-			});
+		EntityFactory.createUnit(world, {
+			position: vector,
+			color: 'red',
+			texture: resources.swordsmen.texture!,
 		});
-	}
+	});
+}
 
 const frame = (): void => {
 	// Compute delta and elapsed time

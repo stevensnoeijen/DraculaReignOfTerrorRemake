@@ -1,19 +1,10 @@
-import { Attributes, System, World } from "ecsy";
-import * as PIXI from 'pixi.js';
-
+import { PixiJsSystem } from "../../PixiJsSystem";
 import { SpriteComponent } from './SpriteComponent';
 
-export class SpriteSystem extends System {
+export class SpriteSystem extends PixiJsSystem {
 	public static queries = {
 		sprites: { components: [SpriteComponent] },
 	};
-
-	private readonly app: PIXI.Application; 
-
-	constructor(world: World, attributes: Attributes) {
-        super(world, attributes);
-        this.app = attributes.app;
-	}
 
 	// This method will get called on every frame by default
 	public execute(delta: number, time: number): void {

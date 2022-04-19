@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "ecsy": "^0.4.2",
+    "pixi-dashed-line": "^1.4.2",
     "pixi.js": "^6.3.0",
     "vue": "^3.2.25"
   },

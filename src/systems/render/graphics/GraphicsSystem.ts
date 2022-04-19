@@ -1,24 +1,18 @@
-import { EntityHelper } from '../../../EntityHelper';
-import { Attributes, Entity, System, World } from "ecsy";
+import { Entity } from "ecsy";
 import * as PIXI from 'pixi.js';
 
+import { EntityHelper } from '../../../EntityHelper';
 import { HealthComponent } from '../../health/HealthComponent';
 import { getHealthColor } from '../../health/utils';
 import { SpriteComponent } from '../sprite/SpriteComponent';
 import { GraphicsComponent } from './GraphicsComponent';
 import { SizeComponent } from '../../SizeComponent';
+import { PixiJsSystem } from '../../PixiJsSystem';
 
-export class GraphicsSystem extends System {
+export class GraphicsSystem extends PixiJsSystem {
 	public static queries = {
 		graphics: { components: [GraphicsComponent] },
 	};
-
-	private readonly app: PIXI.Application; 
-
-	constructor(world: World, attributes: Attributes) {
-        super(world, attributes);
-        this.app = attributes.app;
-	}
 
 	private drawHealthBar(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
 		graphics.beginFill(0x000000);
