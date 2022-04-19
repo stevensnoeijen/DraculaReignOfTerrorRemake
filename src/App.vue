@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { World } from 'ecsy';
-import * as PIXI from 'pixi.js'
+import * as PIXI from 'pixi.js';
+import { DashLine }  from 'pixi-dashed-line';
 
 import { Constants } from './Constants';
 import { TransformComponent } from './systems/TransformComponent';
@@ -94,29 +95,59 @@ onMounted(() => {
 		})
 		// @ts-ignore
 		.addComponent(GridComponent, { grid: pathfinding.grid });
+
+	drawGrid();
+	window.onresize = () => drawGrid();
 });
 
-const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
-		Array.from(Array(100)).forEach(() => {
-			let x = Math.round(
-				Math.random() * window.innerWidth,
-			);
-			x -= (x % Constants.CELL_SIZE);
-			let y = Math.round(
-				Math.random() * window.innerHeight,
-			) + (Constants.CELL_SIZE / 2);
-			y -= (y % Constants.CELL_SIZE);
-
-			EntityFactory.createUnit(world, {
-				position: {
-					x: x,
-					y: y
-				},
-				color: 'red',
-				texture: resources.swordsmen.texture!,
-			});
-		});
+let gridGraphics: PIXI.Graphics|null = null;
+const drawGrid = (): void => {
+	if (gridGraphics == null) {
+		gridGraphics = app.stage.addChild(new PIXI.Graphics());
+	} else {
+		gridGraphics.clear();
 	}
+
+	const dash = new DashLine(gridGraphics, {
+		dash: [5, 5],
+		width: 1,
+		color: 0x666666,
+	})
+
+	for(let height = Constants.CELL_SIZE; height < app.screen.height; height += Constants.CELL_SIZE) {
+		// horizontal lines
+		dash.moveTo(0, height)
+			.lineTo(app.screen.width, height);
+	}
+
+	for(let width = Constants.CELL_SIZE; width < app.screen.width; width += Constants.CELL_SIZE) {
+		// vertical lines
+		dash.moveTo(width, 0)
+			.lineTo(width, app.screen.height);
+	}
+};
+
+const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
+	Array.from(Array(100)).forEach(() => {
+		let x = Math.round(
+			Math.random() * window.innerWidth,
+		);
+		x -= (x % Constants.CELL_SIZE);
+		let y = Math.round(
+			Math.random() * window.innerHeight,
+		) + (Constants.CELL_SIZE / 2);
+		y -= (y % Constants.CELL_SIZE);
+
+		EntityFactory.createUnit(world, {
+			position: {
+				x: x,
+				y: y
+			},
+			color: 'red',
+			texture: resources.swordsmen.texture!,
+		});
+	});
+}
 
 const frame = (): void => {
 	// Compute delta and elapsed time
