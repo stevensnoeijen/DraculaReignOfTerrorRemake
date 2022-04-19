@@ -17,7 +17,20 @@ Take a peek of the current state of the game [here](https://stevensnoeijen.githu
 ```
 npm install
 npm run dev
-npm run test
 ```
 
 A browser tab will open, click "Run in web browser".
+
+# Test
+
+Currently only some unit-tests are available thought running `npm run test`.
+
+All tests are automaticly ran at pr!
+
+# Debug
+
+To use debug options add `#debug=` to the url and refresh the page. Example: `#debug=grid`.
+
+Current debug options are:
+
+- `grid`

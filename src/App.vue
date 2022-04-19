@@ -35,15 +35,18 @@ import { AliveComponent } from './systems/alive/AliveComponent';
 import { Vector2 } from './math/Vector2';
 import { toGridPosition } from './systems/player/utils';
 import { GridSystem } from './systems/render/GridSystem';
+import { getOptions } from './utils';
 
 const app = new PIXI.Application({
 	resizeTo: window,
 });
-
 app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
+
 let lastFrameTime = 0;
+
+const options = getOptions();
 
 onMounted(() => {
 	document.getElementById('App')!.appendChild(app.view);
@@ -88,7 +91,7 @@ onMounted(() => {
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app })
-		.registerSystem(GridSystem, { app });
+		.registerSystem(GridSystem, { app, options });
 
     const pathfinding = new Pathfinding(Math.ceil(app.renderer.width / Constants.CELL_SIZE), Math.ceil(app.renderer.height / Constants.CELL_SIZE));
 

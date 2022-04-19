@@ -4,23 +4,31 @@ import { DashLine }  from 'pixi-dashed-line';
 
 import { Constants } from './../../Constants';
 import { PixiJsSystem } from "../PixiJsSystem"
+import { Options } from '../../types';
 
 export class GridSystem extends PixiJsSystem {
 
     private graphics: PIXI.Graphics;
+    private options: Options;
 
     constructor(world: World, attributes: Attributes) {
         super(world, attributes);
+        this.options = attributes.options;
+
         window.onresize = () => this.draw();
 
         this.graphics = this.app.stage.addChildAt(new PIXI.Graphics(), 0);
-        this.draw()
+        this.draw();
     }
 
     public execute(delta: number, time: number): void {}
 
     private draw(): void {
         this.graphics.clear();
+
+        if (!this.options.debug?.includes('grid')) {
+            return;
+        }
 
         const dash = new DashLine(this.graphics, {
             dash: [5, 5],
