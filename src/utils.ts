@@ -1,6 +1,6 @@
-import { Options } from "./types";
-
 const filterEmpty = Boolean;
+
+export type Options = Record<string, string[]|undefined>;
 
 export const getOptions = (): Options => {
     return window.location.hash
@@ -11,5 +11,5 @@ export const getOptions = (): Options => {
         .reduce((acc, curr) => {
             acc[curr[0]] = curr[1].split(',').filter(filterEmpty);
             return acc;
-        }, {})
+        }, {} as Options)
 }

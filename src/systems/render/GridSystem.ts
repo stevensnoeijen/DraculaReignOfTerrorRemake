@@ -4,7 +4,7 @@ import { DashLine }  from 'pixi-dashed-line';
 
 import { Constants } from './../../Constants';
 import { PixiJsSystem } from "../PixiJsSystem"
-import { Options } from '../../types';
+import { Options } from '../../utils';
 
 export class GridSystem extends PixiJsSystem {
 
