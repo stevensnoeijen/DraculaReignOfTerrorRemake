@@ -33,6 +33,8 @@ import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { AliveComponent } from './systems/alive/AliveComponent';
+import { Vector2 } from './math/Vector2';
+import { toGridPosition } from './systems/player/utils';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -82,7 +84,7 @@ onMounted(() => {
 		.registerSystem(InputSystem, { canvas: app.view })
 		.registerSystem(PlayerMovementKeysSystem)
 		.registerSystem(MovePositionDirectSystem)
-		.registerSystem(PlayerMovementMouseSystem)
+		.registerSystem(PlayerMovementMouseSystem, { app })
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app });
@@ -103,7 +105,7 @@ onMounted(() => {
 let gridGraphics: PIXI.Graphics|null = null;
 const drawGrid = (): void => {
 	if (gridGraphics == null) {
-		gridGraphics = app.stage.addChild(new PIXI.Graphics());
+		gridGraphics = app.stage.addChildAt(new PIXI.Graphics(), 0);
 	} else {
 		gridGraphics.clear();
 	}
@@ -111,7 +113,7 @@ const drawGrid = (): void => {
 	const dash = new DashLine(gridGraphics, {
 		dash: [5, 5],
 		width: 1,
-		color: 0x666666,
+		color: 0x666666777777,
 	})
 
 	for(let height = Constants.CELL_SIZE; height < app.screen.height; height += Constants.CELL_SIZE) {
@@ -129,20 +131,17 @@ const drawGrid = (): void => {
 
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
 	Array.from(Array(100)).forEach(() => {
-		let x = Math.round(
-			Math.random() * window.innerWidth,
-		);
-		x -= (x % Constants.CELL_SIZE);
-		let y = Math.round(
-			Math.random() * window.innerHeight,
-		) + (Constants.CELL_SIZE / 2);
-		y -= (y % Constants.CELL_SIZE);
+		const vector = toGridPosition(new Vector2(
+			Math.round(
+				Math.random() * app.screen.width,
+			), 
+			Math.round(
+				Math.random() * app.screen.height,
+			) + (Constants.CELL_SIZE / 2)
+		));
 
 		EntityFactory.createUnit(world, {
-			position: {
-				x: x,
-				y: y
-			},
+			position: vector,
 			color: 'red',
 			texture: resources.swordsmen.texture!,
 		});

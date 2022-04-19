@@ -1,4 +1,4 @@
-import { System } from 'ecsy';
+import { toGridPosition } from './utils';
 
 import { Input } from '../../Input';
 import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
@@ -6,8 +6,9 @@ import { PathfindingComponent } from '../PathfindingComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { MovePositionDirectComponent } from '../movement/MovePositionDirectComponent';
 import { TransformComponent } from '../TransformComponent';
+import { PixiJsSystem } from '../PixiJsSystem';
 
-export class PlayerMovementMouseSystem extends System {
+export class PlayerMovementMouseSystem extends PixiJsSystem {
 	public static queries = {
 		entities: {
 			components: [PlayerMovementMouseComponent],
@@ -41,13 +42,16 @@ export class PlayerMovementMouseSystem extends System {
 					continue;
 				}
 
-				const start = pathfinding.grid.getPosition(transformComponent.position);
-				const end = pathfinding.grid.getPosition(Input.mousePosition);
+				// const start = pathfinding.grid.getPosition(transformComponent.position);
+				// const end = pathfinding.grid.getPosition(Input.mousePosition);
 
-				const path = pathfinding.findPath(start.x, start.y, end.x, end.y);
-				console.log(path);
+				// const path = pathfinding.findPath(start.x, start.y, end.x, end.y);
+				// console.log(path);
 
-				movePositionDirectComponent.movePosition = Input.mousePosition;
+				console.log('clicked at ' + Input.mousePosition);
+				movePositionDirectComponent.movePosition = toGridPosition(Input.mousePosition);
+
+				console.log('moving to ' + movePositionDirectComponent.movePosition);
 			}
 		}
 	}
