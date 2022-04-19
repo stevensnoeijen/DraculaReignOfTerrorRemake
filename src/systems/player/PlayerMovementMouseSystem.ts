@@ -48,10 +48,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 				// const path = pathfinding.findPath(start.x, start.y, end.x, end.y);
 				// console.log(path);
 
-				console.log('clicked at ' + Input.mousePosition);
 				movePositionDirectComponent.movePosition = toGridPosition(Input.mousePosition);
-
-				console.log('moving to ' + movePositionDirectComponent.movePosition);
 			}
 		}
 	}

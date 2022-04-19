@@ -1,4 +1,4 @@
-import { System } from 'ecsy';
+import { Entity, System } from 'ecsy';
 
 import { Input } from '../../Input';
 import { Vector2 } from '../../math/Vector2';
@@ -22,40 +22,54 @@ export class PlayerMovementKeysSystem extends System {
 				continue;
 			}
 
-			let moveX = 0;
-			let moveY = 0;
+			this.handleMovement(entity);
+			this.handleAction(entity);
+		}
+	}
 
-			if (Input.isKeyDown('w')) {
-				moveY -= 1;
-			}
-			if (Input.isKeyDown('s')) {
-				moveY += 1;
-			}
-			if (Input.isKeyDown('a')) {
-				moveX -= 1;
-			}
-			if (Input.isKeyDown('d')) {
-				moveX += 1;
-			}
+	private handleMovement(entity: Entity): void {
+		let moveX = 0;
+		let moveY = 0;
 
-			const moveVelocity = new Vector2(moveX, moveY).normalized();
+		if (Input.isKeyDown('w')) {
+			moveY -= 1;
+		}
+		if (Input.isKeyDown('s')) {
+			moveY += 1;
+		}
+		if (Input.isKeyDown('a')) {
+			moveX -= 1;
+		}
+		if (Input.isKeyDown('d')) {
+			moveX += 1;
+		}
 
-			const moveTransformVelocityComponent = entity.getMutableComponent(MoveTransformVelocityComponent);
-			if (moveTransformVelocityComponent) {
-				moveTransformVelocityComponent.velocity = moveVelocity;
-			}
-			const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
-			if (moveVelocityComponent) {
-				moveVelocityComponent.velocity = moveVelocity;
-			}
+		const moveVelocity = new Vector2(moveX, moveY).normalized();
 
-			const transformComponent = entity.getMutableComponent(TransformComponent);
-			if (!transformComponent) {
-				continue;
-			}
+		const moveTransformVelocityComponent = entity.getMutableComponent(MoveTransformVelocityComponent);
+		if (moveTransformVelocityComponent) {
+			moveTransformVelocityComponent.velocity = moveVelocity;
+		}
+		const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
+		if (moveVelocityComponent) {
+			moveVelocityComponent.velocity = moveVelocity;
+		}
 
-			if (!moveVelocity.equals(Vector2.ZERO)) {
-				transformComponent.rotation = Vector2.angle(Vector2.ZERO, moveVelocity) - 90;
+		const transformComponent = entity.getMutableComponent(TransformComponent);
+		if (!transformComponent) {
+			return;
+		}
+
+		if (!moveVelocity.equals(Vector2.ZERO)) {
+			transformComponent.rotation = Vector2.angle(Vector2.ZERO, moveVelocity) - 90;
+		}
+	}
+
+	private handleAction(entity: Entity): void {
+		if(Input.isKeyDown('Escape')) {
+			const component = entity.getMutableComponent(SelectableComponent);
+			if(component != null) {
+				component.selected = false;
 			}
 		}
 	}
