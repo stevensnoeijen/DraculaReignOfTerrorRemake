@@ -2,7 +2,6 @@
 import { onMounted } from 'vue';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
-import { DashLine }  from 'pixi-dashed-line';
 
 import { Constants } from './Constants';
 import { TransformComponent } from './systems/TransformComponent';
@@ -35,6 +34,7 @@ import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { AliveComponent } from './systems/alive/AliveComponent';
 import { Vector2 } from './math/Vector2';
 import { toGridPosition } from './systems/player/utils';
+import { GridSystem } from './systems/render/GridSystem';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -87,7 +87,8 @@ onMounted(() => {
 		.registerSystem(PlayerMovementMouseSystem, { app })
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
-		.registerSystem(GraphicsSystem, { app });
+		.registerSystem(GraphicsSystem, { app })
+		.registerSystem(GridSystem, { app });
 
     const pathfinding = new Pathfinding(Math.ceil(app.renderer.width / Constants.CELL_SIZE), Math.ceil(app.renderer.height / Constants.CELL_SIZE));
 
@@ -97,37 +98,7 @@ onMounted(() => {
 		})
 		// @ts-ignore
 		.addComponent(GridComponent, { grid: pathfinding.grid });
-
-	drawGrid();
-	window.onresize = () => drawGrid();
 });
-
-let gridGraphics: PIXI.Graphics|null = null;
-const drawGrid = (): void => {
-	if (gridGraphics == null) {
-		gridGraphics = app.stage.addChildAt(new PIXI.Graphics(), 0);
-	} else {
-		gridGraphics.clear();
-	}
-
-	const dash = new DashLine(gridGraphics, {
-		dash: [5, 5],
-		width: 1,
-		color: 0x666666777777,
-	})
-
-	for(let height = Constants.CELL_SIZE; height < app.screen.height; height += Constants.CELL_SIZE) {
-		// horizontal lines
-		dash.moveTo(0, height)
-			.lineTo(app.screen.width, height);
-	}
-
-	for(let width = Constants.CELL_SIZE; width < app.screen.width; width += Constants.CELL_SIZE) {
-		// vertical lines
-		dash.moveTo(width, 0)
-			.lineTo(width, app.screen.height);
-	}
-};
 
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
 	Array.from(Array(100)).forEach(() => {
