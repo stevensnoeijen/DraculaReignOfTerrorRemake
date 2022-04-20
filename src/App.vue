@@ -3,7 +3,6 @@ import { onMounted } from 'vue';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { Constants } from './Constants';
 import { TransformComponent } from './systems/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
@@ -24,16 +23,14 @@ import { PlayerMovementKeysSystem } from './systems/player/PlayerMovementKeysSys
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
-import { EntityFactory } from './EntityFactory';
 import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { AliveComponent } from './systems/alive/AliveComponent';
-import { Vector2 } from './math/Vector2';
-import { toGridPosition } from './systems/player/utils';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
+import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -58,8 +55,8 @@ onMounted(() => {
 		frame();
 	});
 
-	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load((loader, resources) => {
-		startLevel(resources);
+	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load(() => {
+		loadLevel();
 	});
 
 	world
@@ -91,23 +88,8 @@ onMounted(() => {
 		.registerSystem(GridSystem, { app, options });
 });
 
-const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
-	Array.from(Array(100)).forEach(() => {
-		const vector = toGridPosition(new Vector2(
-			Math.round(
-				Math.random() * app.screen.width,
-			), 
-			Math.round(
-				Math.random() * app.screen.height,
-			) + (Constants.CELL_SIZE / 2)
-		));
-
-		EntityFactory.createUnit(world, {
-			position: vector,
-			color: 'red',
-			texture: resources.swordsmen.texture!,
-		});
-	});
+const loadLevel = (): void => {
+	new RandomUnitsLevel().load(app, world);
 }
 
 const frame = (): void => {
@@ -120,7 +102,6 @@ const frame = (): void => {
 
 	lastFrameTime = time;
 }
-
 </script>
 
 <template>
