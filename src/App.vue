@@ -15,7 +15,6 @@ import { MovePositionDirectComponent } from './systems/movement/MovePositionDire
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
-import { PathfindingComponent } from './systems/PathfindingComponent';
 import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
 import { HealthSystem } from './systems/health/HealthSystem';
 import { AliveSystem } from './systems/alive/AliveSystem';
@@ -26,7 +25,6 @@ import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectS
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { EntityFactory } from './EntityFactory';
-import { Pathfinding } from './ai/Pathfinding';
 import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
@@ -76,7 +74,6 @@ onMounted(() => {
 		.registerComponent(PlayerMovementMouseComponent)
 		.registerComponent(PlayerMovementKeysComponent)
 		.registerComponent(MoveVelocityComponent)
-		.registerComponent(PathfindingComponent)
 		.registerComponent(SpriteComponent)
 		.registerComponent(GraphicsComponent)
 		.registerComponent(GridComponent)
@@ -92,15 +89,6 @@ onMounted(() => {
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app })
 		.registerSystem(GridSystem, { app, options });
-
-    const pathfinding = new Pathfinding(Math.ceil(app.renderer.width / Constants.CELL_SIZE), Math.ceil(app.renderer.height / Constants.CELL_SIZE));
-
-	world.createEntity()
-		.addComponent(PathfindingComponent, {
-			pathfinding: pathfinding,
-		})
-		// @ts-ignore
-		.addComponent(GridComponent, { grid: pathfinding.grid });
 });
 
 const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
