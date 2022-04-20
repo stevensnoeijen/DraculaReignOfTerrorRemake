@@ -115,7 +115,7 @@ export const generateAdjacentPathNodes = (grid: Grid, currentNode: PathNode): Pa
 const MOVE_STRAIGHT_COST = 10;
 const MOVE_DIAGONAL_COST = 14;
 
-const calculateDistanceCost = (from: PathNode, to: PathNode): number => {
+export const calculateDistanceCost = (from: PathNode, to: PathNode): number => {
 	const xDistance = Math.abs(from.position.x - to.position.x);
 	const yDistance = Math.abs(from.position.y - to.position.y);
 	const remaining = Math.abs(xDistance - yDistance);

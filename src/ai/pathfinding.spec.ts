@@ -1,4 +1,13 @@
-import { astar, createPathFromEndNode, getLowestFCostNode, isPositionEqual, isPositionInsideGrid, PathNode, generateAdjacentPathNodes } from './pathfinding';
+import {
+    astar,
+    createPathFromEndNode,
+    getLowestFCostNode,
+    isPositionEqual,
+    isPositionInsideGrid,
+    PathNode,
+    generateAdjacentPathNodes,
+    calculateDistanceCost,
+} from './pathfinding';
 
 describe('isPositionEqual', () => {
     it('should return false when values differ', () => {
@@ -124,8 +133,33 @@ describe('generateAdjacentPathNodes', () => {
     });
 });
 
-describe.skip('calculateDistanceCost', () => {
-    // TODO: add tests
+describe('calculateDistanceCost', () => {
+    it('should calculate by straight route', () => {
+        expect(
+            calculateDistanceCost(
+                new PathNode(null, { x: 0, y: 0 }),
+                new PathNode(null, { x: 3, y: 0 })
+            )
+        ).toEqual(30);
+    });
+
+    it('should calculate by diagonal route', () => {
+        expect(
+            calculateDistanceCost(
+                new PathNode(null, { x: 0, y: 0 }),
+                new PathNode(null, { x: 3, y: 3 })
+            )
+        ).toEqual(42);
+    });
+
+    it('should calculate by combined route', () => {
+        expect(
+            calculateDistanceCost(
+                new PathNode(null, { x: 0, y: 0 }),
+                new PathNode(null, { x: 3, y: 5 })
+            )
+        ).toEqual(62);
+    });
 });
 
 describe('astar', () => {   
@@ -146,7 +180,7 @@ describe('astar', () => {
         expect(path).toHaveLength(0);
     });
 
-    it('should find the way though the maze', () => {
+    it('should go around obstruction', () => {
         const grid = [
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
@@ -167,6 +201,32 @@ describe('astar', () => {
 
         expect(path).toHaveLength(8);
         expect(path[1].position).toEqual({ x: 1, y: 1 });
-        // TODO: do more asserts to check the path
+        expect(path[2].position).toEqual({ x: 2, y: 2 });
+        expect(path[3].position).toEqual({ x: 3, y: 3 });
+        expect(path[4].position).toEqual({ x: 4, y: 3 });
+        expect(path[5].position).toEqual({ x: 5, y: 4 });
+        expect(path[6].position).toEqual({ x: 6, y: 5 });
+    });
+
+    it('should go though the maze', () => {
+        const grid = [
+            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+            [1, 1, 1, 1, 0, 1, 1, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+            [0, 1, 1, 0, 1, 1, 1, 0, 1, 0],
+            [0, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+
+        const start = { x: 0, y: 0 };
+        const end = { x: 9, y: 9 };
+
+        const path = astar(grid, start, end);
+
+        expect(path).toHaveLength(39);
     });
 });
