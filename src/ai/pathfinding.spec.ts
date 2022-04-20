@@ -1,11 +1,11 @@
 import {
     astar,
     createPathFromEndNode,
-    getLowestFCostNode,
+    getLowestFNode,
     isPositionEqual,
     isPositionInsideGrid,
-    PathNode,
-    generateAdjacentPathNodes,
+    Node,
+    generateAdjacentNodes,
     calculateDistanceCost,
 } from './pathfinding';
 
@@ -25,27 +25,27 @@ describe('isPositionEqual', () => {
 
 describe('getLowestFCostNode', () => {
     it('should return null when array is empty', () => {
-        expect(getLowestFCostNode([])).toEqual(null);
+        expect(getLowestFNode([])).toEqual(null);
 
     });
 
     it('should return lowest fCost node', () => {
         const randomNodes = Array.from({ length: 100 }, (value, index) => {
-            const node = new PathNode(null, { x: index, y: index });
-            node.fCost = Math.random() * 100 + 1;
+            const node = new Node(null, { x: index, y: index });
+            node.f = Math.random() * 100 + 1;
             return node;
         });
 
-        const lowestNode = new PathNode(null, { x: 2, y: 2 });
-        lowestNode.fCost = 1;
+        const lowestNode = new Node(null, { x: 2, y: 2 });
+        lowestNode.f = 1;
 
-        expect(getLowestFCostNode([...randomNodes, lowestNode])).toEqual(lowestNode);
+        expect(getLowestFNode([...randomNodes, lowestNode])).toEqual(lowestNode);
     });
 });
 
 describe('createPathFromEndNode', () => {
     it('should return node when only one is given', () => {
-        const node = new PathNode(null, { x: 1, y: 2 });
+        const node = new Node(null, { x: 1, y: 2 });
 
         const path = createPathFromEndNode(node);
 
@@ -53,8 +53,8 @@ describe('createPathFromEndNode', () => {
     });
 
     it('should return reversed path when nodes with parents are given', () => {
-        let lastNode: PathNode|null = null;
-        Array.from({ length: 10 }, (value, index) => lastNode = new PathNode(lastNode, { x: index, y: index }));
+        let lastNode: Node|null = null;
+        Array.from({ length: 10 }, (value, index) => lastNode = new Node(lastNode, { x: index, y: index }));
         
         const path = createPathFromEndNode(lastNode!);
 
@@ -106,7 +106,7 @@ describe('isPositionInsideGrid', () => {
     });
 });
 
-describe('generateAdjacentPathNodes', () => {
+describe('generateAdjacentNodes', () => {
     const grid = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -115,19 +115,19 @@ describe('generateAdjacentPathNodes', () => {
     ];
 
     it('should generate all nodes around the current node when inside the grid', () => {
-        const nodes = generateAdjacentPathNodes(grid, new PathNode(null, { x: 1, y: 1 }));
+        const nodes = generateAdjacentNodes(grid, new Node(null, { x: 1, y: 1 }));
 
         expect(nodes).toHaveLength(8);
     });
 
     it('should generate nodes inside the grid when at the edge of the grid', () => {
-        const nodes = generateAdjacentPathNodes(grid, new PathNode(null, { x: 0, y: 0 }));
+        const nodes = generateAdjacentNodes(grid, new Node(null, { x: 0, y: 0 }));
 
         expect(nodes).toHaveLength(3);
     });
 
     it('should generate all walkable nodes', () => {
-        const nodes = generateAdjacentPathNodes(grid, new PathNode(null, { x: 2, y: 2 }));
+        const nodes = generateAdjacentNodes(grid, new Node(null, { x: 2, y: 2 }));
 
         expect(nodes).toHaveLength(7);
     });
@@ -137,8 +137,8 @@ describe('calculateDistanceCost', () => {
     it('should calculate by straight route', () => {
         expect(
             calculateDistanceCost(
-                new PathNode(null, { x: 0, y: 0 }),
-                new PathNode(null, { x: 3, y: 0 })
+                new Node(null, { x: 0, y: 0 }),
+                new Node(null, { x: 3, y: 0 })
             )
         ).toEqual(30);
     });
@@ -146,8 +146,8 @@ describe('calculateDistanceCost', () => {
     it('should calculate by diagonal route', () => {
         expect(
             calculateDistanceCost(
-                new PathNode(null, { x: 0, y: 0 }),
-                new PathNode(null, { x: 3, y: 3 })
+                new Node(null, { x: 0, y: 0 }),
+                new Node(null, { x: 3, y: 3 })
             )
         ).toEqual(42);
     });
@@ -155,8 +155,8 @@ describe('calculateDistanceCost', () => {
     it('should calculate by combined route', () => {
         expect(
             calculateDistanceCost(
-                new PathNode(null, { x: 0, y: 0 }),
-                new PathNode(null, { x: 3, y: 5 })
+                new Node(null, { x: 0, y: 0 }),
+                new Node(null, { x: 3, y: 5 })
             )
         ).toEqual(62);
     });

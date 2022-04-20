@@ -7,33 +7,33 @@ export const isPositionEqual = (a: Position, b: Position): boolean => {
         && a.y === b.y;
 }
 
-export class PathNode {
+export class Node {
 	/**
 	 * The distance between the current node and the start node.
 	 */
-	public gCost = 0;
+	public g = 0;
 
 	/**
 	 * The heuristic — estimated distance from the current node to the end node.
 	 */
-	public hCost = 0;
+	public h = 0;
 
 	/**
 	 * The total cost of the node.
 	 */
-	public fCost = 0;
+	public f = 0;
 	
 	constructor(
-        public readonly parent: PathNode | null = null,
+        public readonly parent: Node | null = null,
 		public readonly position: Position,
 	) {}
 
-	public calculateFCost(): void {
-		this.fCost = this.gCost + this.hCost;
+	public calculateF(): void {
+		this.f = this.g + this.h;
 	}
 
 	public equals(other: unknown): boolean {
-		if (other instanceof PathNode) {
+		if (other instanceof Node) {
 			return isPositionEqual(this.position, other.position);
 		}
 
@@ -45,19 +45,19 @@ export class PathNode {
 	}
 }
 
-export const getLowestFCostNode = (nodes: PathNode[]): PathNode|null => {
-	let lowestFCostNode = nodes[0];
+export const getLowestFNode = (nodes: Node[]): Node|null => {
+	let lowestFNode = nodes[0];
 	for (let i = 1; i < nodes.length; i++) {
 		const node = nodes[i];
-		if (node.fCost < lowestFCostNode.fCost) {
-			lowestFCostNode = node;
+		if (node.f < lowestFNode.f) {
+			lowestFNode = node;
 		}
 	}
 
-	return lowestFCostNode ?? null;
+	return lowestFNode ?? null;
 }
 
-export const createPathFromEndNode = (endNode: PathNode): PathNode[] => {
+export const createPathFromEndNode = (endNode: Node): Node[] => {
 	const path = [];
 	path.push(endNode);
 
@@ -90,7 +90,7 @@ export const isPositionInsideGrid = (grid: Readonly<Grid>, position: Position): 
 		&& position.y >= 0 && position.y < grid[position.x].length;
 }
 
-export const generateAdjacentPathNodes = (grid: Grid, currentNode: PathNode): PathNode[] => {
+export const generateAdjacentNodes = (grid: Grid, currentNode: Node): Node[] => {
 	return relativeAdjacentPositions.map((relativeAdjacentPosition) => {
 		const position: Position = {
 			x: currentNode.position.x + relativeAdjacentPosition.x,
@@ -107,15 +107,15 @@ export const generateAdjacentPathNodes = (grid: Grid, currentNode: PathNode): Pa
 			return;
 		}
 
-		return new PathNode(currentNode, position);
-	}).filter(filterEmpty) as PathNode[];
+		return new Node(currentNode, position);
+	}).filter(filterEmpty) as Node[];
 }
 
 
 const MOVE_STRAIGHT_COST = 10;
 const MOVE_DIAGONAL_COST = 14;
 
-export const calculateDistanceCost = (from: PathNode, to: PathNode): number => {
+export const calculateDistanceCost = (from: Node, to: Node): number => {
 	const xDistance = Math.abs(from.position.x - to.position.x);
 	const yDistance = Math.abs(from.position.y - to.position.y);
 	const remaining = Math.abs(xDistance - yDistance);
@@ -126,17 +126,17 @@ export const calculateDistanceCost = (from: PathNode, to: PathNode): number => {
 	);
 }
 
-export const astar = (grid: Grid, start: Position, end: Position): PathNode[] => {
-    const startNode = new PathNode(null, start);
-	const endNode = new PathNode(null, end);
+export const astar = (grid: Grid, start: Position, end: Position): Node[] => {
+    const startNode = new Node(null, start);
+	const endNode = new Node(null, end);
 
-	const openList: PathNode[] = [];
-	const closedList: PathNode[] = [];
+	const openList: Node[] = [];
+	const closedList: Node[] = [];
 
 	openList.push(startNode);
 
 	while(openList.length > 0) {
-		const currentNode = getLowestFCostNode(openList);
+		const currentNode = getLowestFNode(openList);
 		if (currentNode == null) {
 			break;
 		}
@@ -150,7 +150,7 @@ export const astar = (grid: Grid, start: Position, end: Position): PathNode[] =>
 			return createPathFromEndNode(currentNode);
 		}
 
-		const adjacentNodes = generateAdjacentPathNodes(grid, currentNode);
+		const adjacentNodes = generateAdjacentNodes(grid, currentNode);
 
 		for(const adjacentNode of adjacentNodes) {
 			if (arrayIncludesByEquals(closedList, adjacentNode)){
@@ -158,14 +158,14 @@ export const astar = (grid: Grid, start: Position, end: Position): PathNode[] =>
 			};
 
 			// set cost values
-			adjacentNode.gCost = currentNode.gCost + 1;
-			adjacentNode.hCost = calculateDistanceCost(adjacentNode, endNode);
-			adjacentNode.calculateFCost();
+			adjacentNode.g = currentNode.g + 1;
+			adjacentNode.h = calculateDistanceCost(adjacentNode, endNode);
+			adjacentNode.calculateF();
 
 			if (arrayIncludesByEquals(openList, adjacentNode)) {
 				const openNode = openList.find(toEqual(adjacentNode))!;
 				// 
-				if (adjacentNode.gCost > openNode.gCost) {
+				if (adjacentNode.g > openNode.g) {
 					continue;
 				}
 			}
