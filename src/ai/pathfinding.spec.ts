@@ -1,3 +1,4 @@
+import { maze } from './../levels/maze';
 import {
     astar,
     createPathFromEndNode,
@@ -209,23 +210,10 @@ describe('astar', () => {
     });
 
     it('should go though the maze', () => {
-        const grid = [
-            [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
-            [0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
-            [1, 1, 1, 1, 0, 1, 1, 0, 1, 0],
-            [0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
-            [0, 1, 1, 0, 1, 1, 1, 0, 1, 0],
-            [0, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ];
-
         const start = { x: 0, y: 0 };
         const end = { x: 9, y: 9 };
 
-        const path = astar(grid, start, end);
+        const path = astar(maze, start, end);
 
         expect(path).toHaveLength(39);
     });

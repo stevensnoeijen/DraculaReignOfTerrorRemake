@@ -31,6 +31,7 @@ import { AliveComponent } from './systems/alive/AliveComponent';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
+import { PathFindingLevel } from './levels/PathFindingLevel';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -88,8 +89,24 @@ onMounted(() => {
 		.registerSystem(GridSystem, { app, options });
 });
 
+let level;
 const loadLevel = (): void => {
-	new RandomUnitsLevel().load(app, world);
+	if(options.level != null && options.level[0] != null) {
+		const levelName = options.level[0].toLowerCase();
+		if (levelName === 'randomunits') {
+			level = new RandomUnitsLevel(app, world);
+		} else if (levelName === 'pathfinding') {
+			level = new PathFindingLevel(app, world);
+		} else {
+			alert('level not found');
+			return;
+		}
+	} else {
+		// default
+		level = new RandomUnitsLevel(app, world);
+	}
+
+	level.load();
 }
 
 const frame = (): void => {
