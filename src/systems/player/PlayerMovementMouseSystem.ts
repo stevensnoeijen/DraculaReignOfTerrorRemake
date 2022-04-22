@@ -38,7 +38,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 					const path = astar(this.map, transformComponent.gridPosition, getMouseGridPosition());
 					
 					const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
-					movePathComponent.path.push(...convertPathfindingPathToPositions(path.slice(1)));
+					movePathComponent.path = convertPathfindingPathToPositions(path.slice(1));
 				}
 			}
 		}
