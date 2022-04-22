@@ -1,11 +1,10 @@
-import { toGridPosition } from './utils';
-
 import { Input } from '../../Input';
 import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { MovePositionDirectComponent } from '../movement/MovePositionDirectComponent';
 import { TransformComponent } from '../TransformComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
+import { toGridPosition } from '../../utils';
 
 export class PlayerMovementMouseSystem extends PixiJsSystem {
 	public static queries = {

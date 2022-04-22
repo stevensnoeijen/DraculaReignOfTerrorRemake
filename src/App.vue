@@ -32,6 +32,7 @@ import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 import { PathFindingLevel } from './levels/PathFindingLevel';
+import { MapSystem } from './systems/render/MapSystem';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -86,7 +87,8 @@ onMounted(() => {
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app })
-		.registerSystem(GridSystem, { app, options });
+		.registerSystem(GridSystem, { app, options })
+		.registerSystem(MapSystem, { app });
 });
 
 let level;

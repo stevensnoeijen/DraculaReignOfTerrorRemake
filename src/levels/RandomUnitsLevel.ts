@@ -5,7 +5,7 @@ import * as PIXI from 'pixi.js';
 import { Constants } from '../Constants';
 import { EntityFactory } from '../EntityFactory';
 import { Vector2 } from '../math/Vector2';
-import { toGridPosition } from '../systems/player/utils';
+import { toGridPosition } from '../utils';
 import { Level } from './Level';
 
 export class RandomUnitsLevel extends Level {

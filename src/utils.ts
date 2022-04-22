@@ -1,3 +1,6 @@
+import { Constants } from './Constants';
+import { Vector2 } from './math/Vector2';
+
 export const filterEmpty = Boolean as <T>(t: T) => NonNullable<T>;
 
 export type Options = Record<string, string[]|undefined>;
@@ -23,4 +26,28 @@ export const toEqual = <T extends HasEquals>(other: T): Predicate<T> => {
 
 export const arrayIncludesByEquals = <T extends HasEquals>(array: T[], object: T): boolean => {
     return array.find(toEqual(object)) != null;
-}
+};
+
+export const toGridPosition = (vector: Vector2): Vector2 => { 
+    return new Vector2(
+        vector.x - (vector.x % Constants.CELL_SIZE) + (Constants.CELL_SIZE / 2),
+        vector.y - (vector.y % Constants.CELL_SIZE) + (Constants.CELL_SIZE / 2)
+    );
+};
+
+export const toWorldPosition = (vector: Vector2): Vector2 => {
+    return new Vector2(
+        (vector.x * Constants.CELL_SIZE) + (Constants.CELL_SIZE / 2),
+        (vector.y * Constants.CELL_SIZE) + (Constants.CELL_SIZE / 2)
+    );
+};
+
+/**
+ * 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {Vector2} centered cell vector
+ */
+export const cellPositionToVector = (x: number, y: number): Vector2 => {
+    return toWorldPosition(new Vector2(x, y));
+};

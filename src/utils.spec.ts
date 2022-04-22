@@ -1,4 +1,5 @@
-import { arrayIncludesByEquals, getOptions, HasEquals, toEqual } from './utils';
+import { Vector2 } from './math/Vector2';
+import { arrayIncludesByEquals, getOptions, HasEquals, toEqual, toGridPosition, toWorldPosition } from './utils';
 
 describe('getOptions', () => {
     const mockWindowLocation = (url: string) => {
@@ -69,5 +70,23 @@ describe('arrayIncludesByEquals', () => {
         const array = Array.from({ length: 3 }, () => ({ equals: returnTrue }));
         
         expect(arrayIncludesByEquals(array, { equals: returnFalse })).toBe(true);
+    });
+});
+
+describe('toGridPosition', () => {
+    it('should center to grid position', () => {
+        const position = toGridPosition(new Vector2(101, 60));
+
+        expect(position.x).toEqual(104);
+        expect(position.y).toEqual(56);
+    });
+});
+
+describe('toWorldPosition', () => {
+    it('should center to grid position', () => {
+        const position = toWorldPosition(new Vector2(10, 2));
+
+        expect(position.x).toEqual(168);
+        expect(position.y).toEqual(40);
     });
 });
