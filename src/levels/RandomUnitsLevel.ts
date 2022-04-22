@@ -1,4 +1,4 @@
-import { createEmptyGrid, getWorldCellSizeByScreen } from './utils';
+import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
@@ -14,7 +14,7 @@ export class RandomUnitsLevel extends Level {
     constructor(app: PIXI.Application, world: World) {
         super(app, world);
 
-        this._collisionMap = createEmptyGrid(getWorldCellSizeByScreen(app));
+        this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
     }
 
     public get collisionMap(): number[][] {

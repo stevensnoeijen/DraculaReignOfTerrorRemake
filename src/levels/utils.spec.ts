@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-import { getWorldCellSizeByScreen, createEmptyGrid } from "./utils";
+import { getGridSizeByScreen, createEmptyGrid } from "./utils";
 
 describe('getWorldCellSizeByScreen', () => {
     it('should give ceil calculation', () => {
-        expect(getWorldCellSizeByScreen({ screen: { width: 800, height: 600 } } as PIXI.Application)).toEqual({
+        expect(getGridSizeByScreen({ screen: { width: 800, height: 600 } } as PIXI.Application)).toEqual({
             width: 50,
             height: 38,
         });

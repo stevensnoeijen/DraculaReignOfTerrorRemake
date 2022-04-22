@@ -1,7 +1,7 @@
-import { MovePathComponent } from './MovePathComponent';
 import { System } from "ecsy";
+
+import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
-import { Vector2 } from '../../math/Vector2';
 import { cellPositionToVector } from '../../utils';
 
 export class MovePathSystem extends System {
