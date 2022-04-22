@@ -19,7 +19,7 @@ export const createEmptyGrid = (size: Size): number[][] => {
 type MazeObject = { x: number; y: number; top: boolean; left: boolean; bottom: boolean; right: boolean; };
 
 export const generateMaze = (size: Size): number[][] => {
-    const ellerMaze = generateEllerMaze(size.width / 2 - 2, size.height / 2 - 2, true, Math.random() * 1000) as MazeObject[][];
+    const ellerMaze = generateEllerMaze(Math.floor(size.width / 2), Math.floor(size.height / 2), true, Math.random() * 1000) as MazeObject[][];
     
     return convertEllerMazeToGrid(ellerMaze);
 };
