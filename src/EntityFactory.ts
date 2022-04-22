@@ -1,3 +1,4 @@
+import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
@@ -24,18 +25,7 @@ interface IUnitProps {
 	texture: PIXI.Texture<PIXI.Resource>;
 }
 
-interface ISelectorProps {
-	position: Position;
-	static?: boolean;
-}
-
-interface IFpsCounterProps {
-	position: Position;
-}
-
 export class EntityFactory {
-	static first = true;
-
 	public static createUnit(world: World, props: IUnitProps): void {
 		const width = Constants.CELL_SIZE;
 		const height = Constants.CELL_SIZE;
@@ -74,7 +64,8 @@ export class EntityFactory {
 			})
 			.addComponent(GraphicsComponent, {
 				graphics: new PIXI.Graphics(),
-			});
+			})
+			.addComponent(MovePathComponent, { path: [] });
 
 	}
 }

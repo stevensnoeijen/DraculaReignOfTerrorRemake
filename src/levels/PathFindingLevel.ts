@@ -1,9 +1,9 @@
 import { cellPositionToVector } from './../utils';
 import { MapSystem } from './../systems/render/MapSystem';
 import { Level } from './Level';
-import { Vector2 } from '../math/Vector2';
 import { EntityFactory } from './../EntityFactory';
 import { maze } from './maze';
+import { PlayerMovementMouseSystem } from '../systems/player/PlayerMovementMouseSystem';
 
 export class PathFindingLevel extends Level {
     public get collisionMap(): number[][] {
@@ -18,5 +18,6 @@ export class PathFindingLevel extends Level {
         });
 
         this.world.getSystem(MapSystem).setMap(this.collisionMap);
+        this.world.getSystem(PlayerMovementMouseSystem).setMap(this.collisionMap);
     }
 }

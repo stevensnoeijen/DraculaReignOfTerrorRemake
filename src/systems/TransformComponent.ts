@@ -1,5 +1,6 @@
 import { Component, Types } from 'ecsy';
 import { Vector2 } from '../math/Vector2';
+import { toGridPosition } from '../utils';
 
 export interface TransformComponentProps {
 	position: Vector2;
@@ -12,6 +13,10 @@ export class TransformComponent extends Component<TransformComponentProps> {
 	 * in degrees (-180 to 180)
 	 */
 	rotation!: number;
+
+	public get gridPosition (): Vector2 {
+		return toGridPosition(this.position);
+	}
 }
 
 TransformComponent.schema = {

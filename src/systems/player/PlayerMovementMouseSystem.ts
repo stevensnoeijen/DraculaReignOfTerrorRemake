@@ -1,10 +1,12 @@
+import { convertPathfindingPathToPositions } from './../../utils';
+import { MovePathComponent } from './../movement/MovePathComponent';
+import { astar } from './../../ai/Pathfinding';
 import { Input } from '../../Input';
 import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
-import { MovePositionDirectComponent } from '../movement/MovePositionDirectComponent';
 import { TransformComponent } from '../TransformComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
-import { toGridPosition } from '../../utils';
+import { getMouseGridPosition, toCenterGridPosition } from '../../utils';
 
 export class PlayerMovementMouseSystem extends PixiJsSystem {
 	public static queries = {
@@ -12,6 +14,12 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 			components: [PlayerMovementMouseComponent],
 		},
 	};
+
+	private map: number[][]|null = null;
+
+	public setMap(map: number[][]): void {
+		this.map = map;
+	}
 
 	public execute(delta: number, time: number): void {
 		if (Input.isMouseButtonUp(2) || Input.isMouseDblClick()) {
@@ -21,19 +29,17 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 					continue;
 				}
 
-				const movePositionDirectComponent = entity.getMutableComponent(
-					MovePositionDirectComponent
-				);
-				if (!movePositionDirectComponent) {
-					continue;
-				}
-
 				const transformComponent = entity.getComponent(TransformComponent);
 				if (!transformComponent) {
 					continue;
 				}
 
-				movePositionDirectComponent.movePosition = toGridPosition(Input.mousePosition);
+				if(this.map != null) {
+					const path = astar(this.map, transformComponent.gridPosition, getMouseGridPosition());
+					
+					const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
+					movePathComponent.path.push(...convertPathfindingPathToPositions(path.slice(1)));
+				}
 			}
 		}
 	}

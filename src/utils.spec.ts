@@ -1,5 +1,6 @@
 import { Vector2 } from './math/Vector2';
-import { arrayIncludesByEquals, getOptions, HasEquals, toEqual, toGridPosition, toWorldPosition } from './utils';
+import { arrayIncludesByEquals, getOptions, toEqual, toCenterGridPosition, toWorldPosition, toGridPosition, convertPathfindingPathToPositions } from './utils';
+import * as PathFinding from './ai/Pathfinding';
 
 describe('getOptions', () => {
     const mockWindowLocation = (url: string) => {
@@ -73,9 +74,9 @@ describe('arrayIncludesByEquals', () => {
     });
 });
 
-describe('toGridPosition', () => {
+describe('toCenterGridPosition', () => {
     it('should center to grid position', () => {
-        const position = toGridPosition(new Vector2(101, 60));
+        const position = toCenterGridPosition(new Vector2(101, 60));
 
         expect(position.x).toEqual(104);
         expect(position.y).toEqual(56);
@@ -88,5 +89,51 @@ describe('toWorldPosition', () => {
 
         expect(position.x).toEqual(168);
         expect(position.y).toEqual(40);
+    });
+});
+
+describe('toGridPosition', () => {
+    it('should 0,0 when position is 8,8', () => {
+        expect(toGridPosition(new Vector2(8, 8))).toMatchObject({
+            x: 0,
+            y: 0,
+        })
+    });
+
+    it('should round down', () => {
+        expect(toGridPosition(new Vector2(47, 47))).toMatchObject({
+            x: 2,
+            y: 2,
+        })
+    });
+});
+
+describe('convertPathfindingPathToPositions', () => {
+    it('should convert positions', () => {
+        const positions = convertPathfindingPathToPositions([
+            {
+                position: {
+                    x: 100,
+                    y: 200,
+                },
+            } as PathFinding.Node,
+            {
+                position: {
+                    x: 300,
+                    y: 400,
+                },
+            } as PathFinding.Node,
+        ]);
+
+        expect(positions).toHaveLength(2);
+        expect(positions).toEqual([
+            {
+                x: 100,
+                y: 200,
+            }, {
+                x: 300,
+                y: 400,
+            }
+        ]);
     });
 });

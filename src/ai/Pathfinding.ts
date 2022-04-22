@@ -1,6 +1,4 @@
-import { arrayIncludesByEquals, filterEmpty, toEqual } from "../utils";
-
-type Position = { x : number; y: number; };
+import { arrayIncludesByEquals, filterEmpty, toEqual, Position } from "../utils";
 
 export const isPositionEqual = (a: Position, b: Position): boolean => {
     return a.x === b.x 
@@ -57,7 +55,9 @@ export const getLowestFNode = (nodes: Node[]): Node|null => {
 	return lowestFNode ?? null;
 }
 
-export const createPathFromEndNode = (endNode: Node): Node[] => {
+export type Path = Node[];
+
+export const createPathFromEndNode = (endNode: Node): Path => {
 	const path = [];
 	path.push(endNode);
 
@@ -86,8 +86,8 @@ const relativeAdjacentPositions: readonly Position[] = [
 type Grid = number[][];
 
 export const isPositionInsideGrid = (grid: Readonly<Grid>, position: Position): boolean => {
-	return position.x >= 0 && position.x < grid.length
-		&& position.y >= 0 && position.y < grid[position.x].length;
+	return position.y >= 0 && position.y < grid.length
+		&& position.x >= 0 && position.x < grid[position.y].length;
 }
 
 export const generateAdjacentNodes = (grid: Grid, currentNode: Node): Node[] => {
@@ -103,7 +103,7 @@ export const generateAdjacentNodes = (grid: Grid, currentNode: Node): Node[] => 
 		}
 
 		// check if walkable terrain
-		if (grid[position.x][position.y] !== 0) {
+		if (grid[position.y][position.x] !== 0) {
 			return;
 		}
 
@@ -126,7 +126,7 @@ export const calculateDistanceCost = (from: Node, to: Node): number => {
 	);
 }
 
-export const astar = (grid: Grid, start: Position, end: Position): Node[] => {
+export const astar = (grid: Grid, start: Position, end: Position): Path => {
     const startNode = new Node(null, start);
 	const endNode = new Node(null, end);
 

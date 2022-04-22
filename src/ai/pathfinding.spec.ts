@@ -200,13 +200,14 @@ describe('astar', () => {
 
         const path = astar(grid, start, end);
 
-        expect(path).toHaveLength(8);
+        expect(path).toHaveLength(9);
         expect(path[1].position).toEqual({ x: 1, y: 1 });
         expect(path[2].position).toEqual({ x: 2, y: 2 });
         expect(path[3].position).toEqual({ x: 3, y: 3 });
-        expect(path[4].position).toEqual({ x: 4, y: 3 });
-        expect(path[5].position).toEqual({ x: 5, y: 4 });
-        expect(path[6].position).toEqual({ x: 6, y: 5 });
+        expect(path[4].position).toEqual({ x: 3, y: 4 });
+        expect(path[5].position).toEqual({ x: 4, y: 5 });
+        expect(path[6].position).toEqual({ x: 5, y: 6 });
+        expect(path[7].position).toEqual({ x: 6, y: 6 });
     });
 
     it('should go though the maze', () => {

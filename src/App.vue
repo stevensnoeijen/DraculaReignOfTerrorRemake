@@ -8,7 +8,6 @@ import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
 import { HealthComponent } from './systems/health/HealthComponent';
-import { GridComponent } from './systems/GridComponent';
 import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
@@ -33,6 +32,8 @@ import { getOptions } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 import { PathFindingLevel } from './levels/PathFindingLevel';
 import { MapSystem } from './systems/render/MapSystem';
+import { MovePathComponent } from './systems/movement/MovePathComponent';
+import { MovePathSystem } from './systems/movement/MovePathSystem';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -75,7 +76,7 @@ onMounted(() => {
 		.registerComponent(MoveVelocityComponent)
 		.registerComponent(SpriteComponent)
 		.registerComponent(GraphicsComponent)
-		.registerComponent(GridComponent)
+		.registerComponent(MovePathComponent)
 		.registerSystem(PlayerSelectionSystem, { app })
 		.registerSystem(HealthSystem)
 		.registerSystem(AliveSystem)
@@ -88,7 +89,8 @@ onMounted(() => {
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app })
 		.registerSystem(GridSystem, { app, options })
-		.registerSystem(MapSystem, { app });
+		.registerSystem(MapSystem, { app })
+		.registerSystem(MovePathSystem);
 });
 
 let level;
