@@ -1,4 +1,3 @@
-import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
@@ -16,6 +15,8 @@ import { MovePositionDirectComponent } from './systems/movement/MovePositionDire
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
+import { CollidableComponent } from './systems/collision/CollidableComponent';
+import { MovePathComponent } from './systems/movement/MovePathComponent';
 
 type Position = { x: number; y: number };
 
@@ -65,7 +66,8 @@ export class EntityFactory {
 			.addComponent(GraphicsComponent, {
 				graphics: new PIXI.Graphics(),
 			})
-			.addComponent(MovePathComponent, { path: [] });
+			.addComponent(MovePathComponent, { path: [] })
+			.addComponent(CollidableComponent);
 
 	}
 }

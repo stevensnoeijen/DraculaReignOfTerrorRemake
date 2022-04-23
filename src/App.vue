@@ -16,7 +16,6 @@ import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent'
 import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
 import { HealthSystem } from './systems/health/HealthSystem';
 import { AliveSystem } from './systems/alive/AliveSystem';
-import { MoveTransformVelocitySystem } from './systems/movement/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
 import { PlayerMovementKeysSystem } from './systems/player/PlayerMovementKeysSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
@@ -34,7 +33,10 @@ import { PathFindingLevel } from './levels/PathFindingLevel';
 import { MapSystem } from './systems/render/MapSystem';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
+import { CollidableComponent } from './systems/collision/CollidableComponent';
+import { CollisionSystem } from './systems/collision/CollisionSystem';
 import { EventBus } from './EventBus';
+import { LevelLoadedEvent, Events } from './Events';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -79,6 +81,7 @@ onMounted(() => {
 		.registerComponent(SpriteComponent)
 		.registerComponent(GraphicsComponent)
 		.registerComponent(MovePathComponent)
+		.registerComponent(CollidableComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { eventBus })
@@ -92,6 +95,7 @@ onMounted(() => {
 		.registerSystem(GridSystem, { app, options, eventBus })
 		.registerSystem(MapSystem, { app, eventBus })
 		.registerSystem(MovePathSystem, { eventBus })
+		.registerSystem(CollisionSystem, { app, eventBus });
 });
 
 let level;
@@ -112,7 +116,7 @@ const loadLevel = (): void => {
 	}
 
 	level.load();
-	eventBus.emit('level:loaded', { level });
+	eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
 }
 
 const frame = (): void => {

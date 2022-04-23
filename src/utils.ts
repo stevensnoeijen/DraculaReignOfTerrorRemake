@@ -20,7 +20,7 @@ export const getOptions = (): Options => {
 };
 
 export type HasEquals = { equals: (other: unknown) => boolean };
-type Predicate<T> = (this: void, value: T, index: number, obj: T[]) => boolean;
+export type Predicate<T> = (this: void, value: T, index: number, obj: T[]) => boolean;
 
 export const toEqual = <T extends HasEquals>(other: T): Predicate<T> => {
 	return (item: T) => item.equals(other)
