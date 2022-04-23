@@ -79,19 +79,19 @@ onMounted(() => {
 		.registerComponent(SpriteComponent)
 		.registerComponent(GraphicsComponent)
 		.registerComponent(MovePathComponent)
-		.registerSystem(PlayerSelectionSystem, { app })
-		.registerSystem(HealthSystem)
-		.registerSystem(AliveSystem)
-		.registerSystem(MoveTransformVelocitySystem)
+		.registerSystem(PlayerSelectionSystem, { app, eventBus })
+		.registerSystem(HealthSystem, { eventBus })
+		.registerSystem(AliveSystem, { eventBus })
 		.registerSystem(InputSystem, { canvas: app.view })
-		.registerSystem(PlayerMovementKeysSystem)
+		// .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with collision atm
 		.registerSystem(MovePositionDirectSystem)
 		.registerSystem(PlayerMovementMouseSystem, { app, eventBus })
-		.registerSystem(MoveVelocitySystem)
-		.registerSystem(SpriteSystem, { app })
-		.registerSystem(GraphicsSystem, { app })
-		.registerSystem(GridSystem, { app, options })
+		.registerSystem(MoveVelocitySystem, { eventBus })
+		.registerSystem(SpriteSystem, { app, eventBus })
+		.registerSystem(GraphicsSystem, { app, eventBus })
+		.registerSystem(GridSystem, { app, options, eventBus })
 		.registerSystem(MapSystem, { app, eventBus })
+		.registerSystem(MovePathSystem, { eventBus })
 });
 
 let level;
