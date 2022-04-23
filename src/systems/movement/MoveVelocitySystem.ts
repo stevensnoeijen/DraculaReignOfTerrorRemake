@@ -40,9 +40,6 @@ export class MoveVelocitySystem extends System {
 			return;
 		}
 
-		
-		const speed = moveVelocityComponent!.moveSpeed * (delta / 1000);
-
 		transformComponent.position.x = transformComponent.position.x + moveVelocityComponent.velocity.x;
 		transformComponent.position.y = transformComponent.position.y + moveVelocityComponent.velocity.y;
 

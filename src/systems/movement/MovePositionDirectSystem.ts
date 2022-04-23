@@ -60,5 +60,4 @@ export class MovePositionDirectSystem extends System {
 			moveVelocityComponent.velocity = Vector2.subtracts(movePositionDirectComponent.movePosition!, transformComponent.position).normalized();
 		}
 	}
-
 }

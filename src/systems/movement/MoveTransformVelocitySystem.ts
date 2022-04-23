@@ -22,7 +22,8 @@ export class MoveTransformVelocitySystem extends System {
 			}
 
 			if (!moveTransformVelocityComponent.velocity.equals(Vector2.ZERO)) {
-				transformComponent.position = Vector2.adds(transformComponent.position, Vector2.multiplies(moveTransformVelocityComponent.velocity, moveTransformVelocityComponent.moveSpeed * (delta / 1000)));
+				console.log('moving');
+				transformComponent.position = Vector2.adds(transformComponent.position, moveTransformVelocityComponent.calculateMovement(delta));
 			}
 		}
 	}
