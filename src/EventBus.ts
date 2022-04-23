@@ -8,7 +8,7 @@ export class EventBus<Event> {
 	private readonly eventTarget: EventTarget;
 
 	constructor(name?: string) {
-		name = name || '' + ++EventBus.counter;
+		name = name || ++EventBus.counter;
 		this.eventTarget = document.appendChild(
 			document.createComment('EventBus: ' + name)
 		);
@@ -27,7 +27,7 @@ export class EventBus<Event> {
 		this.eventTarget.removeEventListener(type, listener as EventListener);
 	}
 
-	public emit(type: string, detail?: CustomEventInit): boolean {
+	public emit(type: string, detail?: unknown): boolean {
 		return this.eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
 	}
 }

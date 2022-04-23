@@ -2,10 +2,8 @@ import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
 import { cellPositionToVector } from './../utils';
-import { MapSystem } from './../systems/render/MapSystem';
 import { Level } from './Level';
 import { EntityFactory } from './../EntityFactory';
-import { PlayerMovementMouseSystem } from '../systems/player/PlayerMovementMouseSystem';
 import { generateMaze, getGridSizeByScreen } from './utils';
 
 export class PathFindingLevel extends Level {
@@ -28,7 +26,10 @@ export class PathFindingLevel extends Level {
             texture: this.app.loader.resources.swordsmen.texture!,
         });
 
-        this.world.getSystem(MapSystem).setMap(this.collisionMap);
-        this.world.getSystem(PlayerMovementMouseSystem).setMap(this.collisionMap);
+        EntityFactory.createUnit(this.world, {
+            position: cellPositionToVector(3, 1),
+            color: 'red',
+            texture: this.app.loader.resources.swordsmen.texture!,
+        });
     }
 }

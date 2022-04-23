@@ -1,3 +1,5 @@
+import { Attributes, World } from 'ecsy';
+
 import { convertPathfindingPathToPositions } from './../../utils';
 import { MovePathComponent } from './../movement/MovePathComponent';
 import { astar } from './../../ai/Pathfinding';
@@ -6,7 +8,9 @@ import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { TransformComponent } from '../TransformComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
-import { getMouseGridPosition, toCenterGridPosition } from '../../utils';
+import { getMouseGridPosition } from '../../utils';
+import { EventBus } from '../../EventBus';
+import { Events, LevelLoadedEvent } from '../../Events';
 
 export class PlayerMovementMouseSystem extends PixiJsSystem {
 	public static queries = {
@@ -17,9 +21,13 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 
 	private map: number[][]|null = null;
 
-	public setMap(map: number[][]): void {
-		this.map = map;
-	}
+	constructor(world: World, attributes: Attributes) {
+        super(world, attributes);
+
+        (attributes.eventBus as EventBus<Events>).on('level:loaded', (event: CustomEvent<LevelLoadedEvent>) => {
+            this.map  = event.detail.level.collisionMap;
+        });
+    }
 
 	public execute(delta: number, time: number): void {
 		if (Input.isMouseButtonUp(2) || Input.isMouseDblClick()) {

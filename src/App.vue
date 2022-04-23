@@ -34,6 +34,7 @@ import { PathFindingLevel } from './levels/PathFindingLevel';
 import { MapSystem } from './systems/render/MapSystem';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
+import { EventBus } from './EventBus';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -41,6 +42,7 @@ const app = new PIXI.Application({
 app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
+const eventBus = new EventBus<Events>();
 
 let lastFrameTime = 0;
 
@@ -84,13 +86,12 @@ onMounted(() => {
 		.registerSystem(InputSystem, { canvas: app.view })
 		.registerSystem(PlayerMovementKeysSystem)
 		.registerSystem(MovePositionDirectSystem)
-		.registerSystem(PlayerMovementMouseSystem, { app })
+		.registerSystem(PlayerMovementMouseSystem, { app, eventBus })
 		.registerSystem(MoveVelocitySystem)
 		.registerSystem(SpriteSystem, { app })
 		.registerSystem(GraphicsSystem, { app })
 		.registerSystem(GridSystem, { app, options })
-		.registerSystem(MapSystem, { app })
-		.registerSystem(MovePathSystem);
+		.registerSystem(MapSystem, { app, eventBus })
 });
 
 let level;
@@ -111,6 +112,7 @@ const loadLevel = (): void => {
 	}
 
 	level.load();
+	eventBus.emit('level:loaded', { level });
 }
 
 const frame = (): void => {

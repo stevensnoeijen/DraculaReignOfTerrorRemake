@@ -1,8 +1,11 @@
+import { LevelLoadedEvent } from './../../Events';
 import { World, Attributes } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
 import { PixiJsSystem } from "../PixiJsSystem";
 import { cellPositionToVector } from './../../utils';
+import { EventBus } from './../../EventBus';
+import { Events } from '../../Events';
 
 export class MapSystem extends PixiJsSystem {
 
@@ -13,12 +16,11 @@ export class MapSystem extends PixiJsSystem {
         super(world, attributes);
 
         this.graphics = this.app.stage.addChildAt(new PIXI.Graphics(), 0);
-    }
 
-    public setMap(map: number[][]): void {
-        this.map = map;
-
-        this.draw();
+        (attributes.eventBus as EventBus<Events>).on('level:loaded', (event: CustomEvent<LevelLoadedEvent>) => {
+            this.map  = event.detail.level.collisionMap;
+            this.draw();
+        });
     }
 
     public execute(delta: number, time: number): void {}
