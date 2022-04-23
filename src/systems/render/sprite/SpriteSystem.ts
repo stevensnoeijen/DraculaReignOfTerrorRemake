@@ -1,5 +1,7 @@
+import { TransformComponent } from './../../TransformComponent';
 import { PixiJsSystem } from "../../PixiJsSystem";
 import { SpriteComponent } from './SpriteComponent';
+import { Sprite } from 'pixi.js';
 
 export class SpriteSystem extends PixiJsSystem {
 	public static queries = {
@@ -16,6 +18,11 @@ export class SpriteSystem extends PixiJsSystem {
 					this.app.stage.addChild(component.sprite);
 
 					component.addedToStage = true;
+				}
+
+				const transformComponent = entity.getComponent(TransformComponent);
+				if (transformComponent != null) {
+					component.sprite.position.set(transformComponent.position.x, transformComponent.position.y);
 				}
 			}
 		}
