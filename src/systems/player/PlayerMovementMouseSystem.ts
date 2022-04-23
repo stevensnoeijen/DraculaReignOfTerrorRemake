@@ -1,3 +1,4 @@
+import { DefaultAttributes } from './../DefaultAttributes';
 import { Attributes, World } from 'ecsy';
 
 import { convertPathfindingPathToPositions } from './../../utils';
@@ -21,11 +22,11 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 
 	private map: number[][]|null = null;
 
-	constructor(world: World, attributes: Attributes) {
+	constructor(world: World, attributes: DefaultAttributes) {
         super(world, attributes);
 
-        (attributes.eventBus as EventBus<Events>).on('level:loaded', (event: CustomEvent<LevelLoadedEvent>) => {
-            this.map  = event.detail.level.collisionMap;
+        attributes.eventBus.on<LevelLoadedEvent>('level:loaded', (event) => {
+            this.map = event.detail.level.collisionMap;
         });
     }
 
