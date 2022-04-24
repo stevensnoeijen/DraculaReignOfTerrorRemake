@@ -33,8 +33,7 @@ import { PathFindingLevel } from './levels/PathFindingLevel';
 import { MapSystem } from './systems/render/MapSystem';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
-import { CollidableComponent } from './systems/collision/CollidableComponent';
-import { CollisionSystem } from './systems/collision/CollisionSystem';
+import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { EventBus } from './EventBus';
 import { LevelLoadedEvent, Events } from './Events';
 
@@ -86,7 +85,7 @@ onMounted(() => {
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { eventBus })
 		.registerSystem(InputSystem, { canvas: app.view })
-		// .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with collision atm
+		// .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
 		.registerSystem(MovePositionDirectSystem)
 		.registerSystem(PlayerMovementMouseSystem, { app, eventBus })
 		.registerSystem(MoveVelocitySystem, { eventBus })
@@ -95,7 +94,6 @@ onMounted(() => {
 		.registerSystem(GridSystem, { app, options, eventBus })
 		.registerSystem(MapSystem, { app, eventBus })
 		.registerSystem(MovePathSystem, { eventBus })
-		.registerSystem(CollisionSystem, { app, eventBus });
 });
 
 let level;

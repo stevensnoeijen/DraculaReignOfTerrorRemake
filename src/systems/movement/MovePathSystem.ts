@@ -1,5 +1,8 @@
-import { System } from "ecsy";
+import { Entity, System } from "ecsy";
 
+import { TransformComponent } from './../TransformComponent';
+import { getCell, isNotEntity, Position, Predicate, toGridPosition } from './../../utils';
+import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { cellPositionToVector } from '../../utils';
@@ -9,6 +12,9 @@ export class MovePathSystem extends System {
 		entities: {
 			components: [MovePathComponent],
 		},
+        colliders: {
+            components: [CollidableComponent],
+        }
 	};
 
     public execute(delta: number, time: number): void {
@@ -25,12 +31,29 @@ export class MovePathSystem extends System {
                 continue;
             }
 
-            const cell = movePathComponent.path.shift();
-            if (cell == null) {
+            const nextCell = movePathComponent.path[0];
+            if (nextCell == null) {
                 continue;
             }
-            movePositionDirectComponent.movePosition = cellPositionToVector(cell.x, cell.y);
+            if (!this.canEntityMoveToCell(entity, nextCell)) {
+                // cancel move
+                continue;
+            }
+            movePathComponent.path.shift();
+
+            movePositionDirectComponent.movePosition = cellPositionToVector(nextCell.x, nextCell.y);
         }
     }
-}
 
+    private canEntityMoveToCell(entity: Entity, cell: Position): boolean {
+        const colliders = this.queries.colliders.results.filter(isNotEntity(entity));
+
+        const collider = colliders.find((collider) => {
+            const colliderCell = getCell(collider);
+
+            return cell.x === colliderCell.x && cell.y === colliderCell.y;
+        });
+
+        return collider == null;
+    }
+}

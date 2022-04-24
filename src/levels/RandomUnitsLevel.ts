@@ -5,7 +5,7 @@ import * as PIXI from 'pixi.js';
 import { Constants } from '../Constants';
 import { EntityFactory } from '../EntityFactory';
 import { Vector2 } from '../math/Vector2';
-import { toCenterGridPosition } from '../utils';
+import { toWorldPositionCellCenter } from '../utils';
 import { Level } from './Level';
 
 export class RandomUnitsLevel extends Level {
@@ -23,7 +23,7 @@ export class RandomUnitsLevel extends Level {
 
     public load(): void {
         Array.from(Array(100)).forEach(() => {
-            const vector = toCenterGridPosition(new Vector2(
+            const vector = toWorldPositionCellCenter(new Vector2(
                 Math.round(
                     Math.random() * this.app.screen.width,
                 ), 

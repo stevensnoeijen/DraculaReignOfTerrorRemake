@@ -1,5 +1,5 @@
 import { Vector2 } from './math/Vector2';
-import { arrayIncludesByEquals, getOptions, toEqual, toCenterGridPosition, toWorldPosition, toGridPosition, convertPathfindingPathToPositions } from './utils';
+import { arrayIncludesByEquals, getOptions, toEqual, toWorldPositionCellCenter, toWorldPosition, toGridPosition, convertPathfindingPathToPositions } from './utils';
 import * as PathFinding from './ai/Pathfinding';
 
 describe('getOptions', () => {
@@ -74,9 +74,9 @@ describe('arrayIncludesByEquals', () => {
     });
 });
 
-describe('toCenterGridPosition', () => {
+describe('toWorldPositionCellCenter', () => {
     it('should center to grid position', () => {
-        const position = toCenterGridPosition(new Vector2(101, 60));
+        const position = toWorldPositionCellCenter(new Vector2(101, 60));
 
         expect(position.x).toEqual(104);
         expect(position.y).toEqual(56);
