@@ -15,7 +15,7 @@ export class Selector extends Node {
             }
         }
     
-        if (this.state === State.CREATED) {
+        if (this.state === State.FAILURE) {
             this.state = State.FAILURE;
         }
         return this.state;

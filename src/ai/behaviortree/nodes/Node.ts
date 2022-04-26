@@ -1,12 +1,11 @@
 export enum State {
-    CREATED,
     RUNNING,
     SUCCESS,
     FAILURE,
 }
 
 export class Node {
-    private _state = State.CREATED;
+    private _state = State.FAILURE;
 
     public parent: Node|null = null; 
 

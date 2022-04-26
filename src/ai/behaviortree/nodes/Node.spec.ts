@@ -91,10 +91,10 @@ describe('Node', () => {
     });
 
     describe('evaluate', () => {
-        it('should return starting state', () => {
+        it('should return default state', () => {
             const node = new Node([]);
 
-            expect(node.evaluate()).toEqual(State.CREATED);
+            expect(node.evaluate()).toEqual(State.FAILURE);
         });
     });
 
