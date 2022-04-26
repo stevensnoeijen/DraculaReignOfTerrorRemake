@@ -3,7 +3,7 @@ import { Attributes, World } from 'ecsy';
 
 import { convertPathfindingPathToPositions } from './../../utils';
 import { MovePathComponent } from './../movement/MovePathComponent';
-import { astar } from './../../ai/Pathfinding';
+import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
 import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';

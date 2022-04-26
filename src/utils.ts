@@ -1,7 +1,7 @@
 import { Input } from './Input';
 import { Constants } from './Constants';
 import { Vector2 } from './math/Vector2';
-import * as PathFinding from './ai/Pathfinding';
+import * as PathFinding from './ai/pathfinding';
 import { Entity } from 'ecsy';
 import { TransformComponent } from './systems/TransformComponent';
 

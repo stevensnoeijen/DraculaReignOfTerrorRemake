@@ -1,6 +1,6 @@
 import { Vector2 } from './math/Vector2';
 import { arrayIncludesByEquals, getOptions, toEqual, toWorldPositionCellCenter, toWorldPosition, toGridPosition, convertPathfindingPathToPositions } from './utils';
-import * as PathFinding from './ai/Pathfinding';
+import * as PathFinding from './ai/pathfinding';
 
 describe('getOptions', () => {
     const mockWindowLocation = (url: string) => {
