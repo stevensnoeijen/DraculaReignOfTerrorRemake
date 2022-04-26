@@ -29,8 +29,18 @@ All tests are automaticly ran at pr!
 
 # Debug
 
-To use debug options add `#debug=` to the url and refresh the page. Example: `#debug=grid`.
+To use debug options add `#debug=<options>` and replace `<options>` to the url and refresh the page.
+Example: `#debug=grid`.
 
 Current debug options are:
 
 - `grid`
+
+# Levels
+
+To select a level add `#level=<level>` and replace `<level>` to the url and refresh the page.
+
+Current levels are:
+
+- `randomunits` (default)
+- `pathfinding`

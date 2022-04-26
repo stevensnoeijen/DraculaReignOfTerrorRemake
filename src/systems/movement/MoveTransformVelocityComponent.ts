@@ -13,6 +13,10 @@ export interface IMoveTransformVelocityComponentProps {
 export class MoveTransformVelocityComponent extends Component<IMoveTransformVelocityComponentProps> {
 	moveSpeed!: number;
 	velocity!: Vector2;
+
+	public calculateMovement(delta: number): Vector2 {
+		return Vector2.multiplies(this.velocity, this.moveSpeed * (delta / 1000));
+	}
 }
 
 MoveTransformVelocityComponent.schema = {

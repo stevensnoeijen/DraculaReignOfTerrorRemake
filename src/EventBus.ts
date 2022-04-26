@@ -1,9 +1,9 @@
-type CustomEventListener<Event> = (event: CustomEvent<Event>) => void;
+type CustomEventListener<Detail> = (event: CustomEvent<Detail>) => void;
 
 /**
  * Source: https://css-tricks.com/lets-create-a-lightweight-native-event-bus-in-javascript/
  */
-export class EventBus<Event> {
+export class EventBus<DetailOptions> {
 	private static counter = 0;
 	private readonly eventTarget: EventTarget;
 
@@ -13,21 +13,21 @@ export class EventBus<Event> {
 			document.createComment('EventBus: ' + name)
 		);
 	}
-	public on(type: string, listener: CustomEventListener<Event>): void {
+	public on<Detail extends DetailOptions>(type: string, listener: CustomEventListener<Detail>): void {
 		this.eventTarget.addEventListener(type, listener as EventListener);
 	}
 
-	public once(type: string, listener: CustomEventListener<Event>): void {
+	public once<Detail extends DetailOptions>(type: string, listener: CustomEventListener<Detail>): void {
 		this.eventTarget.addEventListener(type, listener as EventListener, {
 			once: true,
 		});
 	}
 
-	public off(type: string, listener: CustomEventListener<Event>): void {
+	public off<Detail extends DetailOptions>(type: string, listener: CustomEventListener<Detail>): void {
 		this.eventTarget.removeEventListener(type, listener as EventListener);
 	}
 
-	public emit(type: string, detail?: CustomEventInit): boolean {
+	public emit<Detail extends DetailOptions>(type: string, detail?: Detail): boolean {
 		return this.eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
 	}
 }

@@ -15,6 +15,8 @@ import { MovePositionDirectComponent } from './systems/movement/MovePositionDire
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
+import { CollidableComponent } from './systems/movement/CollidableComponent';
+import { MovePathComponent } from './systems/movement/MovePathComponent';
 
 type Position = { x: number; y: number };
 
@@ -24,18 +26,7 @@ interface IUnitProps {
 	texture: PIXI.Texture<PIXI.Resource>;
 }
 
-interface ISelectorProps {
-	position: Position;
-	static?: boolean;
-}
-
-interface IFpsCounterProps {
-	position: Position;
-}
-
 export class EntityFactory {
-	static first = true;
-
 	public static createUnit(world: World, props: IUnitProps): void {
 		const width = Constants.CELL_SIZE;
 		const height = Constants.CELL_SIZE;
@@ -74,7 +65,9 @@ export class EntityFactory {
 			})
 			.addComponent(GraphicsComponent, {
 				graphics: new PIXI.Graphics(),
-			});
+			})
+			.addComponent(MovePathComponent, { path: [] })
+			.addComponent(CollidableComponent);
 
 	}
 }

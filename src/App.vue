@@ -3,39 +3,39 @@ import { onMounted } from 'vue';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { Constants } from './Constants';
 import { TransformComponent } from './systems/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
 import { HealthComponent } from './systems/health/HealthComponent';
-import { GridComponent } from './systems/GridComponent';
 import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
-import { PathfindingComponent } from './systems/PathfindingComponent';
 import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
 import { HealthSystem } from './systems/health/HealthSystem';
 import { AliveSystem } from './systems/alive/AliveSystem';
-import { MoveTransformVelocitySystem } from './systems/movement/MoveTransformVelocitySystem';
 import { InputSystem } from './systems/InputSystem';
 import { PlayerMovementKeysSystem } from './systems/player/PlayerMovementKeysSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
-import { EntityFactory } from './EntityFactory';
-import { Pathfinding } from './ai/Pathfinding';
 import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { AliveComponent } from './systems/alive/AliveComponent';
-import { Vector2 } from './math/Vector2';
-import { toGridPosition } from './systems/player/utils';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
+import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
+import { PathFindingLevel } from './levels/PathFindingLevel';
+import { MapSystem } from './systems/render/MapSystem';
+import { MovePathComponent } from './systems/movement/MovePathComponent';
+import { MovePathSystem } from './systems/movement/MovePathSystem';
+import { CollidableComponent } from './systems/movement/CollidableComponent';
+import { EventBus } from './EventBus';
+import { LevelLoadedEvent, Events } from './Events';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -43,6 +43,7 @@ const app = new PIXI.Application({
 app.renderer.backgroundColor = 0x008800;
 
 const world = new World();
+const eventBus = new EventBus<Events>();
 
 let lastFrameTime = 0;
 
@@ -60,8 +61,8 @@ onMounted(() => {
 		frame();
 	});
 
-	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load((loader, resources) => {
-		startLevel(resources);
+	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load(() => {
+		loadLevel();
 	});
 
 	world
@@ -76,50 +77,44 @@ onMounted(() => {
 		.registerComponent(PlayerMovementMouseComponent)
 		.registerComponent(PlayerMovementKeysComponent)
 		.registerComponent(MoveVelocityComponent)
-		.registerComponent(PathfindingComponent)
 		.registerComponent(SpriteComponent)
 		.registerComponent(GraphicsComponent)
-		.registerComponent(GridComponent)
-		.registerSystem(PlayerSelectionSystem, { app })
-		.registerSystem(HealthSystem)
-		.registerSystem(AliveSystem)
-		.registerSystem(MoveTransformVelocitySystem)
+		.registerComponent(MovePathComponent)
+		.registerComponent(CollidableComponent)
+		.registerSystem(PlayerSelectionSystem, { app, eventBus })
+		.registerSystem(HealthSystem, { eventBus })
+		.registerSystem(AliveSystem, { eventBus })
 		.registerSystem(InputSystem, { canvas: app.view })
-		.registerSystem(PlayerMovementKeysSystem)
+		// .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
 		.registerSystem(MovePositionDirectSystem)
-		.registerSystem(PlayerMovementMouseSystem, { app })
-		.registerSystem(MoveVelocitySystem)
-		.registerSystem(SpriteSystem, { app })
-		.registerSystem(GraphicsSystem, { app })
-		.registerSystem(GridSystem, { app, options });
-
-    const pathfinding = new Pathfinding(Math.ceil(app.renderer.width / Constants.CELL_SIZE), Math.ceil(app.renderer.height / Constants.CELL_SIZE));
-
-	world.createEntity()
-		.addComponent(PathfindingComponent, {
-			pathfinding: pathfinding,
-		})
-		// @ts-ignore
-		.addComponent(GridComponent, { grid: pathfinding.grid });
+		.registerSystem(PlayerMovementMouseSystem, { app, eventBus })
+		.registerSystem(MoveVelocitySystem, { eventBus })
+		.registerSystem(SpriteSystem, { app, eventBus })
+		.registerSystem(GraphicsSystem, { app, eventBus })
+		.registerSystem(GridSystem, { app, options, eventBus })
+		.registerSystem(MapSystem, { app, eventBus })
+		.registerSystem(MovePathSystem, { eventBus })
 });
 
-const startLevel = (resources: PIXI.utils.Dict<PIXI.LoaderResource>): void => {
-	Array.from(Array(100)).forEach(() => {
-		const vector = toGridPosition(new Vector2(
-			Math.round(
-				Math.random() * app.screen.width,
-			), 
-			Math.round(
-				Math.random() * app.screen.height,
-			) + (Constants.CELL_SIZE / 2)
-		));
+let level;
+const loadLevel = (): void => {
+	if(options.level != null && options.level[0] != null) {
+		const levelName = options.level[0].toLowerCase();
+		if (levelName === 'randomunits') {
+			level = new RandomUnitsLevel(app, world);
+		} else if (levelName === 'pathfinding') {
+			level = new PathFindingLevel(app, world);
+		} else {
+			alert('level not found');
+			return;
+		}
+	} else {
+		// default
+		level = new RandomUnitsLevel(app, world);
+	}
 
-		EntityFactory.createUnit(world, {
-			position: vector,
-			color: 'red',
-			texture: resources.swordsmen.texture!,
-		});
-	});
+	level.load();
+	eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
 }
 
 const frame = (): void => {
@@ -132,7 +127,6 @@ const frame = (): void => {
 
 	lastFrameTime = time;
 }
-
 </script>
 
 <template>
