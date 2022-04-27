@@ -1,5 +1,6 @@
 import { Node, State } from "./Node";
 import { Selector } from "./Selector";
+import { Always } from "./Always";
 
 describe('Selector', () => {
     describe('evaluate', () => {
@@ -9,19 +10,11 @@ describe('Selector', () => {
             expect(selector.evaluate()).toEqual(State.FAILURE);
         });
 
-        class ReturnStateCheck extends Node {
-            constructor(state: State) {
-                super([]);
-
-                this.state = state;
-            }
-        }
-
         it('should fail when all children fail', () => {
             const selector = new Selector([
-                new ReturnStateCheck(State.FAILURE),
-                new ReturnStateCheck(State.FAILURE),
-                new ReturnStateCheck(State.FAILURE),
+                new Always(State.FAILURE),
+                new Always(State.FAILURE),
+                new Always(State.FAILURE),
             ]);
 
             expect(selector.evaluate()).toEqual(State.FAILURE);
@@ -29,8 +22,8 @@ describe('Selector', () => {
 
         it('should return success when one of the children returned success', () => {
             const selector = new Selector([
-                new ReturnStateCheck(State.FAILURE),
-                new ReturnStateCheck(State.SUCCESS),
+                new Always(State.FAILURE),
+                new Always(State.SUCCESS),
             ]);
 
             expect(selector.evaluate()).toEqual(State.SUCCESS);
@@ -38,8 +31,8 @@ describe('Selector', () => {
 
         it('should return running when one of the children returned running', () => {
             const selector = new Selector([
-                new ReturnStateCheck(State.FAILURE),
-                new ReturnStateCheck(State.RUNNING),
+                new Always(State.FAILURE),
+                new Always(State.RUNNING),
             ]);
 
             expect(selector.evaluate()).toEqual(State.RUNNING);
@@ -47,8 +40,8 @@ describe('Selector', () => {
 
         it('should return success when there are also running children', () => {
             const selector = new Selector([
-                new ReturnStateCheck(State.RUNNING),
-                new ReturnStateCheck(State.SUCCESS),
+                new Always(State.RUNNING),
+                new Always(State.SUCCESS),
             ]);
 
             expect(selector.evaluate()).toEqual(State.SUCCESS);
