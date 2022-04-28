@@ -36,6 +36,7 @@ import { MovePathSystem } from './systems/movement/MovePathSystem';
 import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { EventBus } from './EventBus';
 import { LevelLoadedEvent, Events } from './Events';
+import { GameTimeSystem } from './systems/GameTimeSystem';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -94,6 +95,7 @@ onMounted(() => {
 		.registerSystem(GridSystem, { app, options, eventBus })
 		.registerSystem(MapSystem, { app, eventBus })
 		.registerSystem(MovePathSystem, { eventBus })
+		.registerSystem(GameTimeSystem);
 });
 
 let level;

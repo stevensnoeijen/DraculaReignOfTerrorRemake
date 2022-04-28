@@ -2,8 +2,8 @@ import { Node, State } from "./Node";
 
 describe('Node', () => {
     describe('constructor', () => {
-        it('should set 0 children if 0 are given', () => {
-            const node = new Node([]);
+        it('should set 0 children no children are given', () => {
+            const node = new Node();
 
             expect(node.children).toHaveLength(0);
         });

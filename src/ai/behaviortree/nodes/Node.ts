@@ -13,7 +13,7 @@ export class Node {
 
     public readonly data: Map<string, unknown> = new Map();
 
-    constructor(children: Node[]) {
+    constructor(children: Node[] = []) {
         this.children = children;
     }
     
