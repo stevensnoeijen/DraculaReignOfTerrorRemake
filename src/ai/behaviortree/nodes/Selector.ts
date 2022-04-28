@@ -5,7 +5,7 @@ import { Node, State } from "./Node";
  */
 export class Selector extends Node {
     public evaluate(): State {
-        if (this.children.length === 0) {
+        if (!this.hasChildren()) {
             return this.state = State.SUCCESS;
         }
 

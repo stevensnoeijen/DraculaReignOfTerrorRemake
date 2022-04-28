@@ -9,7 +9,7 @@ export class Parallel extends Node {
     }
 
     public evaluate(): State {
-        if (this.children.length === 0) {
+        if (!this.hasChildren()) {
             return this.state = State.SUCCESS;
         }
 
