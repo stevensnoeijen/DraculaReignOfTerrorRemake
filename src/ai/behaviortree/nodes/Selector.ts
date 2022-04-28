@@ -5,6 +5,10 @@ import { Node, State } from "./Node";
  */
 export class Selector extends Node {
     public evaluate(): State {
+        if (this.children.length === 0) {
+            return this.state = State.SUCCESS;
+        }
+
         for(const child of this.children) {
             const state = child.evaluate();
 
@@ -17,6 +21,8 @@ export class Selector extends Node {
     
         if (this.state === State.FAILURE) {
             this.state = State.FAILURE;
+        } else if (this.children.length === 0) {
+            this.state = State.SUCCESS;
         }
         return this.state;
     }

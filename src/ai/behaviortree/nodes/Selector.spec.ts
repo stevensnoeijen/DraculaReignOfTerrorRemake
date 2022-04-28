@@ -7,7 +7,7 @@ describe('Selector', () => {
         it('should fail when no children are set', () => {
             const selector = new Selector([]);
 
-            expect(selector.evaluate()).toEqual(State.FAILURE);
+            expect(selector.evaluate()).toEqual(State.SUCCESS);
         });
 
         it('should fail when all children fail', () => {

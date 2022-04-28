@@ -1,7 +1,7 @@
 export enum State {
-    RUNNING,
-    SUCCESS,
-    FAILURE,
+    RUNNING = 'running',
+    SUCCESS = 'success',
+    FAILURE = 'failure',
 }
 
 export class Node {
