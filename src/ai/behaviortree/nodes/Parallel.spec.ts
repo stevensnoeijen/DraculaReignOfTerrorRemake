@@ -7,12 +7,12 @@ describe('Parallel', () => {
         it('should set defaults', () => {
             const parallel = new Parallel([]);
 
-            expect(parallel.requireAllSuccess).toBe(true);
+            expect(parallel.requireAllSuccess).toBe(false);
         });
     });
 
     describe('evaluate', () => {
-        it('should return success when children are 0', () => {
+        it('should return success when there are 0 children', () => {
             const parallel = new Parallel([]);
 
             expect(parallel.evaluate()).toEqual(State.SUCCESS);
@@ -31,11 +31,10 @@ describe('Parallel', () => {
         it('should return running when any child is running and requireAllSuccess is true', () => {
             const parallel = new Parallel([
                 new Always(State.RUNNING),
-                new Always(State.SUCCESS),
-                new Always(State.SUCCESS),
+                new Always(State.FAILURE),
             ], true);
 
-            expect(parallel.evaluate()).toEqual(State.RUNNING);
+            expect(parallel.evaluate()).toEqual(State.FAILURE);
         });
 
         it('should return success if all children are success and requireAllSuccess is true', () => {
