@@ -13,7 +13,7 @@ export class IsEnemyInAggroRange extends Node {
     }
 
     public evaluate(): State {
-        const entity = this.parent!.getData('entity') as Entity;
+        const entity = this.getData('entity') as Entity;
 
         const inRangeEntities = this.entities
             .filter(not(isSameEntity(entity)))
