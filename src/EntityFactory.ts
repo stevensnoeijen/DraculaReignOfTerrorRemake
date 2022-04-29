@@ -17,6 +17,7 @@ import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent'
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
+import { TeamComponent } from './systems/TeamComponent';
 
 type Position = { x: number; y: number };
 
@@ -24,6 +25,9 @@ interface IUnitProps {
 	position: Position;
 	color: 'red' | 'blue';
 	texture: PIXI.Texture<PIXI.Resource>;
+	team: {
+		number: number;
+	};
 }
 
 export class EntityFactory {
@@ -67,7 +71,8 @@ export class EntityFactory {
 				graphics: new PIXI.Graphics(),
 			})
 			.addComponent(MovePathComponent, { path: [] })
-			.addComponent(CollidableComponent);
+			.addComponent(CollidableComponent)
+			.addComponent(TeamComponent, props.team);
 
 	}
 }

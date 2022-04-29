@@ -24,12 +24,18 @@ export class PathFindingLevel extends Level {
             position: cellPositionToVector(1, 1),
             color: 'red',
             texture: this.app.loader.resources.swordsmen.texture!,
+            team: {
+                number: 1,
+            }
         });
 
         EntityFactory.createUnit(this.world, {
             position: cellPositionToVector(3, 1),
             color: 'red',
             texture: this.app.loader.resources.swordsmen.texture!,
+            team: {
+                number: 2,
+            }
         });
     }
 }

@@ -37,6 +37,7 @@ import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { EventBus } from './EventBus';
 import { LevelLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
+import { TeamComponent } from './systems/TeamComponent';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -82,6 +83,7 @@ onMounted(() => {
 		.registerComponent(GraphicsComponent)
 		.registerComponent(MovePathComponent)
 		.registerComponent(CollidableComponent)
+		.registerComponent(TeamComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { eventBus })
