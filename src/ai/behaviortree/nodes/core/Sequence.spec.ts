@@ -1,5 +1,5 @@
 import { Always } from './Always';
-import { State } from "./Node";
+import { State } from "../Node";
 import { Sequence } from "./Sequence";
 
 describe('Sequence', () => {

@@ -1,4 +1,4 @@
-import { Node, State } from "./Node";
+import { Node, State } from "../Node";
 import { Selector } from "./Selector";
 import { Always } from "./Always";
 

@@ -1,4 +1,4 @@
-import { Node, State } from "./Node";
+import { Node, State } from "../Node";
 
 const stateMap = new Map<State, State>([
     [State.FAILURE, State.SUCCESS],

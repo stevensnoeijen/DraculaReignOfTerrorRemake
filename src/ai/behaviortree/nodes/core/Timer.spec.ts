@@ -1,5 +1,5 @@
-import { GameTime } from './../../../GameTime';
-import { State } from './Node';
+import { GameTime } from './../../../../GameTime';
+import { State } from '../Node';
 import { Always } from './Always';
 import { Timer } from './Timer';
 

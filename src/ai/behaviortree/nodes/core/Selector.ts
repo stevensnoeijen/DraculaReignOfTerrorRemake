@@ -1,4 +1,4 @@
-import { Node, State } from "./Node";
+import { Node, State } from "../Node";
 
 /**
  * This is the "Or" operator.

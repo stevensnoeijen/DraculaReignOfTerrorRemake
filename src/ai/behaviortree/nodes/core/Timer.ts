@@ -1,5 +1,5 @@
-import { GameTime } from './../../../GameTime';
-import { Node, State } from "./Node";
+import { GameTime } from './../../../../GameTime';
+import { Node, State } from "../Node";
 
 type ElapsedCallback = () => void;
 

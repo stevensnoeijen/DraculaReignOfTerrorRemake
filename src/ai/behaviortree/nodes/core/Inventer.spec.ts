@@ -1,6 +1,6 @@
 import { Always } from './Always';
 import { Inventer } from './Inventer';
-import { State } from "./Node";
+import { State } from "../Node";
 
 describe('Inventer', () => {
     describe('evaluate', () => {

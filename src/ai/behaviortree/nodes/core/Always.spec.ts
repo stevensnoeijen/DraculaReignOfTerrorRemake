@@ -1,5 +1,6 @@
-import { State } from './Node';
+import { State } from '../Node';
 import { Always } from './Always';
+
 describe('Always', () => {
     describe('evaluate', () => {
         it.each([
