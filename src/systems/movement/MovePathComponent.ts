@@ -9,9 +9,9 @@ type MovePathComponentProps = {
 };
 
 export class MovePathComponent extends Component<MovePathComponentProps> {
+	static schema = {
+		path: { type: Types.Array, default: [] },
+	};	
+
     path!: Path;
 }
-
-MovePathComponent.schema = {
-	path: { type: Types.Array, default: [] },
-};

@@ -5,9 +5,10 @@ interface TeamComponentProps {
 }
 
 export class TeamComponent extends Component<TeamComponentProps> {
+	static schema = {
+		number: { type: Types.Number },
+	};
+	
+
 	declare number: number;
 }
-
-TeamComponent.schema = {
-	number: { type: Types.Number },
-};

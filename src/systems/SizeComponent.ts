@@ -6,11 +6,11 @@ interface ISizeComponentProps {
 }
 
 export class SizeComponent extends Component<ISizeComponentProps> {
+	static schema = {
+		width: { type: Types.Number, default: 0 },
+		height: { type: Types.Number, default: 0 },
+	};
+
 	declare width: number;
 	declare height: number;
 }
-
-SizeComponent.schema = {
-	width: { type: Types.Number, default: 0 },
-	height: { type: Types.Number, default: 0 },
-};

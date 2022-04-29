@@ -8,6 +8,11 @@ export interface TransformComponentProps {
 }
 
 export class TransformComponent extends Component<TransformComponentProps> {
+	static schema = {
+		position: { type: Types.Ref },
+		rotation: { type: Types.Number, default: 0 },
+	};
+
 	position!: Vector2;
 	/**
 	 * in degrees (-180 to 180)
@@ -22,8 +27,3 @@ export class TransformComponent extends Component<TransformComponentProps> {
 		return Vector2.distance(this.position, other.position);
 	}
 }
-
-TransformComponent.schema = {
-	position: { type: Types.Ref },
-	rotation: { type: Types.Number, default: 0 },
-};

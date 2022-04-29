@@ -6,7 +6,6 @@ import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { cellPositionToVector } from '../../utils';
-import { isNotEntity } from "../utils";
 
 export class MovePathSystem extends System {
     public static queries = {

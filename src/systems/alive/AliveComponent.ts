@@ -5,9 +5,9 @@ export interface IAliveComponentProps {
 }
 
 export class AliveComponent extends Component<IAliveComponentProps> {
+    static schema = {
+        alive: { type: Types.Boolean, default: true },
+    };    
+
     declare alive: boolean
 }
-
-AliveComponent.schema = {
-    alive: { type: Types.Boolean, default: true },
-};

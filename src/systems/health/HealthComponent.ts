@@ -6,11 +6,11 @@ export interface IHealthComponentProps {
 }
 
 export class HealthComponent extends Component<IHealthComponentProps> {
+	static schema = {
+		points: { type: Types.Number, default: 10 },
+		maxPoints: { type: Types.Number, default: 10 },
+	};	
+
 	declare points: number;
 	declare maxPoints: number;
 }
-
-HealthComponent.schema = {
-	points: { type: Types.Number, default: 10 },
-	maxPoints: { type: Types.Number, default: 10 },
-};
