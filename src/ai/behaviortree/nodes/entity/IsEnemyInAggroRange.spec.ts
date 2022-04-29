@@ -1,11 +1,11 @@
 import { Entity, World } from 'ecsy';
 
-import { TransformComponent } from './../../../systems/TransformComponent';
+import { TransformComponent } from './../../../../systems/TransformComponent';
 import { IsEnemyInAggroRange } from './IsEnemyInAggroRange';
-import { Vector2 } from '../../../math/Vector2';
-import { Node, State } from './Node';
-import { TeamComponent } from './../../../systems/TeamComponent';
-import { constructCreateRandomEntities, CreateRandomEntities } from '../../../__tests__/utils';
+import { Vector2 } from '../../../../math/Vector2';
+import { Node, State } from '../Node';
+import { TeamComponent } from './../../../../systems/TeamComponent';
+import { constructCreateRandomEntities, CreateRandomEntities } from '../../../../__tests__/utils';
 
 describe('IsEnemyInAggroRange', () => {
     describe('evaluate', () => {

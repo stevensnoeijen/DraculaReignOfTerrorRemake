@@ -1,9 +1,9 @@
 import { Entity } from "ecsy";
 
-import { isEnemy, byClosestDistance, isInRange, isSameEntity } from './../../../systems/utils/index';
-import { TeamComponent } from './../../../systems/TeamComponent';
-import { Node, State } from "./Node";
-import { not } from "../../../utils";
+import { isEnemy, byClosestDistance, isInRange, isSameEntity } from '../../../../systems/utils/index';
+import { TeamComponent } from '../../../../systems/TeamComponent';
+import { Node, State } from "../Node";
+import { not } from "../../../../utils";
 
 const RANGE = 100;
 
