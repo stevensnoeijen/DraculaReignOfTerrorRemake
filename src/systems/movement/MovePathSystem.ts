@@ -1,6 +1,7 @@
+import { isSameEntity } from './../utils/index';
 import { Entity, System } from "ecsy";
 
-import { getCell, Position } from './../../utils';
+import { getCell, not, Position } from './../../utils';
 import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
@@ -46,7 +47,7 @@ export class MovePathSystem extends System {
     }
 
     private canEntityMoveToCell(entity: Entity, cell: Position): boolean {
-        const colliders = this.queries.colliders.results.filter(isNotEntity(entity));
+        const colliders = this.queries.colliders.results.filter(not(isSameEntity(entity)));
 
         const collider = colliders.find((collider) => {
             const colliderCell = getCell(collider);

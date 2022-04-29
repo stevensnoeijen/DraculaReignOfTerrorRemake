@@ -80,3 +80,7 @@ export type Comparator<T> = (a: T, b: T) => number;
 export const falsePredicate: Predicate<unknown> = () => false;
 
 export const keepOrder: Comparator<unknown> = () => 0;
+
+export const not = <T>(predicate: Predicate<T>): Predicate<T> => {
+    return (obj) => !predicate(obj);
+}

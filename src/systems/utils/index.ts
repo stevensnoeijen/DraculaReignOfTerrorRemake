@@ -17,6 +17,6 @@ export const isEnemy = (team: number): Predicate<Entity> => {
     };
 };
 
-export const isNotEntity = (entity: Entity): Predicate<Entity> => {
-	return (other: Entity) => other.id !== entity.id;
+export const isSameEntity = (entity: Entity): Predicate<Entity> => {
+	return (other: Entity) => other.id === entity.id;
 };

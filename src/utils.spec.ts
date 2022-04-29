@@ -1,5 +1,5 @@
 import { Vector2 } from './math/Vector2';
-import { arrayIncludesByEquals, getOptions, toEqual, toWorldPositionCellCenter, toWorldPosition, toGridPosition, convertPathfindingPathToPositions } from './utils';
+import { arrayIncludesByEquals, getOptions, toEqual, toWorldPositionCellCenter, toWorldPosition, toGridPosition, convertPathfindingPathToPositions, not } from './utils';
 import * as PathFinding from './ai/pathfinding';
 
 describe('getOptions', () => {
@@ -135,5 +135,14 @@ describe('convertPathfindingPathToPositions', () => {
                 y: 400,
             }
         ]);
+    });
+});
+
+describe('not', () => {
+    it.each([
+        [true, false],
+        [false, true]
+    ])('should reverse predicate\'s response %s to %s', (request, response) => {
+        expect(not(() => request)(undefined)).toEqual(response);
     });
 });
