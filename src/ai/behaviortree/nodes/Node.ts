@@ -56,17 +56,7 @@ export class Node {
     }
 
     private getDataOfParent(key: string): unknown|null {
-        let node = this.parent;
-        while (node != null) {
-            const value = node.getData(key)
-            if (value != null) {
-                return value;
-            } else {
-                node = node.parent;
-            }
-        }
-    
-        return null;
+        return this.parent?.getData(key) ?? null;
     }
 
     public setData(key: string, value: unknown): void {
