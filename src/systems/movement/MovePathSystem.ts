@@ -1,11 +1,11 @@
 import { Entity, System } from "ecsy";
 
-import { TransformComponent } from './../TransformComponent';
-import { getCell, isNotEntity, Position, Predicate, toGridPosition } from './../../utils';
+import { getCell, Position } from './../../utils';
 import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { cellPositionToVector } from '../../utils';
+import { isNotEntity } from "../utils";
 
 export class MovePathSystem extends System {
     public static queries = {

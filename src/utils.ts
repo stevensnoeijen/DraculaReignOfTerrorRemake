@@ -22,7 +22,7 @@ export const getOptions = (): Options => {
 };
 
 export type HasEquals = { equals: (other: unknown) => boolean };
-export type Predicate<T> = (this: void, value: T, index: number, obj: T[]) => boolean;
+export type Predicate<T> = (value: T, index?: number, obj?: T[]) => boolean;
 
 export const toEqual = <T extends HasEquals>(other: T): Predicate<T> => {
 	return (item: T) => item.equals(other)
@@ -73,10 +73,6 @@ export const getCell = (entity: Entity): Position => {
     const { x, y } = toGridPosition(component.position)
 
     return { x, y };
-}
-
-export const isNotEntity = (entity: Entity): Predicate<Entity> => {
-	return (other: Entity) => other.id !== entity.id;
 }
 
 export type Comparator<T> = (a: T, b: T) => number;

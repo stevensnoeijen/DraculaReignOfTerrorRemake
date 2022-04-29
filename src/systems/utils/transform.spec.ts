@@ -3,25 +3,18 @@ import { World } from 'ecsy';
 import { byClosestDistance, isInRange } from './transform';
 import { Vector2 } from '../../math/Vector2';
 import { TransformComponent } from './../TransformComponent';
-import { Position } from '../../utils';
+import { constructCreateRandomEntities, CreateRandomEntities } from '../../__tests__/utils';
+import { TeamComponent } from '../TeamComponent';
 
 let world: World;
+let createRandomEntities: CreateRandomEntities;
+
 beforeEach(() => {
     world = new World()
-        .registerComponent(TransformComponent);
+        .registerComponent(TransformComponent)
+        .registerComponent(TeamComponent);
+    createRandomEntities = constructCreateRandomEntities(world);    
 });
-
-export const createRandomEntities = (length: number = 30, minPosition: Position = { x: 3, y: 3}, maxPosition: Position = { x: 100, y: 100 }) => {
-    return Array.from({ length: length }).map(() => {
-        return world.createEntity()
-            .addComponent(TransformComponent, {
-                position: new Vector2(
-                    Math.round(Math.random() * maxPosition.x) + minPosition.x,
-                    Math.round(Math.random() * maxPosition.y) + minPosition.y
-                ),
-            });
-    });
-};
 
 describe('isInRange', () => {
     it('should filter everything when targetEntity has no TransformComponent', () => {
