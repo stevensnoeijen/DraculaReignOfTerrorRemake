@@ -17,6 +17,10 @@ export class TransformComponent extends Component<TransformComponentProps> {
 	public get gridPosition (): Vector2 {
 		return toGridPosition(this.position);
 	}
+
+	public distance(other: TransformComponent): number {
+		return Vector2.distance(this.position, other.position);
+	}
 }
 
 TransformComponent.schema = {

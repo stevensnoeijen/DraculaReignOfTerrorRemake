@@ -24,7 +24,7 @@ export const byClosestDistance = (targetEntity: Entity): Comparator<Entity> => {
         return keepOrder;
     }
 
-    const targetPosition = targetEntity.getComponent(TransformComponent)!.position;
+    const targetTransformComponent = targetEntity.getComponent(TransformComponent)!;
 
     return (a: Entity, b: Entity) => {
         if (!a.hasComponent(TransformComponent) && !b.hasComponent(TransformComponent)) {
@@ -37,9 +37,9 @@ export const byClosestDistance = (targetEntity: Entity): Comparator<Entity> => {
             return -1;
         }
 
-        const aPosition = a.getComponent(TransformComponent)!.position;
-        const bPosition = b.getComponent(TransformComponent)!.position;
+        const aTransformComponent = a.getComponent(TransformComponent)!;
+        const bTransformComponent = b.getComponent(TransformComponent)!;
 
-        return Vector2.distance(targetPosition, aPosition) - Vector2.distance(targetPosition, bPosition);
+        return targetTransformComponent.distance(aTransformComponent) - targetTransformComponent.distance(bTransformComponent);
     }
 }

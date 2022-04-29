@@ -5,10 +5,13 @@ import { Vector2 } from '../../math/Vector2';
 import { TransformComponent } from './../TransformComponent';
 import { Position } from '../../utils';
 
-const world = new World();
-world.registerComponent(TransformComponent);
+let world: World;
+beforeEach(() => {
+    world = new World()
+        .registerComponent(TransformComponent);
+});
 
-const createRandomEntities = (length: number = 30, minPosition: Position = { x: 3, y: 3}, maxPosition: Position = { x: 100, y: 100 }) => {
+export const createRandomEntities = (length: number = 30, minPosition: Position = { x: 3, y: 3}, maxPosition: Position = { x: 100, y: 100 }) => {
     return Array.from({ length: length }).map(() => {
         return world.createEntity()
             .addComponent(TransformComponent, {
