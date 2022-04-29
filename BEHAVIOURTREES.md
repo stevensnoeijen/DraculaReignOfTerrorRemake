@@ -17,13 +17,13 @@ flowchart TD
 Tree((Tree))
   Selector1{Selector}
     Sequence1{Sequence}
-      IsEnemyInFovRange1[/IsEnemyInFovRange/]
+      IsEnemyInAggroRange1[/IsEnemyInAggroRange/]
       SetTarget[SetTarget]
     Sequence2{Sequence}
       Inverter1[/Invert/]
         IsMoving[/IsMoving/]
       Inverter2[/Invert/]
-        IsEnemyInFovRange2[/IsEnemyInFovRange/]
+        IsEnemyInFovRange2[/IsEnemyInAggroRange/]
       UnsetTarget[UnsetTarget]
     Sequence3{Sequence}
       HasTarget[/HasTarget/]
@@ -36,7 +36,7 @@ Tree((Tree))
 
 Tree --> Selector1
   Selector1 --> Sequence1
-    Sequence1 --> IsEnemyInFovRange1
+    Sequence1 --> IsEnemyInAggroRange1
     Sequence1 --> SetTarget
   Selector1 --> Sequence2
     Sequence2 --> Inverter1
