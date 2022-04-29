@@ -78,3 +78,9 @@ export const getCell = (entity: Entity): Position => {
 export const isNotEntity = (entity: Entity): Predicate<Entity> => {
 	return (other: Entity) => other.id !== entity.id;
 }
+
+export type Comparator<T> = (a: T, b: T) => number;
+
+export const falsePredicate: Predicate<unknown> = () => false;
+
+export const keepOrder: Comparator<unknown> = () => 0;
