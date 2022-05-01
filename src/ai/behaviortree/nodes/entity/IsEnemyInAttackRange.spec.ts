@@ -1,15 +1,15 @@
 import { World } from 'ecsy';
 
-import { TransformComponent } from './../../../../systems/TransformComponent';
-import { IsEnemyInAggroRange } from './IsEnemyInAggroRange';
+import { TransformComponent } from '../../../../systems/TransformComponent';
 import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
-import { TeamComponent } from './../../../../systems/TeamComponent';
+import { TeamComponent } from '../../../../systems/TeamComponent';
+import { IsEnemyInAttackRange } from './IsEnemyInAttackRange';
 import { getEntitiesInRange } from './utils';
 
 jest.mock('./utils');
 
-describe('IsEnemyInAggroRange', () => {
+describe('IsEnemyInAttackRange', () => {
     describe('evaluate', () => {
         
         let world: World;
@@ -21,7 +21,6 @@ describe('IsEnemyInAggroRange', () => {
 
             (getEntitiesInRange as jest.MockedFunction<any>).mockClear();
         });
-
 
         it('should success set target when there is an enemy within range', () => {
             const entitiesInRange = [
@@ -42,15 +41,14 @@ describe('IsEnemyInAggroRange', () => {
                 .addComponent(TeamComponent, {
                     number: 1
                 });
-
-            const node = new IsEnemyInAggroRange([]);
+            const node = new IsEnemyInAttackRange([]);
             const parent = new Node();
             parent.setData('entity', entity);
             parent.attach(node);
 
             expect(node.evaluate()).toBe(State.SUCCESS);
             expect(parent.getData('target')).not.toBeNull();
-            expect(getEntitiesInRange).toBeCalledWith(expect.anything(), expect.anything(), 100);
+            expect(getEntitiesInRange).toBeCalledWith(expect.anything(), expect.anything(), 16);
         });
 
         it('should fail and not set target when there is no enemy within range', () => {
@@ -64,8 +62,7 @@ describe('IsEnemyInAggroRange', () => {
                     number: 1
                 });
 
-
-            const node = new IsEnemyInAggroRange([]);
+            const node = new IsEnemyInAttackRange([]);
             const parent = new Node();
             parent.setData('entity', entity);
             parent.attach(node);
