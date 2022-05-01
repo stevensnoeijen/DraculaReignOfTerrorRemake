@@ -1,3 +1,4 @@
+import { AttackComponent } from './../../../../systems/AttackComponent';
 import { HealthComponent } from './../../../../systems/health/HealthComponent';
 import { World } from 'ecsy';
 import { State } from '../Node';
@@ -5,10 +6,14 @@ import { Attack } from './Attack';
 describe('Attack', () => {
     describe('evaluate', () => {
         const world = new World()
+            .registerComponent(AttackComponent)
             .registerComponent(HealthComponent);
 
-        it('should minus 10 health', () => {
-            const entity = world.createEntity();
+        it('should substracts entity\'s attackDamage from target health', () => {
+            const entity = world.createEntity()
+                .addComponent(AttackComponent, {
+                    attackDamage: 10
+                });
             const target = world.createEntity()
                 .addComponent(HealthComponent, {
                     points: 100,

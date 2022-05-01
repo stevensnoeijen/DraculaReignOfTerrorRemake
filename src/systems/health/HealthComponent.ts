@@ -11,6 +11,10 @@ export class HealthComponent extends Component<IHealthComponentProps> {
 		maxPoints: { type: Types.Number, default: 10 },
 	};	
 
-	declare points: number;
-	declare maxPoints: number;
+	points!: number;
+	maxPoints!: number;
+
+	takeHit(damage: number): void {
+		this.points -= damage;
+	}
 }
