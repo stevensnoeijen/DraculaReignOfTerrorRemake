@@ -9,5 +9,5 @@ export class TargetComponent extends Component<TargetComponentProps> {
         target: { type: Types.Ref, default: null },
     };
 
-	declare target: Entity;
+	declare target: Entity|null;
 }
