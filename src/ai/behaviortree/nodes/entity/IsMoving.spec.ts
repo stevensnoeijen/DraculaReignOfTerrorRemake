@@ -10,12 +10,6 @@ describe('IsMoving', () => {
         const world = new World()
             .registerComponent(MovePositionDirectComponent);
 
-        it('should return failure when no entity is set', () => {
-            const setTarget = new IsMoving();
-
-            expect(setTarget.evaluate()).toBe(State.FAILURE);
-        });
-
         it('should return failure when entity has no MovePositionDirectComponent', () => {
             const entity = world.createEntity();
             const setTarget = new IsMoving();

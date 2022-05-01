@@ -1,15 +1,11 @@
 import { Entity } from "ecsy";
 
 import { MovePositionDirectComponent } from "../../../../systems/movement/MovePositionDirectComponent";
-import { Node, State } from "../Node";
+import { State } from "../Node";
+import { EntityNode } from "./EntityNode";
 
-export class IsMoving extends Node {
-    public evaluate(): State {
-        const entity = this.getData('entity') as Entity|null;
-        if (entity == null) {
-            return this.failure();
-        }
-
+export class IsMoving extends EntityNode {
+    protected evaluateByEntity(entity: Entity): State {
         if (!entity.hasComponent(MovePositionDirectComponent)) {
             return this.failure();
         }

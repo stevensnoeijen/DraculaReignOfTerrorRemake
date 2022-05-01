@@ -8,13 +8,6 @@ describe('UnsetTarget', () => {
     describe('evaluate', () => {
         const world = new World()
             .registerComponent(TargetComponent);
-
-        it('should return failure when no entity is set', () => {
-            const unsetTarget = new UnsetTarget();
-
-            expect(unsetTarget.evaluate()).toBe(State.FAILURE);
-        });
-
         it('should return failure when entity has no TargetComponent', () => {
             const entity = world.createEntity();
 

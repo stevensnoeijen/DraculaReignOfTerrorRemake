@@ -9,9 +9,13 @@ describe('SetTarget', () => {
         const world = new World()
             .registerComponent(TargetComponent);
 
-        it('should return failure when no entity is set', () => {
+        it('should return failure when entity has no TargetComponent', () => {
+            const entity = world.createEntity();
+            const target = world.createEntity();
+
             const setTarget = new SetTarget();
-            setTarget.setData('target', world.createEntity());
+            setTarget.setData('entity', entity);
+            setTarget.setData('target', target);
 
             expect(setTarget.evaluate()).toBe(State.FAILURE);
         });
@@ -27,16 +31,7 @@ describe('SetTarget', () => {
             expect(entity.getComponent(TargetComponent)!.target).toBeNull();
         });
         
-        it('should return failure when entity has no TargetComponent', () => {
-            const entity = world.createEntity();
-            const target = world.createEntity();
 
-            const setTarget = new SetTarget();
-            setTarget.setData('entity', entity);
-            setTarget.setData('target', target);
-
-            expect(setTarget.evaluate()).toBe(State.FAILURE);
-        });
 
         it('should set entity\'s TargetComponent and return success', () => {
             const entity = world.createEntity()

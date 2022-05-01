@@ -9,12 +9,6 @@ describe('HasTarget', () => {
         const world = new World()
             .registerComponent(TargetComponent);
 
-        it('should return failure when no entity is set', () => {
-            const hasTarget = new HasTarget();
-
-            expect(hasTarget.evaluate()).toBe(State.FAILURE);
-        });
-
         it('should return failure when entity has no TargetComponent', () => {
             const entity = world.createEntity();
 

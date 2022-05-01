@@ -1,13 +1,13 @@
 import { TargetComponent } from './../../../../systems/TargetComponent';
 import { Entity } from 'ecsy';
 import { Node, State } from "../Node";
+import { EntityNode } from './EntityNode';
 
-export class SetTarget extends Node {
-    public evaluate(): State {
-        const entity = this.getData('entity') as Entity|null;
+export class SetTarget extends EntityNode {
+    protected evaluateByEntity(entity: Entity): State {
         const target = this.getData('target') as Entity|null;
 
-        if (entity == null || target == null || !entity.hasComponent(TargetComponent)) {
+        if (target == null || !entity.hasComponent(TargetComponent)) {
             return this.failure();
         }
 

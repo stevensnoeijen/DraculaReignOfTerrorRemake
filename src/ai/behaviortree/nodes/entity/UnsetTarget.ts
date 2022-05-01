@@ -1,14 +1,10 @@
 import { TargetComponent } from './../../../../systems/TargetComponent';
 import { Entity } from "ecsy";
-import { Node, State } from "../Node";
+import { State } from "../Node";
+import { EntityNode } from './EntityNode';
 
-export class UnsetTarget extends Node {
-    public evaluate(): State {
-        const entity = this.getData('entity') as Entity|null;
-        if (entity == null) {
-            return this.failure();
-        }
-
+export class UnsetTarget extends EntityNode {
+    protected evaluateByEntity(entity: Entity): State {
         if (!entity.hasComponent(TargetComponent)) {
             return this.failure();
         }
