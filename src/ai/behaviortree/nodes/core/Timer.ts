@@ -36,7 +36,7 @@ export class Timer extends Node {
 
     public evaluate(): State {
         if (!this.hasChildren()) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
         this._countdownTimer -= GameTime.delta;
 
@@ -48,9 +48,7 @@ export class Timer extends Node {
             
             return this.state;
         } else {
-            this.state = State.RUNNING;
+            return this.running();
         }
-
-        return this.state;
     }
 }

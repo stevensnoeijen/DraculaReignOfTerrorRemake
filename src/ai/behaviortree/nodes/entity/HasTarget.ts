@@ -6,17 +6,17 @@ export class HasTarget extends Node {
     public evaluate(): State {
         const entity = this.getData('entity') as Entity|null;
         if (entity == null) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
 
         if (!entity.hasComponent(TargetComponent)) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
         const targetComponent = entity.getComponent(TargetComponent)!;
         if (targetComponent.target == null) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
         
-        return this.state = State.SUCCESS;
+        return this.success();
     }
 }

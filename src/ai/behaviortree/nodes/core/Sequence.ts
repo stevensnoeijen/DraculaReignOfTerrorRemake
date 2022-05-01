@@ -16,10 +16,10 @@ export class Sequence extends Node {
                     continue;
                 case State.FAILURE:
                 default:
-                    return this.state = State.FAILURE;
+                    return this.failure();
             }
         }
 
-        return this.state = anyChildIsRunning ? State.RUNNING : State.SUCCESS;
+        return anyChildIsRunning ? this.running() : this.success();
     }
 }

@@ -6,18 +6,18 @@ export class UnsetTarget extends Node {
     public evaluate(): State {
         const entity = this.getData('entity') as Entity|null;
         if (entity == null) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
 
         if (!entity.hasComponent(TargetComponent)) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
         const targetComponent = entity.getMutableComponent(TargetComponent)!;
         if (targetComponent.target == null) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
         targetComponent.target = null;
         
-        return this.state = State.SUCCESS;
+        return this.success();
     }
 }

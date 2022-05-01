@@ -10,7 +10,7 @@ export class Parallel extends Node {
 
     public evaluate(): State {
         if (!this.hasChildren()) {
-            return this.state = State.SUCCESS;
+            return this.success();
         }
 
         let failedChildren = 0;
@@ -31,9 +31,9 @@ export class Parallel extends Node {
         }
 
         if ((this.requireAllSuccess && failedChildren > 0) || failedChildren === this.children.length) {
-            return this.state = State.FAILURE;
+            return this.failure();
         } else {
-            return this.state = runningChildren > 0 ? State.RUNNING : State.SUCCESS;
+            return runningChildren > 0 ? this.running() : this.success();
         }
     }
 }

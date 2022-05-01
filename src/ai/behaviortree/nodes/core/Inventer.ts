@@ -1,6 +1,6 @@
 import { Node, State } from "../Node";
 
-const stateMap = new Map<State, State>([
+const invertStateMap = new Map<State, State>([
     [State.FAILURE, State.SUCCESS],
     [State.SUCCESS, State.FAILURE],
     [State.RUNNING, State.RUNNING],
@@ -12,14 +12,14 @@ const stateMap = new Map<State, State>([
 export class Inventer extends Node {
     public evaluate(): State {
         if (!this.hasChildren()) {
-            return State.FAILURE;
+            return this.failure();
         }
         
         const childState = this.children[0].evaluate();
-        if (!stateMap.has(childState)) {
-            return State.FAILURE;
+        if (!invertStateMap.has(childState)) {
+            return this.failure();
         }
 
-        return this.state = stateMap.get(childState)!;
+        return this.state = invertStateMap.get(childState)!;
     }
 }

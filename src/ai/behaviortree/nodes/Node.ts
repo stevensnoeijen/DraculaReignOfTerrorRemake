@@ -66,4 +66,16 @@ export class Node {
     public hasChildren(): boolean {
         return this.children.length > 0;
     }
+
+    protected running(): State.RUNNING {
+        return this.state = State.RUNNING;
+    }
+
+    protected success(): State.SUCCESS {
+        return this.state = State.SUCCESS;
+    }
+
+    protected failure(): State.FAILURE {
+        return this.state = State.FAILURE;
+    }
 }

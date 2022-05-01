@@ -8,12 +8,12 @@ export class SetTarget extends Node {
         const target = this.getData('target') as Entity|null;
 
         if (entity == null || target == null || !entity.hasComponent(TargetComponent)) {
-            return this.state = State.FAILURE; 
+            return this.failure();
         }
 
         const targetComponent = entity.getMutableComponent(TargetComponent)!;
         targetComponent.target = target;
 
-        return this.state = State.SUCCESS;
+        return this.success();
     }
 }

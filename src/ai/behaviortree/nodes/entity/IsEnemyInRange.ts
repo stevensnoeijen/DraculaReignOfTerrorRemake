@@ -15,11 +15,11 @@ export class IsEnemyInRange extends Node {
 
         const inRangeEntities = getEntitiesInRange(entity, this.entities, this.range);
         if (inRangeEntities.length == 0) {
-            return this.state = State.FAILURE;
+            return this.failure();
         }
 
         this.parent!.setData('target', inRangeEntities[0]);
 
-        return this.state = State.SUCCESS;
+        return this.success();
     }
 }
