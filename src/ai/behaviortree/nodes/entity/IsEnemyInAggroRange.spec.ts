@@ -1,4 +1,4 @@
-import { Entity, World } from 'ecsy';
+import { World } from 'ecsy';
 
 import { TransformComponent } from './../../../../systems/TransformComponent';
 import { IsEnemyInAggroRange } from './IsEnemyInAggroRange';
@@ -6,22 +6,36 @@ import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
 import { TeamComponent } from './../../../../systems/TeamComponent';
 import { constructCreateRandomEntities, CreateRandomEntities } from '../../../../__tests__/utils';
+import { getEntitiesInRange } from './utils';
+
+jest.mock('./utils');
 
 describe('IsEnemyInAggroRange', () => {
     describe('evaluate', () => {
         
         let world: World;
-        let createRandomEntities: CreateRandomEntities;
 
         beforeEach(() => {
             world = new World()
                 .registerComponent(TransformComponent)
                 .registerComponent(TeamComponent);
-            createRandomEntities = constructCreateRandomEntities(world);    
+
+            (getEntitiesInRange as jest.MockedFunction<any>).mockClear();
         });
 
 
         it('should success set target when there is an enemy within range', () => {
+            const entitiesInRange = [
+                world.createEntity()
+                    .addComponent(TransformComponent, {
+                        position: new Vector2(0, 0),
+                    })
+                    .addComponent(TeamComponent, {
+                        number: 2
+                    })
+            ];
+            (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue(entitiesInRange);
+
             const entity = world.createEntity()
                 .addComponent(TransformComponent, {
                     position: new Vector2(0, 0),
@@ -30,12 +44,7 @@ describe('IsEnemyInAggroRange', () => {
                     number: 1
                 });
 
-            const entities = [
-                ...createRandomEntities(10, { x: 5, y: 5, }, { x: 50, y: 50 }),
-                entity,
-            ];
-
-            const node = new IsEnemyInAggroRange(entities);
+            const node = new IsEnemyInAggroRange([]);
             const parent = new Node();
             parent.setData('entity', entity);
             parent.attach(node);
@@ -45,6 +54,8 @@ describe('IsEnemyInAggroRange', () => {
         });
 
         it('should fail and not set target when there is no enemy within range', () => {
+            (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue([]);
+
             const entity = world.createEntity()
                 .addComponent(TransformComponent, {
                     position: new Vector2(0, 0),
@@ -53,12 +64,8 @@ describe('IsEnemyInAggroRange', () => {
                     number: 1
                 });
 
-            const entities = [
-                entity,
-                ...createRandomEntities(10, { x: 5, y: 5, }, { x: 50, y: 50 }, 1),// create friendly entities nearby
-            ];
 
-            const node = new IsEnemyInAggroRange(entities);
+            const node = new IsEnemyInAggroRange([]);
             const parent = new Node();
             parent.setData('entity', entity);
             parent.attach(node);

@@ -1,9 +1,7 @@
 import { Entity } from "ecsy";
 
-import { isEnemy, byClosestDistance, isInRange, isSameEntity } from '../../../../systems/utils/index';
-import { TeamComponent } from '../../../../systems/TeamComponent';
 import { Node, State } from "../Node";
-import { not } from "../../../../utils";
+import { getEntitiesInRange } from "./utils";
 
 const RANGE = 100;
 
@@ -15,12 +13,7 @@ export class IsEnemyInAggroRange extends Node {
     public evaluate(): State {
         const entity = this.getData('entity') as Entity;
 
-        const inRangeEntities = this.entities
-            .filter(not(isSameEntity(entity)))
-            .filter(isEnemy(entity.getComponent(TeamComponent)!.number))
-            .filter(isInRange(entity, RANGE))
-            .sort(byClosestDistance(entity));
-
+        const inRangeEntities = getEntitiesInRange(entity, this.entities, RANGE);
         if (inRangeEntities.length == 0) {
             return this.state = State.FAILURE;
         }
@@ -30,4 +23,3 @@ export class IsEnemyInAggroRange extends Node {
         return this.state = State.SUCCESS;
     }
 }
-
