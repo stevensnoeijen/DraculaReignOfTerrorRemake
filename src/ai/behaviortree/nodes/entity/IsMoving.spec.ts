@@ -6,7 +6,7 @@ import { State } from '../Node';
 import { IsMoving } from './IsMoving';
 
 describe('IsMoving', () => {
-    describe('evaluate', () => {
+    describe('evaluateByEntity', () => {
         const world = new World()
             .registerComponent(MovePositionDirectComponent);
 

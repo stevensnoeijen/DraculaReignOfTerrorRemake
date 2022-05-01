@@ -5,7 +5,7 @@ import { State } from '../Node';
 import { HasTarget } from "./HasTarget";
 
 describe('HasTarget', () => {
-    describe('evaluate', () => {
+    describe('evaluateByEntity', () => {
         const world = new World()
             .registerComponent(TargetComponent);
 

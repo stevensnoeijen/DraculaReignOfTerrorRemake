@@ -5,7 +5,7 @@ import { TargetComponent } from "../../../../systems/TargetComponent";
 import { State } from '../Node';
 
 describe('UnsetTarget', () => {
-    describe('evaluate', () => {
+    describe('evaluateByEntity', () => {
         const world = new World()
             .registerComponent(TargetComponent);
         it('should return failure when entity has no TargetComponent', () => {
