@@ -1,18 +1,21 @@
-import { Entity } from "ecsy";
+import { Component, ComponentConstructor, Entity } from "ecsy";
 
-import { Node, State } from "../Node";
+import { State } from "../Node";
 import { EntityNode } from "./EntityNode";
 import { getEntitiesInRange } from "./utils";
 
-export class IsEnemyInRange extends EntityNode {
+export class IsEnemyInRange<TComponent extends Component<any>, TProperty extends keyof TComponent = keyof TComponent> extends EntityNode {
     constructor(
         private readonly entities: Entity[],
-        private range: number) {
+        private readonly componentConstructor: ComponentConstructor<TComponent>,
+        private readonly componentProperty: TProperty) {
         super();
     }
 
     protected evaluateByEntity(entity: Entity): State {
-        const inRangeEntities = getEntitiesInRange(entity, this.entities, this.range);
+        const range = entity.getComponent(this.componentConstructor)![this.componentProperty] as unknown as number;
+
+        const inRangeEntities = getEntitiesInRange(entity, this.entities, range);
         if (inRangeEntities.length == 0) {
             return this.failure();
         }
