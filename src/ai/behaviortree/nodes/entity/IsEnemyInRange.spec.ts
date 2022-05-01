@@ -10,7 +10,8 @@ import { IsEnemyInRange } from './IsEnemyInRange';
 jest.mock('./utils');
 
 describe('IsEnemyInRange', () => {
-    describe('evaluateByEntity', () => {
+    describe('evaluate', () => {
+        
         let world: World;
 
         beforeEach(() => {

@@ -5,7 +5,7 @@ import { TargetComponent } from '../../../../systems/TargetComponent';
 import { State } from '../Node';
 
 describe('SetTarget', () => {
-    describe('evaluateByEntity', () => {
+    describe('evaluate', () => {
         const world = new World()
             .registerComponent(TargetComponent);
 
