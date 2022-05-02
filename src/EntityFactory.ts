@@ -18,8 +18,8 @@ import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { TeamComponent } from './systems/TeamComponent';
-
-type Position = { x: number; y: number };
+import { FollowComponent } from './systems/movement/FollowComponent';
+import { Position } from './utils';
 
 interface IUnitProps {
 	position: Position;
@@ -72,7 +72,8 @@ export class EntityFactory {
 			})
 			.addComponent(MovePathComponent, { path: [] })
 			.addComponent(CollidableComponent)
-			.addComponent(TeamComponent, props.team);
+			.addComponent(TeamComponent, props.team)
+			.addComponent(FollowComponent);
 
 	}
 }

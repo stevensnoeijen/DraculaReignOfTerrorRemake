@@ -1,4 +1,5 @@
 import { Entity } from "ecsy";
+import { EntityHelper } from "../../EntityHelper";
 
 import { Predicate } from "../../utils";
 import { TeamComponent } from "../TeamComponent";
@@ -20,3 +21,7 @@ export const isEnemy = (team: number): Predicate<Entity> => {
 export const isSameEntity = (entity: Entity): Predicate<Entity> => {
 	return (other: Entity) => other.id === entity.id;
 };
+
+export const getEntityAtPosition = (entities: Entity[], x: number, y: number): Entity | null => {
+    return entities.find((entity) => EntityHelper.isPositionInsideEntity(entity, x, y)) ?? null;
+}

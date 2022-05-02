@@ -5,6 +5,7 @@ import { SelectableComponent } from './SelectableComponent';
 import { EntityHelper } from '../../EntityHelper';
 import { Vector2 } from '../../math/Vector2';
 import { Input } from '../../Input';
+import { getEntityAtPosition } from '../utils';
 
 /**
  * System for selecting units with {@link Input}'s' mouse.
@@ -114,11 +115,7 @@ export class PlayerSelectionSystem extends System {
 	}
 
 	private getEntityAtPosition(x: number, y: number): Entity | null {
-		return (
-			this.queries.selectable.results.find((entity) =>
-				EntityHelper.isPositionInsideEntity(entity, x, y)
-			) || null
-		);
+		return getEntityAtPosition(this.queries.selectable.results, x, y);
 	}
 
 	public execute(delta: number, time: number): void {

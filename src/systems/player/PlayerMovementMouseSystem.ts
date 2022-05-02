@@ -1,4 +1,4 @@
-import { DefaultAttributes } from './../DefaultAttributes';
+import { FollowComponent } from './../movement/FollowComponent';
 import { Attributes, World } from 'ecsy';
 
 import { convertPathfindingPathToPositions } from './../../utils';
@@ -10,14 +10,19 @@ import { SelectableComponent } from '../selection/SelectableComponent';
 import { TransformComponent } from '../TransformComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { getMouseGridPosition } from '../../utils';
-import { EventBus } from '../../EventBus';
 import { Events, LevelLoadedEvent } from '../../Events';
+import { SizeComponent } from './../SizeComponent';
+import { DefaultAttributes } from './../DefaultAttributes';
+import { getEntityAtPosition } from '../utils';
 
 export class PlayerMovementMouseSystem extends PixiJsSystem {
 	public static queries = {
-		entities: {
+		playerEntities: {
 			components: [PlayerMovementMouseComponent],
 		},
+		entities: {
+			components: [TransformComponent, SizeComponent],
+		}
 	};
 
 	private map: number[][]|null = null;
@@ -32,7 +37,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 
 	public execute(delta: number, time: number): void {
 		if (Input.isMouseButtonUp(2) || Input.isMouseDblClick()) {
-			for (const entity of this.queries.entities.results) {
+			for (const entity of this.queries.playerEntities.results) {
 				const selectableComponent = entity.getComponent(SelectableComponent);
 				if (!selectableComponent || !selectableComponent.selected) {
 					continue;
@@ -44,6 +49,15 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 				}
 
 				if(this.map != null) {
+					const clickedEntity = getEntityAtPosition(this.queries.entities.results, Input.mousePosition.x, Input.mousePosition.y);
+					if (clickedEntity != null) {
+						const followComponent = entity.getMutableComponent(FollowComponent);
+						if (followComponent != null) {
+							followComponent.follow = clickedEntity;
+							continue;
+						}
+					}
+
 					const path = astar(this.map, transformComponent.gridPosition, getMouseGridPosition());
 					
 					const movePathComponent = entity.getMutableComponent(MovePathComponent)!;

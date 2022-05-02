@@ -39,6 +39,8 @@ import { LevelLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
 import { TeamComponent } from './systems/TeamComponent';
 import { AttackComponent } from './systems/AttackComponent';
+import { FollowComponent } from './systems/movement/FollowComponent';
+import { FollowSystem } from './systems/movement/FollowSystem';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -86,6 +88,7 @@ onMounted(() => {
 		.registerComponent(CollidableComponent)
 		.registerComponent(TeamComponent)
 		.registerComponent(AttackComponent)
+		.registerComponent(FollowComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { eventBus })
@@ -99,7 +102,8 @@ onMounted(() => {
 		.registerSystem(GridSystem, { app, options, eventBus })
 		.registerSystem(MapSystem, { app, eventBus })
 		.registerSystem(MovePathSystem, { eventBus })
-		.registerSystem(GameTimeSystem);
+		.registerSystem(GameTimeSystem)
+		.registerSystem(FollowSystem, { app, eventBus });
 });
 
 let level;
