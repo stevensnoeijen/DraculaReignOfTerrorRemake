@@ -45,6 +45,10 @@ export class FollowSystem extends System {
 
     private updateFollowingEntity(entity: Entity): void {
         const followComponent = entity.getComponent(FollowComponent)!;
+        if (followComponent.follow == null) {
+            return;
+        }
+        
         const transformComponent = followComponent.follow!.getComponent(TransformComponent)!;
         
         const path = astar(this.map!, entity.getComponent(TransformComponent)!.gridPosition, transformComponent.gridPosition);

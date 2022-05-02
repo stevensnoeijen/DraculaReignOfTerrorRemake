@@ -58,6 +58,12 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 						}
 					}
 
+					// unfollow
+					const followComponent = entity.getMutableComponent(FollowComponent);
+					if (followComponent != null && followComponent.follow != null) {
+						followComponent.follow = null;
+					}
+
 					const path = astar(this.map, transformComponent.gridPosition, getMouseGridPosition());
 					
 					const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
