@@ -1,4 +1,5 @@
-import { World } from 'ecsy';
+import { TargetComponent } from './systems/ai/TargetComponent';
+import { Entity, World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
 import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
@@ -20,6 +21,7 @@ import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { TeamComponent } from './systems/TeamComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
+import { AttackComponent } from './systems/AttackComponent';
 
 interface IUnitProps {
 	position: Position;
@@ -31,7 +33,7 @@ interface IUnitProps {
 }
 
 export class EntityFactory {
-	public static createUnit(world: World, props: IUnitProps): void {
+	public static createUnit(world: World, props: IUnitProps): Entity {
 		const width = Constants.CELL_SIZE;
 		const height = Constants.CELL_SIZE;
 		let rotation = Math.random() * 360;
@@ -41,7 +43,7 @@ export class EntityFactory {
 		sprite.anchor.set(0.5);
 		sprite.position.set(props.position.x, props.position.y);
 
-		world
+		return world
 			.createEntity()
 			.addComponent(TransformComponent, {
 				position: new Vector2(props.position.x, props.position.y),
@@ -73,7 +75,13 @@ export class EntityFactory {
 			.addComponent(MovePathComponent, { path: [] })
 			.addComponent(CollidableComponent)
 			.addComponent(TeamComponent, props.team)
-			.addComponent(FollowComponent);
+			.addComponent(FollowComponent)
+			.addComponent(AttackComponent, {
+				aggroRange: 100,
+				attackRange: 16,
+				attackDamage: 1,
+			})
+			.addComponent(TargetComponent);
 
 	}
 }

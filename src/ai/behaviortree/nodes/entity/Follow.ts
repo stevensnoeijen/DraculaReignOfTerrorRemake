@@ -1,9 +1,9 @@
-import { TargetComponent } from './../../../../systems/TargetComponent';
 import { Entity } from "ecsy";
 
 import { State } from "../Node";
 import { EntityNode } from "./EntityNode";
 import { FollowComponent } from './../../../../systems/movement/FollowComponent';
+import { TargetComponent } from '../../../../systems/ai/TargetComponent';
 
 export class Follow extends EntityNode {
     protected evaluateByEntity(entity: Entity): State {

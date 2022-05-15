@@ -30,6 +30,7 @@ import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 import { PathFindingLevel } from './levels/PathFindingLevel';
+import { BehaviorTreeLevel } from './levels/BehaviorTreeLevel';
 import { MapSystem } from './systems/render/MapSystem';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
@@ -41,6 +42,10 @@ import { TeamComponent } from './systems/TeamComponent';
 import { AttackComponent } from './systems/AttackComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { FollowSystem } from './systems/movement/FollowSystem';
+import { BehaviorTreeComponent } from './systems/ai/BehaviorTreeComponent';
+import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
+import { TargetComponent } from './systems/ai/TargetComponent';
+import { TargetSystem } from './systems/ai/TargetSystem';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -89,6 +94,8 @@ onMounted(() => {
 		.registerComponent(TeamComponent)
 		.registerComponent(AttackComponent)
 		.registerComponent(FollowComponent)
+		.registerComponent(BehaviorTreeComponent)
+		.registerComponent(TargetComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { eventBus })
@@ -103,7 +110,9 @@ onMounted(() => {
 		.registerSystem(MapSystem, { app, eventBus })
 		.registerSystem(MovePathSystem, { eventBus })
 		.registerSystem(GameTimeSystem)
-		.registerSystem(FollowSystem, { app, eventBus });
+		.registerSystem(FollowSystem, { app, eventBus })
+		.registerSystem(BehaviorTreeSystem)
+		.registerSystem(TargetSystem);
 });
 
 let level;
@@ -114,6 +123,8 @@ const loadLevel = (): void => {
 			level = new RandomUnitsLevel(app, world);
 		} else if (levelName === 'pathfinding') {
 			level = new PathFindingLevel(app, world);
+		} else if (levelName === 'behaviortree') {
+			level = new BehaviorTreeLevel(app, world);
 		} else {
 			alert('level not found');
 			return;

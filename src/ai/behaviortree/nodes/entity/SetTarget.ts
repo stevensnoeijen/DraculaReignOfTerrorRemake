@@ -1,11 +1,13 @@
-import { TargetComponent } from './../../../../systems/TargetComponent';
 import { Entity } from 'ecsy';
+
 import { Node, State } from "../Node";
 import { EntityNode } from './EntityNode';
+import { TargetComponent } from '../../../../systems/ai/TargetComponent';
 
 export class SetTarget extends EntityNode {
     protected evaluateByEntity(entity: Entity): State {
         const target = this.getData('target') as Entity|null;
+        console.log('setting target');
 
         if (target == null || !entity.hasComponent(TargetComponent)) {
             return this.failure();

@@ -1,7 +1,8 @@
-import { TargetComponent } from '../../../../systems/TargetComponent';
 import { Entity } from "ecsy";
+
 import { State } from "../Node";
 import { EntityNode } from './EntityNode';
+import { TargetComponent } from '../../../../systems/ai/TargetComponent';
 
 export class HasTarget extends EntityNode {
     protected evaluateByEntity(entity: Entity): State {

@@ -1,6 +1,6 @@
 import { World } from "ecsy";
 
-import { TargetComponent } from "../../../../systems/TargetComponent";
+import { TargetComponent } from "../../../../systems/ai/TargetComponent";
 import { State } from '../Node';
 import { HasTarget } from "./HasTarget";
 

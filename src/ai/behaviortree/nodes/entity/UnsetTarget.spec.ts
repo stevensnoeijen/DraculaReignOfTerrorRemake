@@ -1,7 +1,7 @@
 import { World } from "ecsy";
 
 import { UnsetTarget } from './UnsetTarget';
-import { TargetComponent } from "../../../../systems/TargetComponent";
+import { TargetComponent } from "../../../../systems/ai/TargetComponent";
 import { State } from '../Node';
 
 describe('UnsetTarget', () => {

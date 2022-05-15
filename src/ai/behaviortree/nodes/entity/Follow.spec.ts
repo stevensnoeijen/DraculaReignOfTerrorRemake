@@ -1,7 +1,7 @@
 import { World } from 'ecsy';
 
 import { State } from '../Node';
-import { TargetComponent } from './../../../../systems/TargetComponent';
+import { TargetComponent } from '../../../../systems/ai/TargetComponent';
 import { FollowComponent } from './../../../../systems/movement/FollowComponent';
 import { Follow } from './Follow';
 
