@@ -1,3 +1,4 @@
+import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { Entity, World } from 'ecsy';
 import * as PIXI from 'pixi.js';
@@ -77,11 +78,12 @@ export class EntityFactory {
 			.addComponent(TeamComponent, props.team)
 			.addComponent(FollowComponent)
 			.addComponent(AttackComponent, {
-				aggroRange: 100,
+				aggroRange: 80,
 				attackRange: 16,
 				attackDamage: 1,
 			})
-			.addComponent(TargetComponent);
+			.addComponent(TargetComponent)
+			.addComponent(ControlledComponent);
 
 	}
 }

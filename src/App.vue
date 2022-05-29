@@ -46,6 +46,7 @@ import { BehaviorTreeComponent } from './systems/ai/BehaviorTreeComponent';
 import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { TargetSystem } from './systems/ai/TargetSystem';
+import { ControlledComponent } from './systems/ControlledComponent';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -99,6 +100,7 @@ onMounted(() => {
 		.registerComponent(FollowComponent)
 		.registerComponent(BehaviorTreeComponent)
 		.registerComponent(TargetComponent)
+		.registerComponent(ControlledComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { app, eventBus })

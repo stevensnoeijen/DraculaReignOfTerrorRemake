@@ -1,4 +1,3 @@
-import { isSameEntity } from './../utils/index';
 import { Entity, System } from "ecsy";
 
 import { getCell, not, Position } from './../../utils';
@@ -6,6 +5,8 @@ import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { cellPositionToVector } from '../../utils';
+import { ControlledComponent } from './../ControlledComponent';
+import { isSameEntity } from './../utils/index';
 
 export class MovePathSystem extends System {
     public static queries = {
@@ -32,9 +33,7 @@ export class MovePathSystem extends System {
             }
 
             const nextCell = movePathComponent.path[0];
-            if (nextCell == null) {
-                continue;
-            }
+
             if (!this.canEntityMoveToCell(entity, nextCell)) {
                 // cancel move
                 continue;
@@ -42,6 +41,12 @@ export class MovePathSystem extends System {
             movePathComponent.path.shift();
 
             movePositionDirectComponent.movePosition = cellPositionToVector(nextCell.x, nextCell.y);
+
+            if (movePathComponent.path.length === 0) {
+                if (entity.hasComponent(ControlledComponent)) {
+                    entity.getMutableComponent(ControlledComponent)!.by = null;
+                }
+            }
         }
     }
 

@@ -1,5 +1,6 @@
+import { ControlledComponent } from './../ControlledComponent';
 import { FollowComponent } from './../movement/FollowComponent';
-import { Attributes, World } from 'ecsy';
+import { World } from 'ecsy';
 
 import { convertPathfindingPathToPositions } from './../../utils';
 import { MovePathComponent } from './../movement/MovePathComponent';
@@ -68,6 +69,10 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
 					
 					const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
 					movePathComponent.path = convertPathfindingPathToPositions(path.slice(1));
+
+					if (entity.hasComponent(ControlledComponent)) {
+						entity.getMutableComponent(ControlledComponent)!.by = 'player';
+					}
 				}
 			}
 		}

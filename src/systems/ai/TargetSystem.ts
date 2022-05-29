@@ -1,3 +1,4 @@
+import { Follow } from './../../ai/behaviortree/nodes/entity/Follow';
 import { System, SystemQueries } from 'ecsy';
 
 import { TargetComponent } from './TargetComponent';
@@ -11,25 +12,8 @@ export class TargetSystem extends System {
         }
     };
 
-    timePassed = 0;
-    triggerTime = 1000;
-
     public execute(delta: number, time: number): void {
         this.checkDead();
-
-        this.timePassed += delta;
-        // trigger every second
-        if (this.timePassed > this.triggerTime) {
-            for (const entity of this.queries.entities.results) {
-                const targetComponent = entity.getComponent(TargetComponent)!;
-
-                if (targetComponent.target != null) {
-                    entity.getMutableComponent(FollowComponent)!.follow = targetComponent.target;
-                }
-            }
-
-            this.timePassed = this.triggerTime - this.timePassed;
-        }
     }
 
     private checkDead (): void {

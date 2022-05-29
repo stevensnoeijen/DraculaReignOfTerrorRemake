@@ -1,5 +1,3 @@
-import { Follow } from './../ai/behaviortree/nodes/entity/Follow';
-import { Attack } from './../ai/behaviortree/nodes/entity/Attack';
 import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
@@ -7,18 +5,25 @@ import { cellPositionToVector } from '../utils';
 import { Level } from './Level';
 import { EntityFactory } from '../EntityFactory';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
-import { Tree } from '../ai/behaviortree/Tree';
-import { Selector } from '../ai/behaviortree/nodes/core/Selector';
-import { Timer } from './../ai/behaviortree/nodes/core/Timer';
-import { IsEnemyInAttackRange } from './../ai/behaviortree/nodes/entity/IsEnemyInAttackRange';
-import { HasTarget } from './../ai/behaviortree/nodes/entity/HasTarget';
-import { UnsetTarget } from './../ai/behaviortree/nodes/entity/UnsetTarget';
-import { IsMoving } from '../ai/behaviortree/nodes/entity/IsMoving';
-import { Inventer } from './../ai/behaviortree/nodes/core/Inventer';
-import { SetTarget } from './../ai/behaviortree/nodes/entity/SetTarget';
-import { IsEnemyInAggroRange } from './../ai/behaviortree/nodes/entity/IsEnemyInAggroRange';
-import { Sequence } from './../ai/behaviortree/nodes/core/Sequence';
 import { BehaviorTreeComponent } from './../systems/ai/BehaviorTreeComponent';
+import { Tree } from '../ai/behaviortree/Tree';
+import {
+    Selector,
+    Timer,
+    Inventer,
+    Sequence,
+} from './../ai/behaviortree/nodes/core';
+import {
+    Follow,
+    Attack,
+    IsControlledByPlayer,
+    IsEnemyInAttackRange,
+    HasTarget, 
+    UnsetTarget, 
+    IsMoving,
+    SetTarget,
+    IsEnemyInAggroRange
+} from './../ai/behaviortree/nodes/entity';
 
 export class BehaviorTreeLevel extends Level {
     private map: number[][];
@@ -62,6 +67,11 @@ export class BehaviorTreeLevel extends Level {
                     new SetTarget(),
                 ]),
                 new Sequence([
+                    new IsMoving(),
+                    new Inventer([new IsEnemyInAggroRange(entities)]),
+                    new UnsetTarget(),
+                ]),
+                new Sequence([
                     new HasTarget(),
                     new Selector([
                         new Sequence([
@@ -71,7 +81,10 @@ export class BehaviorTreeLevel extends Level {
                                 children: [new Attack()]
                             })
                         ]),
-                        new Follow(),
+                        new Sequence([
+                            new Inventer([new IsControlledByPlayer()]),
+                            new Follow(),
+                        ])
                     ])
                 ])
             ])
