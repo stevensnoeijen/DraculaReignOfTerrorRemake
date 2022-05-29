@@ -62,11 +62,6 @@ export class BehaviorTreeLevel extends Level {
                     new SetTarget(),
                 ]),
                 new Sequence([
-                    new IsMoving(),
-                    // new Inventer([new IsEnemyInAggroRange(entities)]),
-                    new UnsetTarget(),
-                ]),
-                new Sequence([
                     new HasTarget(),
                     new Selector([
                         new Sequence([
