@@ -6,7 +6,7 @@ import { Predicate } from "../../utils";
 import { TeamComponent } from "../TeamComponent";
 export * from './transform';
 
-export const isEnemy = (team: number): Predicate<Entity> => {
+export const isOnTeam = (team: number): Predicate<Entity> => {
     return (entity: Entity) => {
         if (!entity.hasComponent(TeamComponent)){
             return false;
@@ -14,7 +14,7 @@ export const isEnemy = (team: number): Predicate<Entity> => {
 
         const teamComponent = entity.getComponent(TeamComponent)!;
 
-        return teamComponent.number !== team;
+        return teamComponent.number === team;
     };
 };
 

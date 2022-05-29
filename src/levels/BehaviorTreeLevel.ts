@@ -41,8 +41,8 @@ export class BehaviorTreeLevel extends Level {
     public load(): void {
         const player = EntityFactory.createUnit(this.world, {
             position: cellPositionToVector(1, 1),
-            color: 'red',
-            texture: this.app.loader.resources.swordsmen.texture!,
+            color: 'blue',
+            texture: this.app.loader.resources.swordsmen_blue.texture!,
             team: {
                 number: 1,
             }
@@ -51,7 +51,7 @@ export class BehaviorTreeLevel extends Level {
         const enemy = EntityFactory.createUnit(this.world, {
             position: cellPositionToVector(1, 3),
             color: 'red',
-            texture: this.app.loader.resources.swordsmen.texture!,
+            texture: this.app.loader.resources.swordsmen_red.texture!,
             team: {
                 number: 2,
             }

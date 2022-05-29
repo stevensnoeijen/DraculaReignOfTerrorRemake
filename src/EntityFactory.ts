@@ -57,7 +57,7 @@ export class EntityFactory {
 			.addComponent(MovableComponent)
 			.addComponent(SelectableComponent)
 			.addComponent(HealthComponent, {
-				points: Math.round(Math.random() * 10),
+				points: 10,
 				maxPoints: 10,
 			})
 			.addComponent(AliveComponent)
