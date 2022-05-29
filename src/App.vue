@@ -71,9 +71,12 @@ onMounted(() => {
 		frame();
 	});
 
-	app.loader.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png').load(() => {
-		loadLevel();
-	});
+	app.loader
+		.add('swordsmen', 'assets/swordsmen.blue.move.west_06.png')
+		.add('dead', 'assets/swordsmen.blue.dead.south.png')
+		.load(() => {
+			loadLevel();
+		});
 
 	world
 		.registerComponent(TransformComponent)
@@ -98,7 +101,7 @@ onMounted(() => {
 		.registerComponent(TargetComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
-		.registerSystem(AliveSystem, { eventBus })
+		.registerSystem(AliveSystem, { app, eventBus })
 		.registerSystem(InputSystem, { canvas: app.view })
 		// .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
 		.registerSystem(MovePositionDirectSystem)

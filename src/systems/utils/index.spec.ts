@@ -1,9 +1,11 @@
+import { AliveComponent } from './../alive/AliveComponent';
 import { TeamComponent } from './../TeamComponent';
 import { World } from 'ecsy';
-import { isEnemy, isSameEntity } from './index';
+import { isEnemy, isSameEntity, isAlive } from './index';
 
 const world = new World()
-        .registerComponent(TeamComponent);
+        .registerComponent(TeamComponent)
+        .registerComponent(AliveComponent);
 
 describe('isEnemy', () => {
     it('should return false if entity has no TeamComponent', () => {
@@ -50,5 +52,31 @@ describe('isSameEntity', () => {
         const predictate = isSameEntity(a);
 
         expect(predictate(a)).toBe(true);
+    });
+});
+
+describe('isAlive', () => {   
+    it('should return true when component is not set', () => {
+        const entity = world.createEntity();
+
+        expect(isAlive()(entity)).toBe(true);
+    });
+
+    it('should return true when component is set and true', () => {
+        const entity = world.createEntity()
+            .addComponent(AliveComponent, {
+                alive: true
+            });
+
+        expect(isAlive()(entity)).toBe(true);
+    });
+
+    it('should return false when component is set and false', () => {
+        const entity = world.createEntity()
+            .addComponent(AliveComponent, {
+                alive: false
+            });
+
+        expect(isAlive()(entity)).toBe(false);
     });
 });

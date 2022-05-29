@@ -13,7 +13,7 @@ import { Timer } from './../ai/behaviortree/nodes/core/Timer';
 import { IsEnemyInAttackRange } from './../ai/behaviortree/nodes/entity/IsEnemyInAttackRange';
 import { HasTarget } from './../ai/behaviortree/nodes/entity/HasTarget';
 import { UnsetTarget } from './../ai/behaviortree/nodes/entity/UnsetTarget';
-import { IsMoving } from './../ai/behaviortree/nodes/entity/IsMoving';
+import { IsMoving } from '../ai/behaviortree/nodes/entity/IsMoving';
 import { Inventer } from './../ai/behaviortree/nodes/core/Inventer';
 import { SetTarget } from './../ai/behaviortree/nodes/entity/SetTarget';
 import { IsEnemyInAggroRange } from './../ai/behaviortree/nodes/entity/IsEnemyInAggroRange';
@@ -44,7 +44,7 @@ export class BehaviorTreeLevel extends Level {
         });
 
         const enemy = EntityFactory.createUnit(this.world, {
-            position: cellPositionToVector(3, 1),
+            position: cellPositionToVector(1, 3),
             color: 'red',
             texture: this.app.loader.resources.swordsmen.texture!,
             team: {
@@ -54,30 +54,33 @@ export class BehaviorTreeLevel extends Level {
 
         const entities = [player, enemy];
 
-        const tree = new Tree(new Selector([
-            new Sequence([
-                new IsEnemyInAggroRange(entities),
-                new SetTarget(),
-            ]),
-            new Sequence([
-                new Inventer([new IsMoving()]),
-                new Inventer([new IsEnemyInAggroRange(entities)]),
-                new UnsetTarget(),
-            ]),
-            new Sequence([
-                new HasTarget(),
-                new Selector([
-                    new Sequence([
-                        new IsEnemyInAttackRange(entities),
-                        new Timer({
-                            delay: 1000,
-                            children: [new Attack()]
-                        })
-                    ]),
-                    new Follow(),
+        const tree = new Tree(
+            new Selector([
+                new Sequence([
+                    new Inventer([new HasTarget()]),
+                    new IsEnemyInAggroRange(entities),
+                    new SetTarget(),
+                ]),
+                new Sequence([
+                    new IsMoving(),
+                    // new Inventer([new IsEnemyInAggroRange(entities)]),
+                    new UnsetTarget(),
+                ]),
+                new Sequence([
+                    new HasTarget(),
+                    new Selector([
+                        new Sequence([
+                            new IsEnemyInAttackRange(entities),
+                            new Timer({
+                                delay: 1000,
+                                children: [new Attack()]
+                            })
+                        ]),
+                        new Follow(),
+                    ])
                 ])
             ])
-        ]));
+        );
         tree.root.setData('entity', player);
 
         player.addComponent(BehaviorTreeComponent, {

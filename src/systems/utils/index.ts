@@ -1,9 +1,9 @@
 import { Entity } from "ecsy";
-import { EntityHelper } from "../../EntityHelper";
 
+import { AliveComponent } from './../alive/AliveComponent';
+import { EntityHelper } from "../../EntityHelper";
 import { Predicate } from "../../utils";
 import { TeamComponent } from "../TeamComponent";
-
 export * from './transform';
 
 export const isEnemy = (team: number): Predicate<Entity> => {
@@ -25,3 +25,5 @@ export const isSameEntity = (entity: Entity): Predicate<Entity> => {
 export const getEntityAtPosition = (entities: Entity[], x: number, y: number): Entity | null => {
     return entities.find((entity) => EntityHelper.isPositionInsideEntity(entity, x, y)) ?? null;
 }
+
+export const isAlive = (): Predicate<Entity> => (entity: Entity) => entity.getComponent(AliveComponent)?.alive ?? true;

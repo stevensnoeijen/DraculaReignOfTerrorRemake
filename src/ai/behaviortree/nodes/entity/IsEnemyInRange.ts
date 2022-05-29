@@ -19,8 +19,7 @@ export class IsEnemyInRange<TComponent extends Component<any>, TProperty extends
         if (inRangeEntities.length == 0) {
             return this.failure();
         }
-        console.log('in range ' + this.componentProperty);
-
+        
         this.parent!.setData('target', inRangeEntities[0]);
 
         return this.success();

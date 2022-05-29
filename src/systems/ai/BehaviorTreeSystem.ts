@@ -13,16 +13,10 @@ export class BehaviorTreeSystem extends System {
 
     public execute(delta: number, time: number): void {
         this.timePassed += delta;
-        // trigger every second
-        if (this.timePassed > this.triggerTime) {
-            console.log('update');
-            for(const entity of this.queries.entities.results) {
-                const behaviorTreeComponent = entity.getComponent(BehaviorTreeComponent)!;
+        for(const entity of this.queries.entities.results) {
+            const behaviorTreeComponent = entity.getComponent(BehaviorTreeComponent)!;
 
-                behaviorTreeComponent.tree.update();
-            }
-
-            this.timePassed = this.triggerTime - this.timePassed;
+            behaviorTreeComponent.tree.update();
         }
     }
 }

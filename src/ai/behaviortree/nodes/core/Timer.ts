@@ -45,6 +45,7 @@ export class Timer extends Node {
             if (this.elapsedCallback) {
                 this.elapsedCallback();
             }
+            this.reset();
             
             return this.state;
         } else {
