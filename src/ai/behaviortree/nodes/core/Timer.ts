@@ -35,6 +35,10 @@ export class Timer extends Node {
     }
 
     public evaluate(): State {
+        if (this.isElapsed()) {
+            this.reset();
+        }
+
         if (!this.hasChildren()) {
             return this.failure();
         }
@@ -45,7 +49,6 @@ export class Timer extends Node {
             if (this.elapsedCallback) {
                 this.elapsedCallback();
             }
-            this.reset();
             
             return this.state;
         } else {
