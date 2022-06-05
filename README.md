@@ -36,6 +36,10 @@ Current debug options are:
 
 - `grid`
 
+Other options to use are:
+
+- `showallhealth=true` to always show health of units
+
 # Levels
 
 To select a level add `#level=<level>` and replace `<level>` to the url and refresh the page.

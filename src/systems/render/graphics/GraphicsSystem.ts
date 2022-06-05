@@ -1,4 +1,4 @@
-import { Entity } from "ecsy";
+import { Attributes, Entity, World } from "ecsy";
 import * as PIXI from 'pixi.js';
 
 import { EntityHelper } from '../../../EntityHelper';
@@ -13,6 +13,14 @@ export class GraphicsSystem extends PixiJsSystem {
 	public static queries = {
 		graphics: { components: [GraphicsComponent] },
 	};
+
+	private readonly showAllHealth: boolean;
+
+	constructor(world: World, attributes: Attributes) {
+		super(world, attributes);
+
+		this.showAllHealth = attributes.options.showallhealth !== undefined ? attributes.options.showallhealth[0] == 'true' : false;
+	}
 
 	private drawHealthBar(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
 		graphics.beginFill(0x000000);
@@ -60,13 +68,16 @@ export class GraphicsSystem extends PixiJsSystem {
 					component.addedToStage = true;
 				}
 
-				if (entity.hasComponent(SpriteComponent) && EntityHelper.isSelected(entity)) {
+				if (entity.hasComponent(SpriteComponent) && (this.showAllHealth || EntityHelper.isSelected(entity))) {
 					const sprite = entity.getComponent(SpriteComponent)!.sprite;
+					
 
 					component.graphics.clear();
 					component.graphics.position.set(sprite.position.x, sprite.position.y);
 
-					this.drawSelectionIndicators(entity, component.graphics, sprite);
+					if (EntityHelper.isSelected(entity)) {
+						this.drawSelectionIndicators(entity, component.graphics, sprite);
+					}
 					this.drawHealthBar(entity, component.graphics, sprite);
 				} else {
 					component.graphics.clear();

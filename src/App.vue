@@ -111,7 +111,7 @@ onMounted(() => {
 		.registerSystem(PlayerMovementMouseSystem, { app, eventBus })
 		.registerSystem(MoveVelocitySystem, { eventBus })
 		.registerSystem(SpriteSystem, { app, eventBus })
-		.registerSystem(GraphicsSystem, { app, eventBus })
+		.registerSystem(GraphicsSystem, { app, options, eventBus })
 		.registerSystem(GridSystem, { app, options, eventBus })
 		.registerSystem(MapSystem, { app, eventBus })
 		.registerSystem(MovePathSystem, { eventBus })
