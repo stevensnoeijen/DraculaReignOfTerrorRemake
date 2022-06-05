@@ -12,6 +12,11 @@ export interface IMoveVelocityComponentProps {
  * Use {@link MoveTransformVelocityComponent} when physics is not nesesery.
  */
 export class MoveVelocityComponent extends Component<IMoveVelocityComponentProps> {
+	static schema = {
+		moveSpeed: { type: Types.Number, default: 100 },
+		velocity: { type: Types.Ref, default: Vector2.ZERO },
+	};	
+
 	moveSpeed!: number;
 	velocity!: Vector2;
 
@@ -19,8 +24,3 @@ export class MoveVelocityComponent extends Component<IMoveVelocityComponentProps
 		return Vector2.multiplies(this.velocity, this.moveSpeed * (delta / 1000));
 	}
 }
-
-MoveVelocityComponent.schema = {
-	moveSpeed: { type: Types.Number, default: 100 },
-	velocity: { type: Types.Ref, default: Vector2.ZERO },
-};

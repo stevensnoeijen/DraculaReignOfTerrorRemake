@@ -5,9 +5,9 @@ type MovableComponentProps = {
 };
 
 export class MovableComponent extends Component<MovableComponentProps> {
+	static schema = {
+		moving: { type: Types.Boolean, default: false },
+	};
+
 	declare moving: boolean;
 }
-
-MovableComponent.schema = {
-	moving: { type: Types.Boolean, default: false },
-};

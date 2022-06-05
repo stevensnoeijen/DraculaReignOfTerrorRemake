@@ -5,6 +5,8 @@ import { SelectableComponent } from './SelectableComponent';
 import { EntityHelper } from '../../EntityHelper';
 import { Vector2 } from '../../math/Vector2';
 import { Input } from '../../Input';
+import { getEntityAtPosition } from '../utils';
+import { isOnTeam } from './../utils/index';
 
 /**
  * System for selecting units with {@link Input}'s' mouse.
@@ -85,7 +87,7 @@ export class PlayerSelectionSystem extends System {
 	private selectOneEntity(): void {
 		// single unit select
 		const entity = this.getEntityAtPosition(Input.mousePosition.x, Input.mousePosition.y);
-		if (entity) {
+		if (entity && isOnTeam(1)(entity)) {
 			EntityHelper.select(entity);
 		} else {
 			if (!Input.isMouseDblClick()) {
@@ -110,15 +112,13 @@ export class PlayerSelectionSystem extends System {
 				width,
 				height,
 			})
-		).forEach((entity) => EntityHelper.select(entity));
+		)
+		.filter(isOnTeam(1))
+		.forEach((entity) => EntityHelper.select(entity));
 	}
 
 	private getEntityAtPosition(x: number, y: number): Entity | null {
-		return (
-			this.queries.selectable.results.find((entity) =>
-				EntityHelper.isPositionInsideEntity(entity, x, y)
-			) || null
-		);
+		return getEntityAtPosition(this.queries.selectable.results, x, y);
 	}
 
 	public execute(delta: number, time: number): void {

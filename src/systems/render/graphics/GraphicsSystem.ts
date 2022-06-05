@@ -1,4 +1,5 @@
-import { Entity } from "ecsy";
+import { AttackComponent } from './../../AttackComponent';
+import { Attributes, Entity, World } from "ecsy";
 import * as PIXI from 'pixi.js';
 
 import { EntityHelper } from '../../../EntityHelper';
@@ -13,6 +14,16 @@ export class GraphicsSystem extends PixiJsSystem {
 	public static queries = {
 		graphics: { components: [GraphicsComponent] },
 	};
+
+	private readonly showAllHealth: boolean;
+	private readonly showDebugAggro: boolean;
+
+	constructor(world: World, attributes: Attributes) {
+		super(world, attributes);
+
+		this.showAllHealth = attributes.options.showallhealth !== undefined ? attributes.options.showallhealth[0] == 'true' : false;
+		this.showDebugAggro = attributes.options.debug?.includes('aggro');
+	}
 
 	private drawHealthBar(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
 		graphics.beginFill(0x000000);
@@ -49,6 +60,17 @@ export class GraphicsSystem extends PixiJsSystem {
 			.lineTo(right, -6);
 	}
 
+	private drawAggroRadius(entity: Entity, graphics: PIXI.Graphics, sprite: PIXI.Sprite): void {
+		const attackComponent = entity.getComponent(AttackComponent);
+		if (attackComponent == null) {
+			return;
+		}
+
+		graphics.lineStyle(1, 0xFF0000);
+
+		graphics.drawCircle(0, 0, attackComponent.aggroRange);
+	}
+
 	public execute(delta: number, time: number): void {
 		if ((this.queries.graphics.results?.length ?? 0) > 0) {
 			for (const entity of this.queries.graphics.results) {
@@ -60,14 +82,22 @@ export class GraphicsSystem extends PixiJsSystem {
 					component.addedToStage = true;
 				}
 
-				if (entity.hasComponent(SpriteComponent) && EntityHelper.isSelected(entity)) {
+				if (entity.hasComponent(SpriteComponent)) {
 					const sprite = entity.getComponent(SpriteComponent)!.sprite;
 
 					component.graphics.clear();
 					component.graphics.position.set(sprite.position.x, sprite.position.y);
 
-					this.drawSelectionIndicators(entity, component.graphics, sprite);
-					this.drawHealthBar(entity, component.graphics, sprite);
+					if (EntityHelper.isSelected(entity)) {
+						this.drawSelectionIndicators(entity, component.graphics, sprite);
+					}
+					if (this.showAllHealth || EntityHelper.isSelected(entity)) {
+						this.drawHealthBar(entity, component.graphics, sprite);
+					}
+
+					if (this.showDebugAggro) {
+						this.drawAggroRadius(entity, component.graphics, sprite);
+					}
 				} else {
 					component.graphics.clear();
 				}

@@ -5,9 +5,9 @@ export interface ISelectableComponentProps {
 }
 
 export class SelectableComponent extends Component<ISelectableComponentProps> {
+	static schema = {
+		selected: { type: Types.Boolean, default: false },
+	};	
+
 	declare selected: boolean;
 }
-
-SelectableComponent.schema = {
-	selected: { type: Types.Boolean, default: false },
-};

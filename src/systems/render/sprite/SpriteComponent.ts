@@ -6,11 +6,11 @@ export interface SpriteComponentProps {
 }
 
 export class SpriteComponent extends Component<SpriteComponentProps> {
+    static schema = {
+        sprite: { type: Types.Ref },
+        addedToStage: { type: Types.Boolean },
+    };   
+
     declare sprite: PIXI.Sprite;
     addedToStage: boolean = false;
 }
-
-SpriteComponent.schema = {
-    sprite: { type: Types.Ref },
-    addedToStage: { type: Types.Boolean },
-};

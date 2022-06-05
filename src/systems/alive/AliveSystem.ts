@@ -1,10 +1,12 @@
+import { SpriteComponent } from './../render/sprite/SpriteComponent';
 import { System, SystemQueries, Entity } from 'ecsy';
 
 import { AliveComponent } from './AliveComponent';
 import { HealthComponent } from '../health/HealthComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
+import { PixiJsSystem } from '../PixiJsSystem';
 
-export class AliveSystem extends System {
+export class AliveSystem extends PixiJsSystem {
 	public static queries: SystemQueries = {
 		alives: {
 			components: [AliveComponent],
@@ -36,5 +38,10 @@ export class AliveSystem extends System {
 	private handleDead(entity: Entity): void {
 		entity.removeComponent(SelectableComponent);
 		entity.removeComponent(HealthComponent);
+
+		const spriteComponent = entity.getComponent(SpriteComponent);
+		if (spriteComponent != null) {
+			spriteComponent.sprite.texture = this.app.loader.resources.dead.texture!;
+		}
 	}
 }

@@ -7,9 +7,9 @@ export interface IMovePositionDirectComponentProps {
 }
 
 export class MovePositionDirectComponent extends Component<IMovePositionDirectComponentProps> {
+	static schema = {
+		movePosition: { type: Types.Ref, default: null, },
+	};
+
 	movePosition!: Vector2 | null;
 }
-
-MovePositionDirectComponent.schema = {
-	movePosition: { type: Types.Ref, default: null, },
-};

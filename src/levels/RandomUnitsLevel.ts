@@ -36,6 +36,9 @@ export class RandomUnitsLevel extends Level {
                 position: vector,
                 color: 'red',
                 texture: this.app.loader.resources.swordsmen.texture!,
+                team: {
+                    number: Math.round(Math.random() + 1),
+                }
             });
         });
     }
