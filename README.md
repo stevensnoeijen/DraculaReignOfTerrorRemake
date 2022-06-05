@@ -34,7 +34,8 @@ Example: `#debug=grid`.
 
 Current debug options are:
 
-- `grid`
+- `grid`, shows map grid of positions
+- `aggro`, shows aggro radius of the units
 
 Other options to use are:
 
