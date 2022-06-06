@@ -1,3 +1,5 @@
+import { TransformComponent } from './../systems/TransformComponent';
+import { AnimatedSpriteComponent } from './../systems/render/sprite/AnimatedSpriteComponent';
 import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
@@ -24,6 +26,8 @@ import {
     SetTarget,
     IsEnemyInAggroRange
 } from './../ai/behaviortree/nodes/entity';
+import * as animations  from '../animations';
+import { Vector2 } from '../math/Vector2';
 
 export class BehaviorTreeLevel extends Level {
     private map: number[][];
@@ -39,10 +43,20 @@ export class BehaviorTreeLevel extends Level {
     }
 
     public load(): void {
+        const animation = animations.load(this.app.loader.resources.unit.spritesheet!);
+
+        const s = new PIXI.AnimatedSprite(animation.blue.swordsmen.move.south);
+        s.animationSpeed = .25;
+        s.play();
+
+        this.world.createEntity()
+            .addComponent(AnimatedSpriteComponent, { sprite: s })
+            .addComponent(TransformComponent, { position: new Vector2(100, 100)})        
+
         const player = EntityFactory.createUnit(this.world, {
             position: cellPositionToVector(1, 1),
             color: 'blue',
-            texture: this.app.loader.resources.swordsmen_blue.texture!,
+            texture: this.app.loader.resources.unit.textures['swordsmen.blue.idle.south.png']!,
             team: {
                 number: 1,
             }

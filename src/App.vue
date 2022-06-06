@@ -47,6 +47,7 @@ import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { TargetSystem } from './systems/ai/TargetSystem';
 import { ControlledComponent } from './systems/ControlledComponent';
+import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -76,6 +77,7 @@ onMounted(() => {
 		.add('swordsmen_blue', 'assets/swordsmen.blue.move.west_06.png')
 		.add('swordsmen_red', 'assets/swordsmen.red.move.west_06.png')
 		.add('dead', 'assets/swordsmen.blue.dead.south.png')
+		.add('unit', 'assets/unit.json')
 		.load(() => {
 			loadLevel();
 		});
@@ -93,6 +95,7 @@ onMounted(() => {
 		.registerComponent(PlayerMovementKeysComponent)
 		.registerComponent(MoveVelocityComponent)
 		.registerComponent(SpriteComponent)
+		.registerComponent(AnimatedSpriteComponent)
 		.registerComponent(GraphicsComponent)
 		.registerComponent(MovePathComponent)
 		.registerComponent(CollidableComponent)
