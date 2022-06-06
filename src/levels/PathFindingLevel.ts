@@ -5,14 +5,21 @@ import { cellPositionToVector } from './../utils';
 import { Level } from './Level';
 import { EntityFactory } from './../EntityFactory';
 import { generateMaze, getGridSizeByScreen } from './utils';
+import * as animations from '../animations';
 
 export class PathFindingLevel extends Level {
     private map: number[][];
+    private readonly entityFactory: EntityFactory;
+
+    public readonly unitAnimations: animations.UnitAnimations;
 
     constructor(app: PIXI.Application, world: World) {
         super(app, world);
 
         this.map = generateMaze(getGridSizeByScreen(app));
+
+        this.unitAnimations = animations.load(app.loader.resources.unit.spritesheet!);
+        this.entityFactory = new EntityFactory(world, this.unitAnimations);
     }
 
     public get collisionMap(): number[][] {
@@ -20,19 +27,17 @@ export class PathFindingLevel extends Level {
     }
 
     public load(): void {
-        EntityFactory.createUnit(this.world, {
+        this.entityFactory.createUnit({
             position: cellPositionToVector(1, 1),
             color: 'red',
-            texture: this.app.loader.resources.swordsmen.texture!,
             team: {
                 number: 1,
             }
         });
 
-        EntityFactory.createUnit(this.world, {
+        this.entityFactory.createUnit({
             position: cellPositionToVector(3, 1),
             color: 'red',
-            texture: this.app.loader.resources.swordsmen.texture!,
             team: {
                 number: 2,
             }

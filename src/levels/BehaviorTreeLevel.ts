@@ -1,5 +1,3 @@
-import { TransformComponent } from './../systems/TransformComponent';
-import { AnimatedSpriteComponent } from './../systems/render/sprite/AnimatedSpriteComponent';
 import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
@@ -27,15 +25,19 @@ import {
     IsEnemyInAggroRange
 } from './../ai/behaviortree/nodes/entity';
 import * as animations  from '../animations';
-import { Vector2 } from '../math/Vector2';
 
 export class BehaviorTreeLevel extends Level {
     private map: number[][];
+    private readonly entityFactory: EntityFactory;
+
+    public readonly unitAnimations: animations.UnitAnimations;
 
     constructor(app: PIXI.Application, world: World) {
         super(app, world);
 
         this.map = createEmptyGrid(getGridSizeByScreen(app));
+        this.unitAnimations = animations.load(app.loader.resources.unit.spritesheet!);
+        this.entityFactory = new EntityFactory(world, this.unitAnimations);
     }
 
     public get collisionMap(): number[][] {
@@ -43,29 +45,17 @@ export class BehaviorTreeLevel extends Level {
     }
 
     public load(): void {
-        const animation = animations.load(this.app.loader.resources.unit.spritesheet!);
-
-        const s = new PIXI.AnimatedSprite(animation.blue.swordsmen.move.south);
-        s.animationSpeed = .25;
-        s.play();
-
-        this.world.createEntity()
-            .addComponent(AnimatedSpriteComponent, { sprite: s })
-            .addComponent(TransformComponent, { position: new Vector2(100, 100)})        
-
-        const player = EntityFactory.createUnit(this.world, {
+        const player = this.entityFactory.createUnit({
             position: cellPositionToVector(1, 1),
             color: 'blue',
-            texture: this.app.loader.resources.unit.textures['swordsmen.blue.idle.south.png']!,
             team: {
                 number: 1,
             }
         });
 
-        const enemy = EntityFactory.createUnit(this.world, {
+        const enemy = this.entityFactory.createUnit({
             position: cellPositionToVector(1, 3),
             color: 'red',
-            texture: this.app.loader.resources.swordsmen_red.texture!,
             team: {
                 number: 2,
             }

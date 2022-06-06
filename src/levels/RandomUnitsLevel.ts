@@ -1,4 +1,3 @@
-import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
@@ -6,15 +5,23 @@ import { Constants } from '../Constants';
 import { EntityFactory } from '../EntityFactory';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
+import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Level } from './Level';
+import * as animations from '../animations';
 
 export class RandomUnitsLevel extends Level {
     private readonly _collisionMap: number[][];
+    private readonly entityFactory: EntityFactory;
+
+    public readonly unitAnimations: animations.UnitAnimations;
 
     constructor(app: PIXI.Application, world: World) {
         super(app, world);
 
         this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
+
+        this.unitAnimations = animations.load(app.loader.resources.unit.spritesheet!);
+        this.entityFactory = new EntityFactory(world, this.unitAnimations);
     }
 
     public get collisionMap(): number[][] {
@@ -32,10 +39,9 @@ export class RandomUnitsLevel extends Level {
                 ) + (Constants.CELL_SIZE / 2)
             ));
     
-            EntityFactory.createUnit(this.world, {
+            this.entityFactory.createUnit({
                 position: vector,
                 color: 'red',
-                texture: this.app.loader.resources.swordsmen.texture!,
                 team: {
                     number: Math.round(Math.random() + 1),
                 }

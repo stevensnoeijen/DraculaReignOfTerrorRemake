@@ -1,8 +1,10 @@
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
+import { UnitAnimations } from '../animations';
 
 export abstract class Level {
     abstract get collisionMap(): number[][];
+    abstract get unitAnimations(): UnitAnimations;
 
     constructor(
         protected readonly app: PIXI.Application,

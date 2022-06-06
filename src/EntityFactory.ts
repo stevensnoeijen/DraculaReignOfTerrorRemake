@@ -1,3 +1,4 @@
+import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { Entity, World } from 'ecsy';
@@ -23,28 +24,35 @@ import { TeamComponent } from './systems/TeamComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
+import * as animations from './animations';
 
 interface IUnitProps {
 	position: Position;
 	color: 'red' | 'blue';
-	texture: PIXI.Texture<PIXI.Resource>;
 	team: {
 		number: number;
 	};
 }
 
 export class EntityFactory {
-	public static createUnit(world: World, props: IUnitProps): Entity {
+	constructor(
+		private readonly world: World,
+		private readonly animations: animations.UnitAnimations) {
+	}
+
+	public createUnit(props: IUnitProps): Entity {
 		const width = Constants.CELL_SIZE;
 		const height = Constants.CELL_SIZE;
 		let rotation = Math.random() * 360;
 		rotation -= rotation % 90;
 
-		const sprite = new PIXI.Sprite(props.texture);
+		const sprite = new PIXI.AnimatedSprite(this.animations[props.color].swordsmen.idle.north);
 		sprite.anchor.set(0.5);
 		sprite.position.set(props.position.x, props.position.y);
+		sprite.animationSpeed = .25;
+        sprite.play();
 
-		return world
+		return this.world
 			.createEntity()
 			.addComponent(TransformComponent, {
 				position: new Vector2(props.position.x, props.position.y),
@@ -67,7 +75,7 @@ export class EntityFactory {
 			.addComponent(PlayerMovementKeysComponent)
 			.addComponent(MovePositionDirectComponent)
 			.addComponent(PlayerMovementMouseComponent)
-			.addComponent(SpriteComponent, {
+			.addComponent(AnimatedSpriteComponent, {
 				sprite: sprite,
 			})
 			.addComponent(GraphicsComponent, {

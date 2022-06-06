@@ -46,7 +46,7 @@ export class AliveSystem extends PixiJsSystem {
 		}
 		if (entity.hasComponent(AnimatedSpriteComponent)) {
 			const spriteComponent = entity.getComponent(AnimatedSpriteComponent)!;
-			spriteComponent.sprite.texture = this.app.loader.resources.dead.texture!;
+			spriteComponent.sprite.textures = [this.app.loader.resources.dead.texture!];
 		}
 	}
 }

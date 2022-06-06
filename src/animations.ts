@@ -65,11 +65,13 @@ const loadByColor = (spritesheet: PIXI.Spritesheet, color: Color): Record<Unit, 
     }, {}) as Record<Unit, Animations>;
 }
 
-export const load = (spritesheet: PIXI.Spritesheet): Record<Color, Record<Unit, Animations>> => {
+export type UnitAnimations = Record<Color, Record<Unit, Animations>>;
+
+export const load = (spritesheet: PIXI.Spritesheet): UnitAnimations => {
     return colors.reduce((colorMap, color) => {
         return {
             ...colorMap,
             [color]: loadByColor(spritesheet, color)
         }
-    }, {}) as Record<Color, Record<Unit, Animations>>;
+    }, {}) as UnitAnimations;
 }
