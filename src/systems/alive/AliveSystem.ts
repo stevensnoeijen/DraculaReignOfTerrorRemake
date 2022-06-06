@@ -5,6 +5,7 @@ import { AliveComponent } from './AliveComponent';
 import { HealthComponent } from '../health/HealthComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
+import { AnimatedSpriteComponent } from '../render/sprite/AnimatedSpriteComponent';
 
 export class AliveSystem extends PixiJsSystem {
 	public static queries: SystemQueries = {
@@ -39,8 +40,12 @@ export class AliveSystem extends PixiJsSystem {
 		entity.removeComponent(SelectableComponent);
 		entity.removeComponent(HealthComponent);
 
-		const spriteComponent = entity.getComponent(SpriteComponent);
-		if (spriteComponent != null) {
+		if (entity.hasComponent(SpriteComponent)) {
+			const spriteComponent = entity.getComponent(SpriteComponent)!;
+			spriteComponent.sprite.texture = this.app.loader.resources.dead.texture!;
+		}
+		if (entity.hasComponent(AnimatedSpriteComponent)) {
+			const spriteComponent = entity.getComponent(AnimatedSpriteComponent)!;
 			spriteComponent.sprite.texture = this.app.loader.resources.dead.texture!;
 		}
 	}

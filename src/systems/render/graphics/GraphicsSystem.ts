@@ -1,3 +1,6 @@
+import { AnimatedSpriteComponent } from './../sprite/AnimatedSpriteComponent';
+import { TransformComponent } from './../../TransformComponent';
+import { SelectableComponent } from './../../selection/SelectableComponent';
 import { AttackComponent } from './../../AttackComponent';
 import { Attributes, Entity, World } from "ecsy";
 import * as PIXI from 'pixi.js';
@@ -82,11 +85,12 @@ export class GraphicsSystem extends PixiJsSystem {
 					component.addedToStage = true;
 				}
 
-				if (entity.hasComponent(SpriteComponent)) {
-					const sprite = entity.getComponent(SpriteComponent)!.sprite;
+				if (entity.hasComponent(SelectableComponent)) {
+					const position = entity.getComponent(TransformComponent)!.position;
+					const sprite = entity.getComponent(SpriteComponent)?.sprite ?? entity.getComponent(AnimatedSpriteComponent)!.sprite;
 
 					component.graphics.clear();
-					component.graphics.position.set(sprite.position.x, sprite.position.y);
+					component.graphics.position.set(position.x, position.y);
 
 					if (EntityHelper.isSelected(entity)) {
 						this.drawSelectionIndicators(entity, component.graphics, sprite);

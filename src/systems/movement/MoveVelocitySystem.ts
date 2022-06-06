@@ -1,8 +1,6 @@
-import { Attributes, Entity, System, SystemQueries, World } from 'ecsy';
+import { Entity, System, SystemQueries } from 'ecsy';
 
-import { AliveComponent } from '../alive/AliveComponent';
 import { MoveVelocityComponent } from './MoveVelocityComponent';
-import { SpriteComponent } from '../render/sprite/SpriteComponent';
 import { TransformComponent } from '../TransformComponent';
 
 export class MoveVelocitySystem extends System {

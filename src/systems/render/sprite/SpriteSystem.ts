@@ -26,13 +26,16 @@ export class SpriteSystem extends PixiJsSystem {
 				const component = entity.getMutableComponent(SpriteComponent)!;
 				
 				this.app.stage.addChild(component.sprite);
-
-				const transformComponent = entity.getComponent(TransformComponent);
-				if (transformComponent != null) {
-					component.sprite.position.set(transformComponent.position.x, transformComponent.position.y);
-				}
 			}
 		}
+
+		this.queries.sprites.results.forEach((entity) => {
+			const component = entity.getMutableComponent(SpriteComponent)!;
+			const transformComponent = entity.getComponent(TransformComponent);
+			if (transformComponent != null) {
+				component.sprite.position.set(transformComponent.position.x, transformComponent.position.y);
+			}
+		});
 
 		if ((this.queries.animatedSprites.added?.length ?? 0) > 0) {
 			for (const entity of this.queries.animatedSprites.added!) {
@@ -46,5 +49,13 @@ export class SpriteSystem extends PixiJsSystem {
 				}
 			}
 		}
+
+		this.queries.animatedSprites.results.forEach((entity) => {
+			const component = entity.getMutableComponent(AnimatedSpriteComponent)!;
+			const transformComponent = entity.getComponent(TransformComponent);
+			if (transformComponent != null) {
+				component.sprite.position.set(transformComponent.position.x, transformComponent.position.y);
+			}
+		});
 	}
 }
