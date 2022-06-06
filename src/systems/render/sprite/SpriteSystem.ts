@@ -1,24 +1,24 @@
 import { TransformComponent } from './../../TransformComponent';
 import { PixiJsSystem } from "../../PixiJsSystem";
 import { SpriteComponent } from './SpriteComponent';
-import { Sprite } from 'pixi.js';
 
 export class SpriteSystem extends PixiJsSystem {
 	public static queries = {
-		sprites: { components: [SpriteComponent] },
+		sprites: {
+			components: [SpriteComponent],
+			listen: {
+				added: true
+			}
+		},
 	};
 
 	// This method will get called on every frame by default
 	public execute(delta: number, time: number): void {
-		if ((this.queries.sprites.results?.length ?? 0) > 0) {
-			for (const entity of this.queries.sprites.results) {
+		if ((this.queries.sprites.added?.length ?? 0) > 0) {
+			for (const entity of this.queries.sprites.added!) {
 				const component = entity.getMutableComponent(SpriteComponent)!;
-
-				if (!component.addedToStage) {
-					this.app.stage.addChild(component.sprite);
-
-					component.addedToStage = true;
-				}
+				
+				this.app.stage.addChild(component.sprite);
 
 				const transformComponent = entity.getComponent(TransformComponent);
 				if (transformComponent != null) {
