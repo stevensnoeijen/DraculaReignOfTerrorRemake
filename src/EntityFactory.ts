@@ -1,3 +1,4 @@
+import { AssetComponent } from './systems/render/AssetComponent';
 import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
@@ -46,7 +47,9 @@ export class EntityFactory {
 		let rotation = Math.random() * 360;
 		rotation -= rotation % 90;
 
-		const sprite = new PIXI.AnimatedSprite(this.animations[props.color].swordsmen.idle.north);
+		const unitAnimations = this.animations[props.color].swordsmen;
+
+		const sprite = new PIXI.AnimatedSprite(unitAnimations.idle.north);
 		sprite.anchor.set(0.5);
 		sprite.position.set(props.position.x, props.position.y);
 		sprite.animationSpeed = .25;
@@ -91,7 +94,10 @@ export class EntityFactory {
 				attackDamage: 1,
 			})
 			.addComponent(TargetComponent)
-			.addComponent(ControlledComponent);
+			.addComponent(ControlledComponent)
+			.addComponent(AssetComponent, {
+				animations: unitAnimations,
+			});
 
 	}
 }

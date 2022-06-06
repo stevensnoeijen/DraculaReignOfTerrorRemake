@@ -48,6 +48,7 @@ import { TargetComponent } from './systems/ai/TargetComponent';
 import { TargetSystem } from './systems/ai/TargetSystem';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
+import { AssetComponent } from './systems/render/AssetComponent';
 
 const app = new PIXI.Application({
 	resizeTo: window,
@@ -105,6 +106,7 @@ onMounted(() => {
 		.registerComponent(BehaviorTreeComponent)
 		.registerComponent(TargetComponent)
 		.registerComponent(ControlledComponent)
+		.registerComponent(AssetComponent)
 		.registerSystem(PlayerSelectionSystem, { app, eventBus })
 		.registerSystem(HealthSystem, { eventBus })
 		.registerSystem(AliveSystem, { app, eventBus })

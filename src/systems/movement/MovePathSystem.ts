@@ -7,6 +7,9 @@ import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { cellPositionToVector } from '../../utils';
 import { ControlledComponent } from './../ControlledComponent';
 import { isSameEntity } from './../utils/index';
+import { AssetComponent } from './../render/AssetComponent';
+import { State } from './../../animations';
+import { AnimatedSpriteComponent } from './../render/sprite/AnimatedSpriteComponent';
 
 export class MovePathSystem extends System {
     public static queries = {
@@ -41,12 +44,29 @@ export class MovePathSystem extends System {
             movePathComponent.path.shift();
 
             movePositionDirectComponent.movePosition = cellPositionToVector(nextCell.x, nextCell.y);
+            this.setEntityState(entity, 'move');
 
             if (movePathComponent.path.length === 0) {
                 if (entity.hasComponent(ControlledComponent)) {
                     entity.getMutableComponent(ControlledComponent)!.by = null;
                 }
+                this.setEntityState(entity, 'idle');
             }
+        }
+    }
+
+    private setEntityState (entity: Entity, state: State): void {
+        const spriteComponent = entity.getComponent(AnimatedSpriteComponent);
+        if (spriteComponent != null) {
+            const assetComponent = entity.getComponent(AssetComponent);
+            if (assetComponent == null) {
+                return;
+            }
+
+            if (spriteComponent.sprite.textures !== assetComponent.animations[state].north) {
+                spriteComponent.sprite.textures = assetComponent.animations[state].north;
+                spriteComponent.sprite.play();
+            }            
         }
     }
 
