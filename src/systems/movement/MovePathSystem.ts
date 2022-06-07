@@ -1,3 +1,4 @@
+import { TransformComponent } from './../TransformComponent';
 import { Entity, System } from "ecsy";
 
 import { getCell, not, Position } from './../../utils';
@@ -8,7 +9,7 @@ import { cellPositionToVector } from '../../utils';
 import { ControlledComponent } from './../ControlledComponent';
 import { isSameEntity } from './../utils/index';
 import { AssetComponent } from './../render/AssetComponent';
-import { State } from './../../animations';
+import { rotationToDirection, State } from './../../animations';
 import { AnimatedSpriteComponent } from './../render/sprite/AnimatedSpriteComponent';
 
 export class MovePathSystem extends System {
@@ -62,9 +63,11 @@ export class MovePathSystem extends System {
             if (assetComponent == null) {
                 return;
             }
+            const transformComponent = entity.getMutableComponent(TransformComponent);
+            const direction = rotationToDirection(transformComponent?.rotation ?? 0)!;
 
-            if (spriteComponent.sprite.textures !== assetComponent.animations[state].north) {
-                spriteComponent.sprite.textures = assetComponent.animations[state].north;
+            if (spriteComponent.sprite.textures !== assetComponent.animations[state][direction]) {
+                spriteComponent.sprite.textures = assetComponent.animations[state][direction];
                 spriteComponent.sprite.play();
             }            
         }

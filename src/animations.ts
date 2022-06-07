@@ -75,3 +75,18 @@ export const load = (spritesheet: PIXI.Spritesheet): UnitAnimations => {
         }
     }, {}) as UnitAnimations;
 }
+
+const rotationToDirectionMap = new Map<number, Direction>([
+    [-135, 'northwest'],
+    [-90, 'north'],
+    [-45, 'northeast'],
+    [0, 'east'],
+    [45, 'southeast'],
+    [90, 'south'],
+    [135, 'southwest'],
+    [180, 'west'],
+]);
+
+export const rotationToDirection = (rotation: number): Direction => {
+    return rotationToDirectionMap.get(rotation) ?? 'north';
+}

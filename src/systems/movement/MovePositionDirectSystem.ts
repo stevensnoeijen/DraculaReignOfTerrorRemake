@@ -23,8 +23,9 @@ export class MovePositionDirectSystem extends System {
 			if (!transformComponent) {
 				continue;
 			}
-
-			transformComponent.rotation = Vector2.angle(transformComponent.position, movePositionDirectComponent.movePosition) - 90;
+			if (!transformComponent.position.equals(movePositionDirectComponent.movePosition)) {
+				transformComponent.rotation = Vector2.angle(transformComponent.position, movePositionDirectComponent.movePosition);
+			}
 
 			this.moveByTransformVelocity(entity, transformComponent, movePositionDirectComponent);
 			this.moveByMoveVelocity(entity, transformComponent, movePositionDirectComponent);
