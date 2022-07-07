@@ -13,14 +13,15 @@ sequenceDiagram
   MovePath -->> MovePathSystem: Cell
   MovePathSystem ->> MovePositionDirect: set movePosition
   MovePositionDirect -->> MovePathSystem: void
+  MovePathSystem ->> Transform: set rotation
+  Transform -->> MovePathSystem: void
+
   MovePathSystem -->> World: void
   
   World ->> MovePositionDirectSystem: execute
   MovePositionDirectSystem ->> MovePositionDirect: get movePosition
   MovePositionDirect -->> MovePositionDirectSystem: Vector2|null
   alt movePosition != null
-    MovePositionDirectSystem ->> Transform: set rotation
-    Transform -->> MovePositionDirectSystem: void
     MovePositionDirectSystem ->> MovePositionDirectSystem: check distance
     alt distance < 1
       MovePositionDirectSystem ->> Transform: set position

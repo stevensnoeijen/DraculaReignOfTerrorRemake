@@ -11,6 +11,7 @@ import { isSameEntity } from './../utils/index';
 import { AssetComponent } from './../render/AssetComponent';
 import { rotationToDirection, State } from './../../animations';
 import { AnimatedSpriteComponent } from './../render/sprite/AnimatedSpriteComponent';
+import { Vector2 } from '../../math/Vector2';
 
 export class MovePathSystem extends System {
     public static queries = {
@@ -45,6 +46,11 @@ export class MovePathSystem extends System {
             movePathComponent.path.shift();
 
             movePositionDirectComponent.movePosition = cellPositionToVector(nextCell.x, nextCell.y);
+            const transformComponent = entity.getMutableComponent(TransformComponent)!;
+            if (!transformComponent.position.equals(movePositionDirectComponent.movePosition)) {
+				transformComponent.rotation = Vector2.angle(transformComponent.position, movePositionDirectComponent.movePosition);
+			}
+
             this.setEntityState(entity, 'move');
 
             if (movePathComponent.path.length === 0) {
