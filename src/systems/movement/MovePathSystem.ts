@@ -1,3 +1,4 @@
+import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { TransformComponent } from './../TransformComponent';
 import { Entity, System } from "ecsy";
 
@@ -28,6 +29,14 @@ export class MovePathSystem extends System {
             const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
 
             if(movePathComponent.path.length == 0) {
+                const moveVelocityComponent = entity.getComponent(MoveVelocityComponent);
+                if (moveVelocityComponent?.velocity != null && Vector2.ZERO.equals(moveVelocityComponent.velocity)) {
+                    if (entity.hasComponent(ControlledComponent)) {
+                        entity.getMutableComponent(ControlledComponent)!.by = null;
+                    }
+                    this.setEntityState(entity, 'idle');
+                }
+
                 continue;
             }
 
@@ -52,13 +61,6 @@ export class MovePathSystem extends System {
 			}
 
             this.setEntityState(entity, 'move');
-
-            if (movePathComponent.path.length === 0) {
-                if (entity.hasComponent(ControlledComponent)) {
-                    entity.getMutableComponent(ControlledComponent)!.by = null;
-                }
-                this.setEntityState(entity, 'idle');
-            }
         }
     }
 
