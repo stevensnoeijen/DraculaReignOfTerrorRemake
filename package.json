@@ -14,7 +14,7 @@
     "ecsy": "^0.4.2",
     "generate-maze": "^1.1.0",
     "pixi-dashed-line": "^1.4.2",
-    "pixi.js": "^6.3.0",
+    "pixi.js": "^6.4.2",
     "vue": "^3.2.25"
   },
   "devDependencies": {
