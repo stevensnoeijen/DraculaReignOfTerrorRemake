@@ -80,6 +80,7 @@ export class EntityFactory {
 			.addComponent(PlayerMovementMouseComponent)
 			.addComponent(AnimatedSpriteComponent, {
 				sprite: sprite,
+				state: 'idle_north',
 			})
 			.addComponent(GraphicsComponent, {
 				graphics: new PIXI.Graphics(),

@@ -16,5 +16,6 @@ export class HealthComponent extends Component<IHealthComponentProps> {
 
 	takeHit(damage: number): void {
 		this.points -= damage;
+		console.log('take hit');
 	}
 }

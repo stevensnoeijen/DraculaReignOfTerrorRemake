@@ -1,3 +1,4 @@
+import { setEntityAnimation } from './../render/sprite/utils';
 import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { TransformComponent } from './../TransformComponent';
 import { Entity, System } from "ecsy";
@@ -34,7 +35,9 @@ export class MovePathSystem extends System {
                     if (entity.hasComponent(ControlledComponent)) {
                         entity.getMutableComponent(ControlledComponent)!.by = null;
                     }
-                    this.setEntityState(entity, 'idle');
+                    if (!entity.getComponent(AnimatedSpriteComponent)?.state.startsWith('attack')) {
+                        setEntityAnimation(entity, 'idle');
+                    }
                 }
 
                 continue;
@@ -60,24 +63,7 @@ export class MovePathSystem extends System {
 				transformComponent.rotation = Vector2.angle(transformComponent.position, movePositionDirectComponent.movePosition);
 			}
 
-            this.setEntityState(entity, 'move');
-        }
-    }
-
-    private setEntityState (entity: Entity, state: State): void {
-        const spriteComponent = entity.getComponent(AnimatedSpriteComponent);
-        if (spriteComponent != null) {
-            const assetComponent = entity.getComponent(AssetComponent);
-            if (assetComponent == null) {
-                return;
-            }
-            const transformComponent = entity.getMutableComponent(TransformComponent);
-            const direction = rotationToDirection(transformComponent?.rotation ?? 0)!;
-
-            if (spriteComponent.sprite.textures !== assetComponent.animations[state][direction]) {
-                spriteComponent.sprite.textures = assetComponent.animations[state][direction];
-                spriteComponent.sprite.play();
-            }            
+            setEntityAnimation(entity, 'move');
         }
     }
 
