@@ -49,7 +49,7 @@ import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteC
 import { AssetComponent } from './systems/render/AssetComponent';
 
 
-export class Game {
+export class Engine {
 	private readonly world: World;
 	private readonly eventBus: EventBus<Events>;
 

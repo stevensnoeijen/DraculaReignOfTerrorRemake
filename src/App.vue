@@ -6,17 +6,17 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { PixiApplicationInstance } from './components/types';
-import { Game } from './game/Game';
+import { Engine } from './game/Engine';
 
 const pixi = ref<PixiApplicationInstance>();
-let game: Game;
+let engine: Engine;
 
 window.addEventListener('contextmenu', (event) => {
 	event.preventDefault();
 });
 
 onMounted(() => {
-	game = new Game(pixi.value!.application);
+	engine = new Engine(pixi.value!.application);
 });
 
 </script>
