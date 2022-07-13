@@ -7,6 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    PixiApplication: typeof import('./src/components/PixiApplication.vue')['default']
+    PixiApplication: typeof import('./src/components/pixi/PixiApplication.vue')['default']
   }
 }
