@@ -10,6 +10,7 @@ import { PixiApplicationInstance } from './types';
 const container = ref<HTMLDivElement>();
 
 // copied properties of IApplicationOptions
+// otherwise vue props would not work
 interface Options extends PIXI.IApplicationOptions {
     forceCanvas?: boolean;
 
@@ -17,11 +18,6 @@ interface Options extends PIXI.IApplicationOptions {
     height?: number;
     view?: HTMLCanvasElement;
     useContextAlpha?: boolean | 'notMultiplied';
-    /**
-     * Use `backgroundAlpha` instead.
-     * @deprecated
-     */
-    transparent?: boolean;
     autoDensity?: boolean;
     antialias?: boolean;
     resolution?: number;
@@ -38,7 +34,8 @@ interface Options extends PIXI.IApplicationOptions {
 const props = defineProps<Options>();
 
 const application = new PIXI.Application({
-	...props,
+    ...props,
+    clearBeforeRender: props.clearBeforeRender || true,
 });
 
 defineExpose<PixiApplicationInstance>({
