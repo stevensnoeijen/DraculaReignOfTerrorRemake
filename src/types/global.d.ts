@@ -3,3 +3,5 @@ declare module '@vue/runtime-core' {
         window: typeof Window,
     }
 }
+
+export {}  // Important! See note.
