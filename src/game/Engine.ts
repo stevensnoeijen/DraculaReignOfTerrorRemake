@@ -69,10 +69,10 @@ export class Engine {
 		});
 		
 		this.app.loader
-			.add('swordsmen_blue', 'assets/swordsmen.blue.move.west_06.png')
-			.add('swordsmen_red', 'assets/swordsmen.red.move.west_06.png')
-			.add('dead', 'assets/swordsmen.blue.dead.south.png')
-			.add('unit', 'assets/unit.json')
+			.add('swordsmen_blue', '/assets/swordsmen.blue.move.west_06.png')
+			.add('swordsmen_red', '/assets/swordsmen.red.move.west_06.png')
+			.add('dead', '/assets/swordsmen.blue.dead.south.png')
+			.add('unit', '/assets/unit.json')
 			.load(() => {
 				loadLevel();
 			});

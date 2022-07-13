@@ -5,8 +5,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { PixiApplicationInstance } from './components/types';
-import { Engine } from './game/Engine';
+
+import { PixiApplicationInstance } from '../../components/pixi/types';
+import { Engine } from '../../game/Engine';
 
 const pixi = ref<PixiApplicationInstance>();
 let engine: Engine;
