@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold">Unit editor</h1>
+    <h1 class="text-xl font-bold">Animator preview</h1>
     <div>
       <label for="color">Color: </label>
       <select id="color" v-model="color">
@@ -34,7 +34,7 @@ import * as PIXI from 'pixi.js';
 import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 
-import { PixiApplicationInstance } from "../../components/pixi/types";
+import { PixiApplicationInstance } from "../pixi/types";
 import * as animations from '../../game/animations';
 
 const pixi = ref<PixiApplicationInstance>();

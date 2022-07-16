@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AnimatorPreview: typeof import('./src/components/worldeditor/AnimatorPreview.vue')['default']
     PixiApplication: typeof import('./src/components/pixi/PixiApplication.vue')['default']
     UnitEditor: typeof import('./src/components/worldeditor/UnitEditor.vue')['default']
   }

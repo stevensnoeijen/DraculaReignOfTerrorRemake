@@ -5,6 +5,6 @@
 			World Editor
 		</h1>
 		
-		<unit-editor/>
+		<animator-preview/>
 	</div>
 </template>
