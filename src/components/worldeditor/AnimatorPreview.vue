@@ -36,14 +36,16 @@ import { $ref } from "vue/macros";
 
 import { PixiApplicationInstance } from "../pixi/types";
 import * as animations from '../../game/animations';
+import { AnimationManager } from "../../game/animation/AnimationManager";
+import { Animator } from "../../game/animation/Animator";
 
 const pixi = ref<PixiApplicationInstance>();
 
 const color = $ref<animations.Color>(animations.colors[0]);
-watch(() => color, () => handleChangeAnimation());
+watch(() => color, () => handleChangeSkin());
 
 const unit = $ref<animations.Unit>(animations.units[0]);
-watch(() => unit, () => handleChangeAnimation());
+watch(() => unit, () => handleChangeSkin());
 
 const state = $ref<animations.State>(animations.states[0]);
 watch(() => state, () => handleChangeAnimation());
@@ -51,10 +53,8 @@ watch(() => state, () => handleChangeAnimation());
 const direction = $ref<animations.Direction>(animations.directions[0]);
 watch(() => direction, () => handleChangeAnimation());
 
-let unitAnimations: animations.UnitAnimations;
-const getAnimation = (color: animations.Color, unit: animations.Unit, state: animations.State, direction: animations.Direction): animations.Animation => {
-  return unitAnimations[color][unit][state][direction];
-}
+let animationManager: AnimationManager;
+let animator: Animator;
 
 let sprite: PIXI.AnimatedSprite; 
 
@@ -63,9 +63,11 @@ onMounted(() => {
 
   app.loader.add('unit', '/assets/unit.json')
     .load(() => {
-      unitAnimations = animations.load(app.loader.resources.unit.spritesheet!);
+      animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
 
-      sprite = new PIXI.AnimatedSprite(getAnimation(color, unit, state, direction));
+      sprite = new PIXI.AnimatedSprite(animationManager.getSkin('blue', 'swordsmen').idle.north);// TODO: refactor to not load something...
+      animator = animationManager.createAnimator(sprite, color, unit);
+      animator.set(state, direction);
       sprite.anchor.set(0.5);
       sprite.position.set(app.view.width / 2, app.view.height / 2);
       sprite.animationSpeed = .25;
@@ -74,8 +76,12 @@ onMounted(() => {
     });
 });
 
+const handleChangeSkin = () => {
+  animator = animationManager.createAnimator(sprite, color, unit);
+  handleChangeAnimation();
+};
+
 const handleChangeAnimation = () => {
-  sprite.textures = getAnimation(color, unit, state, direction);
-  sprite.play();
+  animator.set(state, direction);
 };
 </script>
