@@ -4,7 +4,7 @@ export const colors = ['red', 'blue'] as const;
 export type Color = typeof colors[number];
 
 export const units = ['swordsmen', 'crosscowsoldier', 'knight', 'juggernaut', 'catapult', 'cannon'] as const;
-type Unit = typeof units[number];
+export type Unit = typeof units[number];
 
 export const directions = ['north', 'northeast', 'east', 'southeast', 'south', 'southwest', 'west', 'northwest'] as const;
 export type Direction = typeof directions[number];
