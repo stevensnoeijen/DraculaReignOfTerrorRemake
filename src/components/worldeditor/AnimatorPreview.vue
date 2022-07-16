@@ -35,7 +35,7 @@ import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 
 import { PixiApplicationInstance } from "../pixi/types";
-import * as animations from '../../game/animations';
+import * as animations from '../../game/animation/utils';
 import { AnimationManager } from "../../game/animation/AnimationManager";
 import { Animator } from "../../game/animation/Animator";
 
@@ -65,12 +65,11 @@ onMounted(() => {
     .load(() => {
       animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
 
-      sprite = new PIXI.AnimatedSprite(animationManager.getSkin('blue', 'swordsmen').idle.north);// TODO: refactor to not load something...
+      sprite = new PIXI.AnimatedSprite(animationManager.getSkin('blue', 'swordsmen').idle.north.textures);// TODO: refactor to not load something...
       animator = animationManager.createAnimator(sprite, color, unit);
       animator.set(state, direction);
       sprite.anchor.set(0.5);
       sprite.position.set(app.view.width / 2, app.view.height / 2);
-      sprite.animationSpeed = .25;
 		  sprite.play();
       app.stage.addChild(sprite);
     });

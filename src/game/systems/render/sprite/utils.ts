@@ -3,7 +3,7 @@ import { Entity } from "ecsy";
 import { TransformComponent } from './../../TransformComponent';
 import { AssetComponent } from './../AssetComponent';
 import { AnimatedSpriteComponent } from './AnimatedSpriteComponent';
-import { rotationToDirection, State } from "../../../animations";
+import { rotationToDirection, State } from "../../../animation/utils";
 
 export const setEntityAnimation = (entity: Entity, state: State): void => {
     const spriteComponent = entity.getMutableComponent(AnimatedSpriteComponent);

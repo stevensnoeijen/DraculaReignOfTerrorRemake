@@ -5,7 +5,7 @@ import { cellPositionToVector } from './../utils';
 import { Level } from './Level';
 import { EntityFactory } from './../EntityFactory';
 import { generateMaze, getGridSizeByScreen } from './utils';
-import * as animations from '../animations';
+import * as animations from '../animation/utils';
 
 export class PathFindingLevel extends Level {
     private map: number[][];

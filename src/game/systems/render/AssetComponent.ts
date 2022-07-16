@@ -1,6 +1,6 @@
 import { Component, Types } from 'ecsy';
 
-import { Animations } from './../../animations';
+import { Animations } from '../../animation/utils';
 
 export interface AssetComponentProps {
     animations: Animations;

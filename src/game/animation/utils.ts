@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { Animation, DEFAULT_SPEED } from './Animation';
 
 export const colors = ['red', 'blue'] as const;
 export type Color = typeof colors[number];
@@ -12,9 +13,7 @@ export type Direction = typeof directions[number];
 export const states = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
 export type State = typeof states[number];
 
-export type Animation = PIXI.Texture[];
 export type Animations = Record<State, Record<Direction, Animation>>;
-
 
 const getAnimationKey = (color: Color, unit: Unit, state: State, direction: Direction): string => {
     if (['catapult', 'cannon'].includes(unit)) {
@@ -24,18 +23,19 @@ const getAnimationKey = (color: Color, unit: Unit, state: State, direction: Dire
     return `${unit}.${color}.${state}.${direction}`;
 }
 
-const getAnimation = (spritesheet: PIXI.Spritesheet, color: Color, unit: Unit, state: State, direction: Direction): Animation => {
+const getAnimation = (spritesheet: PIXI.Spritesheet, color: Color, unit: Unit, state: State, direction: Direction): Animation | null => {
     const key = getAnimationKey(color, unit, state, direction);
     if (spritesheet.animations[key] != null) {
-        return spritesheet.animations[key];
+        // TODO: move loop check to data
+        return new Animation(spritesheet.animations[key], DEFAULT_SPEED, ['idle', 'dying', 'dead'].includes(state) ? false : true);
     }
     // dead state is no animation
     if (spritesheet.textures[key + '.png'] != null) {
-        return [spritesheet.textures[key + '.png']];
+        return new Animation([spritesheet.textures[key + '.png']], DEFAULT_SPEED, false);
     }
 
     // else nothing found
-    return [];
+    return null;
 }
 
 const loadByDirection = (spritesheet: PIXI.Spritesheet, color: Color, unit: Unit, state: State): Animations => {

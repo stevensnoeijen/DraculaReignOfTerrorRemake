@@ -1,6 +1,6 @@
 import { AnimatedSprite } from "pixi.js";
 
-import { Animations, Direction, State } from "../animations";
+import { Animations, Direction, State } from "./utils";
 
 export class Animator {
   constructor(
@@ -9,7 +9,7 @@ export class Animator {
   }
 
   public set(state: State, direction: Direction): void {
-    this.sprite.textures = this.skin[state][direction];
-    this.sprite.play();
+    const animation = this.skin[state][direction];
+    animation.set(this.sprite);
   }
 }

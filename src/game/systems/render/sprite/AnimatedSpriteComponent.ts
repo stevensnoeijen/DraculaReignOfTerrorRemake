@@ -1,6 +1,6 @@
 import { Component, Types } from 'ecsy';
 import * as PIXI from 'pixi.js';
-import { Direction, State } from '../../../animations';
+import { Direction, State } from '../../../animation/utils';
 
 type AnimationState = `${State}_${Direction}`;
 export interface AnimatedSpriteComponentProps {

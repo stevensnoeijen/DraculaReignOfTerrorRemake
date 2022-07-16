@@ -11,7 +11,7 @@ import { cellPositionToVector } from '../../utils';
 import { ControlledComponent } from './../ControlledComponent';
 import { isSameEntity } from './../utils/index';
 import { AssetComponent } from './../render/AssetComponent';
-import { rotationToDirection, State } from './../../animations';
+import { rotationToDirection, State } from '../../animation/utils';
 import { AnimatedSpriteComponent } from './../render/sprite/AnimatedSpriteComponent';
 import { Vector2 } from '../../math/Vector2';
 

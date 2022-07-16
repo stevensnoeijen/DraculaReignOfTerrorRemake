@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import * as animations from '../animations';
+import * as animations from './utils';
 import { Animator } from './Animator';
 
 export class AnimationManager {

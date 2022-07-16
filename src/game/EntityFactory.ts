@@ -25,7 +25,7 @@ import { TeamComponent } from './systems/TeamComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
-import * as animations from './animations';
+import * as animations from './animation/utils';
 
 interface IUnitProps {
 	position: Position;
