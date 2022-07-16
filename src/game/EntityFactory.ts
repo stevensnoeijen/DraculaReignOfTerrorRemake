@@ -49,7 +49,7 @@ export class EntityFactory {
 
 		const unitAnimations = this.animations[props.color].swordsmen;
 
-		const sprite = new PIXI.AnimatedSprite(unitAnimations.idle.north);
+		const sprite = new PIXI.AnimatedSprite(unitAnimations.idle.north.textures);
 		sprite.anchor.set(0.5);
 		sprite.position.set(props.position.x, props.position.y);
 		sprite.animationSpeed = .25;

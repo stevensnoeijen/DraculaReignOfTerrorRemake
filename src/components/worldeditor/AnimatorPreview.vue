@@ -65,7 +65,7 @@ onMounted(() => {
     .load(() => {
       animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
 
-      sprite = new PIXI.AnimatedSprite(animationManager.getSkin('blue', 'swordsmen').idle.north.textures);// TODO: refactor to not load something...
+      sprite = new PIXI.AnimatedSprite(animationManager.getModel('blue', 'swordsmen').getAnimation('idle', 'north').textures);// TODO: refactor to not load something...
       animator = animationManager.createAnimator(sprite, color, unit);
       animator.set(state, direction);
       sprite.anchor.set(0.5);

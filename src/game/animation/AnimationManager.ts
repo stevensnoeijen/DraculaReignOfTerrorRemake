@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import * as animations from './utils';
 import { Animator } from './Animator';
+import { Model } from './Model';
 
 export class AnimationManager {
   private readonly unitAnimations: animations.UnitAnimations;
@@ -10,11 +11,11 @@ export class AnimationManager {
     this.unitAnimations = animations.load(spritesheet);
   }
 
-  public getSkin (color: animations.Color, unit: animations.Unit): animations.Animations {
-    return this.unitAnimations[color][unit];
+  public getModel (color: animations.Color, unit: animations.Unit): Model {
+    return new Model(`${color}_${unit}`, this.unitAnimations[color][unit]);
   }
 
   public createAnimator(sprite: PIXI.AnimatedSprite, color: animations.Color, unit: animations.Unit): Animator {
-    return new Animator(sprite, this.getSkin(color, unit));
+    return new Animator(sprite, this.getModel(color, unit));
   }
 }

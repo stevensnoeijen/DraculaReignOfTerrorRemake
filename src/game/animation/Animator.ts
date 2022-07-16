@@ -1,15 +1,16 @@
 import { AnimatedSprite } from "pixi.js";
+import { Model } from "./Model";
 
 import { Animations, Direction, State } from "./utils";
 
 export class Animator {
   constructor(
     public readonly sprite: AnimatedSprite,
-    private readonly skin: Animations) {
+    private readonly model: Model) {
   }
 
   public set(state: State, direction: Direction): void {
-    const animation = this.skin[state][direction];
+    const animation = this.model.getAnimation(state, direction);
     animation.set(this.sprite);
   }
 }
