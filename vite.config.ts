@@ -7,7 +7,9 @@ import mpa from 'vite-plugin-mpa';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    Vue(),
+    Vue({
+      reactivityTransform: true,
+    }),
     Components(),
     VueTypeImports(),
     mpa(),
