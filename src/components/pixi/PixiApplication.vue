@@ -6,7 +6,7 @@
 import { defineProps, onMounted, PropType } from 'vue';
 import { $ref } from 'vue/macros';
 import * as PIXI from 'pixi.js';
-import _ from 'lodash';
+import { Dict } from '@pixi/utils';
 
 import { PixiApplicationInstance } from './types';
 
@@ -96,8 +96,13 @@ const props = defineProps({
     resizeTo: {
         type: Object as PropType<Window|HTMLElement>,
         required: false,
-    }
+    },
 });
+
+const emits = defineEmits<{
+    (event: 'tick', delta: number): void,
+    (event: 'load', loader: PIXI.Loader, resources: Dict<PIXI.LoaderResource>): void,
+}>();
 
 const application = new PIXI.Application(props);
 
@@ -107,5 +112,8 @@ defineExpose<PixiApplicationInstance>({
 
 onMounted(() => {
     container.appendChild(application.view);
+
+    application.ticker.add((delta: number) => emits('tick', delta));
+    application.loader.load((...args) => emits('load', ...args));
 });
 </script>
