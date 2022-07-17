@@ -1,7 +1,7 @@
 import { AnimatedSprite } from "pixi.js";
 import { Model } from "./Model";
 
-import { Animations, Direction, State } from "./utils";
+import { Direction, State } from "./utils";
 
 export class Animator {
   constructor(
