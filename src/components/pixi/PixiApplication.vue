@@ -1,5 +1,7 @@
 <template>
-    <div ref="container"></div>
+    <div ref="container">
+        <slot name="default" :application="application"/>
+    </div>
 </template>
 
 <script lang="ts" setup>

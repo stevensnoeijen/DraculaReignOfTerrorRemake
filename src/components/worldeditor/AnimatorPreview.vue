@@ -23,7 +23,18 @@
         <option v-for="direction of animations.directions" :value="direction">{{direction}}</option>
       </select>
 
-      <pixi-application ref="pixi" :width="500" :height="500"/>
+      <pixi-application ref="applicationInstance" :width="500" :height="500">
+        <template #default="{ application }">
+          <pixi-viewport
+            ref="viewportInstance"
+            :screen-width="application.view.width"
+            :screen-height="application.view.height"
+            :interaction="application.renderer.plugins.interaction"
+            :wheel="{
+              center: new PIXI.Point(application.view.width / 2, application.view.height / 2)
+            }"/>
+        </template>
+      </pixi-application>
     </div>
   </div>
 </template>
@@ -33,14 +44,14 @@ import { ref, watch } from "vue";
 import * as PIXI from 'pixi.js';
 import { onMounted } from "vue";
 import { $ref } from "vue/macros";
-import { Viewport } from 'pixi-viewport'
 
-import { PixiApplicationInstance } from "../pixi/types";
+import { PixiApplicationInstance, PixiViewportInstance } from "../pixi/types";
 import * as animations from '../../game/animation/utils';
 import { AnimationManager } from "../../game/animation/AnimationManager";
 import { Animator } from "../../game/animation/Animator";
 
-const pixi = ref<PixiApplicationInstance>();
+const applicationInstance = ref<PixiApplicationInstance>();
+const viewportInstance = $ref<PixiViewportInstance>();
 
 const color = $ref<animations.Color>(animations.colors[0]);
 watch(() => color, () => handleChangeSkin());
@@ -56,34 +67,23 @@ watch(() => direction, () => handleChangeAnimation());
 
 let animationManager: AnimationManager;
 let animator: Animator;
-
 let sprite: PIXI.AnimatedSprite; 
 
 onMounted(() => {
-  const app = pixi.value!.application;
-
-  const viewport = new Viewport({
-      screenWidth: app.view.width,
-      screenHeight: app.view.height,
-      interaction: app.renderer.plugins.interaction,
-  });
-  app.stage.addChild(viewport);
-
-  viewport.wheel({
-    center: new PIXI.Point(app.view.width / 2, app.view.height / 2),
-  });
+  const app = applicationInstance.value!.application;
 
   app.loader.add('unit', '/assets/unit.json')
     .load(() => {
       animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
 
       sprite = new PIXI.AnimatedSprite(animationManager.getModel('blue', 'swordsmen').getAnimation('idle', 'north').textures);// TODO: refactor to not load something...
-      animator = animationManager.createAnimator(sprite, color, unit);
-      animator.set(state, direction);
       sprite.anchor.set(0.5);
       sprite.position.set(app.view.width / 2, app.view.height / 2);
-		  sprite.play();
-      viewport.addChild(sprite);
+
+      animator = animationManager.createAnimator(sprite, color, unit);
+      animator.set(state, direction);
+      
+      viewportInstance.viewport.addChild(sprite);
     });
 });
 
