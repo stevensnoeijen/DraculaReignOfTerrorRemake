@@ -33,6 +33,7 @@ import { ref, watch } from "vue";
 import * as PIXI from 'pixi.js';
 import { onMounted } from "vue";
 import { $ref } from "vue/macros";
+import { Viewport } from 'pixi-viewport'
 
 import { PixiApplicationInstance } from "../pixi/types";
 import * as animations from '../../game/animation/utils';
@@ -61,6 +62,17 @@ let sprite: PIXI.AnimatedSprite;
 onMounted(() => {
   const app = pixi.value!.application;
 
+  const viewport = new Viewport({
+      screenWidth: app.view.width,
+      screenHeight: app.view.height,
+      interaction: app.renderer.plugins.interaction,
+  });
+  app.stage.addChild(viewport);
+
+  viewport.wheel({
+    center: new PIXI.Point(app.view.width / 2, app.view.height / 2),
+  });
+
   app.loader.add('unit', '/assets/unit.json')
     .load(() => {
       animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
@@ -71,7 +83,7 @@ onMounted(() => {
       sprite.anchor.set(0.5);
       sprite.position.set(app.view.width / 2, app.view.height / 2);
 		  sprite.play();
-      app.stage.addChild(sprite);
+      viewport.addChild(sprite);
     });
 });
 
