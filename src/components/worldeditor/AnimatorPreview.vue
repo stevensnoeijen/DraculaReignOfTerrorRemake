@@ -40,9 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import * as PIXI from 'pixi.js';
-import { onMounted } from "vue";
 import { $ref } from "vue/macros";
 
 import { PixiApplicationInstance, PixiViewportInstance } from "../pixi/types";
@@ -72,19 +71,30 @@ let sprite: PIXI.AnimatedSprite;
 onMounted(() => {
   const app = applicationInstance.value!.application;
 
-  app.loader.add('unit', '/assets/unit.json')
-    .load(() => {
-      animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
+  if (app.loader.resources['unit'] != null) {
+    loadSprite();
+  } else {
+    app.loader.add('unit', '/assets/unit.json')
+      .load(() => {
+        animationManager = new AnimationManager(app.loader.resources.unit.spritesheet!);
+        loadSprite();
+      }); 
+    }
+});
 
-      sprite = new PIXI.AnimatedSprite(animationManager.getModel('blue', 'swordsmen').getAnimation('idle', 'north').textures);// TODO: refactor to not load something...
-      sprite.anchor.set(0.5);
-      sprite.position.set(app.view.width / 2, app.view.height / 2);
+const loadSprite = () => {
+  sprite = new PIXI.AnimatedSprite(animationManager.getModel('blue', 'swordsmen').getAnimation('idle', 'north').textures);// TODO: refactor to not load something...
+  sprite.anchor.set(0.5);
+  sprite.position.set(applicationInstance.value!.application.view.width / 2, applicationInstance.value!.application.view.height / 2);
 
-      animator = animationManager.createAnimator(sprite, color, unit);
-      animator.set(state, direction);
-      
-      viewportInstance.viewport.addChild(sprite);
-    });
+  animator = animationManager.createAnimator(sprite, color, unit);
+  animator.set(state, direction);
+  
+  viewportInstance.viewport.addChild(sprite);
+}
+
+onUnmounted(() => {
+  viewportInstance.viewport.removeChild(sprite);
 });
 
 const handleChangeSkin = () => {
