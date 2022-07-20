@@ -6,17 +6,19 @@ export type Color = typeof colors[number];
 
 export const units = ['swordsmen', 'crosscowsoldier', 'knight', 'juggernaut', 'catapult', 'cannon'] as const;
 export type Unit = typeof units[number];
+const colorlessUnits: readonly Unit[] = ['catapult', 'cannon'];
 
 export const directions = ['north', 'northeast', 'east', 'southeast', 'south', 'southwest', 'west', 'northwest'] as const;
 export type Direction = typeof directions[number];
 
 export const states = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
 export type State = typeof states[number];
+const loopableStates: readonly State[] = ['move', 'attack'];
 
 export type Animations = Record<State, Record<Direction, Animation>>;
 
 const getAnimationKey = (color: Color, unit: Unit, state: State, direction: Direction): string => {
-    if (['catapult', 'cannon'].includes(unit)) {
+    if (colorlessUnits.includes(unit)) {
         // have no color in their texture
         return `${unit}.${state}.${direction}`;
     }
@@ -27,7 +29,7 @@ const getAnimation = (spritesheet: PIXI.Spritesheet, color: Color, unit: Unit, s
     const key = getAnimationKey(color, unit, state, direction);
     if (spritesheet.animations[key] != null) {
         // TODO: move loop check to data
-        return new Animation(spritesheet.animations[key], DEFAULT_SPEED, ['idle', 'dying', 'dead'].includes(state) ? false : true);
+        return new Animation(spritesheet.animations[key], DEFAULT_SPEED, loopableStates.includes(state));
     }
     // dead state is no animation
     if (spritesheet.textures[key + '.png'] != null) {
