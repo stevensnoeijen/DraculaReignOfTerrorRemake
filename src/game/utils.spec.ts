@@ -17,21 +17,21 @@ describe('getOptions', () => {
     });
 
     it('should give empty array when only key is set', () => {
-        mockWindowLocation('http://localhost:3000/#debug=');
+        mockWindowLocation('http://localhost:3000/#/game?debug=');
 
-        expect(getOptions()).toEqual({debug: []});
+        expect(getOptions()).toEqual({ debug: [] });
     });
 
     it('should give array when key value is set', () => {
-        mockWindowLocation('http://localhost:3000/#debug=grid');
+        mockWindowLocation('http://localhost:3000/#/game?debug=grid');
 
-        expect(getOptions()).toEqual({debug: ['grid']});
+        expect(getOptions()).toEqual({ debug: ['grid'] });
     });
 
     it('should give array when value with commas is set', () => {
-        mockWindowLocation('http://localhost:3000/#debug=grid,fps');
+        mockWindowLocation('http://localhost:3000/#/game?debug=grid,fps');
 
-        expect(getOptions()).toEqual({debug: ['grid', 'fps']});
+        expect(getOptions()).toEqual({ debug: ['grid', 'fps'] });
     });
 });
 
@@ -45,7 +45,7 @@ describe('toEqual', () => {
         };
 
         const predicate = toEqual(object);
-        
+
         expect(predicate({ equals: returnFalse }, 0, [])).toEqual(false);
     });
 
@@ -55,7 +55,7 @@ describe('toEqual', () => {
         };
 
         const predicate = toEqual(object);
-        
+
         expect(predicate({ equals: returnTrue }, 0, [])).toEqual(true);
     });
 });
@@ -63,13 +63,13 @@ describe('toEqual', () => {
 describe('arrayIncludesByEquals', () => {
     it('should return false if no item is found by equals', () => {
         const array = Array.from({ length: 3 }, () => ({ equals: returnFalse }));
-        
+
         expect(arrayIncludesByEquals(array, { equals: returnFalse })).toBe(false);
     });
 
     it('should return true when item is found by equals', () => {
         const array = Array.from({ length: 3 }, () => ({ equals: returnTrue }));
-        
+
         expect(arrayIncludesByEquals(array, { equals: returnFalse })).toBe(true);
     });
 });
