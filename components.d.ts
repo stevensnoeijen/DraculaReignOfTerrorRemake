@@ -10,5 +10,7 @@ declare module '@vue/runtime-core' {
     AnimatorPreview: typeof import('./src/components/worldeditor/AnimatorPreview.vue')['default']
     PixiApplication: typeof import('./src/components/pixi/PixiApplication.vue')['default']
     PixiViewport: typeof import('./src/components/pixi/PixiViewport.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }

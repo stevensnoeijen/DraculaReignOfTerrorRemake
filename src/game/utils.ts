@@ -7,11 +7,15 @@ import { TransformComponent } from './systems/TransformComponent';
 
 export const filterEmpty = Boolean as <T>(t: T) => NonNullable<T>;
 
-export type Options = Record<string, string[]|undefined>;
+export type Options = Record<string, string[] | undefined>;
 
 export const getOptions = (): Options => {
+    if (window.location.hash.indexOf('?') === -1) {
+        return {};
+    }
+
     return window.location.hash
-        .substring(1)
+        .substring(window.location.hash.indexOf('?') + 1)
         .split('&')
         .filter(filterEmpty)
         .map((option) => option.split('='))
@@ -25,14 +29,14 @@ export type HasEquals = { equals: (other: unknown) => boolean };
 export type Predicate<T> = (value: T, index?: number, obj?: T[]) => boolean;
 
 export const toEqual = <T extends HasEquals>(other: T): Predicate<T> => {
-	return (item: T) => item.equals(other)
+    return (item: T) => item.equals(other)
 };
 
 export const arrayIncludesByEquals = <T extends HasEquals>(array: T[], object: T): boolean => {
     return array.find(toEqual(object)) != null;
 };
 
-export const toWorldPositionCellCenter = (vector: Vector2): Vector2 => { 
+export const toWorldPositionCellCenter = (vector: Vector2): Vector2 => {
     return new Vector2(
         vector.x - (vector.x % Constants.CELL_SIZE) + (Constants.CELL_SIZE / 2),
         vector.y - (vector.y % Constants.CELL_SIZE) + (Constants.CELL_SIZE / 2)
@@ -57,12 +61,12 @@ export const cellPositionToVector = (x: number, y: number): Vector2 => {
 };
 
 export const toGridPosition = (vector: Vector2): Vector2 => {
-	return Vector2.divides(vector, Constants.CELL_SIZE, 'floor');
+    return Vector2.divides(vector, Constants.CELL_SIZE, 'floor');
 };
 
 export const getMouseGridPosition = () => toGridPosition(Input.mousePosition);
 
-export type Position = { x : number; y: number; };
+export type Position = { x: number; y: number; };
 
 export const convertPathfindingPathToPositions = (path: PathFinding.Path): Position[] => {
     return path.map(({ position }) => (position));

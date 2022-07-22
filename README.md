@@ -29,8 +29,8 @@ All tests are automaticly ran at pr!
 
 # Debug
 
-To use debug options add `#debug=<options>` and replace `<options>` to the url and refresh the page.
-Example: `#debug=grid`.
+To use debug options add `#/game?debug=<options>` and replace `<options>` to the url and refresh the page.
+Example: `#/game?debug=grid`.
 
 Current debug options are:
 
@@ -39,11 +39,11 @@ Current debug options are:
 
 Other options to use are:
 
-- `showallhealth=true` to always show health of units
+- `#/game?showallhealth=true` to always show health of units
 
 # Levels
 
-To select a level add `#level=<level>` and replace `<level>` to the url and refresh the page.
+To select a level add `#/game?level=<level>` and replace `<level>` to the url and refresh the page.
 
 Current levels are:
 
