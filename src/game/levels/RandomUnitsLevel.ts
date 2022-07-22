@@ -7,7 +7,7 @@ import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Level } from './Level';
-import * as animations from '../animations';
+import * as animations from '../animation/utils';
 
 export class RandomUnitsLevel extends Level {
     private readonly _collisionMap: number[][];

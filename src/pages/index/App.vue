@@ -1,6 +1,10 @@
 
 <template>
-  <pixi-application ref="pixi" :resize-to="window" :background-color="0x008800"/>
+  <pixi-application
+  	ref="pixi"
+	class="overflow-hidden"
+	:resize-to="window"
+	:background-color="0x008800"/>
 </template>
 
 <script setup lang="ts">
@@ -21,10 +25,3 @@ onMounted(() => {
 });
 
 </script>
-
-<style>
-	body {
-		margin: 0;
-		overflow: hidden;
-	}
-</style>

@@ -24,7 +24,7 @@ import {
     SetTarget,
     IsEnemyInAggroRange
 } from './../ai/behaviortree/nodes/entity';
-import * as animations  from '../animations';
+import * as animations  from '../animation/utils';
 
 export class BehaviorTreeLevel extends Level {
     private map: number[][];

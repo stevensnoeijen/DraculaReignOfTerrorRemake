@@ -3,7 +3,7 @@ import { Entity } from "ecsy";
 import { TransformComponent } from './../../TransformComponent';
 import { AssetComponent } from './../AssetComponent';
 import { AnimatedSpriteComponent } from './AnimatedSpriteComponent';
-import { rotationToDirection, State } from "../../../animations";
+import { rotationToDirection, State } from "../../../animation/utils";
 
 export const setEntityAnimation = (entity: Entity, state: State): void => {
     const spriteComponent = entity.getMutableComponent(AnimatedSpriteComponent);
@@ -17,10 +17,10 @@ export const setEntityAnimation = (entity: Entity, state: State): void => {
 
         if (spriteComponent.state !== `${state}_${direction}`) {
             const oldState = spriteComponent.state;
-            spriteComponent.sprite.textures = assetComponent.animations[state][direction];
+            assetComponent.animations[state][direction].set(spriteComponent.sprite);
             spriteComponent.state = `${state}_${direction}`;
             console.log(entity.id + ': update state from ' + oldState + ' to ' + spriteComponent.state);
             spriteComponent.sprite.play();
-        }            
+        }
     }
 }
