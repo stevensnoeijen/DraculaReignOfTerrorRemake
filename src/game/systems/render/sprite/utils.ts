@@ -17,10 +17,10 @@ export const setEntityAnimation = (entity: Entity, state: State): void => {
 
         if (spriteComponent.state !== `${state}_${direction}`) {
             const oldState = spriteComponent.state;
-            spriteComponent.sprite.textures = assetComponent.animations[state][direction];
+            assetComponent.animations[state][direction].set(spriteComponent.sprite);
             spriteComponent.state = `${state}_${direction}`;
             console.log(entity.id + ': update state from ' + oldState + ' to ' + spriteComponent.state);
             spriteComponent.sprite.play();
-        }            
+        }
     }
 }
