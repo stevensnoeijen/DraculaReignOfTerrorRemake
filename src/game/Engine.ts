@@ -57,26 +57,26 @@ export class Engine {
 		private readonly app: PIXI.Application) {
 		this.world = new World();
 		const eventBus = this.eventBus = new EventBus<Events>();
-		
+
 		let lastFrameTime = 0;
-		
+
 		const options = getOptions();
-				
-		
+
+
 		lastFrameTime = performance.now();
 		this.app.ticker.add(() => {
 			frame();
 		});
-		
+
 		this.app.loader
-			.add('swordsmen_blue', '/assets/swordsmen.blue.move.west_06.png')
-			.add('swordsmen_red', '/assets/swordsmen.red.move.west_06.png')
-			.add('dead', '/assets/swordsmen.blue.dead.south.png')
-			.add('unit', '/assets/unit.json')
+			.add('swordsmen_blue', 'assets/swordsmen.blue.move.west_06.png')
+			.add('swordsmen_red', 'assets/swordsmen.red.move.west_06.png')
+			.add('dead', 'assets/swordsmen.blue.dead.south.png')
+			.add('unit', 'assets/unit.json')
 			.load(() => {
 				loadLevel();
 			});
-		
+
 		this.world
 			.registerComponent(TransformComponent)
 			.registerComponent(SizeComponent)
@@ -118,10 +118,10 @@ export class Engine {
 			.registerSystem(FollowSystem, { app, eventBus })
 			.registerSystem(BehaviorTreeSystem)
 			.registerSystem(TargetSystem);
-		
+
 		let level;
 		const loadLevel = (): void => {
-			if(options.level != null && options.level[0] != null) {
+			if (options.level != null && options.level[0] != null) {
 				const levelName = options.level[0].toLowerCase();
 				if (levelName === 'randomunits') {
 					level = new RandomUnitsLevel(app, this.world);
@@ -137,19 +137,19 @@ export class Engine {
 				// default
 				level = new RandomUnitsLevel(app, this.world);
 			}
-		
+
 			level.load();
 			eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
 		}
-		
+
 		const frame = (): void => {
 			// Compute delta and elapsed time
 			const time = performance.now();
 			const delta = time - lastFrameTime;
-		
+
 			// Run all the systems
 			this.world.execute(delta, time);
-		
+
 			lastFrameTime = time;
 		}
 	}
