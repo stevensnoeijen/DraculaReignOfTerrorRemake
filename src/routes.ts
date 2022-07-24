@@ -1,9 +1,9 @@
-import { RouteRecordRaw } from "vue-router";
-import Game from "./views/Game.vue";
-import WorldEditor from "./views/WorldEditor.vue";
+import { RouteRecordRaw } from 'vue-router';
+import GameView from './views/GameView.vue';
+import WorldEditorView from './views/WorldEditorView.vue';
 
 export const routes: readonly RouteRecordRaw[] = [
-  { path: '/', redirect: '/game', },
-  { path: '/game', component: Game, },
-  { path: '/worldeditor', component: WorldEditor, },
-]
+  { path: '/', redirect: '/game' },
+  { path: '/game', component: GameView },
+  { path: '/worldeditor', component: WorldEditorView },
+];

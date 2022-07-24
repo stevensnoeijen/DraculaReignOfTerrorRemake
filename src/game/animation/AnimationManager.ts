@@ -11,11 +11,15 @@ export class AnimationManager {
     this.unitAnimations = animations.load(spritesheet);
   }
 
-  public getModel (color: animations.Color, unit: animations.Unit): Model {
+  public getModel(color: animations.Color, unit: animations.Unit): Model {
     return new Model(`${color}_${unit}`, this.unitAnimations[color][unit]);
   }
 
-  public createAnimator(sprite: PIXI.AnimatedSprite, color: animations.Color, unit: animations.Unit): Animator {
+  public createAnimator(
+    sprite: PIXI.AnimatedSprite,
+    color: animations.Color,
+    unit: animations.Unit
+  ): Animator {
     return new Animator(sprite, this.getModel(color, unit));
   }
 }

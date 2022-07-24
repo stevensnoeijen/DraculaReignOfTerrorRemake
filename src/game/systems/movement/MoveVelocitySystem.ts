@@ -4,31 +4,37 @@ import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { TransformComponent } from '../TransformComponent';
 
 export class MoveVelocitySystem extends System {
-	public static queries: SystemQueries = {
-		bodies: {
-			components: [MoveVelocityComponent, TransformComponent],
-			listen: {
-				added: true,
-			}
-		},
-	};
+  public static queries: SystemQueries = {
+    bodies: {
+      components: [MoveVelocityComponent, TransformComponent],
+      listen: {
+        added: true,
+      },
+    },
+  };
 
-	public execute(delta: number, time: number): void {
-		this.queries.bodies.results.forEach((entity) => this.updateEntityBody(entity, delta));
-	}
+  public execute(delta: number, time: number): void {
+    this.queries.bodies.results.forEach((entity) =>
+      this.updateEntityBody(entity, delta)
+    );
+  }
 
-	private updateEntityBody(entity: Entity, delta: number): void {
-		const moveVelocityComponent = entity.getMutableComponent(MoveVelocityComponent);
-		if (moveVelocityComponent?.velocity == null) {
-			return;
-		}
+  private updateEntityBody(entity: Entity, delta: number): void {
+    const moveVelocityComponent = entity.getMutableComponent(
+      MoveVelocityComponent
+    );
+    if (moveVelocityComponent?.velocity == null) {
+      return;
+    }
 
-		const transformComponent = entity.getMutableComponent(TransformComponent);
-		if (!transformComponent) {
-			return;
-		}
+    const transformComponent = entity.getMutableComponent(TransformComponent);
+    if (!transformComponent) {
+      return;
+    }
 
-		transformComponent.position.x = transformComponent.position.x + moveVelocityComponent.velocity.x;
-		transformComponent.position.y = transformComponent.position.y + moveVelocityComponent.velocity.y;
-	}
+    transformComponent.position.x =
+      transformComponent.position.x + moveVelocityComponent.velocity.x;
+    transformComponent.position.y =
+      transformComponent.position.y + moveVelocityComponent.velocity.y;
+  }
 }

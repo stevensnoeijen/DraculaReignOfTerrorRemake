@@ -1,13 +1,13 @@
 import { Component, Types } from 'ecsy';
 
 type MovableComponentProps = {
-	moving: boolean;
+  moving: boolean;
 };
 
 export class MovableComponent extends Component<MovableComponentProps> {
-	static schema = {
-		moving: { type: Types.Boolean, default: false },
-	};
+  static schema = {
+    moving: { type: Types.Boolean, default: false },
+  };
 
-	declare moving: boolean;
+  declare moving: boolean;
 }
