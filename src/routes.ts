@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
+
 import GameView from './views/GameView.vue';
 import WorldEditorView from './views/WorldEditorView.vue';
 
