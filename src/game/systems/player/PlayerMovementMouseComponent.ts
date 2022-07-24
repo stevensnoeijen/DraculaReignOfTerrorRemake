@@ -1,3 +1,3 @@
 import { TagComponent } from 'ecsy';
 
-export class PlayerMovementMouseComponent extends TagComponent { }
+export class PlayerMovementMouseComponent extends TagComponent {}

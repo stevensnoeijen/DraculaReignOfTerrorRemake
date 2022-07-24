@@ -1,7 +1,7 @@
-import { IsControlledBy } from "./IsControlledBy";
+import { IsControlledBy } from './IsControlledBy';
 
 export class IsControlledByAi extends IsControlledBy {
-    constructor() {
-        super('ai');
-    }
+  constructor() {
+    super('ai');
+  }
 }

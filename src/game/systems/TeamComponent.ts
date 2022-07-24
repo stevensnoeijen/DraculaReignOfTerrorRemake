@@ -1,14 +1,13 @@
 import { Component, Types } from 'ecsy';
 
 interface TeamComponentProps {
-	number?: number;
+  number?: number;
 }
 
 export class TeamComponent extends Component<TeamComponentProps> {
-	static schema = {
-		number: { type: Types.Number },
-	};
-	
+  static schema = {
+    number: { type: Types.Number },
+  };
 
-	declare number: number;
+  declare number: number;
 }

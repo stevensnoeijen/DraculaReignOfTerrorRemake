@@ -1,7 +1,7 @@
-import { Level } from "./levels/Level";
+import { Level } from './levels/Level';
 
 export interface LevelLoadedEvent {
-    level: Level;
+  level: Level;
 }
 
 export type Events = LevelLoadedEvent;

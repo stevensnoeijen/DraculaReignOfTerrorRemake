@@ -10,42 +10,43 @@ import { Level } from './Level';
 import * as animations from '../animation/utils';
 
 export class RandomUnitsLevel extends Level {
-    private readonly _collisionMap: number[][];
-    private readonly entityFactory: EntityFactory;
+  private readonly _collisionMap: number[][];
+  private readonly entityFactory: EntityFactory;
 
-    public readonly unitAnimations: animations.UnitAnimations;
+  public readonly unitAnimations: animations.UnitAnimations;
 
-    constructor(app: PIXI.Application, world: World) {
-        super(app, world);
+  constructor(app: PIXI.Application, world: World) {
+    super(app, world);
 
-        this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
+    this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
 
-        this.unitAnimations = animations.load(app.loader.resources.unit.spritesheet!);
-        this.entityFactory = new EntityFactory(world, this.unitAnimations);
-    }
+    this.unitAnimations = animations.load(
+      app.loader.resources.unit.spritesheet!
+    );
+    this.entityFactory = new EntityFactory(world, this.unitAnimations);
+  }
 
-    public get collisionMap(): number[][] {
-        return this._collisionMap;
-    }
+  public get collisionMap(): number[][] {
+    return this._collisionMap;
+  }
 
-    public load(): void {
-        Array.from(Array(100)).forEach(() => {
-            const vector = toWorldPositionCellCenter(new Vector2(
-                Math.round(
-                    Math.random() * this.app.screen.width,
-                ), 
-                Math.round(
-                    Math.random() * this.app.screen.height,
-                ) + (Constants.CELL_SIZE / 2)
-            ));
-    
-            this.entityFactory.createUnit({
-                position: vector,
-                color: 'red',
-                team: {
-                    number: Math.round(Math.random() + 1),
-                }
-            });
-        });
-    }
+  public load(): void {
+    Array.from(Array(100)).forEach(() => {
+      const vector = toWorldPositionCellCenter(
+        new Vector2(
+          Math.round(Math.random() * this.app.screen.width),
+          Math.round(Math.random() * this.app.screen.height) +
+            Constants.CELL_SIZE / 2
+        )
+      );
+
+      this.entityFactory.createUnit({
+        position: vector,
+        color: 'red',
+        team: {
+          number: Math.round(Math.random() + 1),
+        },
+      });
+    });
+  }
 }

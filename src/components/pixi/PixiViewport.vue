@@ -15,7 +15,7 @@ const props = defineProps({
     type: Number,
     required: false,
   },
-   /** @default window.innerHeight */
+  /** @default window.innerHeight */
   screenHeight: {
     type: Number,
     required: false,
@@ -48,7 +48,7 @@ const props = defineProps({
   },
   forceHitArea: {
     type: PIXI.Rectangle as PropType<PIXI.Rectangle | null>,
-    required: false
+    required: false,
   },
   /** @default false */
   noTicker: {
@@ -63,7 +63,6 @@ const props = defineProps({
   disableOnContextMenu: {
     type: Boolean,
     required: false,
-    
   },
   /** @default document.body */
   divWheel: {
@@ -102,6 +101,6 @@ onUnmounted(() => {
 });
 
 defineExpose<PixiViewportInstance>({
-    viewport
+  viewport,
 });
 </script>
