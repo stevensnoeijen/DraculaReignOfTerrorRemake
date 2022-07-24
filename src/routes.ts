@@ -5,5 +5,6 @@ import WorldEditorView from './views/WorldEditorView.vue';
 
 export const routes: readonly RouteRecordRaw[] = [
   { path: '/', redirect: '/game' },
-  { path: '/game', component: GameView }, { path: '/worldeditor', component: WorldEditorView },
+  { path: '/game', component: GameView },
+  { path: '/worldeditor', component: WorldEditorView },
 ];
