@@ -9,7 +9,9 @@ export default defineConfig({
     Vue({
       reactivityTransform: true,
     }),
-    Components(),
+    Components({
+      dts: true,
+    }),
     VueTypeImports(),
   ],
-})
+});
