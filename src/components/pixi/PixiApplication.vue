@@ -81,6 +81,7 @@ const props = defineProps({
     default: true,
   },
   powerPreference: {
+    // eslint-disable-next-line no-undef
     type: String as PropType<WebGLPowerPreference>,
     required: false,
     default: 'high-performance',
