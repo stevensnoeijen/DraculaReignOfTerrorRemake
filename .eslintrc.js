@@ -7,9 +7,12 @@ module.exports = {
     'plugin:vue/vue3-essential',
     '@vue/eslint-config-typescript',
   ],
+  plugins: ['import'],
   rules: {
-    'max-len': ['warn', { 'code': 80 }],
+    'max-len': ['warn', { code: 80 }],
     quotes: ['warn', 'single'],
-    semi: ['warn', 'always']
+    semi: ['warn', 'always'],
+    'import/order': ['warn'],
+    'spaced-comment': ['warn', 'always'],
   },
 };
