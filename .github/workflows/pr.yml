@@ -1,31 +1,32 @@
 name: Test Pr
 
-on:  
+on:
   pull_request:
     branches:
       - master
 
-jobs:  
+jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
-      with:
-        ref: ${{ github.ref }}
+      - uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
 
-    - name: Install & Build
-      run: |
-        npm ci
-        npm run build
+      - name: Install
+        run: npm ci
 
-    - name: Test
-      run: npm test
+      - name: Build
+        run: npm run build
 
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        name: JEST Tests
-        path: junit.xml
-        reporter: jest-junit
+      - name: Test
+        run: npm test
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: JEST Tests
+          path: junit.xml
+          reporter: jest-junit
