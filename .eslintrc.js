@@ -9,7 +9,7 @@ module.exports = {
   ],
   plugins: ['import'],
   rules: {
-    'max-len': ['warn', { code: 80 }],
+    'max-len': ['warn', { code: 80, ignorePattern: '^import\\W.*' }],
     quotes: ['warn', 'single'],
     semi: ['warn', 'always'],
     'import/order': ['warn'],
