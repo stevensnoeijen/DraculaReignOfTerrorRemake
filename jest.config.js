@@ -1,10 +1,14 @@
 module.exports = {
-    testEnvironment: 'jsdom',
-    roots: ['<rootDir>/src'],
-    transform: {
-        "^.+\\.(t|j)sx?$": "@swc/jest"
-    },
-    testRegex: '((\\.|/)spec)\\.tsx?$',
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-    reporters: ["default", "jest-junit"]
-}
+  testEnvironment: 'jsdom',
+  moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
+  moduleNameMapper: {
+    '^~/(.*)$': '<rootDir>/src/$1',
+  },
+  transform: {
+    '^.+\\.(ts|js)$': '@swc/jest',
+    '^.+\\.vue$': '@vue/vue3-jest',
+  },
+  setupFiles: ['jest-webgl-canvas-mock'],
+  testRegex: '((\\.|/)spec)\\.ts?$',
+  reporters: ['default', 'jest-junit'],
+};
