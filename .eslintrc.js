@@ -37,5 +37,6 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+    'no-warning-comments': ['warn'],
   },
 };
