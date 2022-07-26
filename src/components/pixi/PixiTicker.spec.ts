@@ -62,6 +62,28 @@ it('should set properties', () => {
   expect(ticker.speed).toBe(2);
 });
 
+it('should have default properties', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiTicker/>
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiTicker,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker;
+
+  expect(ticker.autoStart).toBe(false);
+  expect(ticker.maxFPS).toBe(0);
+  expect(ticker.minFPS).toBe(10);
+  expect(ticker.speed).toBe(1);
+});
+
 it('should add tick callbacks with no priority if not set', () => {
   const WrapperComponent = {
     template: `
