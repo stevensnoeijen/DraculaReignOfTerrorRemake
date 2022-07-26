@@ -5,6 +5,10 @@ export type PixiApplicationInstance = {
   application: PIXI.Application;
 };
 
+export type PixiTickerInstance = {
+  ticker: PIXI.Ticker;
+};
+
 export type PixiViewportInstance = {
   viewport: Viewport;
 };

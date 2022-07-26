@@ -8,7 +8,6 @@
 import { onMounted, PropType } from 'vue';
 import { $ref } from 'vue/macros';
 import * as PIXI from 'pixi.js';
-import { Dict } from '@pixi/utils';
 import _ from 'lodash';
 
 import { PixiApplicationInstance } from './types';
@@ -219,7 +218,7 @@ const props = defineProps({
   sharedTicker: {
     type: Boolean,
     required: false,
-    default: false,
+    default: undefined,
   },
 
   /**
@@ -245,16 +244,6 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits<{
-  (event: 'tick', delta: number): void;
-  (
-    event: 'load',
-    loader: PIXI.Loader,
-    resources: Dict<PIXI.LoaderResource>
-  ): void;
-}>();
-
-// FIXME: pass props if any are set (values are undefined)
 const application = new PIXI.Application(
   _.some(props, _.isUndefined) ? undefined : props
 );
@@ -265,8 +254,5 @@ defineExpose<PixiApplicationInstance>({
 
 onMounted(() => {
   container.appendChild(application.view);
-
-  application.ticker.add((delta: number) => emits('tick', delta));
-  // application.loader.load((...args) => emits('load', ...args)); // FIXME: enable or replace
 });
 </script>
