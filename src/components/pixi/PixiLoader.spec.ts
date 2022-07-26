@@ -24,7 +24,7 @@ it('should expose ticker', () => {
 
 it('should error when not placed inside a pixi-application', () => {
   expect(() => {
-    mount(PixiLoader);
+    mount(PixiLoader, {});
   }).toThrowError('pixi-loader must be used inside pixi-application');
 });
 
