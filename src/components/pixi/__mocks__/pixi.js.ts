@@ -38,6 +38,7 @@ export const Loader = jest.fn().mockImplementation(() => {
   const loader = {
     __name: 'mocked-pixi-loader',
     add: jest.fn(),
+    load: jest.fn(),
   };
 
   // set default properties

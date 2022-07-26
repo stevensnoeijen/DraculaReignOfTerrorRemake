@@ -134,7 +134,24 @@ it('should add multiple reources to the loader queue', () => {
   expect(loader.add).toBeCalledWith(['test.png', 'test2.png']);
 });
 
-// TODO: load=true
+it('should call load when set to true', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiLoader :load="true" />
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiLoader,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const loaderComponent = wrapper.findComponent(PixiLoader);
+  const loader = loaderComponent.vm.loader;
+
+  expect(loader.load).toBeCalledWith();
+});
 
 // TODO: set emit onComplete
 // TODO: set emit onError

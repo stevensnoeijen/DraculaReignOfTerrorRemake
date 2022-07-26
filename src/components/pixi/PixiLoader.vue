@@ -66,6 +66,17 @@ const props = defineProps({
     required: false,
     default: undefined,
   },
+
+  /**
+   * @type boolean
+   * @default false
+   * @description Starts loading the queued resources.
+   */
+  load: {
+    type: Boolean,
+    required: false,
+    default: undefined,
+  },
 });
 
 const instance = getCurrentInstance();
@@ -82,6 +93,10 @@ if (props.defaultQueryString != null)
 
 if (props.loadResources != null) {
   loader.add(props.loadResources);
+}
+
+if (props.load === true) {
+  loader.load();
 }
 
 defineExpose({
