@@ -21,6 +21,8 @@ export const Ticker = jest.fn().mockImplementation(() => {
       callbacks.forEach((callback) => callback(delta));
     },
   };
+
+  // set default properties
   defineMockGetSetProperty(ticker, 'autoStart', false);
   defineMockGetSetProperty(ticker, 'maxFPS', 0);
   defineMockGetSetProperty(ticker, 'minFPS', 10);
@@ -30,12 +32,28 @@ export const Ticker = jest.fn().mockImplementation(() => {
   return ticker;
 });
 
+export type MockedLoader = PIXI.Loader & { __name: string };
+
+export const Loader = jest.fn().mockImplementation(() => {
+  const loader = {
+    __name: 'mocked-pixi-loader',
+  };
+
+  // set default properties
+  defineMockGetSetProperty(loader, 'baseUrl', '');
+  defineMockGetSetProperty(loader, 'concurrency', 10);
+  defineMockGetSetProperty(loader, 'defaultQueryString', '');
+
+  return loader;
+});
+
 export type MockedApplication = PIXI.Application & { __name: string };
 
 export const Application = jest.fn().mockImplementation(() => {
   return {
     __name: 'mocked-pixi-application',
     ticker: new Ticker(),
+    loader: new Loader(),
     view: document.createElement('canvas'),
   };
 });

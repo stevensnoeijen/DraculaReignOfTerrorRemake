@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/valid-template-root -->
 <template>
   <slot name="default" :ticker="ticker" />
 </template>
