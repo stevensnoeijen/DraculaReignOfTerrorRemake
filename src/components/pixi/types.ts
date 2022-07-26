@@ -9,6 +9,10 @@ export type PixiTickerInstance = {
   ticker: PIXI.Ticker;
 };
 
+export type PixiLoaderInstance = {
+  loader: PIXI.Loader;
+};
+
 export type PixiViewportInstance = {
   viewport: Viewport;
 };

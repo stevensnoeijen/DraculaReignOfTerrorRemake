@@ -6,6 +6,8 @@
 import { getCurrentInstance, onMounted, onUnmounted, PropType } from 'vue';
 import * as PIXI from 'pixi.js';
 
+import { PixiLoaderInstance } from './types';
+
 const props = defineProps({
   /**
    * @type {string}
@@ -155,7 +157,7 @@ onUnmounted(() => {
   loader.onError.detach(onErrorNode);
 });
 
-defineExpose({
+defineExpose<PixiLoaderInstance>({
   loader,
 });
 </script>
