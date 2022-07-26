@@ -85,15 +85,14 @@ const emits = defineEmits<{
    * Register a handler for tick events.
    * Calls continuously unless it is removed or the ticker is stopped.
    *
-   * Tick is automaticly removed on unmount.
-   *
+   * `@tick` is automaticly removed on unmount.
    */
   (event: 'tick', delta: number): void;
 
   /**
    * Add a handler for the tick event which is only execute once.
    *
-   * Tick is automaticly removed on unmount.
+   * `@tickOnce` is automaticly removed on unmount.
    */
   (event: 'tickOnce', delta: number): void;
 }>();

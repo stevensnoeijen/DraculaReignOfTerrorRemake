@@ -91,11 +91,39 @@ if (props.startLoading === true) {
 }
 
 const emits = defineEmits<{
-  // TODO: add jsdoc's
+  /**
+   * Dispatched when the loader begins to process the queue.
+   *
+   * `@start` is automaticly detached on unmount.
+   */
   (event: 'start', ...args: Parameters<PIXI.Loader.OnStartSignal>): void;
+
+  /**
+   * Dispatched once per loaded or errored resource.
+   *
+   * `@progress` is automaticly detached on unmount.
+   */
   (event: 'progress', ...args: Parameters<PIXI.Loader.OnProgressSignal>): void;
+
+  /**
+   * Dispatched once per loaded resource.
+   *
+   * `@load` is automaticly detached on unmount.
+   */
   (event: 'load', ...args: Parameters<PIXI.Loader.OnLoadSignal>): void;
+
+  /**
+   * Dispatched when the queued resources all load.
+   *
+   * `@complete` is automaticly detached on unmount.
+   */
   (event: 'complete', ...args: Parameters<PIXI.Loader.OnCompleteSignal>): void;
+
+  /**
+   * Dispatched once per errored resource.
+   *
+   * `@error` is automaticly detached on unmount.
+   */
   (event: 'error', ...args: Parameters<PIXI.Loader.OnErrorSignal>): void;
 }>();
 
