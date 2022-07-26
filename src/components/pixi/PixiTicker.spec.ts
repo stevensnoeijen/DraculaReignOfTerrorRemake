@@ -9,6 +9,18 @@ beforeEach(() => {
   jest.mocked(PIXI.Application).mockClear();
 });
 
+it('should expose ticker', () => {
+  const wrapper = mount(PixiApplication, {
+    slots: {
+      default: [PixiTicker],
+    },
+  });
+  const tickerComponent = wrapper.getComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker as MockedTicker;
+
+  expect(ticker.__name).toBe('mocked-pixi-ticker');
+});
+
 it('should error when not placed inside a pixi-application', () => {
   expect(() => {
     mount(PixiTicker);
@@ -41,12 +53,13 @@ it('should set properties', () => {
     },
   };
   const wrapper = mount(WrapperComponent);
-  const app = wrapper.findComponent(PixiApplication);
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker;
 
-  expect(app.vm.application.ticker.autoStart).toBe(true);
-  expect(app.vm.application.ticker.maxFPS).toBe(30);
-  expect(app.vm.application.ticker.minFPS).toBe(15);
-  expect(app.vm.application.ticker.speed).toBe(2);
+  expect(ticker.autoStart).toBe(true);
+  expect(ticker.maxFPS).toBe(30);
+  expect(ticker.minFPS).toBe(15);
+  expect(ticker.speed).toBe(2);
 });
 
 it('should add tick callbacks with no priority if not set', () => {
@@ -62,8 +75,8 @@ it('should add tick callbacks with no priority if not set', () => {
     },
   };
   const wrapper = mount(WrapperComponent);
-  const component = wrapper.findComponent(PixiApplication);
-  const ticker = component.vm.application.ticker as unknown as MockedTicker;
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker as MockedTicker;
 
   expect(ticker.add).toHaveBeenCalledWith(
     expect.any(Function),
@@ -91,8 +104,8 @@ it('should add tick callbacks with set priority', () => {
     },
   };
   const wrapper = mount(WrapperComponent);
-  const component = wrapper.findComponent(PixiApplication);
-  const ticker = component.vm.application.ticker as unknown as MockedTicker;
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker as MockedTicker;
 
   expect(ticker.add).toHaveBeenCalledWith(
     expect.any(Function),
@@ -120,12 +133,11 @@ it('should emit tick', () => {
     },
   };
   const wrapper = mount(WrapperComponent);
-  const app = wrapper.findComponent(PixiApplication);
-  const component = wrapper.findComponent(PixiTicker);
-  const ticker = app.vm.application.ticker as unknown as MockedTicker;
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker as MockedTicker;
 
   ticker.emit(1);
 
-  expect(component.emitted<[number]>('tick')![0][0]).toBe(1);
-  expect(component.emitted<[number]>('tickOnce')![0][0]).toBe(1);
+  expect(tickerComponent.emitted<[number]>('tick')![0][0]).toBe(1);
+  expect(tickerComponent.emitted<[number]>('tickOnce')![0][0]).toBe(1);
 });

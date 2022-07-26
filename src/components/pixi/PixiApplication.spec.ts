@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { mount } from '@vue/test-utils';
 
 import PixiApplication from './PixiApplication.vue';
+import { MockedApplication } from './__mocks__/pixi.js';
 
 beforeEach(() => {
   jest.mocked(PIXI.Application).mockClear();
@@ -10,7 +11,8 @@ beforeEach(() => {
 it('should expose pixi application', () => {
   const wrapper = mount(PixiApplication);
 
-  expect(wrapper.vm.application.name).toEqual('mocked-pixi-application');
+  const application = wrapper.vm.application as MockedApplication;
+  expect(application.__name).toEqual('mocked-pixi-application');
 });
 
 it('should not set any options in PIXI.Application when none are set', () => {
