@@ -184,6 +184,31 @@ const createEmitSetup = (): [VueWrapper, PIXI.Loader] => {
   return [loaderComponent, loader];
 };
 
+it('should add listeners on mount', () => {
+  const [, loader] = createEmitSetup();
+
+  expect(loader.onStart.add).toHaveBeenCalled();
+  expect(loader.onProgress.add).toHaveBeenCalled();
+  expect(loader.onLoad.add).toHaveBeenCalled();
+  expect(loader.onComplete.add).toHaveBeenCalled();
+  expect(loader.onError.add).toHaveBeenCalled();
+});
+
+it('should remove listeners on unmount', () => {
+  const WrapperComponent = createEmptyWrapperComponent();
+  const wrapper = mount(WrapperComponent);
+  const loaderComponent = wrapper.getComponent(PixiLoader);
+  const loader = loaderComponent.vm.loader;
+
+  wrapper.unmount();
+
+  expect(loader.onStart.detach).toHaveBeenCalled();
+  expect(loader.onProgress.detach).toHaveBeenCalled();
+  expect(loader.onLoad.detach).toHaveBeenCalled();
+  expect(loader.onComplete.detach).toHaveBeenCalled();
+  expect(loader.onError.detach).toHaveBeenCalled();
+});
+
 it('should emit start', () => {
   const [loaderComponent, loader] = createEmitSetup();
 
@@ -237,5 +262,3 @@ it('should emit error', () => {
     erroredResource,
   ]);
 });
-
-// TODO: test unmount works correctly with listeners

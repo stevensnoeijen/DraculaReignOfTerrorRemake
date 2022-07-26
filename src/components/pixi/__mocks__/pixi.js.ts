@@ -51,6 +51,7 @@ export const Loader = jest.fn().mockImplementation(() => {
         // @ts-ignore TODO: replace or remove ts-ignore
         listeners.forEach((listener) => listener(...args));
       },
+      detach: jest.fn(),
     };
   };
 

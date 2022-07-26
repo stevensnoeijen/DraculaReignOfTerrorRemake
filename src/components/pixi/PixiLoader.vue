@@ -99,16 +99,32 @@ const emits = defineEmits<{
   (event: 'error', ...args: Parameters<PIXI.Loader.OnErrorSignal>): void;
 }>();
 
+// nodes that are set as the loader's listeners
+// using any, because type is not exposed in pixi.js
+let onStartNode: any = null;
+let onProgressNode: any = null;
+let onLoadNode: any = null;
+let onCompleteNode: any = null;
+let onErrorNode: any = null;
+
 onMounted(() => {
-  loader.onStart.add((...args) => emits('start', ...args));
-  loader.onProgress.add((...args) => emits('progress', ...args));
-  loader.onLoad.add((...args) => emits('load', ...args));
-  loader.onComplete.add((...args) => emits('complete', ...args));
-  loader.onError.add((...args) => emits('error', ...args));
+  onStartNode = loader.onStart.add((...args) => emits('start', ...args));
+  onProgressNode = loader.onProgress.add((...args) =>
+    emits('progress', ...args)
+  );
+  onLoadNode = loader.onLoad.add((...args) => emits('load', ...args));
+  onCompleteNode = loader.onComplete.add((...args) =>
+    emits('complete', ...args)
+  );
+  onErrorNode = loader.onError.add((...args) => emits('error', ...args));
 });
 
 onUnmounted(() => {
-  loader.onComplete.detachAll();
+  loader.onStart.detach(onStartNode);
+  loader.onProgress.detach(onProgressNode);
+  loader.onLoad.detach(onLoadNode);
+  loader.onComplete.detach(onCompleteNode);
+  loader.onError.detach(onErrorNode);
 });
 
 defineExpose({
