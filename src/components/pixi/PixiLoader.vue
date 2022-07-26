@@ -3,17 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance, PropType } from 'vue';
+import { getCurrentInstance, onMounted, onUnmounted, PropType } from 'vue';
 import * as PIXI from 'pixi.js';
-// import { Dict } from '@pixi/utils';
-
-// const emits = defineEmits<{
-//   (
-//     event: 'load',
-//     loader: PIXI.Loader,
-//     resources: Dict<PIXI.LoaderResource>
-//   ): void;
-// }>();
 
 const props = defineProps({
   /**
@@ -72,7 +63,7 @@ const props = defineProps({
    * @default false
    * @description Starts loading the queued resources.
    */
-  load: {
+  startLoading: {
     type: Boolean,
     required: false,
     default: undefined,
@@ -95,9 +86,30 @@ if (props.loadResources != null) {
   loader.add(props.loadResources);
 }
 
-if (props.load === true) {
+if (props.startLoading === true) {
   loader.load();
 }
+
+const emits = defineEmits<{
+  // TODO: add jsdoc's
+  (event: 'start', ...args: Parameters<PIXI.Loader.OnStartSignal>): void;
+  (event: 'progress', ...args: Parameters<PIXI.Loader.OnProgressSignal>): void;
+  (event: 'load', ...args: Parameters<PIXI.Loader.OnLoadSignal>): void;
+  (event: 'complete', ...args: Parameters<PIXI.Loader.OnCompleteSignal>): void;
+  (event: 'error', ...args: Parameters<PIXI.Loader.OnErrorSignal>): void;
+}>();
+
+onMounted(() => {
+  loader.onStart.add((...args) => emits('start', ...args));
+  loader.onProgress.add((...args) => emits('progress', ...args));
+  loader.onLoad.add((...args) => emits('load', ...args));
+  loader.onComplete.add((...args) => emits('complete', ...args));
+  loader.onError.add((...args) => emits('error', ...args));
+});
+
+onUnmounted(() => {
+  loader.onComplete.detachAll();
+});
 
 defineExpose({
   loader,

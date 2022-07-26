@@ -34,11 +34,36 @@ export const Ticker = jest.fn().mockImplementation(() => {
 
 export type MockedLoader = PIXI.Loader & { __name: string };
 
+type SignalListeners =
+  | PIXI.Loader.OnStartSignal
+  | PIXI.Loader.OnProgressSignal
+  | PIXI.Loader.OnLoadSignal
+  | PIXI.Loader.OnCompleteSignal
+  | PIXI.Loader.OnErrorSignal;
+
 export const Loader = jest.fn().mockImplementation(() => {
+  const createSignal = () => {
+    const listeners: SignalListeners[] = [];
+
+    return {
+      add: jest.fn((listener: SignalListeners) => listeners.push(listener)),
+      dispatch: (...args: Parameters<SignalListeners>) => {
+        // @ts-ignore TODO: replace or remove ts-ignore
+        listeners.forEach((listener) => listener(...args));
+      },
+    };
+  };
+
   const loader = {
     __name: 'mocked-pixi-loader',
     add: jest.fn(),
     load: jest.fn(),
+    onStart: createSignal(),
+    onProgress: createSignal(),
+    onLoad: createSignal(),
+    onComplete: createSignal(),
+    onError: createSignal(),
+    resources: {} as Record<string, PIXI.LoaderResource>,
   };
 
   // set default properties

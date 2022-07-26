@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
+import * as _ from 'lodash';
 
 import PixiApplication from './PixiApplication.vue';
 import PixiLoader from './PixiLoader.vue';
@@ -138,7 +139,7 @@ it('should call load when set to true', () => {
   const WrapperComponent = {
     template: `
     <PixiApplication>
-      <PixiLoader :load="true" />
+      <PixiLoader :startLoading="true" />
     </PixiApplication>
     `,
     components: {
@@ -153,7 +154,88 @@ it('should call load when set to true', () => {
   expect(loader.load).toBeCalledWith();
 });
 
-// TODO: set emit onComplete
-// TODO: set emit onError
-// TODO: set emit onLoad
-// TODO: set emit onProgress
+const createEmptyWrapperComponent = () => {
+  return {
+    template: `
+      <PixiApplication>
+        <PixiLoader />
+      </PixiApplication>
+      `,
+    components: {
+      PixiApplication,
+      PixiLoader,
+    },
+  };
+};
+
+const createLoaderResource = () =>
+  ({ name: 'mocked-pixi-loader-resource' } as PIXI.LoaderResource);
+
+const createEmitSetup = (): [VueWrapper, PIXI.Loader] => {
+  const WrapperComponent = createEmptyWrapperComponent();
+  const wrapper = mount(WrapperComponent);
+  const loaderComponent = wrapper.findComponent(PixiLoader);
+  const loader = loaderComponent.vm.loader;
+
+  loader.resources = {
+    loadedfile: createLoaderResource(),
+  };
+
+  return [loaderComponent, loader];
+};
+
+it('should emit start', () => {
+  const [loaderComponent, loader] = createEmitSetup();
+
+  loader.onStart.dispatch(loader);
+
+  expect(loaderComponent.emitted('start')![0]).toEqual([loader]);
+});
+
+it('should emit progress', () => {
+  const [loaderComponent, loader] = createEmitSetup();
+
+  const loadedResource = _.find(loader.resources);
+  loader.onProgress.dispatch(loader, loadedResource);
+
+  expect(loaderComponent.emitted('progress')![0]).toEqual([
+    loader,
+    loadedResource,
+  ]);
+});
+
+it('should emit load', () => {
+  const [loaderComponent, loader] = createEmitSetup();
+
+  const loadedResource = _.find(loader.resources);
+  loader.onLoad.dispatch(loader, loadedResource);
+
+  expect(loaderComponent.emitted('load')![0]).toEqual([loader, loadedResource]);
+});
+
+it('should emit complete', () => {
+  const [loaderComponent, loader] = createEmitSetup();
+
+  loader.onComplete.dispatch(loader, loader.resources);
+
+  expect(loaderComponent.emitted('complete')![0]).toEqual([
+    loader,
+    loader.resources,
+  ]);
+});
+
+it('should emit error', () => {
+  const [loaderComponent, loader] = createEmitSetup();
+
+  const error = new Error('mock-error');
+  const erroredResource = _.find(loader.resources);
+  loader.onError.dispatch(error, loader, erroredResource);
+
+  expect(loaderComponent.emitted('error')![0]).toEqual([
+    error,
+    loader,
+    erroredResource,
+  ]);
+});
+
+// TODO: test unmount works correctly with listeners
