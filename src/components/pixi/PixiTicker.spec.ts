@@ -35,9 +35,6 @@ it('should load correctly', () => {
   });
 
   expect(wrapper.vm.application.ticker).toBeDefined();
-  // added listeners to emits for add and addOnce
-  expect(wrapper.vm.application.ticker.add).toHaveBeenCalled();
-  expect(wrapper.vm.application.ticker.addOnce).toHaveBeenCalled();
 });
 
 it('should set properties', () => {
@@ -162,4 +159,45 @@ it('should emit tick', () => {
 
   expect(tickerComponent.emitted<[number]>('tick')![0][0]).toBe(1);
   expect(tickerComponent.emitted<[number]>('tickOnce')![0][0]).toBe(1);
+});
+
+it('should add listeners on mount', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiTicker/>
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiTicker,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker as MockedTicker;
+
+  expect(ticker.add).toHaveBeenCalled();
+  expect(ticker.addOnce).toHaveBeenCalled();
+});
+
+it('should remove listeners on unmount', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiTicker/>
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiTicker,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const tickerComponent = wrapper.findComponent(PixiTicker);
+  const ticker = tickerComponent.vm.ticker as MockedTicker;
+
+  wrapper.unmount();
+
+  expect(ticker.remove).toHaveBeenCalledTimes(2);
 });

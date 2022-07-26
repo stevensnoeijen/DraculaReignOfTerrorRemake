@@ -17,6 +17,7 @@ export const Ticker = jest.fn().mockImplementation(() => {
     addOnce: jest.fn((callback: PIXI.TickerCallback<unknown>) =>
       callbacks.push(callback)
     ),
+    remove: jest.fn(),
     emit: (delta: number) => {
       callbacks.forEach((callback) => callback(delta));
     },
