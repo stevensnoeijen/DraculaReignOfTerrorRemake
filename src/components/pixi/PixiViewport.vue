@@ -83,7 +83,7 @@ const props = defineProps({
   },
 });
 
-const viewport = new Viewport(props as IViewportOptions);
+const viewport = new Viewport(props as unknown as IViewportOptions);
 if (props.wheel != null) {
   viewport.wheel(props.wheel);
 }
@@ -94,10 +94,12 @@ if (application == null) {
 }
 
 onMounted(() => {
+  // @ts-ignore
   application.stage.addChild(viewport);
 });
 
 onUnmounted(() => {
+  // @ts-ignore
   application.stage.removeChild(viewport);
 });
 

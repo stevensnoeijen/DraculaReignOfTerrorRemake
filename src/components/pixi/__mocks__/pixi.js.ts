@@ -4,7 +4,10 @@ import { defineMockGetSetProperty } from './../../../__tests__/utils';
 
 const realPIXI = jest.requireActual('pixi.js');
 
-export type MockedTicker = PIXI.Ticker & { __name: string };
+export type MockedTicker = PIXI.Ticker & {
+  __name: string;
+  emit: (delta: number) => void;
+};
 
 export const Ticker = jest.fn().mockImplementation(() => {
   const callbacks: PIXI.TickerCallback<unknown>[] = [];

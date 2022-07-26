@@ -181,6 +181,7 @@ const createEmitSetup = (): [VueWrapper, PIXI.Loader] => {
     loadedfile: createLoaderResource(),
   };
 
+  // @ts-ignore
   return [loaderComponent, loader];
 };
 

@@ -1,11 +1,12 @@
 import { System, Entity, SystemQueries, World, Attributes } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { SelectableComponent } from './SelectableComponent';
 import { EntityHelper } from '../../EntityHelper';
 import { Vector2 } from '../../math/Vector2';
 import { Input } from '../../Input';
 import { getEntityAtPosition } from '../utils';
+
+import { SelectableComponent } from './SelectableComponent';
 import { isOnTeam } from './../utils/index';
 
 /**
@@ -28,7 +29,7 @@ export class PlayerSelectionSystem extends System {
    * Used for deselecting units when clicking,
    * but can be cancelled when dblclick-ing for moving entities.
    */
-  private deselectEntitiesTimeout: NodeJS.Timeout | null = null;
+  private deselectEntitiesTimeout: number | null = null;
 
   private readonly app: PIXI.Application;
   private rectangle: PIXI.Graphics;
@@ -103,6 +104,7 @@ export class PlayerSelectionSystem extends System {
     } else {
       if (!Input.isMouseDblClick()) {
         // deselect entities in .3 sec, or do double-click action
+        // @ts-ignore
         this.deselectEntitiesTimeout = setTimeout(() => {
           this.getSelected().forEach(EntityHelper.deselect);
         }, 300);
