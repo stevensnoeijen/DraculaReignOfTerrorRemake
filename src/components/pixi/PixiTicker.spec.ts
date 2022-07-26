@@ -49,6 +49,64 @@ it('should set properties', () => {
   expect(app.vm.application.ticker.speed).toBe(2);
 });
 
+it('should add tick callbacks with no priority if not set', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiTicker/>
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiTicker,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const component = wrapper.findComponent(PixiApplication);
+  const ticker = component.vm.application.ticker as unknown as MockedTicker;
+
+  expect(ticker.add).toHaveBeenCalledWith(
+    expect.any(Function),
+    undefined,
+    undefined
+  );
+
+  expect(ticker.addOnce).toHaveBeenCalledWith(
+    expect.any(Function),
+    undefined,
+    undefined
+  );
+});
+
+it('should add tick callbacks with set priority', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiTicker :priority="${PIXI.UPDATE_PRIORITY.HIGH}"/>
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiTicker,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const component = wrapper.findComponent(PixiApplication);
+  const ticker = component.vm.application.ticker as unknown as MockedTicker;
+
+  expect(ticker.add).toHaveBeenCalledWith(
+    expect.any(Function),
+    undefined,
+    PIXI.UPDATE_PRIORITY.HIGH
+  );
+
+  expect(ticker.addOnce).toHaveBeenCalledWith(
+    expect.any(Function),
+    undefined,
+    PIXI.UPDATE_PRIORITY.HIGH
+  );
+});
+
 it('should emit tick', () => {
   const WrapperComponent = {
     template: `

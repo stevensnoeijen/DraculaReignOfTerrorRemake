@@ -34,3 +34,5 @@ export const Application = jest.fn().mockImplementation(() => ({
 export const settings = {
   RESOLUTION: realPIXI.RESOLUTION,
 };
+
+export const UPDATE_PRIORITY = realPIXI.UPDATE_PRIORITY;
