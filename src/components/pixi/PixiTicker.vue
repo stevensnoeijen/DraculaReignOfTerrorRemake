@@ -22,7 +22,7 @@ const props = defineProps({
 
   /**
    * @type {number}
-   * @default: 0
+   * @default 0
    * @description
    * Manages the minimum amount of milliseconds required to elapse
    * between invoking {@link PIXI.Ticker#update}.
@@ -39,7 +39,7 @@ const props = defineProps({
 
   /**
    * @type {number}
-   * @default: 10
+   * @default 10
    * @description
    * Manages the maximum amount of milliseconds allowed to elapse
    * between invoking {@link PIXI.Ticker#update}.
