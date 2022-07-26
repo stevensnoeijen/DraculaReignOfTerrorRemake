@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, PropType } from 'vue';
 import * as PIXI from 'pixi.js';
 // import { Dict } from '@pixi/utils';
 
@@ -55,8 +55,18 @@ const props = defineProps({
     required: false,
     default: undefined,
   },
+
+  /**
+   * @type {PIXI.IAddOptions | PIXI.IAddOptions[]}
+   * @description
+   * Adds a resource (or multiple resources) to the loader queue.
+   */
+  loadResources: {
+    type: Object as PropType<(PIXI.IAddOptions | string)[]>,
+    required: false,
+    default: undefined,
+  },
 });
-// TODO: refactor to do easyer defineProps config with default `{ required: false, default: undefined }`
 
 const instance = getCurrentInstance();
 const application = instance?.parent?.exposed?.application as PIXI.Application;
@@ -69,6 +79,10 @@ if (props.baseUrl != null) loader.baseUrl = props.baseUrl!;
 if (props.concurrency != null) loader.concurrency = props.concurrency!;
 if (props.defaultQueryString != null)
   loader.defaultQueryString = props.defaultQueryString!;
+
+if (props.loadResources != null) {
+  loader.add(props.loadResources);
+}
 
 defineExpose({
   loader,

@@ -73,9 +73,66 @@ it('should set properties', () => {
   expect(loader.defaultQueryString).toBe('test=true');
 });
 
-// TODO: load resource
+it('should have empty queue when nothing is set', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiLoader/>
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiLoader,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const loaderComponent = wrapper.findComponent(PixiLoader);
+  const loader = loaderComponent.vm.loader;
 
-// TODO: load multiple resources
+  expect(loader.add).not.toBeCalled();
+});
+
+it('should add reources to the loader queue', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiLoader
+        :loadResources="['test.png']"
+      />
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiLoader,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const loaderComponent = wrapper.findComponent(PixiLoader);
+  const loader = loaderComponent.vm.loader;
+
+  expect(loader.add).toBeCalledWith(['test.png']);
+});
+
+it('should add multiple reources to the loader queue', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiLoader
+        :loadResources="['test.png', 'test2.png']"
+      />
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiLoader,
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const loaderComponent = wrapper.findComponent(PixiLoader);
+  const loader = loaderComponent.vm.loader;
+
+  expect(loader.add).toBeCalledWith(['test.png', 'test2.png']);
+});
 
 // TODO: load=true
 
