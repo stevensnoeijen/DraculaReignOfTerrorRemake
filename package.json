@@ -18,7 +18,7 @@
     "lodash": "^4.17.21",
     "pixi-dashed-line": "^1.4.2",
     "pixi-viewport": "^4.34.4",
-    "pixi.js": "^6.4.2",
+    "pixi.js": "^6.5.1",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"
   },
