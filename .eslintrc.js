@@ -11,11 +11,11 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-recommended',
     '@vue/eslint-config-typescript',
     'plugin:jest/recommended',
   ],
-  plugins: ['import', 'unused-imports', 'jest'],
+  plugins: ['import', 'unused-imports', 'jest', '@typescript-eslint'],
   rules: {
     'max-len': ['warn', { code: 80, ignorePattern: '^import\\W.*' }],
     quotes: ['warn', 'single'],
@@ -40,5 +40,6 @@ module.exports = {
     ],
     'no-warning-comments': ['warn'],
     'jest/no-mocks-import': ['off'],
+    '@typescript-eslint/ban-ts-comment': ['error'],
   },
 };
