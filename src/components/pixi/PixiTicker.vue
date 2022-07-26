@@ -1,5 +1,7 @@
 <!-- eslint-disable vue/valid-template-root -->
-<template></template>
+<template>
+  <slot name="default" :ticker="ticker" />
+</template>
 
 <script lang="ts" setup>
 import * as PIXI from 'pixi.js';
@@ -102,18 +104,19 @@ const application = instance?.parent?.exposed?.application as PIXI.Application;
 if (application == null) {
   throw new Error('pixi-ticker must be used inside pixi-application');
 }
+const ticker = application.ticker;
 
 if (props.autoStart != null) {
-  application.ticker.autoStart = props.autoStart!;
+  ticker.autoStart = props.autoStart!;
 }
 if (props.maxFPS != null) {
-  application.ticker.maxFPS = props.maxFPS!;
+  ticker.maxFPS = props.maxFPS!;
 }
 if (props.minFPS != null) {
-  application.ticker.minFPS = props.minFPS!;
+  ticker.minFPS = props.minFPS!;
 }
 if (props.speed != null) {
-  application.ticker.speed = props.speed!;
+  ticker.speed = props.speed!;
 }
 
 const tickCallback: PIXI.TickerCallback<unknown> = (delta: number) =>
@@ -123,16 +126,16 @@ const tickOnceCallback: PIXI.TickerCallback<unknown> = (delta: number) =>
   emits('tickOnce', delta);
 
 onMounted(() => {
-  application.ticker.add(tickCallback, undefined, props.priority);
-  application.ticker.addOnce(tickOnceCallback, undefined, props.priority);
+  ticker.add(tickCallback, undefined, props.priority);
+  ticker.addOnce(tickOnceCallback, undefined, props.priority);
 });
 
 onUnmounted(() => {
-  application.ticker.remove(tickCallback);
-  application.ticker.remove(tickOnceCallback);
+  ticker.remove(tickCallback);
+  ticker.remove(tickOnceCallback);
 });
 
 defineExpose<PixiTickerInstance>({
-  ticker: application.ticker,
+  ticker: ticker,
 });
 </script>
