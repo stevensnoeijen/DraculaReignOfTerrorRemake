@@ -5,9 +5,10 @@
 <script lang="ts" setup>
 import * as PIXI from 'pixi.js';
 import { getCurrentInstance, onMounted, onUnmounted, PropType } from 'vue';
-import { IViewportOptions, IWheelOptions, Viewport } from 'pixi-viewport';
+import { IWheelOptions, Viewport } from 'pixi-viewport';
 
 import { PixiViewportInstance } from './types';
+import { isAnyPropertySet, omitUndefined } from './utils';
 
 const instance = getCurrentInstance();
 
@@ -41,7 +42,7 @@ const props = defineProps({
 
   /**
    * @type {number}
-   * @default null
+   * @default 0
    */
   worldWidth: {
     type: Number as PropType<Number | null>,
@@ -51,7 +52,7 @@ const props = defineProps({
 
   /**
    * @type {number}
-   * @default null
+   * @default 0
    */
   worldHeight: {
     type: Number as PropType<Number | null>,
@@ -200,7 +201,9 @@ const props = defineProps({
   },
 });
 
-const viewport = new Viewport(props as unknown as IViewportOptions);
+const viewport = isAnyPropertySet(props)
+  ? new Viewport(omitUndefined(props))
+  : new Viewport();
 if (props.wheel != null) {
   viewport.wheel(props.wheel);
 }

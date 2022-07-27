@@ -1,4 +1,4 @@
-import { isAnyPropertySet } from './utils';
+import { isAnyPropertySet, omitUndefined } from './utils';
 
 describe('isAnyPropertySet', () => {
   it('should return false when empty object is given', () => {
@@ -19,5 +19,31 @@ describe('isAnyPropertySet', () => {
         test: 1,
       })
     ).toBe(true);
+  });
+});
+
+describe('omitUndefined', () => {
+  it('should remove undefined properties from object', () => {
+    expect(
+      omitUndefined({
+        novalue: undefined,
+      })
+    ).toEqual({});
+  });
+
+  it('should not remove properties with value', () => {
+    expect(
+      omitUndefined({
+        null: null,
+        zero: 0,
+        neg: -1,
+        emptyString: '',
+      })
+    ).toEqual({
+      null: null,
+      zero: 0,
+      neg: -1,
+      emptyString: '',
+    });
   });
 });

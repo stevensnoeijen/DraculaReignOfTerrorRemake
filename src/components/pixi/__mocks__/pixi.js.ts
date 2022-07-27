@@ -87,6 +87,9 @@ export const Application = jest.fn().mockImplementation(() => {
     ticker: new Ticker(),
     loader: new Loader(),
     view: document.createElement('canvas'),
+    stage: {
+      addChild: jest.fn(),
+    },
   };
 });
 
@@ -95,3 +98,5 @@ export const settings = {
 };
 
 export const UPDATE_PRIORITY = realPIXI.UPDATE_PRIORITY;
+
+export const Rectangle = realPIXI.Rectangle;

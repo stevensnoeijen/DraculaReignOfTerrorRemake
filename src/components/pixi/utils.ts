@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /**
  * @param {Record<string, unknown>} props to check
  * @returns true when any property is set (not undefined), else false
@@ -9,3 +11,6 @@ export const isAnyPropertySet = (props: Record<string, unknown>) => {
 
   return false;
 };
+
+export const omitUndefined = (props: Record<string, unknown>) =>
+  _.omitBy(props, _.isUndefined);
