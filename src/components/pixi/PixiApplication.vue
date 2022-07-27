@@ -8,8 +8,8 @@
 import { onMounted, PropType } from 'vue';
 import { $ref } from 'vue/macros';
 import * as PIXI from 'pixi.js';
-import _ from 'lodash';
 
+import { isAnyPropertySet } from './utils';
 import { PixiApplicationInstance } from './types';
 
 const container = $ref<HTMLDivElement>();
@@ -241,11 +241,12 @@ const props = defineProps({
   resizeTo: {
     type: Object as PropType<Window | HTMLElement>,
     required: false,
+    default: undefined,
   },
 });
 
 const application = new PIXI.Application(
-  _.some(props, _.isUndefined) ? undefined : props
+  isAnyPropertySet(props) ? props : undefined
 );
 
 defineExpose<PixiApplicationInstance>({
