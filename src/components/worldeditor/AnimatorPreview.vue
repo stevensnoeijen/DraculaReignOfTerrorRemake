@@ -42,10 +42,12 @@
             :screen-height="application.view.height"
             :interaction="application.renderer.plugins.interaction"
             :wheel="{
-              center: new PIXI.Point(
-                application.view.width / 2,
-                application.view.height / 2
-              ),
+              options: {
+                center: new PIXI.Point(
+                  application.view.width / 2,
+                  application.view.height / 2
+                ),
+              },
             }"
           />
         </template>
