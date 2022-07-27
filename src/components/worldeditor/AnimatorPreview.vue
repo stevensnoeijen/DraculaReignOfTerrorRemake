@@ -4,21 +4,21 @@
     <div>
       <label for="color">Color: </label>
       <select id="color" v-model="color">
-        <option v-for="color of animations.colors" :value="color" :key="color">
+        <option v-for="color of animations.colors" :key="color" :value="color">
           {{ color }}
         </option>
       </select>
 
       <label for="unit">Unit: </label>
       <select id="unit" v-model="unit">
-        <option v-for="unit of animations.units" :value="unit" :key="unit">
+        <option v-for="unit of animations.units" :key="unit" :value="unit">
           {{ unit }}
         </option>
       </select>
 
       <label for="animation">Animation: </label>
       <select id="animation" v-model="state">
-        <option v-for="state of animations.states" :value="state" :key="state">
+        <option v-for="state of animations.states" :key="state" :value="state">
           {{ state }}
         </option>
       </select>
@@ -27,8 +27,8 @@
       <select id="direction" v-model="direction">
         <option
           v-for="direction of animations.directions"
-          :value="direction"
           :key="direction"
+          :value="direction"
         >
           {{ direction }}
         </option>
@@ -125,12 +125,10 @@ const loadSprite = () => {
   animator = animationManager.createAnimator(sprite, color, unit);
   animator.set(state, direction);
 
-  // @ts-ignore
   viewportInstance.viewport.addChild(sprite);
 };
 
 onUnmounted(() => {
-  // @ts-ignore
   viewportInstance.viewport.removeChild(sprite);
 });
 
