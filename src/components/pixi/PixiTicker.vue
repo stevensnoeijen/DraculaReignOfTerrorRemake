@@ -8,6 +8,13 @@ import { getCurrentInstance, onMounted, onUnmounted } from 'vue';
 
 import { PixiTickerInstance } from './types';
 
+// prop types, if required and defaults adopted from pixi.js code
+/**
+ * The optional ticker parameters.
+ *
+ * @see https://pixijs.download/dev/docs/PIXI.Ticker.html
+ * for all properties
+ */
 const props = defineProps({
   /**
    * @type {boolean}

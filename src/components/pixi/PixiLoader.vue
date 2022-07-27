@@ -8,6 +8,13 @@ import * as PIXI from 'pixi.js';
 
 import { PixiLoaderInstance } from './types';
 
+// prop types, if required and defaults adopted from pixi.js code
+/**
+ * The optional loader parameters.
+ *
+ * @see https://pixijs.download/dev/docs/PIXI.Loader.html
+ * for all properties
+ */
 const props = defineProps({
   /**
    * @type {string}
