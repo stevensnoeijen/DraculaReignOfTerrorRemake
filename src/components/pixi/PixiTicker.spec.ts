@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { mount } from '@vue/test-utils';
 
+import { disableConsoleWarn } from '../../__tests__/utils';
+
 import PixiApplication from './PixiApplication.vue';
 import PixiTicker from './PixiTicker.vue';
 import { MockedTicker } from './__mocks__/pixi.js';
@@ -22,9 +24,11 @@ it('should expose ticker', () => {
 });
 
 it('should error when not placed inside a pixi-application', () => {
+  const spy = disableConsoleWarn();
   expect(() => {
     mount(PixiTicker);
   }).toThrowError('pixi-ticker must be used inside pixi-application');
+  spy.mockRestore();
 });
 
 it('should load correctly', () => {

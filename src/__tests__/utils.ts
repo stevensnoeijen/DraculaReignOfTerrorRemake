@@ -9,3 +9,7 @@ export const defineMockGetSetProperty = <T>(
     set: jest.fn((newValue: T) => (value = newValue)),
   });
 };
+
+export const disableConsoleWarn = () => {
+  return jest.spyOn(console, 'warn').mockImplementation(() => {});
+};

@@ -2,13 +2,11 @@ import { mount } from '@vue/test-utils';
 import { Viewport } from 'pixi-viewport';
 import * as PIXI from 'pixi.js';
 
-import { MockedTicker } from './__mocks__/_pixi.js';
+import { disableConsoleWarn } from '../../__tests__/utils';
+
+import { MockedTicker } from './__mocks__/pixi.js';
 import PixiApplication from './PixiApplication.vue';
 import PixiViewport from './PixiViewport.vue';
-
-// beforeEach(() => {
-//   jest.mocked(PIXI.Application).mockClear();
-// });
 
 it('should expose viewport', () => {
   const wrapper = mount(PixiApplication, {
@@ -23,9 +21,11 @@ it('should expose viewport', () => {
 });
 
 it('should error when not placed inside a pixi-application', () => {
+  const spy = disableConsoleWarn();
   expect(() => {
     mount(PixiViewport);
   }).toThrowError('pixi-viewport must be used inside pixi-application');
+  spy.mockRestore();
 });
 
 it("should add viewport to application's stage", () => {

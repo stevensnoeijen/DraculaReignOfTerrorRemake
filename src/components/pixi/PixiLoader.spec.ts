@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 import { mount, VueWrapper } from '@vue/test-utils';
 import * as _ from 'lodash';
 
+import { disableConsoleWarn } from '../../__tests__/utils';
+
 import PixiApplication from './PixiApplication.vue';
 import PixiLoader from './PixiLoader.vue';
 import { MockedLoader } from './__mocks__/pixi.js';
@@ -23,9 +25,11 @@ it('should expose ticker', () => {
 });
 
 it('should error when not placed inside a pixi-application', () => {
+  const spy = disableConsoleWarn();
   expect(() => {
     mount(PixiLoader, {});
   }).toThrowError('pixi-loader must be used inside pixi-application');
+  spy.mockRestore();
 });
 
 it('should have default properties', () => {
