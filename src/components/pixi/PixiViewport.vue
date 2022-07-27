@@ -211,10 +211,12 @@ if (application == null) {
 }
 
 onMounted(() => {
+  // @ts-ignore
   application.stage.addChild(viewport);
 });
 
 onUnmounted(() => {
+  // @ts-ignore
   application.stage.removeChild(viewport);
 });
 
