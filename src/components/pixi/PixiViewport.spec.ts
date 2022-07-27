@@ -224,4 +224,54 @@ it.each([
   }
 );
 
-// TODO: emits
+it.each([
+  ['clicked'],
+  ['drag-start'],
+  ['drag-end'],
+  ['drag-remove'],
+  ['pinch-start'],
+  ['pinch-end'],
+  ['pinch-remove'],
+  ['snap-start'],
+  ['snap-end'],
+  ['snap-remove'],
+  ['snap-zoom-start'],
+  ['snap-zoom-end'],
+  ['snap-zoom-remove'],
+  ['bounce-x-start'],
+  ['bounce-x-end'],
+  ['bounce-y-start'],
+  ['bounce-y-end'],
+  ['bounce-remove'],
+  ['wheel'],
+  ['wheel-remove'],
+  ['wheel-scroll'],
+  ['wheel-scroll-remove'],
+  ['mouse-edge-start'],
+  ['mouse-edge-end'],
+  ['mouse-edge-remove'],
+  ['moved'],
+  ['moved-end'],
+  ['zoomed'],
+  ['zoomed-end'],
+  ['frame-end'],
+])('should receive %s when emitted', (event) => {
+  const wrapper = mount(PixiApplication, {
+    slots: {
+      default: [PixiViewport],
+    },
+  });
+  const component = wrapper.getComponent(PixiViewport);
+  const viewport = component.vm.viewport;
+
+  const data = {
+    viewport: true,
+    type: 'test',
+  } as const;
+  viewport.emit(event, data);
+
+  expect(component.emitted<[typeof data]>(event)![0][0]).toEqual(data);
+});
+
+// TODO: all listeners registered on mount
+// TODO: all listeners removed on unmounted

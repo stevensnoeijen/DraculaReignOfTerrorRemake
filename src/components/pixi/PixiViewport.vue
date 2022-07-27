@@ -614,12 +614,269 @@ for (const plugin of PLUGINS) {
   }
 }
 
+/**
+ * Events that are emitted from the viewport.
+ *
+ * @see https://github.com/davidfig/pixi-viewport/blob/master/src/Viewport.ts#L1217-L1365
+ * for all events.
+ */
+const emits = defineEmits<{
+  /**
+   * Fires after a mouse or touch click
+   * @event Viewport#clicked
+   * @type {object}
+   * @property {PIXI.Point} screen
+   * @property {PIXI.Point} world
+   * @property {Viewport} viewport
+   */
+  (
+    event: 'clicked',
+    object: { screen: PIXI.Point; world: PIXI.Point; viewport: Viewport }
+  ): void;
+
+  /**
+   * Fires when a drag starts
+   * @event Viewport#drag-start
+   * @type {object}
+   * @property {PIXI.Point} screen
+   * @property {PIXI.Point} world
+   * @property {Viewport} viewport
+   */
+  (
+    event: 'drag-start',
+    object: { screen: PIXI.Point; world: PIXI.Point; viewport: Viewport }
+  ): void;
+
+  /**
+   * Fires when a drag ends
+   * @event Viewport#drag-end
+   * @type {object}
+   * @property {PIXI.Point} screen
+   * @property {PIXI.Point} world
+   * @property {Viewport} viewport
+   */
+  (
+    event: 'drag-end',
+    object: { screen: PIXI.Point; world: PIXI.Point; viewport: Viewport }
+  ): void;
+
+  /**
+   * Fires when a pinch starts
+   * @event Viewport#pinch-start
+   * @type {Viewport}
+   */
+  (event: 'drag-end', viewport: Viewport): void;
+
+  /**
+   * Fires when a pinch end
+   * @event Viewport#pinch-end
+   * @type {Viewport}
+   */
+  (event: 'pinch-end', viewport: Viewport): void;
+
+  /**
+   * Fires when a snap starts
+   * @event Viewport#snap-start
+   * @type {Viewport}
+   */
+  (event: 'snap-start', viewport: Viewport): void;
+
+  /**
+   * Fires when a snap ends
+   * @event Viewport#snap-end
+   * @type {Viewport}
+   */
+  (event: 'snap-end', viewport: Viewport): void;
+
+  /**
+   * Fires when a snap-zoom starts
+   * @event Viewport#snap-zoom-start
+   * @type {Viewport}
+   */
+  (event: 'snap-zoom-start', viewport: Viewport): void;
+
+  /**
+   * Fires when a snap-zoom ends
+   * @event Viewport#snap-zoom-end
+   * @type {Viewport}
+   */
+  (event: 'snap-zoom-end', viewport: Viewport): void;
+
+  /**
+   * Fires when a bounce starts in the x direction
+   * @event Viewport#bounce-x-start
+   * @type {Viewport}
+   */
+  (event: 'bounce-x-start', viewport: Viewport): void;
+
+  /**
+   * Fires when a bounce ends in the x direction
+   * @event Viewport#bounce-x-end
+   * @type {Viewport}
+   */
+  (event: 'bounce-x-end', viewport: Viewport): void;
+
+  /**
+   * Fires when a bounce starts in the y direction
+   * @event Viewport#bounce-y-start
+   * @type {Viewport}
+   */
+  (event: 'bounce-y-start', viewport: Viewport): void;
+
+  /**
+   * Fires when a bounce ends in the y direction
+   * @event Viewport#bounce-y-end
+   * @type {Viewport}
+   */
+  (event: 'bounce-y-end', viewport: Viewport): void;
+
+  /**
+   * Fires when for a mouse wheel event
+   * @event Viewport#wheel
+   * @type {object}
+   * @property {object} wheel
+   * @property {number} wheel.dx
+   * @property {number} wheel.dy
+   * @property {number} wheel.dz
+   * @property {Viewport} viewport
+   */
+  (
+    event: 'wheel',
+    args: { wheel: { dx: number; dy: number; dz: number }; viewport: Viewport }
+  ): void;
+
+  /**
+   * Fires when a wheel-scroll occurs
+   * @event Viewport#wheel-scroll
+   * @type {Viewport}
+   */
+  (event: 'wheel-scroll', viewport: Viewport): void;
+
+  /**
+   * Fires when a mouse-edge starts to scroll
+   * @event Viewport#mouse-edge-start
+   * @type {Viewport}
+   */
+  (event: 'mouse-edge-start', viewport: Viewport): void;
+
+  /**
+   * Fires when the mouse-edge scrolling ends
+   * @event Viewport#mouse-edge-end
+   * @type {Viewport}
+   */
+  (event: 'mouse-edge-end', viewport: Viewport): void;
+
+  /**
+   * Fires when viewport moves through UI interaction, deceleration, ensureVisible, or follow
+   * @event Viewport#moved
+   * @type {object}
+   * @property {Viewport} viewport
+   * @property {string} type - (drag, snap, pinch, follow, bounce-x, bounce-y,
+   *  clamp-x, clamp-y, decelerate, mouse-edges, wheel, ensureVisible)
+   */
+  (
+    event: 'moved',
+    object: {
+      viewport: Viewport;
+      type:
+        | 'drag'
+        | 'snap'
+        | 'pinch'
+        | 'follow'
+        | 'bounce-x'
+        | 'bounce-y'
+        | 'clamp-x'
+        | 'clamp-y'
+        | 'decelerate'
+        | 'mouse-edges'
+        | 'wheel'
+        | 'ensureVisible';
+    }
+  ): void;
+
+  /**
+   * Fires when viewport moves through UI interaction,
+   * deceleration, ensureVisible, or follow
+   *
+   * @event Viewport#zoomed
+   * @type {object}
+   * @property {Viewport} viewport
+   * @property {string} type
+   * (drag-zoom, pinch, wheel, clamp-zoom, ensureVisible)
+   */
+  (
+    event: 'zoomed',
+    object: {
+      viewport: Viewport;
+      type: 'drag-zoom' | 'pinch' | 'wheel' | 'clamp-zoom' | 'ensureVisible';
+    }
+  ): void;
+
+  /**
+   * Fires when viewport stops moving
+   * @event Viewport#moved-end
+   * @type {Viewport}
+   */
+  (event: 'moved-end', viewport: Viewport): void;
+
+  /**
+   * Fires when viewport stops zooming
+   * @event Viewport#zoomed-end
+   * @type {Viewport}
+   */
+  (event: 'zoomed-end', viewport: Viewport): void;
+
+  /**
+   * Fires at the end of an update frame
+   * @event Viewport#frame-end
+   * @type {Viewport}
+   */
+  (event: 'frame-end', viewport: Viewport): void;
+}>();
+
 const application = instance?.parent?.exposed?.application as PIXI.Application;
 if (application == null) {
   throw new Error('pixi-viewport must be used inside pixi-application');
 }
 
+const EVENTS = [
+  'clicked',
+  'drag-start',
+  'drag-end',
+  'drag-remove',
+  'pinch-start',
+  'pinch-end',
+  'pinch-remove',
+  'snap-start',
+  'snap-end',
+  'snap-remove',
+  'snap-zoom-start',
+  'snap-zoom-end',
+  'snap-zoom-remove',
+  'bounce-x-start',
+  'bounce-x-end',
+  'bounce-y-start',
+  'bounce-y-end',
+  'bounce-remove',
+  'wheel',
+  'wheel-remove',
+  'wheel-scroll',
+  'wheel-scroll-remove',
+  'mouse-edge-start',
+  'mouse-edge-end',
+  'mouse-edge-remove',
+  'moved',
+  'moved-end',
+  'zoomed',
+  'zoomed-end',
+  'frame-end',
+];
+
 onMounted(() => {
+  EVENTS.forEach((event) =>
+    viewport.addListener(event, (args) => emits(event, args))
+  );
+
   // @ts-ignore
   application.stage.addChild(viewport);
 });
@@ -627,6 +884,8 @@ onMounted(() => {
 onUnmounted(() => {
   // @ts-ignore
   application.stage.removeChild(viewport);
+
+  // TODO: cleanup listeners
 });
 
 defineExpose<PixiViewportInstance>({
