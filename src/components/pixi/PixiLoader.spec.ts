@@ -171,7 +171,10 @@ const createEmptyWrapperComponent = () => {
 const createLoaderResource = () =>
   ({ name: 'mocked-pixi-loader-resource' } as PIXI.LoaderResource);
 
-const createEmitSetup = (): [VueWrapper, PIXI.Loader] => {
+const createEmitSetup = (): [
+  VueWrapper<InstanceType<typeof PixiLoader>>,
+  PIXI.Loader
+] => {
   const WrapperComponent = createEmptyWrapperComponent();
   const wrapper = mount(WrapperComponent);
   const loaderComponent = wrapper.findComponent(PixiLoader);
@@ -181,7 +184,6 @@ const createEmitSetup = (): [VueWrapper, PIXI.Loader] => {
     loadedfile: createLoaderResource(),
   };
 
-  // @ts-ignore
   return [loaderComponent, loader];
 };
 

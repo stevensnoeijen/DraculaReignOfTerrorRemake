@@ -1,5 +1,5 @@
 <!-- eslint-disable vue/valid-template-root -->
-<template></template>
+<template />
 
 <script lang="ts" setup>
 import * as PIXI from 'pixi.js';
@@ -15,71 +15,82 @@ const props = defineProps({
   screenWidth: {
     type: Number,
     required: false,
+    default: undefined,
   },
   /** @default window.innerHeight */
   screenHeight: {
     type: Number,
     required: false,
+    default: undefined,
   },
   /** @default 0 */
   worldWidth: {
     type: Number as PropType<Number | null>,
     required: false,
+    default: undefined,
   },
   /** @default 0 */
   worldHeight: {
     type: Number as PropType<Number | null>,
     required: false,
+    default: undefined,
   },
   /** @default 5 */
   threshold: {
     type: Number,
     required: false,
+    default: undefined,
   },
   /** @default true */
   passiveWheel: {
     type: Boolean,
     required: false,
-    default: true,
+    default: undefined,
   },
   stopPropagation: {
     type: Boolean,
     required: false,
-    default: false,
+    default: undefined,
   },
   forceHitArea: {
     type: PIXI.Rectangle as PropType<PIXI.Rectangle | null>,
     required: false,
+    default: undefined,
   },
   /** @default false */
   noTicker: {
     type: Boolean,
     required: false,
-    default: false,
+    default: undefined,
   },
   interaction: {
     type: PIXI.InteractionManager as PropType<PIXI.InteractionManager | null>,
     required: false,
+    default: undefined,
   },
   disableOnContextMenu: {
     type: Boolean,
     required: false,
+    default: undefined,
   },
   /** @default document.body */
   divWheel: {
     type: HTMLElement,
     required: false,
+    default: undefined,
   },
+
   /** @default PIXI.Ticker.shared */
   ticker: {
     type: PIXI.Ticker,
     required: false,
-    default: PIXI.Ticker.shared,
+    default: undefined,
   },
 
   wheel: {
     type: Object as PropType<IWheelOptions>,
     required: false,
+    default: undefined,
   },
 });
 
@@ -94,12 +105,10 @@ if (application == null) {
 }
 
 onMounted(() => {
-  // @ts-ignore
   application.stage.addChild(viewport);
 });
 
 onUnmounted(() => {
-  // @ts-ignore
   application.stage.removeChild(viewport);
 });
 
