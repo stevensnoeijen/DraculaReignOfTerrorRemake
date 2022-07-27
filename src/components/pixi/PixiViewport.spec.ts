@@ -134,4 +134,58 @@ it('should set properties', () => {
   );
 });
 
-// TODO: test function props
+it('should have no plugin set by default', () => {
+  const wrapper = mount(PixiApplication, {
+    slots: {
+      default: [PixiViewport],
+    },
+  });
+  const component = wrapper.findComponent(PixiViewport);
+  const viewport = component.vm.viewport;
+
+  expect(viewport.plugins.list).toHaveLength(0);
+});
+
+it.each([
+  ['drag'],
+  ['clamp'],
+  ['decelerate'],
+  ['bounce'],
+  ['pinch'],
+  ['snap'],
+  ['follow'],
+  ['wheel'],
+  ['animate'],
+  ['clamp-zoom'],
+  ['mouse-edges'],
+])('should enable %s plugin when property is set', (pluginName) => {
+  const WrapperComponent = {
+    template: `
+    <PixiApplication>
+      <PixiViewport
+        :${pluginName}="options"
+      />
+    </PixiApplication>
+    `,
+    components: {
+      PixiApplication,
+      PixiViewport,
+    },
+    data() {
+      return {
+        options: {},
+      };
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  const component = wrapper.findComponent(PixiViewport);
+  const viewport = component.vm.viewport;
+
+  expect(viewport.plugins.list).toHaveLength(1);
+  expect(viewport.plugins.get(pluginName)).not.toBeNull();
+  expect(viewport.plugins.get(pluginName)).not.toBeUndefined();
+});
+
+// TODO: tryout property without value for plugins
+
+// TODO: emits
