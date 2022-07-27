@@ -2,6 +2,7 @@
   "recommendations": [
     "vue.volar",
     "vue.vscode-typescript-vue-plugin",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "drknoxy.eslint-disable-snippets"
   ]
 }

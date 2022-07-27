@@ -1,5 +1,8 @@
 import { Entity, World } from 'ecsy';
+import { FunctionKeys } from 'utility-types';
+
 import { State } from '../Node';
+
 import { EntityNode } from './EntityNode';
 
 class ImplementedEntityNode extends EntityNode {
@@ -18,10 +21,13 @@ describe('EntityNode', () => {
       expect(node.evaluate()).toBe(State.FAILURE);
     });
 
-    it('should return success and call evaluateByEntity when entity is set', () => {
+    it(`should return success
+      and call evaluateByEntity when entity is set`, () => {
       const node = new ImplementedEntityNode();
-      // @ts-ignore
-      const spyEvaluateByEntity = jest.spyOn(node, 'evaluateByEntity');
+      const spyEvaluateByEntity = jest.spyOn(
+        node,
+        'evaluateByEntity' as FunctionKeys<ImplementedEntityNode>
+      );
       node.setData('entity', world.createEntity());
 
       expect(node.evaluate()).toBe(State.SUCCESS);

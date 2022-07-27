@@ -11,4 +11,5 @@ module.exports = {
   setupFiles: ['jest-webgl-canvas-mock'],
   testRegex: '((\\.|/)spec)\\.ts?$',
   reporters: ['default', 'jest-junit'],
+  setupFilesAfterEnv: ['./src/__tests__/jest-setup.ts'],
 };
