@@ -186,6 +186,42 @@ it.each([
   expect(viewport.plugins.get(pluginName)).not.toBeUndefined();
 });
 
-// TODO: tryout property without value for plugins
+it.each([
+  ['drag'],
+  ['clamp'],
+  ['decelerate'],
+  ['bounce'],
+  ['pinch'],
+  ['snap'],
+  ['follow'],
+  ['wheel'],
+  ['animate'],
+  ['clamp-zoom'],
+  ['mouse-edges'],
+])(
+  'should enable %s plugin when property is set without value',
+  (pluginName) => {
+    const WrapperComponent = {
+      template: `
+    <PixiApplication>
+      <PixiViewport
+        :${pluginName}
+      />
+    </PixiApplication>
+    `,
+      components: {
+        PixiApplication,
+        PixiViewport,
+      },
+    };
+    const wrapper = mount(WrapperComponent);
+    const component = wrapper.findComponent(PixiViewport);
+    const viewport = component.vm.viewport;
+
+    expect(viewport.plugins.list).toHaveLength(1);
+    expect(viewport.plugins.get(pluginName)).not.toBeNull();
+    expect(viewport.plugins.get(pluginName)).not.toBeUndefined();
+  }
+);
 
 // TODO: emits

@@ -599,15 +599,17 @@ const PLUGINS = [
 
 for (const plugin of PLUGINS) {
   if (props[plugin] != null) {
+    const options =
+      typeof props[plugin]! === 'object' ? props[plugin]!.options : undefined;
     if (plugin === 'snap') {
       const prop = props[plugin]!;
-      viewport.snap(prop.x, prop.y, prop.options);
+      viewport.snap(prop.x, prop.y, options as ISnapOptions);
     } else if (plugin === 'follow') {
       const prop = props[plugin]!;
-      viewport.follow(prop.target, prop.options);
+      viewport.follow(prop.target, options as IFollowOptions);
     } else {
       // @ts-ignore
-      viewport[plugin](props[plugin]!.options);
+      viewport[plugin](options);
     }
   }
 }
