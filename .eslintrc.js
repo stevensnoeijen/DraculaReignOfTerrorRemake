@@ -42,4 +42,5 @@ module.exports = {
     'jest/no-mocks-import': ['off'],
     '@typescript-eslint/ban-ts-comment': ['error'],
   },
+  ignorePatterns: ['components.d.ts'],
 };
