@@ -1,4 +1,3 @@
-import { Viewport } from 'pixi-viewport';
 import * as PIXI from 'pixi.js';
 
 export type PixiApplicationInstance = {
@@ -11,8 +10,4 @@ export type PixiTickerInstance = {
 
 export type PixiLoaderInstance = {
   loader: PIXI.Loader;
-};
-
-export type PixiViewportInstance = {
-  viewport: Viewport;
 };

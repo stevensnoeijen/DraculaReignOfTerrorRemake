@@ -11,7 +11,7 @@ declare module '@vue/runtime-core' {
     PixiApplication: typeof import('./src/components/pixi/PixiApplication.vue')['default']
     PixiLoader: typeof import('./src/components/pixi/PixiLoader.vue')['default']
     PixiTicker: typeof import('./src/components/pixi/PixiTicker.vue')['default']
-    PixiViewport: typeof import('./src/components/pixi/PixiViewport.vue')['default']
+    PixiViewport: typeof import('./src/components/pixi/viewport/PixiViewport.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

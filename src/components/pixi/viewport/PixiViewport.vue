@@ -21,8 +21,10 @@ import {
 } from 'pixi-viewport';
 import { DisplayObject } from '@pixi/display';
 
+import { isAnyPropertySet, omitUndefined } from '../utils';
+
 import { PixiViewportInstance } from './types';
-import { isAnyPropertySet, omitUndefined } from './utils';
+import { EVENTS } from './constants';
 
 const instance = getCurrentInstance();
 
@@ -838,39 +840,6 @@ const application = instance?.parent?.exposed?.application as PIXI.Application;
 if (application == null) {
   throw new Error('pixi-viewport must be used inside pixi-application');
 }
-
-const EVENTS = [
-  'clicked',
-  'drag-start',
-  'drag-end',
-  'drag-remove',
-  'pinch-start',
-  'pinch-end',
-  'pinch-remove',
-  'snap-start',
-  'snap-end',
-  'snap-remove',
-  'snap-zoom-start',
-  'snap-zoom-end',
-  'snap-zoom-remove',
-  'bounce-x-start',
-  'bounce-x-end',
-  'bounce-y-start',
-  'bounce-y-end',
-  'bounce-remove',
-  'wheel',
-  'wheel-remove',
-  'wheel-scroll',
-  'wheel-scroll-remove',
-  'mouse-edge-start',
-  'mouse-edge-end',
-  'mouse-edge-remove',
-  'moved',
-  'moved-end',
-  'zoomed',
-  'zoomed-end',
-  'frame-end',
-];
 
 onMounted(() => {
   EVENTS.forEach((event) =>
