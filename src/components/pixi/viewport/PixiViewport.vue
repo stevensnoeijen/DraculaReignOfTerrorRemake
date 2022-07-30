@@ -21,6 +21,7 @@ import {
 } from 'pixi-viewport';
 import { DisplayObject } from '@pixi/display';
 import EventEmitter from 'eventemitter3';
+import _ from 'lodash';
 
 import { isAnyPropertySet, omitUndefined } from '../utils';
 
@@ -582,10 +583,6 @@ const props = defineProps({
   },
 });
 
-const viewport = isAnyPropertySet(props)
-  ? new Viewport(omitUndefined(props))
-  : new Viewport();
-
 const PLUGINS = [
   'drag',
   'clamp',
@@ -599,6 +596,10 @@ const PLUGINS = [
   'clampZoom',
   'mouseEdges',
 ] as const;
+
+const viewport = isAnyPropertySet(props)
+  ? new Viewport(omitUndefined(_.omit(props, PLUGINS)))
+  : new Viewport();
 
 for (const plugin of PLUGINS) {
   if (props[plugin] != null) {

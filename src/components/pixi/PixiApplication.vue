@@ -9,7 +9,7 @@ import { onMounted, PropType } from 'vue';
 import { $ref } from 'vue/macros';
 import * as PIXI from 'pixi.js';
 
-import { isAnyPropertySet } from './utils';
+import { isAnyPropertySet, omitUndefined } from './utils';
 import { PixiApplicationInstance } from './types';
 
 const container = $ref<HTMLDivElement>();
@@ -246,7 +246,7 @@ const props = defineProps({
 });
 
 const application = new PIXI.Application(
-  isAnyPropertySet(props) ? props : undefined
+  isAnyPropertySet(props) ? omitUndefined(props) : undefined
 );
 
 defineExpose<PixiApplicationInstance>({
