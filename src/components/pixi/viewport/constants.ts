@@ -29,4 +29,6 @@ export const EVENTS = [
   'zoomed',
   'zoomed-end',
   'frame-end',
-];
+] as const;
+
+export type Event = typeof EVENTS[number];

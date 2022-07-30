@@ -89,6 +89,7 @@ export const Application = jest.fn().mockImplementation(() => {
     view: document.createElement('canvas'),
     stage: {
       addChild: jest.fn(),
+      removeChild: jest.fn(),
     },
   };
 });

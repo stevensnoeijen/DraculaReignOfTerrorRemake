@@ -20,11 +20,12 @@ import {
   Viewport,
 } from 'pixi-viewport';
 import { DisplayObject } from '@pixi/display';
+import EventEmitter from 'eventemitter3';
 
 import { isAnyPropertySet, omitUndefined } from '../utils';
 
 import { PixiViewportInstance } from './types';
-import { EVENTS } from './constants';
+import { EVENTS, Event } from './constants';
 
 const instance = getCurrentInstance();
 
@@ -744,7 +745,10 @@ const emits = defineEmits<{
    */
   (
     event: 'wheel',
-    args: { wheel: { dx: number; dy: number; dz: number }; viewport: Viewport }
+    object: {
+      wheel: { dx: number; dy: number; dz: number };
+      viewport: Viewport;
+    }
   ): void;
 
   /**
@@ -841,10 +845,17 @@ if (application == null) {
   throw new Error('pixi-viewport must be used inside pixi-application');
 }
 
+const listeners = new Map<Event, EventEmitter.ListenerFn>();
+
 onMounted(() => {
-  EVENTS.forEach((event) =>
-    viewport.addListener(event, (args) => emits(event, args))
-  );
+  // register all events from viewport to emit
+  EVENTS.forEach((event) => {
+    const listener: EventEmitter.ListenerFn = (...args) =>
+      // @ts-ignore
+      emits(event, ...args);
+    viewport.addListener(event, listener);
+    listeners.set(event, listener);
+  });
 
   // @ts-ignore
   application.stage.addChild(viewport);
@@ -854,7 +865,9 @@ onUnmounted(() => {
   // @ts-ignore
   application.stage.removeChild(viewport);
 
-  // TODO: cleanup listeners
+  listeners.forEach((listener, event) => {
+    if (listener != null) viewport.removeListener(event, listener);
+  });
 });
 
 defineExpose<PixiViewportInstance>({

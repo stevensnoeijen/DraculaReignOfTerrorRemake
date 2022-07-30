@@ -130,7 +130,7 @@ it('should set properties', () => {
   });
   expect(viewport.options.disableOnContextMenu).toBe(true);
   expect(viewport.options.divWheel).not.toEqual(document.body);
-  expect((viewport.options.ticker as MockedTicker).__name).toEqual(
+  expect((viewport.options.ticker as unknown as MockedTicker).__name).toEqual(
     ticker.__name
   );
 });
@@ -246,5 +246,31 @@ it.each(EVENTS.map((event) => [event]))(
   }
 );
 
-// TODO: all listeners registered on mount
-// TODO: all listeners removed on unmounted
+it('should register all listeners to all events', () => {
+  const wrapper = mount(PixiApplication, {
+    slots: {
+      default: [PixiViewport],
+    },
+  });
+  const component = wrapper.getComponent(PixiViewport);
+  const viewport = component.vm.viewport;
+
+  EVENTS.forEach((event) => {
+    expect(viewport.listenerCount(event)).toBe(1);
+  });
+});
+
+it('should remove all listeners to all events on unmount', () => {
+  const wrapper = mount(PixiApplication, {
+    slots: {
+      default: [PixiViewport],
+    },
+  });
+  wrapper.unmount();
+  const component = wrapper.getComponent(PixiViewport);
+  const viewport = component.vm.viewport;
+
+  EVENTS.forEach((event) => {
+    expect(viewport.listenerCount(event)).toBe(0);
+  });
+});
