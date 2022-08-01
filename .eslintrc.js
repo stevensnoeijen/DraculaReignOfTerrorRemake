@@ -18,7 +18,7 @@ module.exports = {
   plugins: ['import', 'unused-imports', 'jest', '@typescript-eslint'],
   rules: {
     'max-len': ['warn', { code: 80, ignorePattern: '^import\\W.*' }],
-    quotes: ['warn', 'single'],
+    quotes: ['warn', 'single', { avoidEscape: true }],
     semi: ['warn', 'always'],
     'import/order': [
       'warn',
