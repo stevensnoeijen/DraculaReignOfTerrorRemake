@@ -2,7 +2,7 @@ import { World, Attributes } from 'ecsy';
 import * as PIXI from 'pixi.js';
 import { DashLine } from 'pixi-dashed-line';
 
-import { Constants } from './../../Constants';
+import { Constants } from '../../Constants';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { Options } from '../../utils';
 

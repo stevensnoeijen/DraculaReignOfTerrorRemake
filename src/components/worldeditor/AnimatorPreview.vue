@@ -4,21 +4,21 @@
     <div>
       <label for="color">Color: </label>
       <select id="color" v-model="color">
-        <option v-for="color of animations.colors" :value="color" :key="color">
+        <option v-for="color of animations.colors" :key="color" :value="color">
           {{ color }}
         </option>
       </select>
 
       <label for="unit">Unit: </label>
       <select id="unit" v-model="unit">
-        <option v-for="unit of animations.units" :value="unit" :key="unit">
+        <option v-for="unit of animations.units" :key="unit" :value="unit">
           {{ unit }}
         </option>
       </select>
 
       <label for="animation">Animation: </label>
       <select id="animation" v-model="state">
-        <option v-for="state of animations.states" :value="state" :key="state">
+        <option v-for="state of animations.states" :key="state" :value="state">
           {{ state }}
         </option>
       </select>
@@ -27,8 +27,8 @@
       <select id="direction" v-model="direction">
         <option
           v-for="direction of animations.directions"
-          :value="direction"
           :key="direction"
+          :value="direction"
         >
           {{ direction }}
         </option>
@@ -42,10 +42,12 @@
             :screen-height="application.view.height"
             :interaction="application.renderer.plugins.interaction"
             :wheel="{
-              center: new PIXI.Point(
-                application.view.width / 2,
-                application.view.height / 2
-              ),
+              options: {
+                center: new PIXI.Point(
+                  application.view.width / 2,
+                  application.view.height / 2
+                ),
+              },
             }"
           />
         </template>
@@ -59,10 +61,11 @@ import { onMounted, onUnmounted, ref, watch } from 'vue';
 import * as PIXI from 'pixi.js';
 import { $ref } from 'vue/macros';
 
-import { PixiApplicationInstance, PixiViewportInstance } from '../pixi/types';
+import { PixiApplicationInstance } from '../pixi/types';
 import * as animations from '../../game/animation/utils';
 import { AnimationManager } from '../../game/animation/AnimationManager';
 import { Animator } from '../../game/animation/Animator';
+import { PixiViewportInstance } from '../pixi/viewport/types';
 
 const applicationInstance = ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();

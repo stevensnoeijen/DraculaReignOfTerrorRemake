@@ -1,11 +1,12 @@
 import { System, Entity, SystemQueries, World, Attributes } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { SelectableComponent } from './SelectableComponent';
 import { EntityHelper } from '../../EntityHelper';
 import { Vector2 } from '../../math/Vector2';
 import { Input } from '../../Input';
 import { getEntityAtPosition } from '../utils';
+
+import { SelectableComponent } from './SelectableComponent';
 import { isOnTeam } from './../utils/index';
 
 /**
