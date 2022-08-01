@@ -605,10 +605,6 @@ for (const plugin of PLUGINS) {
   if (props[plugin] != null) {
     const options =
       typeof props[plugin]! === 'object' ? props[plugin]!.options : undefined;
-    if (options == null) {
-      continue;
-    }
-
     if (plugin === 'snap') {
       const prop = props[plugin]!;
       viewport.snap(prop.x, prop.y, options as ISnapOptions);
@@ -858,7 +854,10 @@ onMounted(() => {
   // register all events from viewport to emit
   EVENTS.forEach((event) => {
     const listener: EventEmitter.ListenerFn = (...args) =>
-      viewport.addListener(event, listener);
+      // cast type of emits as it cannot check type of args
+      (emits as (event: string, ...args: any) => void)(event, ...args);
+
+    viewport.addListener(event, listener);
     listeners.set(event, listener);
   });
 
