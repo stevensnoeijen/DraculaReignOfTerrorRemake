@@ -128,12 +128,10 @@ const loadSprite = () => {
   animator = animationManager.createAnimator(sprite, color, unit);
   animator.set(state, direction);
 
-  // @ts-ignore
   viewportInstance.viewport.addChild(sprite);
 };
 
 onUnmounted(() => {
-  // @ts-ignore
   viewportInstance.viewport.removeChild(sprite);
 });
 

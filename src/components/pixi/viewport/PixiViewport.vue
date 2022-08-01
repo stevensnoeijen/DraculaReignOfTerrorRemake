@@ -605,6 +605,10 @@ for (const plugin of PLUGINS) {
   if (props[plugin] != null) {
     const options =
       typeof props[plugin]! === 'object' ? props[plugin]!.options : undefined;
+    if (options == null) {
+      continue;
+    }
+
     if (plugin === 'snap') {
       const prop = props[plugin]!;
       viewport.snap(prop.x, prop.y, options as ISnapOptions);
@@ -612,8 +616,10 @@ for (const plugin of PLUGINS) {
       const prop = props[plugin]!;
       viewport.follow(prop.target, options as IFollowOptions);
     } else {
-      // @ts-ignore
-      viewport[plugin](options);
+      // has to cast,
+      // because typescript does not know what type of options is passed
+      // type is guarenteed though the `defineProps`.
+      viewport[plugin](options as any);
     }
   }
 }
@@ -852,18 +858,14 @@ onMounted(() => {
   // register all events from viewport to emit
   EVENTS.forEach((event) => {
     const listener: EventEmitter.ListenerFn = (...args) =>
-      // @ts-ignore
-      emits(event, ...args);
-    viewport.addListener(event, listener);
+      viewport.addListener(event, listener);
     listeners.set(event, listener);
   });
 
-  // @ts-ignore
   application.stage.addChild(viewport);
 });
 
 onUnmounted(() => {
-  // @ts-ignore
   application.stage.removeChild(viewport);
 
   listeners.forEach((listener, event) => {

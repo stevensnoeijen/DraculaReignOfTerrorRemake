@@ -52,8 +52,9 @@ export const Loader = jest.fn().mockImplementation(() => {
     return {
       add: jest.fn((listener: SignalListeners) => listeners.push(listener)),
       dispatch: (...args: Parameters<SignalListeners>) => {
-        // @ts-ignore TODO: replace or remove ts-ignore
-        listeners.forEach((listener) => listener(...args));
+        // cast listener as any
+        // so typescript does not check the function's type arguments
+        listeners.forEach((listener) => (listener as any)(...args));
       },
       detach: jest.fn(),
     };
