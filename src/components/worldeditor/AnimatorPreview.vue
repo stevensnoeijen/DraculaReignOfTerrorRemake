@@ -104,7 +104,7 @@ onMounted(() => {
   if (app.loader.resources['unit'] != null) {
     loadSprite();
   } else {
-    app.loader.add('unit', '/assets/unit.json').load(() => {
+    app.loader.add('unit', 'assets/unit.json').load(() => {
       animationManager = new AnimationManager(
         app.loader.resources.unit.spritesheet!
       );
