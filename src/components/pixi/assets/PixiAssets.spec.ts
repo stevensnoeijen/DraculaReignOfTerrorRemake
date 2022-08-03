@@ -60,3 +60,15 @@ it('should set default properties when none are given', () => {
 
   expect(assets.resolver.basePath).toBe(null);
 });
+
+// TODO: add test for load one asset direct
+// TODO: add test for load multiple assets direct
+
+// TODO: add test for load one asset in the background
+// TODO: add test for load multiple assets in the background
+
+// TODO: add test for load one bundle direct
+// TODO: add test for load multiple bundles direct
+
+// TODO: add test for load one bundle in the background
+// TODO: add test for load multiple bundles in the background
