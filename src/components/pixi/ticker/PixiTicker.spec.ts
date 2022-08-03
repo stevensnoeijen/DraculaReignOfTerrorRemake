@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
 import { mount } from '@vue/test-utils';
 
-import { disableConsoleWarn } from '../../__tests__/utils';
+import { disableConsoleWarn } from '../../../__tests__/utils';
+import { MockedTicker } from '../__mocks__/pixi.js';
+import PixiApplication from '../app/PixiApplication.vue';
 
-import PixiApplication from './PixiApplication.vue';
 import PixiTicker from './PixiTicker.vue';
-import { MockedTicker } from './__mocks__/pixi.js';
 
 beforeEach(() => {
   jest.mocked(PIXI.Application).mockClear();
