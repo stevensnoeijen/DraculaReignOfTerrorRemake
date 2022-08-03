@@ -36,6 +36,15 @@
 
       <pixi-application ref="applicationInstance" :width="500" :height="500">
         <template #default="{ application }">
+          <pixi-loader
+            :load-resources="[
+              {
+                name: 'unit',
+                url: 'assets/unit.json',
+              },
+            ]"
+            @complete="loadedAssets"
+          />
           <pixi-viewport
             ref="viewportInstance"
             :screen-width="application.view.width"
@@ -57,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onUnmounted, ref, watch } from 'vue';
 import * as PIXI from 'pixi.js';
 import { $ref } from 'vue/macros';
 
@@ -98,20 +107,10 @@ let animationManager: AnimationManager;
 let animator: Animator;
 let sprite: PIXI.AnimatedSprite;
 
-onMounted(() => {
-  const app = applicationInstance.value!.application;
-
-  if (app.loader.resources['unit'] != null) {
-    loadSprite();
-  } else {
-    app.loader.add('unit', 'assets/unit.json').load(() => {
-      animationManager = new AnimationManager(
-        app.loader.resources.unit.spritesheet!
-      );
-      loadSprite();
-    });
-  }
-});
+const loadedAssets: PIXI.Loader.OnCompleteSignal = (loader, resources) => {
+  animationManager = new AnimationManager(resources.unit.spritesheet!);
+  loadSprite();
+};
 
 const loadSprite = () => {
   sprite = new PIXI.AnimatedSprite(

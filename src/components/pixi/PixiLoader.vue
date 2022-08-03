@@ -69,13 +69,13 @@ const props = defineProps({
 
   /**
    * @type boolean
-   * @default false
+   * @default true
    * @description Starts loading the queued resources.
    */
-  startLoading: {
+  autoLoad: {
     type: Boolean,
     required: false,
-    default: undefined,
+    default: true,
   },
 });
 
@@ -93,10 +93,6 @@ if (props.defaultQueryString != null)
 
 if (props.loadResources != null) {
   loader.add(props.loadResources);
-}
-
-if (props.startLoading === true) {
-  loader.load();
 }
 
 const emits = defineEmits<{
@@ -154,6 +150,10 @@ onMounted(() => {
     emits('complete', ...args)
   );
   onErrorNode = loader.onError.add((...args) => emits('error', ...args));
+
+  if (props.autoLoad) {
+    loader.load();
+  }
 });
 
 onUnmounted(() => {
