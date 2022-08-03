@@ -1,3 +1,4 @@
+import { AssetsClass } from '@pixi/assets';
 import * as PIXI from 'pixi.js';
 
 export type PixiApplicationInstance = {
@@ -10,4 +11,8 @@ export type PixiTickerInstance = {
 
 export type PixiLoaderInstance = {
   loader: PIXI.Loader;
+};
+
+export type PixiAssetsInstance = {
+  assets: AssetsClass;
 };
