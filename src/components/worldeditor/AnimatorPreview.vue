@@ -36,14 +36,14 @@
 
       <pixi-application ref="applicationInstance" :width="500" :height="500">
         <template #default="{ application }">
-          <pixi-loader
-            :load-resources="[
+          <pixi-assets
+            :load-assets="[
               {
-                name: 'unit',
-                url: 'assets/unit.json',
+                keysIn: 'units',
+                assetsIn: 'assets/unit.json',
               },
             ]"
-            @complete="loadedAssets"
+            @asset-loaded="loadedAssets"
           />
           <pixi-viewport
             ref="viewportInstance"
@@ -75,6 +75,7 @@ import { AnimationManager } from '../../game/animation/AnimationManager';
 import { Animator } from '../../game/animation/Animator';
 import { PixiViewportInstance } from '../pixi/viewport/types';
 import { PixiApplicationInstance } from '../pixi/app/types';
+import { AssetLoaded } from '../pixi/assets';
 
 const applicationInstance = ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();
@@ -107,8 +108,8 @@ let animationManager: AnimationManager;
 let animator: Animator;
 let sprite: PIXI.AnimatedSprite;
 
-const loadedAssets: PIXI.Loader.OnCompleteSignal = (loader, resources) => {
-  animationManager = new AnimationManager(resources.unit.spritesheet!);
+const loadedAssets: AssetLoaded<PIXI.Spritesheet> = (assetId, asset) => {
+  animationManager = new AnimationManager(asset);
   loadSprite();
 };
 
