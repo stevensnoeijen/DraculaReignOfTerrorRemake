@@ -70,11 +70,11 @@ import { onUnmounted, ref, watch } from 'vue';
 import * as PIXI from 'pixi.js';
 import { $ref } from 'vue/macros';
 
-import { PixiApplicationInstance } from '../pixi/types';
 import * as animations from '../../game/animation/utils';
 import { AnimationManager } from '../../game/animation/AnimationManager';
 import { Animator } from '../../game/animation/Animator';
 import { PixiViewportInstance } from '../pixi/viewport/types';
+import { PixiApplicationInstance } from '../pixi/app/types';
 
 const applicationInstance = ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();
