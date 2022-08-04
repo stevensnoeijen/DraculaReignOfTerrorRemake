@@ -72,6 +72,7 @@ it('should load asset direct', async () => {
     },
   };
   const wrapper = await mount(WrapperComponent);
+  const assetsComponent = wrapper.getComponent(PixiAssets);
   await wrapper.vm.$nextTick();
 
   expect(Assets.add).toHaveBeenCalledWith(
@@ -81,9 +82,8 @@ it('should load asset direct', async () => {
   );
   expect(Assets.load).toHaveBeenCalledWith('bunnyBooBoo', expect.any(Function));
 
-  // TODO: check emits
-  // expect(wrapper.emitted('asset-progress')).toHaveLength(1);
-  // expect(wrapper.emitted('asset-loaded')).toHaveLength(1);
+  expect(assetsComponent.emitted('assetProgress')).toHaveLength(1);
+  expect(assetsComponent.emitted('assetLoaded')).toHaveLength(1);
 });
 
 it('should load asset in the background', async () => {
@@ -145,6 +145,7 @@ it('should load bundle direct', async () => {
     },
   };
   const wrapper = await mount(WrapperComponent);
+  const assetsComponent = wrapper.getComponent(PixiAssets);
   await wrapper.vm.$nextTick();
 
   expect(Assets.addBundle).toHaveBeenCalledWith('animals', {
@@ -157,9 +158,8 @@ it('should load bundle direct', async () => {
     expect.any(Function)
   );
 
-  // TODO: check emits
-  // expect(wrapper.emitted('bundle-progress')).toHaveLength(1);
-  // expect(wrapper.emitted('bundle-loaded')).toHaveLength(1);
+  expect(assetsComponent.emitted('bundleProgress')).toHaveLength(1);
+  expect(assetsComponent.emitted('bundleLoaded')).toHaveLength(1);
 });
 
 it('should load bundle in the background', async () => {
