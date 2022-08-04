@@ -38,3 +38,5 @@ export type LoadBundle = {
 };
 
 export type LoadStrategy = 'direct' | 'background';
+
+export type AssetLoaded<T> = (assetId: string, asset: T) => void;

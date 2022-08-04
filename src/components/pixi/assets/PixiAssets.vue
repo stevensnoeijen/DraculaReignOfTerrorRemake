@@ -109,39 +109,45 @@ const emits = defineEmits<{
   /**
    * Called when one asset is loaded.
    */
-  <T>(event: 'assetLoaded', name: string, asset: T): void;
+  (event: 'assetLoaded', assetId: string, asset: any): void;
 
   /**
    * optional function that is called when progress on asset loading is made.
    * The function is passed a single parameter, `progress`,
    * which represents the percentage (0.0 - 1.0) of the assets loaded.
    */
-  (
-    event: 'bundleProgress',
-    bundleId: string | string[],
-    progress: number
-  ): void;
+  (event: 'bundleProgress', bundleId: string, progress: number): void;
 
   /**
    * Called when one bundle is loaded.
    */
-  (event: 'bundleLoaded', bundle: any): void;
+  (event: 'bundleLoaded', bundleId: string, bundle: any): void;
 }>();
 
+// TODO: refactor cleanup this code6
 onMounted(async () => {
   await assets.init(props.options);
 
   if (props.loadAssets != null) {
-    props.loadAssets.forEach((loadAsset) =>
-      assets.add(loadAsset.keysIn, loadAsset.assetsIn, loadAsset.data)
-    );
+    props.loadAssets.forEach((loadAsset) => {
+      assets.add(loadAsset.keysIn, loadAsset.assetsIn, loadAsset.data);
+    });
+
     if (props.loadAssetsStrategy === 'direct') {
       await Promise.all(
-        props.loadAssets.map((loadAsset) =>
-          assets.load(loadAsset.keysIn, (progress) =>
+        props.loadAssets.map(async (loadAsset) => {
+          const loadedAssets = await assets.load(loadAsset.keysIn, (progress) =>
             emits('assetProgress', loadAsset.keysIn, progress)
-          )
-        )
+          );
+
+          if (Array.isArray(loadAsset.keysIn)) {
+            loadAsset.keysIn.forEach((keyIn) => {
+              emits('assetLoaded', keyIn, loadedAssets[keyIn]);
+            });
+          } else {
+            emits('assetLoaded', loadAsset.keysIn, loadedAssets);
+          }
+        })
       );
     } else {
       props.loadAssets.forEach((loadAsset) =>
@@ -154,13 +160,17 @@ onMounted(async () => {
     props.loadBundles.forEach((loadBundle) =>
       assets.addBundle(loadBundle.bundleId, loadBundle.assets)
     );
+
     if (props.loadBundlesStrategy === 'direct') {
       await Promise.all(
-        props.loadBundles.map((loadBundle) =>
-          assets.loadBundle(loadBundle.bundleId, (progress) =>
-            emits('bundleProgress', loadBundle.bundleId, progress)
-          )
-        )
+        props.loadBundles.map(async (loadBundle) => {
+          const loadedBundle = await assets.loadBundle(
+            loadBundle.bundleId,
+            (progress) => emits('bundleProgress', loadBundle.bundleId, progress)
+          );
+
+          emits('bundleLoaded', loadBundle.bundleId, loadedBundle);
+        })
       );
     } else {
       props.loadBundles.forEach((loadBundle) =>
@@ -171,6 +181,13 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  assets.reset();
+  if (props.loadAssets != null) {
+    props.loadAssets.forEach((loadAsset) => assets.unload(loadAsset.keysIn));
+  }
+  if (props.loadBundles != null) {
+    props.loadBundles.forEach((loadBundle) =>
+      assets.unloadBundle(loadBundle.bundleId)
+    );
+  }
 });
 </script>

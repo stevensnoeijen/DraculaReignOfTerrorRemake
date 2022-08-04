@@ -2,10 +2,9 @@ import { AssetInitOptions, Assets } from '@pixi/assets';
 import { mount } from '@vue/test-utils';
 
 import PixiAssets from './PixiAssets.vue';
+import { LoadAsset, LoadBundle } from './types';
 
-afterEach(() => {
-  Assets.reset();
-});
+afterEach(() => jest.clearAllMocks());
 
 it('should expose Assets', () => {
   const wrapper = mount(PixiAssets);
@@ -15,21 +14,18 @@ it('should expose Assets', () => {
 });
 
 it('should init on mount', () => {
-  const wrapper = mount(PixiAssets);
-  const assets = wrapper.vm.assets;
+  mount(PixiAssets);
 
-  expect(assets['_initialized']).toBeTruthy();
+  expect(Assets.init).toBeCalled();
 });
 
-it('should reset on mount', () => {
-  const wrapper = mount(PixiAssets);
-  const assets = wrapper.vm.assets;
-  wrapper.unmount();
+it('should set default properties when none are given', () => {
+  mount(PixiAssets);
 
-  expect(assets['_initialized']).not.toBeTruthy();
+  expect(Assets.init).toBeCalledWith(undefined);
 });
 
-it('should set options', async () => {
+it('should set options', () => {
   const WrapperComponent = {
     template: `
     <PixiAssets
@@ -47,28 +43,197 @@ it('should set options', async () => {
       };
     },
   };
+  mount(WrapperComponent);
+
+  expect(Assets.init).toBeCalledWith({
+    basePath: 'htts://example.com/',
+  });
+});
+
+it('should load asset direct', async () => {
+  const WrapperComponent = {
+    template: `
+    <PixiAssets
+      :load-assets="assets"
+    />
+    `,
+    components: {
+      PixiAssets,
+    },
+    data() {
+      return {
+        assets: [
+          {
+            keysIn: 'bunnyBooBoo',
+            assetsIn: '/bunny.png',
+          },
+        ] as LoadAsset[],
+      };
+    },
+  };
   const wrapper = await mount(WrapperComponent);
-  const component = wrapper.findComponent(PixiAssets);
-  const assets = component.vm.assets;
+  await wrapper.vm.$nextTick();
 
-  expect(assets.resolver.basePath).toBe('htts://example.com/');
+  expect(Assets.add).toHaveBeenCalledWith(
+    'bunnyBooBoo',
+    '/bunny.png',
+    undefined
+  );
+  expect(Assets.load).toHaveBeenCalledWith('bunnyBooBoo', expect.any(Function));
+
+  // TODO: check emits
+  // expect(wrapper.emitted('asset-progress')).toHaveLength(1);
+  // expect(wrapper.emitted('asset-loaded')).toHaveLength(1);
 });
 
-it('should set default properties when none are given', () => {
-  const wrapper = mount(PixiAssets);
-  const assets = wrapper.vm.assets;
+it('should load asset in the background', async () => {
+  const WrapperComponent = {
+    template: `
+    <PixiAssets
+      :load-assets="assets"
+      load-assets-strategy="background"
+    />
+    `,
+    components: {
+      PixiAssets,
+    },
+    data() {
+      return {
+        assets: [
+          {
+            keysIn: 'bunnyBooBoo',
+            assetsIn: '/bunny.png',
+          },
+        ] as LoadAsset[],
+      };
+    },
+  };
+  const wrapper = await mount(WrapperComponent);
+  await wrapper.vm.$nextTick();
 
-  expect(assets.resolver.basePath).toBe(null);
+  expect(Assets.add).toHaveBeenCalledWith(
+    'bunnyBooBoo',
+    '/bunny.png',
+    undefined
+  );
+  expect(Assets.backgroundLoad).toHaveBeenCalledWith('bunnyBooBoo');
 });
 
-// TODO: add test for load one asset direct
-// TODO: add test for load multiple assets direct
+it('should load bundle direct', async () => {
+  const WrapperComponent = {
+    template: `
+    <PixiAssets
+      :load-bundles="bundles"
+    />
+    `,
+    components: {
+      PixiAssets,
+    },
+    data() {
+      return {
+        bundles: [
+          {
+            bundleId: 'animals',
+            assets: {
+              bunny: 'bunny.png',
+              chicken: 'chicken.png',
+              thumper: 'thumper.png',
+            },
+          },
+        ] as LoadBundle[],
+      };
+    },
+  };
+  const wrapper = await mount(WrapperComponent);
+  await wrapper.vm.$nextTick();
 
-// TODO: add test for load one asset in the background
-// TODO: add test for load multiple assets in the background
+  expect(Assets.addBundle).toHaveBeenCalledWith('animals', {
+    bunny: 'bunny.png',
+    chicken: 'chicken.png',
+    thumper: 'thumper.png',
+  });
+  expect(Assets.loadBundle).toHaveBeenCalledWith(
+    'animals',
+    expect.any(Function)
+  );
 
-// TODO: add test for load one bundle direct
-// TODO: add test for load multiple bundles direct
+  // TODO: check emits
+  // expect(wrapper.emitted('bundle-progress')).toHaveLength(1);
+  // expect(wrapper.emitted('bundle-loaded')).toHaveLength(1);
+});
 
-// TODO: add test for load one bundle in the background
-// TODO: add test for load multiple bundles in the background
+it('should load bundle in the background', async () => {
+  const WrapperComponent = {
+    template: `
+    <PixiAssets
+      :load-bundles="bundles"
+      load-bundles-strategy="background"
+    />
+    `,
+    components: {
+      PixiAssets,
+    },
+    data() {
+      return {
+        bundles: [
+          {
+            bundleId: 'animals',
+            assets: {
+              bunny: 'bunny.png',
+              chicken: 'chicken.png',
+              thumper: 'thumper.png',
+            },
+          },
+        ] as LoadBundle[],
+      };
+    },
+  };
+  const wrapper = await mount(WrapperComponent);
+  await wrapper.vm.$nextTick();
+
+  expect(Assets.addBundle).toHaveBeenCalledWith('animals', {
+    bunny: 'bunny.png',
+    chicken: 'chicken.png',
+    thumper: 'thumper.png',
+  });
+  expect(Assets.backgroundLoadBundle).toHaveBeenCalledWith('animals');
+});
+
+it('should unload assets on unmount', () => {
+  const WrapperComponent = {
+    template: `
+    <PixiAssets
+      :load-assets="assets"
+      :load-bundles="bundles"
+    />
+    `,
+    components: {
+      PixiAssets,
+    },
+    data() {
+      return {
+        assets: [
+          {
+            keysIn: 'thumper',
+            assetsIn: 'bunny.png',
+          },
+        ] as LoadAsset[],
+        bundles: [
+          {
+            bundleId: 'animals',
+            assets: {
+              bunny: 'bunny.png',
+              chicken: 'chicken.png',
+              thumper: 'thumper.png',
+            },
+          },
+        ] as LoadBundle[],
+      };
+    },
+  };
+  const wrapper = mount(WrapperComponent);
+  wrapper.unmount();
+
+  expect(Assets.unload).toBeCalledWith('thumper');
+  expect(Assets.unloadBundle).toBeCalledWith('animals');
+});
