@@ -124,70 +124,95 @@ const emits = defineEmits<{
   (event: 'bundleLoaded', bundleId: string, bundle: any): void;
 }>();
 
-// TODO: refactor cleanup this code6
-onMounted(async () => {
-  await assets.init(props.options);
+const loadAssetsDirect = async (loadAssets: LoadAsset[]) => {
+  await Promise.all(
+    loadAssets.map(async (loadAsset) => {
+      const loadedAssets = await assets.load(loadAsset.keysIn, (progress) =>
+        emits('assetProgress', loadAsset.keysIn, progress)
+      );
 
+      if (Array.isArray(loadAsset.keysIn)) {
+        loadAsset.keysIn.forEach((keyIn) => {
+          emits('assetLoaded', keyIn, loadedAssets[keyIn]);
+        });
+      } else {
+        emits('assetLoaded', loadAsset.keysIn, loadedAssets);
+      }
+    })
+  );
+};
+
+const loadAssetsInBackground = (loadAssets: LoadAsset[]) => {
+  loadAssets.forEach((loadAsset) => assets.backgroundLoad(loadAsset.keysIn));
+};
+
+const loadAssets = async () => {
   if (props.loadAssets != null) {
     props.loadAssets.forEach((loadAsset) => {
       assets.add(loadAsset.keysIn, loadAsset.assetsIn, loadAsset.data);
     });
 
     if (props.loadAssetsStrategy === 'direct') {
-      await Promise.all(
-        props.loadAssets.map(async (loadAsset) => {
-          const loadedAssets = await assets.load(loadAsset.keysIn, (progress) =>
-            emits('assetProgress', loadAsset.keysIn, progress)
-          );
-
-          if (Array.isArray(loadAsset.keysIn)) {
-            loadAsset.keysIn.forEach((keyIn) => {
-              emits('assetLoaded', keyIn, loadedAssets[keyIn]);
-            });
-          } else {
-            emits('assetLoaded', loadAsset.keysIn, loadedAssets);
-          }
-        })
-      );
+      await loadAssetsDirect(props.loadAssets);
     } else {
-      props.loadAssets.forEach((loadAsset) =>
-        assets.backgroundLoad(loadAsset.keysIn)
-      );
+      loadAssetsInBackground(props.loadAssets);
     }
   }
+};
 
+const loadBundlesDirect = async (loadBundles: LoadBundle[]) => {
+  await Promise.all(
+    loadBundles.map(async (loadBundle) => {
+      const loadedBundle = await assets.loadBundle(
+        loadBundle.bundleId,
+        (progress) => emits('bundleProgress', loadBundle.bundleId, progress)
+      );
+
+      emits('bundleLoaded', loadBundle.bundleId, loadedBundle);
+    })
+  );
+};
+
+const loadBundlesInBackground = (loadBundles: LoadBundle[]) =>
+  loadBundles.forEach((loadBundle) =>
+    assets.backgroundLoadBundle(loadBundle.bundleId)
+  );
+
+const loadBundles = async () => {
   if (props.loadBundles != null) {
     props.loadBundles.forEach((loadBundle) =>
       assets.addBundle(loadBundle.bundleId, loadBundle.assets)
     );
 
     if (props.loadBundlesStrategy === 'direct') {
-      await Promise.all(
-        props.loadBundles.map(async (loadBundle) => {
-          const loadedBundle = await assets.loadBundle(
-            loadBundle.bundleId,
-            (progress) => emits('bundleProgress', loadBundle.bundleId, progress)
-          );
-
-          emits('bundleLoaded', loadBundle.bundleId, loadedBundle);
-        })
-      );
+      await loadBundlesDirect(props.loadBundles);
     } else {
-      props.loadBundles.forEach((loadBundle) =>
-        assets.backgroundLoadBundle(loadBundle.bundleId)
-      );
+      loadBundlesInBackground(props.loadBundles);
     }
   }
+};
+
+onMounted(async () => {
+  await assets.init(props.options);
+  await Promise.all([loadAssets(), loadBundles()]);
 });
 
-onUnmounted(() => {
+const unloadAssets = () => {
   if (props.loadAssets != null) {
     props.loadAssets.forEach((loadAsset) => assets.unload(loadAsset.keysIn));
   }
+};
+
+const unloadBundles = () => {
   if (props.loadBundles != null) {
     props.loadBundles.forEach((loadBundle) =>
       assets.unloadBundle(loadBundle.bundleId)
     );
   }
+};
+
+onUnmounted(() => {
+  unloadAssets();
+  unloadBundles();
 });
 </script>
