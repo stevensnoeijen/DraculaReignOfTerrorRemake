@@ -8,6 +8,9 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AnimatorPreview: typeof import('./src/components/worldeditor/AnimatorPreview.vue')['default']
+    EntityEditor: typeof import('./src/components/worldeditor/EntityEditor.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
+    NTree: typeof import('naive-ui')['NTree']
     PixiApplication: typeof import('./src/components/pixi/app/PixiApplication.vue')['default']
     PixiAssets: typeof import('./src/components/pixi/assets/PixiAssets.vue')['default']
     PixiLoader: typeof import('./src/components/pixi/loader/PixiLoader.vue')['default']

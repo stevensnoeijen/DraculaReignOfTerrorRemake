@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import Checker from 'vite-plugin-checker';
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineConfig({
   plugins: [
@@ -16,6 +17,7 @@ export default defineConfig({
     }),
     Components({
       dts: true,
+      resolvers: [NaiveUiResolver()],
     }),
   ],
 });

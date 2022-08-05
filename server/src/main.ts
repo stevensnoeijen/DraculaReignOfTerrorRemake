@@ -9,9 +9,9 @@ app.use(cors());
 app.use(bodyParser.json());
 const port = 3000;
 
-app.post('/:file', (req, res) => {
+app.post('/:file*', (req, res) => {
   fs.writeFileSync(
-    __dirname + '/../../public/assets/' + req.params.file,
+    __dirname + '/../../public/' + req.params['file'] + req.params[0],
     JSON.stringify(req.body, undefined, 2)
   );
   res.status(202).send();

@@ -52,6 +52,7 @@
     "jest-junit": "^13.1.0",
     "jest-location-mock": "^1.0.9",
     "jest-webgl-canvas-mock": "^0.2.3",
+    "naive-ui": "^2.32.1",
     "node-fetch": "^3.2.10",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
