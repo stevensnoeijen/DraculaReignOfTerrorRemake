@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 
 import { MockedTicker } from '../__mocks__/pixi.js';
 import { disableConsoleWarn } from '../../../__tests__/utils';
-import PixiApplication from '../PixiApplication.vue';
+import PixiApplication from '../app/PixiApplication.vue';
 
 import PixiViewport from './PixiViewport.vue';
 import { EVENTS } from './constants';

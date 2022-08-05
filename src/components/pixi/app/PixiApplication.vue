@@ -1,6 +1,6 @@
 <template>
   <div ref="container">
-    <slot name="default" :application="application" />
+    <slot name="default" :application="application" :app="application" />
   </div>
 </template>
 
@@ -9,7 +9,8 @@ import { onMounted, PropType } from 'vue';
 import { $ref } from 'vue/macros';
 import * as PIXI from 'pixi.js';
 
-import { isAnyPropertySet, omitUndefined } from './utils';
+import { isAnyPropertySet, omitUndefined } from '../utils';
+
 import { PixiApplicationInstance } from './types';
 
 const container = $ref<HTMLDivElement>();
