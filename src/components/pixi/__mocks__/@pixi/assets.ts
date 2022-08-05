@@ -5,7 +5,7 @@ const mockedLoad = (urls: unknown, onProgress?: ProgressCallback) => {
 
   if (Array.isArray(urls)) {
     return Promise.resolve(
-      urls.reduce((prev, url) => ({ ...prev, url: 'mocked-data' }), {})
+      urls.reduce((prev, url) => ({ ...prev, [url]: 'mocked-data' }), {})
     );
   } else {
     return Promise.resolve('mocked-data');
