@@ -1,8 +1,47 @@
 [
   {
-    "name": "unit/swordsman"
+    "name": "unit/swordsmen",
+    "components": [
+      {
+        "type": "Health",
+        "properties": [
+          {
+            "field": "points",
+            "value": 9
+          },
+          {
+            "field": "maxPoints",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "type": "Alive",
+        "properties": [
+          {
+            "field": "alive",
+            "value": true
+          }
+        ]
+      }
+    ]
   },
   {
-    "name": "unit/crossbowmen"
+    "name": "unit/crossbowsoldiers",
+    "components": [
+      {
+        "type": "Health",
+        "properties": [
+          {
+            "field": "points",
+            "value": 6
+          },
+          {
+            "field": "maxPoints",
+            "value": 6
+          }
+        ]
+      }
+    ]
   }
 ]

@@ -1,5 +1,12 @@
 export type Entity = {
   name: string;
+  components: {
+    type: string;
+    properties: {
+      field: string;
+      value: string | boolean | number;
+    }[];
+  }[];
 };
 
 export const getEntities = async (): Promise<Entity[]> => {

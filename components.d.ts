@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     AnimatorPreview: typeof import('./src/components/worldeditor/AnimatorPreview.vue')['default']
     EntityEditor: typeof import('./src/components/worldeditor/EntityEditor.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NDataTable: typeof import('naive-ui')['NDataTable']
     NTree: typeof import('naive-ui')['NTree']
     PixiApplication: typeof import('./src/components/pixi/app/PixiApplication.vue')['default']
     PixiAssets: typeof import('./src/components/pixi/assets/PixiAssets.vue')['default']
