@@ -4,16 +4,7 @@
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2">
         <h3 class="text-l font-bold">Units:</h3>
-        <n-tree
-          :data="typesTree"
-          selectable
-          :selected-keys="[selectedUnit]"
-          :node-props="
-            ({ option }) => ({
-              onClick: () => handleTreeSelect(option),
-            })
-          "
-        />
+        <entity-tree v-model="entities" @select="handleTreeSelect" />
       </div>
       <div class="border-r-2 mr-2 pr-2">
         <h3 class="text-l font-bold">Properties:</h3>
@@ -39,20 +30,17 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataTableColumns, TreeOption } from 'naive-ui';
-import { computed, onMounted, watch } from 'vue';
+import type { DataTableColumns } from 'naive-ui';
+import { computed, onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
 
-let data: api.Entity[] = $ref([]);
-let typesTree = computed(() => {
-  return data.map((item): TreeOption => ({ label: item.name, key: item.name }));
-});
+let entities: api.Entity[] = $ref([]);
 
 let selectedUnit = $ref<string>();
-const handleTreeSelect = (option: TreeOption) => {
-  selectedUnit = option.key as string;
+const handleTreeSelect = (name: string) => {
+  selectedUnit = name;
 };
 
 type RowData = {
@@ -85,7 +73,7 @@ let selectedProperty = $ref<string[]>([]);
 let entityProperties = computed<RowData[]>(() => {
   if (selectedUnit == null) return [];
 
-  const unit = data.find((item) => item.name === selectedUnit)!;
+  const unit = entities.find((item) => item.name === selectedUnit)!;
 
   return unit.components
     .map((component) => {
@@ -100,23 +88,12 @@ let entityProperties = computed<RowData[]>(() => {
     .flat();
 });
 
-watch(
-  () => selectedUnit,
-  () => {
-    // default select first property
-    const unit = data.find((item) => item.name === selectedUnit)!;
-    selectedProperty = [
-      unit.components[0].type + '.' + unit.components[0].properties[0].field!,
-    ];
-  }
-);
-
 const save = async () => {
-  await api.saveEntities(data);
+  await api.saveEntities(entities);
 };
 
 onMounted(async () => {
-  data = await api.getEntities();
-  selectedUnit = data[0].name;
+  entities = await api.getEntities();
+  selectedUnit = entities[0].name;
 });
 </script>
