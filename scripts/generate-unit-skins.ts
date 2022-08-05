@@ -81,6 +81,6 @@ for (const unit of units) {
   }
 }
 fs.writeFileSync(__dirname + '/../public/assets/skins.json', JSON.stringify({
-  spritesheet: '/assets/unit.json',
+  spritesheet: '/assets/units-spritesheet.json',
   skins
 }, null, 2));
