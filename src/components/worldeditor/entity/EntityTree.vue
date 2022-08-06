@@ -2,7 +2,7 @@
   <n-tree
     :data="data"
     selectable
-    :selected-keys="[selectedUnit]"
+    :selected-keys="[selectedKeys]"
     :node-props="
       ({ option }) => ({
         onClick: () => handleTreeSelect(option),
@@ -23,7 +23,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', name: string): void;
+  (event: 'select', entity: Entity): void;
 }>();
 
 let data = computed(() => {
@@ -32,16 +32,21 @@ let data = computed(() => {
   );
 });
 
-let selectedUnit = $ref<string>(props.modelValue[0]?.name);
+let selectedKeys = $ref<string>(props.modelValue[0]?.name);
+
 const handleTreeSelect = (option: TreeOption) => {
-  selectedUnit = option.key as string;
-  emits('select', selectedUnit);
+  const entity = props.modelValue.find(
+    (entity) => entity.name === option.label
+  )!;
+  selectedKeys = entity.name;
+
+  emits('select', entity);
 };
 
 watch(
   () => props.modelValue,
   () => {
-    if (props.modelValue.length > 0) selectedUnit = props.modelValue[0].name;
+    if (props.modelValue.length > 0) selectedKeys = props.modelValue[0].name;
   }
 );
 </script>

@@ -4,14 +4,26 @@
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2">
         <h3 class="text-l font-bold">Units:</h3>
-        <entity-tree v-model="entities" @select="handleTreeSelect" />
+        <entity-tree
+          v-model="entities"
+          @select="(entity) => (selectedEntity = entity)"
+        />
       </div>
       <div class="border-r-2 mr-2 pr-2">
         <h3 class="text-l font-bold">Properties:</h3>
-        <entity-properties-table :properties="entityProperties" />
+        <entity-properties-table
+          :entity="selectedEntity"
+          @select="(property) => (selectedProperty = property)"
+        />
       </div>
-      <div class="bg-green-500 grow">
-        <div class="bg-green-600">propery name and input change</div>
+      <div class="grow">
+        <div>
+          <h3 class="text-l font-bold">Property editor:</h3>
+          <entity-property-editor
+            v-if="selectedProperty != null"
+            :model-value="selectedProperty"
+          />
+        </div>
         <div class="bg-green-800">
           Preview selected data
           <!-- <animator-preview /> -->
@@ -25,37 +37,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
-import { PropertyRowData } from './properties/types';
-import { Entity } from './types';
+import { Entity, Property } from './types';
 
 let entities: Entity[] = $ref([]);
-
-let selectedUnit = $ref<string>();
-const handleTreeSelect = (name: string) => {
-  selectedUnit = name;
-};
-
-let entityProperties = computed(() => {
-  if (selectedUnit == null) return [];
-
-  const unit = entities.find((item) => item.name === selectedUnit)!;
-
-  return unit.components
-    .map((component) => {
-      return component.properties.map(
-        (property): PropertyRowData => ({
-          component: component.type,
-          name: property.field,
-          value: String(property.value),
-        })
-      );
-    })
-    .flat();
-});
+let selectedEntity = $ref<Entity | null>(null);
+let selectedProperty = $ref<Property | null>(null);
 
 const save = async () => {
   await api.saveEntities(entities);
@@ -63,6 +53,7 @@ const save = async () => {
 
 onMounted(async () => {
   entities = await api.getEntities();
-  selectedUnit = entities[0].name;
+  selectedEntity = entities[0];
+  selectedProperty = selectedEntity.components[0].properties[0];
 });
 </script>

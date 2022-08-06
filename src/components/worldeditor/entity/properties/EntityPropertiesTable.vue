@@ -1,6 +1,6 @@
 <template>
   <n-data-table
-    v-model:checked-row-keys="selectedProperty"
+    v-model:checked-row-keys="selectedPropertyKey"
     :row-key="(row: PropertyRowData) => `${row.component}.${row.name}`"
     :columns="columns"
     :data="properties"
@@ -11,6 +11,8 @@
 import { DataTableColumns } from 'naive-ui';
 import { watch } from 'vue';
 import { $ref } from 'vue/macros';
+
+import { Entity, Property } from '../types.js';
 
 import { PropertyRowData } from './types.js';
 
@@ -34,18 +36,56 @@ const columns: DataTableColumns<PropertyRowData> = [
 ];
 
 const props = defineProps<{
-  properties: PropertyRowData[];
+  entity: Entity;
 }>();
 
-let selectedProperty = $ref<string[]>([]);
+const emits = defineEmits<{
+  (event: 'select', property: Property): void;
+}>();
+
+let properties = $ref<PropertyRowData[]>();
+let selectedPropertyKey = $ref<string[]>([]);
 
 watch(
-  () => props.properties,
+  () => props.entity,
   () => {
-    if (props.properties.length > 0)
-      selectedProperty[0] =
-        props.properties[0].component + '.' + props.properties[0].name;
-    else selectedProperty = [];
+    if (props.entity == null) return;
+    properties = props.entity.components
+      .map((component) => {
+        return component.properties.map(
+          (property): PropertyRowData => ({
+            component: component.type,
+            name: property.field,
+            value: String(property.value),
+          })
+        );
+      })
+      .flat();
+  }
+);
+
+watch(
+  () => properties,
+  () => {
+    if (properties.length > 0)
+      selectedPropertyKey[0] =
+        properties[0].component + '.' + properties[0].name;
+    else selectedPropertyKey = [];
+  }
+);
+
+watch(
+  () => selectedPropertyKey,
+  () => {
+    const { componentType, propertyField } = selectedPropertyKey[0].split('.');
+    const property = props.entity.components.find((component) => {
+      if (component.type !== componentType) return undefined;
+      return component.properties.find(
+        (property) => property.field === propertyField
+      );
+    });
+
+    emits('select', property);
   }
 );
 </script>
