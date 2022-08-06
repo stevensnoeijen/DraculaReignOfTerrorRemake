@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AnimatorPreview: typeof import('./src/components/worldeditor/AnimatorPreview.vue')['default']
     EntityEditor: typeof import('./src/components/worldeditor/entity/EntityEditor.vue')['default']
+    EntityPropertiesTable: typeof import('./src/components/worldeditor/entity/properties/EntityPropertiesTable.vue')['default']
     EntityTree: typeof import('./src/components/worldeditor/entity/EntityTree.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NDataTable: typeof import('naive-ui')['NDataTable']
