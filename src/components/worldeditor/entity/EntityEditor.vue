@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import type { DataTableColumns } from 'naive-ui';
-import { computed, onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
@@ -70,23 +70,32 @@ const columns: DataTableColumns<RowData> = [
 
 let selectedProperty = $ref<string[]>([]);
 
-let entityProperties = computed<RowData[]>(() => {
-  if (selectedUnit == null) return [];
+let entityProperties = $ref<RowData[]>([]);
 
-  const unit = entities.find((item) => item.name === selectedUnit)!;
+watch(
+  () => selectedUnit,
+  () => {
+    if (selectedUnit == null) return [];
 
-  return unit.components
-    .map((component) => {
-      return component.properties.map(
-        (property): RowData => ({
-          component: component.type,
-          name: property.field,
-          value: String(property.value),
-        })
-      );
-    })
-    .flat();
-});
+    const unit = entities.find((item) => item.name === selectedUnit)!;
+
+    entityProperties = unit.components
+      .map((component) => {
+        return component.properties.map(
+          (property): RowData => ({
+            component: component.type,
+            name: property.field,
+            value: String(property.value),
+          })
+        );
+      })
+      .flat();
+    if (entityProperties.length > 0)
+      selectedProperty[0] =
+        entityProperties[0].component + '.' + entityProperties[0].name;
+    else selectedProperty = [];
+  }
+);
 
 const save = async () => {
   await api.saveEntities(entities);
