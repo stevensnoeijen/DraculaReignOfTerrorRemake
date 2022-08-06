@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { DataTableColumns } from 'naive-ui';
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
 import { Entity, Property } from '../types.js';
@@ -43,33 +43,29 @@ const emits = defineEmits<{
   (event: 'select', property: Property): void;
 }>();
 
-let properties = $ref<PropertyRowData[]>();
 let selectedPropertyKey = $ref<string[]>([]);
+
+const properties = computed(() => {
+  if (props.entity == null) return [];
+  return props.entity.components
+    .map((component) => {
+      return component.properties.map(
+        (property): PropertyRowData => ({
+          component: component.type,
+          name: property.field,
+          value: String(property.value),
+        })
+      );
+    })
+    .flat();
+});
 
 watch(
   () => props.entity,
   () => {
-    if (props.entity == null) return;
-    properties = props.entity.components
-      .map((component) => {
-        return component.properties.map(
-          (property): PropertyRowData => ({
-            component: component.type,
-            name: property.field,
-            value: String(property.value),
-          })
-        );
-      })
-      .flat();
-  }
-);
-
-watch(
-  () => properties,
-  () => {
-    if (properties.length > 0)
+    if (properties.value.length > 0)
       selectedPropertyKey[0] =
-        properties[0].component + '.' + properties[0].name;
+        properties.value[0].component + '.' + properties.value[0].name;
     else selectedPropertyKey = [];
   }
 );
@@ -77,13 +73,17 @@ watch(
 watch(
   () => selectedPropertyKey,
   () => {
-    const { componentType, propertyField } = selectedPropertyKey[0].split('.');
-    const property = props.entity.components.find((component) => {
-      if (component.type !== componentType) return undefined;
-      return component.properties.find(
-        (property) => property.field === propertyField
-      );
+    const [componentType, propertyField] = selectedPropertyKey[0].split('.');
+
+    const component = props.entity.components.find((component) => {
+      if (component.type === componentType) return component;
     });
+    if (component == null) return;
+
+    const property = component.properties.find(
+      (property) => property.field === propertyField
+    );
+    if (property == null) return;
 
     emits('select', property);
   }

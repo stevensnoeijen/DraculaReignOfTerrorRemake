@@ -4,14 +4,17 @@
       <n-switch
         v-if="typeof property.value === 'boolean'"
         v-model:value="property.value"
+        @update:value="update"
       />
       <n-input
         v-if="typeof property.value === 'string'"
         v-model:value="property.value"
+        @update:value="update"
       />
       <n-input-number
         v-if="typeof property.value === 'number'"
         v-model:value="property.value"
+        @update:value="update"
       />
     </n-form-item>
   </n-form>
@@ -19,7 +22,7 @@
 
 <script lang="ts" setup>
 import { FormRules } from 'naive-ui';
-import { $ref } from 'vue/macros';
+import { computed } from 'vue';
 
 import { Property } from '../types';
 
@@ -34,6 +37,16 @@ const rules: FormRules = {
 const props = defineProps<{
   modelValue: Property;
 }>();
+const property = computed(() => props.modelValue);
 
-const property = $ref(props.modelValue);
+const emits = defineEmits<{
+  (event: 'update:modelValue', modelValue: Property): void;
+}>();
+
+const update = (value: Property['value']) => {
+  emits('update:modelValue', {
+    ...props.modelValue,
+    value,
+  });
+};
 </script>

@@ -4,10 +4,7 @@
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2">
         <h3 class="text-l font-bold">Units:</h3>
-        <entity-tree
-          v-model="entities"
-          @select="(entity) => (selectedEntity = entity)"
-        />
+        <entity-tree v-model="entities" @select="handleSelectEntity" />
       </div>
       <div class="border-r-2 mr-2 pr-2">
         <h3 class="text-l font-bold">Properties:</h3>
@@ -46,6 +43,11 @@ import { Entity, Property } from './types';
 let entities: Entity[] = $ref([]);
 let selectedEntity = $ref<Entity | null>(null);
 let selectedProperty = $ref<Property | null>(null);
+
+const handleSelectEntity = (entity: Entity) => {
+  selectedEntity = entity;
+  selectedProperty = selectedEntity.components[0].properties[0];
+};
 
 const save = async () => {
   await api.saveEntities(entities);
