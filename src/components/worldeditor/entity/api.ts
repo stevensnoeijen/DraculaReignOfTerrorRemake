@@ -1,13 +1,4 @@
-export type Entity = {
-  name: string;
-  components: {
-    type: string;
-    properties: {
-      field: string;
-      value: string | boolean | number;
-    }[];
-  }[];
-};
+import { Entity } from './types';
 
 export const getEntities = async (): Promise<Entity[]> => {
   const res = await fetch('/assets/entities.json');

@@ -30,8 +30,9 @@ import { $ref } from 'vue/macros';
 
 import * as api from './api';
 import { PropertyRowData } from './properties/types';
+import { Entity } from './types';
 
-let entities: api.Entity[] = $ref([]);
+let entities: Entity[] = $ref([]);
 
 let selectedUnit = $ref<string>();
 const handleTreeSelect = (name: string) => {

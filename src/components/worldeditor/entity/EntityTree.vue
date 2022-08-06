@@ -16,10 +16,10 @@ import { computed, watch } from 'vue';
 import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
-import * as api from './api';
+import { Entity } from './types.js';
 
 const props = defineProps<{
-  modelValue: api.Entity[];
+  modelValue: Entity[];
 }>();
 
 const emits = defineEmits<{
