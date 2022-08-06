@@ -34,11 +34,14 @@
 </template>
 
 <script lang="ts" setup>
+import { useMessage } from 'naive-ui';
 import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
 import { Entity, Property } from './types';
+
+const message = useMessage();
 
 let entities: Entity[] = $ref([]);
 let selectedEntity = $ref<Entity | null>(null);
@@ -51,6 +54,7 @@ const handleSelectEntity = (entity: Entity) => {
 
 const save = async () => {
   await api.saveEntities(entities);
+  message.info('saved entities to server');
 };
 
 onMounted(async () => {
