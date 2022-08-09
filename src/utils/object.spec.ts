@@ -1,4 +1,4 @@
-import { isAnyPropertySet, omitUndefined } from './utils';
+import { isAnyPropertySet, omitUndefined } from './object';
 
 describe('isAnyPropertySet', () => {
   it('should return false when empty object is given', () => {
