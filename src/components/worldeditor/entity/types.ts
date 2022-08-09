@@ -1,6 +1,8 @@
+export type PropertyValue = string | boolean | number;
+
 export type Property = {
   field: string;
-  value: string | boolean | number;
+  value: PropertyValue;
 };
 
 export type Entity = {

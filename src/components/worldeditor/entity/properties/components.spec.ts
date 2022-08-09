@@ -1,9 +1,9 @@
-import { getPropertiesByComponents } from './components';
+import { getEditableComponents } from './components';
 
-describe('getPropertiesByComponents', () => {
+describe('getEditableComponents', () => {
   it('should get all registered components', () => {
-    const properties = getPropertiesByComponents();
+    const properties = getEditableComponents();
 
-    expect(Object.keys(properties)).toHaveLength(20);
+    expect(Object.keys(properties)).toHaveLength(4);
   });
 });
