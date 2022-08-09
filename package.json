@@ -63,6 +63,7 @@
     "unplugin-vue-components": "^0.21.1",
     "vite": "^3.0.2",
     "vite-plugin-checker": "^0.4.9",
+    "vite-tsconfig-paths": "^3.5.0",
     "vue-tsc": "^0.39.0"
   }
 }
