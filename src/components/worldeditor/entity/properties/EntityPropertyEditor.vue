@@ -4,17 +4,14 @@
       <n-switch
         v-if="typeof property.value === 'boolean'"
         v-model:value="property.value"
-        @update:value="update"
       />
       <n-input
         v-if="typeof property.value === 'string'"
         v-model:value="property.value"
-        @update:value="update"
       />
       <n-input-number
         v-if="typeof property.value === 'number'"
         v-model:value="property.value"
-        @update:value="update"
       />
     </n-form-item>
   </n-form>
