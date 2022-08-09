@@ -6,13 +6,29 @@
         <h3 class="text-l font-bold">Units:</h3>
         <entity-tree v-model="entities" @select="handleSelectEntity" />
       </div>
-      <div class="border-r-2 mr-2 pr-2">
+      <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Properties:</h3>
         <entity-properties-table
           v-if="selectedEntity != null"
+          class="grow"
           :entity="selectedEntity"
           @select="(property) => (selectedProperty = property)"
         />
+        <div class="">
+          <n-popover trigger="hover">
+            <template #trigger>
+              <n-button> Add Component </n-button>
+            </template>
+            <div>
+              <n-button
+                v-for="(, key) in editableComponents"
+                @click="handleAddComponent(key)"
+              >
+                {{ key }}
+              </n-button>
+            </div>
+          </n-popover>
+        </div>
       </div>
       <div class="grow">
         <div>
@@ -40,6 +56,7 @@ import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
+import { getEditableComponents } from './properties/components';
 import { Entity, Property } from './types';
 
 const message = useMessage();
@@ -48,9 +65,30 @@ let entities: Entity[] = $ref([]);
 let selectedEntity = $ref<Entity | null>(null);
 let selectedProperty = $ref<Property | null>(null);
 
+const editableComponents = getEditableComponents();
+
 const handleSelectEntity = (entity: Entity) => {
   selectedEntity = entity;
   selectedProperty = selectedEntity.components[0].properties[0];
+};
+
+const handleAddComponent = (component: string) => {
+  const properties = editableComponents[component];
+  const componentProps = {
+    type: component,
+    properties: [],
+  };
+
+  for (const key in properties) {
+    const property = properties[key];
+
+    componentProps.properties.push({
+      field: key,
+      value: property.defaultValue,
+    });
+  }
+
+  selectedEntity!.components.push(componentProps);
 };
 
 const save = async () => {

@@ -19,6 +19,8 @@ declare module '@vue/runtime-core' {
     NInput: typeof import('naive-ui')['NInput']
     NInputNumber: typeof import('naive-ui')['NInputNumber']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NPopover: typeof import('naive-ui')['NPopover']
+    NPopselect: typeof import('naive-ui')['NPopselect']
     NSwitch: typeof import('naive-ui')['NSwitch']
     NTree: typeof import('naive-ui')['NTree']
     PixiApplication: typeof import('./src/components/pixi/app/PixiApplication.vue')['default']

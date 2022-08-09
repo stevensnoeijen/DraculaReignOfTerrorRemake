@@ -23,6 +23,20 @@
             "value": true
           }
         ]
+      },
+      {
+        "type": "AttackComponent",
+        "properties": [
+          {
+            "field": "aggroRange"
+          },
+          {
+            "field": "attackRange"
+          },
+          {
+            "field": "attackDamage"
+          }
+        ]
       }
     ]
   },

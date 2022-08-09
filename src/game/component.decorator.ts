@@ -36,11 +36,14 @@ export function EditableProperty(
       propertyName.toString(),
       options
     );
-    console.log('dec', { target });
 
     return descriptor;
   };
 }
+
+export const getEditableClasses = () => {
+  return Object.keys(reflector.getAll());
+};
 
 export const getEditableProperties = <
   ComponentType extends Class<Component<unknown>>
