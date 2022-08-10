@@ -3,7 +3,7 @@
     "name": "unit/swordsmen",
     "components": [
       {
-        "type": "Health",
+        "type": "HealthComponent",
         "properties": [
           {
             "field": "points",
@@ -16,25 +16,19 @@
         ]
       },
       {
-        "type": "Alive",
-        "properties": [
-          {
-            "field": "alive",
-            "value": true
-          }
-        ]
-      },
-      {
         "type": "AttackComponent",
         "properties": [
           {
-            "field": "aggroRange"
+            "field": "aggroRange",
+            "value": 3
           },
           {
-            "field": "attackRange"
+            "field": "attackRange",
+            "value": 2
           },
           {
-            "field": "attackDamage"
+            "field": "attackDamage",
+            "value": 2
           }
         ]
       }
@@ -44,7 +38,7 @@
     "name": "unit/crossbowsoldier",
     "components": [
       {
-        "type": "Health",
+        "type": "HealthComponent",
         "properties": [
           {
             "field": "points",

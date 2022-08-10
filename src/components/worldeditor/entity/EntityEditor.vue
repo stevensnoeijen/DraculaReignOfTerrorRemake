@@ -12,7 +12,7 @@
           v-if="selectedEntity != null"
           class="grow"
           :entity="selectedEntity"
-          @select="(property) => (selectedProperty = property)"
+          @select="handlePropertySelected"
         />
         <div class="">
           <n-popover trigger="hover">
@@ -36,6 +36,7 @@
           <entity-property-editor
             v-if="selectedProperty != null"
             :model-value="selectedProperty"
+            :component="selectedComponent"
           />
         </div>
         <div class="bg-green-800">
@@ -64,12 +65,19 @@ const message = useMessage();
 let entities: Entity[] = $ref([]);
 let selectedEntity = $ref<Entity | null>(null);
 let selectedProperty = $ref<Property | null>(null);
+let selectedComponent = $ref<string | null>(null);
 
 const editableComponents = getEditableComponents();
 
 const handleSelectEntity = (entity: Entity) => {
   selectedEntity = entity;
+  selectedComponent = selectedEntity.components[0].type;
   selectedProperty = selectedEntity.components[0].properties[0];
+};
+
+const handlePropertySelected = (property: Property, component: string) => {
+  selectedProperty = property;
+  selectedComponent = component;
 };
 
 const handleAddComponent = (component: string) => {
@@ -99,6 +107,7 @@ const save = async () => {
 onMounted(async () => {
   entities = await api.getEntities();
   selectedEntity = entities[0];
+  selectedComponent = selectedEntity.components[0].type;
   selectedProperty = selectedEntity.components[0].properties[0];
 });
 </script>

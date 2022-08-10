@@ -52,3 +52,10 @@ export const getEditableProperties = <
 ) => {
   return reflector.getAllByClass(classType);
 };
+
+export const getEditableComponentProperty = (
+  classType: Class<Component<unknown>> | string,
+  property: string
+) => {
+  return reflector.get(classType, property);
+};

@@ -40,7 +40,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', property: Property): void;
+  (event: 'select', property: Property, component: string): void;
 }>();
 
 let selectedPropertyKey = $ref<string[]>([]);
@@ -85,7 +85,7 @@ watch(
     );
     if (property == null) return;
 
-    emits('select', property);
+    emits('select', property, component.type);
   }
 );
 </script>

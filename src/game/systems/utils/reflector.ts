@@ -11,10 +11,15 @@ export class Reflector<Data> {
     this.map[classType.name]![propertyName] = data;
   }
 
-  public get(classType: Class<any>, propertyName: string): Data | null {
-    if (this.map[classType.name] == null) return null;
+  public get(
+    classType: Class<any> | string,
+    propertyName: string
+  ): Data | null {
+    const name = typeof classType === 'string' ? classType : classType.name;
 
-    return this.map[classType.name]![propertyName] ?? null;
+    if (this.map[name] == null) return null;
+
+    return this.map[name]![propertyName] ?? null;
   }
 
   public getAllByClass<ClassType extends Class<any>>(classType: ClassType) {
