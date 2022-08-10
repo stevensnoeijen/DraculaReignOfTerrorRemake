@@ -30,8 +30,8 @@
           </n-popover>
         </div>
       </div>
-      <div class="grow">
-        <div>
+      <div class="grow flex flex-col">
+        <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <entity-property-editor
             v-if="selectedProperty != null"
@@ -39,8 +39,8 @@
             :component="selectedComponent"
           />
         </div>
-        <div class="bg-green-800">
-          Preview selected data
+        <div class="grow">
+          <h4 class="text-l font-bold">Preview</h4>
           <!-- <animator-preview /> -->
         </div>
       </div>
