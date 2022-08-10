@@ -2,6 +2,7 @@
   <n-tree
     :data="data"
     selectable
+    block-line
     :selected-keys="[selectedKeys]"
     :node-props="
       ({ option }) => ({

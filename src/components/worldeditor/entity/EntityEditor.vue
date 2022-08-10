@@ -8,7 +8,7 @@
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Properties:</h3>
-        <entity-properties-table
+        <entity-components-tree
           v-if="selectedEntity != null"
           class="grow"
           :entity="selectedEntity"

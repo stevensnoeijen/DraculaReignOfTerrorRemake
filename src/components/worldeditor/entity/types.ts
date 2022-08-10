@@ -5,10 +5,12 @@ export type Property = {
   value: PropertyValue;
 };
 
+export type Component = {
+  type: string;
+  properties: Property[];
+};
+
 export type Entity = {
   name: string;
-  components: {
-    type: string;
-    properties: Property[];
-  }[];
+  components: Component[];
 };
