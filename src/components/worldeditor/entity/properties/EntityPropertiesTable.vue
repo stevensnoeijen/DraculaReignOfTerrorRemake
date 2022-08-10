@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { DataTableColumns } from 'naive-ui';
-import { computed, watch } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
 import { Entity, Property } from '../types.js';
@@ -61,16 +61,6 @@ const properties = computed(() => {
 });
 
 watch(
-  () => props.entity,
-  () => {
-    if (properties.value.length > 0)
-      selectedPropertyKey[0] =
-        properties.value[0].component + '.' + properties.value[0].name;
-    else selectedPropertyKey = [];
-  }
-);
-
-watch(
   () => selectedPropertyKey,
   () => {
     const [componentType, propertyField] = selectedPropertyKey[0].split('.');
@@ -88,4 +78,11 @@ watch(
     emits('select', property, component.type);
   }
 );
+
+onMounted(() => {
+  if (properties.value.length > 0)
+    selectedPropertyKey[0] =
+      properties.value[0].component + '.' + properties.value[0].name;
+  else selectedPropertyKey = [];
+});
 </script>
