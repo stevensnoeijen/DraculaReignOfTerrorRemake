@@ -3,11 +3,11 @@
     <h2 class="text-2xl font-bold">Entity Editor</h2>
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2">
-        <h3 class="text-l font-bold">Units:</h3>
+        <h3 class="text-l font-bold">Entities:</h3>
         <entity-tree v-model="entities" @select="handleSelectEntity" />
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
-        <h3 class="text-l font-bold">Properties:</h3>
+        <h3 class="text-l font-bold">Components:</h3>
         <entity-components-tree
           v-if="selectedEntity != null"
           class="grow"
