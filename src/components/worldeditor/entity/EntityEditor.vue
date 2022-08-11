@@ -21,13 +21,18 @@
               <n-button> Add Component </n-button>
             </template>
             <div>
-              <n-button
-                v-for="(value, key) in editableComponents"
-                :key="key"
-                @click="handleAddComponent(key)"
-              >
-                {{ key }}
-              </n-button>
+              <template v-if="Object.keys(addableComponents).length > 0">
+                <n-button
+                  v-for="(value, key) in addableComponents"
+                  :key="key"
+                  @click="handleAddComponent(key as string)"
+                >
+                  {{ key }}
+                </n-button>
+              </template>
+              <template v-else>
+                No other components available to add.
+              </template>
             </div>
           </n-popover>
         </div>
@@ -55,7 +60,7 @@
 
 <script lang="ts" setup>
 import { useMessage } from 'naive-ui';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
@@ -69,13 +74,25 @@ let selectedEntity = $ref<Entity | null>(null);
 let selectedProperty = $ref<Property | null>(null);
 let selectedComponent = $ref<string | null>(null);
 
-const editableComponents = getEditableComponents();
-
 const handleSelectEntity = (entity: Entity) => {
   selectedEntity = entity;
   selectedComponent = selectedEntity.components[0].type;
   selectedProperty = selectedEntity.components[0].properties[0];
 };
+
+const addableComponents = computed(() => {
+  const editableComponents = getEditableComponents();
+
+  if (selectedEntity == null) {
+    return [];
+  }
+
+  selectedEntity.components.forEach((component) => {
+    delete editableComponents[component.type];
+  });
+
+  return editableComponents;
+});
 
 const handlePropertySelected = (property: Property, component: string) => {
   selectedProperty = property;
@@ -83,7 +100,7 @@ const handlePropertySelected = (property: Property, component: string) => {
 };
 
 const handleAddComponent = (component: string) => {
-  const properties = editableComponents[component];
+  const properties = addableComponents.value[component];
   const componentProps = {
     type: component,
     properties: [],
@@ -98,6 +115,7 @@ const handleAddComponent = (component: string) => {
     });
   }
 
+  console.log(componentProps);
   selectedEntity!.components.push(componentProps);
 };
 
