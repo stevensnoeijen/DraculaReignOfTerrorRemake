@@ -21,7 +21,8 @@
             </template>
             <div>
               <n-button
-                v-for="(, key) in editableComponents"
+                v-for="(value, key) in editableComponents"
+                :key="key"
                 @click="handleAddComponent(key)"
               >
                 {{ key }}
@@ -34,7 +35,7 @@
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <entity-property-editor
-            v-if="selectedProperty != null"
+            v-if="selectedProperty != null && selectedComponent != null"
             :model-value="selectedProperty"
             :component="selectedComponent"
           />
@@ -57,8 +58,8 @@ import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
-import { getEditableComponents } from './properties/components';
-import { Entity, Property } from './types';
+import { getEditableComponents } from './components/utils';
+import { Component, Entity, Property, PropertyValue } from './types';
 
 const message = useMessage();
 
@@ -85,14 +86,14 @@ const handleAddComponent = (component: string) => {
   const componentProps = {
     type: component,
     properties: [],
-  };
+  } as Component;
 
   for (const key in properties) {
     const property = properties[key];
 
     componentProps.properties.push({
       field: key,
-      value: property.defaultValue,
+      value: property.defaultValue as PropertyValue,
     });
   }
 

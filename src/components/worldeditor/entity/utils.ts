@@ -32,7 +32,6 @@ const createTreeOption = (entity: Entity, layer: string): TreeOption => {
  */
 export const createTreeOptions = (entities: Entity[]): TreeOption[] => {
   const layers = getLayers(entities);
-  console.log(layers);
 
   return layers.map((layer) => ({
     label: layer,

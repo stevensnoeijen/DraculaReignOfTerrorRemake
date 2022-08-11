@@ -1,4 +1,4 @@
-import { getEditableComponents } from './components';
+import { getEditableComponents } from './utils';
 
 describe('getEditableComponents', () => {
   it('should get all registered components', () => {

@@ -5,9 +5,7 @@ import { Reflector } from './systems/utils/reflector';
 
 import { PropertyValue } from '~/components/worldeditor/entity/types';
 
-export interface EditablePropertyOptions<
-  Type extends PropertyValue | unknown = unknown
-> {
+export interface EditablePropertyOptions<Type extends PropertyValue> {
   type: Type;
 
   /**
@@ -21,10 +19,10 @@ export interface EditablePropertyOptions<
   nullable?: boolean;
 }
 
-const reflector = new Reflector<EditablePropertyOptions<unknown>>();
+const reflector = new Reflector<EditablePropertyOptions<any>>();
 
 export function EditableProperty(
-  options: EditablePropertyOptions<unknown>
+  options: EditablePropertyOptions<any>
 ): PropertyDecorator {
   return <D>(
     target: Object,

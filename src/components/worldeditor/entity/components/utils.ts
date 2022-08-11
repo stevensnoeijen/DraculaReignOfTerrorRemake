@@ -14,7 +14,7 @@ const COMPONENTS_CLASSES: readonly Class<Component<unknown>>[] = [
 
 export const getEditableComponents = (): Record<
   string,
-  Record<string, EditablePropertyOptions>
+  Record<string, EditablePropertyOptions<any>>
 > => {
   return COMPONENTS_CLASSES.reduce((curr, componentClass) => {
     const component = getEditableProperties(componentClass);
