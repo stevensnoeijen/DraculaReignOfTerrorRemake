@@ -3,6 +3,7 @@
     :data="data"
     selectable
     block-line
+    default-expand-all
     :selected-keys="[selectedKeys]"
     :node-props="
       ({ option }) => ({
@@ -17,7 +18,8 @@ import { computed, watch } from 'vue';
 import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
-import { Entity } from './types.js';
+import { Entity } from './types';
+import { createTreeOptions } from './utils';
 
 const props = defineProps<{
   modelValue: Entity[];
@@ -28,17 +30,23 @@ const emits = defineEmits<{
 }>();
 
 let data = computed(() => {
-  return props.modelValue.map(
-    (item): TreeOption => ({ label: item.name, key: item.name })
-  );
+  return createTreeOptions(props.modelValue);
 });
 
 let selectedKeys = $ref<string>(props.modelValue[0]?.name);
 
 const handleTreeSelect = (option: TreeOption) => {
-  const entity = props.modelValue.find(
-    (entity) => entity.name === option.label
-  )!;
+  let entity = props.modelValue.find((entity) => entity.name === option.key);
+  if (entity == null) {
+    // try finding first thing in that layer
+    entity = props.modelValue.find((entity) =>
+      entity.name.startsWith(option.key as string)
+    );
+  }
+  if (entity == null) {
+    return;
+  }
+
   selectedKeys = entity.name;
 
   emits('select', entity);
