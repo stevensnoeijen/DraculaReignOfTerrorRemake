@@ -17,9 +17,10 @@
 </template>
 
 <script lang="ts" setup>
-import { NTag, TreeOption } from 'naive-ui';
+import { NIcon, NTag, TreeOption } from 'naive-ui';
 import { computed, h, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
+import { Delete } from '@vicons/carbon';
 
 import { Entity, Component, Property } from '../types.js';
 
@@ -32,6 +33,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: 'select', property: Property, component: string): void;
+  (event: 'update:entity', entity: Entity): void;
 }>();
 
 let data = computed(() => {
@@ -75,7 +77,9 @@ const handleTreeSelect = (option: TreeOption) => {
     // component level
     const component = props.entity.components.find(
       (component) => component.type === option.key
-    )!;
+    );
+    if (component == null) return;
+
     selectedKeys = [propertyOptionKey(component, component.properties[0])];
 
     // select first component
@@ -96,12 +100,30 @@ const handleTreeSelect = (option: TreeOption) => {
   }
 };
 
+const deleteComponent = (componentType: string) => {
+  emits('update:entity', {
+    ...props.entity,
+    components: props.entity.components.filter(
+      (component) => component.type !== componentType
+    ),
+  });
+};
+
 const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (typeof option.key !== 'string') return;
 
   if (!option.key.includes('.')) {
     // component level
-    return;
+    return h(
+      NIcon,
+      {
+        title: "delete component with all it's properties",
+        onClick: () => deleteComponent(option.key as string),
+      },
+      {
+        default: () => h(Delete, {}),
+      }
+    );
   } else {
     // property level
     const [componentType, propertyField] = option.key.split('.');

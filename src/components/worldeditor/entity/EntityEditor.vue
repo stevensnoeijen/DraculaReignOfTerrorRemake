@@ -12,6 +12,7 @@
           v-if="selectedEntity != null"
           class="grow"
           :entity="selectedEntity"
+          @update:entity="(entity) => handleUpdateEntity(entity)"
           @select="handlePropertySelected"
         />
         <div class="">
@@ -98,6 +99,11 @@ const handleAddComponent = (component: string) => {
   }
 
   selectedEntity!.components.push(componentProps);
+};
+
+const handleUpdateEntity = (updatedEntity: Entity) => {
+  const entity = entities.find((entity) => entity.name === updatedEntity.name)!;
+  entity.components = updatedEntity.components;
 };
 
 const save = async () => {
