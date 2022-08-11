@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { NTag, TreeOption } from 'naive-ui';
-import { computed, h, onMounted } from 'vue';
+import { computed, h, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
 import { Entity, Component, Property } from '../types.js';
@@ -48,10 +48,23 @@ let data = computed(() => {
 });
 
 let selectedKeys = $ref<string[]>([
-  props.entity.components[0].type +
-    '.' +
-    props.entity.components[0].properties[0].field,
+  propertyOptionKey(
+    props.entity.components[0],
+    props.entity.components[0].properties[0]
+  ),
 ]);
+
+watch(
+  () => props.entity.components,
+  () => {
+    selectedKeys = [
+      propertyOptionKey(
+        props.entity.components[0],
+        props.entity.components[0].properties[0]
+      ),
+    ];
+  }
+);
 
 const handleTreeSelect = (option: TreeOption) => {
   if (typeof option.key !== 'string') {
@@ -77,6 +90,7 @@ const handleTreeSelect = (option: TreeOption) => {
       (property) => property.field === propertyField
     )!;
 
+    selectedKeys = [propertyOptionKey(component, property)];
     // select first component
     emits('select', property, component.type);
   }
