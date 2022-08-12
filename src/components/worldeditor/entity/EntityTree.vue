@@ -4,6 +4,7 @@
     selectable
     block-line
     default-expand-all
+    :render-suffix="renderSuffix"
     :selected-keys="[selectedKeys]"
     :node-props="
       ({ option }) => ({
@@ -14,12 +15,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from 'vue';
+import { computed, h, watch } from 'vue';
 import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
 import { Entity } from './types';
 import { createTreeOptions } from './utils';
+import TreeDeleteButtonVue from './TreeDeleteButton.vue';
 
 const props = defineProps<{
   modelValue: Entity[];
@@ -28,6 +30,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   (event: 'select', entity: Entity): void;
+  (event: 'update:modelValue', modelValue: Entity[]): void;
 }>();
 
 let data = computed(() => {
@@ -59,6 +62,25 @@ const handleTreeSelect = (option: TreeOption) => {
   selectedKeys = entity.name;
 
   emits('select', entity);
+};
+
+const deleteEntity = (entityName: string) => {
+  emits('update:modelValue', [
+    ...props.modelValue.filter((entity) => entity.name !== entityName),
+  ]);
+  emits('select', props.modelValue[0]);
+};
+
+const renderSuffix = ({ option }: { option: TreeOption }) => {
+  if (typeof option.key !== 'string') return;
+
+  if (!option.key.includes('.')) {
+    // component level
+    return h(TreeDeleteButtonVue, {
+      title: "delete entity with all it's properties",
+      onClick: () => deleteEntity(option.key as string),
+    });
+  }
 };
 
 watch(

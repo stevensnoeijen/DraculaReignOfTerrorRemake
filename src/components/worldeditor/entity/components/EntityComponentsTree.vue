@@ -17,12 +17,12 @@
 </template>
 
 <script lang="ts" setup>
-import { NIcon, NTag, TreeOption } from 'naive-ui';
+import { NTag, TreeOption } from 'naive-ui';
 import { computed, h, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
-import { Delete } from '@vicons/carbon';
 
 import { Entity, Component, Property } from '../types.js';
+import TreeDeleteButtonVue from '../TreeDeleteButton.vue';
 
 const propertyOptionKey = (component: Component, property: Property) =>
   `${component.type}.${property.field}`;
@@ -118,16 +118,10 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
 
   if (!option.key.includes('.')) {
     // component level
-    return h(
-      NIcon,
-      {
-        title: "delete component with all it's properties",
-        onClick: () => deleteComponent(option.key as string),
-      },
-      {
-        default: () => h(Delete, {}),
-      }
-    );
+    return h(TreeDeleteButtonVue, {
+      title: "delete component with all it's properties",
+      onClick: () => deleteComponent(option.key as string),
+    });
   } else {
     // property level
     const [componentType, propertyField] = option.key.split('.');

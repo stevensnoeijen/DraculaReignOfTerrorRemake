@@ -18,10 +18,12 @@ declare module '@vue/runtime-core' {
     NDataTable: typeof import('naive-ui')['NDataTable']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
+    NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NInputNumber: typeof import('naive-ui')['NInputNumber']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
+    NPopconfirm: typeof import('naive-ui')['NPopconfirm']
     NPopover: typeof import('naive-ui')['NPopover']
     NPopselect: typeof import('naive-ui')['NPopselect']
     NSwitch: typeof import('naive-ui')['NSwitch']
@@ -33,5 +35,6 @@ declare module '@vue/runtime-core' {
     PixiViewport: typeof import('./src/components/pixi/viewport/PixiViewport.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TreeDeleteButton: typeof import('./src/components/worldeditor/entity/TreeDeleteButton.vue')['default']
   }
 }
