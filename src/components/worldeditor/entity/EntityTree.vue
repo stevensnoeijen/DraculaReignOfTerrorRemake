@@ -23,6 +23,7 @@ import { createTreeOptions } from './utils';
 
 const props = defineProps<{
   modelValue: Entity[];
+  selected: Entity | null;
 }>();
 
 const emits = defineEmits<{
@@ -34,6 +35,14 @@ let data = computed(() => {
 });
 
 let selectedKeys = $ref<string>(props.modelValue[0]?.name);
+
+watch(
+  () => props.selected,
+  () => {
+    selectedKeys =
+      props.selected == null ? props.modelValue[0]?.name : props.selected.name;
+  }
+);
 
 const handleTreeSelect = (option: TreeOption) => {
   let entity = props.modelValue.find((entity) => entity.name === option.key);

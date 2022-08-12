@@ -59,12 +59,16 @@ let selectedKeys = $ref<string[]>([
 watch(
   () => props.entity.components,
   () => {
-    selectedKeys = [
-      propertyOptionKey(
-        props.entity.components[0],
-        props.entity.components[0].properties[0]
-      ),
-    ];
+    if (props.entity.components.length === 0) {
+      selectedKeys = [];
+    } else {
+      selectedKeys = [
+        propertyOptionKey(
+          props.entity.components[0],
+          props.entity.components[0].properties[0]
+        ),
+      ];
+    }
   }
 );
 

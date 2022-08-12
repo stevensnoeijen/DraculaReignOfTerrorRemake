@@ -2,9 +2,26 @@
   <div class="flex flex-col">
     <h2 class="text-2xl font-bold">Entity Editor</h2>
     <div class="grow flex">
-      <div class="border-r-2 mr-2 pr-2">
+      <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Entities:</h3>
-        <entity-tree v-model="entities" @select="handleSelectEntity" />
+        <entity-tree
+          v-model="entities"
+          class="grow"
+          :selected="selectedEntity"
+          @select="selectEntity"
+        />
+        <n-button @click="showAddEntityModal = true"> Add Entity </n-button>
+        <n-modal
+          v-model:show="showAddEntityModal"
+          preset="confirm"
+          title="Create Entity"
+          positive-text="Add"
+          negative-text="Cancel"
+          @positive-click="() => handleEntityCreate()"
+          @negative-click="() => {}"
+        >
+          <entity-create ref="entityCreateInstance" />
+        </n-modal>
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Components:</h3>
@@ -15,27 +32,23 @@
           @update:entity="(entity) => handleUpdateEntity(entity)"
           @select="handlePropertySelected"
         />
-        <div class="">
-          <n-popover trigger="hover">
-            <template #trigger>
-              <n-button> Add Component </n-button>
+        <n-popover trigger="hover">
+          <template #trigger>
+            <n-button> Add Component </n-button>
+          </template>
+          <div>
+            <template v-if="Object.keys(addableComponents).length > 0">
+              <n-button
+                v-for="(value, key) in addableComponents"
+                :key="key"
+                @click="handleAddComponent(key as string)"
+              >
+                {{ key }}
+              </n-button>
             </template>
-            <div>
-              <template v-if="Object.keys(addableComponents).length > 0">
-                <n-button
-                  v-for="(value, key) in addableComponents"
-                  :key="key"
-                  @click="handleAddComponent(key as string)"
-                >
-                  {{ key }}
-                </n-button>
-              </template>
-              <template v-else>
-                No other components available to add.
-              </template>
-            </div>
-          </n-popover>
-        </div>
+            <template v-else> No other components available to add. </template>
+          </div>
+        </n-popover>
       </div>
       <div class="grow flex flex-col">
         <div class="border-b-2 mb-2">
@@ -52,8 +65,8 @@
         </div>
       </div>
     </div>
-    <div>
-      <n-button @click="save"> Save </n-button>
+    <div class="border-t-2 mt-2 pt-2 flex flex-col items-end">
+      <n-button class="px-10" size="large" @click="save"> Save </n-button>
     </div>
   </div>
 </template>
@@ -65,7 +78,13 @@ import { $ref } from 'vue/macros';
 
 import * as api from './api';
 import { getEditableComponents } from './components/utils';
-import { Component, Entity, Property, PropertyValue } from './types';
+import {
+  Component,
+  Entity,
+  EntityCreateInstance,
+  Property,
+  PropertyValue,
+} from './types';
 
 const message = useMessage();
 
@@ -74,10 +93,30 @@ let selectedEntity = $ref<Entity | null>(null);
 let selectedProperty = $ref<Property | null>(null);
 let selectedComponent = $ref<string | null>(null);
 
-const handleSelectEntity = (entity: Entity) => {
+const selectEntity = (entity: Entity) => {
   selectedEntity = entity;
-  selectedComponent = selectedEntity.components[0].type;
-  selectedProperty = selectedEntity.components[0].properties[0];
+  if (selectedEntity.components.length > 0) {
+    selectedComponent = selectedEntity.components[0].type;
+    selectedProperty = selectedEntity.components[0].properties[0];
+  } else {
+    selectedComponent = null;
+    selectedProperty = null;
+  }
+};
+
+let showAddEntityModal = $ref(false);
+const entityCreateInstance = $ref<EntityCreateInstance>();
+const handleEntityCreate = async () => {
+  try {
+    await entityCreateInstance.form.validate();
+
+    entities.push(entityCreateInstance.entity);
+    selectEntity(entityCreateInstance.entity);
+
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
 
 const addableComponents = computed(() => {
@@ -105,17 +144,13 @@ const handleAddComponent = (component: string) => {
     type: component,
     properties: [],
   } as Component;
-
   for (const key in properties) {
     const property = properties[key];
-
     componentProps.properties.push({
       field: key,
       value: property.defaultValue as PropertyValue,
     });
   }
-
-  console.log(componentProps);
   selectedEntity!.components.push(componentProps);
 };
 

@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AnimatorPreview: typeof import('./src/components/worldeditor/AnimatorPreview.vue')['default']
     EntityComponentsTree: typeof import('./src/components/worldeditor/entity/components/EntityComponentsTree.vue')['default']
+    EntityCreate: typeof import('./src/components/worldeditor/entity/EntityCreate.vue')['default']
     EntityEditor: typeof import('./src/components/worldeditor/entity/EntityEditor.vue')['default']
     EntityPropertiesTable: typeof import('./src/components/worldeditor/entity/properties/EntityPropertiesTable.vue')['default']
     EntityPropertyEditor: typeof import('./src/components/worldeditor/entity/components/EntityPropertyEditor.vue')['default']
@@ -20,6 +21,7 @@ declare module '@vue/runtime-core' {
     NInput: typeof import('naive-ui')['NInput']
     NInputNumber: typeof import('naive-ui')['NInputNumber']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
+    NModal: typeof import('naive-ui')['NModal']
     NPopover: typeof import('naive-ui')['NPopover']
     NPopselect: typeof import('naive-ui')['NPopselect']
     NSwitch: typeof import('naive-ui')['NSwitch']
