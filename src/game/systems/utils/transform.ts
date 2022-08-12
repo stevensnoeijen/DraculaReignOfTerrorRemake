@@ -1,7 +1,10 @@
 import { Entity } from 'ecsy';
+
 import { Vector2 } from '../../math/Vector2';
 import { TransformComponent } from '../TransformComponent';
-import { Comparator, falsePredicate, keepOrder, Predicate } from '../../utils';
+import { Comparator, falsePredicate, keepOrder } from '../../utils';
+
+import { Predicate } from '~/utils/types';
 
 export const isInRange = (
   targetEntity: Entity,

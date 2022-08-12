@@ -1,9 +1,11 @@
 import { Entity } from 'ecsy';
 
-import { AliveComponent } from './../alive/AliveComponent';
 import { EntityHelper } from '../../EntityHelper';
-import { Predicate } from '../../utils';
 import { TeamComponent } from '../TeamComponent';
+
+import { AliveComponent } from './../alive/AliveComponent';
+
+import { Predicate } from '~/utils/types';
 export * from './transform';
 
 export const isOnTeam = (team: number): Predicate<Entity> => {
