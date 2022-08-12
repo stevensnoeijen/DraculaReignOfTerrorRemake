@@ -13,7 +13,7 @@ import { $ref } from 'vue/macros';
 
 import { Entity, EntityCreateInstance } from './types';
 
-const form = ref<FormInst>()!;
+const form = ref<FormInst>();
 
 const rules: FormRules = {
   name: {
@@ -30,6 +30,7 @@ const entity = $ref<Entity>({
 });
 
 defineExpose<EntityCreateInstance>({
+  // @ts-ignore
   form,
   entity,
 });

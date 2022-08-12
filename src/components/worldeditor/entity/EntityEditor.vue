@@ -139,6 +139,7 @@ const handlePropertySelected = (property: Property, component: string) => {
 };
 
 const handleAddComponent = (component: string) => {
+  // @ts-ignore
   const properties = addableComponents.value[component];
   const componentProps = {
     type: component,

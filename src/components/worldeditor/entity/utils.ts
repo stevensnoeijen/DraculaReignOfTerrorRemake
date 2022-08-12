@@ -1,41 +1,64 @@
 import { TreeOption } from 'naive-ui';
 
-import { Entity } from './types';
+import { Entity, isEntity } from './types';
 
-export const unique = (items: any[]) => {
-  return [...new Set(items)];
+import { removeNullable } from '~/utils/array';
+
+type EntityObject<T> = Record<string, T> & { __key?: string };
+type LayeredEntities = EntityObject<
+  Entity | (Record<string, Entity> & { __key?: string })
+>;
+
+const getLayeredEntities = (entities: Entity[]): LayeredEntities => {
+  const layered: LayeredEntities = {};
+
+  for (const entity of entities) {
+    let layers = entity.name.split('/');
+    const entitySubname = layers.splice(-1)[0]; // remove entity's name
+    layers = layers.filter(removeNullable);
+
+    let currentLayer = layered;
+    for (const layer of layers) {
+      if (currentLayer[layer] == null) {
+        currentLayer[layer] = {
+          __key:
+            (currentLayer.__key != null ? currentLayer.__key + '/' : '') +
+            layer,
+        } as EntityObject<Entity>;
+      }
+      currentLayer = currentLayer[layer] as EntityObject<Entity>;
+    }
+    currentLayer[entitySubname] = entity;
+  }
+
+  return layered;
 };
 
-export const getLayers = (entities: Entity[]): string[] => {
-  // get first layer names
-  const layers = entities.map((entity) => {
-    const layers = entity.name.split('/');
-    layers.splice(-1);
+const createChildren = (layeredEntities: LayeredEntities): TreeOption[] => {
+  const options: TreeOption[] = [];
 
-    return layers[0];
-  });
-  return unique(layers.flat());
+  for (const key of Object.keys(layeredEntities).sort()) {
+    if (key === '__key') {
+      continue;
+    }
+    const layerOrEntity = layeredEntities[key];
+    if (isEntity(layerOrEntity)) {
+      options.push({
+        label: key,
+        key: layerOrEntity.name,
+      });
+    } else {
+      options.push({
+        label: key,
+        key: layerOrEntity.__key,
+        children: createChildren(layerOrEntity),
+      });
+    }
+  }
+
+  return options;
 };
 
-const createTreeOption = (entity: Entity, layer: string): TreeOption => {
-  return {
-    label: entity.name.replace(`${layer}/`, ''),
-    key: entity.name,
-  };
-};
-
-/**
- * Only support 1 layer atm.
- *
- * @param {Entity[]} entities
- * @returns {TreeOption[]}
- */
 export const createTreeOptions = (entities: Entity[]): TreeOption[] => {
-  const layers = getLayers(entities);
-
-  return layers.map((layer) => ({
-    label: layer,
-    key: layer,
-    children: entities.map((entity) => createTreeOption(entity, layer)),
-  }));
+  return createChildren(getLayeredEntities(entities));
 };

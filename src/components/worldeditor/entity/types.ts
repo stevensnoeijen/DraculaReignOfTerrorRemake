@@ -17,6 +17,10 @@ export type Entity = {
   components: Component[];
 };
 
+export const isEntity = (entity: object): entity is Entity => {
+  return 'name' in entity;
+};
+
 export type EntityCreateInstance = {
   form: FormInst;
   entity: Entity;
