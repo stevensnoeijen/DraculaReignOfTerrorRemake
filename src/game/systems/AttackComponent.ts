@@ -1,7 +1,5 @@
 import { Component, Entity, Types } from 'ecsy';
 
-import { EditableProperty } from '../component.decorator';
-
 import { HealthComponent } from './health/HealthComponent';
 
 interface AttackComponentProps {
@@ -17,22 +15,8 @@ export class AttackComponent extends Component<AttackComponentProps> {
     attackDamage: { type: Types.Number },
   };
 
-  @EditableProperty({
-    type: Number,
-    nullable: false,
-  })
   aggroRange!: number;
-
-  @EditableProperty({
-    type: Number,
-    nullable: false,
-  })
   attackRange!: number;
-
-  @EditableProperty({
-    type: Number,
-    nullable: false,
-  })
   attackDamage!: number;
 
   attack(enemy: Entity): void {

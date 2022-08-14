@@ -26,7 +26,7 @@ const rules: FormRules = {
 
 const entity = $ref<Entity>({
   name: '',
-  components: [],
+  properties: [],
 });
 
 defineExpose<EntityCreateInstance>({

@@ -25,38 +25,20 @@
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Components:</h3>
-        <entity-components-tree
+        <entity-properties-tree
           v-if="selectedEntity != null"
           class="grow"
           :entity="selectedEntity"
           @update:entity="(entity) => handleUpdateEntity(entity)"
           @select="handlePropertySelected"
         />
-        <n-popover trigger="hover">
-          <template #trigger>
-            <n-button> Add Component </n-button>
-          </template>
-          <div>
-            <template v-if="Object.keys(addableComponents).length > 0">
-              <n-button
-                v-for="(value, key) in addableComponents"
-                :key="key"
-                @click="handleAddComponent(key as string)"
-              >
-                {{ key }}
-              </n-button>
-            </template>
-            <template v-else> No other components available to add. </template>
-          </div>
-        </n-popover>
       </div>
       <div class="grow flex flex-col">
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <entity-property-editor
-            v-if="selectedProperty != null && selectedComponent != null"
+            v-if="selectedProperty != null"
             :model-value="selectedProperty"
-            :component="selectedComponent"
           />
         </div>
         <div class="grow">
@@ -73,33 +55,23 @@
 
 <script lang="ts" setup>
 import { useMessage } from 'naive-ui';
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
-import { getEditableComponents } from './components/utils';
-import {
-  Component,
-  Entity,
-  EntityCreateInstance,
-  Property,
-  PropertyValue,
-} from './types';
+import { Entity, EntityCreateInstance, Property } from './types';
 
 const message = useMessage();
 
 let entities: Entity[] = $ref([]);
 let selectedEntity = $ref<Entity | null>(null);
 let selectedProperty = $ref<Property | null>(null);
-let selectedComponent = $ref<string | null>(null);
 
 const selectEntity = (entity: Entity) => {
   selectedEntity = entity;
-  if (selectedEntity.components.length > 0) {
-    selectedComponent = selectedEntity.components[0].type;
-    selectedProperty = selectedEntity.components[0].properties[0];
+  if (selectedEntity.properties.length > 0) {
+    selectedProperty = selectedEntity.properties[0];
   } else {
-    selectedComponent = null;
     selectedProperty = null;
   }
 };
@@ -119,45 +91,13 @@ const handleEntityCreate = async () => {
   }
 };
 
-const addableComponents = computed(() => {
-  const editableComponents = getEditableComponents();
-
-  if (selectedEntity == null) {
-    return [];
-  }
-
-  selectedEntity.components.forEach((component) => {
-    delete editableComponents[component.type];
-  });
-
-  return editableComponents;
-});
-
-const handlePropertySelected = (property: Property, component: string) => {
+const handlePropertySelected = (property: Property) => {
   selectedProperty = property;
-  selectedComponent = component;
-};
-
-const handleAddComponent = (component: string) => {
-  // @ts-ignore
-  const properties = addableComponents.value[component];
-  const componentProps = {
-    type: component,
-    properties: [],
-  } as Component;
-  for (const key in properties) {
-    const property = properties[key];
-    componentProps.properties.push({
-      field: key,
-      value: property.defaultValue as PropertyValue,
-    });
-  }
-  selectedEntity!.components.push(componentProps);
 };
 
 const handleUpdateEntity = (updatedEntity: Entity) => {
   const entity = entities.find((entity) => entity.name === updatedEntity.name)!;
-  entity.components = updatedEntity.components;
+  entity.properties = updatedEntity.properties;
 };
 
 const save = async () => {
@@ -168,7 +108,7 @@ const save = async () => {
 onMounted(async () => {
   entities = await api.getEntities();
   selectedEntity = entities[0];
-  selectedComponent = selectedEntity.components[0].type;
-  selectedProperty = selectedEntity.components[0].properties[0];
+  selectedProperty = selectedEntity.properties[0];
 });
 </script>
+getObjects

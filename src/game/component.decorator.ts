@@ -1,5 +1,4 @@
 import { Class } from 'utility-types';
-import { Component } from 'ecsy';
 
 import { Reflector } from './systems/utils/reflector';
 
@@ -43,16 +42,14 @@ export const getEditableClasses = () => {
   return Object.keys(reflector.getAll());
 };
 
-export const getEditableProperties = <
-  ComponentType extends Class<Component<unknown>>
->(
+export const getEditableProperties = <ComponentType extends Class<unknown>>(
   classType: ComponentType
 ) => {
   return reflector.getAllByClass(classType);
 };
 
-export const getEditableComponentProperty = (
-  classType: Class<Component<unknown>> | string,
+export const getEditableProperty = (
+  classType: Class<unknown> | string,
   property: string
 ) => {
   return reflector.get(classType, property);

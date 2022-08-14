@@ -22,7 +22,8 @@ import { FormRules } from 'naive-ui';
 import { computed } from 'vue';
 
 import { Property } from '../types';
-import { getEditableComponentProperty } from '../../../../game/component.decorator';
+import { getEditableProperty } from '../../../../game/component.decorator';
+import { Unit } from '../../../../game/Unit';
 
 const rules: FormRules = {
   value: {
@@ -34,13 +35,9 @@ const rules: FormRules = {
 
 const props = defineProps<{
   modelValue: Property;
-  component: string;
 }>();
 const property = computed(() => props.modelValue);
-const type = getEditableComponentProperty(
-  props.component,
-  props.modelValue.field
-)?.type;
+const type = getEditableProperty(Unit, props.modelValue.field)?.type;
 
 const emits = defineEmits<{
   (event: 'update:modelValue', modelValue: Property): void;

@@ -14,7 +14,7 @@ export type Component = {
 
 export type Entity = {
   name: string;
-  components: Component[];
+  properties: Property[];
 };
 
 export const isEntity = (entity: object): entity is Entity => {

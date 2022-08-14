@@ -1,53 +1,110 @@
 [
   {
     "name": "unit/swordsmen",
-    "components": [
+    "properties": [
       {
-        "type": "HealthComponent",
-        "properties": [
-          {
-            "field": "points",
-            "value": 9
-          },
-          {
-            "field": "maxPoints",
-            "value": 9
-          }
+        "field": "healthPointsMax",
+        "value": 9
+      },
+      {
+        "field": "combatAggroRange",
+        "value": 3
+      },
+      {
+        "field": "combatAttackRange",
+        "value": 2
+      },
+      {
+        "field": "combatAttackDamage",
+        "value": 2
+      },
+      {
+        "field": "spriteModel",
+        "value": "test"
+      },
+      {
+        "field": "soundMove",
+        "value": [
+          "test"
         ]
       },
       {
-        "type": "AttackComponent",
-        "properties": [
-          {
-            "field": "aggroRange",
-            "value": 3
-          },
-          {
-            "field": "attackRange",
-            "value": 2
-          },
-          {
-            "field": "attackDamage",
-            "value": 2
-          }
+        "field": "soundAttackTarget",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundAttackEffect",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundDead",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundDeadByCatapult",
+        "value": [
+          "test"
         ]
       }
     ]
   },
   {
     "name": "unit/crossbowsoldier",
-    "components": [
+    "properties": [
       {
-        "type": "HealthComponent",
-        "properties": [
-          {
-            "field": "points",
-            "value": 7
-          },
-          {
-            "field": "maxPoints",
-            "value": 6
-          }
+        "field": "healthPointsMax",
+        "value": 9
+      },
+      {
+        "field": "combatAggroRange",
+        "value": 4
+      },
+      {
+        "field": "combatAttackRange",
+        "value": 2
+      },
+      {
+        "field": "combatAttackDamage",
+        "value": 2
+      },
+      {
+        "field": "spriteModel",
+        "value": "test"
+      },
+      {
+        "field": "soundMove",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundAttackTarget",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundAttackEffect",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundDead",
+        "value": [
+          "test"
+        ]
+      },
+      {
+        "field": "soundDeadByCatapult",
+        "value": [
+          "test"
         ]
       }
     ]
