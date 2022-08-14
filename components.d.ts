@@ -30,7 +30,7 @@ declare module '@vue/runtime-core' {
     NPopselect: typeof import('naive-ui')['NPopselect']
     NSwitch: typeof import('naive-ui')['NSwitch']
     NTree: typeof import('naive-ui')['NTree']
-    ObjectCreate: typeof import('./src/components/worldeditor/objects/ObjectCreate.vue')['default']
+    ObjectCreate: typeof import('./src/components/worldeditor/objects/create/ObjectCreate.vue')['default']
     ObjectPropertiesTree: typeof import('./src/components/worldeditor/objects/properties/ObjectPropertiesTree.vue')['default']
     ObjectPropertyEditor: typeof import('./src/components/worldeditor/objects/properties/ObjectPropertyEditor.vue')['default']
     ObjectsEditor: typeof import('./src/components/worldeditor/objects/ObjectsEditor.vue')['default']

@@ -1,4 +1,4 @@
-import { EditableProperty } from './component.decorator';
+import { EditableProperty } from './decorator';
 
 export class Unit {
   @EditableProperty({
@@ -26,7 +26,7 @@ export class Unit {
   combatAttackDamage!: number;
 
   @EditableProperty({
-    type: [String],
+    type: String,
     nullable: false,
   })
   spriteModel!: string;
