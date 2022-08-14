@@ -4,7 +4,7 @@
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Entities:</h3>
-        <entity-tree
+        <object-tree
           v-model="entities"
           class="grow"
           :selected="selectedEntity"
@@ -20,12 +20,12 @@
           @positive-click="() => handleEntityCreate()"
           @negative-click="() => {}"
         >
-          <entity-create ref="entityCreateInstance" />
+          <object-create ref="entityCreateInstance" />
         </n-modal>
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Components:</h3>
-        <entity-properties-tree
+        <object-properties-tree
           v-if="selectedEntity != null"
           class="grow"
           :entity="selectedEntity"
@@ -36,7 +36,7 @@
       <div class="grow flex flex-col">
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
-          <entity-property-editor
+          <object-property-editor
             v-if="selectedProperty != null"
             :model-value="selectedProperty"
           />
