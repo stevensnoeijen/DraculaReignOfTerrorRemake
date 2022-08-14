@@ -101,12 +101,12 @@ const handleUpdateEntity = (updatedEntity: Entity) => {
 };
 
 const save = async () => {
-  await api.saveEntities(entities);
+  await api.saveObjects(entities);
   message.info('saved entities to server');
 };
 
 onMounted(async () => {
-  entities = await api.getEntities();
+  entities = await api.getObjects();
   selectedEntity = entities[0];
   selectedProperty = selectedEntity.properties[0];
 });
