@@ -2,8 +2,18 @@
   <n-form :model="modelValue" :rules="rules" label-placement="left">
     <n-form-item :label="modelValue.field" path="value">
       <n-input
-        v-if="type === String"
+        v-if="type === String && !property.field.startsWith('sound')"
         v-model:value="(property.value as string)"
+      />
+      <n-select
+        v-if="
+          (type === String || Array.isArray(type)) &&
+          property.field.startsWith('sound')
+        "
+        v-model:value="(property.value as string)"
+        filterable
+        :multiple="Array.isArray(type)"
+        :options="options"
       />
       <n-switch
         v-else-if="type === Boolean"
@@ -19,12 +29,16 @@
 </template>
 
 <script lang="ts" setup>
-import { FormRules } from 'naive-ui';
-import { computed } from 'vue';
+import { FormRules, SelectOption } from 'naive-ui';
+import { computed, onMounted, onUpdated } from 'vue';
+import { $ref } from 'vue/macros';
 
 import { getEditableProperty } from '../../../../game/objects/decorator';
 import { Unit } from '../../../../game/objects/Unit';
 import { Property } from '../ObjectsJson';
+import { getSounds } from '../api';
+
+import { soundsToSelectOptions } from './utils';
 
 const rules: FormRules = {
   value: {
@@ -37,13 +51,30 @@ const rules: FormRules = {
 const props = defineProps<{
   modelValue: Property;
 }>();
+defineEmits<{
+  (event: 'update:modelValue', modelValue: Property): void;
+}>();
 
 const property = computed(() => props.modelValue);
 const type = computed(
   () => getEditableProperty(Unit, props.modelValue.field)?.type
 );
 
-defineEmits<{
-  (event: 'update:modelValue', modelValue: Property): void;
-}>();
+// TODO: move this to the property itself
+let options: SelectOption[] = $ref([]);
+const loadOptions = async () => {
+  if (props.modelValue.field.includes('sound')) {
+    const sounds = await getSounds();
+    options = soundsToSelectOptions(sounds);
+  } else {
+    options = [];
+  }
+};
+
+onMounted(async () => {
+  await loadOptions();
+});
+onUpdated(async () => {
+  await loadOptions();
+});
 </script>

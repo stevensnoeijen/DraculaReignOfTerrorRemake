@@ -1,3 +1,5 @@
+import * as audiosprite from 'audiosprite';
+
 import { GameObject } from './ObjectsJson';
 
 export const getObjects = async (): Promise<GameObject[]> => {
@@ -14,4 +16,10 @@ export const saveObjects = async (entities: GameObject[]) => {
     },
     body: JSON.stringify(entities),
   });
+};
+
+export const getSounds = async (): Promise<audiosprite.Result> => {
+  const res = await fetch('/assets/sounds.json');
+
+  return res.json();
 };
