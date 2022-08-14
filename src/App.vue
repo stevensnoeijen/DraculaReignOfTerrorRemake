@@ -1,5 +1,8 @@
 <template>
-  <n-message-provider>
-    <router-view />
-  </n-message-provider>
+  <Suspense>
+    <n-message-provider>
+      <router-view />
+    </n-message-provider>
+    <template #fallback> Loading... </template>
+  </Suspense>
 </template>
