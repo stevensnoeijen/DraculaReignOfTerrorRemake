@@ -21,19 +21,19 @@ import { NTag, TreeOption } from 'naive-ui';
 import { computed, h, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { Entity, Property } from '../types.js';
+import { GameObject, Property } from '../ObjectsJson';
 
 const props = defineProps<{
-  entity: Entity;
+  object: GameObject;
 }>();
 
 const emits = defineEmits<{
   (event: 'select', property: Property): void;
-  (event: 'update:entity', entity: Entity): void;
+  (event: 'update:object', object: GameObject): void;
 }>();
 
 let data = computed(() => {
-  return props.entity.properties.map(
+  return props.object.properties.map(
     (property): TreeOption => ({
       label: property.field,
       key: property.field,
@@ -41,15 +41,15 @@ let data = computed(() => {
   );
 });
 
-let selectedKeys = $ref<string[]>([props.entity.properties[0].field]);
+let selectedKeys = $ref<string[]>([props.object.properties[0].field]);
 
 watch(
-  () => props.entity.properties,
+  () => props.object.properties,
   () => {
-    if (props.entity.properties.length === 0) {
+    if (props.object.properties.length === 0) {
       selectedKeys = [];
     } else {
-      selectedKeys = [props.entity.properties[0].field];
+      selectedKeys = [props.object.properties[0].field];
     }
   }
 );
@@ -59,7 +59,7 @@ const handleTreeSelect = (option: TreeOption) => {
     return;
   }
 
-  const property = props.entity.properties.find(
+  const property = props.object.properties.find(
     (property) => property.field === option.key
   )!;
   selectedKeys = [property.field];
@@ -70,14 +70,14 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (typeof option.key !== 'string') return;
 
   // property level
-  const property = props.entity.properties.find(
+  const property = props.object.properties.find(
     (property) => property.field === option.key
   )!;
   return h(NTag, { round: true }, { default: () => `${property.value}` });
 };
 
 onMounted(() => {
-  if (data.value.length > 0) selectedKeys = [props.entity.properties[0].field];
+  if (data.value.length > 0) selectedKeys = [props.object.properties[0].field];
   else selectedKeys = [];
 });
 </script>

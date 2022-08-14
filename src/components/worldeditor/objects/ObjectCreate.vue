@@ -1,7 +1,7 @@
 <template>
-  <n-form ref="form" inline :label-width="80" :model="entity" :rules="rules">
+  <n-form ref="form" inline :label-width="80" :model="object" :rules="rules">
     <n-form-item label="Name" path="name">
-      <n-input v-model:value="entity.name" placeholder="unit/swordsmen" />
+      <n-input v-model:value="object.name" placeholder="unit/swordsmen" />
     </n-form-item>
   </n-form>
 </template>
@@ -11,7 +11,8 @@ import { FormInst, FormRules, NForm } from 'naive-ui';
 import { ref } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { Entity, EntityCreateInstance } from './types';
+import { GameObject } from './ObjectsJson';
+import { ObjectCreateInstance } from './types';
 
 const form = ref<FormInst>();
 
@@ -24,14 +25,14 @@ const rules: FormRules = {
   },
 };
 
-const entity = $ref<Entity>({
+const object = $ref<GameObject>({
   name: '',
   properties: [],
 });
 
-defineExpose<EntityCreateInstance>({
+defineExpose<ObjectCreateInstance>({
   // @ts-ignore
   form,
-  entity,
+  object,
 });
 </script>

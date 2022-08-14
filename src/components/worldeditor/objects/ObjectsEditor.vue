@@ -4,32 +4,32 @@
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Entities:</h3>
-        <object-tree
-          v-model="entities"
+        <objects-tree
+          v-model="objects"
           class="grow"
-          :selected="selectedEntity"
-          @select="selectEntity"
+          :selected="selectedObject"
+          @select="selectObject"
         />
-        <n-button @click="showAddEntityModal = true"> Add Entity </n-button>
+        <n-button @click="showObjectCreateModal = true"> Add Entity </n-button>
         <n-modal
-          v-model:show="showAddEntityModal"
+          v-model:show="showObjectCreateModal"
           preset="confirm"
           title="Create Entity"
           positive-text="Add"
           negative-text="Cancel"
-          @positive-click="() => handleEntityCreate()"
+          @positive-click="() => handleObjectCreate()"
           @negative-click="() => {}"
         >
-          <object-create ref="entityCreateInstance" />
+          <object-create ref="objectCreateInstance" />
         </n-modal>
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
-        <h3 class="text-l font-bold">Components:</h3>
+        <h3 class="text-l font-bold">Properties:</h3>
         <object-properties-tree
-          v-if="selectedEntity != null"
+          v-if="selectedObject != null"
           class="grow"
-          :entity="selectedEntity"
-          @update:entity="(entity) => handleUpdateEntity(entity)"
+          :object="selectedObject"
+          @update:object="(object) => handleUpdateObject(object)"
           @select="handlePropertySelected"
         />
       </div>
@@ -59,31 +59,32 @@ import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
 
 import * as api from './api';
-import { Entity, EntityCreateInstance, Property } from './types';
+import { GameObject, Property } from './ObjectsJson';
+import { ObjectCreateInstance } from './types';
 
 const message = useMessage();
 
-let entities: Entity[] = $ref([]);
-let selectedEntity = $ref<Entity | null>(null);
+let objects: GameObject[] = $ref([]);
+let selectedObject = $ref<GameObject | null>(null);
 let selectedProperty = $ref<Property | null>(null);
 
-const selectEntity = (entity: Entity) => {
-  selectedEntity = entity;
-  if (selectedEntity.properties.length > 0) {
-    selectedProperty = selectedEntity.properties[0];
+const selectObject = (object: GameObject) => {
+  selectedObject = object;
+  if (selectedObject.properties.length > 0) {
+    selectedProperty = selectedObject.properties[0];
   } else {
     selectedProperty = null;
   }
 };
 
-let showAddEntityModal = $ref(false);
-const entityCreateInstance = $ref<EntityCreateInstance>();
-const handleEntityCreate = async () => {
+let showObjectCreateModal = $ref(false);
+const objectCreateInstance = $ref<ObjectCreateInstance>();
+const handleObjectCreate = async () => {
   try {
-    await entityCreateInstance.form.validate();
+    await objectCreateInstance.form.validate();
 
-    entities.push(entityCreateInstance.entity);
-    selectEntity(entityCreateInstance.entity);
+    objects.push(objectCreateInstance.object);
+    selectObject(objectCreateInstance.object);
 
     return true;
   } catch (error) {
@@ -95,20 +96,20 @@ const handlePropertySelected = (property: Property) => {
   selectedProperty = property;
 };
 
-const handleUpdateEntity = (updatedEntity: Entity) => {
-  const entity = entities.find((entity) => entity.name === updatedEntity.name)!;
-  entity.properties = updatedEntity.properties;
+const handleUpdateObject = (updatedObject: GameObject) => {
+  const object = objects.find((object) => object.name === updatedObject.name)!;
+  object.properties = updatedObject.properties;
 };
 
 const save = async () => {
-  await api.saveObjects(entities);
-  message.info('saved entities to server');
+  await api.saveObjects(objects);
+  message.info('saved objects to server');
 };
 
 onMounted(async () => {
-  entities = await api.getObjects();
-  selectedEntity = entities[0];
-  selectedProperty = selectedEntity.properties[0];
+  objects = await api.getObjects();
+  selectedObject = objects[0];
+  selectedProperty = selectedObject.properties[0];
 });
 </script>
 getObjects

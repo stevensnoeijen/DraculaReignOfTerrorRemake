@@ -19,18 +19,18 @@ import { computed, h, watch } from 'vue';
 import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
-import { Entity } from './types';
+import { GameObject } from './ObjectsJson';
 import { createTreeOptions } from './utils';
 import TreeDeleteButtonVue from './TreeDeleteButton.vue';
 
 const props = defineProps<{
-  modelValue: Entity[];
-  selected: Entity | null;
+  modelValue: GameObject[];
+  selected: GameObject | null;
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', entity: Entity): void;
-  (event: 'update:modelValue', modelValue: Entity[]): void;
+  (event: 'select', entity: GameObject): void;
+  (event: 'update:modelValue', modelValue: GameObject[]): void;
 }>();
 
 let data = computed(() => {

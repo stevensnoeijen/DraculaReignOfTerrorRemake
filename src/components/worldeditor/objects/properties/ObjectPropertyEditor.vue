@@ -21,9 +21,9 @@
 import { FormRules } from 'naive-ui';
 import { computed } from 'vue';
 
-import { Property } from '../types';
 import { getEditableProperty } from '../../../../game/component.decorator';
 import { Unit } from '../../../../game/Unit';
+import { Property } from '../ObjectsJson';
 
 const rules: FormRules = {
   value: {

@@ -2,7 +2,7 @@ import { Class } from 'utility-types';
 
 import { Reflector } from './systems/utils/reflector';
 
-import { PropertyValue } from '~/components/worldeditor/objects/types';
+import { PropertyValue } from '~/components/worldeditor/objects/ObjectsJson';
 
 export interface EditablePropertyOptions<Type extends PropertyValue> {
   type: Type;
