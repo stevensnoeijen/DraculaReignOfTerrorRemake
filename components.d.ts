@@ -34,7 +34,7 @@ declare module '@vue/runtime-core' {
     ObjectPropertiesTree: typeof import('./src/components/worldeditor/objects/properties/ObjectPropertiesTree.vue')['default']
     ObjectPropertyEditor: typeof import('./src/components/worldeditor/objects/properties/ObjectPropertyEditor.vue')['default']
     ObjectsEditor: typeof import('./src/components/worldeditor/objects/ObjectsEditor.vue')['default']
-    ObjectsTree: typeof import('./src/components/worldeditor/objects/ObjectsTree.vue')['default']
+    ObjectsTree: typeof import('./src/components/worldeditor/objects/tree/ObjectsTree.vue')['default']
     ObjectTree: typeof import('./src/components/worldeditor/objects/ObjectTree.vue')['default']
     PixiApplication: typeof import('./src/components/pixi/app/PixiApplication.vue')['default']
     PixiAssets: typeof import('./src/components/pixi/assets/PixiAssets.vue')['default']

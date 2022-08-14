@@ -1,6 +1,6 @@
 import { TreeOption } from 'naive-ui';
 
-import { GameObject, isObject } from './ObjectsJson';
+import { GameObject, isObject } from '../ObjectsJson';
 
 import { removeNullable } from '~/utils/array';
 

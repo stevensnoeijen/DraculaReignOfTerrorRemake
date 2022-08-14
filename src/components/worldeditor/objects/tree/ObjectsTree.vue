@@ -19,9 +19,10 @@ import { computed, h, watch } from 'vue';
 import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
-import { GameObject } from './ObjectsJson';
+import { GameObject } from '../ObjectsJson';
+import TreeDeleteButtonVue from '../TreeDeleteButton.vue';
+
 import { createTreeOptions } from './utils';
-import TreeDeleteButtonVue from './TreeDeleteButton.vue';
 
 const props = defineProps<{
   modelValue: GameObject[];
@@ -29,7 +30,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', entity: GameObject): void;
+  (event: 'select', object: GameObject): void;
   (event: 'update:modelValue', modelValue: GameObject[]): void;
 }>();
 
@@ -48,25 +49,25 @@ watch(
 );
 
 const handleTreeSelect = (option: TreeOption) => {
-  let entity = props.modelValue.find((entity) => entity.name === option.key);
-  if (entity == null) {
+  let object = props.modelValue.find((object) => object.name === option.key);
+  if (object == null) {
     // try finding first thing in that layer
-    entity = props.modelValue.find((entity) =>
-      entity.name.startsWith(option.key as string)
+    object = props.modelValue.find((object) =>
+      object.name.startsWith(option.key as string)
     );
   }
-  if (entity == null) {
+  if (object == null) {
     return;
   }
 
-  selectedKeys = entity.name;
+  selectedKeys = object.name;
 
-  emits('select', entity);
+  emits('select', object);
 };
 
-const deleteEntity = (entityName: string) => {
+const deleteObject = (objectName: string) => {
   emits('update:modelValue', [
-    ...props.modelValue.filter((entity) => entity.name !== entityName),
+    ...props.modelValue.filter((object) => object.name !== objectName),
   ]);
   emits('select', props.modelValue[0]);
 };
@@ -77,9 +78,9 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (option.children == null) {
     // component level
     return h(TreeDeleteButtonVue, {
-      title: "delete entity with all it's properties",
+      title: "Delete object with all it's properties",
       class: 'ml-6',
-      onClick: () => deleteEntity(option.key as string),
+      onClick: () => deleteObject(option.key as string),
     });
   }
 };
