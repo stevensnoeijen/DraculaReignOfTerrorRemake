@@ -10,10 +10,13 @@
     "preview": "vite preview",
     "lint": "eslint --ext .ts,.vue src",
     "test": "jest",
-    "generate-unit-skins": "ts-node -P tsconfig.node.json scripts/generate-unit-skins.ts"
+    "generate-unit-skins": "ts-node -P tsconfig.node.json scripts/generate-unit-skins.ts",
+    "generate-sounds": "audiosprite ./raw/sounds/*.mp3  --output ./public/assets/sounds --export \"ogg,mp3\""
   },
   "dependencies": {
     "@pixi/assets": "^6.5.1",
+    "@vicons/carbon": "^0.12.0",
+    "@vicons/utils": "^0.1.4",
     "ecsy": "^0.4.2",
     "generate-maze": "^1.1.0",
     "lodash": "^4.17.21",
@@ -23,9 +26,7 @@
     "utility-types": "^3.10.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2",
-    "xicons": "^1.0.0",
-    "@vicons/carbon": "^0.12.0",
-    "@vicons/utils": "^0.1.4"
+    "xicons": "^1.0.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
@@ -41,6 +42,7 @@
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
     "@vue/vue3-jest": "^28.0.1",
+    "audiosprite": "^0.7.2",
     "autoprefixer": "^10.4.7",
     "canvas": "^2.9.3",
     "eslint": "^8.20.0",
