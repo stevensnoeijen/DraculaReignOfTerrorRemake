@@ -29,104 +29,104 @@
       "end": 12.43092970521542,
       "loop": false
     },
-    "catapult_destroyed_1": {
+    "canon_move": {
       "start": 14,
-      "end": 15.808662131519274,
+      "end": 15.72408163265306,
+      "loop": false
+    },
+    "catapult_destroyed_1": {
+      "start": 17,
+      "end": 18.808662131519274,
       "loop": false
     },
     "catapult_destroyed_2": {
-      "start": 17,
-      "end": 18.44548752834467,
+      "start": 20,
+      "end": 21.44548752834467,
       "loop": false
     },
     "catapult_kill_unit": {
-      "start": 20,
-      "end": 20.579047619047618,
+      "start": 23,
+      "end": 23.579047619047618,
       "loop": false
     },
     "catapult_move": {
-      "start": 22,
-      "end": 24.066575963718822,
+      "start": 25,
+      "end": 27.066575963718822,
       "loop": false
     },
     "cut_1": {
-      "start": 26,
-      "end": 26.74888888888889,
+      "start": 29,
+      "end": 29.74888888888889,
       "loop": false
     },
     "cut_2": {
-      "start": 28,
-      "end": 28.66471655328798,
+      "start": 31,
+      "end": 31.66471655328798,
       "loop": false
     },
     "cut_3": {
-      "start": 30,
-      "end": 30.632698412698414,
+      "start": 33,
+      "end": 33.63269841269841,
       "loop": false
     },
     "gate_close_1": {
-      "start": 32,
-      "end": 32.60081632653061,
+      "start": 35,
+      "end": 35.60081632653061,
       "loop": false
     },
     "gate_close_2": {
-      "start": 34,
-      "end": 34.40204081632653,
+      "start": 37,
+      "end": 37.40204081632653,
       "loop": false
     },
     "horse_1": {
-      "start": 36,
-      "end": 37.48607709750567,
+      "start": 39,
+      "end": 40.48607709750567,
       "loop": false
     },
     "horse_2": {
-      "start": 39,
-      "end": 39.847573696145126,
+      "start": 42,
+      "end": 42.847573696145126,
       "loop": false
     },
     "juggernaut_attack": {
-      "start": 41,
-      "end": 41.801632653061226,
+      "start": 44,
+      "end": 44.801632653061226,
       "loop": false
     },
     "juggernaut_move": {
-      "start": 43,
-      "end": 43.73945578231292,
+      "start": 46,
+      "end": 46.73945578231292,
       "loop": false
     },
     "swords_1": {
-      "start": 45,
-      "end": 45.73287981859411,
+      "start": 48,
+      "end": 48.73287981859411,
       "loop": false
     },
     "swords_2": {
-      "start": 47,
-      "end": 47.547165532879816,
+      "start": 50,
+      "end": 50.547165532879816,
       "loop": false
     },
     "swords_3": {
-      "start": 49,
-      "end": 50.22480725623583,
+      "start": 52,
+      "end": 53.22480725623583,
       "loop": false
     },
     "swords_4": {
-      "start": 52,
-      "end": 52.272879818594106,
+      "start": 55,
+      "end": 55.272879818594106,
       "loop": false
     },
     "swords_5": {
-      "start": 54,
-      "end": 54.909886621315195,
+      "start": 57,
+      "end": 57.909886621315195,
       "loop": false
     },
     "swords_6": {
-      "start": 56,
-      "end": 56.73428571428571,
-      "loop": false
-    },
-    "tank_move": {
-      "start": 58,
-      "end": 59.72408163265306,
+      "start": 59,
+      "end": 59.73428571428571,
       "loop": false
     },
     "unit_die_1": {
