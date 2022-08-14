@@ -74,10 +74,11 @@ const deleteEntity = (entityName: string) => {
 const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (typeof option.key !== 'string') return;
 
-  if (!option.key.includes('.')) {
+  if (option.children == null) {
     // component level
     return h(TreeDeleteButtonVue, {
       title: "delete entity with all it's properties",
+      class: 'ml-6',
       onClick: () => deleteEntity(option.key as string),
     });
   }

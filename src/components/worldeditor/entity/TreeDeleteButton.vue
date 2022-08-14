@@ -1,7 +1,7 @@
 <template>
   <n-popconfirm @positive-click="emits('click')">
     <template #trigger>
-      <n-icon :title="title">
+      <n-icon :title="title" :class="class">
         <delete />
       </n-icon>
     </template>
@@ -14,6 +14,7 @@ import { Delete } from '@vicons/carbon';
 
 defineProps<{
   title: string;
+  class?: string;
 }>();
 
 const emits = defineEmits<{
