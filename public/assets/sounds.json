@@ -1,7 +1,7 @@
 {
   "resources": [
-    "./public/assets/sounds.ogg",
-    "./public/assets/sounds.mp3"
+    "assets\\sounds.ogg",
+    "assets\\sounds.mp3"
   ],
   "spritemap": {
     "arrow_1": {

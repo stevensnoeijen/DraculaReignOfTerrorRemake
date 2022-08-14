@@ -11,7 +11,7 @@
     "lint": "eslint --ext .ts,.vue src",
     "test": "jest",
     "generate-unit-skins": "ts-node -P tsconfig.node.json scripts/generate-unit-skins.ts",
-    "generate-sounds": "audiosprite ./raw/sounds/*.mp3  --output ./public/assets/sounds --export \"ogg,mp3\""
+    "generate-sounds": "audiosprite ./raw/sounds/*.mp3  --output ./public/assets/sounds --path assets/ --export \"ogg,mp3\""
   },
   "dependencies": {
     "@pixi/assets": "^6.5.1",
