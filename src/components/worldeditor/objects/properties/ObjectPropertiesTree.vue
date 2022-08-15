@@ -22,6 +22,7 @@ import { computed, h, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
 import { GameObject, Property } from '../ObjectsJson';
+import { ellipsize } from '../../../../utils';
 
 const props = defineProps<{
   object: GameObject;
@@ -73,7 +74,11 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   const property = props.object.properties.find(
     (property) => property.field === option.key
   )!;
-  return h(NTag, { round: true }, { default: () => `${property.value}` });
+  return h(
+    NTag,
+    { round: true },
+    { default: () => `${ellipsize(property.value, 3)}` }
+  );
 };
 
 onMounted(() => {
