@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "skipLibCheck": true,
+    "types": ["unplugin-icons/types/vue"],
     "paths": {
       "~/*": ["./src/*"]
     }

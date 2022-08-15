@@ -4,6 +4,8 @@ import Components from 'unplugin-vue-components/vite';
 import Checker from 'vite-plugin-checker';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import Icons from 'unplugin-icons/vite';
+import IconsResolver from 'unplugin-icons/resolver';
 
 export default defineConfig({
   plugins: [
@@ -18,7 +20,11 @@ export default defineConfig({
     }),
     Components({
       dts: true,
-      resolvers: [NaiveUiResolver()],
+      resolvers: [NaiveUiResolver(), IconsResolver()],
+    }),
+    Icons({
+      autoInstall: true,
+      compiler: 'vue3',
     }),
     tsconfigPaths(),
   ],

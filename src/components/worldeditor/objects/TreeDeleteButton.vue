@@ -2,7 +2,7 @@
   <n-popconfirm @positive-click="emits('click')">
     <template #trigger>
       <n-icon :title="title" :class="class">
-        <delete />
+        <i-carbon-delete />
       </n-icon>
     </template>
     Are you sure you want to delete this?
@@ -10,8 +10,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Delete } from '@vicons/carbon';
-
 defineProps<{
   title: string;
   class?: string;

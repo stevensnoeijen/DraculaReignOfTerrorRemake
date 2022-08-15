@@ -16,6 +16,9 @@ declare module '@vue/runtime-core' {
     EntityPropertiesTree: typeof import('./src/components/worldeditor/objects/properties/EntityPropertiesTree.vue')['default']
     EntityPropertyEditor: typeof import('./src/components/worldeditor/objects/properties/EntityPropertyEditor.vue')['default']
     EntityTree: typeof import('./src/components/worldeditor/entity/EntityTree.vue')['default']
+    ICarbonDelete: typeof import('~icons/carbon/delete')['default']
+    ICarbonPlay: typeof import('~icons/carbon/play')['default']
+    ICarbonStop: typeof import('~icons/carbon/stop')['default']
     NButton: typeof import('naive-ui')['NButton']
     NDataTable: typeof import('naive-ui')['NDataTable']
     NForm: typeof import('naive-ui')['NForm']
@@ -44,6 +47,8 @@ declare module '@vue/runtime-core' {
     PixiViewport: typeof import('./src/components/pixi/viewport/PixiViewport.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SoundButton: typeof import('./src/components/worldeditor/sound/SoundButton.vue')['default']
+    SoundPreview: typeof import('./src/components/worldeditor/sound/SoundPreview.vue')['default']
     TreeDeleteButton: typeof import('./src/components/worldeditor/objects/TreeDeleteButton.vue')['default']
   }
 }
