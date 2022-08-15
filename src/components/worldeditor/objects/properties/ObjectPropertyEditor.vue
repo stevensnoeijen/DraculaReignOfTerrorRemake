@@ -36,7 +36,7 @@ import { $ref } from 'vue/macros';
 import { getEditableProperty } from '../../../../game/objects/decorator';
 import { Unit } from '../../../../game/objects/Unit';
 import { Property } from '../ObjectsJson';
-import { getSounds } from '../api';
+import { getSounds } from '../../sound/api';
 
 import { soundsToSelectOptions } from './utils';
 

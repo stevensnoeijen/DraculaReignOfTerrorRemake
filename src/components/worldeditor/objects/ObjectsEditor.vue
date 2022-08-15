@@ -38,12 +38,16 @@
           <h3 class="text-l font-bold">Property editor:</h3>
           <object-property-editor
             v-if="selectedProperty != null"
-            :model-value="selectedProperty"
+            v-model="selectedProperty"
           />
         </div>
         <div class="grow">
           <h4 class="text-l font-bold">Preview</h4>
           <!-- <animator-preview /> -->
+          <sound-preview
+            v-if="selectedProperty?.field.includes('sound')"
+            v-model="(selectedProperty!.value as string | string[])"
+          />
         </div>
       </div>
     </div>
