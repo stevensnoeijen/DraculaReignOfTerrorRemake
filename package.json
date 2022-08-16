@@ -10,8 +10,9 @@
     "preview": "vite preview",
     "lint": "eslint --ext .ts,.vue src",
     "test": "jest",
-    "generate-unit-skins": "ts-node -P tsconfig.node.json scripts/generate-unit-skins.ts",
-    "generate-sounds": "audiosprite ./raw/sounds/*.mp3  --output ./public/assets/sounds --path assets/ --export \"ogg,mp3\""
+    "generate-sounds": "audiosprite ./raw/sounds/*.mp3  --output ./public/assets/sounds --path assets/ --export \"ogg,mp3\"",
+    "add-animations-to-unit-spritesheet": "ts-node -P tsconfig.node.json scripts/add-animations-to-unit-spritesheet",
+    "generate-sprite-models": "ts-node -P tsconfig.node.json scripts/generate-sprite-models.ts"
   },
   "dependencies": {
     "@pixi/assets": "^6.5.1",

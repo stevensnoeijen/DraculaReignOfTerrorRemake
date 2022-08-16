@@ -40,7 +40,7 @@
             :load-assets="[
               {
                 keysIn: 'units',
-                assetsIn: 'assets/units-spritesheet.json',
+                assetsIn: 'assets/unit-spritesheet.json',
               },
             ]"
             @asset-loaded="loadedAssets"

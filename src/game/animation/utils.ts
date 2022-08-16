@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+
 import { Animation, DEFAULT_SPEED } from './Animation';
 
 export const colors = ['red', 'blue'] as const;
@@ -63,12 +64,8 @@ const getAnimation = (
     );
   }
   // dead state is no animation
-  if (spritesheet.textures[key + '.png'] != null) {
-    return new Animation(
-      [spritesheet.textures[key + '.png']],
-      DEFAULT_SPEED,
-      false
-    );
+  if (spritesheet.textures[key] != null) {
+    return new Animation([spritesheet.textures[key]], DEFAULT_SPEED, false);
   }
 
   // else nothing found
