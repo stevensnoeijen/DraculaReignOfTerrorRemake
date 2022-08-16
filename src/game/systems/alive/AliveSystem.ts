@@ -1,11 +1,16 @@
-import { SpriteComponent } from './../render/sprite/SpriteComponent';
-import { System, SystemQueries, Entity } from 'ecsy';
+import { SystemQueries, Entity } from 'ecsy';
+import { Sprite } from 'pixi.js';
 
-import { AliveComponent } from './AliveComponent';
 import { HealthComponent } from '../health/HealthComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { AnimatedSpriteComponent } from '../render/sprite/AnimatedSpriteComponent';
+
+import { rotationToDirection } from './../../animation/utils';
+import { TransformComponent } from './../TransformComponent';
+import { AssetComponent } from './../render/AssetComponent';
+import { SpriteComponent } from './../render/sprite/SpriteComponent';
+import { AliveComponent } from './AliveComponent';
 
 export class AliveSystem extends PixiJsSystem {
   public static queries: SystemQueries = {
@@ -40,15 +45,23 @@ export class AliveSystem extends PixiJsSystem {
     entity.removeComponent(SelectableComponent);
     entity.removeComponent(HealthComponent);
 
+    const sprite = AliveSystem.getSprite(entity);
+    const assetComponent = entity.getComponent(AssetComponent)!;
+    const transformComponent = entity.getComponent(TransformComponent)!;
+    sprite.texture =
+      assetComponent.animations.dead[
+        rotationToDirection(transformComponent.rotation)
+      ].textures[0];
+  }
+
+  private static getSprite(entity: Entity): Sprite {
     if (entity.hasComponent(SpriteComponent)) {
-      const spriteComponent = entity.getComponent(SpriteComponent)!;
-      spriteComponent.sprite.texture = this.app.loader.resources.dead.texture!;
+      return entity.getComponent(SpriteComponent)!.sprite;
     }
     if (entity.hasComponent(AnimatedSpriteComponent)) {
-      const spriteComponent = entity.getComponent(AnimatedSpriteComponent)!;
-      spriteComponent.sprite.textures = [
-        this.app.loader.resources.dead.texture!,
-      ];
+      return entity.getComponent(AnimatedSpriteComponent)!.sprite;
     }
+
+    throw new Error('Entity has no sprite');
   }
 }
