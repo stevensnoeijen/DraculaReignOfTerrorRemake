@@ -3,11 +3,12 @@ import _ from 'lodash';
 import { State, Unit, Color, Direction } from './utils';
 
 type StateDirectionDescription =
-  | ({
+  | { texture: string }
+  | {
       speed: number;
       loop: boolean;
-    } & { texture: string })
-  | { animation: string };
+      animation: string;
+    };
 
 export interface Model {
   unit: Unit;

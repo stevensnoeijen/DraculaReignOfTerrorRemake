@@ -13,7 +13,12 @@ const units = [
 ] as const;
 type Unit = typeof units[number];
 const colorlessUnits: ReadonlyArray<Unit> = ['catapult', 'cannon'];
-const movelessUnits: ReadonlyArray<Unit> = ['catapult', 'cannon'];
+const animatedUnits: ReadonlyArray<Unit> = [
+  'swordsmen',
+  'crossbowsoldier',
+  'knight',
+  'juggernaut',
+];
 
 const states = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
 type State = typeof states[number];
@@ -56,7 +61,7 @@ const getAnimationKey = (
   state: State,
   direction: Direction
 ): string | null => {
-  if (movelessUnits.includes(unit)) {
+  if (!animatedUnits.includes(unit)) {
     state = 'idle';
   }
 
@@ -70,6 +75,8 @@ const getAnimationKey = (
 const models: Model[] = [];
 
 for (const unit of units) {
+  const isAnimatedUnit = animatedUnits.includes(unit);
+
   for (const color of colors) {
     const model = {
       unit,
@@ -82,7 +89,7 @@ for (const unit of units) {
       for (const direction of directions) {
         const animationName = getAnimationKey(unit, color, state, direction);
 
-        if (animationStates.includes(state)) {
+        if (isAnimatedUnit && animationStates.includes(state)) {
           modelState[direction] = {
             animation: animationName,
             speed: 0.25,
@@ -91,8 +98,6 @@ for (const unit of units) {
         } else {
           modelState[direction] = {
             texture: animationName,
-            speed: 0,
-            loop: false,
           };
         }
       }

@@ -7,44 +7,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "swordsmen.red.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.north"
           },
           "northeast": {
-            "texture": "swordsmen.red.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.northeast"
           },
           "east": {
-            "texture": "swordsmen.red.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.east"
           },
           "southeast": {
-            "texture": "swordsmen.red.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.southeast"
           },
           "south": {
-            "texture": "swordsmen.red.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.south"
           },
           "southwest": {
-            "texture": "swordsmen.red.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.southwest"
           },
           "west": {
-            "texture": "swordsmen.red.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.west"
           },
           "northwest": {
-            "texture": "swordsmen.red.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.idle.northwest"
           }
         },
         "move": {
@@ -175,44 +159,28 @@
         },
         "dead": {
           "north": {
-            "texture": "swordsmen.red.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.north"
           },
           "northeast": {
-            "texture": "swordsmen.red.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.northeast"
           },
           "east": {
-            "texture": "swordsmen.red.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.east"
           },
           "southeast": {
-            "texture": "swordsmen.red.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.southeast"
           },
           "south": {
-            "texture": "swordsmen.red.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.south"
           },
           "southwest": {
-            "texture": "swordsmen.red.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.southwest"
           },
           "west": {
-            "texture": "swordsmen.red.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.west"
           },
           "northwest": {
-            "texture": "swordsmen.red.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.red.dead.northwest"
           }
         }
       }
@@ -223,44 +191,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "swordsmen.blue.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.north"
           },
           "northeast": {
-            "texture": "swordsmen.blue.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.northeast"
           },
           "east": {
-            "texture": "swordsmen.blue.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.east"
           },
           "southeast": {
-            "texture": "swordsmen.blue.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.southeast"
           },
           "south": {
-            "texture": "swordsmen.blue.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.south"
           },
           "southwest": {
-            "texture": "swordsmen.blue.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.southwest"
           },
           "west": {
-            "texture": "swordsmen.blue.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.west"
           },
           "northwest": {
-            "texture": "swordsmen.blue.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.idle.northwest"
           }
         },
         "move": {
@@ -391,44 +343,28 @@
         },
         "dead": {
           "north": {
-            "texture": "swordsmen.blue.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.north"
           },
           "northeast": {
-            "texture": "swordsmen.blue.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.northeast"
           },
           "east": {
-            "texture": "swordsmen.blue.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.east"
           },
           "southeast": {
-            "texture": "swordsmen.blue.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.southeast"
           },
           "south": {
-            "texture": "swordsmen.blue.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.south"
           },
           "southwest": {
-            "texture": "swordsmen.blue.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.southwest"
           },
           "west": {
-            "texture": "swordsmen.blue.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.west"
           },
           "northwest": {
-            "texture": "swordsmen.blue.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "swordsmen.blue.dead.northwest"
           }
         }
       }
@@ -439,44 +375,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "crossbowsoldier.red.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.north"
           },
           "northeast": {
-            "texture": "crossbowsoldier.red.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.northeast"
           },
           "east": {
-            "texture": "crossbowsoldier.red.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.east"
           },
           "southeast": {
-            "texture": "crossbowsoldier.red.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.southeast"
           },
           "south": {
-            "texture": "crossbowsoldier.red.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.south"
           },
           "southwest": {
-            "texture": "crossbowsoldier.red.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.southwest"
           },
           "west": {
-            "texture": "crossbowsoldier.red.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.west"
           },
           "northwest": {
-            "texture": "crossbowsoldier.red.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.idle.northwest"
           }
         },
         "move": {
@@ -607,44 +527,28 @@
         },
         "dead": {
           "north": {
-            "texture": "crossbowsoldier.red.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.north"
           },
           "northeast": {
-            "texture": "crossbowsoldier.red.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.northeast"
           },
           "east": {
-            "texture": "crossbowsoldier.red.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.east"
           },
           "southeast": {
-            "texture": "crossbowsoldier.red.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.southeast"
           },
           "south": {
-            "texture": "crossbowsoldier.red.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.south"
           },
           "southwest": {
-            "texture": "crossbowsoldier.red.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.southwest"
           },
           "west": {
-            "texture": "crossbowsoldier.red.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.west"
           },
           "northwest": {
-            "texture": "crossbowsoldier.red.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.red.dead.northwest"
           }
         }
       }
@@ -655,44 +559,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "crossbowsoldier.blue.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.north"
           },
           "northeast": {
-            "texture": "crossbowsoldier.blue.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.northeast"
           },
           "east": {
-            "texture": "crossbowsoldier.blue.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.east"
           },
           "southeast": {
-            "texture": "crossbowsoldier.blue.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.southeast"
           },
           "south": {
-            "texture": "crossbowsoldier.blue.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.south"
           },
           "southwest": {
-            "texture": "crossbowsoldier.blue.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.southwest"
           },
           "west": {
-            "texture": "crossbowsoldier.blue.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.west"
           },
           "northwest": {
-            "texture": "crossbowsoldier.blue.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.idle.northwest"
           }
         },
         "move": {
@@ -823,44 +711,28 @@
         },
         "dead": {
           "north": {
-            "texture": "crossbowsoldier.blue.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.north"
           },
           "northeast": {
-            "texture": "crossbowsoldier.blue.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.northeast"
           },
           "east": {
-            "texture": "crossbowsoldier.blue.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.east"
           },
           "southeast": {
-            "texture": "crossbowsoldier.blue.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.southeast"
           },
           "south": {
-            "texture": "crossbowsoldier.blue.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.south"
           },
           "southwest": {
-            "texture": "crossbowsoldier.blue.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.southwest"
           },
           "west": {
-            "texture": "crossbowsoldier.blue.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.west"
           },
           "northwest": {
-            "texture": "crossbowsoldier.blue.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "crossbowsoldier.blue.dead.northwest"
           }
         }
       }
@@ -871,44 +743,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "knight.red.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.north"
           },
           "northeast": {
-            "texture": "knight.red.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.northeast"
           },
           "east": {
-            "texture": "knight.red.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.east"
           },
           "southeast": {
-            "texture": "knight.red.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.southeast"
           },
           "south": {
-            "texture": "knight.red.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.south"
           },
           "southwest": {
-            "texture": "knight.red.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.southwest"
           },
           "west": {
-            "texture": "knight.red.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.west"
           },
           "northwest": {
-            "texture": "knight.red.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.idle.northwest"
           }
         },
         "move": {
@@ -1039,44 +895,28 @@
         },
         "dead": {
           "north": {
-            "texture": "knight.red.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.north"
           },
           "northeast": {
-            "texture": "knight.red.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.northeast"
           },
           "east": {
-            "texture": "knight.red.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.east"
           },
           "southeast": {
-            "texture": "knight.red.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.southeast"
           },
           "south": {
-            "texture": "knight.red.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.south"
           },
           "southwest": {
-            "texture": "knight.red.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.southwest"
           },
           "west": {
-            "texture": "knight.red.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.west"
           },
           "northwest": {
-            "texture": "knight.red.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.red.dead.northwest"
           }
         }
       }
@@ -1087,44 +927,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "knight.blue.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.north"
           },
           "northeast": {
-            "texture": "knight.blue.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.northeast"
           },
           "east": {
-            "texture": "knight.blue.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.east"
           },
           "southeast": {
-            "texture": "knight.blue.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.southeast"
           },
           "south": {
-            "texture": "knight.blue.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.south"
           },
           "southwest": {
-            "texture": "knight.blue.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.southwest"
           },
           "west": {
-            "texture": "knight.blue.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.west"
           },
           "northwest": {
-            "texture": "knight.blue.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.idle.northwest"
           }
         },
         "move": {
@@ -1255,44 +1079,28 @@
         },
         "dead": {
           "north": {
-            "texture": "knight.blue.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.north"
           },
           "northeast": {
-            "texture": "knight.blue.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.northeast"
           },
           "east": {
-            "texture": "knight.blue.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.east"
           },
           "southeast": {
-            "texture": "knight.blue.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.southeast"
           },
           "south": {
-            "texture": "knight.blue.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.south"
           },
           "southwest": {
-            "texture": "knight.blue.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.southwest"
           },
           "west": {
-            "texture": "knight.blue.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.west"
           },
           "northwest": {
-            "texture": "knight.blue.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "knight.blue.dead.northwest"
           }
         }
       }
@@ -1303,44 +1111,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "juggernaut.red.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.north"
           },
           "northeast": {
-            "texture": "juggernaut.red.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.northeast"
           },
           "east": {
-            "texture": "juggernaut.red.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.east"
           },
           "southeast": {
-            "texture": "juggernaut.red.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.southeast"
           },
           "south": {
-            "texture": "juggernaut.red.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.south"
           },
           "southwest": {
-            "texture": "juggernaut.red.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.southwest"
           },
           "west": {
-            "texture": "juggernaut.red.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.west"
           },
           "northwest": {
-            "texture": "juggernaut.red.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.idle.northwest"
           }
         },
         "move": {
@@ -1471,44 +1263,28 @@
         },
         "dead": {
           "north": {
-            "texture": "juggernaut.red.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.north"
           },
           "northeast": {
-            "texture": "juggernaut.red.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.northeast"
           },
           "east": {
-            "texture": "juggernaut.red.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.east"
           },
           "southeast": {
-            "texture": "juggernaut.red.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.southeast"
           },
           "south": {
-            "texture": "juggernaut.red.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.south"
           },
           "southwest": {
-            "texture": "juggernaut.red.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.southwest"
           },
           "west": {
-            "texture": "juggernaut.red.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.west"
           },
           "northwest": {
-            "texture": "juggernaut.red.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.red.dead.northwest"
           }
         }
       }
@@ -1519,44 +1295,28 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "juggernaut.blue.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.north"
           },
           "northeast": {
-            "texture": "juggernaut.blue.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.northeast"
           },
           "east": {
-            "texture": "juggernaut.blue.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.east"
           },
           "southeast": {
-            "texture": "juggernaut.blue.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.southeast"
           },
           "south": {
-            "texture": "juggernaut.blue.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.south"
           },
           "southwest": {
-            "texture": "juggernaut.blue.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.southwest"
           },
           "west": {
-            "texture": "juggernaut.blue.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.west"
           },
           "northwest": {
-            "texture": "juggernaut.blue.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.idle.northwest"
           }
         },
         "move": {
@@ -1687,44 +1447,28 @@
         },
         "dead": {
           "north": {
-            "texture": "juggernaut.blue.dead.north",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.north"
           },
           "northeast": {
-            "texture": "juggernaut.blue.dead.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.northeast"
           },
           "east": {
-            "texture": "juggernaut.blue.dead.east",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.east"
           },
           "southeast": {
-            "texture": "juggernaut.blue.dead.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.southeast"
           },
           "south": {
-            "texture": "juggernaut.blue.dead.south",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.south"
           },
           "southwest": {
-            "texture": "juggernaut.blue.dead.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.southwest"
           },
           "west": {
-            "texture": "juggernaut.blue.dead.west",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.west"
           },
           "northwest": {
-            "texture": "juggernaut.blue.dead.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "juggernaut.blue.dead.northwest"
           }
         }
       }
@@ -1735,212 +1479,132 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "catapult.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "texture": "catapult.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "texture": "catapult.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "texture": "catapult.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "texture": "catapult.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "texture": "catapult.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "texture": "catapult.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "texture": "catapult.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northwest"
           }
         },
         "move": {
           "north": {
-            "animation": "catapult.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "animation": "catapult.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "animation": "catapult.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "animation": "catapult.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "animation": "catapult.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "animation": "catapult.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "animation": "catapult.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "animation": "catapult.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northwest"
           }
         },
         "attack": {
           "north": {
-            "animation": "catapult.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "animation": "catapult.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "animation": "catapult.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "animation": "catapult.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "animation": "catapult.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "animation": "catapult.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "animation": "catapult.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "animation": "catapult.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northwest"
           }
         },
         "dying": {
           "north": {
-            "animation": "catapult.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "animation": "catapult.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "animation": "catapult.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "animation": "catapult.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "animation": "catapult.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "animation": "catapult.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "animation": "catapult.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "animation": "catapult.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northwest"
           }
         },
         "dead": {
           "north": {
-            "texture": "catapult.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "texture": "catapult.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "texture": "catapult.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "texture": "catapult.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "texture": "catapult.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "texture": "catapult.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "texture": "catapult.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "texture": "catapult.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northwest"
           }
         }
       }
@@ -1951,212 +1615,132 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "catapult.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "texture": "catapult.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "texture": "catapult.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "texture": "catapult.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "texture": "catapult.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "texture": "catapult.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "texture": "catapult.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "texture": "catapult.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northwest"
           }
         },
         "move": {
           "north": {
-            "animation": "catapult.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "animation": "catapult.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "animation": "catapult.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "animation": "catapult.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "animation": "catapult.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "animation": "catapult.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "animation": "catapult.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "animation": "catapult.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northwest"
           }
         },
         "attack": {
           "north": {
-            "animation": "catapult.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "animation": "catapult.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "animation": "catapult.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "animation": "catapult.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "animation": "catapult.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "animation": "catapult.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "animation": "catapult.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "animation": "catapult.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northwest"
           }
         },
         "dying": {
           "north": {
-            "animation": "catapult.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "animation": "catapult.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "animation": "catapult.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "animation": "catapult.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "animation": "catapult.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "animation": "catapult.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "animation": "catapult.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "animation": "catapult.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "catapult.idle.northwest"
           }
         },
         "dead": {
           "north": {
-            "texture": "catapult.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.north"
           },
           "northeast": {
-            "texture": "catapult.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northeast"
           },
           "east": {
-            "texture": "catapult.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.east"
           },
           "southeast": {
-            "texture": "catapult.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southeast"
           },
           "south": {
-            "texture": "catapult.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.south"
           },
           "southwest": {
-            "texture": "catapult.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.southwest"
           },
           "west": {
-            "texture": "catapult.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.west"
           },
           "northwest": {
-            "texture": "catapult.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "catapult.idle.northwest"
           }
         }
       }
@@ -2167,212 +1751,132 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "cannon.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "texture": "cannon.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "texture": "cannon.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "texture": "cannon.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "texture": "cannon.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "texture": "cannon.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "texture": "cannon.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "texture": "cannon.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northwest"
           }
         },
         "move": {
           "north": {
-            "animation": "cannon.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "animation": "cannon.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "animation": "cannon.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "animation": "cannon.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "animation": "cannon.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "animation": "cannon.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "animation": "cannon.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "animation": "cannon.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northwest"
           }
         },
         "attack": {
           "north": {
-            "animation": "cannon.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "animation": "cannon.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "animation": "cannon.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "animation": "cannon.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "animation": "cannon.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "animation": "cannon.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "animation": "cannon.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "animation": "cannon.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northwest"
           }
         },
         "dying": {
           "north": {
-            "animation": "cannon.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "animation": "cannon.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "animation": "cannon.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "animation": "cannon.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "animation": "cannon.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "animation": "cannon.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "animation": "cannon.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "animation": "cannon.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northwest"
           }
         },
         "dead": {
           "north": {
-            "texture": "cannon.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "texture": "cannon.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "texture": "cannon.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "texture": "cannon.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "texture": "cannon.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "texture": "cannon.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "texture": "cannon.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "texture": "cannon.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northwest"
           }
         }
       }
@@ -2383,212 +1887,132 @@
       "states": {
         "idle": {
           "north": {
-            "texture": "cannon.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "texture": "cannon.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "texture": "cannon.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "texture": "cannon.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "texture": "cannon.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "texture": "cannon.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "texture": "cannon.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "texture": "cannon.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northwest"
           }
         },
         "move": {
           "north": {
-            "animation": "cannon.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "animation": "cannon.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "animation": "cannon.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "animation": "cannon.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "animation": "cannon.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "animation": "cannon.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "animation": "cannon.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "animation": "cannon.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northwest"
           }
         },
         "attack": {
           "north": {
-            "animation": "cannon.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "animation": "cannon.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "animation": "cannon.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "animation": "cannon.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "animation": "cannon.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "animation": "cannon.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "animation": "cannon.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "animation": "cannon.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northwest"
           }
         },
         "dying": {
           "north": {
-            "animation": "cannon.idle.north",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "animation": "cannon.idle.northeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "animation": "cannon.idle.east",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "animation": "cannon.idle.southeast",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "animation": "cannon.idle.south",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "animation": "cannon.idle.southwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "animation": "cannon.idle.west",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "animation": "cannon.idle.northwest",
-            "speed": 0.25,
-            "loop": true
+            "texture": "cannon.idle.northwest"
           }
         },
         "dead": {
           "north": {
-            "texture": "cannon.idle.north",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.north"
           },
           "northeast": {
-            "texture": "cannon.idle.northeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northeast"
           },
           "east": {
-            "texture": "cannon.idle.east",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.east"
           },
           "southeast": {
-            "texture": "cannon.idle.southeast",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southeast"
           },
           "south": {
-            "texture": "cannon.idle.south",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.south"
           },
           "southwest": {
-            "texture": "cannon.idle.southwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.southwest"
           },
           "west": {
-            "texture": "cannon.idle.west",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.west"
           },
           "northwest": {
-            "texture": "cannon.idle.northwest",
-            "speed": 0,
-            "loop": false
+            "texture": "cannon.idle.northwest"
           }
         }
       }
