@@ -9,3 +9,10 @@ export const soundsToSelectOptions = (
     value: key,
   }));
 };
+
+export const stringsToSelectOptions = (values: string[]): SelectOption[] => {
+  return values.map((value) => ({
+    label: value,
+    value: value,
+  }));
+};

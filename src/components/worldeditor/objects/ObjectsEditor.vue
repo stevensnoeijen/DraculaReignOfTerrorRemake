@@ -43,7 +43,10 @@
         </div>
         <div class="grow">
           <h4 class="text-l font-bold">Preview</h4>
-          <!-- <animator-preview /> -->
+          <sprite-model-preview
+            v-if="selectedProperty?.field === 'spriteModel'"
+            :unit="(selectedProperty!.value as Unit)"
+          />
           <sound-preview
             v-if="selectedProperty?.field.includes('sound')"
             v-model="(selectedProperty!.value as string | string[])"
@@ -65,6 +68,8 @@ import { $ref } from 'vue/macros';
 import * as api from './api';
 import { GameObject, Property } from './ObjectsJson';
 import { ObjectCreateInstance } from './create/types';
+
+import { Unit } from '~/game/animation/utils';
 
 const message = useMessage();
 

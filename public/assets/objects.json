@@ -20,7 +20,7 @@
       },
       {
         "field": "spriteModel",
-        "value": "test"
+        "value": "swordsmen"
       },
       {
         "field": "soundMove",
@@ -112,7 +112,7 @@
       },
       {
         "field": "spriteModel",
-        "value": "test"
+        "value": "crossbowsoldier"
       },
       {
         "field": "soundMove",
@@ -200,7 +200,7 @@
       },
       {
         "field": "spriteModel",
-        "value": ""
+        "value": "knight"
       },
       {
         "field": "soundMove",
@@ -283,7 +283,7 @@
       },
       {
         "field": "spriteModel",
-        "value": ""
+        "value": "juggernaut"
       },
       {
         "field": "soundMove",
@@ -347,7 +347,7 @@
       },
       {
         "field": "spriteModel",
-        "value": ""
+        "value": "catapult"
       },
       {
         "field": "soundMove",
@@ -399,7 +399,7 @@
       },
       {
         "field": "spriteModel",
-        "value": ""
+        "value": "cannon"
       },
       {
         "field": "soundMove",

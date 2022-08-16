@@ -2,13 +2,20 @@
   <n-form :model="modelValue" :rules="rules" label-placement="left">
     <n-form-item :label="modelValue.field" path="value">
       <n-input
-        v-if="type === String && !property.field.startsWith('sound')"
+        v-if="
+          type === String &&
+          !(
+            property.field.startsWith('sound') ||
+            property.field === 'spriteModel'
+          )
+        "
         v-model:value="(property.value as string)"
       />
       <n-select
         v-if="
           (type === String || Array.isArray(type)) &&
-          property.field.startsWith('sound')
+          (property.field.startsWith('sound') ||
+            property.field === 'spriteModel')
         "
         v-model:value="(property.value as string)"
         filterable
@@ -37,8 +44,9 @@ import { getEditableProperty } from '../../../../game/objects/decorator';
 import { Unit } from '../../../../game/objects/Unit';
 import { Property } from '../ObjectsJson';
 import { getSounds } from '../../sound/api';
+import { getSpriteModelNames } from '../../sprite/api';
 
-import { soundsToSelectOptions } from './utils';
+import { soundsToSelectOptions, stringsToSelectOptions } from './utils';
 
 const rules: FormRules = {
   value: {
@@ -66,6 +74,10 @@ const loadOptions = async () => {
   if (props.modelValue.field.includes('sound')) {
     const sounds = await getSounds();
     options = soundsToSelectOptions(sounds);
+  } else if (props.modelValue.field === 'spriteModel') {
+    const names = await getSpriteModelNames();
+
+    options = stringsToSelectOptions(names);
   } else {
     options = [];
   }

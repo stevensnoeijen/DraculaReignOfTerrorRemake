@@ -1,39 +1,6 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold">Animator preview</h1>
     <div>
-      <label for="color">Color: </label>
-      <select id="color" v-model="color">
-        <option v-for="color of animations.colors" :key="color" :value="color">
-          {{ color }}
-        </option>
-      </select>
-
-      <label for="unit">Unit: </label>
-      <select id="unit" v-model="unit">
-        <option v-for="unit of animations.units" :key="unit" :value="unit">
-          {{ unit }}
-        </option>
-      </select>
-
-      <label for="animation">Animation: </label>
-      <select id="animation" v-model="state">
-        <option v-for="state of animations.states" :key="state" :value="state">
-          {{ state }}
-        </option>
-      </select>
-
-      <label for="direction">Direction: </label>
-      <select id="direction" v-model="direction">
-        <option
-          v-for="direction of animations.directions"
-          :key="direction"
-          :value="direction"
-        >
-          {{ direction }}
-        </option>
-      </select>
-
       <pixi-application ref="applicationInstance" :width="500" :height="500">
         <template #default="{ application }">
           <pixi-assets
@@ -62,6 +29,32 @@
         </template>
       </pixi-application>
     </div>
+    <div>
+      <label for="color">Color: </label>
+      <select id="color" v-model="color">
+        <option v-for="color of animations.colors" :key="color" :value="color">
+          {{ color }}
+        </option>
+      </select>
+
+      <label for="animation">Animation: </label>
+      <select id="animation" v-model="state">
+        <option v-for="state of animations.states" :key="state" :value="state">
+          {{ state }}
+        </option>
+      </select>
+
+      <label for="direction">Direction: </label>
+      <select id="direction" v-model="direction">
+        <option
+          v-for="direction of animations.directions"
+          :key="direction"
+          :value="direction"
+        >
+          {{ direction }}
+        </option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -80,16 +73,19 @@ import { AssetLoaded } from '../pixi/assets';
 const applicationInstance = ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();
 
+const props = defineProps<{
+  unit: animations.Unit;
+}>();
+
 const color = $ref<animations.Color>(animations.colors[0]);
 watch(
   () => color,
-  () => handleChangeSkin()
+  () => handleChangeModel()
 );
 
-const unit = $ref<animations.Unit>(animations.units[0]);
 watch(
-  () => unit,
-  () => handleChangeSkin()
+  () => props.unit,
+  () => handleChangeModel()
 );
 
 const state = $ref<animations.State>(animations.states[0]);
@@ -125,7 +121,7 @@ const loadSprite = () => {
     applicationInstance.value!.application.view.height / 2
   );
 
-  animator = animationManager.createAnimator(sprite, color, unit);
+  animator = animationManager.createAnimator(sprite, color, props.unit);
   animator.set(state, direction);
 
   viewportInstance.viewport.addChild(sprite);
@@ -135,8 +131,8 @@ onUnmounted(() => {
   viewportInstance.viewport.removeChild(sprite);
 });
 
-const handleChangeSkin = () => {
-  animator = animationManager.createAnimator(sprite, color, unit);
+const handleChangeModel = () => {
+  animator = animationManager.createAnimator(sprite, color, props.unit);
   handleChangeAnimation();
 };
 
