@@ -7,7 +7,7 @@ export type Color = typeof colors[number];
 
 export const units = [
   'swordsmen',
-  'crosscowsoldier',
+  'crossbowsoldier',
   'knight',
   'juggernaut',
   'catapult',

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { State, Unit, Color, Direction } from './../../../game/animation/utils';
+import { State, Unit, Color, Direction } from './utils';
 
 type StateDirectionDescription =
   | ({
@@ -9,13 +9,13 @@ type StateDirectionDescription =
     } & { texture: string })
   | { animation: string };
 
-interface Model {
+export interface Model {
   unit: Unit;
   color: Color;
   states: Record<State, Record<Direction, StateDirectionDescription>>;
 }
 
-interface UnitSpriteModelsJson {
+export interface UnitSpriteModelsJson {
   spritesheet: string;
   models: Model[];
 }

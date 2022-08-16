@@ -71,7 +71,6 @@ const models: Model[] = [];
 
 for (const unit of units) {
   for (const color of colors) {
-    //   const unitAnimations = animations.filter((animation) => animation.startsWith(unit));
     const model = {
       unit,
       color,
@@ -91,7 +90,7 @@ for (const unit of units) {
           };
         } else {
           modelState[direction] = {
-            texture: animationName + '.png',
+            texture: animationName,
             speed: 0,
             loop: false,
           };

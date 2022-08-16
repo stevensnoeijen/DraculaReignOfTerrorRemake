@@ -44,7 +44,7 @@
         <div class="grow">
           <h4 class="text-l font-bold">Preview</h4>
           <sprite-model-preview
-            v-if="selectedProperty?.field === 'spriteModel'"
+            v-if="selectedProperty?.field === 'spriteModel' && !isEmpty(selectedProperty!.value)"
             :unit="(selectedProperty!.value as Unit)"
           />
           <sound-preview
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="border-t-2 mt-2 pt-2 flex flex-col items-end">
-      <n-button class="px-10" size="large" @click="save"> Save </n-button>
+      <n-button class="px-10" size="large" @click="handleSave"> Save </n-button>
     </div>
   </div>
 </template>
@@ -64,6 +64,7 @@
 import { useMessage } from 'naive-ui';
 import { onMounted } from 'vue';
 import { $ref } from 'vue/macros';
+import { isEmpty } from 'lodash';
 
 import * as api from './api';
 import { GameObject, Property } from './ObjectsJson';
@@ -110,7 +111,7 @@ const handleUpdateObject = (updatedObject: GameObject) => {
   object.properties = updatedObject.properties;
 };
 
-const save = async () => {
+const handleSave = async () => {
   await api.saveObjects(objects);
   message.info('saved objects to server');
 };
