@@ -63,8 +63,7 @@ import { Animator } from '../../game/animation/Animator';
 import { PixiViewportInstance } from '../pixi/viewport/types';
 import { PixiApplicationInstance } from '../pixi/app/types';
 import { AssetLoaded } from '../pixi/assets';
-
-import { stringsToSelectOptions } from './objects/properties/utils';
+import { stringsToSelectOptions } from '../utils';
 
 const applicationInstance = $ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();

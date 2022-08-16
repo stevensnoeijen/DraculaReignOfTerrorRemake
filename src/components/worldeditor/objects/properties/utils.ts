@@ -9,12 +9,3 @@ export const soundsToSelectOptions = (
     value: key,
   }));
 };
-
-export const stringsToSelectOptions = (
-  values: readonly string[]
-): SelectOption[] => {
-  return values.map((value) => ({
-    label: value,
-    value: value,
-  }));
-};
