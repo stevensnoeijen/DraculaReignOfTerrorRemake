@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts" setup>
-import { Unit } from '~/game/animation/utils';
+import { UnitType } from '~/game/types';
 
 defineProps<{
-  unit: Unit;
+  unit: UnitType;
 }>();
 </script>

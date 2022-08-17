@@ -1,12 +1,14 @@
 import { Entity } from 'ecsy';
 
-import { rotationToDirection, State } from '../../../animation/utils';
+import { rotationToDirection } from '../../../animation/load';
 
 import { TransformComponent } from './../../TransformComponent';
 import { AssetComponent } from './../AssetComponent';
 import { AnimatedSpriteComponent } from './AnimatedSpriteComponent';
 
-export const setEntityAnimation = (entity: Entity, state: State): void => {
+import { UnitState } from '~/game/types';
+
+export const setEntityAnimation = (entity: Entity, state: UnitState): void => {
   const spriteComponent = entity.getMutableComponent(AnimatedSpriteComponent);
   if (spriteComponent != null) {
     const assetComponent = entity.getComponent(AssetComponent);

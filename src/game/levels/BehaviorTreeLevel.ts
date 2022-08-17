@@ -5,7 +5,7 @@ import { cellPositionToVector } from '../utils';
 import { EntityFactory } from '../EntityFactory';
 import { Tree } from '../ai/behaviortree/Tree';
 import { AnimationService } from '../animation/AnimationService';
-import { UnitSpriteModelsJson } from '../animation/api';
+import { AnimationModelsJson } from '../animation/api';
 
 import { Level } from './Level';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
@@ -40,7 +40,7 @@ export class BehaviorTreeLevel extends Level {
 
     this.animationService = new AnimationService(
       app.loader.resources['unit-spritesheet'].spritesheet!,
-      app.loader.resources['animation-models'].data as UnitSpriteModelsJson
+      app.loader.resources['animation-models'].data as AnimationModelsJson
     );
     this.entityFactory = new EntityFactory(world, this.animationService);
   }

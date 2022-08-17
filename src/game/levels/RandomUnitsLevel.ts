@@ -5,7 +5,7 @@ import { Constants } from '../Constants';
 import { EntityFactory } from '../EntityFactory';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
-import { UnitSpriteModelsJson } from '../animation/api';
+import { AnimationModelsJson } from '../animation/api';
 import { AnimationService } from '../animation/AnimationService';
 
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
@@ -24,7 +24,7 @@ export class RandomUnitsLevel extends Level {
 
     this.animationService = new AnimationService(
       app.loader.resources['unit-spritesheet'].spritesheet!,
-      app.loader.resources['animation-models'].data as UnitSpriteModelsJson
+      app.loader.resources['animation-models'].data as AnimationModelsJson
     );
     this.entityFactory = new EntityFactory(world, this.animationService);
   }

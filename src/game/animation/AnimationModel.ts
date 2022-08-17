@@ -1,5 +1,8 @@
+import { UnitState } from '../types';
+
+import { MoveDirection } from './../types';
 import { Animation } from './Animation';
-import { AnimationMap, Direction, State } from './utils';
+import { AnimationMap } from './load';
 
 export class AnimationModel {
   constructor(
@@ -7,7 +10,7 @@ export class AnimationModel {
     private readonly map: AnimationMap
   ) {}
 
-  public getAnimation(state: State, direction: Direction): Animation {
+  public getAnimation(state: UnitState, direction: MoveDirection): Animation {
     return this.map[state][direction];
   }
 }

@@ -57,7 +57,7 @@ import { onBeforeUnmount, watch } from 'vue';
 import * as PIXI from 'pixi.js';
 import { $computed, $ref } from 'vue/macros';
 
-import * as animations from '../../game/animation/utils';
+import * as animations from '../../game/animation/load';
 import { AnimationService } from '../../game/animation/AnimationService';
 import { Animator } from '../../game/animation/Animator';
 import { PixiViewportInstance } from '../pixi/viewport/types';

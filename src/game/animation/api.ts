@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { State, Unit, Color, Direction } from './utils';
+import { UnitType, TeamColor, UnitState, MoveDirection } from './../types';
 
 type StateDirectionDescription =
   | { texture: string }
@@ -11,17 +11,17 @@ type StateDirectionDescription =
     };
 
 export interface Model {
-  unit: Unit;
-  color: Color;
-  states: Record<State, Record<Direction, StateDirectionDescription>>;
+  unit: UnitType;
+  color: TeamColor;
+  states: Record<UnitState, Record<MoveDirection, StateDirectionDescription>>;
 }
 
-export interface UnitSpriteModelsJson {
+export interface AnimationModelsJson {
   spritesheet: string;
   models: Model[];
 }
 
-export const getAnimationModels = async (): Promise<UnitSpriteModelsJson> => {
+export const getAnimationModels = async (): Promise<AnimationModelsJson> => {
   const res = await fetch('/assets/animation-models.json');
 
   return res.json();

@@ -70,7 +70,7 @@ import * as api from './api';
 import { GameObject, Property } from './ObjectsJson';
 import { ObjectCreateInstance } from './create/types';
 
-import { Unit } from '~/game/animation/utils';
+import { Unit } from '~/game/animation/load';
 
 const message = useMessage();
 

@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
 import { AnimationService } from '../animation/AnimationService';
-import { UnitSpriteModelsJson } from '../animation/api';
+import { AnimationModelsJson } from '../animation/api';
 
 import { cellPositionToVector } from './../utils';
 import { Level } from './Level';
@@ -21,7 +21,7 @@ export class PathFindingLevel extends Level {
 
     this.animationService = new AnimationService(
       app.loader.resources['unit-spritesheet'].spritesheet!,
-      app.loader.resources['animation-models'].data as UnitSpriteModelsJson
+      app.loader.resources['animation-models'].data as AnimationModelsJson
     );
     this.entityFactory = new EntityFactory(world, this.animationService);
   }

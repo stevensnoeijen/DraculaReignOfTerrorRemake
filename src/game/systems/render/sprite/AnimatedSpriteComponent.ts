@@ -1,11 +1,12 @@
 import { Component, Types } from 'ecsy';
 import * as PIXI from 'pixi.js';
-import { Direction, State } from '../../../animation/utils';
 
-type AnimationState = `${State}_${Direction}`;
+import { MoveDirection, UnitState } from '~/game/types';
+
+type AnimatedState = `${UnitState}_${MoveDirection}`;
 export interface AnimatedSpriteComponentProps {
   sprite: PIXI.AnimatedSprite;
-  state: AnimationState;
+  state: AnimatedState;
 }
 
 export class AnimatedSpriteComponent extends Component<AnimatedSpriteComponentProps> {
@@ -15,5 +16,5 @@ export class AnimatedSpriteComponent extends Component<AnimatedSpriteComponentPr
   };
 
   declare sprite: PIXI.AnimatedSprite;
-  state!: AnimationState;
+  state!: AnimatedState;
 }

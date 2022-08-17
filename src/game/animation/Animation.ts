@@ -1,7 +1,5 @@
 import * as PIXI from 'pixi.js';
 
-export const TEXTURE_SPEED = Number.POSITIVE_INFINITY;
-
 export class Animation {
   constructor(
     public readonly textures: PIXI.Texture[],

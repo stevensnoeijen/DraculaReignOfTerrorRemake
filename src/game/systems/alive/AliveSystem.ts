@@ -5,8 +5,8 @@ import { HealthComponent } from '../health/HealthComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { AnimatedSpriteComponent } from '../render/sprite/AnimatedSpriteComponent';
+import { rotationToDirection } from '../../animation/load';
 
-import { rotationToDirection } from './../../animation/utils';
 import { TransformComponent } from './../TransformComponent';
 import { AssetComponent } from './../render/AssetComponent';
 import { SpriteComponent } from './../render/sprite/SpriteComponent';

@@ -1,8 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-import { Color, createAnimationMap, createModelName, Unit } from './utils';
+import { TeamColor, UnitType } from '../types';
+
+import { createAnimationMap, createModelName } from './load';
 import { Animator } from './Animator';
-import { UnitSpriteModelsJson } from './api';
+import { AnimationModelsJson } from './api';
 import { AnimationModel } from './AnimationModel';
 
 export class AnimationService {
@@ -10,22 +12,22 @@ export class AnimationService {
 
   constructor(
     private readonly spritesheet: PIXI.Spritesheet,
-    private readonly spriteModels: UnitSpriteModelsJson
+    private readonly animationModels: AnimationModelsJson
   ) {}
 
-  private createModel(color: Color, unit: Unit): AnimationModel {
+  private createModel(color: TeamColor, unit: UnitType): AnimationModel {
     return new AnimationModel(
       `${color}_${unit}`,
       createAnimationMap(
         this.spritesheet,
-        this.spriteModels.models,
+        this.animationModels.models,
         color,
         unit
       )
     );
   }
 
-  private getModel(color: Color, unit: Unit): AnimationModel {
+  private getModel(color: TeamColor, unit: UnitType): AnimationModel {
     const modelName = createModelName(color, unit);
     if (!this.modelsCache.has(modelName)) {
       this.modelsCache.set(modelName, this.createModel(color, unit));
@@ -35,8 +37,8 @@ export class AnimationService {
 
   public createAnimator(
     sprite: PIXI.AnimatedSprite,
-    color: Color,
-    unit: Unit
+    color: TeamColor,
+    unit: UnitType
   ): Animator {
     return new Animator(sprite, this.getModel(color, unit));
   }

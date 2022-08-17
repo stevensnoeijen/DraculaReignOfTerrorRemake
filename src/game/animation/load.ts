@@ -1,52 +1,32 @@
 import * as PIXI from 'pixi.js';
 
-import { Animation, TEXTURE_SPEED } from './Animation';
+import {
+  UnitState,
+  MoveDirection,
+  MOVE_DIRECTIONS,
+  TeamColor,
+  UnitType,
+  UNIT_STATES,
+} from '../types';
+
+import { Animation } from './Animation';
 import { Model } from './api';
 
-export const colors = ['red', 'blue'] as const;
-export type Color = typeof colors[number];
-
-export const units = [
-  'swordsmen',
-  'crossbowsoldier',
-  'knight',
-  'juggernaut',
-  'catapult',
-  'cannon',
-] as const;
-export type Unit = typeof units[number];
-const colorlessUnits: readonly Unit[] = ['catapult', 'cannon'];
-
-export const directions = [
-  'north',
-  'northeast',
-  'east',
-  'southeast',
-  'south',
-  'southwest',
-  'west',
-  'northwest',
-] as const;
-export type Direction = typeof directions[number];
-
-export const states = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
-export type State = typeof states[number];
-
-type DirectionalAnimations = Record<Direction, Animation>;
-export type AnimationMap = Record<State, DirectionalAnimations>;
+export type DirectionalAnimations = Record<MoveDirection, Animation>;
+export type AnimationMap = Record<UnitState, DirectionalAnimations>;
 
 const createAnimation = (
   spritesheet: PIXI.Spritesheet,
   model: Model,
-  state: State,
-  direction: Direction
+  state: UnitState,
+  direction: MoveDirection
 ): Animation | null => {
   const descriptor = model.states[state][direction];
 
   if ('texture' in descriptor) {
     return new Animation(
       [spritesheet.textures[descriptor.texture]],
-      TEXTURE_SPEED,
+      Number.POSITIVE_INFINITY,
       false
     );
   } else {
@@ -62,9 +42,9 @@ const createAnimation = (
 const createDirectionalAnimations = (
   spritesheet: PIXI.Spritesheet,
   spriteModel: Model,
-  state: State
+  state: UnitState
 ): DirectionalAnimations => {
-  return directions.reduce((directionMap, direction) => {
+  return MOVE_DIRECTIONS.reduce((directionMap, direction) => {
     return {
       ...directionMap,
       [direction]: createAnimation(spritesheet, spriteModel, state, direction),
@@ -75,14 +55,15 @@ const createDirectionalAnimations = (
 export const createAnimationMap = (
   spritesheet: PIXI.Spritesheet,
   spriteModels: Model[],
-  color: Color,
-  unit: Unit
+  color: TeamColor,
+  unitType: UnitType
 ): AnimationMap => {
   const spriteModel = spriteModels.find(
-    (spriteModel) => spriteModel.color === color && spriteModel.unit === unit
+    (spriteModel) =>
+      spriteModel.color === color && spriteModel.unit === unitType
   )!;
 
-  return states.reduce((directionMap, state) => {
+  return UNIT_STATES.reduce((directionMap, state) => {
     return {
       ...directionMap,
       [state]: createDirectionalAnimations(spritesheet, spriteModel, state),
@@ -90,14 +71,17 @@ export const createAnimationMap = (
   }, {}) as AnimationMap;
 };
 
-export type ModelName = `${Color}_${Unit}`;
-export const createModelName = (color: Color, unit: Unit): ModelName => {
+export type ModelName = `${TeamColor}_${UnitType}`;
+export const createModelName = (
+  color: TeamColor,
+  unit: UnitType
+): ModelName => {
   return `${color}_${unit}`;
 };
 
-const ROTATION_TO_DIRECTION_MAP: ReadonlyMap<number, Direction> = new Map<
+const ROTATION_TO_DIRECTION_MAP: ReadonlyMap<number, MoveDirection> = new Map<
   number,
-  Direction
+  MoveDirection
 >([
   [-135, 'northwest'],
   [-90, 'north'],
@@ -109,6 +93,6 @@ const ROTATION_TO_DIRECTION_MAP: ReadonlyMap<number, Direction> = new Map<
   [180, 'west'],
 ]);
 
-export const rotationToDirection = (rotation: number): Direction => {
+export const rotationToDirection = (rotation: number): MoveDirection => {
   return ROTATION_TO_DIRECTION_MAP.get(rotation) ?? 'north';
 };
