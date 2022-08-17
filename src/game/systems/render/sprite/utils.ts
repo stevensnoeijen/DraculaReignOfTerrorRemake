@@ -17,7 +17,7 @@ export const setEntityAnimation = (entity: Entity, state: State): void => {
     const direction = rotationToDirection(transformComponent?.rotation ?? 0)!;
 
     if (spriteComponent.state !== `${state}_${direction}`) {
-      assetComponent.animations[state][direction].set(spriteComponent.sprite);
+      assetComponent.animator.set(state, direction);
       spriteComponent.state = `${state}_${direction}`;
       spriteComponent.sprite.play();
     }

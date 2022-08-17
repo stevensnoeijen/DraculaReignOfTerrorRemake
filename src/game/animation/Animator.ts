@@ -1,12 +1,12 @@
 import { AnimatedSprite } from 'pixi.js';
-import { Model } from './Model';
 
+import { SpriteModel } from './SpriteModel';
 import { Direction, State } from './utils';
 
 export class Animator {
   constructor(
     public readonly sprite: AnimatedSprite,
-    private readonly model: Model
+    private readonly model: SpriteModel
   ) {}
 
   public set(state: State, direction: Direction): void {

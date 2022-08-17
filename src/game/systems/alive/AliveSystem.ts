@@ -45,13 +45,12 @@ export class AliveSystem extends PixiJsSystem {
     entity.removeComponent(SelectableComponent);
     entity.removeComponent(HealthComponent);
 
-    const sprite = AliveSystem.getSprite(entity);
     const assetComponent = entity.getComponent(AssetComponent)!;
     const transformComponent = entity.getComponent(TransformComponent)!;
-    sprite.texture =
-      assetComponent.animations.dead[
-        rotationToDirection(transformComponent.rotation)
-      ].textures[0];
+    assetComponent.animator.set(
+      'dead',
+      rotationToDirection(transformComponent.rotation)
+    );
   }
 
   private static getSprite(entity: Entity): Sprite {

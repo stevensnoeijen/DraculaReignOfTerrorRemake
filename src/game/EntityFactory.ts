@@ -24,7 +24,7 @@ import { TeamComponent } from './systems/TeamComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
-import * as animations from './animation/utils';
+import { AnimationManager } from './animation/AnimationManager';
 
 interface IUnitProps {
   position: Position;
@@ -37,7 +37,7 @@ interface IUnitProps {
 export class EntityFactory {
   constructor(
     private readonly world: World,
-    private readonly animations: animations.UnitAnimations
+    private readonly animationManager: AnimationManager
   ) {}
 
   public createUnit(props: IUnitProps): Entity {
@@ -46,9 +46,14 @@ export class EntityFactory {
     let rotation = Math.random() * 360;
     rotation -= rotation % 90;
 
-    const unitAnimations = this.animations[props.color].swordsmen;
+    const spriteModel = this.animationManager.createModel(
+      props.color,
+      'swordsmen'
+    );
 
-    const sprite = new PIXI.AnimatedSprite(unitAnimations.idle.north.textures);
+    const sprite = new PIXI.AnimatedSprite(
+      spriteModel.getAnimation('idle', 'north').textures
+    );
     sprite.anchor.set(0.5);
     sprite.position.set(props.position.x, props.position.y);
     sprite.animationSpeed = 0.25;
@@ -96,7 +101,11 @@ export class EntityFactory {
       .addComponent(TargetComponent)
       .addComponent(ControlledComponent)
       .addComponent(AssetComponent, {
-        animations: unitAnimations,
+        animator: this.animationManager.createAnimator(
+          sprite,
+          props.color,
+          'swordsmen'
+        ),
       });
   }
 }

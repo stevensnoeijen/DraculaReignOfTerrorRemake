@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-export const DEFAULT_SPEED = 0.25;
+export const TEXTURE_SPEED = Number.POSITIVE_INFINITY;
 
 export class Animation {
   constructor(

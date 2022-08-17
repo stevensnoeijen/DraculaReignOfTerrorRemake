@@ -1,27 +1,29 @@
 import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
+import { AnimationManager } from '../animation/AnimationManager';
+import { UnitSpriteModelsJson } from '../animation/api';
+
 import { cellPositionToVector } from './../utils';
 import { Level } from './Level';
 import { EntityFactory } from './../EntityFactory';
 import { generateMaze, getGridSizeByScreen } from './utils';
-import * as animations from '../animation/utils';
 
 export class PathFindingLevel extends Level {
   private map: number[][];
   private readonly entityFactory: EntityFactory;
-
-  public readonly unitAnimations: animations.UnitAnimations;
+  private readonly animationManager: AnimationManager;
 
   constructor(app: PIXI.Application, world: World) {
     super(app, world);
 
     this.map = generateMaze(getGridSizeByScreen(app));
 
-    this.unitAnimations = animations.load(
-      app.loader.resources.unit.spritesheet!
+    this.animationManager = new AnimationManager(
+      app.loader.resources['unit-spritesheet'].spritesheet!,
+      app.loader.resources['unit-sprite-models'].data as UnitSpriteModelsJson
     );
-    this.entityFactory = new EntityFactory(world, this.unitAnimations);
+    this.entityFactory = new EntityFactory(world, this.animationManager);
   }
 
   public get collisionMap(): number[][] {
@@ -31,7 +33,7 @@ export class PathFindingLevel extends Level {
   public load(): void {
     this.entityFactory.createUnit({
       position: cellPositionToVector(1, 1),
-      color: 'red',
+      color: 'blue',
       team: {
         number: 1,
       },

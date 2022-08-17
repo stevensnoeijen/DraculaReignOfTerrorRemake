@@ -2,11 +2,14 @@ import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
 
 import { cellPositionToVector } from '../utils';
-import { Level } from './Level';
 import { EntityFactory } from '../EntityFactory';
+import { Tree } from '../ai/behaviortree/Tree';
+import { AnimationManager } from '../animation/AnimationManager';
+import { UnitSpriteModelsJson } from '../animation/api';
+
+import { Level } from './Level';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { BehaviorTreeComponent } from './../systems/ai/BehaviorTreeComponent';
-import { Tree } from '../ai/behaviortree/Tree';
 import {
   Selector,
   Timer,
@@ -24,22 +27,22 @@ import {
   SetTarget,
   IsEnemyInAggroRange,
 } from './../ai/behaviortree/nodes/entity';
-import * as animations from '../animation/utils';
 
 export class BehaviorTreeLevel extends Level {
   private map: number[][];
   private readonly entityFactory: EntityFactory;
-
-  public readonly unitAnimations: animations.UnitAnimations;
+  private readonly animationManager: AnimationManager;
 
   constructor(app: PIXI.Application, world: World) {
     super(app, world);
 
     this.map = createEmptyGrid(getGridSizeByScreen(app));
-    this.unitAnimations = animations.load(
-      app.loader.resources.unit.spritesheet!
+
+    this.animationManager = new AnimationManager(
+      app.loader.resources['unit-spritesheet'].spritesheet!,
+      app.loader.resources['unit-sprite-models'].data as UnitSpriteModelsJson
     );
-    this.entityFactory = new EntityFactory(world, this.unitAnimations);
+    this.entityFactory = new EntityFactory(world, this.animationManager);
   }
 
   public get collisionMap(): number[][] {

@@ -64,13 +64,12 @@ import { PixiViewportInstance } from '../pixi/viewport/types';
 import { PixiApplicationInstance } from '../pixi/app/types';
 import { AssetLoaded } from '../pixi/assets';
 import { stringsToSelectOptions } from '../utils';
+import { getSpriteModels } from '../../game/animation/api';
 
 const applicationInstance = $ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();
 
-const app = $computed<PIXI.Application | null>(
-  () => applicationInstance?.application ?? null
-);
+const app = $computed(() => applicationInstance?.application);
 const props = defineProps<{
   unit: animations.Unit;
 }>();
@@ -102,15 +101,16 @@ let animationManager: AnimationManager;
 let animator: Animator;
 let sprite: PIXI.AnimatedSprite;
 
-const loadedAssets: AssetLoaded<PIXI.Spritesheet> = (assetId, asset) => {
-  animationManager = new AnimationManager(asset);
+const loadedAssets: AssetLoaded<PIXI.Spritesheet> = async (assetId, asset) => {
+  const spriteModels = await getSpriteModels();
+  animationManager = new AnimationManager(asset, spriteModels);
   loadSprite();
 };
 
 const loadSprite = () => {
   sprite = new PIXI.AnimatedSprite(
     animationManager
-      .getModel('blue', 'swordsmen')
+      .createModel('blue', 'swordsmen')
       .getAnimation('idle', 'north').textures
   ); // TODO: refactor to not load something...
   sprite.anchor.set(0.5);

@@ -1,25 +1,33 @@
 import * as PIXI from 'pixi.js';
 
-import * as animations from './utils';
+import { Color, createAnimationMap, Unit } from './utils';
 import { Animator } from './Animator';
-import { Model } from './Model';
+import { UnitSpriteModelsJson } from './api';
+import { SpriteModel } from './SpriteModel';
 
 export class AnimationManager {
-  private readonly unitAnimations: animations.UnitAnimations;
+  constructor(
+    private readonly spritesheet: PIXI.Spritesheet,
+    private readonly spriteModels: UnitSpriteModelsJson
+  ) {}
 
-  constructor(spritesheet: PIXI.Spritesheet) {
-    this.unitAnimations = animations.load(spritesheet);
-  }
-
-  public getModel(color: animations.Color, unit: animations.Unit): Model {
-    return new Model(`${color}_${unit}`, this.unitAnimations[color][unit]);
+  public createModel(color: Color, unit: Unit): SpriteModel {
+    return new SpriteModel(
+      `${color}_${unit}`,
+      createAnimationMap(
+        this.spritesheet,
+        this.spriteModels.models,
+        color,
+        unit
+      )
+    );
   }
 
   public createAnimator(
     sprite: PIXI.AnimatedSprite,
-    color: animations.Color,
-    unit: animations.Unit
+    color: Color,
+    unit: Unit
   ): Animator {
-    return new Animator(sprite, this.getModel(color, unit));
+    return new Animator(sprite, this.createModel(color, unit));
   }
 }

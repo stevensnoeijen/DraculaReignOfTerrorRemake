@@ -64,9 +64,12 @@ export class Engine {
       frame();
     });
 
-    this.app.loader.add('unit', 'assets/unit-spritesheet.json').load(() => {
-      loadLevel();
-    });
+    this.app.loader
+      .add('unit-spritesheet', 'assets/unit-spritesheet.json')
+      .add('unit-sprite-models', 'assets/unit-sprite-models.json')
+      .load(() => {
+        loadLevel();
+      });
 
     this.world
       .registerComponent(TransformComponent)

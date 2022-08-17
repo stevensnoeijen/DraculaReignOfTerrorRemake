@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
-import { Animation, DEFAULT_SPEED } from './Animation';
+import { Animation, TEXTURE_SPEED } from './Animation';
+import { Model } from './api';
 
 export const colors = ['red', 'blue'] as const;
 export type Color = typeof colors[number];
@@ -30,96 +31,63 @@ export type Direction = typeof directions[number];
 
 export const states = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
 export type State = typeof states[number];
-const loopableStates: readonly State[] = ['move', 'attack'];
 
-export type Animations = Record<State, Record<Direction, Animation>>;
+type DirectionalAnimations = Record<Direction, Animation>;
+export type AnimationMap = Record<State, DirectionalAnimations>;
 
-const getAnimationKey = (
-  color: Color,
-  unit: Unit,
-  state: State,
-  direction: Direction
-): string => {
-  if (colorlessUnits.includes(unit)) {
-    // have no color in their texture
-    return `${unit}.${state}.${direction}`;
-  }
-  return `${unit}.${color}.${state}.${direction}`;
-};
-
-const getAnimation = (
+const createAnimation = (
   spritesheet: PIXI.Spritesheet,
-  color: Color,
-  unit: Unit,
+  model: Model,
   state: State,
   direction: Direction
 ): Animation | null => {
-  const key = getAnimationKey(color, unit, state, direction);
-  if (spritesheet.animations[key] != null) {
-    // TODO: move loop check to data
+  const descriptor = model.states[state][direction];
+
+  if ('texture' in descriptor) {
     return new Animation(
-      spritesheet.animations[key],
-      DEFAULT_SPEED,
-      loopableStates.includes(state)
+      [spritesheet.textures[descriptor.texture]],
+      TEXTURE_SPEED,
+      false
+    );
+  } else {
+    // animation
+    return new Animation(
+      spritesheet.animations[descriptor.animation],
+      descriptor.speed,
+      descriptor.loop
     );
   }
-  // dead state is no animation
-  if (spritesheet.textures[key] != null) {
-    return new Animation([spritesheet.textures[key]], DEFAULT_SPEED, false);
-  }
-
-  // else nothing found
-  return null;
 };
 
-const loadByDirection = (
+const createDirectionalAnimations = (
   spritesheet: PIXI.Spritesheet,
-  color: Color,
-  unit: Unit,
+  spriteModel: Model,
   state: State
-): Animations => {
+): DirectionalAnimations => {
   return directions.reduce((directionMap, direction) => {
     return {
       ...directionMap,
-      [direction]: getAnimation(spritesheet, color, unit, state, direction),
+      [direction]: createAnimation(spritesheet, spriteModel, state, direction),
     };
-  }, {}) as Animations;
+  }, {}) as DirectionalAnimations;
 };
 
-const loadByUnit = (
+export const createAnimationMap = (
   spritesheet: PIXI.Spritesheet,
+  spriteModels: Model[],
   color: Color,
   unit: Unit
-): Animations => {
+): AnimationMap => {
+  const spriteModel = spriteModels.find(
+    (spriteModel) => spriteModel.color === color && spriteModel.unit === unit
+  )!;
+
   return states.reduce((directionMap, state) => {
     return {
       ...directionMap,
-      [state]: loadByDirection(spritesheet, color, unit, state), // todo implement me
+      [state]: createDirectionalAnimations(spritesheet, spriteModel, state),
     };
-  }, {}) as Animations;
-};
-
-const loadByColor = (
-  spritesheet: PIXI.Spritesheet,
-  color: Color
-): Record<Unit, Animations> => {
-  return units.reduce((unitMap, unit) => {
-    return {
-      ...unitMap,
-      [unit]: loadByUnit(spritesheet, color, unit),
-    };
-  }, {}) as Record<Unit, Animations>;
-};
-
-export type UnitAnimations = Record<Color, Record<Unit, Animations>>;
-
-export const load = (spritesheet: PIXI.Spritesheet): UnitAnimations => {
-  return colors.reduce((colorMap, color) => {
-    return {
-      ...colorMap,
-      [color]: loadByColor(spritesheet, color),
-    };
-  }, {}) as UnitAnimations;
+  }, {}) as AnimationMap;
 };
 
 const ROTATION_TO_DIRECTION_MAP: ReadonlyMap<number, Direction> = new Map<
