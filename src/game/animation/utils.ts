@@ -90,6 +90,11 @@ export const createAnimationMap = (
   }, {}) as AnimationMap;
 };
 
+export type ModelName = `${Color}_${Unit}`;
+export const createModelName = (color: Color, unit: Unit): ModelName => {
+  return `${color}_${unit}`;
+};
+
 const ROTATION_TO_DIRECTION_MAP: ReadonlyMap<number, Direction> = new Map<
   number,
   Direction

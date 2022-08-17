@@ -108,7 +108,7 @@ for (const unit of units) {
   }
 }
 fs.writeFileSync(
-  __dirname + '/../public/assets/unit-sprite-models.json',
+  __dirname + '/../public/assets/animation-models.json',
   JSON.stringify(
     {
       spritesheet: '/assets/unit-spritesheet.json',

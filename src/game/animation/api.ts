@@ -21,13 +21,13 @@ export interface UnitSpriteModelsJson {
   models: Model[];
 }
 
-export const getSpriteModels = async (): Promise<UnitSpriteModelsJson> => {
-  const res = await fetch('/assets/unit-sprite-models.json');
+export const getAnimationModels = async (): Promise<UnitSpriteModelsJson> => {
+  const res = await fetch('/assets/animation-models.json');
 
   return res.json();
 };
 
 export const getSpriteModelNames = async () => {
-  const spriteModels = await getSpriteModels();
+  const spriteModels = await getAnimationModels();
   return _.uniq(spriteModels.models.map((model) => model.unit));
 };

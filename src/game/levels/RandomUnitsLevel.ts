@@ -6,27 +6,27 @@ import { EntityFactory } from '../EntityFactory';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
 import { UnitSpriteModelsJson } from '../animation/api';
+import { AnimationService } from '../animation/AnimationService';
 
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Level } from './Level';
-import { AnimationManager } from './../animation/AnimationManager';
 
 export class RandomUnitsLevel extends Level {
   private readonly _collisionMap: number[][];
   private readonly entityFactory: EntityFactory;
 
-  private readonly animationManager: AnimationManager;
+  private readonly animationService: AnimationService;
 
   constructor(app: PIXI.Application, world: World) {
     super(app, world);
 
     this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
 
-    this.animationManager = new AnimationManager(
+    this.animationService = new AnimationService(
       app.loader.resources['unit-spritesheet'].spritesheet!,
-      app.loader.resources['unit-sprite-models'].data as UnitSpriteModelsJson
+      app.loader.resources['animation-models'].data as UnitSpriteModelsJson
     );
-    this.entityFactory = new EntityFactory(world, this.animationManager);
+    this.entityFactory = new EntityFactory(world, this.animationService);
   }
 
   public get collisionMap(): number[][] {

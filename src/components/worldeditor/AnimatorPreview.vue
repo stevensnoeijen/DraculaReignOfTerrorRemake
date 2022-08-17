@@ -58,13 +58,13 @@ import * as PIXI from 'pixi.js';
 import { $computed, $ref } from 'vue/macros';
 
 import * as animations from '../../game/animation/utils';
-import { AnimationManager } from '../../game/animation/AnimationManager';
+import { AnimationService } from '../../game/animation/AnimationService';
 import { Animator } from '../../game/animation/Animator';
 import { PixiViewportInstance } from '../pixi/viewport/types';
 import { PixiApplicationInstance } from '../pixi/app/types';
 import { AssetLoaded } from '../pixi/assets';
 import { stringsToSelectOptions } from '../utils';
-import { getSpriteModels } from '../../game/animation/api';
+import { getAnimationModels } from '../../game/animation/api';
 
 const applicationInstance = $ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();
@@ -97,29 +97,25 @@ watch(
   () => handleChangeAnimation()
 );
 
-let animationManager: AnimationManager;
+let animationService: AnimationService;
 let animator: Animator;
 let sprite: PIXI.AnimatedSprite;
 
 const loadedAssets: AssetLoaded<PIXI.Spritesheet> = async (assetId, asset) => {
-  const spriteModels = await getSpriteModels();
-  animationManager = new AnimationManager(asset, spriteModels);
+  const animationModels = await getAnimationModels();
+  animationService = new AnimationService(asset, animationModels);
   loadSprite();
 };
 
 const loadSprite = () => {
-  sprite = new PIXI.AnimatedSprite(
-    animationManager
-      .createModel('blue', 'swordsmen')
-      .getAnimation('idle', 'north').textures
-  ); // TODO: refactor to not load something...
+  sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
   sprite.anchor.set(0.5);
   sprite.position.set(
     applicationInstance.application.view.width / 2,
     applicationInstance.application.view.height / 2
   );
 
-  animator = animationManager.createAnimator(sprite, color, props.unit);
+  animator = animationService.createAnimator(sprite, color, props.unit);
   animator.set(state, direction);
 
   viewportInstance.viewport.addChild(sprite);
@@ -131,7 +127,7 @@ onBeforeUnmount(() => {
 });
 
 const handleChangeModel = () => {
-  animator = animationManager.createAnimator(sprite, color, props.unit);
+  animator = animationService.createAnimator(sprite, color, props.unit);
   handleChangeAnimation();
 };
 

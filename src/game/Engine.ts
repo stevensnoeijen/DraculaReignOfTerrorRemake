@@ -66,7 +66,7 @@ export class Engine {
 
     this.app.loader
       .add('unit-spritesheet', 'assets/unit-spritesheet.json')
-      .add('unit-sprite-models', 'assets/unit-sprite-models.json')
+      .add('animation-models', 'assets/animation-models.json')
       .load(() => {
         loadLevel();
       });
