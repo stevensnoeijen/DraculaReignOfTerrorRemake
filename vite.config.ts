@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
@@ -8,6 +10,11 @@ import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './src'),
+    },
+  },
   plugins: [
     Checker({
       typescript: {
