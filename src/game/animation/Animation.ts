@@ -1,7 +1,5 @@
 import * as PIXI from 'pixi.js';
 
-export const DEFAULT_SPEED = 0.25;
-
 export class Animation {
   constructor(
     public readonly textures: PIXI.Texture[],

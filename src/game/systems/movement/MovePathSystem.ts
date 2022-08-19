@@ -1,19 +1,18 @@
+import { Entity, System } from 'ecsy';
+
+import { cellPositionToVector } from '../../utils';
+import { Vector2 } from '../../math/Vector2';
+
 import { setEntityAnimation } from './../render/sprite/utils';
 import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { TransformComponent } from './../TransformComponent';
-import { Entity, System } from 'ecsy';
-
 import { getCell, not, Position } from './../../utils';
 import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
-import { cellPositionToVector } from '../../utils';
 import { ControlledComponent } from './../ControlledComponent';
 import { isSameEntity } from './../utils/index';
-import { AssetComponent } from './../render/AssetComponent';
-import { rotationToDirection, State } from '../../animation/utils';
 import { AnimatedSpriteComponent } from './../render/sprite/AnimatedSpriteComponent';
-import { Vector2 } from '../../math/Vector2';
 
 export class MovePathSystem extends System {
   public static queries = {

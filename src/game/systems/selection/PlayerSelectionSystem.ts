@@ -29,7 +29,7 @@ export class PlayerSelectionSystem extends System {
    * Used for deselecting units when clicking,
    * but can be cancelled when dblclick-ing for moving entities.
    */
-  private deselectEntitiesTimeout: NodeJS.Timeout | null = null;
+  private deselectEntitiesTimeout: ReturnType<typeof setTimeout> | null = null;
 
   private readonly app: PIXI.Application;
   private rectangle: PIXI.Graphics;

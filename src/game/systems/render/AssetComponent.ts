@@ -1,15 +1,15 @@
 import { Component, Types } from 'ecsy';
 
-import { Animations } from '../../animation/utils';
+import { Animator } from '~/game/animation/Animator';
 
 export interface AssetComponentProps {
-  animations: Animations;
+  animator: Animator;
 }
 
 export class AssetComponent extends Component<AssetComponentProps> {
   static schema = {
-    animations: { type: Types.Ref },
+    animator: { type: Types.Ref },
   };
 
-  animations!: Animations;
+  animator!: Animator;
 }

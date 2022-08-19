@@ -23,7 +23,7 @@ import { DisplayObject } from '@pixi/display';
 import EventEmitter from 'eventemitter3';
 import _ from 'lodash';
 
-import { isAnyPropertySet, omitUndefined } from '../utils';
+import { isAnyPropertySet, omitUndefined } from '../../../utils/object';
 
 import { PixiViewportInstance } from './types';
 import { EVENTS, Event } from './constants';

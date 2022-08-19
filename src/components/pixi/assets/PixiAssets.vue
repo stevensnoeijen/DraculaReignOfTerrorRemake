@@ -193,7 +193,9 @@ const loadBundles = async () => {
 };
 
 onMounted(async () => {
-  await assets.init(props.options);
+  if (assets['_initialized'] === false) {
+    await assets.init(props.options);
+  }
   await Promise.all([loadAssets(), loadBundles()]);
 });
 

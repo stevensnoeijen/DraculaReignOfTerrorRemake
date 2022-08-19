@@ -1,0 +1,120 @@
+import * as fs from 'fs';
+
+const colors = ['red', 'blue'] as const;
+type Color = typeof colors[number];
+
+const units = [
+  'swordsmen',
+  'crossbowsoldier',
+  'knight',
+  'juggernaut',
+  'catapult',
+  'cannon',
+] as const;
+type Unit = typeof units[number];
+const colorlessUnits: ReadonlyArray<Unit> = ['catapult', 'cannon'];
+const animatedUnits: ReadonlyArray<Unit> = [
+  'swordsmen',
+  'crossbowsoldier',
+  'knight',
+  'juggernaut',
+];
+
+const states = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
+type State = typeof states[number];
+const animationStates: ReadonlyArray<State> = ['move', 'attack', 'dying'];
+
+const directions = [
+  'north',
+  'northeast',
+  'east',
+  'southeast',
+  'south',
+  'southwest',
+  'west',
+  'northwest',
+] as const;
+type Direction = typeof directions[number];
+
+type BaseAnimation = {
+  loop: boolean;
+  speed: number;
+};
+
+type ModelState = {
+  [direction in Direction]:
+    | (BaseAnimation & ({ animation: string } | { texture: string }))
+    | {};
+};
+
+type Model = {
+  unit: Unit;
+  color: Color;
+  states: {
+    [state in State]: ModelState;
+  };
+};
+
+const getAnimationKey = (
+  unit: Unit,
+  color: Color,
+  state: State,
+  direction: Direction
+): string | null => {
+  if (!animatedUnits.includes(unit)) {
+    state = 'idle';
+  }
+
+  if (colorlessUnits.includes(unit)) {
+    // have no color in their texture
+    return `${unit}.${state}.${direction}`;
+  }
+  return `${unit}.${color}.${state}.${direction}`;
+};
+
+const models: Model[] = [];
+
+for (const unit of units) {
+  const isAnimatedUnit = animatedUnits.includes(unit);
+
+  for (const color of colors) {
+    const model = {
+      unit,
+      color,
+      states: {},
+    } as Model;
+
+    for (const state of states) {
+      const modelState = {} as ModelState;
+      for (const direction of directions) {
+        const animationName = getAnimationKey(unit, color, state, direction);
+
+        if (isAnimatedUnit && animationStates.includes(state)) {
+          modelState[direction] = {
+            animation: animationName,
+            speed: 0.25,
+            loop: true,
+          };
+        } else {
+          modelState[direction] = {
+            texture: animationName,
+          };
+        }
+      }
+      model.states[state] = modelState;
+    }
+
+    models.push(model);
+  }
+}
+fs.writeFileSync(
+  __dirname + '/../public/assets/animation-models.json',
+  JSON.stringify(
+    {
+      spritesheet: '/assets/unit-spritesheet.json',
+      models,
+    },
+    null,
+    2
+  )
+);

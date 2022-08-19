@@ -6,6 +6,8 @@ import { Vector2 } from './math/Vector2';
 import * as PathFinding from './ai/pathfinding';
 import { TransformComponent } from './systems/TransformComponent';
 
+import { Predicate } from '~/utils/types';
+
 export const filterEmpty = Boolean as <T>(t: T) => NonNullable<T>;
 
 export type Options = Record<string, string[] | undefined>;
@@ -27,7 +29,6 @@ export const getOptions = (): Options => {
 };
 
 export type HasEquals = { equals: (other: unknown) => boolean };
-export type Predicate<T> = (value: T, index?: number, obj?: T[]) => boolean;
 
 export const toEqual = <T extends HasEquals>(other: T): Predicate<T> => {
   return (item: T) => item.equals(other);

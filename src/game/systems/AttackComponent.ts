@@ -1,5 +1,6 @@
-import { HealthComponent } from './health/HealthComponent';
 import { Component, Entity, Types } from 'ecsy';
+
+import { HealthComponent } from './health/HealthComponent';
 
 interface AttackComponentProps {
   aggroRange: number;

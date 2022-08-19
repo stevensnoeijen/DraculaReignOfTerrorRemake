@@ -12,5 +12,6 @@ export class SizeComponent extends Component<ISizeComponentProps> {
   };
 
   declare width: number;
+
   declare height: number;
 }

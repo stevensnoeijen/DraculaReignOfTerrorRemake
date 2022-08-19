@@ -9,7 +9,7 @@ import { onMounted, PropType } from 'vue';
 import { $ref } from 'vue/macros';
 import * as PIXI from 'pixi.js';
 
-import { isAnyPropertySet, omitUndefined } from '../utils';
+import { isAnyPropertySet, omitUndefined } from '../../../utils/object';
 
 import { PixiApplicationInstance } from './types';
 

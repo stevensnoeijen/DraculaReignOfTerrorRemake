@@ -1,11 +1,14 @@
 import { Entity } from 'ecsy';
 
+import { rotationToDirection } from '../../../animation/load';
+
 import { TransformComponent } from './../../TransformComponent';
 import { AssetComponent } from './../AssetComponent';
 import { AnimatedSpriteComponent } from './AnimatedSpriteComponent';
-import { rotationToDirection, State } from '../../../animation/utils';
 
-export const setEntityAnimation = (entity: Entity, state: State): void => {
+import { UnitState } from '~/game/types';
+
+export const setEntityAnimation = (entity: Entity, state: UnitState): void => {
   const spriteComponent = entity.getMutableComponent(AnimatedSpriteComponent);
   if (spriteComponent != null) {
     const assetComponent = entity.getComponent(AssetComponent);
@@ -16,16 +19,8 @@ export const setEntityAnimation = (entity: Entity, state: State): void => {
     const direction = rotationToDirection(transformComponent?.rotation ?? 0)!;
 
     if (spriteComponent.state !== `${state}_${direction}`) {
-      const oldState = spriteComponent.state;
-      assetComponent.animations[state][direction].set(spriteComponent.sprite);
+      assetComponent.animator.set(state, direction);
       spriteComponent.state = `${state}_${direction}`;
-      console.log(
-        entity.id +
-          ': update state from ' +
-          oldState +
-          ' to ' +
-          spriteComponent.state
-      );
       spriteComponent.sprite.play();
     }
   }
