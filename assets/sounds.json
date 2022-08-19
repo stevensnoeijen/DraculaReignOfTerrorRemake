@@ -1,0 +1,258 @@
+{
+  "resources": [
+    "assets\\sounds.ogg",
+    "assets\\sounds.mp3"
+  ],
+  "spritemap": {
+    "arrow_1": {
+      "start": 0,
+      "end": 0.25900226757369615,
+      "loop": false
+    },
+    "arrow_2": {
+      "start": 2,
+      "end": 2.274331065759637,
+      "loop": false
+    },
+    "canon_destroyed": {
+      "start": 4,
+      "end": 6.97219954648526,
+      "loop": false
+    },
+    "canon_fire_1": {
+      "start": 8,
+      "end": 9.02172335600907,
+      "loop": false
+    },
+    "canon_fire_2": {
+      "start": 11,
+      "end": 12.43092970521542,
+      "loop": false
+    },
+    "canon_move": {
+      "start": 14,
+      "end": 15.72408163265306,
+      "loop": false
+    },
+    "catapult_destroyed_1": {
+      "start": 17,
+      "end": 18.808662131519274,
+      "loop": false
+    },
+    "catapult_destroyed_2": {
+      "start": 20,
+      "end": 21.44548752834467,
+      "loop": false
+    },
+    "catapult_fire": {
+      "start": 23,
+      "end": 23.40204081632653,
+      "loop": false
+    },
+    "catapult_kill_unit": {
+      "start": 25,
+      "end": 25.579047619047618,
+      "loop": false
+    },
+    "catapult_move": {
+      "start": 27,
+      "end": 29.066575963718822,
+      "loop": false
+    },
+    "cut_1": {
+      "start": 31,
+      "end": 31.74888888888889,
+      "loop": false
+    },
+    "cut_2": {
+      "start": 33,
+      "end": 33.66471655328798,
+      "loop": false
+    },
+    "cut_3": {
+      "start": 35,
+      "end": 35.63269841269841,
+      "loop": false
+    },
+    "gate_close": {
+      "start": 37,
+      "end": 37.60081632653061,
+      "loop": false
+    },
+    "horse_1": {
+      "start": 39,
+      "end": 40.48607709750567,
+      "loop": false
+    },
+    "horse_2": {
+      "start": 42,
+      "end": 42.847573696145126,
+      "loop": false
+    },
+    "juggernaut_attack": {
+      "start": 44,
+      "end": 44.801632653061226,
+      "loop": false
+    },
+    "juggernaut_move": {
+      "start": 46,
+      "end": 46.73945578231292,
+      "loop": false
+    },
+    "swords_1": {
+      "start": 48,
+      "end": 48.73287981859411,
+      "loop": false
+    },
+    "swords_2": {
+      "start": 50,
+      "end": 50.547165532879816,
+      "loop": false
+    },
+    "swords_3": {
+      "start": 52,
+      "end": 53.22480725623583,
+      "loop": false
+    },
+    "swords_4": {
+      "start": 55,
+      "end": 55.272879818594106,
+      "loop": false
+    },
+    "swords_5": {
+      "start": 57,
+      "end": 57.909886621315195,
+      "loop": false
+    },
+    "swords_6": {
+      "start": 59,
+      "end": 59.73428571428571,
+      "loop": false
+    },
+    "unit_die_1": {
+      "start": 61,
+      "end": 61.236167800453515,
+      "loop": false
+    },
+    "unit_die_10": {
+      "start": 63,
+      "end": 63.399138321995466,
+      "loop": false
+    },
+    "unit_die_11": {
+      "start": 65,
+      "end": 65.39913832199547,
+      "loop": false
+    },
+    "unit_die_2": {
+      "start": 67,
+      "end": 67.37446712018141,
+      "loop": false
+    },
+    "unit_die_3": {
+      "start": 69,
+      "end": 69.98104308390023,
+      "loop": false
+    },
+    "unit_die_4": {
+      "start": 71,
+      "end": 71.26113378684808,
+      "loop": false
+    },
+    "unit_die_5": {
+      "start": 73,
+      "end": 73.34544217687075,
+      "loop": false
+    },
+    "unit_die_6": {
+      "start": 75,
+      "end": 75.36285714285714,
+      "loop": false
+    },
+    "unit_die_7": {
+      "start": 77,
+      "end": 77.39609977324263,
+      "loop": false
+    },
+    "unit_die_8": {
+      "start": 79,
+      "end": 79.47126984126984,
+      "loop": false
+    },
+    "unit_die_9": {
+      "start": 81,
+      "end": 81.38897959183673,
+      "loop": false
+    },
+    "unit_move_1": {
+      "start": 83,
+      "end": 84.34675736961451,
+      "loop": false
+    },
+    "unit_move_10": {
+      "start": 86,
+      "end": 86.83011337868481,
+      "loop": false
+    },
+    "unit_move_11": {
+      "start": 88,
+      "end": 89.24807256235827,
+      "loop": false
+    },
+    "unit_move_12": {
+      "start": 91,
+      "end": 92.25510204081633,
+      "loop": false
+    },
+    "unit_move_13": {
+      "start": 94,
+      "end": 95.4744671201814,
+      "loop": false
+    },
+    "unit_move_2": {
+      "start": 97,
+      "end": 97.79818594104309,
+      "loop": false
+    },
+    "unit_move_3": {
+      "start": 99,
+      "end": 100.63120181405895,
+      "loop": false
+    },
+    "unit_move_4": {
+      "start": 102,
+      "end": 103.30031746031746,
+      "loop": false
+    },
+    "unit_move_5": {
+      "start": 105,
+      "end": 106.60798185941043,
+      "loop": false
+    },
+    "unit_move_6": {
+      "start": 108,
+      "end": 108.94621315192744,
+      "loop": false
+    },
+    "unit_move_7": {
+      "start": 110,
+      "end": 110.81560090702948,
+      "loop": false
+    },
+    "unit_move_8": {
+      "start": 112,
+      "end": 112.89396825396825,
+      "loop": false
+    },
+    "unit_move_9": {
+      "start": 114,
+      "end": 115.5092970521542,
+      "loop": false
+    },
+    "unit_move_multiple": {
+      "start": 117,
+      "end": 118.52671201814059,
+      "loop": false
+    }
+  }
+}

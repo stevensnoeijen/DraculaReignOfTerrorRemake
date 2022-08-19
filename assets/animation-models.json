@@ -1,0 +1,2021 @@
+{
+  "spritesheet": "/assets/unit-spritesheet.json",
+  "models": [
+    {
+      "unit": "swordsmen",
+      "color": "red",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "swordsmen.red.idle.north"
+          },
+          "northeast": {
+            "texture": "swordsmen.red.idle.northeast"
+          },
+          "east": {
+            "texture": "swordsmen.red.idle.east"
+          },
+          "southeast": {
+            "texture": "swordsmen.red.idle.southeast"
+          },
+          "south": {
+            "texture": "swordsmen.red.idle.south"
+          },
+          "southwest": {
+            "texture": "swordsmen.red.idle.southwest"
+          },
+          "west": {
+            "texture": "swordsmen.red.idle.west"
+          },
+          "northwest": {
+            "texture": "swordsmen.red.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "swordsmen.red.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "swordsmen.red.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "swordsmen.red.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "swordsmen.red.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "swordsmen.red.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "swordsmen.red.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "swordsmen.red.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "swordsmen.red.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "swordsmen.red.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "swordsmen.red.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "swordsmen.red.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "swordsmen.red.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "swordsmen.red.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "swordsmen.red.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "swordsmen.red.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "swordsmen.red.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "swordsmen.red.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "swordsmen.red.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "swordsmen.red.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "swordsmen.red.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "swordsmen.red.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "swordsmen.red.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "swordsmen.red.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "swordsmen.red.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "swordsmen.red.dead.north"
+          },
+          "northeast": {
+            "texture": "swordsmen.red.dead.northeast"
+          },
+          "east": {
+            "texture": "swordsmen.red.dead.east"
+          },
+          "southeast": {
+            "texture": "swordsmen.red.dead.southeast"
+          },
+          "south": {
+            "texture": "swordsmen.red.dead.south"
+          },
+          "southwest": {
+            "texture": "swordsmen.red.dead.southwest"
+          },
+          "west": {
+            "texture": "swordsmen.red.dead.west"
+          },
+          "northwest": {
+            "texture": "swordsmen.red.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "swordsmen",
+      "color": "blue",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "swordsmen.blue.idle.north"
+          },
+          "northeast": {
+            "texture": "swordsmen.blue.idle.northeast"
+          },
+          "east": {
+            "texture": "swordsmen.blue.idle.east"
+          },
+          "southeast": {
+            "texture": "swordsmen.blue.idle.southeast"
+          },
+          "south": {
+            "texture": "swordsmen.blue.idle.south"
+          },
+          "southwest": {
+            "texture": "swordsmen.blue.idle.southwest"
+          },
+          "west": {
+            "texture": "swordsmen.blue.idle.west"
+          },
+          "northwest": {
+            "texture": "swordsmen.blue.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "swordsmen.blue.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "swordsmen.blue.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "swordsmen.blue.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "swordsmen.blue.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "swordsmen.blue.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "swordsmen.blue.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "swordsmen.blue.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "swordsmen.blue.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "swordsmen.blue.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "swordsmen.blue.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "swordsmen.blue.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "swordsmen.blue.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "swordsmen.blue.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "swordsmen.blue.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "swordsmen.blue.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "swordsmen.blue.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "swordsmen.blue.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "swordsmen.blue.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "swordsmen.blue.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "swordsmen.blue.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "swordsmen.blue.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "swordsmen.blue.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "swordsmen.blue.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "swordsmen.blue.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "swordsmen.blue.dead.north"
+          },
+          "northeast": {
+            "texture": "swordsmen.blue.dead.northeast"
+          },
+          "east": {
+            "texture": "swordsmen.blue.dead.east"
+          },
+          "southeast": {
+            "texture": "swordsmen.blue.dead.southeast"
+          },
+          "south": {
+            "texture": "swordsmen.blue.dead.south"
+          },
+          "southwest": {
+            "texture": "swordsmen.blue.dead.southwest"
+          },
+          "west": {
+            "texture": "swordsmen.blue.dead.west"
+          },
+          "northwest": {
+            "texture": "swordsmen.blue.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "crossbowsoldier",
+      "color": "red",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "crossbowsoldier.red.idle.north"
+          },
+          "northeast": {
+            "texture": "crossbowsoldier.red.idle.northeast"
+          },
+          "east": {
+            "texture": "crossbowsoldier.red.idle.east"
+          },
+          "southeast": {
+            "texture": "crossbowsoldier.red.idle.southeast"
+          },
+          "south": {
+            "texture": "crossbowsoldier.red.idle.south"
+          },
+          "southwest": {
+            "texture": "crossbowsoldier.red.idle.southwest"
+          },
+          "west": {
+            "texture": "crossbowsoldier.red.idle.west"
+          },
+          "northwest": {
+            "texture": "crossbowsoldier.red.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "crossbowsoldier.red.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "crossbowsoldier.red.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "crossbowsoldier.red.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "crossbowsoldier.red.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "crossbowsoldier.red.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "crossbowsoldier.red.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "crossbowsoldier.red.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "crossbowsoldier.red.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "crossbowsoldier.red.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "crossbowsoldier.red.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "crossbowsoldier.red.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "crossbowsoldier.red.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "crossbowsoldier.red.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "crossbowsoldier.red.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "crossbowsoldier.red.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "crossbowsoldier.red.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "crossbowsoldier.red.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "crossbowsoldier.red.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "crossbowsoldier.red.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "crossbowsoldier.red.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "crossbowsoldier.red.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "crossbowsoldier.red.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "crossbowsoldier.red.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "crossbowsoldier.red.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "crossbowsoldier.red.dead.north"
+          },
+          "northeast": {
+            "texture": "crossbowsoldier.red.dead.northeast"
+          },
+          "east": {
+            "texture": "crossbowsoldier.red.dead.east"
+          },
+          "southeast": {
+            "texture": "crossbowsoldier.red.dead.southeast"
+          },
+          "south": {
+            "texture": "crossbowsoldier.red.dead.south"
+          },
+          "southwest": {
+            "texture": "crossbowsoldier.red.dead.southwest"
+          },
+          "west": {
+            "texture": "crossbowsoldier.red.dead.west"
+          },
+          "northwest": {
+            "texture": "crossbowsoldier.red.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "crossbowsoldier",
+      "color": "blue",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "crossbowsoldier.blue.idle.north"
+          },
+          "northeast": {
+            "texture": "crossbowsoldier.blue.idle.northeast"
+          },
+          "east": {
+            "texture": "crossbowsoldier.blue.idle.east"
+          },
+          "southeast": {
+            "texture": "crossbowsoldier.blue.idle.southeast"
+          },
+          "south": {
+            "texture": "crossbowsoldier.blue.idle.south"
+          },
+          "southwest": {
+            "texture": "crossbowsoldier.blue.idle.southwest"
+          },
+          "west": {
+            "texture": "crossbowsoldier.blue.idle.west"
+          },
+          "northwest": {
+            "texture": "crossbowsoldier.blue.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "crossbowsoldier.blue.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "crossbowsoldier.blue.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "crossbowsoldier.blue.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "crossbowsoldier.blue.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "crossbowsoldier.blue.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "crossbowsoldier.blue.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "crossbowsoldier.blue.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "crossbowsoldier.blue.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "crossbowsoldier.blue.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "crossbowsoldier.blue.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "crossbowsoldier.blue.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "crossbowsoldier.blue.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "crossbowsoldier.blue.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "crossbowsoldier.blue.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "crossbowsoldier.blue.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "crossbowsoldier.blue.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "crossbowsoldier.blue.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "crossbowsoldier.blue.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "crossbowsoldier.blue.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "crossbowsoldier.blue.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "crossbowsoldier.blue.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "crossbowsoldier.blue.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "crossbowsoldier.blue.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "crossbowsoldier.blue.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "crossbowsoldier.blue.dead.north"
+          },
+          "northeast": {
+            "texture": "crossbowsoldier.blue.dead.northeast"
+          },
+          "east": {
+            "texture": "crossbowsoldier.blue.dead.east"
+          },
+          "southeast": {
+            "texture": "crossbowsoldier.blue.dead.southeast"
+          },
+          "south": {
+            "texture": "crossbowsoldier.blue.dead.south"
+          },
+          "southwest": {
+            "texture": "crossbowsoldier.blue.dead.southwest"
+          },
+          "west": {
+            "texture": "crossbowsoldier.blue.dead.west"
+          },
+          "northwest": {
+            "texture": "crossbowsoldier.blue.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "knight",
+      "color": "red",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "knight.red.idle.north"
+          },
+          "northeast": {
+            "texture": "knight.red.idle.northeast"
+          },
+          "east": {
+            "texture": "knight.red.idle.east"
+          },
+          "southeast": {
+            "texture": "knight.red.idle.southeast"
+          },
+          "south": {
+            "texture": "knight.red.idle.south"
+          },
+          "southwest": {
+            "texture": "knight.red.idle.southwest"
+          },
+          "west": {
+            "texture": "knight.red.idle.west"
+          },
+          "northwest": {
+            "texture": "knight.red.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "knight.red.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "knight.red.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "knight.red.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "knight.red.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "knight.red.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "knight.red.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "knight.red.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "knight.red.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "knight.red.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "knight.red.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "knight.red.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "knight.red.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "knight.red.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "knight.red.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "knight.red.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "knight.red.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "knight.red.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "knight.red.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "knight.red.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "knight.red.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "knight.red.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "knight.red.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "knight.red.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "knight.red.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "knight.red.dead.north"
+          },
+          "northeast": {
+            "texture": "knight.red.dead.northeast"
+          },
+          "east": {
+            "texture": "knight.red.dead.east"
+          },
+          "southeast": {
+            "texture": "knight.red.dead.southeast"
+          },
+          "south": {
+            "texture": "knight.red.dead.south"
+          },
+          "southwest": {
+            "texture": "knight.red.dead.southwest"
+          },
+          "west": {
+            "texture": "knight.red.dead.west"
+          },
+          "northwest": {
+            "texture": "knight.red.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "knight",
+      "color": "blue",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "knight.blue.idle.north"
+          },
+          "northeast": {
+            "texture": "knight.blue.idle.northeast"
+          },
+          "east": {
+            "texture": "knight.blue.idle.east"
+          },
+          "southeast": {
+            "texture": "knight.blue.idle.southeast"
+          },
+          "south": {
+            "texture": "knight.blue.idle.south"
+          },
+          "southwest": {
+            "texture": "knight.blue.idle.southwest"
+          },
+          "west": {
+            "texture": "knight.blue.idle.west"
+          },
+          "northwest": {
+            "texture": "knight.blue.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "knight.blue.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "knight.blue.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "knight.blue.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "knight.blue.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "knight.blue.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "knight.blue.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "knight.blue.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "knight.blue.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "knight.blue.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "knight.blue.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "knight.blue.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "knight.blue.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "knight.blue.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "knight.blue.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "knight.blue.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "knight.blue.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "knight.blue.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "knight.blue.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "knight.blue.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "knight.blue.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "knight.blue.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "knight.blue.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "knight.blue.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "knight.blue.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "knight.blue.dead.north"
+          },
+          "northeast": {
+            "texture": "knight.blue.dead.northeast"
+          },
+          "east": {
+            "texture": "knight.blue.dead.east"
+          },
+          "southeast": {
+            "texture": "knight.blue.dead.southeast"
+          },
+          "south": {
+            "texture": "knight.blue.dead.south"
+          },
+          "southwest": {
+            "texture": "knight.blue.dead.southwest"
+          },
+          "west": {
+            "texture": "knight.blue.dead.west"
+          },
+          "northwest": {
+            "texture": "knight.blue.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "juggernaut",
+      "color": "red",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "juggernaut.red.idle.north"
+          },
+          "northeast": {
+            "texture": "juggernaut.red.idle.northeast"
+          },
+          "east": {
+            "texture": "juggernaut.red.idle.east"
+          },
+          "southeast": {
+            "texture": "juggernaut.red.idle.southeast"
+          },
+          "south": {
+            "texture": "juggernaut.red.idle.south"
+          },
+          "southwest": {
+            "texture": "juggernaut.red.idle.southwest"
+          },
+          "west": {
+            "texture": "juggernaut.red.idle.west"
+          },
+          "northwest": {
+            "texture": "juggernaut.red.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "juggernaut.red.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "juggernaut.red.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "juggernaut.red.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "juggernaut.red.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "juggernaut.red.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "juggernaut.red.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "juggernaut.red.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "juggernaut.red.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "juggernaut.red.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "juggernaut.red.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "juggernaut.red.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "juggernaut.red.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "juggernaut.red.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "juggernaut.red.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "juggernaut.red.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "juggernaut.red.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "juggernaut.red.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "juggernaut.red.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "juggernaut.red.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "juggernaut.red.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "juggernaut.red.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "juggernaut.red.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "juggernaut.red.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "juggernaut.red.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "juggernaut.red.dead.north"
+          },
+          "northeast": {
+            "texture": "juggernaut.red.dead.northeast"
+          },
+          "east": {
+            "texture": "juggernaut.red.dead.east"
+          },
+          "southeast": {
+            "texture": "juggernaut.red.dead.southeast"
+          },
+          "south": {
+            "texture": "juggernaut.red.dead.south"
+          },
+          "southwest": {
+            "texture": "juggernaut.red.dead.southwest"
+          },
+          "west": {
+            "texture": "juggernaut.red.dead.west"
+          },
+          "northwest": {
+            "texture": "juggernaut.red.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "juggernaut",
+      "color": "blue",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "juggernaut.blue.idle.north"
+          },
+          "northeast": {
+            "texture": "juggernaut.blue.idle.northeast"
+          },
+          "east": {
+            "texture": "juggernaut.blue.idle.east"
+          },
+          "southeast": {
+            "texture": "juggernaut.blue.idle.southeast"
+          },
+          "south": {
+            "texture": "juggernaut.blue.idle.south"
+          },
+          "southwest": {
+            "texture": "juggernaut.blue.idle.southwest"
+          },
+          "west": {
+            "texture": "juggernaut.blue.idle.west"
+          },
+          "northwest": {
+            "texture": "juggernaut.blue.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "animation": "juggernaut.blue.move.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "juggernaut.blue.move.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "juggernaut.blue.move.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "juggernaut.blue.move.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "juggernaut.blue.move.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "juggernaut.blue.move.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "juggernaut.blue.move.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "juggernaut.blue.move.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "attack": {
+          "north": {
+            "animation": "juggernaut.blue.attack.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "juggernaut.blue.attack.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "juggernaut.blue.attack.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "juggernaut.blue.attack.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "juggernaut.blue.attack.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "juggernaut.blue.attack.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "juggernaut.blue.attack.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "juggernaut.blue.attack.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dying": {
+          "north": {
+            "animation": "juggernaut.blue.dying.north",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northeast": {
+            "animation": "juggernaut.blue.dying.northeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "east": {
+            "animation": "juggernaut.blue.dying.east",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southeast": {
+            "animation": "juggernaut.blue.dying.southeast",
+            "speed": 0.25,
+            "loop": true
+          },
+          "south": {
+            "animation": "juggernaut.blue.dying.south",
+            "speed": 0.25,
+            "loop": true
+          },
+          "southwest": {
+            "animation": "juggernaut.blue.dying.southwest",
+            "speed": 0.25,
+            "loop": true
+          },
+          "west": {
+            "animation": "juggernaut.blue.dying.west",
+            "speed": 0.25,
+            "loop": true
+          },
+          "northwest": {
+            "animation": "juggernaut.blue.dying.northwest",
+            "speed": 0.25,
+            "loop": true
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "juggernaut.blue.dead.north"
+          },
+          "northeast": {
+            "texture": "juggernaut.blue.dead.northeast"
+          },
+          "east": {
+            "texture": "juggernaut.blue.dead.east"
+          },
+          "southeast": {
+            "texture": "juggernaut.blue.dead.southeast"
+          },
+          "south": {
+            "texture": "juggernaut.blue.dead.south"
+          },
+          "southwest": {
+            "texture": "juggernaut.blue.dead.southwest"
+          },
+          "west": {
+            "texture": "juggernaut.blue.dead.west"
+          },
+          "northwest": {
+            "texture": "juggernaut.blue.dead.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "catapult",
+      "color": "red",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "attack": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "dying": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "catapult",
+      "color": "blue",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "attack": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "dying": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "catapult.idle.north"
+          },
+          "northeast": {
+            "texture": "catapult.idle.northeast"
+          },
+          "east": {
+            "texture": "catapult.idle.east"
+          },
+          "southeast": {
+            "texture": "catapult.idle.southeast"
+          },
+          "south": {
+            "texture": "catapult.idle.south"
+          },
+          "southwest": {
+            "texture": "catapult.idle.southwest"
+          },
+          "west": {
+            "texture": "catapult.idle.west"
+          },
+          "northwest": {
+            "texture": "catapult.idle.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "cannon",
+      "color": "red",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "attack": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "dying": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        }
+      }
+    },
+    {
+      "unit": "cannon",
+      "color": "blue",
+      "states": {
+        "idle": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "move": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "attack": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "dying": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        },
+        "dead": {
+          "north": {
+            "texture": "cannon.idle.north"
+          },
+          "northeast": {
+            "texture": "cannon.idle.northeast"
+          },
+          "east": {
+            "texture": "cannon.idle.east"
+          },
+          "southeast": {
+            "texture": "cannon.idle.southeast"
+          },
+          "south": {
+            "texture": "cannon.idle.south"
+          },
+          "southwest": {
+            "texture": "cannon.idle.southwest"
+          },
+          "west": {
+            "texture": "cannon.idle.west"
+          },
+          "northwest": {
+            "texture": "cannon.idle.northwest"
+          }
+        }
+      }
+    }
+  ]
+}
