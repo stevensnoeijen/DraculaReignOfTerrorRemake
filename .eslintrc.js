@@ -1,3 +1,6 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution');
+
 module.exports = {
   env: {
     browser: true,
@@ -11,7 +14,6 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     '@vue/eslint-config-typescript',
   ],
-  parser: 'vue-eslint-parser',
   plugins: ['import', 'unused-imports', '@typescript-eslint'],
   rules: {
     'max-len': ['warn', { code: 80, ignorePattern: '^import\\W.*' }],
