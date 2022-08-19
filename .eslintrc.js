@@ -1,6 +1,3 @@
-/* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution');
-
 module.exports = {
   env: {
     browser: true,
@@ -13,9 +10,9 @@ module.exports = {
     'eslint:recommended',
     'plugin:vue/vue3-recommended',
     '@vue/eslint-config-typescript',
-    'plugin:jest/recommended',
   ],
-  plugins: ['import', 'unused-imports', 'jest', '@typescript-eslint'],
+  parser: 'vue-eslint-parser',
+  plugins: ['import', 'unused-imports', '@typescript-eslint'],
   rules: {
     'max-len': ['warn', { code: 80, ignorePattern: '^import\\W.*' }],
     quotes: ['warn', 'single', { avoidEscape: true }],
@@ -39,8 +36,22 @@ module.exports = {
       },
     ],
     'no-warning-comments': ['warn'],
-    'jest/no-mocks-import': ['off'],
     '@typescript-eslint/ban-ts-comment': ['error'],
   },
   ignorePatterns: ['components.d.ts'],
+  overrides: [
+    {
+      files: ['**/*.spec.ts'],
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended'],
+      rules: {
+        'jest/no-mocks-import': ['off'],
+      },
+    },
+  ],
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+  },
 };
