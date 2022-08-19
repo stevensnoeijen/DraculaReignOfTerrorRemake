@@ -12,13 +12,16 @@ const mockedLoad = (urls: unknown, onProgress?: ProgressCallback) => {
   }
 };
 
+let initialized = false;
+
 export const AssetsClass = jest.fn().mockImplementation(() => ({
+  _initialized: initialized,
   add: jest.fn(),
   addBundle: jest.fn(),
   backgroundLoad: jest.fn(),
   backgroundLoadBundle: jest.fn(),
   get: jest.fn(),
-  init: jest.fn(),
+  init: jest.fn(() => (initialized = true)),
   load: jest.fn().mockImplementation(mockedLoad),
   loadBundle: jest.fn().mockImplementation(mockedLoad),
   reset: jest.fn(),
