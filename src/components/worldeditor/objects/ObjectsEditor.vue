@@ -48,8 +48,18 @@
             :unit="(selectedProperty!.value as UnitType)"
           />
           <sound-preview
-            v-if="selectedProperty?.field.includes('sound')"
-            v-model.string="selectedProperty!.value"
+            v-if="
+              selectedProperty?.field.includes('sound') &&
+              typeof selectedProperty.value === 'string'
+            "
+            v-model="selectedProperty.value"
+          />
+          <sound-preview
+            v-if="
+              selectedProperty?.field.includes('sound') &&
+              Array.isArray(selectedProperty.value)
+            "
+            v-model="selectedProperty.value"
           />
         </div>
       </div>
@@ -91,7 +101,6 @@ let showObjectCreateModal = $ref(false);
 const objectCreateInstance = $ref<ObjectCreateInstance>();
 const handleObjectCreate = async () => {
   try {
-    console.log('check');
     await objectCreateInstance.form.validate();
 
     objects.push(objectCreateInstance.object);

@@ -1,7 +1,10 @@
 <template>
   <n-popconfirm @positive-click="emits('click')">
     <template #trigger>
-      <n-icon :title="title" :class="iconClass">
+      <n-icon
+        :title="iconTitle"
+        :class="iconClass"
+      >
         <i-carbon-delete />
       </n-icon>
     </template>

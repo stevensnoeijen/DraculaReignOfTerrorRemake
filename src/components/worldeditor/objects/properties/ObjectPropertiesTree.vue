@@ -7,11 +7,7 @@
     default-expand-all
     :selected-keys="selectedKeys"
     :render-suffix="renderSuffix"
-    :node-props="
-      ({ option }) => ({
-        onClick: () => handleTreeSelect(option),
-      })
-    "
+    :node-props="nodeProps"
     class="w-56"
   />
 </template>
@@ -65,6 +61,12 @@ const handleTreeSelect = (option: TreeOption) => {
   )!;
   selectedKeys = [property.field];
   emits('select', property);
+};
+
+const nodeProps = ({ option }: { option: TreeOption }) => {
+  return {
+    onClick: () => handleTreeSelect(option),
+  };
 };
 
 const renderSuffix = ({ option }: { option: TreeOption }) => {

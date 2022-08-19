@@ -6,11 +6,7 @@
     default-expand-all
     :render-suffix="renderSuffix"
     :selected-keys="[selectedKeys]"
-    :node-props="
-      ({ option }) => ({
-        onClick: () => handleTreeSelect(option),
-      })
-    "
+    :node-props="nodeProps"
   />
 </template>
 
@@ -65,6 +61,12 @@ const handleTreeSelect = (option: TreeOption) => {
   emits('select', object);
 };
 
+const nodeProps = ({ option }: { option: TreeOption }) => {
+  return {
+    onClick: () => handleTreeSelect(option),
+  };
+};
+
 const deleteObject = (objectName: string) => {
   emits('update:modelValue', [
     ...props.modelValue.filter((object) => object.name !== objectName),
@@ -77,7 +79,7 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
 
   if (option.children == null) {
     // component level
-    return h(TreeDeleteButton, {
+    return h(TreeDeleteButton as any, {
       'icon-title': "Delete object with all it's properties",
       'icon-class': 'ml-6',
       onClick: () => deleteObject(option.key as string),
