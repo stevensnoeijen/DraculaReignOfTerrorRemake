@@ -5,7 +5,6 @@ import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import Checker from 'vite-plugin-checker';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 
@@ -33,6 +32,5 @@ export default defineConfig({
       autoInstall: true,
       compiler: 'vue3',
     }),
-    tsconfigPaths(),
   ],
 });
