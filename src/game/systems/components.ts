@@ -6,12 +6,16 @@ export { AttackComponent } from './AttackComponent';
 export { SelectableComponent } from './selection/SelectableComponent';
 export { AssetComponent } from './render/AssetComponent';
 export { SpriteComponent } from './render/sprite/SpriteComponent';
-export { AnimatedSpriteComponent } from './render/sprite/AnimatedSpriteComponent';
+export { AnimatedSpriteComponent }
+  from './render/sprite/AnimatedSpriteComponent';
 export { GraphicsComponent } from './render/graphics/GraphicsComponent';
-export { PlayerMovementMouseComponent } from './player/PlayerMovementMouseComponent';
-export { PlayerMovementKeysComponent } from './player/PlayerMovementKeysComponent';
+export { PlayerMovementMouseComponent }
+  from './player/PlayerMovementMouseComponent';
+export { PlayerMovementKeysComponent }
+  from './player/PlayerMovementKeysComponent';
 export { MoveVelocityComponent } from './movement/MoveVelocityComponent';
-export { MovePositionDirectComponent } from './movement/MovePositionDirectComponent';
+export { MovePositionDirectComponent }
+  from './movement/MovePositionDirectComponent';
 export { MovePathComponent } from './movement/MovePathComponent';
 export { MovableComponent } from './movement/MovableComponent';
 export { FollowComponent } from './movement/FollowComponent';
