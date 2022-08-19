@@ -1,6 +1,23 @@
 import { GameObject } from '../ObjectsJson';
 
-import { createEmptyObject } from './utils';
+import { createEmptyObject, getDefaultValueByType } from './utils';
+
+describe('getDefaultValueByType', () => {
+  it.each([
+    [String, ''],
+    [Number, 0],
+    [Boolean, false],
+  ])(
+    'should create %O when %s is given',
+    (type: unknown, expectedResponse: unknown) => {
+      expect(getDefaultValueByType(type)).toBe(expectedResponse);
+    }
+  );
+
+  it('should create throw error when unknown type is given', () => {
+    expect(() => getDefaultValueByType(Date)).toThrowError();
+  });
+});
 
 describe('createEmptyObject', () => {
   it('should set all properties', () => {

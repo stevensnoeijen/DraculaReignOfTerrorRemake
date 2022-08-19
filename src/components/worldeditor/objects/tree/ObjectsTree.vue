@@ -20,7 +20,7 @@ import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
 import { GameObject } from '../ObjectsJson';
-import TreeDeleteButtonVue from '../TreeDeleteButton.vue';
+import TreeDeleteButton from '../TreeDeleteButton.vue';
 
 import { createTreeOptions } from './utils';
 
@@ -77,9 +77,9 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
 
   if (option.children == null) {
     // component level
-    return h(TreeDeleteButtonVue, {
-      title: "Delete object with all it's properties",
-      class: 'ml-6',
+    return h(TreeDeleteButton, {
+      'icon-title': "Delete object with all it's properties",
+      'icon-class': 'ml-6',
       onClick: () => deleteObject(option.key as string),
     });
   }

@@ -30,21 +30,21 @@
         <n-form-item label="Color">
           <n-select
             v-model:value="color"
-            :options="stringsToSelectOptions(animations.colors)"
+            :options="stringsToSelectOptions(TEAM_COLORS)"
           />
         </n-form-item>
 
         <n-form-item label="Animation">
           <n-select
             v-model:value="state"
-            :options="stringsToSelectOptions(animations.states)"
+            :options="stringsToSelectOptions(UNIT_STATES)"
           />
         </n-form-item>
 
         <n-form-item label="Direction">
           <n-select
             v-model:value="direction"
-            :options="stringsToSelectOptions(animations.directions)"
+            :options="stringsToSelectOptions(MOVE_DIRECTIONS)"
           />
         </n-form-item>
       </n-form>
@@ -57,7 +57,6 @@ import { onBeforeUnmount, watch } from 'vue';
 import * as PIXI from 'pixi.js';
 import { $computed, $ref } from 'vue/macros';
 
-import * as animations from '../../game/animation/load';
 import { AnimationService } from '../../game/animation/AnimationService';
 import { Animator } from '../../game/animation/Animator';
 import { PixiViewportInstance } from '../pixi/viewport/types';
@@ -66,15 +65,22 @@ import { AssetLoaded } from '../pixi/assets';
 import { stringsToSelectOptions } from '../utils';
 import { getAnimationModels } from '../../game/animation/api';
 
+import {
+  MOVE_DIRECTIONS,
+  TEAM_COLORS,
+  UnitType,
+  UNIT_STATES,
+} from '~/game/types';
+
 const applicationInstance = $ref<PixiApplicationInstance>();
 const viewportInstance = $ref<PixiViewportInstance>();
 
 const app = $computed(() => applicationInstance?.application);
 const props = defineProps<{
-  unit: animations.Unit;
+  unit: UnitType;
 }>();
 
-const color = $ref<animations.Color>(animations.colors[0]);
+const color = $ref(TEAM_COLORS[0]);
 watch(
   () => color,
   () => handleChangeModel()
@@ -85,13 +91,13 @@ watch(
   () => handleChangeModel()
 );
 
-const state = $ref<animations.State>(animations.states[0]);
+const state = $ref(UNIT_STATES[0]);
 watch(
   () => state,
   () => handleChangeAnimation()
 );
 
-const direction = $ref<animations.Direction>(animations.directions[0]);
+const direction = $ref(MOVE_DIRECTIONS[0]);
 watch(
   () => direction,
   () => handleChangeAnimation()
@@ -122,7 +128,9 @@ const loadSprite = () => {
 };
 
 onBeforeUnmount(() => {
-  applicationInstance.application.stage.removeChild(viewportInstance.viewport);
+  applicationInstance.application.stage.removeChild(
+    viewportInstance.viewport as unknown as PIXI.DisplayObject
+  );
   viewportInstance.viewport.removeChild(sprite);
 });
 

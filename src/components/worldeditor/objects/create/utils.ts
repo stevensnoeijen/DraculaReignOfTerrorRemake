@@ -8,26 +8,21 @@ import {
 } from '~/game/objects/decorator';
 import { Unit } from '~/game/objects/Unit';
 
-type PropertyType = Class<PropertyValue>;
-
-const getDefaultValueByType = <T extends PropertyType>(type: T): T => {
-  // @ts-ignore
+export const getDefaultValueByType = <T extends unknown>(type: T): T => {
   if (type === String) {
-    return '' as unknown as T;
+    return '' as T;
   }
-  // @ts-ignore
   if (type === Number) {
-    return 0 as unknown as T;
+    return 0 as T;
   }
-  // @ts-ignore
   if (type === Boolean) {
-    return false as unknown as T;
+    return false as T;
   }
 
-  return undefined!;
+  throw new Error(`Can not create default value of unknown type ${type}`);
 };
 
-const getDefaultValue = <T extends PropertyType>(
+const getDefaultValue = <T extends Class<PropertyValue>>(
   options: EditablePropertyOptions<T>
 ): T => {
   if (options.defaultValue != null) return options.defaultValue;

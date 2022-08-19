@@ -45,11 +45,11 @@
           <h4 class="text-l font-bold">Preview</h4>
           <sprite-model-preview
             v-if="selectedProperty?.field === 'spriteModel' && !isEmpty(selectedProperty!.value)"
-            :unit="(selectedProperty!.value as Unit)"
+            :unit="(selectedProperty!.value as UnitType)"
           />
           <sound-preview
             v-if="selectedProperty?.field.includes('sound')"
-            v-model="(selectedProperty!.value as string | string[])"
+            v-model.string="selectedProperty!.value"
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ import * as api from './api';
 import { GameObject, Property } from './ObjectsJson';
 import { ObjectCreateInstance } from './create/types';
 
-import { Unit } from '~/game/animation/load';
+import { UnitType } from '~/game/types';
 
 const message = useMessage();
 
@@ -91,6 +91,7 @@ let showObjectCreateModal = $ref(false);
 const objectCreateInstance = $ref<ObjectCreateInstance>();
 const handleObjectCreate = async () => {
   try {
+    console.log('check');
     await objectCreateInstance.form.validate();
 
     objects.push(objectCreateInstance.object);

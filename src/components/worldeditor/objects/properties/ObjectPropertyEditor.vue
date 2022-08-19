@@ -9,7 +9,7 @@
             property.field === 'spriteModel'
           )
         "
-        v-model:value="(property.value as string)"
+        v-model:value.string="property.value"
       />
       <n-select
         v-if="
@@ -17,18 +17,18 @@
           (property.field.startsWith('sound') ||
             property.field === 'spriteModel')
         "
-        v-model:value="(property.value as string)"
+        v-model:value.string[]="property.value"
         filterable
         :multiple="Array.isArray(type)"
         :options="options"
       />
       <n-switch
         v-else-if="type === Boolean"
-        v-model:value="(property.value as boolean)"
+        v-model:value.boolean="property.value"
       />
       <n-input-number
         v-else-if="type === Number"
-        v-model:value="(property.value as number)"
+        v-model:value.number="property.value"
       />
       <span v-else> Type not supported </span>
     </n-form-item>

@@ -30,8 +30,7 @@ const rules: FormRules = {
 const object = $ref<GameObject>(createEmptyObject());
 
 defineExpose<ObjectCreateInstance>({
-  // @ts-ignore
-  form,
+  form: form as unknown as FormInst,
   object,
 });
 </script>
