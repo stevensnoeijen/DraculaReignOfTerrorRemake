@@ -30,7 +30,7 @@ const emits = defineEmits<{
   (event: 'update:modelValue', modelValue: GameObject[]): void;
 }>();
 
-let data = computed(() => {
+const data = computed(() => {
   return createTreeOptions(props.modelValue);
 });
 
