@@ -22,7 +22,7 @@
     "generate-maze": "^1.1.0",
     "lodash": "^4.17.21",
     "pixi-dashed-line": "^1.4.2",
-    "pixi-viewport": "https://github.com/stevensnoeijen/pixi-viewport/tarball/upgrade-pixi.js-to-v6.5",
+    "pixi-viewport": "^4.35.0",
     "pixi.js": "^6.5.1",
     "utility-types": "^3.10.0",
     "vue": "^3.2.37",
