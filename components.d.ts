@@ -25,6 +25,7 @@ declare module '@vue/runtime-core' {
     NTree: typeof import('naive-ui')['NTree']
     ObjectCreate: typeof import('./src/components/worldeditor/objects/create/ObjectCreate.vue')['default']
     ObjectPropertiesTree: typeof import('./src/components/worldeditor/objects/properties/ObjectPropertiesTree.vue')['default']
+    ObjectProperty: typeof import('./src/components/worldeditor/objects/properties/ObjectProperty.vue')['default']
     ObjectPropertyEditor: typeof import('./src/components/worldeditor/objects/properties/ObjectPropertyEditor.vue')['default']
     ObjectsEditor: typeof import('./src/components/worldeditor/objects/ObjectsEditor.vue')['default']
     ObjectsTree: typeof import('./src/components/worldeditor/objects/tree/ObjectsTree.vue')['default']

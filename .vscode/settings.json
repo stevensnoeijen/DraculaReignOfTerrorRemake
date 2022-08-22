@@ -1,20 +1,23 @@
 {
   "editor.tabSize": 2,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "javascript.preferences.quoteStyle": "single",
-  "editor.formatOnSaveMode": "file",
   "eslint.validate": ["javascript", "typescript", "typescriptvue"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "editor.formatOnType": false,
   "typescript.format.enable": true,
   "typescript.format.insertSpaceAfterConstructor": true,
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
   },
   "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "files.autoSave": "onFocusChange"
 }

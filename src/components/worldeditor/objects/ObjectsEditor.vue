@@ -1,16 +1,22 @@
 <template>
   <div class="flex flex-col">
-    <h2 class="text-2xl font-bold">Objects Editor</h2>
+    <h2 class="text-2xl font-bold">
+      Objects Editor
+    </h2>
     <div class="grow flex">
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
-        <h3 class="text-l font-bold">Objects:</h3>
+        <h3 class="text-l font-bold">
+          Objects:
+        </h3>
         <objects-tree
           v-model="objects"
           class="grow"
           :selected="selectedObject"
           @select="selectObject"
         />
-        <n-button @click="showObjectCreateModal = true"> Add Object </n-button>
+        <n-button @click="showObjectCreateModal = true">
+          Add Object
+        </n-button>
         <n-modal
           v-model:show="showObjectCreateModal"
           preset="confirm"
@@ -24,7 +30,9 @@
         </n-modal>
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
-        <h3 class="text-l font-bold">Properties:</h3>
+        <h3 class="text-l font-bold">
+          Properties:
+        </h3>
         <object-properties-tree
           v-if="selectedObject != null"
           class="grow"
@@ -35,29 +43,34 @@
       </div>
       <div class="grow flex flex-col">
         <div class="border-b-2 mb-2">
-          <h3 class="text-l font-bold">Property editor:</h3>
+          <h3 class="text-l font-bold">
+            Property editor:
+          </h3>
           <object-property-editor
             v-if="selectedProperty != null"
             v-model="selectedProperty"
           />
         </div>
         <div class="grow">
-          <h4 class="text-l font-bold">Preview</h4>
+          <h4 class="text-l font-bold">
+            Preview
+          </h4>
           <sprite-model-preview
-            v-if="selectedProperty?.field === 'spriteModel' && !isEmpty(selectedProperty!.value)"
+            v-if="selectedProperty?.field === 'spriteModel'
+              && !isEmpty(selectedProperty!.value)"
             :unit="(selectedProperty!.value as UnitType)"
           />
           <sound-preview
             v-if="
               selectedProperty?.field.includes('sound') &&
-              typeof selectedProperty.value === 'string'
+                typeof selectedProperty.value === 'string'
             "
             v-model="selectedProperty.value"
           />
           <sound-preview
             v-if="
               selectedProperty?.field.includes('sound') &&
-              Array.isArray(selectedProperty.value)
+                Array.isArray(selectedProperty.value)
             "
             v-model="selectedProperty.value"
           />
@@ -65,7 +78,13 @@
       </div>
     </div>
     <div class="border-t-2 mt-2 pt-2 flex flex-col items-end">
-      <n-button class="px-10" size="large" @click="handleSave"> Save </n-button>
+      <n-button
+        class="px-10"
+        size="large"
+        @click="handleSave"
+      >
+        Save
+      </n-button>
     </div>
   </div>
 </template>

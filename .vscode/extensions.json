@@ -3,6 +3,8 @@
     "vue.volar",
     "vue.vscode-typescript-vue-plugin",
     "esbenp.prettier-vscode",
-    "drknoxy.eslint-disable-snippets"
+    "drknoxy.eslint-disable-snippets",
+    "dbaeumer.vscode-eslint",
+    "rvest.vs-code-prettier-eslint"
   ]
 }

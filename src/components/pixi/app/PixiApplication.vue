@@ -1,6 +1,10 @@
 <template>
   <div ref="container">
-    <slot name="default" :application="application" :app="application" />
+    <slot
+      name="default"
+      :application="application"
+      :app="application"
+    />
   </div>
 </template>
 

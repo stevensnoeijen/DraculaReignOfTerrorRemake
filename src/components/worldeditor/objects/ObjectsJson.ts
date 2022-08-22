@@ -1,4 +1,4 @@
-export type PropertyValue = string | boolean | number;
+export type PropertyValue = string | boolean | number | string[];
 
 export type Property = {
   field: string;
