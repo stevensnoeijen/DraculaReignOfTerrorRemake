@@ -56,7 +56,8 @@
             Preview
           </h4>
           <sprite-model-preview
-            v-if="selectedProperty?.field === 'spriteModel' && !isEmpty(selectedProperty!.value)"
+            v-if="selectedProperty?.field === 'spriteModel'
+              && !isEmpty(selectedProperty!.value)"
             :unit="(selectedProperty!.value as UnitType)"
           />
           <sound-preview
