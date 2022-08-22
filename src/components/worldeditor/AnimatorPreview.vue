@@ -128,9 +128,6 @@ const loadSprite = () => {
 };
 
 onBeforeUnmount(() => {
-  applicationInstance.application.stage.removeChild(
-    viewportInstance.viewport as unknown as PIXI.DisplayObject
-  );
   viewportInstance.viewport.removeChild(sprite);
 });
 
