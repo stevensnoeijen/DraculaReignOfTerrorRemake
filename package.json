@@ -10,9 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .ts,.vue src",
     "test": "jest",
-    "pack": "gulp pack",
-    "add-animations-to-unit-spritesheet": "ts-node -P tsconfig.node.json scripts/add-animations-to-unit-spritesheet",
-    "generate-animation-models": "ts-node -P tsconfig.node.json scripts/generate-animation-models.ts"
+    "pack": "gulp pack"
   },
   "dependencies": {
     "@pixi/assets": "^6.5.1",

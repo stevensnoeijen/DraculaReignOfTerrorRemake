@@ -40,7 +40,10 @@ gulp.task('pack-sprites-units', function() {
 });
 
 gulp.task('add-animations-to-unit-spritesheet', () =>
-  run('npm run add-animations-to-unit-spritesheet').exec()
+  run(
+    'ts-node -P tsconfig.node.json scripts/add-animations-to-unit-spritesheet'
+  )
+  .exec()
 );
 
 gulp.task(
@@ -62,4 +65,16 @@ gulp.task('pack-sounds', function() {
     .pipe(gulp.dest('public/assets/'));
 });
 
-gulp.task('pack', gulp.series('pack-sounds', 'pack-sprites'));
+gulp.task('generate-animation-models', () =>
+  run('ts-node -P tsconfig.node.json scripts/generate-animation-models.ts')
+    .exec()
+);
+
+gulp.task(
+  'pack',
+  gulp.series(
+    'pack-sounds',
+    'pack-sprites',
+    'generate-animation-models'
+  )
+);
