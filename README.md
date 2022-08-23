@@ -49,3 +49,16 @@ Current levels are:
 
 - `randomunits` (default)
 - `pathfinding`
+
+# Pack
+
+Assets (sprites and sounds) are packaged together to be more efficient.
+
+Packing happens with all files in `raw/` to `/public/assets` by calling `npm run pack`.
+Requirement to run this script is to copy `template.gulp.env` to `.gulp.env` and fill in the var `TINIFY_KEY`, get a key thought https://tinypng.com/developers .
+
+Packing is done though gulp's `pack` task, see [gulpfile.js](./gulpfile.js).
+
+You can also call other gulp tasks seperately if you want with `npx gulp <task>`.
+
+Fully manually packing see [raw/README.md](raw/README.md)

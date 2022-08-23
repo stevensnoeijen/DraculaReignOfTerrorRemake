@@ -21,3 +21,5 @@ junit.xml
 *.njsproj
 *.sln
 *.sw?
+
+.gulp.env
