@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const texturePacker = require('gulp-free-tex-packer');
 const run = require('gulp-run');
+const audiosprite = require('gulp-audiosprite');
 
 require('dotenv').config({
   path: '.gulp.env',
@@ -37,6 +38,7 @@ gulp.task('pack-sprites-units', function() {
   }))
   .pipe(gulp.dest('public/assets/'));
 });
+
 gulp.task('add-animations-to-unit-spritesheet', () =>
   run('npm run add-animations-to-unit-spritesheet').exec()
 );
@@ -49,4 +51,15 @@ gulp.task(
   )
 );
 
-gulp.task('pack', gulp.series('pack-sprites'));
+gulp.task('pack-sounds', function() {
+  return gulp.src('raw/sounds/*.mp3')
+    .pipe(audiosprite({
+      export: 'ogg,mp3',
+      path: 'assets',
+      output: 'sounds',
+      log: 'notice'
+    }))
+    .pipe(gulp.dest('public/assets/'));
+});
+
+gulp.task('pack', gulp.series('pack-sounds', 'pack-sprites'));

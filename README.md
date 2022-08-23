@@ -59,4 +59,6 @@ Requirement to run this script is to copy `template.gulp.env` to `.gulp.env` and
 
 Packing is done though gulp's `pack` task, see [gulpfile.js](./gulpfile.js).
 
-You can also do this manually, see [raw/sprites/README.md](raw/sprites/README.md)
+You can also call other gulp tasks seperately if you want with `npx gulp <task>`.
+
+Fully manually packing see [raw/README.md](raw/README.md)
