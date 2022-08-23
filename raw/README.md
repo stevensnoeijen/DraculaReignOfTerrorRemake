@@ -10,4 +10,4 @@ Sounds are packed with gulp's `pack-sounds` task, triggered by `npm run pack` or
 
 ## Sprites
 
-See [sprites/README.md](sprites/README.md)
+Sprites are packed with gulp's `pack-sprites` task, triggered by `npm run pack` or run seperately `npx gulp pack-sprites`.
