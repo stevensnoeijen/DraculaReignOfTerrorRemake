@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
-import { World } from 'ecsy';
 
 import { cellPositionToVector } from '../utils';
 import { EntityFactory } from '../EntityFactory';
 import { Tree } from '../ai/behaviortree/Tree';
 import { AnimationService } from '../animation/AnimationService';
 import { AnimationModelsJson } from '../animation/api';
+import { Engine } from '../Engine';
 
 import { Level } from './Level';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
@@ -33,8 +33,8 @@ export class BehaviorTreeLevel extends Level {
   private readonly entityFactory: EntityFactory;
   private readonly animationService: AnimationService;
 
-  constructor(app: PIXI.Application, world: World) {
-    super(app, world);
+  constructor(app: PIXI.Application, engine: Engine) {
+    super(app, engine);
 
     this.map = createEmptyGrid(getGridSizeByScreen(app));
 
@@ -42,7 +42,7 @@ export class BehaviorTreeLevel extends Level {
       app.loader.resources['unit-spritesheet'].spritesheet!,
       app.loader.resources['animation-models'].data as AnimationModelsJson
     );
-    this.entityFactory = new EntityFactory(world, this.animationService);
+    this.entityFactory = new EntityFactory(engine.world, this.animationService);
   }
 
   public get collisionMap(): number[][] {

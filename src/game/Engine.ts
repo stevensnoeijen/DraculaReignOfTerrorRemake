@@ -49,8 +49,8 @@ import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteC
 import { AssetComponent } from './systems/render/AssetComponent';
 
 export class Engine {
-  private readonly newWorld: IWorld;
-  private readonly world: World;
+  public readonly newWorld: IWorld;
+  public readonly world: World;
   private readonly eventBus: EventBus<Events>;
 
   constructor(private readonly app: PIXI.Application) {
@@ -122,18 +122,18 @@ export class Engine {
       if (options.level != null && options.level[0] != null) {
         const levelName = options.level[0].toLowerCase();
         if (levelName === 'randomunits') {
-          level = new RandomUnitsLevel(app, this.world);
+          level = new RandomUnitsLevel(app, this);
         } else if (levelName === 'pathfinding') {
-          level = new PathFindingLevel(app, this.world);
+          level = new PathFindingLevel(app, this);
         } else if (levelName === 'behaviortree') {
-          level = new BehaviorTreeLevel(app, this.world);
+          level = new BehaviorTreeLevel(app, this);
         } else {
           alert('level not found');
           return;
         }
       } else {
         // default
-        level = new RandomUnitsLevel(app, this.world);
+        level = new RandomUnitsLevel(app, this);
       }
 
       this.newWorld.run();
