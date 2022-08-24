@@ -1,5 +1,11 @@
 module.exports = {
   testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    customExportConditions: [
+      'node',
+      'node-addons'
+    ]
+  },
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'],
   moduleNameMapper: {
     '^~/(.*)$': '<rootDir>/src/$1',
