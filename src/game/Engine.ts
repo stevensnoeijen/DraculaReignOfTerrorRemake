@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
+import { buildWorld, IWorld } from 'sim-ecs';
 
 import { TransformComponent } from './systems/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
@@ -48,11 +49,14 @@ import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteC
 import { AssetComponent } from './systems/render/AssetComponent';
 
 export class Engine {
+  private readonly newWorld: IWorld;
   private readonly world: World;
   private readonly eventBus: EventBus<Events>;
 
   constructor(private readonly app: PIXI.Application) {
     this.world = new World();
+    this.newWorld = buildWorld()
+      .build();
     const eventBus = (this.eventBus = new EventBus<Events>());
 
     let lastFrameTime = 0;
@@ -132,6 +136,7 @@ export class Engine {
         level = new RandomUnitsLevel(app, this.world);
       }
 
+      this.newWorld.run();
       level.load();
       eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
     };
