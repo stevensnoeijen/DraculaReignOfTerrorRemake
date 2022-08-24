@@ -26,7 +26,7 @@ import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
 import { AnimationService } from './animation/AnimationService';
 
-interface IUnitProps {
+export interface IUnitProps {
   color: 'red' | 'blue';
   position: Position;
   team: {

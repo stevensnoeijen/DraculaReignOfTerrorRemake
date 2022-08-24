@@ -20,7 +20,7 @@ export class PathFindingLevel extends Level {
   }
 
   public load(): void {
-    this.engine.entityFactory.createUnit({
+    this.engine.createUnit({
       position: cellPositionToVector(1, 1),
       color: 'blue',
       team: {
@@ -28,7 +28,7 @@ export class PathFindingLevel extends Level {
       },
     });
 
-    this.engine.entityFactory.createUnit({
+    this.engine.createUnit({
       position: cellPositionToVector(3, 1),
       color: 'red',
       team: {

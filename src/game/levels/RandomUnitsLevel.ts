@@ -31,7 +31,7 @@ export class RandomUnitsLevel extends Level {
         )
       );
 
-      this.engine.entityFactory.createUnit({
+      this.engine.createUnit({
         position: vector,
         color: 'red',
         team: {

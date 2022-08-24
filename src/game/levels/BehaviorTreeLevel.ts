@@ -39,7 +39,7 @@ export class BehaviorTreeLevel extends Level {
   }
 
   public load(): void {
-    const player = this.engine.entityFactory.createUnit({
+    const player = this.engine.createUnit({
       position: cellPositionToVector(1, 1),
       color: 'blue',
       team: {
@@ -47,7 +47,7 @@ export class BehaviorTreeLevel extends Level {
       },
     });
 
-    const enemy = this.engine.entityFactory.createUnit({
+    const enemy = this.engine.createUnit({
       position: cellPositionToVector(1, 3),
       color: 'red',
       team: {

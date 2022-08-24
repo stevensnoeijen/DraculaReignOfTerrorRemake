@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { World } from 'ecsy';
+import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
 import { TransformComponent } from './systems/TransformComponent';
@@ -49,7 +49,7 @@ import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteC
 import { AssetComponent } from './systems/render/AssetComponent';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
-import { EntityFactory } from './EntityFactory';
+import { EntityFactory, IUnitProps } from './EntityFactory';
 
 export class Engine {
   public readonly newWorld: IWorld;
@@ -57,7 +57,7 @@ export class Engine {
   // TODO: should load this "safer"
   private _animationService!: AnimationService;
   // TODO: should load this "safer" and make readonly
-  public entityFactory!: EntityFactory;
+  private entityFactory!: EntityFactory;
 
   private readonly eventBus: EventBus<Events>;
 
@@ -169,5 +169,9 @@ export class Engine {
 
   public get animationService(): AnimationService {
     return this._animationService;
+  }
+
+  public createUnit(props: IUnitProps): Entity {
+    return this.entityFactory.createUnit(props);
   }
 }
