@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import { cellPositionToVector } from '../utils';
-import { EntityFactory } from '../EntityFactory';
 import { Tree } from '../ai/behaviortree/Tree';
 import { Engine } from '../Engine';
 
@@ -28,14 +27,11 @@ import {
 
 export class BehaviorTreeLevel extends Level {
   private map: number[][];
-  private readonly entityFactory: EntityFactory;
 
   constructor(app: PIXI.Application, engine: Engine) {
     super(app, engine);
 
     this.map = createEmptyGrid(getGridSizeByScreen(app));
-
-    this.entityFactory = new EntityFactory(engine.world, engine.animationService);
   }
 
   public get collisionMap(): number[][] {
@@ -43,7 +39,7 @@ export class BehaviorTreeLevel extends Level {
   }
 
   public load(): void {
-    const player = this.entityFactory.createUnit({
+    const player = this.engine.entityFactory.createUnit({
       position: cellPositionToVector(1, 1),
       color: 'blue',
       team: {
@@ -51,7 +47,7 @@ export class BehaviorTreeLevel extends Level {
       },
     });
 
-    const enemy = this.entityFactory.createUnit({
+    const enemy = this.engine.entityFactory.createUnit({
       position: cellPositionToVector(1, 3),
       color: 'red',
       team: {

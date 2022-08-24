@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import { Constants } from '../Constants';
-import { EntityFactory } from '../EntityFactory';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
 import { Engine } from '../Engine';
@@ -11,13 +10,11 @@ import { Level } from './Level';
 
 export class RandomUnitsLevel extends Level {
   private readonly _collisionMap: number[][];
-  private readonly entityFactory: EntityFactory;
 
   constructor(app: PIXI.Application, engine: Engine) {
     super(app, engine);
 
     this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
-    this.entityFactory = new EntityFactory(engine.world, engine.animationService);
   }
 
   public get collisionMap(): number[][] {
@@ -34,7 +31,7 @@ export class RandomUnitsLevel extends Level {
         )
       );
 
-      this.entityFactory.createUnit({
+      this.engine.entityFactory.createUnit({
         position: vector,
         color: 'red',
         team: {

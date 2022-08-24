@@ -49,17 +49,21 @@ import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteC
 import { AssetComponent } from './systems/render/AssetComponent';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
+import { EntityFactory } from './EntityFactory';
 
 export class Engine {
   public readonly newWorld: IWorld;
   public readonly world: World;
   // TODO: should load this "safer"
   private _animationService!: AnimationService;
+  // TODO: should load this "safer" and make readonly
+  public entityFactory!: EntityFactory;
 
   private readonly eventBus: EventBus<Events>;
 
   constructor(private readonly app: PIXI.Application) {
     this.world = new World();
+
     this.newWorld = buildWorld()
       .build();
     const eventBus = (this.eventBus = new EventBus<Events>());
@@ -81,6 +85,7 @@ export class Engine {
           app.loader.resources['unit-spritesheet'].spritesheet!,
           app.loader.resources['animation-models'].data as AnimationModelsJson
         );
+        this.entityFactory = new EntityFactory(this.world, this.animationService);
         loadLevel();
       });
 
