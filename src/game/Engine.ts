@@ -47,10 +47,15 @@ import { TargetSystem } from './systems/ai/TargetSystem';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
 import { AssetComponent } from './systems/render/AssetComponent';
+import { AnimationService } from './animation/AnimationService';
+import { AnimationModelsJson } from './animation/api';
 
 export class Engine {
   public readonly newWorld: IWorld;
   public readonly world: World;
+  // TODO: should load this "safer"
+  private _animationService!: AnimationService;
+
   private readonly eventBus: EventBus<Events>;
 
   constructor(private readonly app: PIXI.Application) {
@@ -72,6 +77,10 @@ export class Engine {
       .add('unit-spritesheet', 'assets/unit-spritesheet.json')
       .add('animation-models', 'assets/animation-models.json')
       .load(() => {
+        this._animationService = new AnimationService(
+          app.loader.resources['unit-spritesheet'].spritesheet!,
+          app.loader.resources['animation-models'].data as AnimationModelsJson
+        );
         loadLevel();
       });
 
@@ -151,5 +160,9 @@ export class Engine {
 
       lastFrameTime = time;
     };
+  }
+
+  public get animationService(): AnimationService {
+    return this._animationService;
   }
 }
