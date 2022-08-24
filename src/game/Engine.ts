@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
+import { SimEcsComponent } from './systems/SimEcsComponent';
 import { TransformComponent } from './systems/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
@@ -52,6 +53,7 @@ import { AnimationModelsJson } from './animation/api';
 import { EntityFactory, IUnitProps } from './EntityFactory';
 
 export class Engine {
+  // TODO: rename after migration of ecsy
   public readonly newWorld: IWorld;
   public readonly world: World;
   // TODO: should load this "safer"
@@ -113,6 +115,7 @@ export class Engine {
       .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
       .registerComponent(AssetComponent)
+      .registerComponent(SimEcsComponent)
       .registerSystem(PlayerSelectionSystem, { app, eventBus })
       .registerSystem(HealthSystem, { eventBus })
       .registerSystem(AliveSystem, { app, eventBus })
@@ -172,6 +175,16 @@ export class Engine {
   }
 
   public createUnit(props: IUnitProps): Entity {
-    return this.entityFactory.createUnit(props);
+    const entity = this.entityFactory.createUnit(props);
+
+    const simEcsEntity = this.newWorld.buildEntity()
+      .with(entity)
+      .build();
+
+    entity.addComponent(SimEcsComponent, {
+      entity: simEcsEntity,
+    });
+
+    return entity;
   }
 }
