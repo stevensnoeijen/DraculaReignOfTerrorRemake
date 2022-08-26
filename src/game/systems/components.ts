@@ -1,5 +1,4 @@
 export { TransformComponent } from './TransformComponent';
-export { TeamComponent } from './TeamComponent';
 export { SizeComponent } from './SizeComponent';
 export { ControlledComponent } from './ControlledComponent';
 export { AttackComponent } from './AttackComponent';

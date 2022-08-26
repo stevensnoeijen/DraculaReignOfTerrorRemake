@@ -1,22 +1,19 @@
 import { Entity } from 'ecsy';
 
 import { EntityHelper } from '../../EntityHelper';
-import { TeamComponent } from '../TeamComponent';
 
+import { SimEcsComponent } from './../SimEcsComponent';
 import { AliveComponent } from './../alive/AliveComponent';
 
 import { Predicate } from '~/utils/types';
+import { Team } from '~/game/components/Team';
 export * from './transform';
 
-export const isOnTeam = (team: number): Predicate<Entity> => {
+export const isOnTeam = (teamId: number): Predicate<Entity> => {
   return (entity: Entity) => {
-    if (!entity.hasComponent(TeamComponent)) {
-      return false;
-    }
+    const simEcsComponent = entity.getComponent(SimEcsComponent);
 
-    const teamComponent = entity.getComponent(TeamComponent)!;
-
-    return teamComponent.number === team;
+    return simEcsComponent?.entity.getComponent(Team)?.id === teamId ?? false;
   };
 };
 

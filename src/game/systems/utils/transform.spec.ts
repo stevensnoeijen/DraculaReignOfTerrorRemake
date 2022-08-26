@@ -1,13 +1,15 @@
 import { World } from 'ecsy';
 
-import { byClosestDistance, isInRange } from './transform';
 import { Vector2 } from '../../math/Vector2';
-import { TransformComponent } from './../TransformComponent';
 import {
   constructCreateRandomEntities,
   CreateRandomEntities,
 } from '../../__tests__/utils';
-import { TeamComponent } from '../TeamComponent';
+
+import { SimEcsComponent } from './../SimEcsComponent';
+import { byClosestDistance, isInRange } from './transform';
+import { TransformComponent } from './../TransformComponent';
+
 
 let world: World;
 let createRandomEntities: CreateRandomEntities;
@@ -15,7 +17,7 @@ let createRandomEntities: CreateRandomEntities;
 beforeEach(() => {
   world = new World()
     .registerComponent(TransformComponent)
-    .registerComponent(TeamComponent);
+    .registerComponent(SimEcsComponent);
   createRandomEntities = constructCreateRandomEntities(world);
 });
 

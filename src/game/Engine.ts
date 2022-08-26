@@ -37,7 +37,6 @@ import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { EventBus } from './EventBus';
 import { LevelLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
-import { TeamComponent } from './systems/TeamComponent';
 import { AttackComponent } from './systems/AttackComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { FollowSystem } from './systems/movement/FollowSystem';
@@ -51,9 +50,10 @@ import { AssetComponent } from './systems/render/AssetComponent';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { EntityFactory, IUnitProps } from './EntityFactory';
+import { Team } from './components/Team';
 
 export class Engine {
-  // TODO: rename after migration of ecsy
+  // TODO: rename after migration of ecsy, also update tests
   public readonly newWorld: IWorld;
   public readonly world: World;
   // TODO: should load this "safer"
@@ -108,7 +108,6 @@ export class Engine {
       .registerComponent(GraphicsComponent)
       .registerComponent(MovePathComponent)
       .registerComponent(CollidableComponent)
-      .registerComponent(TeamComponent)
       .registerComponent(AttackComponent)
       .registerComponent(FollowComponent)
       .registerComponent(BehaviorTreeComponent)
@@ -179,6 +178,7 @@ export class Engine {
 
     const simEcsEntity = this.newWorld.buildEntity()
       .with(entity)
+      .with(new Team(props.team.number))
       .build();
 
     entity.addComponent(SimEcsComponent, {

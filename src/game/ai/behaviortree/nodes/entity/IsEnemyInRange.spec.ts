@@ -1,24 +1,30 @@
-import { AttackComponent } from './../../../../systems/AttackComponent';
 import { World } from 'ecsy';
+import { IWorld, buildWorld } from 'sim-ecs';
 
 import { TransformComponent } from '../../../../systems/TransformComponent';
 import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
-import { TeamComponent } from '../../../../systems/TeamComponent';
+
+import { Team } from './../../../../components/Team';
+import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
+import { AttackComponent } from './../../../../systems/AttackComponent';
 import { getEntitiesInRange } from './utils';
 import { IsEnemyInRange } from './IsEnemyInRange';
+
 
 jest.mock('./utils');
 
 describe('IsEnemyInRange', () => {
   describe('evaluate', () => {
+    let newWorld: IWorld;
     let world: World;
 
     beforeEach(() => {
       world = new World()
         .registerComponent(AttackComponent)
         .registerComponent(TransformComponent)
-        .registerComponent(TeamComponent);
+        .registerComponent(SimEcsComponent);
+      newWorld = buildWorld().build();
 
       (getEntitiesInRange as jest.MockedFunction<any>).mockClear();
     });
@@ -30,8 +36,8 @@ describe('IsEnemyInRange', () => {
           .addComponent(TransformComponent, {
             position: new Vector2(0, 0),
           })
-          .addComponent(TeamComponent, {
-            number: 2,
+          .addComponent(SimEcsComponent, {
+            entity: newWorld.buildEntity().with(new Team(2)).build(),
           }),
       ];
       (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue(
@@ -46,8 +52,8 @@ describe('IsEnemyInRange', () => {
         .addComponent(TransformComponent, {
           position: new Vector2(0, 0),
         })
-        .addComponent(TeamComponent, {
-          number: 1,
+        .addComponent(SimEcsComponent, {
+          entity: newWorld.buildEntity().with(new Team(1)).build(),
         });
       const node = new IsEnemyInRange([], AttackComponent, 'aggroRange');
       const parent = new Node();

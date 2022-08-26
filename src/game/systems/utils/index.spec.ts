@@ -1,14 +1,20 @@
-import { AliveComponent } from './../alive/AliveComponent';
-import { TeamComponent } from './../TeamComponent';
+import { buildWorld } from 'sim-ecs';
 import { World } from 'ecsy';
+
+import { SimEcsComponent } from './../SimEcsComponent';
+import { AliveComponent } from './../alive/AliveComponent';
+
 import { isOnTeam, isSameEntity, isAlive } from './index';
 
+import { Team } from '~/game/components/Team';
+
+const newWorld = buildWorld().build();
 const world = new World()
-  .registerComponent(TeamComponent)
+  .registerComponent(SimEcsComponent)
   .registerComponent(AliveComponent);
 
 describe('isOnTeam', () => {
-  it('should return false if entity has no TeamComponent', () => {
+  it('should return false if entity has no Team', () => {
     const entity = world.createEntity();
     const predicate = isOnTeam(1);
 
@@ -16,8 +22,8 @@ describe('isOnTeam', () => {
   });
 
   it('should return true if entity team is the same', () => {
-    const entity = world.createEntity().addComponent(TeamComponent, {
-      number: 1,
+    const entity = world.createEntity().addComponent(SimEcsComponent, {
+      entity: newWorld.buildEntity().with(new Team(1)).build(),
     });
     const predicate = isOnTeam(1);
 
@@ -25,8 +31,8 @@ describe('isOnTeam', () => {
   });
 
   it('should return false if entity team is different', () => {
-    const entity = world.createEntity().addComponent(TeamComponent, {
-      number: 2,
+    const entity = world.createEntity().addComponent(SimEcsComponent, {
+      entity: newWorld.buildEntity().with(new Team(2)).build(),
     });
     const predicate = isOnTeam(1);
 

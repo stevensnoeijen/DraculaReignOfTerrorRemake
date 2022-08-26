@@ -20,7 +20,6 @@ import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent'
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
-import { TeamComponent } from './systems/TeamComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
@@ -91,7 +90,6 @@ export class EntityFactory {
       })
       .addComponent(MovePathComponent, { path: [] })
       .addComponent(CollidableComponent)
-      .addComponent(TeamComponent, props.team)
       .addComponent(FollowComponent)
       .addComponent(AttackComponent, {
         aggroRange: 80,
