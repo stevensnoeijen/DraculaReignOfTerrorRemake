@@ -24,7 +24,6 @@ import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
-import { AliveComponent } from './systems/alive/AliveComponent';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
@@ -51,6 +50,7 @@ import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { EntityFactory, IUnitProps } from './EntityFactory';
 import { Team } from './components/Team';
+import { Alive } from './components/Alive';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -97,7 +97,6 @@ export class Engine {
       .registerComponent(SelectableComponent)
       .registerComponent(MovableComponent)
       .registerComponent(HealthComponent)
-      .registerComponent(AliveComponent)
       .registerComponent(MoveTransformVelocityComponent)
       .registerComponent(MovePositionDirectComponent)
       .registerComponent(PlayerMovementMouseComponent)
@@ -179,6 +178,7 @@ export class Engine {
     const simEcsEntity = this.newWorld.buildEntity()
       .with(entity)
       .with(new Team(props.team.number))
+      .with(new Alive(true))
       .build();
 
     entity.addComponent(SimEcsComponent, {

@@ -1,6 +1,9 @@
 import { Entity, System, SystemQueries } from 'ecsy';
-import { AliveComponent } from '../alive/AliveComponent';
+
+import { SimEcsComponent } from './../SimEcsComponent';
 import { HealthComponent } from './HealthComponent';
+
+import { Alive } from '~/game/components/Alive';
 
 export class HealthSystem extends System {
   // Define a query of entities that have "Velocity" and "Position" components
@@ -28,13 +31,9 @@ export class HealthSystem extends System {
     if (!health) {
       return;
     }
-    if (!entity.hasComponent(AliveComponent)) {
-      // if not alive
-      return;
-    }
 
     if (health.points === 0) {
-      const aliveComponent = entity.getMutableComponent(AliveComponent);
+      const aliveComponent = entity.getComponent(SimEcsComponent)!.entity.getComponent(Alive);
       if (!aliveComponent) {
         return;
       }

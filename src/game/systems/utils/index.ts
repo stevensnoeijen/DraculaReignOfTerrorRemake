@@ -3,10 +3,10 @@ import { Entity } from 'ecsy';
 import { EntityHelper } from '../../EntityHelper';
 
 import { SimEcsComponent } from './../SimEcsComponent';
-import { AliveComponent } from './../alive/AliveComponent';
 
 import { Predicate } from '~/utils/types';
 import { Team } from '~/game/components/Team';
+import { Alive } from '~/game/components/Alive';
 export * from './transform';
 
 export const isOnTeam = (teamId: number): Predicate<Entity> => {
@@ -34,4 +34,4 @@ export const getEntityAtPosition = (
 };
 
 export const isAlive = (entity: Entity) =>
-  entity.getComponent(AliveComponent)?.alive ?? true;
+  entity.getComponent(SimEcsComponent)?.entity.getComponent(Alive)?.alive ?? true;

@@ -1,8 +1,7 @@
 import { System, SystemQueries } from 'ecsy';
-import { Follow } from './../../ai/behaviortree/nodes/entity/Follow';
+
+import { isAlive } from './../utils/index';
 import { TargetComponent } from './TargetComponent';
-import { FollowComponent } from './../movement/FollowComponent';
-import { AliveComponent } from './../alive/AliveComponent';
 
 export class TargetSystem extends System {
   static queries: SystemQueries = {
@@ -22,10 +21,7 @@ export class TargetSystem extends System {
         return;
       }
 
-      const targetAliveComponent =
-        targetComponent.target.getComponent(AliveComponent);
-
-      if (targetAliveComponent !== null && !targetAliveComponent!.alive) {
+      if (isAlive(targetComponent.target)) {
         entity.getMutableComponent(TargetComponent)!.target = null;
       }
     }

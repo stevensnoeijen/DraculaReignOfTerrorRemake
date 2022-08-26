@@ -9,8 +9,7 @@ import {
 } from '../../../../systems/utils/index';
 import { not } from '../../../../utils';
 
-import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
-
+import { SimEcsComponent } from '~/game/systems/SimEcsComponent';
 import { Team } from '~/game/components/Team';
 
 export const getEntitiesInRange = (

@@ -2,16 +2,15 @@ import { buildWorld } from 'sim-ecs';
 import { World } from 'ecsy';
 
 import { SimEcsComponent } from './../SimEcsComponent';
-import { AliveComponent } from './../alive/AliveComponent';
 
 import { isOnTeam, isSameEntity, isAlive } from './index';
 
 import { Team } from '~/game/components/Team';
+import { Alive } from '~/game/components/Alive';
 
 const newWorld = buildWorld().build();
 const world = new World()
-  .registerComponent(SimEcsComponent)
-  .registerComponent(AliveComponent);
+  .registerComponent(SimEcsComponent);
 
 describe('isOnTeam', () => {
   it('should return false if entity has no Team', () => {
@@ -67,17 +66,19 @@ describe('isAlive', () => {
   });
 
   it('should return true when component is set and true', () => {
-    const entity = world.createEntity().addComponent(AliveComponent, {
-      alive: true,
-    });
+    const entity = world.createEntity()
+      .addComponent(SimEcsComponent, {
+        entity: newWorld.buildEntity().with(new Alive(true)).build(),
+      });
 
     expect(isAlive(entity)).toBe(true);
   });
 
   it('should return false when component is set and false', () => {
-    const entity = world.createEntity().addComponent(AliveComponent, {
-      alive: false,
-    });
+    const entity = world.createEntity()
+      .addComponent(SimEcsComponent, {
+        entity: newWorld.buildEntity().with(new Alive(false)).build(),
+      });
 
     expect(isAlive(entity)).toBe(false);
   });
