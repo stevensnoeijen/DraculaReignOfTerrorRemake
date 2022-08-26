@@ -1,6 +1,7 @@
 import { Component, ComponentConstructor, Entity } from 'ecsy';
 
 import { State } from '../Node';
+
 import { EntityNode } from './EntityNode';
 import { getEntitiesInRange } from './utils';
 

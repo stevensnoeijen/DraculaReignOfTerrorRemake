@@ -21,7 +21,7 @@ export class TargetSystem extends System {
         return;
       }
 
-      if (isAlive(targetComponent.target)) {
+      if (!isAlive(targetComponent.target)) {
         entity.getMutableComponent(TargetComponent)!.target = null;
       }
     }

@@ -34,4 +34,4 @@ export const getEntityAtPosition = (
 };
 
 export const isAlive = (entity: Entity) =>
-  entity.getComponent(SimEcsComponent)?.entity.getComponent(Alive)?.alive ?? true;
+  entity.getComponent(SimEcsComponent)?.entity.getComponent(Alive)?.alive ?? false;
