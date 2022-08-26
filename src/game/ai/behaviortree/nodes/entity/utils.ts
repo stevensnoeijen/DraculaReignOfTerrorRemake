@@ -27,7 +27,7 @@ export const getEntitiesInRange = (
         )
       )
     )
-    .filter(isAlive())
+    .filter(isAlive)
     .filter(isInRange(sourceEntity, range))
     .sort(byClosestDistance(sourceEntity));
 };

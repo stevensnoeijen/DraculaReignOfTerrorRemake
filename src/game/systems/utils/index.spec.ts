@@ -63,7 +63,7 @@ describe('isAlive', () => {
   it('should return true when component is not set', () => {
     const entity = world.createEntity();
 
-    expect(isAlive()(entity)).toBe(true);
+    expect(isAlive(entity)).toBe(true);
   });
 
   it('should return true when component is set and true', () => {
@@ -71,7 +71,7 @@ describe('isAlive', () => {
       alive: true,
     });
 
-    expect(isAlive()(entity)).toBe(true);
+    expect(isAlive(entity)).toBe(true);
   });
 
   it('should return false when component is set and false', () => {
@@ -79,6 +79,6 @@ describe('isAlive', () => {
       alive: false,
     });
 
-    expect(isAlive()(entity)).toBe(false);
+    expect(isAlive(entity)).toBe(false);
   });
 });

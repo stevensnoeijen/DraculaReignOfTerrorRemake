@@ -33,5 +33,5 @@ export const getEntityAtPosition = (
   );
 };
 
-export const isAlive = (): Predicate<Entity> => (entity: Entity) =>
+export const isAlive = (entity: Entity) =>
   entity.getComponent(AliveComponent)?.alive ?? true;

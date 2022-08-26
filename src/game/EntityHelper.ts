@@ -1,19 +1,13 @@
 import { Entity } from 'ecsy';
+
 import { TransformComponent } from './systems/TransformComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { Bounds } from './math/collision/Bounds';
 import { Vector2 } from './math/Vector2';
-import { AliveComponent } from './systems/alive/AliveComponent';
 
 export class EntityHelper {
-  public static isAlive(entity: Entity): boolean {
-    const aliveComponent = entity.getComponent(AliveComponent);
-
-    return aliveComponent?.alive || false;
-  }
-
   public static isPositionInsideEntity(
     entity: Entity,
     x: number,
