@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { defineMockGetSetProperty } from './../../../__tests__/utils';
+import { defineMockGetSetProperty } from '../__tests__/utils';
 
 const realPIXI = jest.requireActual('pixi.js');
 
@@ -62,7 +62,7 @@ export const Loader = jest.fn().mockImplementation(() => {
 
   const loader = {
     __name: 'mocked-pixi-loader',
-    add: jest.fn(),
+    add: jest.fn().mockReturnThis(),
     load: jest.fn(),
     onStart: createSignal(),
     onProgress: createSignal(),

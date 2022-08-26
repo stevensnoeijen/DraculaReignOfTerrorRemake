@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import { mount } from '@vue/test-utils';
 
 import { disableConsoleWarn } from '../../../__tests__/utils';
-import { MockedTicker } from '../__mocks__/pixi.js';
+import { MockedTicker } from '../../../__mocks__/pixi.js.js';
 import PixiApplication from '../app/PixiApplication.vue';
 
 import PixiTicker from './PixiTicker.vue';
