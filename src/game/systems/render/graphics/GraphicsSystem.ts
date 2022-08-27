@@ -2,12 +2,12 @@ import { Attributes, Entity, World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
 import { EntityHelper } from '../../../EntityHelper';
-import { getHealthColor } from '../../health/utils';
 import { SpriteComponent } from '../sprite/SpriteComponent';
 import { SizeComponent } from '../../SizeComponent';
 import { PixiJsSystem } from '../../PixiJsSystem';
 import { SimEcsComponent } from '../../SimEcsComponent';
 
+import { getHealthColor } from './utils';
 import { GraphicsComponent } from './GraphicsComponent';
 import { AttackComponent } from './../../AttackComponent';
 import { SelectableComponent } from './../../selection/SelectableComponent';

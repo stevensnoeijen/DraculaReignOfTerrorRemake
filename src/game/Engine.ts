@@ -15,7 +15,7 @@ import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMou
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
 import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
-import { HealthSystem } from './systems/health/HealthSystem';
+import { HealthSystem } from './systems/HealthSystem';
 import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
@@ -69,9 +69,10 @@ export class Engine {
 
     this.newWorld = buildWorld()
       .withDefaultScheduling(root =>
-        root.addNewStage(stage =>
-          stage.addSystem(AliveSystem)
-        )
+        root.addNewStage(stage => {
+          stage.addSystem(AliveSystem);
+          stage.addSystem(HealthSystem);
+        })
       )
       .withComponents(EcsyEntity, Team, Alive)
       .build();
@@ -121,7 +122,6 @@ export class Engine {
       .registerComponent(AssetComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(PlayerSelectionSystem, { app, eventBus })
-      .registerSystem(HealthSystem, { eventBus })
       .registerSystem(InputSystem, { canvas: app.view })
       // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
       .registerSystem(MovePositionDirectSystem)
