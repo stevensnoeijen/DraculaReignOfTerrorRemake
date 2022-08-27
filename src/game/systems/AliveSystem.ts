@@ -4,12 +4,14 @@ import { createSystem, queryComponents, Read } from 'sim-ecs';
 import { Alive } from '../components/Alive';
 import { rotationToDirection } from '../animation/load';
 import { EcsyEntity } from '../components/EcsyEntity';
+import { Health } from '../components/Health';
 
-import { SelectableComponent, HealthComponent, AssetComponent, TransformComponent } from './components';
+import { SelectableComponent, AssetComponent, TransformComponent } from './components';
+import { SimEcsComponent } from './SimEcsComponent';
 
 const handleDead = (entity: Entity): void => {
   entity.removeComponent(SelectableComponent);
-  entity.removeComponent(HealthComponent);
+  entity.getComponent(SimEcsComponent)!.entity.removeComponent(Health);
 
   const assetComponent = entity.getComponent(AssetComponent)!;
   const transformComponent = entity.getComponent(TransformComponent)!;

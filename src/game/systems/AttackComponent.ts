@@ -1,6 +1,8 @@
 import { Component, Entity, Types } from 'ecsy';
 
-import { HealthComponent } from './health/HealthComponent';
+import { Health } from '../components/Health';
+
+import { SimEcsComponent } from './SimEcsComponent';
 
 interface AttackComponentProps {
   aggroRange: number;
@@ -20,7 +22,7 @@ export class AttackComponent extends Component<AttackComponentProps> {
   attackDamage!: number;
 
   attack(enemy: Entity): void {
-    const enemyHealthComponent = enemy.getMutableComponent(HealthComponent)!;
+    const enemyHealthComponent = enemy.getMutableComponent(SimEcsComponent)!.entity.getComponent(Health)!;
     enemyHealthComponent.takeHit(this.attackDamage);
   }
 }

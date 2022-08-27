@@ -10,7 +10,6 @@ import { SizeComponent } from './systems/SizeComponent';
 import { TransformComponent } from './systems//TransformComponent';
 import { Constants } from './Constants';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
-import { HealthComponent } from './systems/health/HealthComponent';
 import { Vector2 } from './math/Vector2';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
@@ -69,10 +68,6 @@ export class EntityFactory {
       })
       .addComponent(MovableComponent)
       .addComponent(SelectableComponent)
-      .addComponent(HealthComponent, {
-        points: 10,
-        maxPoints: 10,
-      })
       .addComponent(MoveVelocityComponent, {
         moveSpeed: 50,
       })

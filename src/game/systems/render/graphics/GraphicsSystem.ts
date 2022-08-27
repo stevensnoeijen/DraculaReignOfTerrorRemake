@@ -1,17 +1,20 @@
-import { AnimatedSpriteComponent } from './../sprite/AnimatedSpriteComponent';
-import { TransformComponent } from './../../TransformComponent';
-import { SelectableComponent } from './../../selection/SelectableComponent';
-import { AttackComponent } from './../../AttackComponent';
 import { Attributes, Entity, World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
 import { EntityHelper } from '../../../EntityHelper';
-import { HealthComponent } from '../../health/HealthComponent';
 import { getHealthColor } from '../../health/utils';
 import { SpriteComponent } from '../sprite/SpriteComponent';
-import { GraphicsComponent } from './GraphicsComponent';
 import { SizeComponent } from '../../SizeComponent';
 import { PixiJsSystem } from '../../PixiJsSystem';
+import { SimEcsComponent } from '../../SimEcsComponent';
+
+import { GraphicsComponent } from './GraphicsComponent';
+import { AttackComponent } from './../../AttackComponent';
+import { SelectableComponent } from './../../selection/SelectableComponent';
+import { TransformComponent } from './../../TransformComponent';
+import { AnimatedSpriteComponent } from './../sprite/AnimatedSpriteComponent';
+
+import { Health } from '~/game/components/Health';
 
 export class GraphicsSystem extends PixiJsSystem {
   public static queries = {
@@ -40,7 +43,7 @@ export class GraphicsSystem extends PixiJsSystem {
     graphics.drawRect(-8, 12, 16, 5);
     graphics.endFill();
 
-    const health = entity.getComponent(HealthComponent);
+    const health = entity.getComponent(SimEcsComponent)?.entity.getComponent(Health);
     if (health) {
       const percentage = health.points / health.maxPoints;
       graphics.beginFill(getHealthColor(percentage));

@@ -19,4 +19,3 @@ export { MovePathComponent } from './movement/MovePathComponent';
 export { MovableComponent } from './movement/MovableComponent';
 export { FollowComponent } from './movement/FollowComponent';
 export { CollidableComponent } from './movement/CollidableComponent';
-export { HealthComponent } from './health/HealthComponent';

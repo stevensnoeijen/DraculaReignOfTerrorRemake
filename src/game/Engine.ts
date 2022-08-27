@@ -9,7 +9,6 @@ import { TransformComponent } from './systems/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
-import { HealthComponent } from './systems/health/HealthComponent';
 import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
@@ -52,6 +51,7 @@ import { AnimationModelsJson } from './animation/api';
 import { EntityFactory, IUnitProps } from './EntityFactory';
 import { Team } from './components/Team';
 import { Alive } from './components/Alive';
+import { Health } from './components/Health';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -103,7 +103,6 @@ export class Engine {
       .registerComponent(SizeComponent)
       .registerComponent(SelectableComponent)
       .registerComponent(MovableComponent)
-      .registerComponent(HealthComponent)
       .registerComponent(MoveTransformVelocityComponent)
       .registerComponent(MovePositionDirectComponent)
       .registerComponent(PlayerMovementMouseComponent)
@@ -185,6 +184,10 @@ export class Engine {
       .with(new EcsyEntity(entity))
       .with(new Team(props.team.number))
       .with(new Alive(true))
+      .with(new Health({
+        points: 10,
+        maxPoints: 10,
+      }))
       .build();
 
     entity.addComponent(SimEcsComponent, {

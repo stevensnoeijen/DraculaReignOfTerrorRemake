@@ -1,15 +1,15 @@
 import { Entity, System, SystemQueries } from 'ecsy';
 
 import { SimEcsComponent } from './../SimEcsComponent';
-import { HealthComponent } from './HealthComponent';
 
 import { Alive } from '~/game/components/Alive';
+import { Health } from '~/game/components/Health';
 
 export class HealthSystem extends System {
   // Define a query of entities that have "Velocity" and "Position" components
   public static queries: SystemQueries = {
     healthy: {
-      components: [HealthComponent],
+      components: [SimEcsComponent],
       listen: {
         added: true,
         changed: true,
@@ -27,17 +27,18 @@ export class HealthSystem extends System {
   }
 
   private updateStatus(entity: Entity): void {
-    const health = entity.getComponent(HealthComponent);
-    if (!health) {
+    const simEcsComponent = entity.getComponent(SimEcsComponent);
+    if (!simEcsComponent) {
       return;
     }
 
+    const health = simEcsComponent.entity.getComponent(Health)!;
     if (health.points === 0) {
-      const aliveComponent = entity.getComponent(SimEcsComponent)!.entity.getComponent(Alive);
-      if (!aliveComponent) {
+      const alive = simEcsComponent.entity.getComponent(Alive);
+      if (!alive) {
         return;
       }
-      aliveComponent.alive = false;
+      alive.alive = false;
     }
   }
 }
