@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
+import { EcsyEntity } from './components/EcsyEntity';
+import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { TransformComponent } from './systems/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
@@ -15,7 +17,6 @@ import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeys
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
 import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
 import { HealthSystem } from './systems/health/HealthSystem';
-import { AliveSystem } from './systems/alive/AliveSystem';
 import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
@@ -67,6 +68,12 @@ export class Engine {
     this.world = new World();
 
     this.newWorld = buildWorld()
+      .withDefaultScheduling(root =>
+        root.addNewStage(stage =>
+          stage.addSystem(AliveSystem)
+        )
+      )
+      .withComponents(EcsyEntity, Team, Alive)
       .build();
     const eventBus = (this.eventBus = new EventBus<Events>());
 
@@ -116,7 +123,6 @@ export class Engine {
       .registerComponent(SimEcsComponent)
       .registerSystem(PlayerSelectionSystem, { app, eventBus })
       .registerSystem(HealthSystem, { eventBus })
-      .registerSystem(AliveSystem, { app, eventBus })
       .registerSystem(InputSystem, { canvas: app.view })
       // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
       .registerSystem(MovePositionDirectSystem)
@@ -176,7 +182,7 @@ export class Engine {
     const entity = this.entityFactory.createUnit(props);
 
     const simEcsEntity = this.newWorld.buildEntity()
-      .with(entity)
+      .with(new EcsyEntity(entity))
       .with(new Team(props.team.number))
       .with(new Alive(true))
       .build();
