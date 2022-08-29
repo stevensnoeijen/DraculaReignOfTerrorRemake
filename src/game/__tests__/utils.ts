@@ -8,6 +8,8 @@ import { Team } from '../components/Team';
 import { TransformComponent } from './../systems/TransformComponent';
 import { SimEcsComponent } from './../systems/SimEcsComponent';
 
+import { Alive } from '~/game/components/Alive';
+
 export type CreateRandomEntities = (
   length?: number,
   minPosition?: Position,
@@ -36,7 +38,10 @@ export const constructCreateRandomEntities = (
           ),
         })
         .addComponent(SimEcsComponent, {
-          entity: newWorld.buildEntity().with(new Team(teamId)).build(),
+          entity: newWorld.buildEntity()
+            .with(new Team(teamId))
+            .with(new Alive(true))
+            .build(),
         });
     });
   };

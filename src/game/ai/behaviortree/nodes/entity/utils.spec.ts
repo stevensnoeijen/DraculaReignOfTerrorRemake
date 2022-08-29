@@ -9,6 +9,7 @@ import { Vector2 } from './../../../../math/Vector2';
 import { constructCreateRandomEntities } from './../../../../__tests__/utils';
 import { getEntitiesInRange } from './utils';
 
+import { Alive } from '~/game/components/Alive';
 import { Team } from '~/game/components/Team';
 
 describe('getEntitiesInRange', () => {
@@ -33,6 +34,7 @@ describe('getEntitiesInRange', () => {
       .addComponent(SimEcsComponent, {
         entity: newWorld.buildEntity()
           .with(new Team(1))
+          .with(new Alive(true))
           .build(),
       });
 
