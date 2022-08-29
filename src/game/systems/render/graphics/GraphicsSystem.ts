@@ -8,7 +8,6 @@ import { PixiJsSystem } from '../../PixiJsSystem';
 import { SimEcsComponent } from '../../SimEcsComponent';
 
 import { getHealthColor } from './utils';
-import { GraphicsComponent } from './GraphicsComponent';
 import { AttackComponent } from './../../AttackComponent';
 import { SelectableComponent } from './../../selection/SelectableComponent';
 import { TransformComponent } from './../../TransformComponent';
@@ -18,7 +17,7 @@ import { Health } from '~/game/components/Health';
 
 export class GraphicsSystem extends PixiJsSystem {
   public static queries = {
-    graphics: { components: [GraphicsComponent] },
+    graphics: { components: [SimEcsComponent] },
   };
 
   private readonly showAllHealth: boolean;
@@ -98,14 +97,12 @@ export class GraphicsSystem extends PixiJsSystem {
     if ((this.queries.graphics.results?.length ?? 0) > 0) {
       for (const entity of this.queries.graphics.results) {
         const component = entity.getMutableComponent(
-          GraphicsComponent
-        ) as GraphicsComponent;
+          SimEcsComponent
+        ) as SimEcsComponent;
 
-        if (!component.addedToStage) {
-          this.app.stage.addChild(component.graphics);
-
-          component.addedToStage = true;
-        }
+        const graphics = component.entity.getComponent(PIXI.Graphics)!;
+        // FIXME: graphics is added multiple times, optimise this
+        this.app.stage.addChild(graphics);
 
         if (entity.hasComponent(SelectableComponent)) {
           const position = entity.getComponent(TransformComponent)!.position;
@@ -113,21 +110,21 @@ export class GraphicsSystem extends PixiJsSystem {
             entity.getComponent(SpriteComponent)?.sprite ??
             entity.getComponent(AnimatedSpriteComponent)!.sprite;
 
-          component.graphics.clear();
-          component.graphics.position.set(position.x, position.y);
+          graphics.clear();
+          graphics.position.set(position.x, position.y);
 
           if (EntityHelper.isSelected(entity)) {
-            this.drawSelectionIndicators(entity, component.graphics, sprite);
+            this.drawSelectionIndicators(entity, graphics, sprite);
           }
           if (this.showAllHealth || EntityHelper.isSelected(entity)) {
-            this.drawHealthBar(entity, component.graphics, sprite);
+            this.drawHealthBar(entity, graphics, sprite);
           }
 
           if (this.showDebugAggro) {
-            this.drawAggroRadius(entity, component.graphics, sprite);
+            this.drawAggroRadius(entity, graphics, sprite);
           }
         } else {
-          component.graphics.clear();
+          graphics.clear();
         }
       }
     }

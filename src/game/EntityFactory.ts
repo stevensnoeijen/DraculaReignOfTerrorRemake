@@ -15,7 +15,6 @@ import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMou
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
-import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
@@ -77,9 +76,6 @@ export class EntityFactory {
       .addComponent(AnimatedSpriteComponent, {
         sprite: sprite,
         state: 'idle_north',
-      })
-      .addComponent(GraphicsComponent, {
-        graphics: new PIXI.Graphics(),
       })
       .addComponent(MovePathComponent, { path: [] })
       .addComponent(CollidableComponent)

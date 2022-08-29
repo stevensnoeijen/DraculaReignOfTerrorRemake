@@ -7,7 +7,6 @@ export { AssetComponent } from './render/AssetComponent';
 export { SpriteComponent } from './render/sprite/SpriteComponent';
 export { AnimatedSpriteComponent }
   from './render/sprite/AnimatedSpriteComponent';
-export { GraphicsComponent } from './render/graphics/GraphicsComponent';
 export { PlayerMovementMouseComponent }
   from './player/PlayerMovementMouseComponent';
 export { PlayerMovementKeysComponent }

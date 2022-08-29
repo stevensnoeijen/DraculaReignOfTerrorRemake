@@ -22,7 +22,6 @@ import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseS
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
-import { GraphicsComponent } from './systems/render/graphics/GraphicsComponent';
 import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
@@ -68,6 +67,7 @@ export class Engine {
     this.world = new World();
 
     this.newWorld = buildWorld()
+      .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
       .withDefaultScheduling(root =>
         root.addNewStage(stage => {
           stage.addSystem(AliveSystem);
@@ -76,6 +76,8 @@ export class Engine {
       )
       .withComponents(EcsyEntity, Team, Alive)
       .build();
+    this.newWorld.addResource(app);
+
     const eventBus = (this.eventBus = new EventBus<Events>());
 
     let lastFrameTime = 0;
@@ -111,7 +113,6 @@ export class Engine {
       .registerComponent(MoveVelocityComponent)
       .registerComponent(SpriteComponent)
       .registerComponent(AnimatedSpriteComponent)
-      .registerComponent(GraphicsComponent)
       .registerComponent(MovePathComponent)
       .registerComponent(CollidableComponent)
       .registerComponent(AttackComponent)
@@ -188,6 +189,7 @@ export class Engine {
         points: 10,
         maxPoints: 10,
       }))
+      .with(new PIXI.Graphics())
       .build();
 
     entity.addComponent(SimEcsComponent, {
