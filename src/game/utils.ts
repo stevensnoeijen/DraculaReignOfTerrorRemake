@@ -10,11 +10,13 @@ import { Predicate } from '~/utils/types';
 
 export const filterEmpty = Boolean as <T>(t: T) => NonNullable<T>;
 
-export type Options = Record<string, string[] | undefined>;
+export class Options {
+  [key: string]: string[] | undefined;
+}
 
 export const getOptions = (): Options => {
   if (window.location.hash.indexOf('?') === -1) {
-    return {};
+    return new Options();
   }
 
   return window.location.hash
@@ -25,7 +27,7 @@ export const getOptions = (): Options => {
     .reduce((acc, curr) => {
       acc[curr[0]] = curr[1].split(',').filter(filterEmpty);
       return acc;
-    }, {} as Options);
+    }, new Options());
 };
 
 export type HasEquals = { equals: (other: unknown) => boolean };

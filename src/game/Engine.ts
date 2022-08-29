@@ -22,7 +22,7 @@ import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseS
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
-import { GraphicsSystem } from './systems/render/graphics/GraphicsSystem';
+import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
@@ -72,6 +72,7 @@ export class Engine {
         root.addNewStage(stage => {
           stage.addSystem(AliveSystem);
           stage.addSystem(HealthSystem);
+          stage.addSystem(GraphicsSystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)
@@ -83,6 +84,7 @@ export class Engine {
     let lastFrameTime = 0;
 
     const options = getOptions();
+    this.newWorld.addResource(options);
 
     lastFrameTime = performance.now();
     this.app.ticker.add(() => {
@@ -129,7 +131,6 @@ export class Engine {
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
       .registerSystem(MoveVelocitySystem, { eventBus })
       .registerSystem(SpriteSystem, { app, eventBus })
-      .registerSystem(GraphicsSystem, { app, options, eventBus })
       .registerSystem(GridSystem, { app, options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(MovePathSystem, { eventBus })
