@@ -2,8 +2,8 @@ import { Entity, System } from 'ecsy';
 
 import { cellPositionToVector } from '../../utils';
 import { Vector2 } from '../../math/Vector2';
+import { setEntityAnimation } from '../utils/animation';
 
-import { setEntityAnimation } from './../render/sprite/utils';
 import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { TransformComponent } from './../TransformComponent';
 import { getCell, not, Position } from './../../utils';

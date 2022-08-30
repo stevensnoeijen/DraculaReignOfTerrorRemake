@@ -1,10 +1,10 @@
 import { Entity } from 'ecsy';
 
-import { rotationToDirection } from '../../../animation/load';
+import { rotationToDirection } from '../../animation/load';
 
-import { Animator } from './../../../animation/Animator';
-import { SimEcsComponent } from './../../SimEcsComponent';
-import { TransformComponent } from './../../TransformComponent';
+import { Animator } from './../../animation/Animator';
+import { SimEcsComponent } from './../SimEcsComponent';
+import { TransformComponent } from './../TransformComponent';
 
 import { UnitState } from '~/game/types';
 

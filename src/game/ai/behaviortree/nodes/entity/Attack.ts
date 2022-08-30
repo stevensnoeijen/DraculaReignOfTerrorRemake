@@ -1,9 +1,11 @@
-import { setEntityAnimation } from './../../../../systems/render/sprite/utils';
 import { Entity } from 'ecsy';
 
 import { State } from '../Node';
+
 import { EntityNode } from './EntityNode';
 import { AttackComponent } from './../../../../systems/AttackComponent';
+
+import { setEntityAnimation } from '~/game/systems/utils/animation';
 
 export class Attack extends EntityNode {
   protected evaluateByEntity(entity: Entity): State {
