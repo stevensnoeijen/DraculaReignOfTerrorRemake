@@ -4,7 +4,6 @@ export { ControlledComponent } from './ControlledComponent';
 export { AttackComponent } from './AttackComponent';
 export { SelectableComponent } from './selection/SelectableComponent';
 export { AssetComponent } from './render/AssetComponent';
-export { SpriteComponent } from './render/sprite/SpriteComponent';
 export { AnimatedSpriteComponent }
   from './render/sprite/AnimatedSpriteComponent';
 export { PlayerMovementMouseComponent }

@@ -20,7 +20,6 @@ import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
-import { SpriteComponent } from './systems/render/sprite/SpriteComponent';
 import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
@@ -113,7 +112,6 @@ export class Engine {
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(MoveVelocityComponent)
-      .registerComponent(SpriteComponent)
       .registerComponent(AnimatedSpriteComponent)
       .registerComponent(MovePathComponent)
       .registerComponent(CollidableComponent)

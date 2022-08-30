@@ -6,12 +6,11 @@ import { createSystem, queryComponents, Read, WriteResource } from 'sim-ecs';
 import {
   SelectableComponent,
   TransformComponent,
-  SpriteComponent,
   AnimatedSpriteComponent
 } from '../components';
-import { getHealthColor } from './utils';
 import { SimEcsComponent } from '../SimEcsComponent';
 
+import { getHealthColor } from './utils';
 import { EcsyEntity } from './../../components/EcsyEntity';
 import { SizeComponent } from './../SizeComponent';
 import { AttackComponent } from './../AttackComponent';
@@ -109,7 +108,7 @@ export const GraphicsSystem = createSystem({
       if (entity.hasComponent(SelectableComponent)) {
         const position = entity.getComponent(TransformComponent)!.position;
         const sprite =
-          entity.getComponent(SpriteComponent)?.sprite ??
+          entity.getComponent(SimEcsComponent)?.entity.getComponent(PIXI.Sprite) ??
           entity.getComponent(AnimatedSpriteComponent)!.sprite;
 
         graphics.clear();
