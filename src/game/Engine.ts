@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
+import { SpriteSystem as AnimatedSpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
@@ -20,7 +21,7 @@ import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
-import { SpriteSystem } from './systems/render/sprite/SpriteSystem';
+import { SpriteSystem } from './systems/pixi/SpriteSystem';
 import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions } from './utils';
@@ -72,6 +73,7 @@ export class Engine {
           stage.addSystem(AliveSystem);
           stage.addSystem(HealthSystem);
           stage.addSystem(GraphicsSystem);
+          stage.addSystem(SpriteSystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)
@@ -128,7 +130,7 @@ export class Engine {
       .registerSystem(MovePositionDirectSystem)
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
       .registerSystem(MoveVelocitySystem, { eventBus })
-      .registerSystem(SpriteSystem, { app, eventBus })
+      .registerSystem(AnimatedSpriteSystem, { app, eventBus })
       .registerSystem(GridSystem, { app, options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(MovePathSystem, { eventBus })
