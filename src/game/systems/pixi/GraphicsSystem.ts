@@ -1,23 +1,22 @@
 import * as PIXI from 'pixi.js';
 import { Entity } from 'ecsy';
 import { Graphics } from 'pixi.js';
-import { createSystem, queryComponents, Read, WriteResource } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
 
 import {
   SelectableComponent,
-  TransformComponent,
-  AnimatedSpriteComponent
+  TransformComponent
 } from '../components';
 import { SimEcsComponent } from '../SimEcsComponent';
 
 import { getHealthColor } from './utils';
-import { EcsyEntity } from './../../components/EcsyEntity';
 import { SizeComponent } from './../SizeComponent';
 import { AttackComponent } from './../AttackComponent';
 
 import { EntityHelper } from '~/game/EntityHelper';
 import { Options } from '~/game/utils';
 import { Health } from '~/game/components/Health';
+import { EcsyEntity } from '~/game/components/EcsyEntity';
 
 const drawHealthBar = (
   entity: Entity,
@@ -88,6 +87,8 @@ export const GraphicsSystem = createSystem({
     query: queryComponents({
       graphics: Read(Graphics),
       ecsyEntity: Read(EcsyEntity),
+      sprite: ReadOptional(PIXI.Sprite),
+      animatedSprite: ReadOptional(PIXI.AnimatedSprite),
     }),
   })
   .withSetupFunction(({ options }) => {
@@ -100,25 +101,23 @@ export const GraphicsSystem = createSystem({
     app,
     query
   }) => {
-    query.execute(({ graphics, ecsyEntity }) => {
+    query.execute(({ ecsyEntity, graphics, sprite, animatedSprite }) => {
       // FIXME: graphics is added multiple times, optimise this
       app.stage.addChild(graphics as PIXI.Graphics);
 
       const entity = ecsyEntity.entity;
       if (entity.hasComponent(SelectableComponent)) {
         const position = entity.getComponent(TransformComponent)!.position;
-        const sprite =
-          entity.getComponent(SimEcsComponent)?.entity.getComponent(PIXI.Sprite) ??
-          entity.getComponent(AnimatedSpriteComponent)!.sprite;
+        const target = (sprite ?? animatedSprite) as PIXI.Sprite;
 
         graphics.clear();
         graphics.position.set(position.x, position.y);
 
         if (EntityHelper.isSelected(entity)) {
-          drawSelectionIndicators(entity, graphics as PIXI.Graphics, sprite);
+          drawSelectionIndicators(entity, graphics as PIXI.Graphics, target);
         }
         if (showAllHealth || EntityHelper.isSelected(entity)) {
-          drawHealthBar(entity, graphics as PIXI.Graphics, sprite);
+          drawHealthBar(entity, graphics as PIXI.Graphics, target);
         }
 
         if (showDebugAggro) {

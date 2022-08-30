@@ -2,7 +2,6 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
-import { SpriteSystem as AnimatedSpriteSystem } from './systems/render/sprite/SpriteSystem';
 import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
@@ -130,7 +129,6 @@ export class Engine {
       .registerSystem(MovePositionDirectSystem)
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
       .registerSystem(MoveVelocitySystem, { eventBus })
-      .registerSystem(AnimatedSpriteSystem, { app, eventBus })
       .registerSystem(GridSystem, { app, options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(MovePathSystem, { eventBus })
@@ -191,6 +189,7 @@ export class Engine {
         maxPoints: 10,
       }))
       .with(new PIXI.Graphics())
+      .with(entity.getComponent(AnimatedSpriteComponent)!.sprite)
       .build();
 
     entity.addComponent(SimEcsComponent, {
