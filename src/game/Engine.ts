@@ -42,8 +42,6 @@ import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { TargetSystem } from './systems/ai/TargetSystem';
 import { ControlledComponent } from './systems/ControlledComponent';
-import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
-import { AssetComponent } from './systems/render/AssetComponent';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { EntityFactory, IUnitProps } from './EntityFactory';
@@ -113,7 +111,6 @@ export class Engine {
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(MoveVelocityComponent)
-      .registerComponent(AnimatedSpriteComponent)
       .registerComponent(MovePathComponent)
       .registerComponent(CollidableComponent)
       .registerComponent(AttackComponent)
@@ -121,7 +118,6 @@ export class Engine {
       .registerComponent(BehaviorTreeComponent)
       .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
-      .registerComponent(AssetComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(PlayerSelectionSystem, { app, eventBus })
       .registerSystem(InputSystem, { canvas: app.view })
@@ -180,6 +176,19 @@ export class Engine {
   public createUnit(props: IUnitProps): Entity {
     const entity = this.entityFactory.createUnit(props);
 
+    const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
+    const animator = this.animationService.createAnimator(
+      sprite,
+      props.color,
+      'swordsmen'
+    );
+    sprite.textures = animator.model.getAnimation('idle', 'north').textures;
+
+    sprite.anchor.set(0.5);
+    sprite.position.set(props.position.x, props.position.y);
+    sprite.animationSpeed = 0.25;
+    sprite.play();
+
     const simEcsEntity = this.newWorld.buildEntity()
       .with(new EcsyEntity(entity))
       .with(new Team(props.team.number))
@@ -189,7 +198,8 @@ export class Engine {
         maxPoints: 10,
       }))
       .with(new PIXI.Graphics())
-      .with(entity.getComponent(AnimatedSpriteComponent)!.sprite)
+      .with(sprite)
+      .with(animator)
       .build();
 
     entity.addComponent(SimEcsComponent, {

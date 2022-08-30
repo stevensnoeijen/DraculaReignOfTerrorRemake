@@ -12,7 +12,6 @@ import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { ControlledComponent } from './../ControlledComponent';
 import { isSameEntity } from './../utils/index';
-import { AnimatedSpriteComponent } from './../render/sprite/AnimatedSpriteComponent';
 
 export class MovePathSystem extends System {
   public static queries = {
@@ -38,13 +37,6 @@ export class MovePathSystem extends System {
         ) {
           if (entity.hasComponent(ControlledComponent)) {
             entity.getMutableComponent(ControlledComponent)!.by = null;
-          }
-          if (
-            !entity
-              .getComponent(AnimatedSpriteComponent)
-              ?.state.startsWith('attack')
-          ) {
-            setEntityAnimation(entity, 'idle');
           }
         }
 

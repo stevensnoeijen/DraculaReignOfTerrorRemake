@@ -1,8 +1,5 @@
 import { Entity, World } from 'ecsy';
-import * as PIXI from 'pixi.js';
 
-import { AssetComponent } from './systems/render/AssetComponent';
-import { AnimatedSpriteComponent } from './systems/render/sprite/AnimatedSpriteComponent';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
@@ -42,19 +39,6 @@ export class EntityFactory {
     let rotation = Math.random() * 360;
     rotation -= rotation % 90;
 
-    const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
-    const animator = this.animationService.createAnimator(
-      sprite,
-      props.color,
-      'swordsmen'
-    );
-    sprite.textures = animator.model.getAnimation('idle', 'north').textures;
-
-    sprite.anchor.set(0.5);
-    sprite.position.set(props.position.x, props.position.y);
-    sprite.animationSpeed = 0.25;
-    sprite.play();
-
     return this.world
       .createEntity()
       .addComponent(TransformComponent, {
@@ -73,10 +57,6 @@ export class EntityFactory {
       .addComponent(PlayerMovementKeysComponent)
       .addComponent(MovePositionDirectComponent)
       .addComponent(PlayerMovementMouseComponent)
-      .addComponent(AnimatedSpriteComponent, {
-        sprite: sprite,
-        state: 'idle_north',
-      })
       .addComponent(MovePathComponent, { path: [] })
       .addComponent(CollidableComponent)
       .addComponent(FollowComponent)
@@ -86,9 +66,6 @@ export class EntityFactory {
         attackDamage: 1,
       })
       .addComponent(TargetComponent)
-      .addComponent(ControlledComponent)
-      .addComponent(AssetComponent, {
-        animator: animator,
-      });
+      .addComponent(ControlledComponent);
   }
 }

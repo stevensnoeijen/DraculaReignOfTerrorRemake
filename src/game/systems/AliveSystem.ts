@@ -6,16 +6,17 @@ import { rotationToDirection } from '../animation/load';
 import { EcsyEntity } from '../components/EcsyEntity';
 import { Health } from '../components/Health';
 
-import { SelectableComponent, AssetComponent, TransformComponent } from './components';
+import { Animator } from './../animation/Animator';
+import { SelectableComponent, TransformComponent } from './components';
 import { SimEcsComponent } from './SimEcsComponent';
 
 const handleDead = (entity: Entity): void => {
   entity.removeComponent(SelectableComponent);
   entity.getComponent(SimEcsComponent)!.entity.removeComponent(Health);
 
-  const assetComponent = entity.getComponent(AssetComponent)!;
+  const simEcsComponent = entity.getComponent(SimEcsComponent)!;
   const transformComponent = entity.getComponent(TransformComponent)!;
-  assetComponent.animator.set(
+  simEcsComponent.entity.getComponent(Animator)!.set(
     'dead',
     rotationToDirection(transformComponent.rotation)
   );
