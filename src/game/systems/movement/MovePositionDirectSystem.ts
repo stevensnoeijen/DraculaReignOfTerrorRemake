@@ -1,65 +1,50 @@
-import { Entity, System } from 'ecsy';
+
+import { createSystem, queryComponents, Write } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
 import { Vector2 } from '../../math/Vector2';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
-
-import { getSimComponent } from './../utils/index';
-import { MovePositionDirectComponent } from './MovePositionDirectComponent';
+import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
 
-export class MovePositionDirectSystem extends System {
-  public static queries = {
-    entities: {
-      components: [MovePositionDirectComponent],
-    },
-  };
+const moveByMoveVelocity = (
+  movePositionDirect: MovePositionDirect,
+  moveVelocity: MoveVelocity,
+  transform: Transform,
+) => {
+  if (movePositionDirect.movePosition == null) return;
 
-  public execute(delta: number, time: number): void {
-    for (const entity of this.queries.entities.results) {
-      const movePositionDirectComponent = entity.getMutableComponent(
-        MovePositionDirectComponent
-      );
-      if (null == movePositionDirectComponent?.movePosition) {
-        continue;
-      }
-      const transformComponent = getSimComponent(entity, Transform);
-      if (!transformComponent) {
-        continue;
-      }
-
-      this.moveByMoveVelocity(
-        entity,
-        transformComponent,
-        movePositionDirectComponent
-      );
-    }
+  if (
+    Vector2.distance(
+      transform.position,
+      movePositionDirect.movePosition
+    ) < 1
+  ) {
+    transform.position = movePositionDirect.movePosition;
+    // stop
+    movePositionDirect.movePosition = null;
+    moveVelocity.velocity = Vector2.ZERO;
+    return;
   }
 
-  private moveByMoveVelocity(
-    entity: Entity,
-    transformComponent: Transform,
-    movePositionDirectComponent: MovePositionDirectComponent
-  ): void {
-    const moveVelocityComponent = getSimComponent(entity, MoveVelocity);
-    if (moveVelocityComponent) {
-      if (
-        Vector2.distance(
-          transformComponent.position,
-          movePositionDirectComponent.movePosition!
-        ) < 1
-      ) {
-        transformComponent.position = movePositionDirectComponent.movePosition!;
-        // stop
-        movePositionDirectComponent.movePosition = null;
-        moveVelocityComponent.velocity = Vector2.ZERO;
-        return;
-      }
+  moveVelocity.velocity = Vector2.subtracts(
+    movePositionDirect.movePosition!,
+    transform.position
+  ).normalized();
+};
 
-      moveVelocityComponent.velocity = Vector2.subtracts(
-        movePositionDirectComponent.movePosition!,
-        transformComponent.position
-      ).normalized();
-    }
-  }
-}
+export const MovePositionDirectSystem = createSystem({
+  query: queryComponents({
+    movePositionDirect: Write(MovePositionDirect),
+    moveVelocity: Write(MoveVelocity),
+    transform: Write(Transform),
+  }),
+})
+.withRunFunction(({
+  query
+}) => {
+  query.execute(({ movePositionDirect, moveVelocity, transform }) => {
+    moveByMoveVelocity(movePositionDirect, moveVelocity, transform);
+  });
+})
+.build();

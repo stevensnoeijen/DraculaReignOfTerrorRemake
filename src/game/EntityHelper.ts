@@ -4,7 +4,7 @@ import { getSimComponent } from './systems/utils/index';
 import { Transform } from './components/Transform';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { Size } from './components/Size';
-import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
+import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { Bounds } from './math/collision/Bounds';
 import { Vector2 } from './math/Vector2';
 
@@ -80,13 +80,11 @@ export class EntityHelper {
   }
 
   public static isMoving(entity: Entity): boolean {
-    const movePositionDirectComponent = entity.getComponent(
-      MovePositionDirectComponent
-    );
-    if (!movePositionDirectComponent) {
+    const movePositionDirect = getSimComponent(entity, MovePositionDirect);
+    if (!movePositionDirect) {
       return false;
     }
 
-    return movePositionDirectComponent.movePosition !== null;
+    return movePositionDirect.movePosition !== null;
   }
 }

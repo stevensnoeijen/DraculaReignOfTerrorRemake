@@ -5,11 +5,11 @@ import { Vector2 } from '../../math/Vector2';
 import { setEntityAnimation } from '../utils/animation';
 import { Transform } from '../../components/Transform';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
+import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
 import { SimEcsComponent } from './../SimEcsComponent';
 import { getCell, not, Position } from './../../utils';
 import { MovePathComponent } from './MovePathComponent';
-import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { ControlledComponent } from './../ControlledComponent';
 import { getSimComponent, isSameEntity } from './../utils/index';
 
@@ -41,10 +41,8 @@ export class MovePathSystem extends System {
         continue;
       }
 
-      const movePositionDirectComponent = entity.getMutableComponent(
-        MovePositionDirectComponent
-      )!;
-      if (movePositionDirectComponent.movePosition != null) {
+      const movePositionDirect = getSimComponent(entity, MovePositionDirect)!;
+      if (movePositionDirect.movePosition != null) {
         // is currently moving
         continue;
       }
@@ -57,19 +55,19 @@ export class MovePathSystem extends System {
       }
       movePathComponent.path.shift();
 
-      movePositionDirectComponent.movePosition = cellPositionToVector(
+      movePositionDirect.movePosition = cellPositionToVector(
         nextCell.x,
         nextCell.y
       );
       const transformComponent = getSimComponent(entity, Transform)!;
       if (
         !transformComponent.position.equals(
-          movePositionDirectComponent.movePosition
+          movePositionDirect.movePosition
         )
       ) {
         transformComponent.rotation = Vector2.angle(
           transformComponent.position,
-          movePositionDirectComponent.movePosition
+          movePositionDirect.movePosition
         );
       }
 

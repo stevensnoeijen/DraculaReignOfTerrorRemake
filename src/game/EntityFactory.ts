@@ -4,7 +4,6 @@ import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
-import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
@@ -31,7 +30,6 @@ export class EntityFactory {
       .createEntity()
       .addComponent(SelectableComponent)
       .addComponent(PlayerMovementKeysComponent)
-      .addComponent(MovePositionDirectComponent)
       .addComponent(PlayerMovementMouseComponent)
       .addComponent(MovePathComponent, { path: [] })
       .addComponent(FollowComponent)

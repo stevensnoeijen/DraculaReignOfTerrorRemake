@@ -7,7 +7,6 @@ import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
-import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocity } from './components/movement/MoveVelocity';
@@ -48,6 +47,7 @@ import { Health } from './components/Health';
 import { Vector2 } from './math/Vector2';
 import { Size } from './components/Size';
 import { Constants } from './Constants';
+import { MovePositionDirect } from './components/movement/MovePositionDirect';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -72,6 +72,7 @@ export class Engine {
           stage.addSystem(GraphicsSystem);
           stage.addSystem(SpriteSystem);
           stage.addSystem(MoveVelocitySystem);
+          stage.addSystem(MovePositionDirectSystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)
@@ -104,7 +105,6 @@ export class Engine {
 
     this.world
       .registerComponent(SelectableComponent)
-      .registerComponent(MovePositionDirectComponent)
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(MovePathComponent)
@@ -117,7 +117,6 @@ export class Engine {
       .registerSystem(PlayerSelectionSystem, { app, eventBus })
       .registerSystem(InputSystem, { canvas: app.view })
       // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
-      .registerSystem(MovePositionDirectSystem)
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
       .registerSystem(GridSystem, { app, options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
@@ -203,6 +202,7 @@ export class Engine {
       .with(Collider)
       .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
       .with(new MoveVelocity(50))
+      .with(MovePositionDirect)
       .build();
 
     entity.addComponent(SimEcsComponent, {
