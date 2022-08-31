@@ -5,7 +5,7 @@ import { buildWorld, IWorld } from 'sim-ecs';
 import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
-import { TransformComponent } from './systems/TransformComponent';
+import { TransformComponent } from './components/TransformComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';

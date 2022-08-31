@@ -5,10 +5,10 @@ import { LevelLoadedEvent } from '../../Events';
 import { DefaultAttributes } from '../DefaultAttributes';
 import { convertPathfindingPathToPositions } from '../../utils';
 import { getSimComponent } from '../utils';
+import { TransformComponent } from '../../components/TransformComponent';
 
 import { FollowComponent } from './FollowComponent';
 import { MovePathComponent } from './MovePathComponent';
-import { TransformComponent } from './../TransformComponent';
 
 export class FollowSystem extends System {
   public static queries = {

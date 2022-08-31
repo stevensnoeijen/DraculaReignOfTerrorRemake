@@ -5,8 +5,8 @@ import { Alive } from '../components/Alive';
 import { rotationToDirection } from '../animation/load';
 import { EcsyEntity } from '../components/EcsyEntity';
 import { Health } from '../components/Health';
+import { TransformComponent } from '../components/TransformComponent';
 
-import { TransformComponent } from './TransformComponent';
 import { Animator } from './../animation/Animator';
 import { SelectableComponent } from './components';
 import { SimEcsComponent } from './SimEcsComponent';

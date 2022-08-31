@@ -5,7 +5,7 @@ import { Vector2 } from '../../math/Vector2';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { MoveTransformVelocityComponent } from '../movement/MoveTransformVelocityComponent';
 import { MoveVelocityComponent } from '../movement/MoveVelocityComponent';
-import { TransformComponent } from '../TransformComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 
 import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
 import { getSimComponent } from './../utils/index';

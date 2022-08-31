@@ -1,7 +1,7 @@
 import { Entity } from 'ecsy';
 
 import { getSimComponent } from './systems/utils/index';
-import { TransformComponent } from './systems/TransformComponent';
+import { TransformComponent } from './components/TransformComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { SizeComponent } from './systems/SizeComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';

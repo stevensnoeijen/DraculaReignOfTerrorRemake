@@ -4,8 +4,8 @@ import { Entity, World } from 'ecsy';
 import { Position } from '../utils';
 import { Vector2 } from '../math/Vector2';
 import { Team } from '../components/Team';
+import { TransformComponent } from '../components/TransformComponent';
 
-import { TransformComponent } from './../systems/TransformComponent';
 import { SimEcsComponent } from './../systems/SimEcsComponent';
 
 import { Alive } from '~/game/components/Alive';

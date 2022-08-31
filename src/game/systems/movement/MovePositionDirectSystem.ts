@@ -1,6 +1,6 @@
 import { Entity, System } from 'ecsy';
 
-import { TransformComponent } from '../TransformComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { Vector2 } from '../../math/Vector2';
 
 import { getSimComponent } from './../utils/index';

@@ -1,7 +1,7 @@
 import { World } from 'ecsy';
 import { IWorld, buildWorld } from 'sim-ecs';
 
-import { TransformComponent } from '../../../../systems/TransformComponent';
+import { TransformComponent } from '../../../../components/TransformComponent';
 import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
 

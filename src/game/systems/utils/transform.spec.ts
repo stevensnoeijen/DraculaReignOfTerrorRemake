@@ -6,10 +6,10 @@ import {
   constructCreateRandomEntities,
   CreateRandomEntities,
 } from '../../__tests__/utils';
+import { TransformComponent } from '../../components/TransformComponent';
 
 import { SimEcsComponent } from './../SimEcsComponent';
 import { byClosestDistance, isInRange } from './transform';
-import { TransformComponent } from './../TransformComponent';
 
 import { removeSimComponent } from './index';
 

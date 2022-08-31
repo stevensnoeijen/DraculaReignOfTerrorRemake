@@ -1,6 +1,6 @@
 import { Entity, System, SystemQueries } from 'ecsy';
 
-import { TransformComponent } from '../TransformComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 
 import { getSimComponent } from './../utils/index';
 import { SimEcsComponent } from './../SimEcsComponent';

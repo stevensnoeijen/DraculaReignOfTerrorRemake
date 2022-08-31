@@ -3,7 +3,7 @@ import { World } from 'ecsy';
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
 import { SelectableComponent } from '../selection/SelectableComponent';
-import { TransformComponent } from '../TransformComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { getMouseGridPosition } from '../../utils';
 import { LevelLoadedEvent } from '../../Events';

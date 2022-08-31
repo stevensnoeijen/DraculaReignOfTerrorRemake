@@ -1,7 +1,7 @@
 import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
-import { TransformComponent } from '../TransformComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 
 const updateSprite = (app: PIXI.Application, sprite: PIXI.Sprite, transform: TransformComponent) => {
   // FIXME: add is done multiple times, optimise me

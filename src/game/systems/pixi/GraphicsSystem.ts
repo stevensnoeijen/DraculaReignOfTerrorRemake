@@ -7,8 +7,8 @@ import {
   SelectableComponent,
 } from '../components';
 import { SimEcsComponent } from '../SimEcsComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 
-import { TransformComponent } from './../TransformComponent';
 import { getSimComponent } from './../utils/index';
 import { getHealthColor } from './utils';
 import { SizeComponent } from './../SizeComponent';

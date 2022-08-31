@@ -1,7 +1,7 @@
 import { Entity } from 'ecsy';
 
 import { Vector2 } from '../../math/Vector2';
-import { TransformComponent } from '../TransformComponent';
+import { TransformComponent } from '../../components/TransformComponent';
 import { Comparator, falsePredicate, keepOrder } from '../../utils';
 
 import { hasSimComponent, getSimComponent } from './index';

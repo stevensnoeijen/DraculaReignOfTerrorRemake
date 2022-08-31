@@ -1,7 +1,7 @@
 import { buildWorld, IWorld } from 'sim-ecs';
 import { World } from 'ecsy';
 
-import { TransformComponent } from '../../../../systems/TransformComponent';
+import { TransformComponent } from '../../../../components/TransformComponent';
 import { CreateRandomEntities } from '../../../../__tests__/utils';
 
 import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
