@@ -2,7 +2,6 @@ import { Entity, World } from 'ecsy';
 
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
-import { MovableComponent } from './systems/movement/MovableComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
@@ -31,7 +30,6 @@ export class EntityFactory {
   public createUnit(props: IUnitProps): Entity {
     return this.world
       .createEntity()
-      .addComponent(MovableComponent)
       .addComponent(SelectableComponent)
       .addComponent(MoveVelocityComponent, {
         moveSpeed: 50,

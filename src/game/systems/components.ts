@@ -10,5 +10,4 @@ export { MoveVelocityComponent } from './movement/MoveVelocityComponent';
 export { MovePositionDirectComponent }
   from './movement/MovePositionDirectComponent';
 export { MovePathComponent } from './movement/MovePathComponent';
-export { MovableComponent } from './movement/MovableComponent';
 export { FollowComponent } from './movement/FollowComponent';
