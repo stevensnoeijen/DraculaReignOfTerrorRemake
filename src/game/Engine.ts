@@ -6,7 +6,6 @@ import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
-import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
 import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
@@ -49,6 +48,8 @@ import { Team } from './components/Team';
 import { Alive } from './components/Alive';
 import { Health } from './components/Health';
 import { Vector2 } from './math/Vector2';
+import { Size } from './components/Size';
+import { Constants } from './Constants';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -103,7 +104,6 @@ export class Engine {
       });
 
     this.world
-      .registerComponent(SizeComponent)
       .registerComponent(SelectableComponent)
       .registerComponent(MovableComponent)
       .registerComponent(MoveTransformVelocityComponent)
@@ -206,6 +206,7 @@ export class Engine {
       .with(sprite)
       .with(animator)
       .with(Collider)
+      .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
       .build();
 
     entity.addComponent(SimEcsComponent, {

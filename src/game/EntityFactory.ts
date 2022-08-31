@@ -3,8 +3,6 @@ import { Entity, World } from 'ecsy';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
-import { SizeComponent } from './systems/SizeComponent';
-import { Constants } from './Constants';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
@@ -31,15 +29,8 @@ export class EntityFactory {
   ) {}
 
   public createUnit(props: IUnitProps): Entity {
-    const width = Constants.CELL_SIZE;
-    const height = Constants.CELL_SIZE;
-
     return this.world
       .createEntity()
-      .addComponent(SizeComponent, {
-        width: width,
-        height: height,
-      })
       .addComponent(MovableComponent)
       .addComponent(SelectableComponent)
       .addComponent(MoveVelocityComponent, {

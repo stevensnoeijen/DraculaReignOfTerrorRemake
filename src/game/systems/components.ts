@@ -1,4 +1,4 @@
-export { SizeComponent } from './SizeComponent';
+export { Size as SizeComponent } from '../components/Size';
 export { ControlledComponent } from './ControlledComponent';
 export { AttackComponent } from './AttackComponent';
 export { SelectableComponent } from './selection/SelectableComponent';

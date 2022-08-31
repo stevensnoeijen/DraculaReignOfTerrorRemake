@@ -3,7 +3,7 @@ import { Entity } from 'ecsy';
 import { getSimComponent } from './systems/utils/index';
 import { Transform } from './components/Transform';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
-import { SizeComponent } from './systems/SizeComponent';
+import { Size } from './components/Size';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { Bounds } from './math/collision/Bounds';
 import { Vector2 } from './math/Vector2';
@@ -15,7 +15,7 @@ export class EntityHelper {
     y: number
   ): boolean {
     const transform = getSimComponent(entity, Transform);
-    const size = entity.getComponent(SizeComponent);
+    const size = getSimComponent(entity, Size);
 
     if (!transform || !size) {
       // position or/and size isnt set

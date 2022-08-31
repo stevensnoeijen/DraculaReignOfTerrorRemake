@@ -16,7 +16,6 @@ import { FollowComponent } from './../movement/FollowComponent';
 import { convertPathfindingPathToPositions } from './../../utils';
 import { MovePathComponent } from './../movement/MovePathComponent';
 import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
-import { SizeComponent } from './../SizeComponent';
 import { DefaultAttributes } from './../DefaultAttributes';
 
 
@@ -26,7 +25,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
       components: [PlayerMovementMouseComponent],
     },
     entities: {
-      components: [SimEcsComponent, SizeComponent],
+      components: [SimEcsComponent],
     },
   };
 
