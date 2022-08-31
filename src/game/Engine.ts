@@ -11,7 +11,7 @@ import { MoveTransformVelocityComponent } from './systems/movement/MoveTransform
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
-import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
+import { MoveVelocity } from './components/movement/MoveVelocity';
 import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';
 import { InputSystem } from './systems/InputSystem';
@@ -72,6 +72,7 @@ export class Engine {
           stage.addSystem(HealthSystem);
           stage.addSystem(GraphicsSystem);
           stage.addSystem(SpriteSystem);
+          stage.addSystem(MoveVelocitySystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)
@@ -108,7 +109,6 @@ export class Engine {
       .registerComponent(MovePositionDirectComponent)
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
-      .registerComponent(MoveVelocityComponent)
       .registerComponent(MovePathComponent)
       .registerComponent(AttackComponent)
       .registerComponent(FollowComponent)
@@ -121,7 +121,6 @@ export class Engine {
       // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
       .registerSystem(MovePositionDirectSystem)
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
-      .registerSystem(MoveVelocitySystem, { eventBus })
       .registerSystem(GridSystem, { app, options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(MovePathSystem, { eventBus })
@@ -205,6 +204,7 @@ export class Engine {
       .with(animator)
       .with(Collider)
       .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
+      .with(new MoveVelocity(50))
       .build();
 
     entity.addComponent(SimEcsComponent, {

@@ -6,7 +6,6 @@ import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
-import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
@@ -31,9 +30,6 @@ export class EntityFactory {
     return this.world
       .createEntity()
       .addComponent(SelectableComponent)
-      .addComponent(MoveVelocityComponent, {
-        moveSpeed: 50,
-      })
       .addComponent(PlayerMovementKeysComponent)
       .addComponent(MovePositionDirectComponent)
       .addComponent(PlayerMovementMouseComponent)

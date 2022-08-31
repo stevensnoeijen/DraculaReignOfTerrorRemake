@@ -106,7 +106,7 @@ export const GraphicsSystem = createSystem({
 
       const entity = ecsyEntity.entity;
       if (entity.hasComponent(SelectableComponent)) {
-        const position = getSimComponent(entity, Transform).position;
+        const position = getSimComponent(entity, Transform)!.position;
         const target = (sprite ?? animatedSprite) as PIXI.Sprite;
 
         graphics.clear();

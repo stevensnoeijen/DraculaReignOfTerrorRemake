@@ -43,7 +43,7 @@ export const hasSimComponent = (entity: Entity, type: Class<Object>): boolean =>
 };
 
 // TODO: remove after migration of ecsy to sim-ecs
-export const getSimComponent = <T extends Object>(entity: Entity, type: Class<T>): T => {
+export const getSimComponent = <T extends Object>(entity: Entity, type: Class<T>): T | undefined => {
   return entity.getComponent(SimEcsComponent)!.entity.getComponent(type)!;
 };
 

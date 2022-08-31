@@ -54,11 +54,11 @@ export class FollowSystem extends System {
       return;
     }
 
-    const transformComponent = getSimComponent(followComponent.follow, Transform);
+    const transformComponent = getSimComponent(followComponent.follow, Transform)!;
 
     const path = astar(
       this.map!,
-      getSimComponent(entity, Transform).gridPosition,
+      getSimComponent(entity, Transform)!.gridPosition,
       transformComponent.gridPosition
     );
 

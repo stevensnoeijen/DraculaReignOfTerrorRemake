@@ -1,44 +1,29 @@
-import { Entity, System, SystemQueries } from 'ecsy';
+
+import { createSystem, queryComponents, Read, Write } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
+import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
-import { getSimComponent } from './../utils/index';
-import { SimEcsComponent } from './../SimEcsComponent';
-import { MoveVelocityComponent } from './MoveVelocityComponent';
-
-
-export class MoveVelocitySystem extends System {
-  public static queries: SystemQueries = {
-    bodies: {
-      components: [MoveVelocityComponent, SimEcsComponent],
-      listen: {
-        added: true,
-      },
-    },
-  };
-
-  public execute(delta: number, time: number): void {
-    this.queries.bodies.results.forEach((entity) =>
-      this.updateEntityBody(entity, delta)
-    );
+const updateTransform = (transform: Transform, moveVelocity: MoveVelocity) => {
+  if (moveVelocity.velocity == null) {
+    return;
   }
 
-  private updateEntityBody(entity: Entity, delta: number): void {
-    const moveVelocityComponent = entity.getMutableComponent(
-      MoveVelocityComponent
-    );
-    if (moveVelocityComponent?.velocity == null) {
-      return;
-    }
+  transform.position.x = transform.position.x + moveVelocity.velocity.x;
+  transform.position.y = transform.position.y + moveVelocity.velocity.y;
+};
 
-    const transformComponent = getSimComponent(entity, Transform);
-    if (!transformComponent) {
-      return;
-    }
-
-    transformComponent.position.x =
-      transformComponent.position.x + moveVelocityComponent.velocity.x;
-    transformComponent.position.y =
-      transformComponent.position.y + moveVelocityComponent.velocity.y;
-  }
-}
+export const MoveVelocitySystem = createSystem({
+  query: queryComponents({
+    transform: Write(Transform),
+    moveVelocity: Read(MoveVelocity),
+  }),
+})
+.withRunFunction(({
+  query
+}) => {
+  query.execute(({ transform, moveVelocity }) => {
+    updateTransform(transform, moveVelocity);
+  });
+})
+.build();

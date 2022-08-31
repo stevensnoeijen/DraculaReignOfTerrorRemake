@@ -4,7 +4,7 @@ import { Input } from '../../Input';
 import { Vector2 } from '../../math/Vector2';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { MoveTransformVelocityComponent } from '../movement/MoveTransformVelocityComponent';
-import { MoveVelocityComponent } from '../movement/MoveVelocityComponent';
+import { MoveVelocity } from '../../components/movement/MoveVelocity';
 import { Transform } from '../../components/Transform';
 
 import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
@@ -54,9 +54,7 @@ export class PlayerMovementKeysSystem extends System {
     if (moveTransformVelocityComponent) {
       moveTransformVelocityComponent.velocity = moveVelocity;
     }
-    const moveVelocityComponent = entity.getMutableComponent(
-      MoveVelocityComponent
-    );
+    const moveVelocityComponent = getSimComponent(entity, MoveVelocity);
     if (moveVelocityComponent) {
       moveVelocityComponent.velocity = moveVelocity;
     }

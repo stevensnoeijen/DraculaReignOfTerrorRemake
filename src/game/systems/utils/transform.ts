@@ -16,13 +16,13 @@ export const isInRange = (
     return falsePredicate;
   }
   const targetPosition =
-    getSimComponent(targetEntity, Transform).position;
+    getSimComponent(targetEntity, Transform)!.position;
 
   return (entity) => {
     if (!hasSimComponent(entity, Transform)) {
       return false;
     }
-    const transform = getSimComponent(entity, Transform);
+    const transform = getSimComponent(entity, Transform)!;
 
     return (
       Vector2.distance(targetPosition, transform.position) <= maxRange
@@ -35,7 +35,7 @@ export const byClosestDistance = (targetEntity: Entity): Comparator<Entity> => {
     return keepOrder;
   }
 
-  const targetTransform = getSimComponent(targetEntity, Transform);
+  const targetTransform = getSimComponent(targetEntity, Transform)!;
 
   return (a: Entity, b: Entity) => {
     if (
@@ -51,8 +51,8 @@ export const byClosestDistance = (targetEntity: Entity): Comparator<Entity> => {
       return -1;
     }
 
-    const aTransform = getSimComponent(a, Transform);
-    const bTransform = getSimComponent(b, Transform);
+    const aTransform = getSimComponent(a, Transform)!;
+    const bTransform = getSimComponent(b, Transform)!;
 
     return (
       targetTransform.distance(aTransform) -

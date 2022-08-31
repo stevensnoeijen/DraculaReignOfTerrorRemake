@@ -4,9 +4,9 @@ import { cellPositionToVector } from '../../utils';
 import { Vector2 } from '../../math/Vector2';
 import { setEntityAnimation } from '../utils/animation';
 import { Transform } from '../../components/Transform';
+import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
 import { SimEcsComponent } from './../SimEcsComponent';
-import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { getCell, not, Position } from './../../utils';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
@@ -28,9 +28,7 @@ export class MovePathSystem extends System {
       const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
 
       if (movePathComponent.path.length == 0) {
-        const moveVelocityComponent = entity.getComponent(
-          MoveVelocityComponent
-        );
+        const moveVelocityComponent = getSimComponent(entity, MoveVelocity);
         if (
           moveVelocityComponent?.velocity != null &&
           Vector2.ZERO.equals(moveVelocityComponent.velocity)
@@ -63,7 +61,7 @@ export class MovePathSystem extends System {
         nextCell.x,
         nextCell.y
       );
-      const transformComponent = getSimComponent(entity, Transform);
+      const transformComponent = getSimComponent(entity, Transform)!;
       if (
         !transformComponent.position.equals(
           movePositionDirectComponent.movePosition

@@ -2,11 +2,11 @@ import { Entity, System } from 'ecsy';
 
 import { Transform } from '../../components/Transform';
 import { Vector2 } from '../../math/Vector2';
+import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
 import { getSimComponent } from './../utils/index';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { MoveTransformVelocityComponent } from './MoveTransformVelocityComponent';
-import { MoveVelocityComponent } from './MoveVelocityComponent';
 
 
 export class MovePositionDirectSystem extends System {
@@ -73,9 +73,7 @@ export class MovePositionDirectSystem extends System {
     transformComponent: Transform,
     movePositionDirectComponent: MovePositionDirectComponent
   ): void {
-    const moveVelocityComponent = entity.getMutableComponent(
-      MoveVelocityComponent
-    );
+    const moveVelocityComponent = getSimComponent(entity, MoveVelocity);
     if (moveVelocityComponent) {
       if (
         Vector2.distance(
