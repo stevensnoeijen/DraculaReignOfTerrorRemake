@@ -1,20 +1,24 @@
-import { ControlledComponent } from './../ControlledComponent';
-import { FollowComponent } from './../movement/FollowComponent';
 import { World } from 'ecsy';
 
-import { convertPathfindingPathToPositions } from './../../utils';
-import { MovePathComponent } from './../movement/MovePathComponent';
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
-import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { TransformComponent } from '../TransformComponent';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { getMouseGridPosition } from '../../utils';
-import { Events, LevelLoadedEvent } from '../../Events';
+import { LevelLoadedEvent } from '../../Events';
+import { getEntityAtPosition } from '../utils';
+
+import { getSimComponent } from './../utils/index';
+import { SimEcsComponent } from './../SimEcsComponent';
+import { ControlledComponent } from './../ControlledComponent';
+import { FollowComponent } from './../movement/FollowComponent';
+import { convertPathfindingPathToPositions } from './../../utils';
+import { MovePathComponent } from './../movement/MovePathComponent';
+import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { SizeComponent } from './../SizeComponent';
 import { DefaultAttributes } from './../DefaultAttributes';
-import { getEntityAtPosition } from '../utils';
+
 
 export class PlayerMovementMouseSystem extends PixiJsSystem {
   public static queries = {
@@ -22,7 +26,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
       components: [PlayerMovementMouseComponent],
     },
     entities: {
-      components: [TransformComponent, SizeComponent],
+      components: [SimEcsComponent, SizeComponent],
     },
   };
 
@@ -44,7 +48,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
           continue;
         }
 
-        const transformComponent = entity.getComponent(TransformComponent);
+        const transformComponent = getSimComponent(entity, TransformComponent);
         if (!transformComponent) {
           continue;
         }

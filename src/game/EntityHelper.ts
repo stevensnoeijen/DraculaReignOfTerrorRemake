@@ -1,5 +1,6 @@
 import { Entity } from 'ecsy';
 
+import { getSimComponent } from './systems/utils/index';
 import { TransformComponent } from './systems/TransformComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { SizeComponent } from './systems/SizeComponent';
@@ -13,7 +14,7 @@ export class EntityHelper {
     x: number,
     y: number
   ): boolean {
-    const transform = entity.getComponent(TransformComponent);
+    const transform = getSimComponent(entity, TransformComponent);
     const size = entity.getComponent(SizeComponent);
 
     if (!transform || !size) {
@@ -40,7 +41,7 @@ export class EntityHelper {
     object: Entity,
     container: { x: number; y: number; width: number; height: number }
   ): boolean {
-    const objectTransform = object.getComponent(TransformComponent);
+    const objectTransform = getSimComponent(object, TransformComponent);
     if (!objectTransform) {
       return false;
     }

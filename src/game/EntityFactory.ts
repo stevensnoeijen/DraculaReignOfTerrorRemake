@@ -4,10 +4,8 @@ import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
 import { SizeComponent } from './systems/SizeComponent';
-import { TransformComponent } from './systems//TransformComponent';
 import { Constants } from './Constants';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
-import { Vector2 } from './math/Vector2';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
@@ -36,15 +34,9 @@ export class EntityFactory {
   public createUnit(props: IUnitProps): Entity {
     const width = Constants.CELL_SIZE;
     const height = Constants.CELL_SIZE;
-    let rotation = Math.random() * 360;
-    rotation -= rotation % 90;
 
     return this.world
       .createEntity()
-      .addComponent(TransformComponent, {
-        position: new Vector2(props.position.x, props.position.y),
-        rotation: rotation,
-      })
       .addComponent(SizeComponent, {
         width: width,
         height: height,

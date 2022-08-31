@@ -4,23 +4,25 @@ import { Vector2 } from '../../math/Vector2';
 import { TransformComponent } from '../TransformComponent';
 import { Comparator, falsePredicate, keepOrder } from '../../utils';
 
+import { hasSimComponent, getSimComponent } from './index';
+
 import { Predicate } from '~/utils/types';
 
 export const isInRange = (
   targetEntity: Entity,
   maxRange: number
 ): Predicate<Entity> => {
-  if (!targetEntity.hasComponent(TransformComponent)) {
+  if (!hasSimComponent(targetEntity, TransformComponent)) {
     return falsePredicate;
   }
   const targetPosition =
-    targetEntity.getComponent(TransformComponent)!.position;
+    getSimComponent(targetEntity, TransformComponent).position;
 
   return (entity) => {
-    if (!entity.hasComponent(TransformComponent)) {
+    if (!hasSimComponent(entity, TransformComponent)) {
       return false;
     }
-    const transformComponent = entity.getComponent(TransformComponent)!;
+    const transformComponent = getSimComponent(entity, TransformComponent);
 
     return (
       Vector2.distance(targetPosition, transformComponent.position) <= maxRange
@@ -29,29 +31,28 @@ export const isInRange = (
 };
 
 export const byClosestDistance = (targetEntity: Entity): Comparator<Entity> => {
-  if (!targetEntity.hasComponent(TransformComponent)) {
+  if (!hasSimComponent(targetEntity, TransformComponent)) {
     return keepOrder;
   }
 
-  const targetTransformComponent =
-    targetEntity.getComponent(TransformComponent)!;
+  const targetTransformComponent = getSimComponent(targetEntity, TransformComponent);
 
   return (a: Entity, b: Entity) => {
     if (
-      !a.hasComponent(TransformComponent) &&
-      !b.hasComponent(TransformComponent)
+      !hasSimComponent(a, TransformComponent) &&
+      !hasSimComponent(b, TransformComponent)
     ) {
       return 0;
     }
-    if (!a.hasComponent(TransformComponent)) {
+    if (!hasSimComponent(a, TransformComponent)) {
       return 1;
     }
-    if (!b.hasComponent(TransformComponent)) {
+    if (!hasSimComponent(b, TransformComponent)) {
       return -1;
     }
 
-    const aTransformComponent = a.getComponent(TransformComponent)!;
-    const bTransformComponent = b.getComponent(TransformComponent)!;
+    const aTransformComponent = getSimComponent(a, TransformComponent);
+    const bTransformComponent = getSimComponent(b, TransformComponent);
 
     return (
       targetTransformComponent.distance(aTransformComponent) -

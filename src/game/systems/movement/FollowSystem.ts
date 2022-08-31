@@ -1,11 +1,14 @@
-import { TransformComponent } from './../TransformComponent';
 import { Entity, System, World } from 'ecsy';
+
 import { astar } from '../../ai/pathfinding';
 import { LevelLoadedEvent } from '../../Events';
 import { DefaultAttributes } from '../DefaultAttributes';
+import { convertPathfindingPathToPositions } from '../../utils';
+import { getSimComponent } from '../utils';
+
 import { FollowComponent } from './FollowComponent';
 import { MovePathComponent } from './MovePathComponent';
-import { convertPathfindingPathToPositions } from '../../utils';
+import { TransformComponent } from './../TransformComponent';
 
 export class FollowSystem extends System {
   public static queries = {
@@ -51,12 +54,11 @@ export class FollowSystem extends System {
       return;
     }
 
-    const transformComponent =
-      followComponent.follow!.getComponent(TransformComponent)!;
+    const transformComponent = getSimComponent(followComponent.follow, TransformComponent);
 
     const path = astar(
       this.map!,
-      entity.getComponent(TransformComponent)!.gridPosition,
+      getSimComponent(entity, TransformComponent).gridPosition,
       transformComponent.gridPosition
     );
 

@@ -1,12 +1,16 @@
 import { Entity, System, SystemQueries } from 'ecsy';
 
-import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { TransformComponent } from '../TransformComponent';
+
+import { getSimComponent } from './../utils/index';
+import { SimEcsComponent } from './../SimEcsComponent';
+import { MoveVelocityComponent } from './MoveVelocityComponent';
+
 
 export class MoveVelocitySystem extends System {
   public static queries: SystemQueries = {
     bodies: {
-      components: [MoveVelocityComponent, TransformComponent],
+      components: [MoveVelocityComponent, SimEcsComponent],
       listen: {
         added: true,
       },
@@ -27,7 +31,7 @@ export class MoveVelocitySystem extends System {
       return;
     }
 
-    const transformComponent = entity.getMutableComponent(TransformComponent);
+    const transformComponent = getSimComponent(entity, TransformComponent);
     if (!transformComponent) {
       return;
     }

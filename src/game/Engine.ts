@@ -23,7 +23,7 @@ import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { SpriteSystem } from './systems/pixi/SpriteSystem';
 import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
-import { getOptions } from './utils';
+import { getOptions, randomRotation } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 import { PathFindingLevel } from './levels/PathFindingLevel';
 import { BehaviorTreeLevel } from './levels/BehaviorTreeLevel';
@@ -48,6 +48,7 @@ import { EntityFactory, IUnitProps } from './EntityFactory';
 import { Team } from './components/Team';
 import { Alive } from './components/Alive';
 import { Health } from './components/Health';
+import { Vector2 } from './math/Vector2';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -102,7 +103,6 @@ export class Engine {
       });
 
     this.world
-      .registerComponent(TransformComponent)
       .registerComponent(SizeComponent)
       .registerComponent(SelectableComponent)
       .registerComponent(MovableComponent)
@@ -190,6 +190,12 @@ export class Engine {
     sprite.play();
 
     const simEcsEntity = this.newWorld.buildEntity()
+      .with(
+        new TransformComponent({
+          position: new Vector2(props.position.x, props.position.y),
+          rotation: randomRotation(),
+        })
+      )
       .with(new EcsyEntity(entity))
       .with(new Team(props.team.number))
       .with(new Alive(true))

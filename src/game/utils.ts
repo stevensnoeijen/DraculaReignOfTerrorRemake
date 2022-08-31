@@ -1,5 +1,6 @@
 import { Entity } from 'ecsy';
 
+import { getSimComponent } from './systems/utils/index';
 import { Input } from './Input';
 import { Constants } from './Constants';
 import { Vector2 } from './math/Vector2';
@@ -82,7 +83,7 @@ export const convertPathfindingPathToPositions = (
 };
 
 export const getCell = (entity: Entity): Position => {
-  const component = entity.getComponent(TransformComponent)!;
+  const component = getSimComponent(entity, TransformComponent)!;
   const { x, y } = toGridPosition(component.position);
 
   return { x, y };
@@ -96,4 +97,10 @@ export const keepOrder: Comparator<unknown> = () => 0;
 
 export const not = <T>(predicate: Predicate<T>): Predicate<T> => {
   return (obj) => !predicate(obj);
+};
+
+export const randomRotation = () => {
+  const rotation = Math.random() * 360;
+
+  return rotation - rotation % 90;
 };

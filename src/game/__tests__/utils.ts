@@ -31,16 +31,16 @@ export const constructCreateRandomEntities = (
     return Array.from({ length: length }).map(() => {
       return world
         .createEntity()
-        .addComponent(TransformComponent, {
-          position: new Vector2(
-            Math.round(Math.random() * maxPosition.x) + minPosition.x,
-            Math.round(Math.random() * maxPosition.y) + minPosition.y
-          ),
-        })
         .addComponent(SimEcsComponent, {
           entity: newWorld.buildEntity()
             .with(new Team(teamId))
             .with(new Alive(true))
+            .with(new TransformComponent({
+              position: new Vector2(
+                Math.round(Math.random() * maxPosition.x) + minPosition.x,
+                Math.round(Math.random() * maxPosition.y) + minPosition.y
+              ),
+            }))
             .build(),
         });
     });

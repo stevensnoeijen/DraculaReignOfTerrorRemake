@@ -11,7 +11,7 @@ import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { ControlledComponent } from './../ControlledComponent';
-import { isSameEntity } from './../utils/index';
+import { getSimComponent, isSameEntity } from './../utils/index';
 
 export class MovePathSystem extends System {
   public static queries = {
@@ -63,8 +63,7 @@ export class MovePathSystem extends System {
         nextCell.x,
         nextCell.y
       );
-      const transformComponent =
-        entity.getMutableComponent(TransformComponent)!;
+      const transformComponent = getSimComponent(entity, TransformComponent);
       if (
         !transformComponent.position.equals(
           movePositionDirectComponent.movePosition

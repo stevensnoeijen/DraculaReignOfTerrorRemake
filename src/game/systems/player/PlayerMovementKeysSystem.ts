@@ -2,11 +2,13 @@ import { Entity, System } from 'ecsy';
 
 import { Input } from '../../Input';
 import { Vector2 } from '../../math/Vector2';
-import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
 import { SelectableComponent } from '../selection/SelectableComponent';
 import { MoveTransformVelocityComponent } from '../movement/MoveTransformVelocityComponent';
 import { MoveVelocityComponent } from '../movement/MoveVelocityComponent';
 import { TransformComponent } from '../TransformComponent';
+
+import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
+import { getSimComponent } from './../utils/index';
 
 export class PlayerMovementKeysSystem extends System {
   public static queries = {
@@ -59,7 +61,7 @@ export class PlayerMovementKeysSystem extends System {
       moveVelocityComponent.velocity = moveVelocity;
     }
 
-    const transformComponent = entity.getMutableComponent(TransformComponent);
+    const transformComponent = getSimComponent(entity, TransformComponent);
     if (!transformComponent) {
       return;
     }

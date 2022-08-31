@@ -1,4 +1,3 @@
-export { TransformComponent } from './TransformComponent';
 export { SizeComponent } from './SizeComponent';
 export { ControlledComponent } from './ControlledComponent';
 export { AttackComponent } from './AttackComponent';

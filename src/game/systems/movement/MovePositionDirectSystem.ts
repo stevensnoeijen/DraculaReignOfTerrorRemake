@@ -1,10 +1,13 @@
 import { Entity, System } from 'ecsy';
 
+import { TransformComponent } from '../TransformComponent';
+import { Vector2 } from '../../math/Vector2';
+
+import { getSimComponent } from './../utils/index';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { MoveTransformVelocityComponent } from './MoveTransformVelocityComponent';
 import { MoveVelocityComponent } from './MoveVelocityComponent';
-import { TransformComponent } from '../TransformComponent';
-import { Vector2 } from '../../math/Vector2';
+
 
 export class MovePositionDirectSystem extends System {
   public static queries = {
@@ -21,7 +24,7 @@ export class MovePositionDirectSystem extends System {
       if (null == movePositionDirectComponent?.movePosition) {
         continue;
       }
-      const transformComponent = entity.getMutableComponent(TransformComponent);
+      const transformComponent = getSimComponent(entity, TransformComponent);
       if (!transformComponent) {
         continue;
       }

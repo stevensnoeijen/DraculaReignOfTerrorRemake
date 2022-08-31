@@ -6,6 +6,8 @@ import { Animator } from './../../animation/Animator';
 import { SimEcsComponent } from './../SimEcsComponent';
 import { TransformComponent } from './../TransformComponent';
 
+import { getSimComponent } from './index';
+
 import { UnitState } from '~/game/types';
 
 export const setEntityAnimation = (entity: Entity, state: UnitState): void => {
@@ -13,7 +15,7 @@ export const setEntityAnimation = (entity: Entity, state: UnitState): void => {
   if (simEcsComponent == null) {
     return;
   }
-  const transformComponent = entity.getComponent(TransformComponent);
+  const transformComponent = getSimComponent(entity, TransformComponent);
   const direction = rotationToDirection(transformComponent?.rotation ?? 0)!;
 
   simEcsComponent.entity.getComponent(Animator)!.set(state, direction);

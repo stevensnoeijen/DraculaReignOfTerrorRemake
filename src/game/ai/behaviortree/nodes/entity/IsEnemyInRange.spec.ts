@@ -22,7 +22,6 @@ describe('IsEnemyInRange', () => {
     beforeEach(() => {
       world = new World()
         .registerComponent(AttackComponent)
-        .registerComponent(TransformComponent)
         .registerComponent(SimEcsComponent);
       newWorld = buildWorld().build();
 
@@ -33,11 +32,13 @@ describe('IsEnemyInRange', () => {
       const entitiesInRange = [
         world
           .createEntity()
-          .addComponent(TransformComponent, {
-            position: new Vector2(0, 0),
-          })
           .addComponent(SimEcsComponent, {
-            entity: newWorld.buildEntity().with(new Team(2)).build(),
+            entity: newWorld.buildEntity()
+              .with(new Team(2))
+              .with(new TransformComponent({
+                position: new Vector2(0, 0),
+              }))
+              .build(),
           }),
       ];
       (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue(
@@ -49,11 +50,13 @@ describe('IsEnemyInRange', () => {
         .addComponent(AttackComponent, {
           aggroRange: 100,
         })
-        .addComponent(TransformComponent, {
-          position: new Vector2(0, 0),
-        })
         .addComponent(SimEcsComponent, {
-          entity: newWorld.buildEntity().with(new Team(1)).build(),
+          entity: newWorld.buildEntity()
+            .with(new Team(1))
+            .with(new TransformComponent({
+              position: new Vector2(0, 0),
+            }))
+            .build(),
         });
       const node = new IsEnemyInRange([], AttackComponent, 'aggroRange');
       const parent = new Node();

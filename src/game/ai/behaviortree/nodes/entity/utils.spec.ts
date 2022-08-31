@@ -20,7 +20,6 @@ describe('getEntitiesInRange', () => {
   beforeEach(() => {
     newWorld = buildWorld().build();
     world = new World()
-      .registerComponent(TransformComponent)
       .registerComponent(SimEcsComponent);
     createRandomEntities = constructCreateRandomEntities(world);
   });
@@ -28,13 +27,13 @@ describe('getEntitiesInRange', () => {
   it('should success set target when there is an enemy within range', () => {
     const entity = world
       .createEntity()
-      .addComponent(TransformComponent, {
-        position: new Vector2(0, 0),
-      })
       .addComponent(SimEcsComponent, {
         entity: newWorld.buildEntity()
           .with(new Team(1))
           .with(new Alive(true))
+          .with(new TransformComponent({
+            position: new Vector2(0, 0),
+          }))
           .build(),
       });
 
