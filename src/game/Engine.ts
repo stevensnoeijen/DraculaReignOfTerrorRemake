@@ -30,7 +30,7 @@ import { BehaviorTreeLevel } from './levels/BehaviorTreeLevel';
 import { MapSystem } from './systems/render/MapSystem';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
-import { CollidableComponent } from './systems/movement/CollidableComponent';
+import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
 import { LevelLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
@@ -112,7 +112,6 @@ export class Engine {
       .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(MoveVelocityComponent)
       .registerComponent(MovePathComponent)
-      .registerComponent(CollidableComponent)
       .registerComponent(AttackComponent)
       .registerComponent(FollowComponent)
       .registerComponent(BehaviorTreeComponent)
@@ -206,6 +205,7 @@ export class Engine {
       .with(new PIXI.Graphics())
       .with(sprite)
       .with(animator)
+      .with(Collider)
       .build();
 
     entity.addComponent(SimEcsComponent, {

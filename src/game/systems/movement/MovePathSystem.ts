@@ -5,9 +5,9 @@ import { Vector2 } from '../../math/Vector2';
 import { setEntityAnimation } from '../utils/animation';
 import { Transform } from '../../components/Transform';
 
+import { SimEcsComponent } from './../SimEcsComponent';
 import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { getCell, not, Position } from './../../utils';
-import { CollidableComponent } from './CollidableComponent';
 import { MovePathComponent } from './MovePathComponent';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
 import { ControlledComponent } from './../ControlledComponent';
@@ -19,7 +19,7 @@ export class MovePathSystem extends System {
       components: [MovePathComponent],
     },
     colliders: {
-      components: [CollidableComponent],
+      components: [SimEcsComponent],
     },
   };
 

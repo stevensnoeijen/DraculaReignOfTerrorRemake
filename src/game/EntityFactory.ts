@@ -10,7 +10,6 @@ import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMou
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocityComponent } from './systems/movement/MoveVelocityComponent';
-import { CollidableComponent } from './systems/movement/CollidableComponent';
 import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
@@ -50,7 +49,6 @@ export class EntityFactory {
       .addComponent(MovePositionDirectComponent)
       .addComponent(PlayerMovementMouseComponent)
       .addComponent(MovePathComponent, { path: [] })
-      .addComponent(CollidableComponent)
       .addComponent(FollowComponent)
       .addComponent(AttackComponent, {
         aggroRange: 80,
