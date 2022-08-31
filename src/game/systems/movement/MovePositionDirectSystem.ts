@@ -6,7 +6,6 @@ import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
 import { getSimComponent } from './../utils/index';
 import { MovePositionDirectComponent } from './MovePositionDirectComponent';
-import { MoveTransformVelocityComponent } from './MoveTransformVelocityComponent';
 
 
 export class MovePositionDirectSystem extends System {
@@ -29,42 +28,11 @@ export class MovePositionDirectSystem extends System {
         continue;
       }
 
-      // TODO: remove this?
-      // this.moveByTransformVelocity(entity, transformComponent, movePositionDirectComponent);
       this.moveByMoveVelocity(
         entity,
         transformComponent,
         movePositionDirectComponent
       );
-    }
-  }
-
-  private moveByTransformVelocity(
-    entity: Entity,
-    transformComponent: Transform,
-    movePositionDirectComponent: MovePositionDirectComponent
-  ): void {
-    const moveTransformVelocityComponent = entity.getMutableComponent(
-      MoveTransformVelocityComponent
-    );
-    if (moveTransformVelocityComponent) {
-      if (
-        Vector2.distance(
-          transformComponent.position,
-          movePositionDirectComponent.movePosition!
-        ) < 1
-      ) {
-        transformComponent.position = movePositionDirectComponent.movePosition!;
-        // stop
-        movePositionDirectComponent.movePosition = null;
-        moveTransformVelocityComponent.velocity = Vector2.ZERO;
-        return;
-      }
-
-      moveTransformVelocityComponent.velocity = Vector2.subtracts(
-        movePositionDirectComponent.movePosition!,
-        transformComponent.position
-      ).normalized();
     }
   }
 

@@ -7,7 +7,6 @@ import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
-import { MoveTransformVelocityComponent } from './systems/movement/MoveTransformVelocityComponent';
 import { MovePositionDirectComponent } from './systems/movement/MovePositionDirectComponent';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
@@ -105,7 +104,6 @@ export class Engine {
 
     this.world
       .registerComponent(SelectableComponent)
-      .registerComponent(MoveTransformVelocityComponent)
       .registerComponent(MovePositionDirectComponent)
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
