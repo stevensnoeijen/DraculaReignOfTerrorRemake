@@ -3,7 +3,7 @@ import { World } from 'ecsy';
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
 import { SelectableComponent } from '../selection/SelectableComponent';
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { getMouseGridPosition } from '../../utils';
 import { LevelLoadedEvent } from '../../Events';
@@ -48,7 +48,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
           continue;
         }
 
-        const transformComponent = getSimComponent(entity, TransformComponent);
+        const transformComponent = getSimComponent(entity, Transform);
         if (!transformComponent) {
           continue;
         }

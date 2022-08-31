@@ -6,7 +6,7 @@ import {
   constructCreateRandomEntities,
   CreateRandomEntities,
 } from '../../__tests__/utils';
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
 import { SimEcsComponent } from './../SimEcsComponent';
 import { byClosestDistance, isInRange } from './transform';
@@ -19,7 +19,6 @@ let createRandomEntities: CreateRandomEntities;
 
 beforeEach(() => {
   world = new World()
-    .registerComponent(TransformComponent)
     .registerComponent(SimEcsComponent);
   newWorld = buildWorld().build();
   createRandomEntities = constructCreateRandomEntities(world);
@@ -43,15 +42,13 @@ describe('isInRange', () => {
     const targetEntity = world.createEntity();
     targetEntity.addComponent(SimEcsComponent, {
       entity: newWorld.buildEntity()
-        .with(new TransformComponent({
-          position: Vector2.ZERO,
-        }))
+        .with(new Transform(Vector2.ZERO))
         .build(),
     });
 
     const entitiesWithoutTransform = createRandomEntities();
     entitiesWithoutTransform.forEach((entity) =>
-      removeSimComponent(entity, TransformComponent)
+      removeSimComponent(entity, Transform)
     );
 
     const filter = isInRange(targetEntity, 100);
@@ -65,9 +62,7 @@ describe('isInRange', () => {
     const targetEntity = world.createEntity();
     targetEntity.addComponent(SimEcsComponent, {
       entity: newWorld.buildEntity()
-        .with(new TransformComponent({
-          position: Vector2.ZERO,
-        }))
+        .with(new Transform(Vector2.ZERO))
         .build(),
     });
     const inRangeEntities = createRandomEntities(
@@ -107,16 +102,14 @@ describe('byClosestDistance', () => {
     const targetEntity = world.createEntity();
     targetEntity.addComponent(SimEcsComponent, {
       entity: newWorld.buildEntity()
-        .with(new TransformComponent({
-          position: Vector2.ZERO,
-        }))
+        .with(new Transform(Vector2.ZERO))
         .build(),
     });
 
     const entities = createRandomEntities();
-    removeSimComponent(entities[0], TransformComponent);
-    removeSimComponent(entities[1], TransformComponent);
-    removeSimComponent(entities[2], TransformComponent);
+    removeSimComponent(entities[0], Transform);
+    removeSimComponent(entities[1], Transform);
+    removeSimComponent(entities[2], Transform);
 
     const sorted = [...entities].sort(byClosestDistance(targetEntity));
 
@@ -128,9 +121,7 @@ describe('byClosestDistance', () => {
     const targetEntity = world.createEntity();
     targetEntity.addComponent(SimEcsComponent, {
       entity: newWorld.buildEntity()
-        .with(new TransformComponent({
-          position: Vector2.ZERO,
-        }))
+        .with(new Transform(Vector2.ZERO))
         .build(),
     });
 
@@ -138,9 +129,7 @@ describe('byClosestDistance', () => {
       .createEntity()
       .addComponent(SimEcsComponent, {
         entity: newWorld.buildEntity()
-          .with(new TransformComponent({
-            position: Vector2.ZERO,
-          }))
+          .with(new Transform(Vector2.ZERO))
           .build(),
       });
 

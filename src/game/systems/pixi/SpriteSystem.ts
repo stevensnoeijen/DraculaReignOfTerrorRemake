@@ -1,9 +1,9 @@
 import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
-const updateSprite = (app: PIXI.Application, sprite: PIXI.Sprite, transform: TransformComponent) => {
+const updateSprite = (app: PIXI.Application, sprite: PIXI.Sprite, transform: Transform) => {
   // FIXME: add is done multiple times, optimise me
   app.stage.addChild(sprite);
 
@@ -13,7 +13,7 @@ const updateSprite = (app: PIXI.Application, sprite: PIXI.Sprite, transform: Tra
   );
 };
 
-const updateAnimatedSprite = (app: PIXI.Application, sprite: PIXI.AnimatedSprite, transform: TransformComponent) => {
+const updateAnimatedSprite = (app: PIXI.Application, sprite: PIXI.AnimatedSprite, transform: Transform) => {
   // FIXME: add is done multiple times, optimise me
   app.stage.addChild(sprite);
 
@@ -28,7 +28,7 @@ export const SpriteSystem = createSystem({
   query: queryComponents({
     sprite: ReadOptional(PIXI.Sprite),
     animatedSprite: ReadOptional(PIXI.AnimatedSprite),
-    transform: Read(TransformComponent),
+    transform: Read(Transform),
   }),
 })
 .withRunFunction(({

@@ -3,7 +3,7 @@ import { Entity, System } from 'ecsy';
 import { cellPositionToVector } from '../../utils';
 import { Vector2 } from '../../math/Vector2';
 import { setEntityAnimation } from '../utils/animation';
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
 import { MoveVelocityComponent } from './MoveVelocityComponent';
 import { getCell, not, Position } from './../../utils';
@@ -63,7 +63,7 @@ export class MovePathSystem extends System {
         nextCell.x,
         nextCell.y
       );
-      const transformComponent = getSimComponent(entity, TransformComponent);
+      const transformComponent = getSimComponent(entity, Transform);
       if (
         !transformComponent.position.equals(
           movePositionDirectComponent.movePosition

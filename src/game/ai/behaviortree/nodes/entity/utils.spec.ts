@@ -1,7 +1,7 @@
 import { buildWorld, IWorld } from 'sim-ecs';
 import { World } from 'ecsy';
 
-import { TransformComponent } from '../../../../components/TransformComponent';
+import { Transform } from '../../../../components/Transform';
 import { CreateRandomEntities } from '../../../../__tests__/utils';
 
 import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
@@ -31,9 +31,7 @@ describe('getEntitiesInRange', () => {
         entity: newWorld.buildEntity()
           .with(new Team(1))
           .with(new Alive(true))
-          .with(new TransformComponent({
-            position: new Vector2(0, 0),
-          }))
+          .with(new Transform(Vector2.ZERO))
           .build(),
       });
 

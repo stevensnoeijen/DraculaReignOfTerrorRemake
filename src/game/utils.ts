@@ -5,7 +5,7 @@ import { Input } from './Input';
 import { Constants } from './Constants';
 import { Vector2 } from './math/Vector2';
 import * as PathFinding from './ai/pathfinding';
-import { TransformComponent } from './components/TransformComponent';
+import { Transform } from './components/Transform';
 
 import { Predicate } from '~/utils/types';
 
@@ -83,7 +83,7 @@ export const convertPathfindingPathToPositions = (
 };
 
 export const getCell = (entity: Entity): Position => {
-  const component = getSimComponent(entity, TransformComponent)!;
+  const component = getSimComponent(entity, Transform)!;
   const { x, y } = toGridPosition(component.position);
 
   return { x, y };

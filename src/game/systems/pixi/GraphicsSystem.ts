@@ -7,7 +7,7 @@ import {
   SelectableComponent,
 } from '../components';
 import { SimEcsComponent } from '../SimEcsComponent';
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
 import { getSimComponent } from './../utils/index';
 import { getHealthColor } from './utils';
@@ -108,7 +108,7 @@ export const GraphicsSystem = createSystem({
 
       const entity = ecsyEntity.entity;
       if (entity.hasComponent(SelectableComponent)) {
-        const position = getSimComponent(entity, TransformComponent).position;
+        const position = getSimComponent(entity, Transform).position;
         const target = (sprite ?? animatedSprite) as PIXI.Sprite;
 
         graphics.clear();

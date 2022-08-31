@@ -5,7 +5,7 @@ import { buildWorld, IWorld } from 'sim-ecs';
 import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
-import { TransformComponent } from './components/TransformComponent';
+import { Transform } from './components/Transform';
 import { SizeComponent } from './systems/SizeComponent';
 import { SelectableComponent } from './systems/selection/SelectableComponent';
 import { MovableComponent } from './systems/movement/MovableComponent';
@@ -191,10 +191,10 @@ export class Engine {
 
     const simEcsEntity = this.newWorld.buildEntity()
       .with(
-        new TransformComponent({
-          position: new Vector2(props.position.x, props.position.y),
-          rotation: randomRotation(),
-        })
+        new Transform(
+          new Vector2(props.position.x, props.position.y),
+          randomRotation()
+        )
       )
       .with(new EcsyEntity(entity))
       .with(new Team(props.team.number))

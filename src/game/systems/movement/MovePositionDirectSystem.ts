@@ -1,6 +1,6 @@
 import { Entity, System } from 'ecsy';
 
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 import { Vector2 } from '../../math/Vector2';
 
 import { getSimComponent } from './../utils/index';
@@ -24,7 +24,7 @@ export class MovePositionDirectSystem extends System {
       if (null == movePositionDirectComponent?.movePosition) {
         continue;
       }
-      const transformComponent = getSimComponent(entity, TransformComponent);
+      const transformComponent = getSimComponent(entity, Transform);
       if (!transformComponent) {
         continue;
       }
@@ -41,7 +41,7 @@ export class MovePositionDirectSystem extends System {
 
   private moveByTransformVelocity(
     entity: Entity,
-    transformComponent: TransformComponent,
+    transformComponent: Transform,
     movePositionDirectComponent: MovePositionDirectComponent
   ): void {
     const moveTransformVelocityComponent = entity.getMutableComponent(
@@ -70,7 +70,7 @@ export class MovePositionDirectSystem extends System {
 
   private moveByMoveVelocity(
     entity: Entity,
-    transformComponent: TransformComponent,
+    transformComponent: Transform,
     movePositionDirectComponent: MovePositionDirectComponent
   ): void {
     const moveVelocityComponent = entity.getMutableComponent(

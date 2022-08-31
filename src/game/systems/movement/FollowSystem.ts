@@ -5,7 +5,7 @@ import { LevelLoadedEvent } from '../../Events';
 import { DefaultAttributes } from '../DefaultAttributes';
 import { convertPathfindingPathToPositions } from '../../utils';
 import { getSimComponent } from '../utils';
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
 import { FollowComponent } from './FollowComponent';
 import { MovePathComponent } from './MovePathComponent';
@@ -54,11 +54,11 @@ export class FollowSystem extends System {
       return;
     }
 
-    const transformComponent = getSimComponent(followComponent.follow, TransformComponent);
+    const transformComponent = getSimComponent(followComponent.follow, Transform);
 
     const path = astar(
       this.map!,
-      getSimComponent(entity, TransformComponent).gridPosition,
+      getSimComponent(entity, Transform).gridPosition,
       transformComponent.gridPosition
     );
 

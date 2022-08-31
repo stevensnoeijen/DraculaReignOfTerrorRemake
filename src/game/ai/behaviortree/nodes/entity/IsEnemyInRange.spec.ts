@@ -1,7 +1,7 @@
 import { World } from 'ecsy';
 import { IWorld, buildWorld } from 'sim-ecs';
 
-import { TransformComponent } from '../../../../components/TransformComponent';
+import { Transform } from '../../../../components/Transform';
 import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
 
@@ -35,9 +35,7 @@ describe('IsEnemyInRange', () => {
           .addComponent(SimEcsComponent, {
             entity: newWorld.buildEntity()
               .with(new Team(2))
-              .with(new TransformComponent({
-                position: new Vector2(0, 0),
-              }))
+              .with(new Transform(new Vector2(0, 0)))
               .build(),
           }),
       ];
@@ -53,9 +51,7 @@ describe('IsEnemyInRange', () => {
         .addComponent(SimEcsComponent, {
           entity: newWorld.buildEntity()
             .with(new Team(1))
-            .with(new TransformComponent({
-              position: new Vector2(0, 0),
-            }))
+            .with(new Transform(Vector2.ZERO))
             .build(),
         });
       const node = new IsEnemyInRange([], AttackComponent, 'aggroRange');

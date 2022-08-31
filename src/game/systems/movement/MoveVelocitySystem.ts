@@ -1,6 +1,6 @@
 import { Entity, System, SystemQueries } from 'ecsy';
 
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
 import { getSimComponent } from './../utils/index';
 import { SimEcsComponent } from './../SimEcsComponent';
@@ -31,7 +31,7 @@ export class MoveVelocitySystem extends System {
       return;
     }
 
-    const transformComponent = getSimComponent(entity, TransformComponent);
+    const transformComponent = getSimComponent(entity, Transform);
     if (!transformComponent) {
       return;
     }

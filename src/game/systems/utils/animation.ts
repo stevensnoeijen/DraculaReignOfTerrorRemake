@@ -1,7 +1,7 @@
 import { Entity } from 'ecsy';
 
 import { rotationToDirection } from '../../animation/load';
-import { TransformComponent } from '../../components/TransformComponent';
+import { Transform } from '../../components/Transform';
 
 import { Animator } from './../../animation/Animator';
 import { SimEcsComponent } from './../SimEcsComponent';
@@ -15,7 +15,7 @@ export const setEntityAnimation = (entity: Entity, state: UnitState): void => {
   if (simEcsComponent == null) {
     return;
   }
-  const transformComponent = getSimComponent(entity, TransformComponent);
+  const transformComponent = getSimComponent(entity, Transform);
   const direction = rotationToDirection(transformComponent?.rotation ?? 0)!;
 
   simEcsComponent.entity.getComponent(Animator)!.set(state, direction);
