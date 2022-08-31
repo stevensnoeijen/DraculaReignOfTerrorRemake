@@ -6,11 +6,11 @@ import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
-import { SelectableComponent } from './systems/selection/SelectableComponent';
+import { Selectable } from './components/player/Selectable';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocity } from './components/movement/MoveVelocity';
-import { PlayerSelectionSystem } from './systems/selection/PlayerSelectionSystem';
+import { PlayerSelectionSystem } from './systems/player/PlayerSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';
 import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
@@ -74,6 +74,7 @@ export class Engine {
           stage.addSystem(MoveVelocitySystem);
           stage.addSystem(MovePositionDirectSystem);
           stage.addSystem(MovePathSystem);
+          stage.addSystem(PlayerSelectionSystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)
@@ -105,7 +106,6 @@ export class Engine {
       });
 
     this.world
-      .registerComponent(SelectableComponent)
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(AttackComponent)
@@ -114,7 +114,6 @@ export class Engine {
       .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
       .registerComponent(SimEcsComponent)
-      .registerSystem(PlayerSelectionSystem, { app, eventBus })
       .registerSystem(InputSystem, { canvas: app.view })
       // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
@@ -203,6 +202,7 @@ export class Engine {
       .with(new MoveVelocity(50))
       .with(MovePositionDirect)
       .with(new MovePath([]))
+      .with(new Selectable(false))
       .build();
 
     entity.addComponent(SimEcsComponent, {

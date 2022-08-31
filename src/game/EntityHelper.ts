@@ -2,7 +2,7 @@ import { Entity } from 'ecsy';
 
 import { getSimComponent } from './systems/utils/index';
 import { Transform } from './components/Transform';
-import { SelectableComponent } from './systems/selection/SelectableComponent';
+import { Selectable } from './components/player/Selectable';
 import { Size } from './components/Size';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { Bounds } from './math/collision/Bounds';
@@ -55,7 +55,7 @@ export class EntityHelper {
   }
 
   public static deselect(entity: Entity): void {
-    const selectable = entity.getMutableComponent(SelectableComponent);
+    const selectable = getSimComponent(entity, Selectable);
     if (!selectable) {
       return;
     }
@@ -63,7 +63,7 @@ export class EntityHelper {
   }
 
   public static select(entity: Entity): void {
-    const selectable = entity.getMutableComponent(SelectableComponent);
+    const selectable = getSimComponent(entity, Selectable);
     if (!selectable) {
       return;
     }
@@ -71,7 +71,7 @@ export class EntityHelper {
   }
 
   public static isSelected(entity: Entity): boolean {
-    const selectable = entity.getComponent(SelectableComponent);
+    const selectable = getSimComponent(entity, Selectable);
     if (!selectable) {
       return false;
     }

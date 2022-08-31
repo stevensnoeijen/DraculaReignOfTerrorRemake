@@ -2,7 +2,7 @@ import { World } from 'ecsy';
 
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
-import { SelectableComponent } from '../selection/SelectableComponent';
+import { Selectable } from '../../components/player/Selectable';
 import { Transform } from '../../components/Transform';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { getMouseGridPosition } from '../../utils';
@@ -42,7 +42,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
   public execute(delta: number, time: number): void {
     if (Input.isMouseButtonUp(2) || Input.isMouseDblClick()) {
       for (const entity of this.queries.playerEntities.results) {
-        const selectableComponent = entity.getComponent(SelectableComponent);
+        const selectableComponent = getSimComponent(entity, Selectable);
         if (!selectableComponent || !selectableComponent.selected) {
           continue;
         }

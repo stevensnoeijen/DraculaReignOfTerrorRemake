@@ -3,14 +3,12 @@ import { Entity } from 'ecsy';
 import { Graphics } from 'pixi.js';
 import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
 
-import {
-  SelectableComponent,
-} from '../components';
 import { SimEcsComponent } from '../SimEcsComponent';
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
+import { Selectable } from '../../components/player/Selectable';
 
-import { getSimComponent } from './../utils/index';
+import { getSimComponent, hasSimComponent } from './../utils/index';
 import { getHealthColor } from './utils';
 import { AttackComponent } from './../AttackComponent';
 
@@ -105,7 +103,7 @@ export const GraphicsSystem = createSystem({
       app.stage.addChild(graphics as PIXI.Graphics);
 
       const entity = ecsyEntity.entity;
-      if (entity.hasComponent(SelectableComponent)) {
+      if (hasSimComponent(entity, Selectable)) {
         const position = getSimComponent(entity, Transform)!.position;
         const target = (sprite ?? animatedSprite) as PIXI.Sprite;
 

@@ -2,23 +2,24 @@ import { Entity, System } from 'ecsy';
 
 import { Input } from '../../Input';
 import { Vector2 } from '../../math/Vector2';
-import { SelectableComponent } from '../selection/SelectableComponent';
+import { Selectable } from '../../components/player/Selectable';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
 import { Transform } from '../../components/Transform';
 
+import { SimEcsComponent } from './../SimEcsComponent';
 import { PlayerMovementKeysComponent } from './PlayerMovementKeysComponent';
 import { getSimComponent } from './../utils/index';
 
 export class PlayerMovementKeysSystem extends System {
   public static queries = {
     entities: {
-      components: [PlayerMovementKeysComponent, SelectableComponent],
+      components: [PlayerMovementKeysComponent, SimEcsComponent],
     },
   };
 
   public execute(delta: number, time: number): void {
     for (const entity of this.queries.entities.results) {
-      const selectableComponent = entity.getComponent(SelectableComponent);
+      const selectableComponent = getSimComponent(entity, Selectable);
       if (!selectableComponent || !selectableComponent.selected) {
         continue;
       }
@@ -65,7 +66,7 @@ export class PlayerMovementKeysSystem extends System {
 
   private handleAction(entity: Entity): void {
     if (Input.isKeyDown('Escape')) {
-      const component = entity.getMutableComponent(SelectableComponent);
+      const component = getSimComponent(entity, Selectable);
       if (component != null) {
         component.selected = false;
       }
