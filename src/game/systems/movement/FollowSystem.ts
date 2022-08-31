@@ -6,9 +6,9 @@ import { DefaultAttributes } from '../DefaultAttributes';
 import { convertPathfindingPathToPositions } from '../../utils';
 import { getSimComponent } from '../utils';
 import { Transform } from '../../components/Transform';
+import { MovePath } from '../../components/movement/MovePath';
 
 import { FollowComponent } from './FollowComponent';
-import { MovePathComponent } from './MovePathComponent';
 
 export class FollowSystem extends System {
   public static queries = {
@@ -40,7 +40,7 @@ export class FollowSystem extends System {
     for (const entity of this.queries.entities.results) {
       if (
         entity.getComponent(FollowComponent)!.follow != null &&
-        entity.getComponent(MovePathComponent)?.path != null
+        getSimComponent(entity, MovePath)?.path != null
       ) {
         // when following and move-path is done
         this.updateFollowingEntity(entity);
@@ -62,7 +62,7 @@ export class FollowSystem extends System {
       transformComponent.gridPosition
     );
 
-    const movePathComponent = entity.getMutableComponent(MovePathComponent)!;
+    const movePathComponent = getSimComponent(entity, MovePath)!;
     movePathComponent.path = convertPathfindingPathToPositions(
       path.slice(1).slice(0, -1)
     ); // move to the other entity

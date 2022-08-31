@@ -24,7 +24,6 @@ import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 import { PathFindingLevel } from './levels/PathFindingLevel';
 import { BehaviorTreeLevel } from './levels/BehaviorTreeLevel';
 import { MapSystem } from './systems/render/MapSystem';
-import { MovePathComponent } from './systems/movement/MovePathComponent';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
 import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
@@ -48,6 +47,7 @@ import { Vector2 } from './math/Vector2';
 import { Size } from './components/Size';
 import { Constants } from './Constants';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
+import { MovePath } from './components/movement/MovePath';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -73,6 +73,7 @@ export class Engine {
           stage.addSystem(SpriteSystem);
           stage.addSystem(MoveVelocitySystem);
           stage.addSystem(MovePositionDirectSystem);
+          stage.addSystem(MovePathSystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)
@@ -107,7 +108,6 @@ export class Engine {
       .registerComponent(SelectableComponent)
       .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
-      .registerComponent(MovePathComponent)
       .registerComponent(AttackComponent)
       .registerComponent(FollowComponent)
       .registerComponent(BehaviorTreeComponent)
@@ -120,7 +120,6 @@ export class Engine {
       .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
       .registerSystem(GridSystem, { app, options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
-      .registerSystem(MovePathSystem, { eventBus })
       .registerSystem(GameTimeSystem)
       .registerSystem(FollowSystem, { app, eventBus })
       .registerSystem(BehaviorTreeSystem)
@@ -203,6 +202,7 @@ export class Engine {
       .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
       .with(new MoveVelocity(50))
       .with(MovePositionDirect)
+      .with(new MovePath([]))
       .build();
 
     entity.addComponent(SimEcsComponent, {

@@ -6,5 +6,4 @@ export { PlayerMovementMouseComponent }
   from './player/PlayerMovementMouseComponent';
 export { PlayerMovementKeysComponent }
   from './player/PlayerMovementKeysComponent';
-export { MovePathComponent } from './movement/MovePathComponent';
 export { FollowComponent } from './movement/FollowComponent';

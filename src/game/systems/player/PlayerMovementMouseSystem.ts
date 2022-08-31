@@ -8,13 +8,13 @@ import { PixiJsSystem } from '../PixiJsSystem';
 import { getMouseGridPosition } from '../../utils';
 import { LevelLoadedEvent } from '../../Events';
 import { getEntityAtPosition } from '../utils';
+import { MovePath } from '../../components/movement/MovePath';
 
 import { getSimComponent } from './../utils/index';
 import { SimEcsComponent } from './../SimEcsComponent';
 import { ControlledComponent } from './../ControlledComponent';
 import { FollowComponent } from './../movement/FollowComponent';
 import { convertPathfindingPathToPositions } from './../../utils';
-import { MovePathComponent } from './../movement/MovePathComponent';
 import { PlayerMovementMouseComponent } from './PlayerMovementMouseComponent';
 import { DefaultAttributes } from './../DefaultAttributes';
 
@@ -78,8 +78,7 @@ export class PlayerMovementMouseSystem extends PixiJsSystem {
             getMouseGridPosition()
           );
 
-          const movePathComponent =
-            entity.getMutableComponent(MovePathComponent)!;
+          const movePathComponent = getSimComponent(entity, MovePath)!;
           movePathComponent.path = convertPathfindingPathToPositions(
             path.slice(1)
           );
