@@ -8,7 +8,8 @@ import { getEntityAtPosition, getSimComponent } from '../utils';
 import { Selectable } from '../../components/player/Selectable';
 import { isOnTeam } from '../utils/index';
 import { EcsyEntity } from '../../components/EcsyEntity';
-import { MouseSelection } from '../player/MouseSelection';
+
+import { MouseSelection } from './MouseSelection';
 
 const mouseSelection = new MouseSelection();
 
