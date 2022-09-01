@@ -20,14 +20,14 @@ import { SpriteSystem } from './systems/pixi/SpriteSystem';
 import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
 import { getOptions, Options, randomRotation } from './utils';
-import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
-import { PathFindingLevel } from './levels/PathFindingLevel';
-import { BehaviorTreeLevel } from './levels/BehaviorTreeLevel';
+import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
+import { PathFindingScenario } from './scenarios/PathFindingScenario';
+import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
 import { MapSystem } from './systems/render/MapSystem';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
 import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
-import { LevelLoadedEvent, Events } from './Events';
+import { ScenarioLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
 import { AttackComponent } from './systems/AttackComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
@@ -48,7 +48,7 @@ import { Size } from './components/Size';
 import { Constants } from './Constants';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { MovePath } from './components/movement/MovePath';
-import { Level } from './levels/Level';
+import { Scenario } from './scenarios/Scenario';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -140,7 +140,7 @@ export class Engine {
           this.app.loader.resources['animation-models'].data as AnimationModelsJson
         );
         this.entityFactory = new EntityFactory(this.world, this.animationService);
-        this.loadLevel();
+        this.loadScenario();
       });
   }
 
@@ -193,30 +193,30 @@ export class Engine {
     return entity;
   }
 
-  private async loadLevel() {
-    let level: Level;
-    if (this.options.level != null && this.options.level[0] != null) {
-      const levelName = this.options.level[0].toLowerCase();
-      if (levelName === 'randomunits') {
-        level = new RandomUnitsLevel(this.app, this);
-      } else if (levelName === 'pathfinding') {
-        level = new PathFindingLevel(this.app, this);
-      } else if (levelName === 'behaviortree') {
-        level = new BehaviorTreeLevel(this.app, this);
+  private async loadScenario() {
+    let scenario: Scenario;
+    if (this.options.scenario != null && this.options.scenario[0] != null) {
+      const scenarioName = this.options.scenario[0].toLowerCase();
+      if (scenarioName === 'randomunits') {
+        scenario = new RandomUnitsScenario(this.app, this);
+      } else if (scenarioName === 'pathfinding') {
+        scenario = new PathFindingScenario(this.app, this);
+      } else if (scenarioName === 'behaviortree') {
+        scenario = new BehaviorTreeScenario(this.app, this);
       } else {
-        alert('level not found');
+        alert('scenario not found');
         return;
       }
     } else {
       // default
-      level = new RandomUnitsLevel(this.app, this);
+      scenario = new RandomUnitsScenario(this.app, this);
   }
 
     this.newWorld.run();
-    level.load();
+    scenario.load();
     // TODO: remove temp solution for register listener in MouseControlledSystem
     setTimeout(() => {
-      this.eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
+      this.eventBus.emit<ScenarioLoadedEvent>('scenario:loaded', { scenario: scenario });
     }, 100);
   }
 }

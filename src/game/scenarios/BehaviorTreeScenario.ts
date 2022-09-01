@@ -3,16 +3,13 @@ import * as PIXI from 'pixi.js';
 import { cellPositionToVector } from '../utils';
 import { Tree } from '../ai/behaviortree/Tree';
 import { Engine } from '../Engine';
-
-import { Level } from './Level';
-import { createEmptyGrid, getGridSizeByScreen } from './utils';
-import { BehaviorTreeComponent } from './../systems/ai/BehaviorTreeComponent';
+import { BehaviorTreeComponent } from '../systems/ai/BehaviorTreeComponent';
 import {
   Selector,
   Timer,
   Inventer,
   Sequence,
-} from './../ai/behaviortree/nodes/core';
+} from '../ai/behaviortree/nodes/core';
 import {
   Follow,
   Attack,
@@ -23,9 +20,12 @@ import {
   IsMoving,
   SetTarget,
   IsEnemyInAggroRange,
-} from './../ai/behaviortree/nodes/entity';
+} from '../ai/behaviortree/nodes/entity';
 
-export class BehaviorTreeLevel extends Level {
+import { createEmptyGrid, getGridSizeByScreen } from './utils';
+import { Scenario } from './Scenario';
+
+export class BehaviorTreeScenario extends Scenario {
   private map: number[][];
 
   constructor(app: PIXI.Application, engine: Engine) {

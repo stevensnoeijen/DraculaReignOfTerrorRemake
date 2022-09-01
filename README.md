@@ -41,14 +41,15 @@ Other options to use are:
 
 - `#/game?showallhealth=true` to always show health of units
 
-# Levels
+# Scenarios
 
-To select a level add `#/game?level=<level>` and replace `<level>` to the url and refresh the page.
+To select a scenario add `#/game?scenario=<scenario>` and replace `<scenario>` to the url and refresh the page.
 
-Current levels are:
+Current scenario are:
 
 - `randomunits` (default)
 - `pathfinding`
+- `behaviortree`
 
 # Pack
 

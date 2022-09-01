@@ -5,7 +5,7 @@ import { Input } from '../../Input';
 import { Selectable } from '../../components/player/Selectable';
 import { Transform } from '../../components/Transform';
 import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../utils';
-import { LevelLoadedEvent } from '../../Events';
+import { ScenarioLoadedEvent } from '../../Events';
 import { getEntityAtPosition } from '../utils';
 import { MovePath } from '../../components/movement/MovePath';
 import { FollowComponent } from '../components';
@@ -29,8 +29,8 @@ export const MouseControlledSystem = createSystem({
   }),
 })
 .withSetupFunction(({ eventBus }) => {
-  eventBus.on<LevelLoadedEvent>('level:loaded', (event) => {
-    collsionMap = event.detail.level.collisionMap;
+  eventBus.on<ScenarioLoadedEvent>('scenario:loaded', (event) => {
+    collsionMap = event.detail.scenario.collisionMap;
   });
 })
 .withRunFunction(({

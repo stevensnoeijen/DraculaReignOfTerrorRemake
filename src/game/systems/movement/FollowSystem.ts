@@ -1,7 +1,7 @@
 import { Entity, System, World } from 'ecsy';
 
 import { astar } from '../../ai/pathfinding';
-import { LevelLoadedEvent } from '../../Events';
+import { ScenarioLoadedEvent } from '../../Events';
 import { DefaultAttributes } from '../DefaultAttributes';
 import { convertPathfindingPathToPositions } from '../../utils';
 import { getSimComponent } from '../utils';
@@ -25,8 +25,8 @@ export class FollowSystem extends System {
   constructor(world: World, attributes: DefaultAttributes) {
     super(world, attributes);
 
-    attributes.eventBus.on<LevelLoadedEvent>('level:loaded', (event) => {
-      this.map = event.detail.level.collisionMap;
+    attributes.eventBus.on<ScenarioLoadedEvent>('scenario:loaded', (event) => {
+      this.map = event.detail.scenario.collisionMap;
     });
   }
 

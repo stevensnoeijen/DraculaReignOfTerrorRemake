@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js';
 
 import { Engine } from '../Engine';
+import { cellPositionToVector } from '../utils';
 
-import { cellPositionToVector } from './../utils';
-import { Level } from './Level';
+import { Scenario } from './Scenario';
 import { generateMaze, getGridSizeByScreen } from './utils';
 
-export class PathFindingLevel extends Level {
+export class PathFindingScenario extends Scenario {
   private map: number[][];
 
   constructor(app: PIXI.Application, engine: Engine) {

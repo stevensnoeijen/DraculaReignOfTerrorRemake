@@ -1,7 +1,7 @@
-import { Level } from './levels/Level';
+import { Scenario } from './scenarios/Scenario';
 
-export interface LevelLoadedEvent {
-  level: Level;
+export interface ScenarioLoadedEvent {
+  scenario: Scenario;
 }
 
-export type Events = LevelLoadedEvent;
+export type Events = ScenarioLoadedEvent;

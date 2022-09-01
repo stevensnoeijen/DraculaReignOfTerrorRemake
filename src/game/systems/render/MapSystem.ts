@@ -1,9 +1,10 @@
 import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
-import { DefaultAttributes } from './../DefaultAttributes';
-import { LevelLoadedEvent } from './../../Events';
 import { PixiJsSystem } from '../PixiJsSystem';
+
+import { DefaultAttributes } from './../DefaultAttributes';
+import { ScenarioLoadedEvent } from './../../Events';
 import { cellPositionToVector } from './../../utils';
 
 export class MapSystem extends PixiJsSystem {
@@ -15,8 +16,8 @@ export class MapSystem extends PixiJsSystem {
 
     this.graphics = this.app.stage.addChildAt(new PIXI.Graphics(), 0);
 
-    attributes.eventBus.on<LevelLoadedEvent>('level:loaded', (event) => {
-      this.map = event.detail.level.collisionMap;
+    attributes.eventBus.on<ScenarioLoadedEvent>('scenario:loaded', (event) => {
+      this.map = event.detail.scenario.collisionMap;
       this.draw();
     });
   }

@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import { Engine } from '../Engine';
 
-export abstract class Level {
+export abstract class Scenario {
   abstract get collisionMap(): number[][];
 
   constructor(

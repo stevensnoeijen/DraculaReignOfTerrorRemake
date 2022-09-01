@@ -6,9 +6,9 @@ import { toWorldPositionCellCenter } from '../utils';
 import { Engine } from '../Engine';
 
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
-import { Level } from './Level';
+import { Scenario } from './Scenario';
 
-export class RandomUnitsLevel extends Level {
+export class RandomUnitsScenario extends Scenario {
   private readonly _collisionMap: number[][];
 
   constructor(app: PIXI.Application, engine: Engine) {
