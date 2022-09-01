@@ -8,7 +8,7 @@ import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../u
 import { ScenarioLoadedEvent } from '../../Events';
 import { getEntityAtPosition } from '../utils';
 import { MovePath } from '../../components/movement/MovePath';
-import { FollowComponent } from '../components';
+import { FollowComponent } from '../movement/FollowComponent';
 
 import { EcsyEntity } from './../../components/EcsyEntity';
 import { MouseControlled } from './MouseControlled';
