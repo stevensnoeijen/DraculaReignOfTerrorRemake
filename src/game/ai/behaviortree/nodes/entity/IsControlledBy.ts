@@ -1,11 +1,15 @@
 import { Entity } from 'ecsy';
 
 import { State } from '../Node';
-import { EntityNode } from './EntityNode';
 import {
   By,
-  ControlledComponent,
-} from '../../../../systems/ControlledComponent';
+  Controlled,
+} from '../../../../components/input/Controlled';
+
+import { hasSimComponent } from './../../../../systems/utils/index';
+import { EntityNode } from './EntityNode';
+
+import { getSimComponent } from '~/game/systems/utils';
 
 export abstract class IsControlledBy extends EntityNode {
   constructor(private readonly by: By) {
@@ -13,11 +17,11 @@ export abstract class IsControlledBy extends EntityNode {
   }
 
   protected evaluateByEntity(entity: Entity): State {
-    if (!entity.hasComponent(ControlledComponent)) {
+    if (!hasSimComponent(entity, Controlled)) {
       return this.failure();
     }
-    const controlledComponent = entity.getComponent(ControlledComponent)!;
-    if (controlledComponent.by === this.by) {
+    const controlled = getSimComponent(entity, Controlled)!;
+    if (controlled.by === this.by) {
       return this.success();
     }
 

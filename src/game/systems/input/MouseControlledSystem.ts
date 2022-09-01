@@ -9,9 +9,9 @@ import { ScenarioLoadedEvent } from '../../Events';
 import { getEntityAtPosition } from '../utils';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
+import { Controlled } from '../../components/input/Controlled';
 
 import { EcsyEntity } from './../../components/EcsyEntity';
-import { ControlledComponent } from './../ControlledComponent';
 
 import { EventBus } from '~/game/EventBus';
 import { MouseControlled } from '~/game/components/input/MouseControlled';
@@ -27,6 +27,7 @@ export const MouseControlledSystem = createSystem({
     mouseControlled: Read(MouseControlled),
     movePath: Write(MovePath),
     follow: WriteOptional(Follow),
+    controlled: WriteOptional(Controlled),
   }),
 })
 .withSetupFunction(({ eventBus }) => {
@@ -45,7 +46,7 @@ export const MouseControlledSystem = createSystem({
 
   const entities = Array.from(query.iter()).map(e => e.ecsyEntity.entity);
 
-  query.execute(({ selectable, transform, ecsyEntity, movePath, follow }) => {
+  query.execute(({ selectable, transform, ecsyEntity, movePath, follow, controlled }) => {
     if (!selectable.selected)
       return;
 
@@ -76,8 +77,8 @@ export const MouseControlledSystem = createSystem({
       path.slice(1)
     );
 
-    if (ecsyEntity.entity.hasComponent(ControlledComponent)) {
-      ecsyEntity.entity.getMutableComponent(ControlledComponent)!.by = 'player';
+    if (controlled != null) {
+      controlled.by = 'player';
     }
   });
 })

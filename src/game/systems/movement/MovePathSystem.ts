@@ -1,4 +1,4 @@
-import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write } from 'sim-ecs';
+import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write, ReadOptional } from 'sim-ecs';
 import { Entity } from 'ecsy';
 
 import { cellPositionToVector } from '../../utils';
@@ -6,11 +6,11 @@ import { Vector2 } from '../../math/Vector2';
 import { setEntityAnimation } from '../utils/animation';
 import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
+import { Controlled } from '../../components/input/Controlled';
 
 import { EcsyEntity } from './../../components/EcsyEntity';
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
-import { ControlledComponent } from './../ControlledComponent';
 import { getSimComponent, isSameEntity } from './../utils/index';
 
 import { MovePath } from '~/game/components/movement/MovePath';
@@ -37,7 +37,7 @@ const updateMovePosition = (
   movePath: MovePath,
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
-  controlled: ControlledComponent | null
+  controlled: Controlled | null
 ) => {
   if (movePath.path.length == 0) {
     if (
@@ -96,21 +96,20 @@ export const MovePathSystem = createSystem({
     moveVelocity: Read(MoveVelocity),
     ecsyEntity: Read(EcsyEntity),
     movePositionDirect: Write(MovePositionDirect),
+    controlled: ReadOptional(Controlled),
   }),
 })
 .withRunFunction(({
   query
 }) => {
-  query.execute(({ movePath, moveVelocity, ecsyEntity, movePositionDirect }) => {
-    const controlled = ecsyEntity.entity.getMutableComponent(ControlledComponent) ?? null;
-
+  query.execute(({ movePath, moveVelocity, ecsyEntity, movePositionDirect, controlled }) => {
     updateMovePosition(
       Array.from(query.iter()).map(e => e.entity),
       ecsyEntity.entity,
       movePath,
       moveVelocity,
       movePositionDirect,
-      controlled
+      controlled ?? null,
     );
   });
 })

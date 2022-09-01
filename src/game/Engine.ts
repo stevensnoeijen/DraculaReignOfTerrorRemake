@@ -35,7 +35,7 @@ import { FollowSystem } from './systems/ai/FollowSystem';
 import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { Target } from './components/ai/Target';
 import { TargetSystem } from './systems/ai/TargetSystem';
-import { ControlledComponent } from './systems/ControlledComponent';
+import { Controlled } from './components/input/Controlled';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { EntityFactory, IUnitProps } from './EntityFactory';
@@ -106,7 +106,6 @@ export class Engine {
 
     this.world
       .registerComponent(AttackComponent)
-      .registerComponent(ControlledComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
@@ -179,6 +178,7 @@ export class Engine {
       .with(MovePositionDirect)
       .with(new MovePath([]))
       .with(new Selectable(false))
+      .with(Controlled)
       .with(MouseControlled)
       .with(Follow)
       .with(Target)
