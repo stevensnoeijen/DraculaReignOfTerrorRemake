@@ -6,8 +6,7 @@ import { Vector2 } from '../../math/Vector2';
 import { Selectable } from '../../components/player/Selectable';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
 import { Transform } from '../../components/Transform';
-
-import { KeyboardControlled } from './KeyboardControlled';
+import { KeyboardControlled } from '../../components/input/KeyboardControlled';
 
 const handleMovement = (moveVelocity: MoveVelocity, transform: Transform) => {
   let moveX = 0;

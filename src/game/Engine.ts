@@ -9,7 +9,7 @@ import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
 import { Selectable } from './components/player/Selectable';
-import { MouseControlled } from './systems/input/MouseControlled';
+import { MouseControlled } from './components/input/MouseControlled';
 import { MoveVelocity } from './components/movement/MoveVelocity';
 import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';

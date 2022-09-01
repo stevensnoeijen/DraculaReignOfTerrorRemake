@@ -11,10 +11,10 @@ import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 
 import { EcsyEntity } from './../../components/EcsyEntity';
-import { MouseControlled } from './MouseControlled';
 import { ControlledComponent } from './../ControlledComponent';
 
 import { EventBus } from '~/game/EventBus';
+import { MouseControlled } from '~/game/components/input/MouseControlled';
 
 let collsionMap: number[][] | null = null;
 
