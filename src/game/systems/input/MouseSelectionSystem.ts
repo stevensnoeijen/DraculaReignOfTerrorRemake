@@ -5,7 +5,7 @@ import { createSystem, queryComponents, Read, ReadResource, ReadEntity } from 's
 import { EntityHelper } from '../../EntityHelper';
 import { Input } from '../../Input';
 import { getEntityAtPosition, getSimComponent } from '../utils';
-import { Selectable } from '../../components/player/Selectable';
+import { Selectable } from '../../components/input/Selectable';
 import { isOnTeam } from '../utils/index';
 import { EcsyEntity } from '../../components/EcsyEntity';
 

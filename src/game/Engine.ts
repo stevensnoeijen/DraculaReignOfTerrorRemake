@@ -8,7 +8,7 @@ import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
-import { Selectable } from './components/player/Selectable';
+import { Selectable } from './components/input/Selectable';
 import { MouseControlled } from './components/input/MouseControlled';
 import { MoveVelocity } from './components/movement/MoveVelocity';
 import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';

@@ -6,7 +6,7 @@ import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from
 import { SimEcsComponent } from '../SimEcsComponent';
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
-import { Selectable } from '../../components/player/Selectable';
+import { Selectable } from '../../components/input/Selectable';
 
 import { getSimComponent, hasSimComponent } from './../utils/index';
 import { getHealthColor } from './utils';

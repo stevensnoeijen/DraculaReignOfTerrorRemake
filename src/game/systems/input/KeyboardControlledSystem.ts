@@ -3,7 +3,7 @@ import { createSystem, queryComponents, Read, Write } from 'sim-ecs';
 
 import { Input } from '../../Input';
 import { Vector2 } from '../../math/Vector2';
-import { Selectable } from '../../components/player/Selectable';
+import { Selectable } from '../../components/input/Selectable';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
 import { Transform } from '../../components/Transform';
 import { KeyboardControlled } from '../../components/input/KeyboardControlled';

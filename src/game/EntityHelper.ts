@@ -2,7 +2,7 @@ import { Entity } from 'ecsy';
 
 import { getSimComponent } from './systems/utils/index';
 import { Transform } from './components/Transform';
-import { Selectable } from './components/player/Selectable';
+import { Selectable } from './components/input/Selectable';
 import { Size } from './components/Size';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { Bounds } from './math/collision/Bounds';

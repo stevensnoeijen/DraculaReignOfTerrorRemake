@@ -2,7 +2,7 @@ import { createSystem, queryComponents, Read, ReadResource, Write, WriteOptional
 
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
-import { Selectable } from '../../components/player/Selectable';
+import { Selectable } from '../../components/input/Selectable';
 import { Transform } from '../../components/Transform';
 import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../utils';
 import { ScenarioLoadedEvent } from '../../Events';
