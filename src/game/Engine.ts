@@ -12,7 +12,7 @@ import { MouseControlled } from './systems/input/MouseControlled';
 import { MoveVelocity } from './components/movement/MoveVelocity';
 import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';
-import { InputSystem } from './systems/InputSystem';
+import { InputSystem } from './systems/input/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { MouseControlledSystem } from './systems/input/MouseControlledSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
@@ -69,6 +69,7 @@ export class Engine {
       .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
       .withDefaultScheduling(root =>
         root.addNewStage(stage => {
+          stage.addSystem(InputSystem);
           stage.addSystem(AliveSystem);
           stage.addSystem(HealthSystem);
           stage.addSystem(GraphicsSystem);
@@ -108,7 +109,6 @@ export class Engine {
       .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
       .registerComponent(SimEcsComponent)
-      .registerSystem(InputSystem, { canvas: app.view })
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(GameTimeSystem)
