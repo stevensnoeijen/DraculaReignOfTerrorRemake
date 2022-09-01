@@ -2,13 +2,13 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
+import { KeyboardControlledSystem } from './systems/input/KeyboardControlledSystem';
 import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
 import { Selectable } from './components/player/Selectable';
 import { MouseControlled } from './systems/input/MouseControlled';
-import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocity } from './components/movement/MoveVelocity';
 import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';
@@ -78,6 +78,7 @@ export class Engine {
           stage.addSystem(MovePathSystem);
           stage.addSystem(MouseSelectionSystem);
           stage.addSystem(MouseControlledSystem);
+          stage.addSystem(KeyboardControlledSystem);
         })
       )
       .build();
@@ -101,7 +102,6 @@ export class Engine {
       .add('animation-models', 'assets/animation-models.json');
 
     this.world
-      .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(AttackComponent)
       .registerComponent(FollowComponent)
       .registerComponent(BehaviorTreeComponent)
@@ -109,7 +109,6 @@ export class Engine {
       .registerComponent(ControlledComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(InputSystem, { canvas: app.view })
-      // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(GameTimeSystem)
