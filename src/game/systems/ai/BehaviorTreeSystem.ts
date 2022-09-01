@@ -1,22 +1,17 @@
-import { BehaviorTreeComponent } from './BehaviorTreeComponent';
-import { System, SystemQueries } from 'ecsy';
+import { createSystem, queryComponents, Read } from 'sim-ecs';
 
-export class BehaviorTreeSystem extends System {
-  static queries: SystemQueries = {
-    entities: {
-      components: [BehaviorTreeComponent],
-    },
-  };
+import { BehaviorTree } from '../../components/ai/BehaviorTree';
 
-  timePassed = 0;
-  triggerTime = 1000;
-
-  public execute(delta: number, time: number): void {
-    this.timePassed += delta;
-    for (const entity of this.queries.entities.results) {
-      const behaviorTreeComponent = entity.getComponent(BehaviorTreeComponent)!;
-
-      behaviorTreeComponent.tree.update();
-    }
-  }
-}
+export const BehaviorTreeSystem = createSystem({
+  query: queryComponents({
+    behaviorTree: Read(BehaviorTree),
+  }),
+})
+.withRunFunction(({
+  query
+}) => {
+  query.execute(({ behaviorTree }) => {
+    behaviorTree.tree.update();
+  });
+})
+.build();

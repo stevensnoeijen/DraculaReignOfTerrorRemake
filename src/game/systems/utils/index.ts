@@ -50,3 +50,7 @@ export const getSimComponent = <T extends Object>(entity: Entity, type: Class<T>
 // TODO: remove after migration of ecsy to sim-ecs
 export const removeSimComponent = (entity: Entity, type: Class<Object>) =>
   entity.getComponent(SimEcsComponent)!.entity.removeComponent(type);
+
+export const addSimComponent = (entity: Entity, component: Object) => {
+  entity.getComponent(SimEcsComponent)!.entity.addComponent(component);
+};

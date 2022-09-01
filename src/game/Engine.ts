@@ -32,7 +32,6 @@ import { ScenarioLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
 import { AttackComponent } from './systems/AttackComponent';
 import { FollowSystem } from './systems/ai/FollowSystem';
-import { BehaviorTreeComponent } from './systems/ai/BehaviorTreeComponent';
 import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { TargetComponent } from './systems/ai/TargetComponent';
 import { TargetSystem } from './systems/ai/TargetSystem';
@@ -81,6 +80,7 @@ export class Engine {
           stage.addSystem(MouseControlledSystem);
           stage.addSystem(KeyboardControlledSystem);
           stage.addSystem(FollowSystem);
+          stage.addSystem(BehaviorTreeSystem);
         })
       )
       .build();
@@ -105,14 +105,12 @@ export class Engine {
 
     this.world
       .registerComponent(AttackComponent)
-      .registerComponent(BehaviorTreeComponent)
       .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(GameTimeSystem)
-      .registerSystem(BehaviorTreeSystem)
       .registerSystem(TargetSystem);
 
     const frame = (): void => {

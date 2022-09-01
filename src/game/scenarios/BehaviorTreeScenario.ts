@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import { cellPositionToVector } from '../utils';
 import { Tree } from '../ai/behaviortree/Tree';
 import { Engine } from '../Engine';
-import { BehaviorTreeComponent } from '../systems/ai/BehaviorTreeComponent';
+import { BehaviorTree } from '../components/ai/BehaviorTree';
 import {
   Selector,
   Timer,
@@ -22,6 +22,7 @@ import {
   IsEnemyInAggroRange,
 } from '../ai/behaviortree/nodes/entity';
 
+import { addSimComponent } from './../systems/utils/index';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
 
@@ -89,8 +90,6 @@ export class BehaviorTreeScenario extends Scenario {
     );
     tree.root.setData('entity', player);
 
-    player.addComponent(BehaviorTreeComponent, {
-      tree,
-    });
+    addSimComponent(player, new BehaviorTree(tree));
   }
 }
