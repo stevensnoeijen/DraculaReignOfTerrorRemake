@@ -2,7 +2,6 @@ import { Entity, World } from 'ecsy';
 
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
-import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
 import { AnimationService } from './animation/AnimationService';
@@ -24,7 +23,6 @@ export class EntityFactory {
   public createUnit(props: IUnitProps): Entity {
     return this.world
       .createEntity()
-      .addComponent(FollowComponent)
       .addComponent(AttackComponent, {
         aggroRange: 80,
         attackRange: 16,

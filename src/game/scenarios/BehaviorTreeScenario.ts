@@ -11,7 +11,7 @@ import {
   Sequence,
 } from '../ai/behaviortree/nodes/core';
 import {
-  Follow,
+  SetFollow,
   Attack,
   IsControlledByPlayer,
   IsEnemyInAttackRange,
@@ -81,7 +81,7 @@ export class BehaviorTreeScenario extends Scenario {
             ]),
             new Sequence([
               new Inventer([new IsControlledByPlayer()]),
-              new Follow(),
+              new SetFollow(),
             ]),
           ]),
         ]),

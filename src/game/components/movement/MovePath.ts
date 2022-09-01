@@ -5,6 +5,6 @@ type Path = Position[];
 
 export class MovePath {
   constructor (
-    public path: Path,
+    public path: Path = [],
   ) {}
 }

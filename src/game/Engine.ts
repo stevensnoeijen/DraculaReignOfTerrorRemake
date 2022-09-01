@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
+import { Follow } from './components/ai/Follow';
 import { KeyboardControlledSystem } from './systems/input/KeyboardControlledSystem';
 import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
@@ -30,8 +31,7 @@ import { EventBus } from './EventBus';
 import { ScenarioLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
 import { AttackComponent } from './systems/AttackComponent';
-import { FollowComponent } from './systems/movement/FollowComponent';
-import { FollowSystem } from './systems/movement/FollowSystem';
+import { FollowSystem } from './systems/ai/FollowSystem';
 import { BehaviorTreeComponent } from './systems/ai/BehaviorTreeComponent';
 import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { TargetComponent } from './systems/ai/TargetComponent';
@@ -80,6 +80,7 @@ export class Engine {
           stage.addSystem(MouseSelectionSystem);
           stage.addSystem(MouseControlledSystem);
           stage.addSystem(KeyboardControlledSystem);
+          stage.addSystem(FollowSystem);
         })
       )
       .build();
@@ -104,7 +105,6 @@ export class Engine {
 
     this.world
       .registerComponent(AttackComponent)
-      .registerComponent(FollowComponent)
       .registerComponent(BehaviorTreeComponent)
       .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
@@ -112,7 +112,6 @@ export class Engine {
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(GameTimeSystem)
-      .registerSystem(FollowSystem, { app, eventBus })
       .registerSystem(BehaviorTreeSystem)
       .registerSystem(TargetSystem);
 
@@ -184,6 +183,7 @@ export class Engine {
       .with(new MovePath([]))
       .with(new Selectable(false))
       .with(MouseControlled)
+      .with(Follow)
       .build();
 
     entity.addComponent(SimEcsComponent, {

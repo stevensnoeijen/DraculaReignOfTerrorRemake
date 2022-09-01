@@ -1,5 +1,5 @@
 export * from './Attack';
-export * from './Follow';
+export * from './SetFollow';
 export * from './HasTarget';
 export * from './IsControlledByAi';
 export * from './IsControlledByPlayer';

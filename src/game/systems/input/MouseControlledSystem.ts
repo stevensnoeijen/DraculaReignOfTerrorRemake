@@ -1,4 +1,4 @@
-import { createSystem, queryComponents, Read, ReadResource, Write } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadResource, Write, WriteOptional } from 'sim-ecs';
 
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
@@ -8,7 +8,7 @@ import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../u
 import { ScenarioLoadedEvent } from '../../Events';
 import { getEntityAtPosition } from '../utils';
 import { MovePath } from '../../components/movement/MovePath';
-import { FollowComponent } from '../movement/FollowComponent';
+import { Follow } from '../../components/ai/Follow';
 
 import { EcsyEntity } from './../../components/EcsyEntity';
 import { MouseControlled } from './MouseControlled';
@@ -26,6 +26,7 @@ export const MouseControlledSystem = createSystem({
     transform: Read(Transform),
     mouseControlled: Read(MouseControlled),
     movePath: Write(MovePath),
+    follow: WriteOptional(Follow),
   }),
 })
 .withSetupFunction(({ eventBus }) => {
@@ -44,7 +45,7 @@ export const MouseControlledSystem = createSystem({
 
   const entities = Array.from(query.iter()).map(e => e.ecsyEntity.entity);
 
-  query.execute(({ selectable, transform, ecsyEntity, movePath }) => {
+  query.execute(({ selectable, transform, ecsyEntity, movePath, follow }) => {
     if (!selectable.selected)
       return;
 
@@ -54,17 +55,15 @@ export const MouseControlledSystem = createSystem({
       Input.mousePosition.y
     );
     if (clickedEntity != null) {
-      const followComponent = ecsyEntity.entity.getMutableComponent(FollowComponent);
-      if (followComponent != null) {
-        followComponent.follow = clickedEntity;
+      if (follow != null) {
+        follow.entity = clickedEntity;
         return;
       }
     }
 
     // unfollow
-    const followComponent = ecsyEntity.entity.getMutableComponent(FollowComponent);
-    if (followComponent != null && followComponent.follow != null) {
-      followComponent.follow = null;
+    if (follow != null && follow.entity != null) {
+      follow.entity = null;
     }
 
     const path = astar(
