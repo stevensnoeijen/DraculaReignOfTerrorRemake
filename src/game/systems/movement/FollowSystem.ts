@@ -31,6 +31,8 @@ export class FollowSystem extends System {
   }
 
   public execute(delta: number, time: number): void {
+    if (this.map == null) return;
+
     if ((this.queries.entities.changed ?? []).length > 0) {
       for (const entity of this.queries.entities.changed!) {
         this.updateFollowingEntity(entity);

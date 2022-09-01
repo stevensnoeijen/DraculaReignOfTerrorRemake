@@ -2,7 +2,6 @@ import { Entity, World } from 'ecsy';
 
 import { ControlledComponent } from './systems/ControlledComponent';
 import { TargetComponent } from './systems/ai/TargetComponent';
-import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { FollowComponent } from './systems/movement/FollowComponent';
 import { Position } from './utils';
@@ -27,7 +26,6 @@ export class EntityFactory {
     return this.world
       .createEntity()
       .addComponent(PlayerMovementKeysComponent)
-      .addComponent(PlayerMovementMouseComponent)
       .addComponent(FollowComponent)
       .addComponent(AttackComponent, {
         aggroRange: 80,

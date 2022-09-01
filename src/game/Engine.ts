@@ -7,19 +7,19 @@ import { AliveSystem } from './systems/AliveSystem';
 import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
 import { Selectable } from './components/player/Selectable';
-import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
+import { MouseControlled } from './systems/input/MouseControlled';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocity } from './components/movement/MoveVelocity';
 import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';
 import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
-import { PlayerMovementMouseSystem } from './systems/player/PlayerMovementMouseSystem';
+import { MouseControlledSystem } from './systems/input/MouseControlledSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { SpriteSystem } from './systems/pixi/SpriteSystem';
 import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
-import { getOptions, randomRotation } from './utils';
+import { getOptions, Options, randomRotation } from './utils';
 import { RandomUnitsLevel } from './levels/RandomUnitsLevel';
 import { PathFindingLevel } from './levels/PathFindingLevel';
 import { BehaviorTreeLevel } from './levels/BehaviorTreeLevel';
@@ -48,6 +48,7 @@ import { Size } from './components/Size';
 import { Constants } from './Constants';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { MovePath } from './components/movement/MovePath';
+import { Level } from './levels/Level';
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
@@ -57,6 +58,7 @@ export class Engine {
   private _animationService!: AnimationService;
   // TODO: should load this "safer" and make readonly
   private entityFactory!: EntityFactory;
+  private options: Options;
 
   private readonly eventBus: EventBus<Events>;
 
@@ -75,18 +77,19 @@ export class Engine {
           stage.addSystem(MovePositionDirectSystem);
           stage.addSystem(MovePathSystem);
           stage.addSystem(MouseSelectionSystem);
+          stage.addSystem(MouseControlledSystem);
         })
       )
-      .withComponents(EcsyEntity, Team, Alive)
       .build();
     this.newWorld.addResource(app);
 
-    const eventBus = (this.eventBus = new EventBus<Events>());
+    const eventBus = this.eventBus = new EventBus<Events>();
+    this.newWorld.addResource(eventBus);
 
     let lastFrameTime = 0;
 
-    const options = getOptions();
-    this.newWorld.addResource(options);
+    this.options = getOptions();
+    this.newWorld.addResource(this.options);
 
     lastFrameTime = performance.now();
     this.app.ticker.add(() => {
@@ -95,18 +98,9 @@ export class Engine {
 
     this.app.loader
       .add('unit-spritesheet', 'assets/unit-spritesheet.json')
-      .add('animation-models', 'assets/animation-models.json')
-      .load(() => {
-        this._animationService = new AnimationService(
-          app.loader.resources['unit-spritesheet'].spritesheet!,
-          app.loader.resources['animation-models'].data as AnimationModelsJson
-        );
-        this.entityFactory = new EntityFactory(this.world, this.animationService);
-        loadLevel();
-      });
+      .add('animation-models', 'assets/animation-models.json');
 
     this.world
-      .registerComponent(PlayerMovementMouseComponent)
       .registerComponent(PlayerMovementKeysComponent)
       .registerComponent(AttackComponent)
       .registerComponent(FollowComponent)
@@ -116,37 +110,12 @@ export class Engine {
       .registerComponent(SimEcsComponent)
       .registerSystem(InputSystem, { canvas: app.view })
       // .registerSystem(PlayerMovementKeysSystem, { eventBus }) // disabled for now, not working with (map) collision atm
-      .registerSystem(PlayerMovementMouseSystem, { app, eventBus })
-      .registerSystem(GridSystem, { app, options, eventBus })
+      .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
       .registerSystem(GameTimeSystem)
       .registerSystem(FollowSystem, { app, eventBus })
       .registerSystem(BehaviorTreeSystem)
       .registerSystem(TargetSystem);
-
-    let level;
-    const loadLevel = (): void => {
-      if (options.level != null && options.level[0] != null) {
-        const levelName = options.level[0].toLowerCase();
-        if (levelName === 'randomunits') {
-          level = new RandomUnitsLevel(app, this);
-        } else if (levelName === 'pathfinding') {
-          level = new PathFindingLevel(app, this);
-        } else if (levelName === 'behaviortree') {
-          level = new BehaviorTreeLevel(app, this);
-        } else {
-          alert('level not found');
-          return;
-        }
-      } else {
-        // default
-        level = new RandomUnitsLevel(app, this);
-      }
-
-      this.newWorld.run();
-      level.load();
-      eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
-    };
 
     const frame = (): void => {
       // Compute delta and elapsed time
@@ -162,6 +131,18 @@ export class Engine {
 
   public get animationService(): AnimationService {
     return this._animationService;
+  }
+
+  public async run() {
+    this.app.loader
+      .load(() => {
+        this._animationService = new AnimationService(
+          this.app.loader.resources['unit-spritesheet'].spritesheet!,
+          this.app.loader.resources['animation-models'].data as AnimationModelsJson
+        );
+        this.entityFactory = new EntityFactory(this.world, this.animationService);
+        this.loadLevel();
+      });
   }
 
   public createUnit(props: IUnitProps): Entity {
@@ -203,6 +184,7 @@ export class Engine {
       .with(MovePositionDirect)
       .with(new MovePath([]))
       .with(new Selectable(false))
+      .with(MouseControlled)
       .build();
 
     entity.addComponent(SimEcsComponent, {
@@ -210,5 +192,32 @@ export class Engine {
     });
 
     return entity;
+  }
+
+  private async loadLevel() {
+    let level: Level;
+    if (this.options.level != null && this.options.level[0] != null) {
+      const levelName = this.options.level[0].toLowerCase();
+      if (levelName === 'randomunits') {
+        level = new RandomUnitsLevel(this.app, this);
+      } else if (levelName === 'pathfinding') {
+        level = new PathFindingLevel(this.app, this);
+      } else if (levelName === 'behaviortree') {
+        level = new BehaviorTreeLevel(this.app, this);
+      } else {
+        alert('level not found');
+        return;
+      }
+    } else {
+      // default
+      level = new RandomUnitsLevel(this.app, this);
+  }
+
+    this.newWorld.run();
+    level.load();
+    // TODO: remove temp solution for register listener in MouseControlledSystem
+    setTimeout(() => {
+      this.eventBus.emit<LevelLoadedEvent>('level:loaded', { level });
+    }, 100);
   }
 }

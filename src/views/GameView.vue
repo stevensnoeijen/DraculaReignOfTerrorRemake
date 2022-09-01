@@ -20,7 +20,8 @@ window.addEventListener('contextmenu', (event) => {
   event.preventDefault();
 });
 
-onMounted(() => {
+onMounted(async () => {
   engine = new Engine(pixi.value!.application);
+  await engine.run();
 });
 </script>
