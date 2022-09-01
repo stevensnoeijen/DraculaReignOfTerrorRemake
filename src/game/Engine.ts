@@ -10,7 +10,7 @@ import { Selectable } from './components/player/Selectable';
 import { PlayerMovementMouseComponent } from './systems/player/PlayerMovementMouseComponent';
 import { PlayerMovementKeysComponent } from './systems/player/PlayerMovementKeysComponent';
 import { MoveVelocity } from './components/movement/MoveVelocity';
-import { PlayerSelectionSystem } from './systems/player/PlayerSelectionSystem';
+import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';
 import { HealthSystem } from './systems/HealthSystem';
 import { InputSystem } from './systems/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
@@ -74,7 +74,7 @@ export class Engine {
           stage.addSystem(MoveVelocitySystem);
           stage.addSystem(MovePositionDirectSystem);
           stage.addSystem(MovePathSystem);
-          stage.addSystem(PlayerSelectionSystem);
+          stage.addSystem(MouseSelectionSystem);
         })
       )
       .withComponents(EcsyEntity, Team, Alive)

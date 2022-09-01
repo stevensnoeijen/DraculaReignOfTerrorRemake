@@ -7,9 +7,8 @@ import { Input } from '../../Input';
 import { getEntityAtPosition, getSimComponent } from '../utils';
 import { Selectable } from '../../components/player/Selectable';
 import { isOnTeam } from '../utils/index';
-
-import { EcsyEntity } from './../../components/EcsyEntity';
-import { MouseSelection } from './MouseSelection';
+import { EcsyEntity } from '../../components/EcsyEntity';
+import { MouseSelection } from '../player/MouseSelection';
 
 const mouseSelection = new MouseSelection();
 
@@ -102,7 +101,7 @@ const updateMouseSelection = (entities: Entity[]) => {
 /**
  * System for selecting units with {@link Input}'s' mouse.
  */
-export const PlayerSelectionSystem = createSystem({
+export const MouseSelectionSystem = createSystem({
   app: ReadResource(PIXI.Application),
   query: queryComponents({
     entity: ReadEntity(),
@@ -110,7 +109,6 @@ export const PlayerSelectionSystem = createSystem({
   }),
 })
 .withSetupFunction(({ app }) => {
-
   app.stage.addChild(mouseSelection.rectangle);
 })
 .withRunFunction(({
