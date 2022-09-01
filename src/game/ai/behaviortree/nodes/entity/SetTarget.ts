@@ -1,19 +1,23 @@
 import { Entity } from 'ecsy';
 
-import { Node, State } from '../Node';
+import { State } from '../Node';
+import { Target } from '../../../../components/ai/Target';
+
+import { hasSimComponent } from './../../../../systems/utils/index';
 import { EntityNode } from './EntityNode';
-import { TargetComponent } from '../../../../systems/ai/TargetComponent';
+
+import { getSimComponent } from '~/game/systems/utils';
 
 export class SetTarget extends EntityNode {
   protected evaluateByEntity(entity: Entity): State {
     const target = this.getData('target') as Entity | null;
 
-    if (target == null || !entity.hasComponent(TargetComponent)) {
+    if (target == null || !hasSimComponent(entity, Target)) {
       return this.failure();
     }
 
-    const targetComponent = entity.getMutableComponent(TargetComponent)!;
-    targetComponent.target = target;
+    const targetComponent = getSimComponent(entity, Target)!;
+    targetComponent.entity = target;
 
     return this.success();
   }

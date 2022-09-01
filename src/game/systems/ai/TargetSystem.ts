@@ -1,29 +1,25 @@
-import { System, SystemQueries } from 'ecsy';
+import { createSystem, queryComponents, Write } from 'sim-ecs';
 
 import { isAlive } from './../utils/index';
-import { TargetComponent } from './TargetComponent';
 
-export class TargetSystem extends System {
-  static queries: SystemQueries = {
-    entities: {
-      components: [TargetComponent],
-    },
-  };
+import { Target } from '~/game/components/ai/Target';
 
-  public execute(delta: number, time: number): void {
-    this.checkDead();
-  }
-
-  private checkDead(): void {
-    for (const entity of this.queries.entities.results) {
-      const targetComponent = entity.getComponent(TargetComponent)!;
-      if (targetComponent.target === null) {
-        return;
-      }
-
-      if (!isAlive(targetComponent.target)) {
-        entity.getMutableComponent(TargetComponent)!.target = null;
-      }
+export const TargetSystem = createSystem({
+  query: queryComponents({
+    target: Write(Target),
+  }),
+})
+.withRunFunction(({
+  query
+}) => {
+  query.execute(({ target }) => {
+    if (target.entity === null) {
+      return;
     }
-  }
-}
+
+    if (!isAlive(target.entity)) {
+      target.entity = null;
+    }
+  });
+})
+.build();

@@ -1,7 +1,6 @@
 import { Entity, World } from 'ecsy';
 
 import { ControlledComponent } from './systems/ControlledComponent';
-import { TargetComponent } from './systems/ai/TargetComponent';
 import { Position } from './utils';
 import { AttackComponent } from './systems/AttackComponent';
 import { AnimationService } from './animation/AnimationService';
@@ -28,7 +27,6 @@ export class EntityFactory {
         attackRange: 16,
         attackDamage: 1,
       })
-      .addComponent(TargetComponent)
       .addComponent(ControlledComponent);
   }
 }

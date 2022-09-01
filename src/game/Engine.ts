@@ -33,7 +33,7 @@ import { GameTimeSystem } from './systems/GameTimeSystem';
 import { AttackComponent } from './systems/AttackComponent';
 import { FollowSystem } from './systems/ai/FollowSystem';
 import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
-import { TargetComponent } from './systems/ai/TargetComponent';
+import { Target } from './components/ai/Target';
 import { TargetSystem } from './systems/ai/TargetSystem';
 import { ControlledComponent } from './systems/ControlledComponent';
 import { AnimationService } from './animation/AnimationService';
@@ -81,6 +81,7 @@ export class Engine {
           stage.addSystem(KeyboardControlledSystem);
           stage.addSystem(FollowSystem);
           stage.addSystem(BehaviorTreeSystem);
+          stage.addSystem(TargetSystem);
         })
       )
       .build();
@@ -105,13 +106,11 @@ export class Engine {
 
     this.world
       .registerComponent(AttackComponent)
-      .registerComponent(TargetComponent)
       .registerComponent(ControlledComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
-      .registerSystem(GameTimeSystem)
-      .registerSystem(TargetSystem);
+      .registerSystem(GameTimeSystem);
 
     const frame = (): void => {
       // Compute delta and elapsed time
@@ -182,6 +181,7 @@ export class Engine {
       .with(new Selectable(false))
       .with(MouseControlled)
       .with(Follow)
+      .with(Target)
       .build();
 
     entity.addComponent(SimEcsComponent, {
