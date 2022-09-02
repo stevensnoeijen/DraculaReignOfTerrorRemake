@@ -73,6 +73,7 @@ export class Engine {
       .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
       .withDefaultScheduling(root =>
         root.addNewStage(stage => {
+          stage.addSystem(GameTimeSystem);
           stage.addSystem(InputSystem);
           stage.addSystem(AliveSystem);
           stage.addSystem(HealthSystem);
@@ -112,8 +113,7 @@ export class Engine {
     this.world
       .registerComponent(SimEcsComponent)
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
-      .registerSystem(MapSystem, { app, eventBus })
-      .registerSystem(GameTimeSystem);
+      .registerSystem(MapSystem, { app, eventBus });
 
     const frame = (): void => {
       // Compute delta and elapsed time

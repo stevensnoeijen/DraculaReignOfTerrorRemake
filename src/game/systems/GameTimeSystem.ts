@@ -1,8 +1,13 @@
-import { System } from 'ecsy';
+import { createSystem } from 'sim-ecs';
+
 import { GameTime } from '../GameTime';
 
-export class GameTimeSystem extends System {
-  public execute(delta: number, time: number): void {
-    GameTime.delta = delta;
-  }
-}
+let lastTime = Date.now();
+
+export const GameTimeSystem = createSystem({})
+  .withRunFunction(() => {
+    const currentTime = Date.now();
+    GameTime.delta = currentTime - lastTime;
+    lastTime = currentTime;
+  })
+  .build();
