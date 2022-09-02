@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Entity, World } from 'ecsy';
 import { buildWorld, IWorld } from 'sim-ecs';
 
+import { GridRenderSystem2 } from './systems/pixi/GridRenderSystem';
 import { Follow } from './components/ai/Follow';
 import { KeyboardControlledSystem } from './systems/input/KeyboardControlledSystem';
 import { EcsyEntity } from './components/EcsyEntity';
@@ -19,12 +20,10 @@ import { MouseControlledSystem } from './systems/input/MouseControlledSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { SpriteRenderSystem } from './systems/pixi/SpriteRenderSystem';
 import { GraphicsRenderSystem } from './systems/pixi/GraphicsRenderSystem';
-import { GridRenderSystem } from './systems/render/GridRenderSystem';
 import { getOptions, Options, Position, randomRotation } from './utils';
 import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
 import { PathFindingScenario } from './scenarios/PathFindingScenario';
 import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
-import { MapRenderSystem } from './systems/render/MapRenderSystem';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
 import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
@@ -88,6 +87,7 @@ export class Engine {
           stage.addSystem(FollowSystem);
           stage.addSystem(BehaviorTreeSystem);
           stage.addSystem(TargetSystem);
+          stage.addSystem(GridRenderSystem2);
         })
       )
       .build();
@@ -111,9 +111,7 @@ export class Engine {
       .add('animation-models', 'assets/animation-models.json');
 
     this.world
-      .registerComponent(SimEcsComponent)
-      .registerSystem(GridRenderSystem, { app, options: this.options, eventBus })
-      .registerSystem(MapRenderSystem, { app, eventBus });
+      .registerComponent(SimEcsComponent);
 
     const frame = (): void => {
       // Compute delta and elapsed time
