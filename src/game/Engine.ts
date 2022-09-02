@@ -20,7 +20,7 @@ import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
 import { SpriteSystem } from './systems/pixi/SpriteSystem';
 import { GraphicsSystem } from './systems/pixi/GraphicsSystem';
 import { GridSystem } from './systems/render/GridSystem';
-import { getOptions, Options, randomRotation } from './utils';
+import { getOptions, Options, Position, randomRotation } from './utils';
 import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
 import { PathFindingScenario } from './scenarios/PathFindingScenario';
 import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
@@ -38,7 +38,6 @@ import { TargetSystem } from './systems/ai/TargetSystem';
 import { Controlled } from './components/input/Controlled';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
-import { EntityFactory, IUnitProps } from './EntityFactory';
 import { Team } from './components/Team';
 import { Alive } from './components/Alive';
 import { Health } from './components/Health';
@@ -49,14 +48,20 @@ import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { MovePath } from './components/movement/MovePath';
 import { Scenario } from './scenarios/Scenario';
 
+export interface IUnitProps {
+  color: 'red' | 'blue';
+  position: Position;
+  team: {
+    number: number;
+  };
+}
+
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests
   public readonly newWorld: IWorld;
   public readonly world: World;
   // TODO: should load this "safer"
   private _animationService!: AnimationService;
-  // TODO: should load this "safer" and make readonly
-  private entityFactory!: EntityFactory;
   private options: Options;
 
   private readonly eventBus: EventBus<Events>;
@@ -133,13 +138,12 @@ export class Engine {
           this.app.loader.resources['unit-spritesheet'].spritesheet!,
           this.app.loader.resources['animation-models'].data as AnimationModelsJson
         );
-        this.entityFactory = new EntityFactory(this.world, this.animationService);
         this.loadScenario();
       });
   }
 
   public createUnit(props: IUnitProps): Entity {
-    const entity = this.entityFactory.createUnit(props);
+    const entity = this.world.createEntity();
 
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
     const animator = this.animationService.createAnimator(
