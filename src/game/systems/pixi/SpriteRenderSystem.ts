@@ -23,7 +23,7 @@ const updateAnimatedSprite = (app: PIXI.Application, sprite: PIXI.AnimatedSprite
   );
 };
 
-export const SpriteSystem = createSystem({
+export const SpriteRenderSystem = createSystem({
   app: WriteResource(PIXI.Application),
   query: queryComponents({
     sprite: ReadOptional(PIXI.Sprite),

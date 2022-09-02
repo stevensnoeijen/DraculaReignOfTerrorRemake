@@ -17,14 +17,14 @@ import { InputSystem } from './systems/input/InputSystem';
 import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
 import { MouseControlledSystem } from './systems/input/MouseControlledSystem';
 import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
-import { SpriteSystem } from './systems/pixi/SpriteRenderSystem';
+import { SpriteRenderSystem } from './systems/pixi/SpriteRenderSystem';
 import { GraphicsRenderSystem } from './systems/pixi/GraphicsRenderSystem';
-import { GridSystem } from './systems/render/GridRenderSystem';
+import { GridRenderSystem } from './systems/render/GridRenderSystem';
 import { getOptions, Options, Position, randomRotation } from './utils';
 import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
 import { PathFindingScenario } from './scenarios/PathFindingScenario';
 import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
-import { MapSystem } from './systems/render/MapRenderSystem';
+import { MapRenderSystem } from './systems/render/MapRenderSystem';
 import { MovePathSystem } from './systems/movement/MovePathSystem';
 import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
@@ -78,7 +78,7 @@ export class Engine {
           stage.addSystem(AliveSystem);
           stage.addSystem(HealthSystem);
           stage.addSystem(GraphicsRenderSystem);
-          stage.addSystem(SpriteSystem);
+          stage.addSystem(SpriteRenderSystem);
           stage.addSystem(MoveVelocitySystem);
           stage.addSystem(MovePositionDirectSystem);
           stage.addSystem(MovePathSystem);
@@ -112,8 +112,8 @@ export class Engine {
 
     this.world
       .registerComponent(SimEcsComponent)
-      .registerSystem(GridSystem, { app, options: this.options, eventBus })
-      .registerSystem(MapSystem, { app, eventBus });
+      .registerSystem(GridRenderSystem, { app, options: this.options, eventBus })
+      .registerSystem(MapRenderSystem, { app, eventBus });
 
     const frame = (): void => {
       // Compute delta and elapsed time

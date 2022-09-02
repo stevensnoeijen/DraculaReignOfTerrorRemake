@@ -2,12 +2,11 @@ import { World } from 'ecsy';
 import * as PIXI from 'pixi.js';
 
 import { PixiJsSystem } from '../PixiJsSystem';
-
 import { DefaultAttributes } from '../DefaultAttributes';
 import { ScenarioLoadedEvent } from '../../Events';
 import { cellPositionToVector } from '../../utils';
 
-export class MapSystem extends PixiJsSystem {
+export class MapRenderSystem extends PixiJsSystem {
   private graphics: PIXI.Graphics;
   private map: number[][] | null = null;
 

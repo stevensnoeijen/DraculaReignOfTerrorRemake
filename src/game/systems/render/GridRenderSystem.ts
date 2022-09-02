@@ -6,7 +6,7 @@ import { Constants } from '../../Constants';
 import { PixiJsSystem } from '../PixiJsSystem';
 import { Options } from '../../utils';
 
-export class GridSystem extends PixiJsSystem {
+export class GridRenderSystem extends PixiJsSystem {
   private graphics: PIXI.Graphics;
   private options: Options;
 
