@@ -11,6 +11,7 @@ import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 import { Controlled } from '../../components/input/Controlled';
 
+import { SimEcsComponent } from './../SimEcsComponent';
 import { EcsyEntity } from './../../components/EcsyEntity';
 
 import { EventBus } from '~/game/EventBus';
@@ -57,7 +58,7 @@ export const MouseControlledSystem = createSystem({
     );
     if (clickedEntity != null) {
       if (follow != null) {
-        follow.entity = clickedEntity;
+        follow.entity = clickedEntity.getComponent(SimEcsComponent)!.entity;
         return;
       }
     }

@@ -1,24 +1,17 @@
 import { buildWorld } from 'sim-ecs';
-import { World } from 'ecsy';
 
 import { Vector2 } from '../../../../math/Vector2';
 import { MovePositionDirect } from '../../../../components/movement/MovePositionDirect';
 import { State } from '../Node';
 
-import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
 import { IsMoving } from './IsMoving';
 
 describe('IsMoving', () => {
   describe('evaluate', () => {
-    const newWorld = buildWorld().build();
-    const world = new World()
-      .registerComponent(SimEcsComponent);
+    const world = buildWorld().build();
 
     it('should return failure when entity has no MovePositionDirect', () => {
-      const entity = world.createEntity();
-      entity.addComponent(SimEcsComponent, {
-        entity: newWorld.buildEntity().build()
-      });
+      const entity = world.buildEntity().build();
 
       const setTarget = new IsMoving();
       setTarget.setData('entity', entity);
@@ -27,13 +20,9 @@ describe('IsMoving', () => {
     });
 
     it("should return failure when entity's MovePositionDirect movePosition is null", () => {
-      const entity = world
-        .createEntity();
-      entity.addComponent(SimEcsComponent, {
-        entity: newWorld.buildEntity()
-          .with(new MovePositionDirect(null))
-          .build()
-      });
+      const entity = world.buildEntity()
+        .with(new MovePositionDirect(null))
+        .build();
       const setTarget = new IsMoving();
       setTarget.setData('entity', entity);
 
@@ -41,13 +30,9 @@ describe('IsMoving', () => {
     });
 
     it("should return success when entity's MovePositionDirect movePosition is null", () => {
-      const entity = world
-        .createEntity();
-        entity.addComponent(SimEcsComponent, {
-          entity: newWorld.buildEntity()
-            .with(new MovePositionDirect(new Vector2(1, 2)))
-            .build()
-        });
+      const entity = world.buildEntity()
+        .with(new MovePositionDirect(new Vector2(1, 2)))
+        .build();
       const setTarget = new IsMoving();
       setTarget.setData('entity', entity);
 

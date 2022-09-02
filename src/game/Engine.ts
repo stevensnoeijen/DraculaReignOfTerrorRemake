@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
-import { Entity, World } from 'ecsy';
-import { buildWorld, IWorld } from 'sim-ecs';
+import { World } from 'ecsy';
+import { buildWorld, IEntity, IWorld } from 'sim-ecs';
 
 import { GridRenderSystem2 } from './systems/pixi/GridRenderSystem';
 import { Follow } from './components/ai/Follow';
@@ -140,7 +140,7 @@ export class Engine {
       });
   }
 
-  public createUnit(props: IUnitProps): Entity {
+  public createUnit(props: IUnitProps): IEntity {
     const entity = this.world.createEntity();
 
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
@@ -190,7 +190,7 @@ export class Engine {
       entity: simEcsEntity,
     });
 
-    return entity;
+    return simEcsEntity;
   }
 
   private async loadScenario() {

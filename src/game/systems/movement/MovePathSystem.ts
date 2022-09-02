@@ -8,6 +8,7 @@ import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 import { Controlled } from '../../components/input/Controlled';
 
+import { SimEcsComponent } from './../SimEcsComponent';
 import { EcsyEntity } from './../../components/EcsyEntity';
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
@@ -86,7 +87,7 @@ const updateMovePosition = (
     );
   }
 
-  setEntityAnimation(entity, 'move');
+  setEntityAnimation(entity.getComponent(SimEcsComponent)!.entity, 'move');
 };
 
 export const MovePathSystem = createSystem({

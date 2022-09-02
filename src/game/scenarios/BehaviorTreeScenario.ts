@@ -13,7 +13,6 @@ import {
 import {
   SetFollow,
   Attack,
-  IsControlledByPlayer,
   IsEnemyInAttackRange,
   HasTarget,
   UnsetTarget,
@@ -22,7 +21,7 @@ import {
   IsEnemyInAggroRange,
 } from '../ai/behaviortree/nodes/entity';
 
-import { addSimComponent } from './../systems/utils/index';
+import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
 
@@ -81,7 +80,7 @@ export class BehaviorTreeScenario extends Scenario {
               }),
             ]),
             new Sequence([
-              new Inventer([new IsControlledByPlayer()]),
+              new Inventer([new IsControlledBy('player')]),
               new SetFollow(),
             ]),
           ]),
@@ -90,6 +89,6 @@ export class BehaviorTreeScenario extends Scenario {
     );
     tree.root.setData('entity', player);
 
-    addSimComponent(player, new BehaviorTree(tree));
+    player.addComponent(new BehaviorTree(tree));
   }
 }

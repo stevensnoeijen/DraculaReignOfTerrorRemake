@@ -1,4 +1,5 @@
-import { Entity } from 'ecsy';
+
+import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
 import {
@@ -6,21 +7,19 @@ import {
   Controlled,
 } from '../../../../components/input/Controlled';
 
-import { hasSimComponent } from './../../../../systems/utils/index';
 import { EntityNode } from './EntityNode';
 
-import { getSimComponent } from '~/game/systems/utils';
 
-export abstract class IsControlledBy extends EntityNode {
+export class IsControlledBy extends EntityNode {
   constructor(private readonly by: By) {
     super([]);
   }
 
-  protected evaluateByEntity(entity: Entity): State {
-    if (!hasSimComponent(entity, Controlled)) {
+  protected evaluateByEntity(entity: IEntity): State {
+    if (!entity.hasComponent(Controlled)) {
       return this.failure();
     }
-    const controlled = getSimComponent(entity, Controlled)!;
+    const controlled = entity.getComponent(Controlled)!;
     if (controlled.by === this.by) {
       return this.success();
     }

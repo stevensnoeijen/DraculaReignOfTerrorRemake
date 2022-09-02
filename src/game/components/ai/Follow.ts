@@ -1,8 +1,8 @@
-import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
 export class Follow {
   constructor(
-    public entity: Entity | null = null
+    public entity: IEntity | null = null
   ) {
   }
 }

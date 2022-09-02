@@ -6,6 +6,7 @@ import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
 import { Combat } from '../../../../components/ai/Combat';
 
+import { EcsyEntity } from './../../../../components/EcsyEntity';
 import { Team } from './../../../../components/Team';
 import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
 import { getEntitiesInRange } from './utils';
@@ -42,15 +43,18 @@ describe('IsEnemyInRange', () => {
         entitiesInRange
       );
 
-      const entity = world
+      const entity = newWorld.buildEntity()
+        .with(new Team(1))
+        .with(new Transform(Vector2.ZERO))
+        .with(new Combat(100, 0, 0))
+        .build();
+      const ecsyEntity = world
         .createEntity()
         .addComponent(SimEcsComponent, {
-          entity: newWorld.buildEntity()
-            .with(new Team(1))
-            .with(new Transform(Vector2.ZERO))
-            .with(new Combat(100, 0, 0))
-            .build(),
+          entity: entity,
         });
+      entity.addComponent(new EcsyEntity(ecsyEntity));
+
       const node = new IsEnemyInRange([], Combat, 'aggroRange');
       const parent = new Node();
       parent.setData('entity', entity);

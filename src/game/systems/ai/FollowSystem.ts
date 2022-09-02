@@ -7,7 +7,6 @@ import { Transform } from '../../components/Transform';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 
-import { getSimComponent } from './../utils/index';
 
 import { EventBus } from '~/game/EventBus';
 
@@ -39,7 +38,7 @@ export const FollowSystem = createSystem({
 
     const path = astar(
       collsionMap!, transform.gridPosition,
-      getSimComponent(follow.entity, Transform)!.gridPosition,
+      follow.entity.getComponent(Transform)!.gridPosition,
     );
 
     movePath.path = convertPathfindingPathToPositions(

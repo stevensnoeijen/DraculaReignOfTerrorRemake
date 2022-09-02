@@ -1,29 +1,22 @@
-import { buildWorld } from 'sim-ecs';
-import { World, Entity } from 'ecsy';
+import { buildWorld, IEntity } from 'sim-ecs';
 
 import { Target } from '../../../../components/ai/Target';
 import { State } from '../Node';
 
-import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
 import { UnsetTarget } from './UnsetTarget';
 
-import { getSimComponent } from '~/game/systems/utils';
 
 describe('UnsetTarget', () => {
   describe('evaluate', () => {
-    const newWorld = buildWorld().build();
-    const world = new World().registerComponent(SimEcsComponent);
-    const createEntity = (target: Entity | null = null) =>
-      world.createEntity().addComponent(SimEcsComponent, {
-        entity: newWorld.buildEntity()
-          .with(new Target(target))
-          .build(),
-      });
+    const world = buildWorld().build();
+
+    const createEntity = (target: IEntity | null = null) =>
+      world.buildEntity()
+        .with(new Target(target))
+        .build();
 
     it('should return failure when entity has no TargetComponent', () => {
-      const entity = world.createEntity().addComponent(SimEcsComponent, {
-        entity: newWorld.buildEntity().build()
-      });
+      const entity = world.buildEntity().build();
 
       const unsetTarget = new UnsetTarget();
       unsetTarget.setData('entity', entity);
@@ -48,7 +41,7 @@ describe('UnsetTarget', () => {
       unsetTarget.setData('entity', entity);
 
       expect(unsetTarget.evaluate()).toBe(State.SUCCESS);
-      expect(getSimComponent(entity, Target)!.entity).toBeNull();
+      expect(entity.getComponent(Target)!.entity).toBeNull();
     });
   });
 });

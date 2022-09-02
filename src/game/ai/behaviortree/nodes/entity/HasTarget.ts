@@ -1,19 +1,19 @@
-import { Entity } from 'ecsy';
+
+import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
 import { Target } from '../../../../components/ai/Target';
 
 import { EntityNode } from './EntityNode';
 
-import { hasSimComponent, getSimComponent } from '~/game/systems/utils';
 
 export class HasTarget extends EntityNode {
-  protected evaluateByEntity(entity: Entity): State {
-    if (!hasSimComponent(entity, Target)) {
+  protected evaluateByEntity(entity: IEntity): State {
+    if (!entity.hasComponent(Target)) {
       return this.failure();
     }
-    const targetComponent = getSimComponent(entity, Target)!;
-    if (targetComponent.entity == null) {
+    const target = entity.getComponent(Target)!;
+    if (target.entity == null) {
       return this.failure();
     }
 

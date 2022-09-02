@@ -1,10 +1,10 @@
-import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
 import { Node, State } from '../Node';
 
 export abstract class EntityNode extends Node {
   public evaluate(): State {
-    const entity = this.getData('entity') as Entity | null;
+    const entity = this.getData('entity') as IEntity | null;
     if (entity == null) {
       return this.failure();
     }
@@ -12,5 +12,5 @@ export abstract class EntityNode extends Node {
     return this.evaluateByEntity(entity);
   }
 
-  protected abstract evaluateByEntity(entity: Entity): State;
+  protected abstract evaluateByEntity(entity: IEntity): State;
 }

@@ -1,4 +1,4 @@
-import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
 import { Follow } from '../../../../components/ai/Follow';
@@ -6,18 +6,17 @@ import { Target } from '../../../../components/ai/Target';
 
 import { EntityNode } from './EntityNode';
 
-import { getSimComponent } from '~/game/systems/utils';
 
 export class SetFollow extends EntityNode {
-  protected evaluateByEntity(entity: Entity): State {
-    const targetComponent = getSimComponent(entity, Target);
-    const followComponent = getSimComponent(entity, Follow);
+  protected evaluateByEntity(entity: IEntity): State {
+    const target = entity.getComponent(Target);
+    const follow = entity.getComponent(Follow);
 
-    if (targetComponent == null || followComponent == null) {
+    if (target == null || follow == null) {
       return this.failure();
     }
 
-    followComponent.entity = targetComponent.entity;
+    follow.entity = target.entity;
 
     return this.success();
   }

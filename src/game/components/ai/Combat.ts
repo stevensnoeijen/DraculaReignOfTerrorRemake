@@ -1,8 +1,8 @@
-import { Entity } from 'ecsy';
+
+import { IEntity } from 'sim-ecs';
 
 import { Health } from '../Health';
 
-import { getSimComponent } from '~/game/systems/utils';
 
 export class Combat {
   constructor(
@@ -11,8 +11,8 @@ export class Combat {
     public readonly attackDamage: number,
   ) { }
 
-  attack(enemy: Entity): void {
-    const enemyHealthComponent = getSimComponent(enemy, Health)!;
+  attack(enemy: IEntity): void {
+    const enemyHealthComponent = enemy.getComponent(Health)!;
     enemyHealthComponent.takeHit(this.attackDamage);
   }
 }
