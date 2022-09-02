@@ -30,7 +30,7 @@ import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
 import { ScenarioLoadedEvent, Events } from './Events';
 import { GameTimeSystem } from './systems/GameTimeSystem';
-import { AttackComponent } from './systems/AttackComponent';
+import { Combat } from './components/ai/Combat';
 import { FollowSystem } from './systems/ai/FollowSystem';
 import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { Target } from './components/ai/Target';
@@ -105,7 +105,6 @@ export class Engine {
       .add('animation-models', 'assets/animation-models.json');
 
     this.world
-      .registerComponent(AttackComponent)
       .registerComponent(SimEcsComponent)
       .registerSystem(GridSystem, { app, options: this.options, eventBus })
       .registerSystem(MapSystem, { app, eventBus })
@@ -182,6 +181,7 @@ export class Engine {
       .with(MouseControlled)
       .with(Follow)
       .with(Target)
+      .with(new Combat(80, 16, 1))
       .build();
 
     entity.addComponent(SimEcsComponent, {

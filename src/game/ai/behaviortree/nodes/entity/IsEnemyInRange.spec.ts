@@ -4,10 +4,10 @@ import { IWorld, buildWorld } from 'sim-ecs';
 import { Transform } from '../../../../components/Transform';
 import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
+import { Combat } from '../../../../components/ai/Combat';
 
 import { Team } from './../../../../components/Team';
 import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
-import { AttackComponent } from './../../../../systems/AttackComponent';
 import { getEntitiesInRange } from './utils';
 import { IsEnemyInRange } from './IsEnemyInRange';
 
@@ -21,7 +21,6 @@ describe('IsEnemyInRange', () => {
 
     beforeEach(() => {
       world = new World()
-        .registerComponent(AttackComponent)
         .registerComponent(SimEcsComponent);
       newWorld = buildWorld().build();
 
@@ -45,16 +44,14 @@ describe('IsEnemyInRange', () => {
 
       const entity = world
         .createEntity()
-        .addComponent(AttackComponent, {
-          aggroRange: 100,
-        })
         .addComponent(SimEcsComponent, {
           entity: newWorld.buildEntity()
             .with(new Team(1))
             .with(new Transform(Vector2.ZERO))
+            .with(new Combat(100, 0, 0))
             .build(),
         });
-      const node = new IsEnemyInRange([], AttackComponent, 'aggroRange');
+      const node = new IsEnemyInRange([], Combat, 'aggroRange');
       const parent = new Node();
       parent.setData('entity', entity);
       parent.attach(node);

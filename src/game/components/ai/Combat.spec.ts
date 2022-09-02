@@ -1,13 +1,15 @@
 import { buildWorld } from 'sim-ecs';
 import { World } from 'ecsy';
 
-import { Health } from '../components/Health';
+import { Health } from '../Health';
 
-import { AttackComponent } from './AttackComponent';
-import { SimEcsComponent } from './SimEcsComponent';
+import { Combat } from './Combat';
+
+import { getSimComponent } from '~/game/systems/utils';
+import { SimEcsComponent } from '~/game/systems/SimEcsComponent';
 
 
-describe('AttackComponent', () => {
+describe('Combat', () => {
   describe('attack', () => {
     const newWorld = buildWorld().build();
     const world = new World().registerComponent(SimEcsComponent);
@@ -21,14 +23,11 @@ describe('AttackComponent', () => {
           }))
         .build(),
       });
-      const attackComponent = new AttackComponent({
-        attackDamage: 10,
-      });
+      const combat = new Combat(0, 0, 10);
 
-      attackComponent.attack(enemy);
+      combat.attack(enemy);
 
-      expect(enemy.getComponent(SimEcsComponent)!
-        .entity.getComponent(Health)!
+      expect(getSimComponent(enemy, Health)!
         .points).toEqual(90);
     });
   });

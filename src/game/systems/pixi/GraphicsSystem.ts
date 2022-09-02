@@ -7,10 +7,10 @@ import { SimEcsComponent } from '../SimEcsComponent';
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
+import { Combat } from '../../components/ai/Combat';
 
 import { getSimComponent, hasSimComponent } from './../utils/index';
 import { getHealthColor } from './utils';
-import { AttackComponent } from './../AttackComponent';
 
 import { EntityHelper } from '~/game/EntityHelper';
 import { Options } from '~/game/utils';
@@ -63,14 +63,14 @@ const drawAggroRadius = (
   entity: Entity,
   graphics: PIXI.Graphics,
 ): void => {
-  const attackComponent = entity.getComponent(AttackComponent);
-  if (attackComponent == null) {
+  const combat = getSimComponent(entity, Combat);
+  if (combat == null) {
     return;
   }
 
   graphics.lineStyle(1, 0xff0000);
 
-  graphics.drawCircle(0, 0, attackComponent.aggroRange);
+  graphics.drawCircle(0, 0, combat.aggroRange);
 };
 
 

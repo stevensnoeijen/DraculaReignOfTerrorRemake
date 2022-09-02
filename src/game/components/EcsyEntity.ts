@@ -1,9 +1,7 @@
 import { Entity } from 'ecsy';
 
 export class EcsyEntity {
-  public entity: Entity;
-
-  constructor(entity: Entity) {
+  constructor(public readonly entity: Entity) {
     this.entity = entity;
   }
 }

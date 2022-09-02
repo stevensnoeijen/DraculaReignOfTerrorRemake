@@ -1,24 +1,27 @@
-import { Component, ComponentConstructor, Entity } from 'ecsy';
+import { Entity } from 'ecsy';
+import { Class } from 'utility-types';
 
 import { State } from '../Node';
 
 import { EntityNode } from './EntityNode';
 import { getEntitiesInRange } from './utils';
 
+import { getSimComponent } from '~/game/systems/utils';
+
 export class IsEnemyInRange<
-  TComponent extends Component<any>,
+  TComponent extends Object,
   TProperty extends keyof TComponent = keyof TComponent
 > extends EntityNode {
   constructor(
     private readonly entities: Entity[],
-    private readonly componentConstructor: ComponentConstructor<TComponent>,
+    private readonly componentConstructor: Class<TComponent>,
     private readonly componentProperty: TProperty
   ) {
     super();
   }
 
   protected evaluateByEntity(entity: Entity): State {
-    const range = entity.getComponent(this.componentConstructor)![
+    const range = getSimComponent(entity, this.componentConstructor)![
       this.componentProperty
     ] as unknown as number;
 
