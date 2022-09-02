@@ -8,8 +8,8 @@ import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
 import { Combat } from '../../components/ai/Combat';
+import { getSimComponent, hasSimComponent } from '../utils/index';
 
-import { getSimComponent, hasSimComponent } from './../utils/index';
 import { getHealthColor } from './utils';
 
 import { EntityHelper } from '~/game/EntityHelper';
@@ -77,7 +77,7 @@ const drawAggroRadius = (
 let showAllHealth: boolean;
 let showDebugAggro: boolean;
 
-export const GraphicsSystem = createSystem({
+export const GraphicsRenderSystem = createSystem({
     options: WriteResource(Options),
     app: WriteResource(PIXI.Application),
     query: queryComponents({

@@ -3,9 +3,9 @@ import * as PIXI from 'pixi.js';
 
 import { PixiJsSystem } from '../PixiJsSystem';
 
-import { DefaultAttributes } from './../DefaultAttributes';
-import { ScenarioLoadedEvent } from './../../Events';
-import { cellPositionToVector } from './../../utils';
+import { DefaultAttributes } from '../DefaultAttributes';
+import { ScenarioLoadedEvent } from '../../Events';
+import { cellPositionToVector } from '../../utils';
 
 export class MapSystem extends PixiJsSystem {
   private graphics: PIXI.Graphics;
