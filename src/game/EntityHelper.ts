@@ -1,7 +1,5 @@
-import { Entity } from 'ecsy';
 import { IEntity } from 'sim-ecs';
 
-import { getSimComponent } from './systems/utils/index';
 import { Transform } from './components/Transform';
 import { Selectable } from './components/input/Selectable';
 import { Size } from './components/Size';
@@ -71,17 +69,8 @@ export class EntityHelper {
     selectable.selected = true;
   }
 
-  public static isSelected(entity: Entity): boolean {
-    const selectable = getSimComponent(entity, Selectable);
-    if (!selectable) {
-      return false;
-    }
-
-    return selectable.selected;
-  }
-
-  public static isMoving(entity: Entity): boolean {
-    const movePositionDirect = getSimComponent(entity, MovePositionDirect);
+  public static isMoving(entity: IEntity): boolean {
+    const movePositionDirect = entity.getComponent(MovePositionDirect);
     if (!movePositionDirect) {
       return false;
     }

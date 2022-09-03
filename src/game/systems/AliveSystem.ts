@@ -1,21 +1,18 @@
-import { Entity } from 'ecsy';
-import { createSystem, queryComponents, Read } from 'sim-ecs';
+import { createSystem, IEntity, queryComponents, Read, ReadEntity } from 'sim-ecs';
 
 import { Alive } from '../components/Alive';
 import { rotationToDirection } from '../animation/load';
-import { EcsyEntity } from '../components/EcsyEntity';
 import { Health } from '../components/Health';
 import { Transform } from '../components/Transform';
 import { Selectable } from '../components/input/Selectable';
 
-import { removeSimComponent } from './utils/index';
 import { Animator } from './../animation/Animator';
 import { SimEcsComponent } from './SimEcsComponent';
 
 
-const handleDead = (entity: Entity, transform: Transform): void => {
-  removeSimComponent(entity, Selectable);
-  removeSimComponent(entity, Health);
+const handleDead = (entity: IEntity, transform: Transform): void => {
+  entity.removeComponent(Selectable);
+  entity.removeComponent(Health);
 
   const simEcsComponent = entity.getComponent(SimEcsComponent)!;
   simEcsComponent.entity.getComponent(Animator)!.set(
@@ -26,15 +23,15 @@ const handleDead = (entity: Entity, transform: Transform): void => {
 
 export const AliveSystem = createSystem({
     query: queryComponents({
+      entity: ReadEntity(),
       alive: Read(Alive),
-      entity: Read(EcsyEntity),
       transform: Read(Transform),
     }),
   }).withRunFunction(({
     query
   }) => {
     query.execute(({ alive, entity, transform }) => {
-      if (!alive.alive) handleDead(entity.entity, transform);
+      if (!alive.alive) handleDead(entity, transform);
     });
   })
   .build();

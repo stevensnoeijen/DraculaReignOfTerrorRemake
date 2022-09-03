@@ -1,41 +1,32 @@
 import * as PIXI from 'pixi.js';
-import { Entity } from 'ecsy';
 import { Graphics } from 'pixi.js';
 import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
 
-import { SimEcsComponent } from '../SimEcsComponent';
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
 import { Combat } from '../../components/ai/Combat';
-import { getSimComponent, hasSimComponent } from '../utils/index';
 
 import { getHealthColor } from './utils';
 
-import { EntityHelper } from '~/game/EntityHelper';
 import { Options } from '~/game/utils';
 import { Health } from '~/game/components/Health';
-import { EcsyEntity } from '~/game/components/EcsyEntity';
 
 const drawHealthBar = (
-  entity: Entity,
+  health: Health,
   graphics: PIXI.Graphics,
 ): void => {
   graphics.beginFill(0x000000);
   graphics.drawRect(-8, 12, 16, 5);
   graphics.endFill();
 
-  const health = entity.getComponent(SimEcsComponent)?.entity.getComponent(Health);
-  if (health) {
-    const percentage = health.points / health.maxPoints;
-    graphics.beginFill(getHealthColor(percentage));
-    graphics.drawRect(-7, 13, 14 * percentage, 3);
-    graphics.endFill();
-  }
+  const percentage = health.points / health.maxPoints;
+  graphics.beginFill(getHealthColor(percentage));
+  graphics.drawRect(-7, 13, 14 * percentage, 3);
+  graphics.endFill();
 };
 
 const drawSelectionIndicators = (
-  entity: Entity,
   graphics: PIXI.Graphics,
   size: Size,
 ): void => {
@@ -60,13 +51,9 @@ const drawSelectionIndicators = (
 };
 
 const drawAggroRadius = (
-  entity: Entity,
+  combat: Combat,
   graphics: PIXI.Graphics,
 ): void => {
-  const combat = getSimComponent(entity, Combat);
-  if (combat == null) {
-    return;
-  }
 
   graphics.lineStyle(1, 0xff0000);
 
@@ -81,11 +68,14 @@ export const GraphicsRenderSystem = createSystem({
     options: WriteResource(Options),
     app: WriteResource(PIXI.Application),
     query: queryComponents({
-      ecsyEntity: Read(EcsyEntity),
       graphics: Read(Graphics),
       sprite: ReadOptional(PIXI.Sprite),
       animatedSprite: ReadOptional(PIXI.AnimatedSprite),
       size: Read(Size),
+      selectable: ReadOptional(Selectable),
+      transform: Read(Transform),
+      health: ReadOptional(Health),
+      combat: ReadOptional(Combat),
     }),
   })
   .withSetupFunction(({ options }) => {
@@ -98,27 +88,25 @@ export const GraphicsRenderSystem = createSystem({
     app,
     query
   }) => {
-    query.execute(({ ecsyEntity, graphics, sprite, animatedSprite, size }) => {
+    query.execute(({ graphics, sprite, animatedSprite, size, selectable, transform, health, combat }) => {
       // FIXME: graphics is added multiple times, optimise this
       app.stage.addChild(graphics as PIXI.Graphics);
 
-      const entity = ecsyEntity.entity;
-      if (hasSimComponent(entity, Selectable)) {
-        const position = getSimComponent(entity, Transform)!.position;
+      if (selectable != null && transform != null) {
         const target = (sprite ?? animatedSprite) as PIXI.Sprite;
 
         graphics.clear();
-        graphics.position.set(position.x, position.y);
+        graphics.position.set(transform.position.x, transform.position.y);
 
-        if (EntityHelper.isSelected(entity)) {
-          drawSelectionIndicators(entity, graphics as PIXI.Graphics, size);
+        if (selectable.selected) {
+          drawSelectionIndicators(graphics as PIXI.Graphics, size);
         }
-        if (showAllHealth || EntityHelper.isSelected(entity)) {
-          drawHealthBar(entity, graphics as PIXI.Graphics);
+        if (health != null && (showAllHealth || selectable.selected)) {
+          drawHealthBar(health as Health, graphics as PIXI.Graphics);
         }
 
-        if (showDebugAggro) {
-          drawAggroRadius(entity, graphics as PIXI.Graphics);
+        if (showDebugAggro && combat != null) {
+          drawAggroRadius(combat, graphics as PIXI.Graphics);
         }
       } else {
         graphics.clear();
