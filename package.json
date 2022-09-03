@@ -16,7 +16,6 @@
     "@pixi/assets": "^6.5.1",
     "@pixi/sound": "^4.3.0",
     "@vicons/utils": "^0.1.4",
-    "ecsy": "^0.4.2",
     "generate-maze": "^1.1.0",
     "lodash": "^4.17.21",
     "nanoid": "3.x.x",

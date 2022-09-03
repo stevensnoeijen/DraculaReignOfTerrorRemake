@@ -1,12 +1,10 @@
-import { buildWorld, IEntity, IWorld } from 'sim-ecs';
-import { Entity, World } from 'ecsy';
+import { IEntity, IWorld } from 'sim-ecs';
 
 import { Position } from '../utils';
 import { Vector2 } from '../math/Vector2';
 import { Team } from '../components/Team';
 import { Transform } from '../components/Transform';
 
-import { SimEcsComponent } from './../systems/SimEcsComponent';
 
 import { Alive } from '~/game/components/Alive';
 

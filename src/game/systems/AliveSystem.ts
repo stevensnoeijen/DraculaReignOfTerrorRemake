@@ -7,15 +7,13 @@ import { Transform } from '../components/Transform';
 import { Selectable } from '../components/input/Selectable';
 
 import { Animator } from './../animation/Animator';
-import { SimEcsComponent } from './SimEcsComponent';
 
 
 const handleDead = (entity: IEntity, transform: Transform): void => {
   entity.removeComponent(Selectable);
   entity.removeComponent(Health);
 
-  const simEcsComponent = entity.getComponent(SimEcsComponent)!;
-  simEcsComponent.entity.getComponent(Animator)!.set(
+  entity.getComponent(Animator)!.set(
     'dead',
     rotationToDirection(transform.rotation)
   );

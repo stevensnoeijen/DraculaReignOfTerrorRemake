@@ -2,11 +2,11 @@ import { createSystem } from 'sim-ecs';
 
 import { GameTime } from '../GameTime';
 
-let lastTime = Date.now();
+let lastTime = performance.now();
 
 export const GameTimeSystem = createSystem({})
   .withRunFunction(() => {
-    const currentTime = Date.now();
+    const currentTime = performance.now();
     GameTime.delta = currentTime - lastTime;
     lastTime = currentTime;
   })

@@ -1,4 +1,3 @@
-import { World } from 'ecsy';
 import { IWorld, buildWorld } from 'sim-ecs';
 
 import { Vector2 } from '../../math/Vector2';
@@ -8,24 +7,20 @@ import {
 } from '../../__tests__/utils';
 import { Transform } from '../../components/Transform';
 
-import { SimEcsComponent } from './../SimEcsComponent';
 import { byClosestDistance, isInRange } from './transform';
 
 
-let world: World;
-let newWorld: IWorld;
+let world: IWorld;
 let createRandomEntities: CreateRandomEntities;
 
 beforeEach(() => {
-  world = new World()
-    .registerComponent(SimEcsComponent);
-  newWorld = buildWorld().build();
-  createRandomEntities = constructCreateRandomEntities(newWorld);
+  world = buildWorld().build();
+  createRandomEntities = constructCreateRandomEntities(world);
 });
 
 describe('isInRange', () => {
   it('should filter everything when targetEntity has no TransformComponent', () => {
-    const targetEntity = newWorld.buildEntity().build();
+    const targetEntity = world.buildEntity().build();
 
     const filter = isInRange(targetEntity, 100);
 
@@ -35,7 +30,7 @@ describe('isInRange', () => {
   });
 
   it('should filter out entities that have no TransformComponent', () => {
-    const targetEntity = newWorld.buildEntity()
+    const targetEntity = world.buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
 
@@ -52,7 +47,7 @@ describe('isInRange', () => {
   });
 
   it('should filter out entities that are out of given range', () => {
-    const targetEntity = newWorld.buildEntity()
+    const targetEntity = world.buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
     const inRangeEntities = createRandomEntities(
@@ -76,7 +71,7 @@ describe('isInRange', () => {
 
 describe('byClosestDistance', () => {
   it('should keep order sort when targetEntity has no TransformComponent', () => {
-    const targetEntity = newWorld.buildEntity()
+    const targetEntity = world.buildEntity()
       .build();
 
     const entities = createRandomEntities();
@@ -86,7 +81,7 @@ describe('byClosestDistance', () => {
   });
 
   it('should sort entities without TransformComponent to the back', () => {
-    const targetEntity = newWorld.buildEntity()
+    const targetEntity = world.buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
 
@@ -102,11 +97,11 @@ describe('byClosestDistance', () => {
   });
 
   it('should sort entities by distance', () => {
-    const targetEntity = newWorld.buildEntity()
+    const targetEntity = world.buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
 
-    const closestEntity = newWorld.buildEntity()
+    const closestEntity = world.buildEntity()
           .with(new Transform(Vector2.ZERO))
           .build();
 

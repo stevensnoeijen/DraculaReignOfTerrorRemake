@@ -9,13 +9,13 @@ import { Health } from '~/game/components/Health';
 
 describe('Attack', () => {
   describe('evaluate', () => {
-    const newWorld = buildWorld().build();
+    const world = buildWorld().build();
 
     it("should substracts entity's attackDamage from target health", () => {
-      const entity = newWorld.buildEntity()
+      const entity = world.buildEntity()
         .with(new Combat(0, 0, 10))
         .build();
-      const target = newWorld.buildEntity()
+      const target = world.buildEntity()
         .with(new Health({
           points: 100,
           maxPoints: 100,

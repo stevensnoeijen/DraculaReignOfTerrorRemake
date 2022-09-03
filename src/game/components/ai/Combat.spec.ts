@@ -1,20 +1,17 @@
 import { buildWorld } from 'sim-ecs';
-import { World } from 'ecsy';
 
 import { Health } from '../Health';
 
 import { Combat } from './Combat';
 
-import { SimEcsComponent } from '~/game/systems/SimEcsComponent';
 
 
 describe('Combat', () => {
   describe('attack', () => {
-    const newWorld = buildWorld().build();
-    const world = new World().registerComponent(SimEcsComponent);
+    const world = buildWorld().build();
 
     it('should take hit to enemy', () => {
-      const enemy = newWorld.buildEntity()
+      const enemy = world.buildEntity()
         .with(new Health({
           points: 100,
           maxPoints: 100,

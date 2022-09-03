@@ -32,7 +32,6 @@ export class IsEnemyInRange<
     if (inRangeEntities.length == 0) {
       return this.failure();
     }
-    console.log(true);
 
     this.parent!.setData('target', inRangeEntities[0]);
 

@@ -1,14 +1,12 @@
 import * as PIXI from 'pixi.js';
-import { World } from 'ecsy';
 import { buildWorld, Entity, IEntity, IWorld } from 'sim-ecs';
 import { nanoid } from 'nanoid';
 
-import { GridRenderSystem2 } from './systems/pixi/GridRenderSystem';
+import { LoadScenarioSystem } from './systems/LoadScenarioSystem';
+import { GridRenderSystem } from './systems/pixi/GridRenderSystem';
 import { Follow } from './components/ai/Follow';
 import { KeyboardControlledSystem } from './systems/input/KeyboardControlledSystem';
-import { EcsyEntity } from './components/EcsyEntity';
 import { AliveSystem } from './systems/AliveSystem';
-import { SimEcsComponent } from './systems/SimEcsComponent';
 import { Transform } from './components/Transform';
 import { Selectable } from './components/input/Selectable';
 import { MouseControlled } from './components/input/MouseControlled';
@@ -59,9 +57,7 @@ export interface IUnitProps {
 Entity.uuidFn = nanoid;
 
 export class Engine {
-  // TODO: rename after migration of ecsy, also update tests
-  public readonly newWorld: IWorld;
-  public readonly world: World;
+  public readonly world: IWorld;
   // TODO: should load this "safer"
   private _animationService!: AnimationService;
   private options: Options;
@@ -69,12 +65,11 @@ export class Engine {
   private readonly eventBus: EventBus<Events>;
 
   constructor(private readonly app: PIXI.Application) {
-    this.world = new World();
-
-    this.newWorld = buildWorld()
+    this.world = buildWorld()
       .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
       .withDefaultScheduling(root =>
         root.addNewStage(stage => {
+          stage.addSystem(LoadScenarioSystem);
           stage.addSystem(GameTimeSystem);
           stage.addSystem(InputSystem);
           stage.addSystem(AliveSystem);
@@ -90,42 +85,21 @@ export class Engine {
           stage.addSystem(FollowSystem);
           stage.addSystem(BehaviorTreeSystem);
           stage.addSystem(TargetSystem);
-          stage.addSystem(GridRenderSystem2);
+          stage.addSystem(GridRenderSystem);
         })
       )
       .build();
-    this.newWorld.addResource(app);
+    this.world.addResource(app);
 
     const eventBus = this.eventBus = new EventBus<Events>();
-    this.newWorld.addResource(eventBus);
-
-    let lastFrameTime = 0;
+    this.world.addResource(eventBus);
 
     this.options = getOptions();
-    this.newWorld.addResource(this.options);
-
-    lastFrameTime = performance.now();
-    this.app.ticker.add(() => {
-      frame();
-    });
+    this.world.addResource(this.options);
 
     this.app.loader
       .add('unit-spritesheet', 'assets/unit-spritesheet.json')
       .add('animation-models', 'assets/animation-models.json');
-
-    this.world
-      .registerComponent(SimEcsComponent);
-
-    const frame = (): void => {
-      // Compute delta and elapsed time
-      const time = performance.now();
-      const delta = time - lastFrameTime;
-
-      // Run all the systems
-      this.world.execute(delta, time);
-
-      lastFrameTime = time;
-    };
   }
 
   public get animationService(): AnimationService {
@@ -144,8 +118,6 @@ export class Engine {
   }
 
   public createUnit(props: IUnitProps): IEntity {
-    const entity = this.world.createEntity();
-
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
     const animator = this.animationService.createAnimator(
       sprite,
@@ -159,14 +131,13 @@ export class Engine {
     sprite.animationSpeed = 0.25;
     sprite.play();
 
-    const simEcsEntity = this.newWorld.buildEntity()
+    return this.world.buildEntity()
       .with(
         new Transform(
           new Vector2(props.position.x, props.position.y),
           randomRotation()
         )
       )
-      .with(new EcsyEntity(entity))
       .with(new Team(props.team.number))
       .with(new Alive(true))
       .with(new Health({
@@ -188,12 +159,6 @@ export class Engine {
       .with(Target)
       .with(new Combat(80, 16, 1))
       .build();
-
-    entity.addComponent(SimEcsComponent, {
-      entity: simEcsEntity,
-    });
-
-    return simEcsEntity;
   }
 
   private async loadScenario() {
@@ -215,7 +180,7 @@ export class Engine {
       scenario = new RandomUnitsScenario(this.app, this);
   }
 
-    this.newWorld.run();
+    this.world.run();
     scenario.load();
     // TODO: remove temp solution for register listener in MouseControlledSystem
     setTimeout(() => {

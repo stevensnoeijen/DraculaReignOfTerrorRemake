@@ -39,7 +39,7 @@ const draw = (app: PIXI.Application, options: Options) => {
   }
 };
 
-export const GridRenderSystem2 = createSystem({
+export const GridRenderSystem = createSystem({
     app: ReadResource(PIXI.Application),
     options: ReadResource(Options),
   })
