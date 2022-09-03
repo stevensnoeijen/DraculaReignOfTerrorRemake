@@ -69,24 +69,5 @@ describe('IsEnemyInRange', () => {
       );
     });
 
-    // it('should fail and not set target when there is no enemy within range', () => {
-    //     (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue([]);
-
-    //     const entity = world.createEntity()
-    //         .addComponent(TransformComponent, {
-    //             position: new Vector2(0, 0),
-    //         })
-    //         .addComponent(TeamComponent, {
-    //             number: 1
-    //         });
-
-    //     const node = new IsEnemyInRange([], 100);
-    //     const parent = new Node();
-    //     parent.setData('entity', entity);
-    //     parent.attach(node);
-
-    //     expect(node.evaluate()).toBe(State.FAILURE);
-    //     expect(parent.getData('target')).toBeNull();
-    // });
   });
 });

@@ -3,9 +3,6 @@ import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
 
-import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
-import { EcsyEntity } from './../../../../components/EcsyEntity';
-import { ecsyEntities } from './../../../../utils';
 import { EntityNode } from './EntityNode';
 import { getEntitiesInRange } from './utils';
 
@@ -29,14 +26,15 @@ export class IsEnemyInRange<
     ] as unknown as number;
 
     const inRangeEntities = getEntitiesInRange(
-      entity.getComponent(EcsyEntity)!.entity,
-      ecsyEntities(this.entities),
+      entity,
+      this.entities,
       range);
     if (inRangeEntities.length == 0) {
       return this.failure();
     }
+    console.log(true);
 
-    this.parent!.setData('target', inRangeEntities[0].getComponent(SimEcsComponent)!.entity);
+    this.parent!.setData('target', inRangeEntities[0]);
 
     return this.success();
   }

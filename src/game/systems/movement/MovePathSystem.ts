@@ -1,5 +1,4 @@
 import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write, ReadOptional } from 'sim-ecs';
-import { Entity } from 'ecsy';
 
 import { cellPositionToVector } from '../../utils';
 import { Vector2 } from '../../math/Vector2';
@@ -8,17 +7,15 @@ import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 import { Controlled } from '../../components/input/Controlled';
 
-import { SimEcsComponent } from './../SimEcsComponent';
-import { EcsyEntity } from './../../components/EcsyEntity';
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
-import { getSimComponent, isSameEntity } from './../utils/index';
+import { isSameEntity } from './../utils/index';
 
 import { MovePath } from '~/game/components/movement/MovePath';
 
 const canEntityMoveToCell = (
-  colliders: Entity[],
-  entity: Entity,
+  colliders: IEntity[],
+  entity: IEntity,
   cell: Position
 ): boolean => {
   const collider = colliders.filter(
@@ -34,7 +31,7 @@ const canEntityMoveToCell = (
 
 const updateMovePosition = (
   entities: IEntity[],
-  entity: Entity,
+  entity: IEntity,
   movePath: MovePath,
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
@@ -61,7 +58,7 @@ const updateMovePosition = (
 
   if (
     !canEntityMoveToCell(
-      entities.map(e => e.getComponent(EcsyEntity)!.entity),
+      entities,
       entity,
       nextCell
     )
@@ -75,7 +72,7 @@ const updateMovePosition = (
     nextCell.x,
     nextCell.y
   );
-  const transformComponent = getSimComponent(entity, Transform)!;
+  const transformComponent = entity.getComponent(Transform)!;
   if (
     !transformComponent.position.equals(
       movePositionDirect.movePosition
@@ -87,7 +84,7 @@ const updateMovePosition = (
     );
   }
 
-  setEntityAnimation(entity.getComponent(SimEcsComponent)!.entity, 'move');
+  setEntityAnimation(entity, 'move');
 };
 
 export const MovePathSystem = createSystem({
@@ -95,7 +92,6 @@ export const MovePathSystem = createSystem({
     entity: ReadEntity(),
     movePath: Write(MovePath),
     moveVelocity: Read(MoveVelocity),
-    ecsyEntity: Read(EcsyEntity),
     movePositionDirect: Write(MovePositionDirect),
     controlled: ReadOptional(Controlled),
   }),
@@ -103,10 +99,10 @@ export const MovePathSystem = createSystem({
 .withRunFunction(({
   query
 }) => {
-  query.execute(({ movePath, moveVelocity, ecsyEntity, movePositionDirect, controlled }) => {
+  query.execute(({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
     updateMovePosition(
       Array.from(query.iter()).map(e => e.entity),
-      ecsyEntity.entity,
+      entity,
       movePath,
       moveVelocity,
       movePositionDirect,

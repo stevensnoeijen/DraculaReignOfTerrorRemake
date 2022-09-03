@@ -1,13 +1,10 @@
-import { Entity } from 'ecsy';
 import { IEntity } from 'sim-ecs';
 
-import { getSimComponent } from './systems/utils/index';
 import { Input } from './Input';
 import { Constants } from './Constants';
 import { Vector2 } from './math/Vector2';
 import * as PathFinding from './ai/pathfinding';
 import { Transform } from './components/Transform';
-import { EcsyEntity } from './components/EcsyEntity';
 
 import { Predicate } from '~/utils/types';
 
@@ -84,9 +81,9 @@ export const convertPathfindingPathToPositions = (
   return path.map(({ position }) => position);
 };
 
-export const getCell = (entity: Entity): Position => {
-  const component = getSimComponent(entity, Transform)!;
-  const { x, y } = toGridPosition(component.position);
+export const getCell = (entity: IEntity): Position => {
+  const transform = entity.getComponent(Transform)!;
+  const { x, y } = toGridPosition(transform.position);
 
   return { x, y };
 };
@@ -106,6 +103,3 @@ export const randomRotation = () => {
 
   return rotation - rotation % 90;
 };
-
-export const ecsyEntities = (entities: IEntity[]) =>
-  entities.map(e => e.getComponent(EcsyEntity)!.entity);

@@ -1,4 +1,4 @@
-import { buildWorld } from 'sim-ecs';
+import { buildWorld, IEntity, IWorld } from 'sim-ecs';
 import { Entity, World } from 'ecsy';
 
 import { Position } from '../utils';
@@ -15,13 +15,11 @@ export type CreateRandomEntities = (
   minPosition?: Position,
   maxPosition?: Position,
   team?: number
-) => Entity[];
+) => IEntity[];
 
 export const constructCreateRandomEntities = (
-  world: World
+  world: IWorld
 ): CreateRandomEntities => {
-  const newWorld = buildWorld().build();
-
   return (
     length: number = 30,
     minPosition: Position = { x: 3, y: 3 },
@@ -29,21 +27,17 @@ export const constructCreateRandomEntities = (
     teamId: number = 2
   ) => {
     return Array.from({ length: length }).map(() => {
-      return world
-        .createEntity()
-        .addComponent(SimEcsComponent, {
-          entity: newWorld.buildEntity()
-            .with(new Team(teamId))
-            .with(new Alive(true))
-            .with(new Transform(
-                new Vector2(
-                  Math.round(Math.random() * maxPosition.x) + minPosition.x,
-                  Math.round(Math.random() * maxPosition.y) + minPosition.y
-                )
-              )
+      return world.buildEntity()
+        .with(new Team(teamId))
+        .with(new Alive(true))
+        .with(new Transform(
+            new Vector2(
+              Math.round(Math.random() * maxPosition.x) + minPosition.x,
+              Math.round(Math.random() * maxPosition.y) + minPosition.y
             )
-            .build(),
-        });
+          )
+        )
+        .build();
     });
   };
 };

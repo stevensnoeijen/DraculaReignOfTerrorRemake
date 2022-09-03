@@ -11,7 +11,6 @@ import { Transform } from '../../components/Transform';
 import { SimEcsComponent } from './../SimEcsComponent';
 import { byClosestDistance, isInRange } from './transform';
 
-import { removeSimComponent } from './index';
 
 let world: World;
 let newWorld: IWorld;
@@ -21,15 +20,12 @@ beforeEach(() => {
   world = new World()
     .registerComponent(SimEcsComponent);
   newWorld = buildWorld().build();
-  createRandomEntities = constructCreateRandomEntities(world);
+  createRandomEntities = constructCreateRandomEntities(newWorld);
 });
 
 describe('isInRange', () => {
   it('should filter everything when targetEntity has no TransformComponent', () => {
-    const targetEntity = world.createEntity();
-    targetEntity.addComponent(SimEcsComponent, {
-      entity: newWorld.buildEntity().build(),
-    });
+    const targetEntity = newWorld.buildEntity().build();
 
     const filter = isInRange(targetEntity, 100);
 
@@ -39,16 +35,13 @@ describe('isInRange', () => {
   });
 
   it('should filter out entities that have no TransformComponent', () => {
-    const targetEntity = world.createEntity();
-    targetEntity.addComponent(SimEcsComponent, {
-      entity: newWorld.buildEntity()
-        .with(new Transform(Vector2.ZERO))
-        .build(),
-    });
+    const targetEntity = newWorld.buildEntity()
+      .with(new Transform(Vector2.ZERO))
+      .build();
 
     const entitiesWithoutTransform = createRandomEntities();
     entitiesWithoutTransform.forEach((entity) =>
-      removeSimComponent(entity, Transform)
+      entity.removeComponent(Transform)
     );
 
     const filter = isInRange(targetEntity, 100);
@@ -59,12 +52,9 @@ describe('isInRange', () => {
   });
 
   it('should filter out entities that are out of given range', () => {
-    const targetEntity = world.createEntity();
-    targetEntity.addComponent(SimEcsComponent, {
-      entity: newWorld.buildEntity()
-        .with(new Transform(Vector2.ZERO))
-        .build(),
-    });
+    const targetEntity = newWorld.buildEntity()
+      .with(new Transform(Vector2.ZERO))
+      .build();
     const inRangeEntities = createRandomEntities(
       10,
       { x: 3, y: 0 },
@@ -86,11 +76,8 @@ describe('isInRange', () => {
 
 describe('byClosestDistance', () => {
   it('should keep order sort when targetEntity has no TransformComponent', () => {
-    const targetEntity = world.createEntity();
-    targetEntity.addComponent(SimEcsComponent, {
-      entity: newWorld.buildEntity()
-        .build(),
-    });
+    const targetEntity = newWorld.buildEntity()
+      .build();
 
     const entities = createRandomEntities();
     const sorted = [...entities].sort(byClosestDistance(targetEntity));
@@ -99,17 +86,14 @@ describe('byClosestDistance', () => {
   });
 
   it('should sort entities without TransformComponent to the back', () => {
-    const targetEntity = world.createEntity();
-    targetEntity.addComponent(SimEcsComponent, {
-      entity: newWorld.buildEntity()
-        .with(new Transform(Vector2.ZERO))
-        .build(),
-    });
+    const targetEntity = newWorld.buildEntity()
+      .with(new Transform(Vector2.ZERO))
+      .build();
 
     const entities = createRandomEntities();
-    removeSimComponent(entities[0], Transform);
-    removeSimComponent(entities[1], Transform);
-    removeSimComponent(entities[2], Transform);
+    entities[0].removeComponent(Transform);
+    entities[1].removeComponent(Transform);
+    entities[2].removeComponent(Transform);
 
     const sorted = [...entities].sort(byClosestDistance(targetEntity));
 
@@ -118,20 +102,13 @@ describe('byClosestDistance', () => {
   });
 
   it('should sort entities by distance', () => {
-    const targetEntity = world.createEntity();
-    targetEntity.addComponent(SimEcsComponent, {
-      entity: newWorld.buildEntity()
-        .with(new Transform(Vector2.ZERO))
-        .build(),
-    });
+    const targetEntity = newWorld.buildEntity()
+      .with(new Transform(Vector2.ZERO))
+      .build();
 
-    const closestEntity = world
-      .createEntity()
-      .addComponent(SimEcsComponent, {
-        entity: newWorld.buildEntity()
+    const closestEntity = newWorld.buildEntity()
           .with(new Transform(Vector2.ZERO))
-          .build(),
-      });
+          .build();
 
     const sorted = [...createRandomEntities(), closestEntity].sort(
       byClosestDistance(targetEntity)

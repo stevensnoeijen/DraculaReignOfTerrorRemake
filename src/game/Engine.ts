@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { World } from 'ecsy';
-import { buildWorld, IEntity, IWorld } from 'sim-ecs';
+import { buildWorld, Entity, IEntity, IWorld } from 'sim-ecs';
+import { nanoid } from 'nanoid';
 
 import { GridRenderSystem2 } from './systems/pixi/GridRenderSystem';
 import { Follow } from './components/ai/Follow';
@@ -54,6 +55,8 @@ export interface IUnitProps {
     number: number;
   };
 }
+
+Entity.uuidFn = nanoid;
 
 export class Engine {
   // TODO: rename after migration of ecsy, also update tests

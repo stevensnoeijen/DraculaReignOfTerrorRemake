@@ -1,5 +1,6 @@
 import { Entity } from 'ecsy';
 import { Class } from 'utility-types';
+import { IEntity } from 'sim-ecs';
 
 import { EntityHelper } from '../../EntityHelper';
 
@@ -10,23 +11,19 @@ import { Team } from '~/game/components/Team';
 import { Alive } from '~/game/components/Alive';
 export * from './transform';
 
-export const isOnTeam = (teamId: number): Predicate<Entity> => {
-  return (entity: Entity) => {
-    const simEcsComponent = entity.getComponent(SimEcsComponent);
-
-    return simEcsComponent?.entity.getComponent(Team)?.id === teamId ?? false;
-  };
+export const isOnTeam = (teamId: number): Predicate<IEntity> => {
+  return (entity) => entity.getComponent(Team)?.id === teamId ?? false;
 };
 
-export const isSameEntity = (entity: Entity): Predicate<Entity> => {
-  return (other: Entity) => other.id === entity.id;
+export const isSameEntity = (entity: IEntity): Predicate<IEntity> => {
+  return (other) => other.id === entity.id;
 };
 
 export const getEntityAtPosition = (
-  entities: Entity[],
+  entities: IEntity[],
   x: number,
   y: number
-): Entity | null => {
+): IEntity | null => {
   return (
     entities.find((entity) =>
       EntityHelper.isPositionInsideEntity(entity, x, y)
@@ -34,8 +31,8 @@ export const getEntityAtPosition = (
   );
 };
 
-export const isAlive = (entity: Entity) =>
-  entity.getComponent(SimEcsComponent)?.entity.getComponent(Alive)?.alive ?? false;
+export const isAlive = (entity: IEntity) =>
+  entity.getComponent(Alive)?.alive ?? false;
 
 // TODO: remove after migration of ecsy to sim-ecs
 export const hasSimComponent = (entity: Entity, type: Class<Object>): boolean => {

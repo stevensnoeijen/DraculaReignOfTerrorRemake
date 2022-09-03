@@ -1,6 +1,5 @@
 import { createSystem, queryComponents, Write } from 'sim-ecs';
 
-import { EcsyEntity } from './../../components/EcsyEntity';
 import { isAlive } from './../utils/index';
 
 import { Target } from '~/game/components/ai/Target';
@@ -18,7 +17,7 @@ export const TargetSystem = createSystem({
       return;
     }
 
-    if (!isAlive(target.entity.getComponent(EcsyEntity)!.entity)) {
+    if (!isAlive(target.entity)) {
       target.entity = null;
     }
   });

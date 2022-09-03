@@ -1,10 +1,8 @@
 import { buildWorld, IWorld } from 'sim-ecs';
-import { World } from 'ecsy';
 
 import { Transform } from '../../../../components/Transform';
 import { CreateRandomEntities } from '../../../../__tests__/utils';
 
-import { SimEcsComponent } from './../../../../systems/SimEcsComponent';
 import { Vector2 } from './../../../../math/Vector2';
 import { constructCreateRandomEntities } from './../../../../__tests__/utils';
 import { getEntitiesInRange } from './utils';
@@ -13,27 +11,20 @@ import { Alive } from '~/game/components/Alive';
 import { Team } from '~/game/components/Team';
 
 describe('getEntitiesInRange', () => {
-  let world: World;
-  let newWorld: IWorld;
+  let world: IWorld;
   let createRandomEntities: CreateRandomEntities;
 
   beforeEach(() => {
-    newWorld = buildWorld().build();
-    world = new World()
-      .registerComponent(SimEcsComponent);
+    world = buildWorld().build();
     createRandomEntities = constructCreateRandomEntities(world);
   });
 
   it('should success set target when there is an enemy within range', () => {
-    const entity = world
-      .createEntity()
-      .addComponent(SimEcsComponent, {
-        entity: newWorld.buildEntity()
-          .with(new Team(1))
-          .with(new Alive(true))
-          .with(new Transform(Vector2.ZERO))
-          .build(),
-      });
+    const entity = world.buildEntity()
+      .with(new Team(1))
+      .with(new Alive(true))
+      .with(new Transform(Vector2.ZERO))
+      .build();
 
     const entities = [
       ...createRandomEntities(10, { x: 5, y: 5 }, { x: 50, y: 50 }),

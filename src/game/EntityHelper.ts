@@ -1,4 +1,5 @@
 import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
 import { getSimComponent } from './systems/utils/index';
 import { Transform } from './components/Transform';
@@ -10,12 +11,12 @@ import { Vector2 } from './math/Vector2';
 
 export class EntityHelper {
   public static isPositionInsideEntity(
-    entity: Entity,
+    entity: IEntity,
     x: number,
     y: number
   ): boolean {
-    const transform = getSimComponent(entity, Transform);
-    const size = getSimComponent(entity, Size);
+    const transform = entity.getComponent(Transform);
+    const size = entity.getComponent(Size);
 
     if (!transform || !size) {
       // position or/and size isnt set
@@ -38,10 +39,10 @@ export class EntityHelper {
    * @returns {boolean} true if the objects is inside the container
    */
   public static isObjectInsideContainer(
-    object: Entity,
+    object: IEntity,
     container: { x: number; y: number; width: number; height: number }
   ): boolean {
-    const objectTransform = getSimComponent(object, Transform);
+    const objectTransform = object.getComponent(Transform);
     if (!objectTransform) {
       return false;
     }
@@ -54,16 +55,16 @@ export class EntityHelper {
     );
   }
 
-  public static deselect(entity: Entity): void {
-    const selectable = getSimComponent(entity, Selectable);
+  public static deselect(entity: IEntity): void {
+    const selectable = entity.getComponent(Selectable);
     if (!selectable) {
       return;
     }
     selectable.selected = false;
   }
 
-  public static select(entity: Entity): void {
-    const selectable = getSimComponent(entity, Selectable);
+  public static select(entity: IEntity): void {
+    const selectable = entity.getComponent(Selectable);
     if (!selectable) {
       return;
     }

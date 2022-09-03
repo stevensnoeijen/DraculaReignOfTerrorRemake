@@ -1,13 +1,11 @@
-import { Entity } from 'ecsy';
 import * as PIXI from 'pixi.js';
-import { createSystem, queryComponents, Read, ReadResource, ReadEntity } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadResource, ReadEntity, IEntity } from 'sim-ecs';
 
 import { EntityHelper } from '../../EntityHelper';
 import { Input } from '../../Input';
-import { getEntityAtPosition, getSimComponent } from '../utils';
+import { getEntityAtPosition } from '../utils';
 import { Selectable } from '../../components/input/Selectable';
 import { isOnTeam } from '../utils/index';
-import { EcsyEntity } from '../../components/EcsyEntity';
 
 import { MouseSelection } from './MouseSelection';
 
@@ -19,13 +17,13 @@ const mouseSelection = new MouseSelection();
    */
 let deselectEntitiesTimeout: ReturnType<typeof setTimeout> | null = null;
 
-const getSelected = (entities: Entity[]): Entity[] => {
+const getSelected = (entities: IEntity[]): IEntity[] => {
   return entities.filter(
-    (entity) => getSimComponent(entity, Selectable)?.selected || false
+    (entity) => entity.getComponent(Selectable)?.selected || false
   );
 };
 
-const selectEntities = (entities: Entity[]) => {
+const selectEntities = (entities: IEntity[]) => {
   if (mouseSelection.isSimpleClick()) {
     selectOneEntity(entities);
   } else {
@@ -33,18 +31,18 @@ const selectEntities = (entities: Entity[]) => {
   }
 };
 
-const updateSelect = (entities: Entity[]) => {
+const updateSelect = (entities: IEntity[]) => {
   mouseSelection.update();
   getSelected(entities)
     .forEach(EntityHelper.deselect);
 };
 
-const endSelect = (entities: Entity[]) => {
+const endSelect = (entities: IEntity[]) => {
   selectEntities(entities);
   mouseSelection.end();
 };
 
-const selectEntitiesInsideSelectionRectangle = (entities: Entity[]) => {
+const selectEntitiesInsideSelectionRectangle = (entities: IEntity[]) => {
   const width = Input.mousePosition.x - mouseSelection.startPosition!.x;
   const height = Input.mousePosition.y - mouseSelection.startPosition!.y;
 
@@ -60,7 +58,7 @@ const selectEntitiesInsideSelectionRectangle = (entities: Entity[]) => {
     .filter(isOnTeam(1))
     .forEach((entity) => EntityHelper.select(entity));
 };
-const selectOneEntity = (entities: Entity[]) => {
+const selectOneEntity = (entities: IEntity[]) => {
   // single unit select
   const entity = getEntityAtPosition(
     entities,
@@ -81,7 +79,7 @@ const selectOneEntity = (entities: Entity[]) => {
   }
 };
 
-const updateMouseSelection = (entities: Entity[]) => {
+const updateMouseSelection = (entities: IEntity[]) => {
   if (Input.isMouseDblClick() && deselectEntitiesTimeout !== null) {
     clearTimeout(deselectEntitiesTimeout);
   }
@@ -116,7 +114,7 @@ export const MouseSelectionSystem = createSystem({
   query
 }) => {
   const entities = Array.from(query.iter())
-    .map(e => e.entity.getComponent(EcsyEntity)!.entity);
+    .map(e => e.entity);
 
   updateMouseSelection(entities);
 })

@@ -1,4 +1,4 @@
-import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
 import {
   isOnTeam,
@@ -9,20 +9,19 @@ import {
 } from '../../../../systems/utils/index';
 import { not } from '../../../../utils';
 
-import { SimEcsComponent } from '~/game/systems/SimEcsComponent';
 import { Team } from '~/game/components/Team';
 
 export const getEntitiesInRange = (
-  sourceEntity: Entity,
-  entities: Entity[],
+  sourceEntity: IEntity,
+  entities: IEntity[],
   range: number
-): Entity[] => {
+) => {
   return entities
     .filter(not(isSameEntity(sourceEntity)))
     .filter(
       not(
         isOnTeam(
-          sourceEntity.getComponent(SimEcsComponent)!.entity.getComponent(Team)!.id
+          sourceEntity.getComponent(Team)!.id
         )
       )
     )
