@@ -12,7 +12,12 @@ export class GameState extends State {
   activate(actions: ITransitionActions): void | Promise<void> {
     const engine = actions.getResource(Engine);
     const entityLoader = new EntityLoader(actions, engine.animationService);
-    engine.scenario!.load(entityLoader);
+
+    if (engine.scenario == null) {
+      throw new Error('No scenario loaded');
+    }
+
+    engine.scenario.load(entityLoader);
 
     const eventBus = actions.getResource(EventBus<Events>);
 

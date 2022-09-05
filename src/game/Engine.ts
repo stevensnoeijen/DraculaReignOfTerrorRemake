@@ -10,7 +10,6 @@ import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { Scenario } from './scenarios/Scenario';
 import { GameState } from './states/GameState';
-import * as scenarios from './scenarios/factory';
 import { ScenarioConstructor } from './scenarios/types';
 
 Entity.uuidFn = nanoid;
@@ -21,7 +20,7 @@ export class Engine {
   private _animationService!: AnimationService;
   private options: Options;
 
-  public scenario: Scenario | null = null;
+  private _scenario: Scenario | null = null;
 
   constructor(private readonly app: PIXI.Application) {
     this.world = buildWorld()
@@ -53,29 +52,18 @@ export class Engine {
           this.app.loader.resources['unit-spritesheet'].spritesheet!,
           this.app.loader.resources['animation-models'].data as AnimationModelsJson
         );
-        this.loadScenario();
+
+        this.world.run({
+          initialState: GameState,
+        });
       });
   }
 
-  private async loadScenario() {
-    const scenarioConstructor = this.getScenarioConstructor();
-    this.scenario = new scenarioConstructor(this.app, this);
-
-    this.world.run({
-      initialState: GameState,
-    });
+  public get scenario () {
+    return this._scenario;
   }
 
-  private getScenarioConstructor(): ScenarioConstructor {
-    if (this.options.scenario == null || this.options.scenario[0] == null)
-      return scenarios.DEFAULT_SCENARIO;
-
-    const scenarioName = this.options.scenario[0].toLowerCase();
-    const scenarioConstructor = scenarios.constructorByName(scenarioName);
-    if (scenarioConstructor == null) {
-      throw new Error('scenario not found');
-    }
-
-    return scenarioConstructor;
+  public setScenario(scenarioConstructor: ScenarioConstructor) {
+    this._scenario = new scenarioConstructor(this.app, this);
   }
 }
