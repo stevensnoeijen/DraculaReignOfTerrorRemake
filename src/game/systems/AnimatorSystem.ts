@@ -1,9 +1,9 @@
 import { createSystem, queryComponents, Read, ReadEvents } from 'sim-ecs';
 
-import { rotationToDirection } from '../animation/load';
-import { Transform } from '../components/Transform';
 import { StoppedMoving } from '../events/StoppedMoving';
+import { StoppedAttacking } from '../events/StoppedAttacking';
 
+import { StartedAttacking } from './../events/StartedAttacking';
 import { StartedMoving } from './../events/StartedMoving';
 import { Died } from './../events/Died';
 import { Animator } from './../animation/Animator';
@@ -12,6 +12,8 @@ import { setEntityAnimation } from './utils/animation';
 export const AnimatorSystem = createSystem({
     startedMoving: ReadEvents(StartedMoving),
     stoppedMoving: ReadEvents(StoppedMoving),
+    startedAttacking: ReadEvents(StartedAttacking),
+    stoppedAttacking: ReadEvents(StoppedAttacking),
     died: ReadEvents(Died),
 
     query: queryComponents({
@@ -20,27 +22,29 @@ export const AnimatorSystem = createSystem({
   }).withRunFunction(({
     startedMoving,
     stoppedMoving,
+    startedAttacking,
+    stoppedAttacking,
     died,
 
     query
   }) => {
-    startedMoving.execute((event) => {
-      console.log('receive started moving');
+    startedMoving.execute(event => {
       setEntityAnimation(event.entity, 'move');
     });
-    stoppedMoving.execute((event) => {
-      console.log('receive stopped moving');
+    stoppedMoving.execute(event => {
+      setEntityAnimation(event.entity, 'idle');
+    });
+    startedAttacking.execute(event => {
+      setEntityAnimation(event.entity, 'attack');
+    });
+    stoppedAttacking.execute(event => {
       setEntityAnimation(event.entity, 'idle');
     });
 
     died.execute((event) => {
-      console.log('handle died');
       if (!query.matchesEntity(event.entity)) return;
 
-      event.entity.getComponent(Animator)!.set(
-        'dead',
-        rotationToDirection(event.entity.getComponent(Transform)!.rotation)
-      );
+      setEntityAnimation(event.entity, 'dead');
    });
   })
   .build();
