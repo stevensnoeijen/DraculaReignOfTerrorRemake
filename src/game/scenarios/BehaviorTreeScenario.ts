@@ -21,6 +21,7 @@ import {
   IsEnemyInAggroRange,
 } from '../ai/behaviortree/nodes/entity';
 
+import { EntityLoader } from './../EntityLoader';
 import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
@@ -38,8 +39,8 @@ export class BehaviorTreeScenario extends Scenario {
     return this.map;
   }
 
-  public load(): void {
-    const player = this.engine.createUnit({
+  public load(entityLoader: EntityLoader): void {
+    entityLoader.createUnit({
       position: cellPositionToVector(1, 1),
       color: 'blue',
       team: {
@@ -47,7 +48,7 @@ export class BehaviorTreeScenario extends Scenario {
       },
     });
 
-    const enemy = this.engine.createUnit({
+     entityLoader.createUnit({
       position: cellPositionToVector(1, 3),
       color: 'red',
       team: {
@@ -55,7 +56,7 @@ export class BehaviorTreeScenario extends Scenario {
       },
     });
 
-    const entities = [player, enemy];
+    const entities = Array.from(this.engine.world.getEntities());
 
     const tree = new Tree(
       new Selector([
@@ -87,8 +88,8 @@ export class BehaviorTreeScenario extends Scenario {
         ]),
       ])
     );
-    tree.root.setData('entity', player);
+    tree.root.setData('entity', entities[0]);
 
-    player.addComponent(new BehaviorTree(tree));
+    entities[0].addComponent(new BehaviorTree(tree));
   }
 }

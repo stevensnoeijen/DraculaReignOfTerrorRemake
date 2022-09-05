@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Engine } from '../Engine';
+import { EntityLoader } from '../EntityLoader';
 
 export abstract class Scenario {
   abstract get collisionMap(): number[][];
@@ -10,5 +11,5 @@ export abstract class Scenario {
     protected readonly engine: Engine
   ) {}
 
-  abstract load(): void;
+  abstract load(entityLoader: EntityLoader): void;
 }

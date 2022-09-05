@@ -5,6 +5,7 @@ import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
 import { Engine } from '../Engine';
 
+import { EntityLoader } from './../EntityLoader';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
 
@@ -21,7 +22,7 @@ export class RandomUnitsScenario extends Scenario {
     return this._collisionMap;
   }
 
-  public load(): void {
+  public load(entityLoader: EntityLoader): void {
     Array.from(Array(100)).forEach(() => {
       const vector = toWorldPositionCellCenter(
         new Vector2(
@@ -31,7 +32,7 @@ export class RandomUnitsScenario extends Scenario {
         )
       );
 
-      this.engine.createUnit({
+      entityLoader.createUnit({
         position: vector,
         color: 'red',
         team: {
