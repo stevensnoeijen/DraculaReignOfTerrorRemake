@@ -2,37 +2,21 @@ import * as PIXI from 'pixi.js';
 import { buildWorld, Entity, IEntity, IWorld } from 'sim-ecs';
 import { nanoid } from 'nanoid';
 
-import { LoadScenarioSystem } from './systems/LoadScenarioSystem';
-import { GridRenderSystem } from './systems/pixi/GridRenderSystem';
+import { gameSchedule } from './states/gameSchedule';
 import { Follow } from './components/ai/Follow';
-import { KeyboardControlledSystem } from './systems/input/KeyboardControlledSystem';
-import { AliveSystem } from './systems/AliveSystem';
 import { Transform } from './components/Transform';
 import { Selectable } from './components/input/Selectable';
 import { MouseControlled } from './components/input/MouseControlled';
 import { MoveVelocity } from './components/movement/MoveVelocity';
-import { MouseSelectionSystem } from './systems/input/MouseSelectionSystem';
-import { HealthSystem } from './systems/HealthSystem';
-import { InputSystem } from './systems/input/InputSystem';
-import { MovePositionDirectSystem } from './systems/movement/MovePositionDirectSystem';
-import { MouseControlledSystem } from './systems/input/MouseControlledSystem';
-import { MoveVelocitySystem } from './systems/movement/MoveVelocitySystem';
-import { SpriteRenderSystem } from './systems/pixi/SpriteRenderSystem';
-import { GraphicsRenderSystem } from './systems/pixi/GraphicsRenderSystem';
 import { getOptions, Options, Position, randomRotation } from './utils';
 import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
 import { PathFindingScenario } from './scenarios/PathFindingScenario';
 import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
-import { MovePathSystem } from './systems/movement/MovePathSystem';
 import { Collider } from './components/Collider';
 import { EventBus } from './EventBus';
 import { ScenarioLoadedEvent, Events } from './Events';
-import { GameTimeSystem } from './systems/GameTimeSystem';
 import { Combat } from './components/ai/Combat';
-import { FollowSystem } from './systems/ai/FollowSystem';
-import { BehaviorTreeSystem } from './systems/ai/BehaviorTreeSystem';
 import { Target } from './components/ai/Target';
-import { TargetSystem } from './systems/ai/TargetSystem';
 import { Controlled } from './components/input/Controlled';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
@@ -45,6 +29,7 @@ import { Constants } from './Constants';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
 import { MovePath } from './components/movement/MovePath';
 import { Scenario } from './scenarios/Scenario';
+import { GameState } from './states/GameState';
 
 export interface IUnitProps {
   color: 'red' | 'blue';
@@ -67,27 +52,7 @@ export class Engine {
   constructor(private readonly app: PIXI.Application) {
     this.world = buildWorld()
       .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
-      .withDefaultScheduling(root =>
-        root.addNewStage(stage => {
-          stage.addSystem(LoadScenarioSystem);
-          stage.addSystem(GameTimeSystem);
-          stage.addSystem(InputSystem);
-          stage.addSystem(AliveSystem);
-          stage.addSystem(HealthSystem);
-          stage.addSystem(GraphicsRenderSystem);
-          stage.addSystem(SpriteRenderSystem);
-          stage.addSystem(MoveVelocitySystem);
-          stage.addSystem(MovePositionDirectSystem);
-          stage.addSystem(MovePathSystem);
-          stage.addSystem(MouseSelectionSystem);
-          stage.addSystem(MouseControlledSystem);
-          stage.addSystem(KeyboardControlledSystem);
-          stage.addSystem(FollowSystem);
-          stage.addSystem(BehaviorTreeSystem);
-          stage.addSystem(TargetSystem);
-          stage.addSystem(GridRenderSystem);
-        })
-      )
+      .withStateScheduling(GameState, root => root.fromPrefab(gameSchedule))
       .build();
     this.world.addResource(app);
 
@@ -180,7 +145,9 @@ export class Engine {
       scenario = new RandomUnitsScenario(this.app, this);
   }
 
-    this.world.run();
+    this.world.run({
+      initialState: GameState,
+    });
     scenario.load();
     // TODO: remove temp solution for register listener in MouseControlledSystem
     setTimeout(() => {
