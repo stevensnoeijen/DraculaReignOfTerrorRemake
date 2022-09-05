@@ -8,7 +8,7 @@ import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
 import { PathFindingScenario } from './scenarios/PathFindingScenario';
 import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
 import { EventBus } from './EventBus';
-import { Events, ScenarioLoadedEvent } from './Events';
+import { Events } from './Events';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { Scenario } from './scenarios/Scenario';
@@ -81,9 +81,5 @@ export class Engine {
     this.world.run({
       initialState: GameState,
     });
-    // TODO: remove temp solution for register listener in MouseControlledSystem
-    setTimeout(() => {
-      this.eventBus.emit<ScenarioLoadedEvent>('scenario:loaded', { scenario: this.scenario! });
-    }, 100);
   }
 }
