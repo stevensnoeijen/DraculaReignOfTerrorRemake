@@ -1,11 +1,12 @@
-import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write, ReadOptional } from 'sim-ecs';
+import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write, ReadOptional, WriteEvents } from 'sim-ecs';
+import { IEventWriter } from 'sim-ecs/dist/events';
 
 import { cellPositionToVector } from '../../utils';
 import { Vector2 } from '../../math/Vector2';
-import { setEntityAnimation } from '../utils/animation';
 import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 import { Controlled } from '../../components/input/Controlled';
+import { StartedMoving } from '../../events/StartedMoving';
 
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
@@ -35,7 +36,8 @@ const updateMovePosition = (
   movePath: MovePath,
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
-  controlled: Controlled | null
+  controlled: Controlled | null,
+  startedMoving: IEventWriter<typeof StartedMoving>,
 ) => {
   if (movePath.path.length == 0) {
     if (
@@ -43,7 +45,7 @@ const updateMovePosition = (
       Vector2.ZERO.equals(moveVelocity.velocity)
     ) {
       if (controlled != null)
-        controlled.by = null;
+      controlled.by = null;
     }
 
     return;
@@ -84,10 +86,13 @@ const updateMovePosition = (
     );
   }
 
-  setEntityAnimation(entity, 'move');
+  if (!transformComponent.position.equals(Vector2.ZERO))// first cell
+    startedMoving.publish(new StartedMoving(entity));
 };
 
 export const MovePathSystem = createSystem({
+  startedMoving: WriteEvents(StartedMoving),
+
   query: queryComponents({
     entity: ReadEntity(),
     movePath: Write(MovePath),
@@ -97,7 +102,9 @@ export const MovePathSystem = createSystem({
   }),
 })
 .withRunFunction(({
-  query
+  startedMoving,
+
+  query,
 }) => {
   query.execute(({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
     updateMovePosition(
@@ -107,6 +114,7 @@ export const MovePathSystem = createSystem({
       moveVelocity,
       movePositionDirect,
       controlled ?? null,
+      startedMoving,
     );
   });
 })

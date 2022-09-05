@@ -9,6 +9,7 @@ import { Follow } from '../../components/ai/Follow';
 
 
 import { EventBus } from '~/game/EventBus';
+import { Target } from '~/game/components/ai/Target';
 
 let collsionMap: number[][] | null = null;
 
@@ -16,6 +17,8 @@ export const FollowSystem = createSystem({
   eventBus: ReadResource(EventBus),
   query: queryComponents({
     follow: Read(Follow),
+    target: Write(Target),
+
     transform: Read(Transform),
     movePath: Write(MovePath),
   }),

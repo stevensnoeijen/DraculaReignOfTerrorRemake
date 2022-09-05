@@ -17,6 +17,8 @@ import { MovePathSystem } from '../systems/movement/MovePathSystem';
 import { GridRenderSystem } from '../systems/pixi/GridRenderSystem';
 import { GraphicsRenderSystem } from '../systems/pixi/GraphicsRenderSystem';
 
+import { AnimatorSystem } from './../systems/AnimatorSystem';
+
 export const gameSchedule: ISyncPointPrefab = {
   stages: [
     [GameTimeSystem],
@@ -36,6 +38,7 @@ export const gameSchedule: ISyncPointPrefab = {
       TargetSystem,
       FollowSystem,
     ],
+    [AnimatorSystem],
     [
       GridRenderSystem,
       GraphicsRenderSystem,

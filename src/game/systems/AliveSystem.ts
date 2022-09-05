@@ -1,35 +1,28 @@
-import { createSystem, IEntity, queryComponents, Read, ReadEntity } from 'sim-ecs';
+import { createSystem, WriteEvents, queryEntities, With } from 'sim-ecs';
 
 import { Alive } from '../components/Alive';
-import { rotationToDirection } from '../animation/load';
 import { Health } from '../components/Health';
-import { Transform } from '../components/Transform';
 import { Selectable } from '../components/input/Selectable';
-
-import { Animator } from './../animation/Animator';
-
-
-const handleDead = (entity: IEntity, transform: Transform): void => {
-  entity.removeComponent(Selectable);
-  entity.removeComponent(Health);
-
-  entity.getComponent(Animator)!.set(
-    'dead',
-    rotationToDirection(transform.rotation)
-  );
-};
+import { Died } from '../events/Died';
 
 export const AliveSystem = createSystem({
-    query: queryComponents({
-      entity: ReadEntity(),
-      alive: Read(Alive),
-      transform: Read(Transform),
-    }),
+    died: WriteEvents(Died),
+    query: queryEntities(With(Alive), With(Health)),
   }).withRunFunction(({
+    died,
     query
   }) => {
-    query.execute(({ alive, entity, transform }) => {
-      if (!alive.alive) handleDead(entity, transform);
+    query.execute((entity) => {
+      const alive = entity.getComponent(Alive)!;
+      const health = entity.getComponent(Health);
+      if (alive.alive || health == null) {
+        return;
+      }
+
+      entity.removeComponent(Health);
+      entity.removeComponent(Selectable);
+
+      died.publish(new Died(entity));
     });
   })
   .build();
