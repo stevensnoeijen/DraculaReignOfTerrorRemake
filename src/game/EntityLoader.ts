@@ -81,6 +81,6 @@ export class EntityLoader {
       .with(new Combat(80, 16, 1))
       .build();
 
-      this.world.flushCommands();
+      this.world.flushCommands();// TODO: optimise this
   }
 }
