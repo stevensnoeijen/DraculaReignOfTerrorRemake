@@ -4,15 +4,14 @@ import { nanoid } from 'nanoid';
 
 import { gameSchedule } from './states/gameSchedule';
 import { getOptions, Options } from './utils';
-import { RandomUnitsScenario } from './scenarios/RandomUnitsScenario';
-import { PathFindingScenario } from './scenarios/PathFindingScenario';
-import { BehaviorTreeScenario } from './scenarios/BehaviorTreeScenario';
 import { EventBus } from './EventBus';
 import { Events } from './Events';
 import { AnimationService } from './animation/AnimationService';
 import { AnimationModelsJson } from './animation/api';
 import { Scenario } from './scenarios/Scenario';
 import { GameState } from './states/GameState';
+import * as scenarios from './scenarios/factory';
+import { ScenarioConstructor } from './scenarios/types';
 
 Entity.uuidFn = nanoid;
 
@@ -22,7 +21,7 @@ export class Engine {
   private _animationService!: AnimationService;
   private options: Options;
 
-  private readonly eventBus: EventBus<Events>;
+  public scenario: Scenario | null = null;
 
   constructor(private readonly app: PIXI.Application) {
     this.world = buildWorld()
@@ -32,7 +31,7 @@ export class Engine {
     this.world.addResource(app);
     this.world.addResource(this);
 
-    const eventBus = this.eventBus = new EventBus<Events>();
+    const eventBus = new EventBus<Events>();
     this.world.addResource(eventBus);
 
     this.options = getOptions();
@@ -58,28 +57,25 @@ export class Engine {
       });
   }
 
-  public scenario: Scenario | null = null;
-
   private async loadScenario() {
-    if (this.options.scenario != null && this.options.scenario[0] != null) {
-      const scenarioName = this.options.scenario[0].toLowerCase();
-      if (scenarioName === 'randomunits') {
-        this.scenario = new RandomUnitsScenario(this.app, this);
-      } else if (scenarioName === 'pathfinding') {
-        this.scenario = new PathFindingScenario(this.app, this);
-      } else if (scenarioName === 'behaviortree') {
-        this.scenario = new BehaviorTreeScenario(this.app, this);
-      } else {
-        alert('scenario not found');
-        return;
-      }
-    } else {
-      // default
-      this.scenario = new RandomUnitsScenario(this.app, this);
-  }
+    const scenarioConstructor = this.getScenarioConstructor();
+    this.scenario = new scenarioConstructor(this.app, this);
 
     this.world.run({
       initialState: GameState,
     });
+  }
+
+  private getScenarioConstructor(): ScenarioConstructor {
+    if (this.options.scenario == null || this.options.scenario[0] == null)
+      return scenarios.DEFAULT_SCENARIO;
+
+    const scenarioName = this.options.scenario[0].toLowerCase();
+    const scenarioConstructor = scenarios.constructorByName(scenarioName);
+    if (scenarioConstructor == null) {
+      throw new Error('scenario not found');
+    }
+
+    return scenarioConstructor;
   }
 }
