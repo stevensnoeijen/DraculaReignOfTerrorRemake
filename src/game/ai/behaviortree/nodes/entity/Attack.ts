@@ -6,7 +6,6 @@ import { Combat } from '../../../../components/ai/Combat';
 import { EntityNode } from './EntityNode';
 
 import { BehaviorTree } from '~/game/components/ai/BehaviorTree';
-import { StartedAttacking } from '~/game/events/StartedAttacking';
 
 export class Attack extends EntityNode {
   protected evaluateByEntity(entity: IEntity): State {
@@ -15,7 +14,7 @@ export class Attack extends EntityNode {
 
     const behaviorTree = entity.getComponent(BehaviorTree);
     if (behaviorTree != null) {
-      behaviorTree.addEvent(new StartedAttacking(entity));
+      // behaviorTree.addEvent(new StartedAttacking(entity)); // TODO: set to Hit Event
     }
 
     combat.attack(target);

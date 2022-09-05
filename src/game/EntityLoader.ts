@@ -20,6 +20,7 @@ import { Controlled } from './components/input/Controlled';
 import { MouseControlled } from './components/input/MouseControlled';
 import { Follow } from './components/ai/Follow';
 import { Target } from './components/ai/Target';
+import { UnitState } from './components/UnitState';
 
 export interface IUnitProps {
   color: 'red' | 'blue';
@@ -79,6 +80,7 @@ export class EntityLoader {
       .with(Follow)
       .with(Target)
       .with(new Combat(80, 16, 1))
+      .with(UnitState)
       .build();
 
       this.world.flushCommands();// TODO: optimise this

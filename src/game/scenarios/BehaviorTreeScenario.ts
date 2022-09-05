@@ -9,6 +9,7 @@ import {
   Timer,
   Inventer,
   Sequence,
+  Parallel,
 } from '../ai/behaviortree/nodes/core';
 import {
   SetFollow,
@@ -20,11 +21,15 @@ import {
   SetTarget,
   IsEnemyInAggroRange,
 } from '../ai/behaviortree/nodes/entity';
+import { SendEvent } from '../ai/behaviortree/nodes/entity/SendEvent';
+import { StartedAttacking } from '../events/StartedAttacking';
+import { IsUnitState } from '../ai/behaviortree/nodes/entity/IsUnitState';
 
 import { EntityLoader } from './../EntityLoader';
 import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
+
 
 export class BehaviorTreeScenario extends Scenario {
   private map: number[][];
@@ -75,10 +80,16 @@ export class BehaviorTreeScenario extends Scenario {
           new Selector([
             new Sequence([
               new IsEnemyInAttackRange(entities),
-              new Timer({
-                delay: 1000,
-                children: [new Attack()],
-              }),
+              new Parallel([
+                new Sequence([
+                  new Inventer([new IsUnitState('attack')]),
+                  new SendEvent(StartedAttacking),
+                 ]),
+                new Timer({
+                  delay: 1000,
+                  children: [new Attack()],
+                }),
+              ])
             ]),
             new Sequence([
               new Inventer([new IsControlledBy('player')]),

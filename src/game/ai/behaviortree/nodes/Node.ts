@@ -63,6 +63,10 @@ export class Node {
     this.data.set(key, value);
   }
 
+  public hasData(key: string): boolean {
+    return this.data.get(key) != null;
+  }
+
   public hasChildren(): boolean {
     return this.children.length > 0;
   }

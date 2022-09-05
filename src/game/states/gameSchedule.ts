@@ -16,6 +16,7 @@ import { MovePositionDirectSystem } from '../systems/movement/MovePositionDirect
 import { MovePathSystem } from '../systems/movement/MovePathSystem';
 import { GridRenderSystem } from '../systems/pixi/GridRenderSystem';
 import { GraphicsRenderSystem } from '../systems/pixi/GraphicsRenderSystem';
+import { UnitStateSystem } from '../systems/UnitStateSystem';
 
 import { AnimatorSystem } from './../systems/AnimatorSystem';
 
@@ -33,12 +34,13 @@ export const gameSchedule: ISyncPointPrefab = {
     [MoveVelocitySystem],
     [MovePositionDirectSystem],
     [MovePathSystem],
+    [AnimatorSystem],
     [
       BehaviorTreeSystem,
       TargetSystem,
       FollowSystem,
+      UnitStateSystem,
     ],
-    [AnimatorSystem],
     [
       GridRenderSystem,
       GraphicsRenderSystem,
