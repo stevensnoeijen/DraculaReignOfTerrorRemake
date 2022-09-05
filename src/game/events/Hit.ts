@@ -1,3 +1,3 @@
 import { EntityEvent } from './EntityEvent';
 
-export class Died extends EntityEvent {}
+export class Hit extends EntityEvent {}

@@ -1,3 +1,3 @@
-import { AbstractEntityEvent } from './AbstractEntityEvent';
+import { EntityEvent } from './EntityEvent';
 
-export class StartedMoving extends AbstractEntityEvent {}
+export class StartedMoving extends EntityEvent {}

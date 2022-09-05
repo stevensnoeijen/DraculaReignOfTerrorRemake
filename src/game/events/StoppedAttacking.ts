@@ -1,3 +1,3 @@
-import { AbstractEntityEvent } from './AbstractEntityEvent';
+import { EntityEvent } from './EntityEvent';
 
-export class StoppedAttacking extends AbstractEntityEvent {}
+export class StoppedAttacking extends EntityEvent {}

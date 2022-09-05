@@ -6,12 +6,11 @@ import { State } from '../Node';
 import { EntityNode } from './EntityNode';
 
 import { BehaviorTree } from '~/game/components/ai/BehaviorTree';
-import { AbstractEntityEventConstructor } from '~/game/events/AbstractEntityEvent';
-
+import { EntityEventConstructor } from '~/game/events/EntityEvent';
 
 export class SendEvent extends EntityNode {
   constructor(
-    private eventConstructor: AbstractEntityEventConstructor,
+    private eventConstructor: EntityEventConstructor,
   ) {
     super([]);
   }

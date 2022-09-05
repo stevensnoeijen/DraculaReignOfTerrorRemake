@@ -24,6 +24,7 @@ import {
 import { SendEvent } from '../ai/behaviortree/nodes/entity/SendEvent';
 import { StartedAttacking } from '../events/StartedAttacking';
 import { IsUnitState } from '../ai/behaviortree/nodes/entity/IsUnitState';
+import { Hit } from '../events/Hit';
 
 import { EntityLoader } from './../EntityLoader';
 import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
@@ -87,7 +88,10 @@ export class BehaviorTreeScenario extends Scenario {
                  ]),
                 new Timer({
                   delay: 1000,
-                  children: [new Attack()],
+                  execute: new Sequence([
+                    new Attack(),
+                    new SendEvent(Hit)
+                  ]),
                 }),
               ])
             ]),

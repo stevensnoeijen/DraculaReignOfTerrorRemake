@@ -3,14 +3,12 @@ import { createSystem, queryComponents, Write, WriteEvents } from 'sim-ecs';
 
 import { BehaviorTree } from '../../components/ai/BehaviorTree';
 
-import { StartedAttacking } from './../../events/StartedAttacking';
 
-import { StoppedAttacking } from '~/game/events/StoppedAttacking';
 import { UnitState } from '~/game/components/UnitState';
+import { EntityEvent } from '~/game/events/EntityEvent';
 
 export const BehaviorTreeSystem = createSystem({
-  startedAttacking: WriteEvents(StartedAttacking),
-  stoppedAttacking: WriteEvents(StoppedAttacking),
+  events: WriteEvents(EntityEvent),
 
   query: queryComponents({
     behaviorTree: Write(BehaviorTree),
@@ -18,21 +16,15 @@ export const BehaviorTreeSystem = createSystem({
   }),
 })
 .withRunFunction(({
-  startedAttacking,
-  stoppedAttacking,
-
+  events,
   query
 }) => {
   query.execute(({ behaviorTree }) => {
     behaviorTree.tree.update();
 
     for(const event of behaviorTree.events) {
-       if (event instanceof StartedAttacking) {
-        startedAttacking.publish(event);
-        continue;
-      }
-      if (event instanceof StoppedAttacking) {
-        stoppedAttacking.publish(event);
+       if (event instanceof EntityEvent) {
+        events.publish(event);
         continue;
       }
       console.warn('Event not handled', event);
