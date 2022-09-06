@@ -1,12 +1,24 @@
-import { createSystem, queryComponents, Read, ReadEvents } from 'sim-ecs';
+import { createSystem, IEntity, queryComponents, Read, ReadEvents } from 'sim-ecs';
 
 import { Idled } from '../events/Idled';
 import { Moved } from '../events/Moved';
 import { Attacked } from '../events/Attacked';
+import { UnitState } from '../types';
+import { Transform } from '../components/Transform';
+import { rotationToDirection } from '../animation/load';
 
-import { Died } from './../events/Died';
 import { Animator } from './../animation/Animator';
-import { setEntityAnimation } from './utils/animation';
+import { Died } from './../events/Died';
+
+export const setEntityAnimation = (entity: IEntity, state: UnitState): void => {
+  if (!entity.hasComponent(Animator)) return;
+
+  const transform = entity.getComponent(Transform);
+  const direction = rotationToDirection(transform?.rotation ?? 0)!;
+
+  entity.getComponent(Animator)!.set(state, direction);
+};
+
 
 export const AnimatorSystem = createSystem({
     idled: ReadEvents(Idled),
@@ -38,7 +50,7 @@ export const AnimatorSystem = createSystem({
       setEntityAnimation(event.entity, 'attack');
     });
     died.execute((event) => {
-      console.log('handle died');
+      console.log('died');
       if (!query.matchesEntity(event.entity)) return;
 
       setEntityAnimation(event.entity, 'dead');
