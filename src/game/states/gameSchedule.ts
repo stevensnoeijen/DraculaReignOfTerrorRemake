@@ -17,9 +17,9 @@ import { MovePathSystem } from '../systems/movement/MovePathSystem';
 import { GridRenderSystem } from '../systems/pixi/GridRenderSystem';
 import { GraphicsRenderSystem } from '../systems/pixi/GraphicsRenderSystem';
 import { UnitStateSystem } from '../systems/UnitStateSystem';
-
-import { SoundsSystem } from './../systems/SoundsSystem';
-import { AnimatorSystem } from './../systems/AnimatorSystem';
+import { MapRenderSystem } from '../systems/pixi/MapRenderSystem';
+import { SoundsSystem } from '../systems/SoundsSystem';
+import { AnimatorSystem } from '../systems/AnimatorSystem';
 
 export const gameSchedule: ISyncPointPrefab = {
   stages: [
@@ -46,6 +46,7 @@ export const gameSchedule: ISyncPointPrefab = {
       SoundsSystem
     ],
     [
+      MapRenderSystem,
       GridRenderSystem,
       SpriteRenderSystem,
       GraphicsRenderSystem,
