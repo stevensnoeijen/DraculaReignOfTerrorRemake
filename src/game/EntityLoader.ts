@@ -44,7 +44,7 @@ export class EntityLoader {
   }
 
   public createUnit(name: string, props: IUnitProps): void {
-    const unit = this.getUnit(name);
+    const data = this.getData(name);
 
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
     const animator = this.animationService.createAnimator(
@@ -69,8 +69,8 @@ export class EntityLoader {
       .with(new Team(props.team.number))
       .with(new Alive(true))
       .with(new Health({
-        points: 10,
-        maxPoints: 10,
+        points: data.healthPointsMax,
+        maxPoints: data.healthPointsMax,
       }))
       .with(new PIXI.Graphics())
       .with(sprite)
@@ -85,15 +85,19 @@ export class EntityLoader {
       .with(MouseControlled)
       .with(Follow)
       .with(Target)
-      .with(new Combat(80, 16, 1))
+      .with(new Combat(
+        data.combatAggroRange,
+        data.combatAttackRange,
+        data.combatAttackDamage
+      ))
       .with(UnitState)
-      .with(this.soundService.createComponent(unit))
+      .with(this.soundService.createComponent(data))
       .build();
 
       this.world.flushCommands();// TODO: optimise this
   }
 
-  private getUnit(name: string): Unit {
+  private getData(name: string): Unit {
     const object = this.objects.find((object) => object.name === name);
     if (object == null) throw new Error(`Unit with name ${name} not existend`);
 

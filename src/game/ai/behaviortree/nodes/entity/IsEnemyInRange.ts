@@ -3,6 +3,7 @@ import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
 
+import { Constants } from './../../../../Constants';
 import { EntityNode } from './EntityNode';
 import { getEntitiesInRange } from './utils';
 
@@ -28,7 +29,8 @@ export class IsEnemyInRange<
     const inRangeEntities = getEntitiesInRange(
       entity,
       this.entities,
-      range);
+      range * Constants.CELL_SIZE
+    );
     if (inRangeEntities.length == 0) {
       return this.failure();
     }
