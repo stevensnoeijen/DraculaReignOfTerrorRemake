@@ -67,22 +67,22 @@ export class BehaviorTreeScenario extends Scenario {
     const tree = new Tree(
       new Selector([
         new Sequence([
-          new Inventer([new HasTarget()]),
+          new Inventer(new HasTarget()),
           new IsEnemyInAggroRange(entities),
           new SetTarget(),
         ]),
         new Sequence([
           new IsMoving(),
-          new Inventer([new IsEnemyInAggroRange(entities)]),
+          new Inventer(new IsEnemyInAggroRange(entities)),
           new UnsetTarget(),
         ]),
         new Selector([
           new Sequence([
-            new Inventer([new IsMoving()]),
+            new Inventer(new IsMoving()),
             new IsEnemyInAttackRange(entities),
             new Parallel([
               new Sequence([
-                new Inventer([new IsUnitState('attack')]),
+                new Inventer(new IsUnitState('attack')),
                 new SendEvent(Attacked),
                 ]),
               new Timer({
@@ -95,7 +95,7 @@ export class BehaviorTreeScenario extends Scenario {
             ])
           ]),
           new Sequence([
-            new Inventer([new IsControlledBy('player')]),
+            new Inventer(new IsControlledBy('player')),
             new SetFollow(),
           ]),
         ]),

@@ -10,6 +10,10 @@ const invertStateMap = new Map<State, State>([
  * This is the "Not" operator (!).
  */
 export class Inventer extends Node {
+  constructor (node: Node){
+    super([node]);
+  }
+
   public evaluate(): State {
     if (!this.hasChildren()) {
       return this.failure();
