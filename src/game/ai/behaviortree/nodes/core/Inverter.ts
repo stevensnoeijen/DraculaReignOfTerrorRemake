@@ -9,7 +9,7 @@ const invertStateMap = new Map<State, State>([
 /**
  * This is the "Not" operator (!).
  */
-export class Inventer extends Node {
+export class Inverter extends Node {
   constructor (node: Node){
     super([node]);
   }

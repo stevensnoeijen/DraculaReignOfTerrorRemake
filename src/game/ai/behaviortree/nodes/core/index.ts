@@ -1,5 +1,5 @@
 export * from './Always';
-export * from './Inventer';
+export * from './Inverter';
 export * from './Parallel';
 export * from './Selector';
 export * from './Sequence';

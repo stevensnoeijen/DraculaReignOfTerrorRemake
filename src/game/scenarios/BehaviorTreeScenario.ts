@@ -6,7 +6,7 @@ import { BehaviorTree } from '../components/ai/BehaviorTree';
 import {
   Selector,
   Timer,
-  Inventer,
+  Inverter,
   Sequence,
   Parallel,
 } from '../ai/behaviortree/nodes/core';
@@ -67,22 +67,22 @@ export class BehaviorTreeScenario extends Scenario {
     const tree = new Tree(
       new Selector([
         new Sequence([
-          new Inventer(new HasTarget()),
+          new Inverter(new HasTarget()),
           new IsEnemyInAggroRange(entities),
           new SetTarget(),
         ]),
         new Sequence([
           new IsMoving(),
-          new Inventer(new IsEnemyInAggroRange(entities)),
+          new Inverter(new IsEnemyInAggroRange(entities)),
           new UnsetTarget(),
         ]),
         new Selector([
           new Sequence([
-            new Inventer(new IsMoving()),
+            new Inverter(new IsMoving()),
             new IsEnemyInAttackRange(entities),
             new Parallel([
               new Sequence([
-                new Inventer(new IsUnitState('attack')),
+                new Inverter(new IsUnitState('attack')),
                 new SendEvent(Attacked),
                 ]),
               new Timer({
@@ -95,7 +95,7 @@ export class BehaviorTreeScenario extends Scenario {
             ])
           ]),
           new Sequence([
-            new Inventer(new IsControlledBy('player')),
+            new Inverter(new IsControlledBy('player')),
             new SetFollow(),
           ]),
         ]),
