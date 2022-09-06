@@ -21,8 +21,8 @@ export class Engine {
       .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
       .withStateScheduling(GameState, root => root.fromPrefab(gameSchedule))
       .build();
-    this.world.addResource(app);// TODO: remove me, replace all getResouce(PIXI.Application) with Engine.app
     this.world.addResource(this);
+    this.world.addResource(app);
     this.world.addResource(new EventBus<Events>());// TODO: remove me when replaced with sim-ecs events
     this.world.addResource(getOptions());
 
