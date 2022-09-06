@@ -1,8 +1,9 @@
 import { Class } from 'utility-types';
 
-import { Reflector } from '../systems/utils/reflector';
-
 import { PropertyValue } from './ObjectsJson';
+
+import { Reflector } from '~/utils/reflector';
+
 
 export interface EditablePropertyOptions<Type extends Class<PropertyValue>> {
   type: Type;
