@@ -1,12 +1,12 @@
 import { createSystem, queryComponents, Write, WriteEvents, ReadEntity } from 'sim-ecs';
 
-import { StoppedAttacking } from './../../events/StoppedAttacking';
 import { isAlive } from './../utils/index';
 
 import { Target } from '~/game/components/ai/Target';
+import { Idled } from '~/game/events/Idled';
 
 export const TargetSystem = createSystem({
-  stoppedAttacking: WriteEvents(StoppedAttacking),
+  idled: WriteEvents(Idled),
 
   query: queryComponents({
     entity: ReadEntity(),
@@ -14,7 +14,7 @@ export const TargetSystem = createSystem({
   }),
 })
 .withRunFunction(({
-  stoppedAttacking,
+  idled: stoppedAttacking,
   query
 }) => {
   query.execute(({ entity, target }) => {
@@ -24,7 +24,7 @@ export const TargetSystem = createSystem({
 
     if (!isAlive(target.entity)) {
       target.entity = null;
-      stoppedAttacking.publish(new StoppedAttacking(entity));
+      stoppedAttacking.publish(new Idled(entity));
     }
   });
 })

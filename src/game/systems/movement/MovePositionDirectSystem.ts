@@ -9,7 +9,7 @@ import { MovePositionDirect } from '../../components/movement/MovePositionDirect
 
 import { MovePath } from './../../components/movement/MovePath';
 
-import { StoppedMoving } from '~/game/events/StoppedMoving';
+import { Idled } from '~/game/events/Idled';
 
 
 const moveByMoveVelocity = (
@@ -18,7 +18,7 @@ const moveByMoveVelocity = (
   moveVelocity: MoveVelocity,
   movePath: Readonly<MovePath>,
   transform: Transform,
-  stoppedMoving: IEventWriter<typeof StoppedMoving>
+  idled: IEventWriter<typeof Idled>
 ) => {
   if (movePositionDirect.movePosition == null) return;
 
@@ -34,7 +34,7 @@ const moveByMoveVelocity = (
     moveVelocity.velocity = Vector2.ZERO;
 
     if (movePath.path.length === 0)
-      stoppedMoving.publish(new StoppedMoving(entity));
+      idled.publish(new Idled(entity));
 
     return;
   }
@@ -46,7 +46,7 @@ const moveByMoveVelocity = (
 };
 
 export const MovePositionDirectSystem = createSystem({
-  stoppedMoving: WriteEvents(StoppedMoving),
+  idled: WriteEvents(Idled),
 
   query: queryComponents({
     entity: ReadEntity(),
@@ -57,11 +57,11 @@ export const MovePositionDirectSystem = createSystem({
   }),
 })
 .withRunFunction(({
-  stoppedMoving,
+  idled,
   query
 }) => {
   query.execute(({ entity, movePositionDirect, moveVelocity, movePath, transform }) => {
-    moveByMoveVelocity(entity, movePositionDirect, moveVelocity, movePath, transform, stoppedMoving);
+    moveByMoveVelocity(entity, movePositionDirect, moveVelocity, movePath, transform, idled);
   });
 })
 .build();

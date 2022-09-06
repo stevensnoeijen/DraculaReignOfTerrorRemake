@@ -1,47 +1,44 @@
 import { createSystem, queryComponents, Read, ReadEvents } from 'sim-ecs';
 
-import { StoppedMoving } from '../events/StoppedMoving';
-import { StoppedAttacking } from '../events/StoppedAttacking';
+import { Idled } from '../events/Idled';
+import { Moved } from '../events/Moved';
+import { Attacked } from '../events/Attacked';
 
-import { StartedAttacking } from './../events/StartedAttacking';
-import { StartedMoving } from './../events/StartedMoving';
 import { Died } from './../events/Died';
 import { Animator } from './../animation/Animator';
 import { setEntityAnimation } from './utils/animation';
 
 export const AnimatorSystem = createSystem({
-    startedMoving: ReadEvents(StartedMoving),
-    stoppedMoving: ReadEvents(StoppedMoving),
-    startedAttacking: ReadEvents(StartedAttacking),
-    stoppedAttacking: ReadEvents(StoppedAttacking),
+    idled: ReadEvents(Idled),
+    moved: ReadEvents(Moved),
+    attacked: ReadEvents(Attacked),
     died: ReadEvents(Died),
 
     query: queryComponents({
       animator: Read(Animator),
     }),
   }).withRunFunction(({
-    startedMoving,
-    stoppedMoving,
-    startedAttacking,
-    stoppedAttacking,
+    moved,
+    idled,
+    attacked,
     died,
 
     query
   }) => {
-    startedMoving.execute(event => {
+    moved.execute(event => {
+      console.log('moved');
       setEntityAnimation(event.entity, 'move');
     });
-    stoppedMoving.execute(event => {
+    idled.execute(event => {
+      console.log('idled');
       setEntityAnimation(event.entity, 'idle');
     });
-    startedAttacking.execute(event => {
+    attacked.execute(event => {
+      console.log('attacked');
       setEntityAnimation(event.entity, 'attack');
     });
-    stoppedAttacking.execute(event => {
-      setEntityAnimation(event.entity, 'idle');
-    });
-
     died.execute((event) => {
+      console.log('handle died');
       if (!query.matchesEntity(event.entity)) return;
 
       setEntityAnimation(event.entity, 'dead');

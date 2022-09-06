@@ -1,37 +1,36 @@
 import { createSystem, queryComponents, Write, ReadEvents, IEntity } from 'sim-ecs';
 
 import { UnitState } from '../components/UnitState';
-import { StoppedMoving } from '../events/StoppedMoving';
+import { Idled } from '../events/Idled';
 import { UnitState as State } from '../types';
+import { Moved } from '../events/Moved';
+import { Died } from '../events/Died';
 
-import { StartedMoving } from './../events/StartedMoving';
-
-import { StoppedAttacking } from '~/game/events/StoppedAttacking';
-import { StartedAttacking } from '~/game/events/StartedAttacking';
+import { Attacked } from '~/game/events/Attacked';
 
 const setState = (entity: IEntity, state: State) => {
   entity.getComponent(UnitState)!.state = state;
 };
 
 export const UnitStateSystem = createSystem({
-  startedAttacking: ReadEvents(StartedAttacking),
-  stoppedAttacking: ReadEvents(StoppedAttacking),
-  startedMoving: ReadEvents(StartedMoving),
-  stoppedMoving: ReadEvents(StoppedMoving),
+  idled: ReadEvents(Idled),
+  moved: ReadEvents(Moved),
+  attacked: ReadEvents(Attacked),
+  died: ReadEvents(Died),
 
   query: queryComponents({
     unitState: Write(UnitState),
   }),
 }).withRunFunction(({
-  startedAttacking,
-  stoppedAttacking,
-  startedMoving,
-  stoppedMoving,
+  idled,
+  moved,
+  attacked,
+  died,
 }) => {
-  startedAttacking.execute(event => setState(event.entity, 'attack'));
-  stoppedAttacking.execute(event => setState(event.entity, 'idle'));
-  startedMoving.execute(event => setState(event.entity, 'move'));
-  stoppedMoving.execute(event => setState(event.entity, 'idle'));
+  idled.execute(event => setState(event.entity, 'idle'));
+  moved.execute(event => setState(event.entity, 'move'));
+  attacked.execute(event => setState(event.entity, 'attack'));
+  died.execute(event => setState(event.entity, 'dead'));
 })
 .build();
 

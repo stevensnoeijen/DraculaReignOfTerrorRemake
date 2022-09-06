@@ -34,13 +34,13 @@ export const gameSchedule: ISyncPointPrefab = {
     [MoveVelocitySystem],
     [MovePositionDirectSystem],
     [MovePathSystem],
-    [AnimatorSystem],
     [
       BehaviorTreeSystem,
       TargetSystem,
       FollowSystem,
       UnitStateSystem,
     ],
+    [AnimatorSystem],
     [
       GridRenderSystem,
       GraphicsRenderSystem,

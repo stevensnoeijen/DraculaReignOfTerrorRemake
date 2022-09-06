@@ -22,7 +22,7 @@ import {
   IsEnemyInAggroRange,
 } from '../ai/behaviortree/nodes/entity';
 import { SendEvent } from '../ai/behaviortree/nodes/entity/SendEvent';
-import { StartedAttacking } from '../events/StartedAttacking';
+import { Attacked } from '../events/Attacked';
 import { IsUnitState } from '../ai/behaviortree/nodes/entity/IsUnitState';
 import { Hit } from '../events/Hit';
 
@@ -84,7 +84,7 @@ export class BehaviorTreeScenario extends Scenario {
               new Parallel([
                 new Sequence([
                   new Inventer([new IsUnitState('attack')]),
-                  new SendEvent(StartedAttacking),
+                  new SendEvent(Attacked),
                  ]),
                 new Timer({
                   delay: 1000,

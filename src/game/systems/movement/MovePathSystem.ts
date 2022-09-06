@@ -6,7 +6,7 @@ import { Vector2 } from '../../math/Vector2';
 import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 import { Controlled } from '../../components/input/Controlled';
-import { StartedMoving } from '../../events/StartedMoving';
+import { Moved } from '../../events/Moved';
 
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
@@ -37,7 +37,7 @@ const updateMovePosition = (
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
   controlled: Controlled | null,
-  startedMoving: IEventWriter<typeof StartedMoving>,
+  moved: IEventWriter<typeof Moved>,
 ) => {
   if (movePath.path.length == 0) {
     if (
@@ -86,12 +86,12 @@ const updateMovePosition = (
     );
   }
 
-  if (!transformComponent.position.equals(Vector2.ZERO))// first cell
-    startedMoving.publish(new StartedMoving(entity));
+  if (!transformComponent.position.equals(Vector2.ZERO))
+    moved.publish(new Moved(entity));
 };
 
 export const MovePathSystem = createSystem({
-  startedMoving: WriteEvents(StartedMoving),
+  moved: WriteEvents(Moved),
 
   query: queryComponents({
     entity: ReadEntity(),
@@ -102,8 +102,7 @@ export const MovePathSystem = createSystem({
   }),
 })
 .withRunFunction(({
-  startedMoving,
-
+  moved,
   query,
 }) => {
   query.execute(({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
@@ -114,7 +113,7 @@ export const MovePathSystem = createSystem({
       moveVelocity,
       movePositionDirect,
       controlled ?? null,
-      startedMoving,
+      moved,
     );
   });
 })
