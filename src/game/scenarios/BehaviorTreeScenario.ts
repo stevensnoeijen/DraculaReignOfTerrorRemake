@@ -26,6 +26,7 @@ import { Attacked } from '../events/Attacked';
 import { IsUnitState } from '../ai/behaviortree/nodes/entity/IsUnitState';
 import { Hit } from '../events/Hit';
 
+import { UNIT_SWORDSMEN } from './../objects/constants';
 import { EntityLoader } from './../EntityLoader';
 import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
@@ -46,7 +47,7 @@ export class BehaviorTreeScenario extends Scenario {
   }
 
   public load(entityLoader: EntityLoader): void {
-    entityLoader.createUnit({
+    entityLoader.createUnit(UNIT_SWORDSMEN, {
       position: cellPositionToVector(1, 1),
       color: 'blue',
       team: {
@@ -54,7 +55,7 @@ export class BehaviorTreeScenario extends Scenario {
       },
     });
 
-     entityLoader.createUnit({
+     entityLoader.createUnit(UNIT_SWORDSMEN, {
       position: cellPositionToVector(1, 3),
       color: 'red',
       team: {

@@ -18,6 +18,7 @@ import { GridRenderSystem } from '../systems/pixi/GridRenderSystem';
 import { GraphicsRenderSystem } from '../systems/pixi/GraphicsRenderSystem';
 import { UnitStateSystem } from '../systems/UnitStateSystem';
 
+import { SoundsSystem } from './../systems/SoundsSystem';
 import { AnimatorSystem } from './../systems/AnimatorSystem';
 
 export const gameSchedule: ISyncPointPrefab = {
@@ -40,7 +41,10 @@ export const gameSchedule: ISyncPointPrefab = {
       FollowSystem,
       UnitStateSystem,
     ],
-    [AnimatorSystem],
+    [
+      AnimatorSystem,
+      SoundsSystem
+    ],
     [
       GridRenderSystem,
       GraphicsRenderSystem,

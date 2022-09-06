@@ -1,4 +1,4 @@
-import { createSystem, queryComponents, Read, ReadResource, Write, WriteOptional, ReadEntity } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadResource, Write, WriteOptional, ReadEntity, WriteEvents } from 'sim-ecs';
 
 import { astar } from '../../ai/pathfinding';
 import { Input } from '../../Input';
@@ -14,10 +14,12 @@ import { Controlled } from '../../components/input/Controlled';
 
 import { EventBus } from '~/game/EventBus';
 import { MouseControlled } from '~/game/components/input/MouseControlled';
+import { Commanded } from '~/game/events/Commanded';
 
 let collsionMap: number[][] | null = null;
 
 export const MouseControlledSystem = createSystem({
+  commanded: WriteEvents(Commanded),
   eventBus: ReadResource(EventBus),
   query: queryComponents({
     entity: ReadEntity(),
@@ -35,6 +37,7 @@ export const MouseControlledSystem = createSystem({
   });
 })
 .withRunFunction(({
+  commanded,
   query
 }) => {
   if (!Input.isMouseButtonUp(2) && !Input.isMouseDblClick())
@@ -45,7 +48,7 @@ export const MouseControlledSystem = createSystem({
 
   const entities = Array.from(query.iter()).map(e => e.entity);
 
-  query.execute(({ selectable, transform, movePath, follow, controlled }) => {
+  query.execute(({ entity, selectable, transform, movePath, follow, controlled }) => {
     if (!selectable.selected) return;
 
     const clickedEntity = getEntityAtPosition(
@@ -78,6 +81,8 @@ export const MouseControlledSystem = createSystem({
     if (controlled != null) {
       controlled.by = 'player';
     }
+
+    commanded.publish(new Commanded(entity));
   });
 })
 .build();

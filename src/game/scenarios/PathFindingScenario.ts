@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import { Engine } from '../Engine';
 import { cellPositionToVector } from '../utils';
 
+import { UNIT_SWORDSMEN } from './../objects/constants';
 import { EntityLoader } from './../EntityLoader';
 import { Scenario } from './Scenario';
 import { generateMaze, getGridSizeByScreen } from './utils';
@@ -21,7 +22,7 @@ export class PathFindingScenario extends Scenario {
   }
 
   public load(entityLoader: EntityLoader): void {
-    entityLoader.createUnit({
+    entityLoader.createUnit(UNIT_SWORDSMEN, {
       position: cellPositionToVector(1, 1),
       color: 'blue',
       team: {
@@ -29,7 +30,7 @@ export class PathFindingScenario extends Scenario {
       },
     });
 
-    entityLoader.createUnit({
+    entityLoader.createUnit(UNIT_SWORDSMEN, {
       position: cellPositionToVector(3, 1),
       color: 'red',
       team: {

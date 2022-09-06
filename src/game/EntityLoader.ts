@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { IPartialWorld } from 'sim-ecs';
 
+import { ObjectsJson } from './objects/ObjectsJson';
+import { SoundService } from './sounds/SoundService';
 import { Combat } from './components/ai/Combat';
 import { AnimationService } from './animation/AnimationService';
 import { Position, randomRotation } from './utils';
@@ -21,6 +23,7 @@ import { MouseControlled } from './components/input/MouseControlled';
 import { Follow } from './components/ai/Follow';
 import { Target } from './components/ai/Target';
 import { UnitState } from './components/UnitState';
+import { Unit } from './objects/Unit';
 
 export interface IUnitProps {
   color: 'red' | 'blue';
@@ -31,15 +34,18 @@ export interface IUnitProps {
 }
 
 export class EntityLoader {
-
   constructor(
     private readonly world: IPartialWorld,
+    private readonly objects: ObjectsJson,
     private readonly animationService: AnimationService,
+    private readonly soundService: SoundService,
   ) {
 
   }
 
-  public createUnit(props: IUnitProps): void {
+  public createUnit(name: string, props: IUnitProps): void {
+    const unit = this.getUnit(name);
+
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
     const animator = this.animationService.createAnimator(
       sprite,
@@ -81,8 +87,16 @@ export class EntityLoader {
       .with(Target)
       .with(new Combat(80, 16, 1))
       .with(UnitState)
+      .with(this.soundService.createComponent(unit))
       .build();
 
       this.world.flushCommands();// TODO: optimise this
+  }
+
+  private getUnit(name: string): Unit {
+    const object = this.objects.find((object) => object.name === name);
+    if (object == null) throw new Error(`Unit with name ${name} not existend`);
+
+    return Unit.fromJson(object);
   }
 }

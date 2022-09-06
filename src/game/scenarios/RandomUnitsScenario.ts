@@ -5,6 +5,7 @@ import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils';
 import { Engine } from '../Engine';
 
+import { UNIT_SWORDSMEN } from './../objects/constants';
 import { EntityLoader } from './../EntityLoader';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
@@ -32,7 +33,7 @@ export class RandomUnitsScenario extends Scenario {
         )
       );
 
-      entityLoader.createUnit({
+      entityLoader.createUnit(UNIT_SWORDSMEN, {
         position: vector,
         color: 'red',
         team: {
