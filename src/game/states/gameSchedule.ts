@@ -47,8 +47,8 @@ export const gameSchedule: ISyncPointPrefab = {
     ],
     [
       GridRenderSystem,
-      GraphicsRenderSystem,
       SpriteRenderSystem,
+      GraphicsRenderSystem,
     ]
   ]
 };
