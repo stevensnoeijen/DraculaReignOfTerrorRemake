@@ -23,5 +23,5 @@ export const MOVE_DIRECTIONS = [
 ] as const;
 export type MoveDirection = typeof MOVE_DIRECTIONS[number];
 
-export const UNIT_STATES = ['idle', 'move', 'attack', 'dying', 'dead'] as const;
+export const UNIT_STATES = ['idle', 'move', 'attack', 'dead'] as const;
 export type UnitState = typeof UNIT_STATES[number];
