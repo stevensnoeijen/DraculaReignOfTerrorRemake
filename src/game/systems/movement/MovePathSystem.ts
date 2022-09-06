@@ -10,7 +10,7 @@ import { Moved } from '../../events/Moved';
 
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
-import { isSameEntity } from './../utils/index';
+import { isAlive, isSameEntity } from './../utils/index';
 
 import { MovePath } from '~/game/components/movement/MovePath';
 
@@ -19,9 +19,9 @@ const canEntityMoveToCell = (
   entity: IEntity,
   cell: Position
 ): boolean => {
-  const collider = colliders.filter(
-      not(isSameEntity(entity))
-    ).find((collider) => {
+  const collider = colliders.filter(not(isSameEntity(entity)))
+    .filter(isAlive)
+    .find((collider) => {
       const colliderCell = getCell(collider);
 
       return cell.x === colliderCell.x && cell.y === colliderCell.y;
