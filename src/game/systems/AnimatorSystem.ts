@@ -10,7 +10,7 @@ import { rotationToDirection } from '../animation/load';
 import { Animator } from './../animation/Animator';
 import { Died } from './../events/Died';
 
-export const setEntityAnimation = (entity: IEntity, state: UnitState): void => {
+export const setAnimation = (entity: IEntity, state: UnitState): void => {
   if (!entity.hasComponent(Animator)) return;
 
   const transform = entity.getComponent(Transform);
@@ -39,21 +39,21 @@ export const AnimatorSystem = createSystem({
   }) => {
     moved.execute(event => {
       console.log('moved');
-      setEntityAnimation(event.entity, 'move');
+      setAnimation(event.entity, 'move');
     });
     idled.execute(event => {
       console.log('idled');
-      setEntityAnimation(event.entity, 'idle');
+      setAnimation(event.entity, 'idle');
     });
     attacked.execute(event => {
       console.log('attacked');
-      setEntityAnimation(event.entity, 'attack');
+      setAnimation(event.entity, 'attack');
     });
     died.execute((event) => {
       console.log('died');
       if (!query.matchesEntity(event.entity)) return;
 
-      setEntityAnimation(event.entity, 'dead');
+      setAnimation(event.entity, 'dead');
    });
   })
   .build();
