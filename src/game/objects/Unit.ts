@@ -35,13 +35,7 @@ export class Unit {
     type: [String],
     nullable: false,
   })
-  soundMove!: string[];
-
-  @EditableProperty({
-    type: [String],
-    nullable: false,
-  })
-  soundAttackTarget!: string[];
+  soundCommand!: string[];
 
   @EditableProperty({
     type: [String],

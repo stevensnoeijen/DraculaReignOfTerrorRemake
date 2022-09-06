@@ -23,7 +23,7 @@ describe('createEmptyObject', () => {
   it('should set all properties', () => {
     const object = createEmptyObject();
 
-    expect(object.properties).toHaveLength(10);
+    expect(object.properties).toHaveLength(9);
   });
 
   const testObjectProperties = (
@@ -47,8 +47,7 @@ describe('createEmptyObject', () => {
   ] as const;
   const STRING_PROPERTIES = ['spriteModel', 'soundDeadByCatapult'] as const;
   const STRING_ARRAY_PROPERTIES = [
-    'soundMove',
-    'soundAttackTarget',
+    'soundCommand',
     'soundAttackEffect',
     'soundDead',
   ] as const;

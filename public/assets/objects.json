@@ -23,7 +23,7 @@
         "value": "swordsmen"
       },
       {
-        "field": "soundMove",
+        "field": "soundCommand",
         "value": [
           "unit_move_1",
           "unit_move_10",
@@ -32,24 +32,6 @@
           "unit_move_12",
           "unit_move_2",
           "unit_move_3",
-          "unit_move_4",
-          "unit_move_5",
-          "unit_move_6",
-          "unit_move_7",
-          "unit_move_8",
-          "unit_move_9"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_1",
-          "unit_move_10",
-          "unit_move_11",
-          "unit_move_12",
-          "unit_move_13",
-          "unit_move_3",
-          "unit_move_2",
           "unit_move_4",
           "unit_move_5",
           "unit_move_6",
@@ -115,7 +97,7 @@
         "value": "crossbowsoldier"
       },
       {
-        "field": "soundMove",
+        "field": "soundCommand",
         "value": [
           "unit_move_1",
           "unit_move_10",
@@ -128,34 +110,13 @@
           "unit_move_5",
           "unit_move_6",
           "unit_move_7",
-          "unit_move_8",
-          "unit_move_9"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_1",
-          "unit_move_10",
-          "unit_move_11",
-          "unit_move_12",
-          "unit_move_13",
-          "unit_move_2",
-          "unit_move_3",
-          "unit_move_4",
-          "unit_move_5",
-          "unit_move_7",
-          "unit_move_6",
           "unit_move_8",
           "unit_move_9"
         ]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "arrow_1",
-          "arrow_2"
-        ]
+        "value": ["arrow_1", "arrow_2"]
       },
       {
         "field": "soundDead",
@@ -203,7 +164,7 @@
         "value": "knight"
       },
       {
-        "field": "soundMove",
+        "field": "soundCommand",
         "value": [
           "unit_move_1",
           "unit_move_10",
@@ -222,24 +183,6 @@
         ]
       },
       {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_1",
-          "unit_move_10",
-          "unit_move_11",
-          "unit_move_12",
-          "unit_move_13",
-          "unit_move_2",
-          "unit_move_3",
-          "unit_move_4",
-          "unit_move_5",
-          "unit_move_6",
-          "unit_move_7",
-          "unit_move_8",
-          "unit_move_9"
-        ]
-      },
-      {
         "field": "soundAttackEffect",
         "value": [
           "swords_2",
@@ -252,9 +195,7 @@
       },
       {
         "field": "soundDead",
-        "value": [
-          "horse_1"
-        ]
+        "value": ["horse_1"]
       },
       {
         "field": "soundDeadByCatapult",
@@ -286,23 +227,12 @@
         "value": "juggernaut"
       },
       {
-        "field": "soundMove",
-        "value": [
-          "unit_move_multiple"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_multiple",
-          "juggernaut_move"
-        ]
+        "field": "soundCommand",
+        "value": ["unit_move_multiple", "juggernaut_move"]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "juggernaut_attack"
-        ]
+        "value": ["juggernaut_attack"]
       },
       {
         "field": "soundDead",
@@ -350,27 +280,16 @@
         "value": "catapult"
       },
       {
-        "field": "soundMove",
-        "value": [
-          "catapult_move"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": []
+        "field": "soundCommand",
+        "value": ["catapult_move"]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "catapult_fire"
-        ]
+        "value": ["catapult_fire"]
       },
       {
         "field": "soundDead",
-        "value": [
-          "catapult_destroyed_1",
-          "catapult_destroyed_2"
-        ]
+        "value": ["catapult_destroyed_1", "catapult_destroyed_2"]
       },
       {
         "field": "soundDeadByCatapult",
@@ -402,27 +321,16 @@
         "value": "cannon"
       },
       {
-        "field": "soundMove",
-        "value": [
-          "canon_move"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": []
+        "field": "soundCommand",
+        "value": ["canon_move"]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "canon_fire_1",
-          "canon_fire_2"
-        ]
+        "value": ["canon_fire_1", "canon_fire_2"]
       },
       {
         "field": "soundDead",
-        "value": [
-          "canon_destroyed"
-        ]
+        "value": ["canon_destroyed"]
       },
       {
         "field": "soundDeadByCatapult",
