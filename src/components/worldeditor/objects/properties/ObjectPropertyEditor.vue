@@ -20,7 +20,7 @@
 import { FormRules } from 'naive-ui';
 import { onUpdated, ref } from 'vue';
 
-import { Property } from '../ObjectsJson';
+import { Property } from '~/game/objects/ObjectsJson';
 
 const rules: FormRules = {
   value: {

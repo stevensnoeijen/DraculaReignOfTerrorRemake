@@ -1,7 +1,6 @@
 import { Class } from 'utility-types';
 
-import { GameObject, PropertyValue } from './../ObjectsJson';
-
+import { GameObject, PropertyValue } from '~/game/objects/ObjectsJson';
 import {
   EditablePropertyOptions,
   getEditableProperties,

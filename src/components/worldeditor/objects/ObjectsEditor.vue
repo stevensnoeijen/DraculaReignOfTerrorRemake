@@ -96,10 +96,12 @@ import { $ref } from 'vue/macros';
 import { isEmpty } from 'lodash';
 
 import * as api from './api';
-import { GameObject, Property } from './ObjectsJson';
 import { ObjectCreateInstance } from './create/types';
 
+import { GameObject, Property } from '~/game/objects/ObjectsJson';
 import { UnitType } from '~/game/types';
+
+
 
 const message = useMessage();
 

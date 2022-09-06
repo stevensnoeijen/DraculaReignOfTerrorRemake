@@ -11,10 +11,11 @@ import { FormInst, FormRules, NForm } from 'naive-ui';
 import { ref } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { GameObject } from '../ObjectsJson';
 
 import { ObjectCreateInstance } from './types';
 import { createEmptyObject } from './utils';
+
+import { GameObject } from '~/game/objects/ObjectsJson';
 
 const form = ref<FormInst>();
 

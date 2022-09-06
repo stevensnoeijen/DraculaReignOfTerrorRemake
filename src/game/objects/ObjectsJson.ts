@@ -18,3 +18,5 @@ export type GameObject = {
 export const isObject = (entity: object): entity is GameObject => {
   return 'name' in entity;
 };
+
+export type ObjectsJson  = GameObject[];

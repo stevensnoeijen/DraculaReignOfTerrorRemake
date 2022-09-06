@@ -19,7 +19,6 @@ export const setAnimation = (entity: IEntity, state: UnitState): void => {
   entity.getComponent(Animator)!.set(state, direction);
 };
 
-
 export const AnimatorSystem = createSystem({
     idled: ReadEvents(Idled),
     moved: ReadEvents(Moved),

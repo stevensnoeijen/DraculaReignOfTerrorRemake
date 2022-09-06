@@ -38,14 +38,17 @@ import { SelectOption } from 'naive-ui';
 import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { getEditableProperty } from '../../../../game/objects/decorator';
-import { Unit } from '../../../../game/objects/Unit';
-import { Property, PropertyValue } from '../ObjectsJson';
 import { getSounds } from '../../sound/api';
-import { getSpriteModelNames } from '../../../../game/animation/api';
 import { stringsToSelectOptions } from '../../../utils';
 
 import { soundsToSelectOptions } from './utils';
+
+import { getEditableProperty } from '~/game/objects/decorator';
+import { Unit } from '~/game/objects/Unit';
+import { Property, PropertyValue } from '~/game/objects/ObjectsJson';
+import { getSpriteModelNames } from '~/game/animation/api';
+
+
 
 const props = defineProps<{
   modelValue: Property;

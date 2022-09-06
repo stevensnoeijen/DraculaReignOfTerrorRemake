@@ -1,7 +1,6 @@
 import { TreeOption } from 'naive-ui';
 
-import { GameObject, isObject } from '../ObjectsJson';
-
+import { GameObject, isObject } from '~/game/objects/ObjectsJson';
 import { removeNullable } from '~/utils/array';
 
 type LayeredObject<T> = Record<string, T> & { __key?: string };
