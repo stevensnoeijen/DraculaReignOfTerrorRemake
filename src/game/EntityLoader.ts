@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { IPartialWorld } from 'sim-ecs';
+import { IWorld } from 'sim-ecs';
 
 import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
@@ -35,7 +35,7 @@ export interface IUnitProps {
 
 export class EntityLoader {
   constructor(
-    private readonly world: IPartialWorld,
+    private readonly world: IWorld,
     private readonly objects: ObjectsJson,
     private readonly animationService: AnimationService,
     private readonly soundService: SoundService,

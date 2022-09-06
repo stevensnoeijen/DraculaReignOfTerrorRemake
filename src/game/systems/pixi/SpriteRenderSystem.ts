@@ -1,22 +1,13 @@
-import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
 import { Transform } from '../../components/Transform';
 
-const updateSprite = (app: PIXI.Application, sprite: PIXI.Sprite, transform: Transform) => {
-  // FIXME: add is done multiple times, optimise me
-  app.stage.addChild(sprite);
+import { Alive } from '~/game/components/Alive';
 
- sprite.position.set(
-    transform.position.x,
-    transform.position.y
-  );
-};
+let aliveLayer: PIXI.Container;
 
-const updateAnimatedSprite = (app: PIXI.Application, sprite: PIXI.AnimatedSprite, transform: Transform) => {
-  // FIXME: add is done multiple times, optimise me
-  app.stage.addChild(sprite);
-
+const updatePosition = (sprite: PIXI.AnimatedSprite | PIXI.Sprite, transform: Transform) => {
   sprite.position.set(
     transform.position.x,
     transform.position.y
@@ -25,23 +16,35 @@ const updateAnimatedSprite = (app: PIXI.Application, sprite: PIXI.AnimatedSprite
 
 export const SpriteRenderSystem = createSystem({
   app: WriteResource(PIXI.Application),
+  entityAdded: ReadEvents(EntityAdded),
   query: queryComponents({
     sprite: ReadOptional(PIXI.Sprite),
     animatedSprite: ReadOptional(PIXI.AnimatedSprite),
     transform: Read(Transform),
+    alive: Read(Alive),
   }),
 })
+.withSetupFunction(({ app }) => {
+  aliveLayer = app.stage.addChildAt(new PIXI.Container(), 1);
+})
 .withRunFunction(({
-  app,
-  query
+  entityAdded,
+  query,
 }) => {
-  query.execute(({ sprite, animatedSprite, transform, }) => {
-    if (sprite != null) updateSprite(app, sprite as PIXI.Sprite, transform);
+  entityAdded.execute(event => {
+    if (event.entity.hasComponent(PIXI.Sprite))
+      aliveLayer.addChild(event.entity.getComponent(PIXI.Sprite)!);
+
+    if (event.entity.hasComponent(PIXI.AnimatedSprite))
+      aliveLayer.addChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
+  });
+
+  query.execute(({ sprite, animatedSprite, transform, alive }) => {
+    if (sprite != null) updatePosition(sprite as PIXI.Sprite, transform);
     if (animatedSprite != null)
-      updateAnimatedSprite(
-        app,
+      updatePosition(
         animatedSprite as PIXI.AnimatedSprite,
-        transform
+        transform,
       );
   });
 })

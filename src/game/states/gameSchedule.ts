@@ -20,7 +20,7 @@ import { UnitStateSystem } from '../systems/UnitStateSystem';
 import { MapRenderSystem } from '../systems/pixi/MapRenderSystem';
 import { SoundsSystem } from '../systems/SoundsSystem';
 import { AnimatorSystem } from '../systems/AnimatorSystem';
-import { ScenarioLoadedSystem } from '../systems/ScenarioLoadedSystem';
+import { LoadScenarioSystem } from '../systems/LoadScenarioSystem';
 
 export const gameSchedule: ISyncPointPrefab = {
   stages: [
@@ -54,6 +54,6 @@ export const gameSchedule: ISyncPointPrefab = {
     ]
   ],
   after: {
-    stages: [[ScenarioLoadedSystem]]
+    stages: [[LoadScenarioSystem]]
   }
 };
