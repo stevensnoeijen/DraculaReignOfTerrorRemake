@@ -3,12 +3,10 @@ import { Sound as PixiSound } from '@pixi/sound';
 
 import { Engine } from '../Engine';
 import { EntityLoader } from '../EntityLoader';
-import { Events } from '../Events';
 import { AnimationModelsJson } from '../animation/api';
 import { ObjectsJson } from '../data/ObjectsJson';
 
 import { SoundService } from './../sounds/SoundService';
-import { EventBus } from './../EventBus';
 import { AnimationService } from './../animation/AnimationService';
 
 
@@ -19,15 +17,8 @@ export class GameState extends State {
     if (engine.scenario == null) {
       throw new Error('No scenario loaded');
     }
-    engine.scenario.load(this.getEntityLoader(actions, engine));
 
-    const eventBus = actions.getResource(EventBus<Events>);
-    // TODO: remove temp solution for register listener in MouseControlledSystem
-    setTimeout(() => {
-      eventBus.emit('scenario:loaded', {
-        scenario: engine.scenario!
-      });
-    }, 100);
+    engine.scenario.load(this.getEntityLoader(actions, engine));
   }
 
   private getAnimationService (engine: Engine) {
