@@ -3,6 +3,8 @@ import * as PIXI from 'pixi.js';
 
 import { Transform } from '../../components/Transform';
 
+import { DEAD_LAYER, ALIVE_LAYER } from './layers';
+
 import { Alive } from '~/game/components/Alive';
 import { Died } from '~/game/events/Died';
 
@@ -28,8 +30,8 @@ export const SpriteRenderSystem = createSystem({
   }),
 })
 .withSetupFunction(({ app }) => {
-  deadLayer = app.stage.addChildAt(new PIXI.Container(), 0);
-  aliveLayer = app.stage.addChildAt(new PIXI.Container(), 1);
+  deadLayer = app.stage.addChildAt(new PIXI.Container(), DEAD_LAYER);
+  aliveLayer = app.stage.addChildAt(new PIXI.Container(), ALIVE_LAYER);
 })
 .withRunFunction(({
   entityAdded,

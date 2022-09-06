@@ -5,7 +5,9 @@ import { DashLine } from 'pixi-dashed-line';
 import { Constants } from '../../Constants';
 import { Options } from '../../utils';
 
-let graphics: PIXI.Graphics;
+import { GRID_LAYER } from './layers';
+
+const graphics = new PIXI.Graphics();
 
 const draw = (app: PIXI.Application, options: Options) => {
   graphics.clear();
@@ -46,7 +48,7 @@ export const GridRenderSystem = createSystem({
   .withSetupFunction(({ app, options }) => {
     window.onresize = () => draw(app, options);
 
-    graphics = app.stage.addChildAt(new PIXI.Graphics(), 0);
+    app.stage.addChildAt(graphics, GRID_LAYER);
     draw(app, options);
   })
   .build();

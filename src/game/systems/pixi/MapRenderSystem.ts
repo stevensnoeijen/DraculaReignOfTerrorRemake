@@ -1,13 +1,14 @@
 import { createSystem, ReadResource } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
+import { MAP_LAYER } from './layers';
 import { cellPositionToVector } from './../../utils';
 
 import { EventBus } from '~/game/EventBus';
 import { ScenarioLoadedEvent } from '~/game/Events';
 
 let collsionMap: number[][] | null = null;
-let graphics: PIXI.Graphics;
+const graphics = new PIXI.Graphics();
 
 const draw = () => {
   if (collsionMap == null) {
@@ -39,7 +40,7 @@ export const MapRenderSystem = createSystem({
     collsionMap = event.detail.scenario.collisionMap;
   });
 
-  graphics = app.stage.addChildAt(new PIXI.Graphics(), 0);
+  app.stage.addChildAt(graphics, MAP_LAYER);
 })
 .withRunFunction(() => {
   draw();

@@ -1,16 +1,19 @@
 import * as PIXI from 'pixi.js';
 import { Graphics } from 'pixi.js';
-import { createSystem, queryComponents, Read, ReadOptional, WriteResource } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
 import { Combat } from '../../components/ai/Combat';
 
+import { GRAPHICS_LAYER } from './layers';
 import { getHealthColor } from './utils';
 
 import { Options } from '~/game/utils';
 import { Health } from '~/game/components/Health';
+
+const graphicsLayer = new PIXI.Container();
 
 const drawHealthBar = (
   health: Health,
@@ -60,17 +63,17 @@ const drawAggroRadius = (
   graphics.drawCircle(0, 0, combat.aggroRange);
 };
 
-
 let showAllHealth: boolean;
 let showDebugAggro: boolean;
 
 export const GraphicsRenderSystem = createSystem({
     options: WriteResource(Options),
     app: WriteResource(PIXI.Application),
+
+    entityAdded: ReadEvents(EntityAdded),
+
     query: queryComponents({
       graphics: Read(Graphics),
-      sprite: ReadOptional(PIXI.Sprite),
-      animatedSprite: ReadOptional(PIXI.AnimatedSprite),
       size: Read(Size),
       selectable: ReadOptional(Selectable),
       transform: Read(Transform),
@@ -78,23 +81,25 @@ export const GraphicsRenderSystem = createSystem({
       combat: ReadOptional(Combat),
     }),
   })
-  .withSetupFunction(({ options }) => {
+  .withSetupFunction(({ options, app }) => {
     showAllHealth = options.showallhealth !== undefined
       ? options.showallhealth[0] == 'true'
       : false;
     showDebugAggro = options.debug?.includes('aggro') ?? false;
+
+    app.stage.addChildAt(graphicsLayer, GRAPHICS_LAYER);
   })
   .withRunFunction(({
-    app,
+    entityAdded,
     query
   }) => {
-    query.execute(({ graphics, sprite, animatedSprite, size, selectable, transform, health, combat }) => {
-      // FIXME: graphics is added multiple times, optimise this
-      app.stage.addChild(graphics as PIXI.Graphics);
+    entityAdded.execute(event => {
+      if (event.entity.hasComponent(PIXI.Graphics))
+        graphicsLayer.addChild(event.entity.getComponent(PIXI.Graphics)!);
+    });
 
+    query.execute(({ graphics, size, selectable, transform, health, combat }) => {
       if (selectable != null && transform != null) {
-        const target = (sprite ?? animatedSprite) as PIXI.Sprite;
-
         graphics.clear();
         graphics.position.set(transform.position.x, transform.position.y);
 
