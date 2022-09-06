@@ -24,8 +24,8 @@ import { SendEvent } from '../ai/behaviortree/nodes/entity/SendEvent';
 import { Attacked } from '../events/Attacked';
 import { IsUnitState } from '../ai/behaviortree/nodes/entity/IsUnitState';
 import { Hit } from '../events/Hit';
+import { UNIT_SWORDSMEN } from '../data/constants';
 
-import { UNIT_SWORDSMEN } from './../objects/constants';
 import { EntityLoader } from './../EntityLoader';
 import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';

@@ -1,4 +1,4 @@
-import { GameObject } from '~/game/objects/ObjectsJson';
+import { GameObject } from '~/game/data/ObjectsJson';
 
 export const getObjects = async (): Promise<GameObject[]> => {
   const res = await fetch('/assets/objects.json');

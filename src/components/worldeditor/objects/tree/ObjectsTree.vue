@@ -19,7 +19,7 @@ import TreeDeleteButton from '../TreeDeleteButton.vue';
 
 import { createTreeOptions } from './utils';
 
-import { GameObject } from '~/game/objects/ObjectsJson';
+import { GameObject } from '~/game/data/ObjectsJson';
 
 const props = defineProps<{
   modelValue: GameObject[];

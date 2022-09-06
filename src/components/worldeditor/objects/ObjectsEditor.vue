@@ -98,7 +98,7 @@ import { isEmpty } from 'lodash';
 import * as api from './api';
 import { ObjectCreateInstance } from './create/types';
 
-import { GameObject, Property } from '~/game/objects/ObjectsJson';
+import { GameObject, Property } from '~/game/data/ObjectsJson';
 import { UnitType } from '~/game/types';
 
 

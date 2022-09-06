@@ -43,9 +43,9 @@ import { stringsToSelectOptions } from '../../../utils';
 
 import { soundsToSelectOptions } from './utils';
 
-import { getEditableProperty } from '~/game/objects/decorator';
-import { Unit } from '~/game/objects/Unit';
-import { Property, PropertyValue } from '~/game/objects/ObjectsJson';
+import { getEditableProperty } from '~/game/data/decorator';
+import { Unit } from '~/game/data/Unit';
+import { Property, PropertyValue } from '~/game/data/ObjectsJson';
 import { getSpriteModelNames } from '~/game/animation/api';
 
 

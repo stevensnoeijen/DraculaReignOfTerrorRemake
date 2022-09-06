@@ -5,8 +5,8 @@ import { Engine } from '../Engine';
 import { EntityLoader } from '../EntityLoader';
 import { Events } from '../Events';
 import { AnimationModelsJson } from '../animation/api';
+import { ObjectsJson } from '../data/ObjectsJson';
 
-import { ObjectsJson } from './../objects/ObjectsJson';
 import { SoundService } from './../sounds/SoundService';
 import { EventBus } from './../EventBus';
 import { AnimationService } from './../animation/AnimationService';

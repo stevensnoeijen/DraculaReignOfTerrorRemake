@@ -17,7 +17,7 @@ import { NTag, TreeOption } from 'naive-ui';
 import { computed, h, onMounted, watch } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { GameObject, Property } from '~/game/objects/ObjectsJson';
+import { GameObject, Property } from '~/game/data/ObjectsJson';
 import { ellipsize } from '~/utils';
 
 const props = defineProps<{

@@ -1,6 +1,6 @@
 import { createEmptyObject, getDefaultValueByType } from './utils';
 
-import { GameObject } from '~/game/objects/ObjectsJson';
+import { GameObject } from '~/game/data/ObjectsJson';
 
 
 describe('getDefaultValueByType', () => {

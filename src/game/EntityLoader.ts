@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { IPartialWorld } from 'sim-ecs';
 
-import { ObjectsJson } from './objects/ObjectsJson';
+import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { Combat } from './components/ai/Combat';
 import { AnimationService } from './animation/AnimationService';
@@ -23,7 +23,7 @@ import { MouseControlled } from './components/input/MouseControlled';
 import { Follow } from './components/ai/Follow';
 import { Target } from './components/ai/Target';
 import { UnitState } from './components/UnitState';
-import { Unit } from './objects/Unit';
+import { Unit } from './data/Unit';
 
 export interface IUnitProps {
   color: 'red' | 'blue';

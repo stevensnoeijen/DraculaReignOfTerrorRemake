@@ -1,7 +1,7 @@
 import { Sound as PixiSound } from '@pixi/sound';
 
 import { Sounds } from '../components/Sounds';
-import { Unit } from '../objects/Unit';
+import { Unit } from '../data/Unit';
 
 import { Action, SoundController } from './SoundController';
 

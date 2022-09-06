@@ -1,8 +1,8 @@
 
 import { Engine } from '../Engine';
 import { cellPositionToVector } from '../utils';
+import { UNIT_SWORDSMEN } from '../data/constants';
 
-import { UNIT_SWORDSMEN } from './../objects/constants';
 import { EntityLoader } from './../EntityLoader';
 import { Scenario } from './Scenario';
 import { generateMaze, getGridSizeByScreen } from './utils';

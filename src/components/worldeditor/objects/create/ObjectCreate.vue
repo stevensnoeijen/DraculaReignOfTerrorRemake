@@ -15,7 +15,7 @@ import { $ref } from 'vue/macros';
 import { ObjectCreateInstance } from './types';
 import { createEmptyObject } from './utils';
 
-import { GameObject } from '~/game/objects/ObjectsJson';
+import { GameObject } from '~/game/data/ObjectsJson';
 
 const form = ref<FormInst>();
 
