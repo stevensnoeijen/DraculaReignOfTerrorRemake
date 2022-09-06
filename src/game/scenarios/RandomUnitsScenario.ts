@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 
 import { Constants } from '../Constants';
 import { Vector2 } from '../math/Vector2';
@@ -13,10 +12,10 @@ import { Scenario } from './Scenario';
 export class RandomUnitsScenario extends Scenario {
   private readonly _collisionMap: number[][];
 
-  constructor(app: PIXI.Application, engine: Engine) {
-    super(app, engine);
+  constructor(engine: Engine) {
+    super(engine);
 
-    this._collisionMap = createEmptyGrid(getGridSizeByScreen(app));
+    this._collisionMap = createEmptyGrid(getGridSizeByScreen(engine.app));
   }
 
   public get collisionMap(): number[][] {
@@ -27,8 +26,8 @@ export class RandomUnitsScenario extends Scenario {
     Array.from(Array(100)).forEach(() => {
       const vector = toWorldPositionCellCenter(
         new Vector2(
-          Math.round(Math.random() * this.app.screen.width),
-          Math.round(Math.random() * this.app.screen.height) +
+          Math.round(Math.random() * this.engine.app.screen.width),
+          Math.round(Math.random() * this.engine.app.screen.height) +
             Constants.CELL_SIZE / 2
         )
       );

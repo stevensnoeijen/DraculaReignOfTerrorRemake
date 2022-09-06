@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 
 import { cellPositionToVector } from '../utils';
 import { Tree } from '../ai/behaviortree/Tree';
@@ -36,10 +35,10 @@ import { Scenario } from './Scenario';
 export class BehaviorTreeScenario extends Scenario {
   private map: number[][];
 
-  constructor(app: PIXI.Application, engine: Engine) {
-    super(app, engine);
+  constructor(engine: Engine) {
+    super(engine);
 
-    this.map = createEmptyGrid(getGridSizeByScreen(app));
+    this.map = createEmptyGrid(getGridSizeByScreen(engine.app));
   }
 
   public get collisionMap(): number[][] {

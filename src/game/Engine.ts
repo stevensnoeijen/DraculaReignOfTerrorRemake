@@ -47,6 +47,6 @@ export class Engine {
   }
 
   public setScenario(scenarioConstructor: ScenarioConstructor) {
-    this._scenario = new scenarioConstructor(this.app, this);
+    this._scenario = new scenarioConstructor(this);
   }
 }

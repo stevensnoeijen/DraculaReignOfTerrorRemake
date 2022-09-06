@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 
 import { Engine } from '../Engine';
 import { cellPositionToVector } from '../utils';
@@ -11,10 +10,10 @@ import { generateMaze, getGridSizeByScreen } from './utils';
 export class PathFindingScenario extends Scenario {
   private map: number[][];
 
-  constructor(app: PIXI.Application, engine: Engine) {
-    super(app, engine);
+  constructor(engine: Engine) {
+    super(engine);
 
-    this.map = generateMaze(getGridSizeByScreen(app));
+    this.map = generateMaze(getGridSizeByScreen(engine.app));
   }
 
   public get collisionMap(): number[][] {
