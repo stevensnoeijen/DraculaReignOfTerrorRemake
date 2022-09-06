@@ -12,6 +12,7 @@ import { getHealthColor } from './utils';
 
 import { Options } from '~/game/utils';
 import { Health } from '~/game/components/Health';
+import { Died } from '~/game/events/Died';
 
 const graphicsLayer = new PIXI.Container();
 
@@ -71,6 +72,7 @@ export const GraphicsRenderSystem = createSystem({
     app: WriteResource(PIXI.Application),
 
     entityAdded: ReadEvents(EntityAdded),
+    died: ReadEvents(Died),
 
     query: queryComponents({
       graphics: Read(Graphics),
@@ -91,11 +93,21 @@ export const GraphicsRenderSystem = createSystem({
   })
   .withRunFunction(({
     entityAdded,
+    died,
     query
   }) => {
     entityAdded.execute(event => {
       if (event.entity.hasComponent(PIXI.Graphics))
         graphicsLayer.addChild(event.entity.getComponent(PIXI.Graphics)!);
+    });
+
+    died.execute(event => {
+      if (event.entity.hasComponent(Graphics)) {
+        const graphics = event.entity.getComponent(Graphics)!;
+        graphicsLayer.removeChild(graphics);
+
+        event.entity.removeComponent(Graphics);
+      }
     });
 
     query.execute(({ graphics, size, selectable, transform, health, combat }) => {
