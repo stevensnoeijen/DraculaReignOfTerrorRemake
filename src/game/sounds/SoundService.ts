@@ -1,7 +1,9 @@
 import { Sound as PixiSound } from '@pixi/sound';
 
-import { Action, Sounds } from '../components/Sounds';
+import { Sounds } from '../components/Sounds';
 import { Unit } from '../objects/Unit';
+
+import { Action, SoundController } from './SoundController';
 
 export class SoundService {
   constructor(
@@ -9,10 +11,7 @@ export class SoundService {
   ) {}
 
   public createComponent(unit: Unit): Sounds {
-    return new Sounds(
-      this.pixiSound,
-      this.getTranslations(unit),
-    );
+    return new Sounds(this.getSoundController(unit));
   }
 
   private getTranslations(unit: Unit): Map<Action, string[] | undefined> {
@@ -25,5 +24,12 @@ export class SoundService {
         unit.soundDeadByCatapult != null ? [unit.soundDeadByCatapult] : []
       ],
     ]);
+  }
+
+  private getSoundController (unit: Unit) {
+    return new SoundController(
+      this.pixiSound,
+      this.getTranslations(unit)
+    );
   }
 }
