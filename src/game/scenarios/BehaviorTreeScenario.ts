@@ -77,29 +77,27 @@ export class BehaviorTreeScenario extends Scenario {
           new Inventer([new IsEnemyInAggroRange(entities)]),
           new UnsetTarget(),
         ]),
-        new Sequence([
-          new HasTarget(),
-          new Selector([
-            new Sequence([
-              new IsEnemyInAttackRange(entities),
-              new Parallel([
-                new Sequence([
-                  new Inventer([new IsUnitState('attack')]),
-                  new SendEvent(Attacked),
-                 ]),
-                new Timer({
-                  delay: 1000,
-                  execute: new Sequence([
-                    new Attack(),
-                    new SendEvent(Hit)
-                  ]),
-                }),
-              ])
-            ]),
-            new Sequence([
-              new Inventer([new IsControlledBy('player')]),
-              new SetFollow(),
-            ]),
+        new Selector([
+          new Sequence([
+            new Inventer([new IsMoving()]),
+            new IsEnemyInAttackRange(entities),
+            new Parallel([
+              new Sequence([
+                new Inventer([new IsUnitState('attack')]),
+                new SendEvent(Attacked),
+                ]),
+              new Timer({
+                delay: 1000,
+                execute: new Sequence([
+                  new Attack(),
+                  new SendEvent(Hit)
+                ]),
+              }),
+            ])
+          ]),
+          new Sequence([
+            new Inventer([new IsControlledBy('player')]),
+            new SetFollow(),
           ]),
         ]),
       ])
