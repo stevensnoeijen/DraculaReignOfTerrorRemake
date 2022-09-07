@@ -1,5 +1,7 @@
 import { Sound as PixiSound } from '@pixi/sound';
 
+import { ArrayMinLength } from './../../utils/types';
+
 import { getRandomValue } from '~/utils/array';
 
 export type Action = 'command' | 'attackEffect' | 'dead' | 'deadByCatapult';
@@ -22,7 +24,7 @@ export class SoundController {
     if (translations == null || translations.length === 0)
       return;
 
-    const alias = getRandomValue(translations);
+    const alias = getRandomValue(translations as ArrayMinLength<string, 1>);
     if (alias == undefined) return;
 
     this.currentlyPlayingAction = action;

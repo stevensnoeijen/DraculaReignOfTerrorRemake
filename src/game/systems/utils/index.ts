@@ -7,8 +7,8 @@ import { Team } from '~/game/components/Team';
 import { Alive } from '~/game/components/Alive';
 export * from './transform';
 
-export const isOnTeam = (teamId: number): Predicate<IEntity> => {
-  return (entity) => entity.getComponent(Team)?.id === teamId ?? false;
+export const isOnTeam = (team: Team): Predicate<IEntity> => {
+  return (entity) => entity.getComponent(Team)?.equals(team) ?? false;
 };
 
 export const isSameEntity = (entity: IEntity): Predicate<IEntity> => {

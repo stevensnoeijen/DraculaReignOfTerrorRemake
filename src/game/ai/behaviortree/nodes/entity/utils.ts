@@ -21,7 +21,7 @@ export const getEntitiesInRange = (
     .filter(
       not(
         isOnTeam(
-          sourceEntity.getComponent(Team)!.id
+          sourceEntity.getComponent(Team)!
         )
       )
     )

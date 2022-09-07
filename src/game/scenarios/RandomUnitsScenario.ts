@@ -9,6 +9,9 @@ import { EntityLoader } from './../EntityLoader';
 import { createEmptyGrid, getGridSizeByScreen } from './utils';
 import { Scenario } from './Scenario';
 
+import { Team } from '~/game/components/Team';
+import { getRandomValue } from '~/utils/array';
+
 export class RandomUnitsScenario extends Scenario {
   private readonly _collisionMap: number[][];
 
@@ -34,10 +37,7 @@ export class RandomUnitsScenario extends Scenario {
 
       entityLoader.createUnit(UNIT_SWORDSMEN, {
         position: vector,
-        color: 'red',
-        team: {
-          number: Math.round(Math.random() + 1),
-        },
+        team: getRandomValue([Team.PLAYER, Team.CPU])
       });
     });
   }

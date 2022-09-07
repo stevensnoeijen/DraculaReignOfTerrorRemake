@@ -25,6 +25,7 @@ import { Attacked } from '../events/Attacked';
 import { IsUnitState } from '../ai/behaviortree/nodes/entity/IsUnitState';
 import { Hit } from '../events/Hit';
 import { UNIT_SWORDSMEN } from '../data/constants';
+import { Team } from '../components/Team';
 
 import { EntityLoader } from './../EntityLoader';
 import { IsControlledBy } from './../ai/behaviortree/nodes/entity/IsControlledBy';
@@ -48,18 +49,12 @@ export class BehaviorTreeScenario extends Scenario {
   public load(entityLoader: EntityLoader): void {
     entityLoader.createUnit(UNIT_SWORDSMEN, {
       position: cellPositionToVector(1, 1),
-      color: 'blue',
-      team: {
-        number: 1,
-      },
+      team: Team.PLAYER,
     });
 
      entityLoader.createUnit(UNIT_SWORDSMEN, {
       position: cellPositionToVector(1, 3),
-      color: 'red',
-      team: {
-        number: 2,
-      },
+      team: Team.CPU,
     });
 
     const entities = Array.from(this.engine.world.getEntities());

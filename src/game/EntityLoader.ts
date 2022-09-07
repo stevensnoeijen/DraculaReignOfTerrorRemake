@@ -26,11 +26,8 @@ import { UnitState } from './components/UnitState';
 import { Unit } from './data/Unit';
 
 export interface IUnitProps {
-  color: 'red' | 'blue';
+  team: Team;
   position: Position;
-  team: {
-    number: number;
-  };
 }
 
 export class EntityLoader {
@@ -49,7 +46,7 @@ export class EntityLoader {
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
     const animator = this.animationService.createAnimator(
       sprite,
-      props.color,
+      props.team.color,
       'swordsmen'
     );
     sprite.textures = animator.model.getAnimation('idle', 'north').textures;
@@ -66,7 +63,7 @@ export class EntityLoader {
           randomRotation()
         )
       )
-      .with(new Team(props.team.number))
+      .with(props.team)
       .with(new Alive(true))
       .with(new Health({
         points: data.healthPointsMax,

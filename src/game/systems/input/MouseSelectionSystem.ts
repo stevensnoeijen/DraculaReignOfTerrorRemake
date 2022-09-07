@@ -9,6 +9,8 @@ import { isOnTeam } from '../utils/index';
 
 import { MouseSelection } from './MouseSelection';
 
+import { Team } from '~/game/components/Team';
+
 const mouseSelection = new MouseSelection();
 
  /**
@@ -55,7 +57,7 @@ const selectEntitiesInsideSelectionRectangle = (entities: IEntity[]) => {
         height,
       })
     )
-    .filter(isOnTeam(1))
+    .filter(isOnTeam(Team.PLAYER))
     .forEach((entity) => EntityHelper.select(entity));
 };
 const selectOneEntity = (entities: IEntity[]) => {
@@ -65,7 +67,7 @@ const selectOneEntity = (entities: IEntity[]) => {
     Input.mousePosition.x,
     Input.mousePosition.y
   );
-  if (entity != null && isOnTeam(1)(entity)) {
+  if (entity != null && isOnTeam(Team.PLAYER)(entity)) {
     EntityHelper.select(entity);
   } else {
     if (!Input.isMouseDblClick()) {

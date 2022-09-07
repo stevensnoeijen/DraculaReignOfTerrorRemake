@@ -1,7 +1,14 @@
-export class Team {
-  public readonly id: number;
+import { TeamColor } from './../types';
 
-  constructor(id: number) {
-    this.id = id;
+export class Team {
+  public static readonly PLAYER = new Team('blue');
+  public static readonly CPU = new Team('red');
+
+  constructor(
+    public readonly color: TeamColor,
+  ) {}
+
+  public equals (other: Team) {
+    return this.color === other.color;
   }
 }
