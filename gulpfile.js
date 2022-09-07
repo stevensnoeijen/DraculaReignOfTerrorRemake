@@ -78,3 +78,14 @@ gulp.task(
     'generate-animation-models'
   )
 );
+
+gulp.task('index-components', () =>
+    run('cti ./src/game/components').exec()
+);
+gulp.task('index-systems', () =>
+    run('cti ./src/game/systems').exec()
+);
+
+gulp.task('index',
+  gulp.series('index-components', 'index-systems')
+);

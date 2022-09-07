@@ -1,59 +1,50 @@
 import { ISyncPointPrefab } from 'sim-ecs';
 
-import { GameTimeSystem } from '../systems/GameTimeSystem';
-import { InputSystem } from '../systems/input/InputSystem';
-import { TargetSystem } from '../systems/ai/TargetSystem';
-import { BehaviorTreeSystem } from '../systems/ai/BehaviorTreeSystem';
-import { FollowSystem } from '../systems/ai/FollowSystem';
-import { KeyboardControlledSystem } from '../systems/input/KeyboardControlledSystem';
-import { MouseSelectionSystem } from '../systems/input/MouseSelectionSystem';
-import { HealthSystem } from '../systems/HealthSystem';
-import { MoveVelocitySystem } from '../systems/movement/MoveVelocitySystem';
-import { SpriteRenderSystem } from '../systems/render/SpriteRenderSystem';
-import { MouseControlledSystem } from '../systems/input/MouseControlledSystem';
-import { AliveSystem } from '../systems/AliveSystem';
-import { MovePositionDirectSystem } from '../systems/movement/MovePositionDirectSystem';
-import { MovePathSystem } from '../systems/movement/MovePathSystem';
-import { GridRenderSystem } from '../systems/render/GridRenderSystem';
-import { GraphicsRenderSystem } from '../systems/render/GraphicsRenderSystem';
-import { UnitStateSystem } from '../systems/UnitStateSystem';
-import { MapRenderSystem } from '../systems/render/MapRenderSystem';
-import { SoundsSystem } from '../systems/SoundsSystem';
-import { AnimatorSystem } from '../systems/AnimatorSystem';
-import { LoadScenarioSystem } from '../systems/LoadScenarioSystem';
+import {
+  GameTimeSystem,
+  InputSystem,
+  TargetSystem,
+  BehaviorTreeSystem,
+  FollowSystem,
+  KeyboardControlledSystem,
+  MouseSelectionSystem,
+  HealthSystem,
+  MoveVelocitySystem,
+  SpriteRenderSystem,
+  MouseControlledSystem,
+  AliveSystem,
+  MovePositionDirectSystem,
+  MovePathSystem,
+  GridRenderSystem,
+  GraphicsRenderSystem,
+  UnitStateSystem,
+  MapRenderSystem,
+  SoundsSystem,
+  AnimatorSystem,
+  LoadScenarioSystem,
+} from '../systems';
 
 export const gameSchedule: ISyncPointPrefab = {
   stages: [
     [GameTimeSystem],
     [InputSystem],
-    [
-      MouseControlledSystem,
-      KeyboardControlledSystem,
-    ],
+    [MouseControlledSystem, KeyboardControlledSystem],
     [MouseSelectionSystem],
     [AliveSystem],
     [HealthSystem],
     [MoveVelocitySystem],
     [MovePositionDirectSystem],
     [MovePathSystem],
-    [
-      BehaviorTreeSystem,
-      TargetSystem,
-      FollowSystem,
-      UnitStateSystem,
-    ],
-    [
-      AnimatorSystem,
-      SoundsSystem
-    ],
+    [BehaviorTreeSystem, TargetSystem, FollowSystem, UnitStateSystem],
+    [AnimatorSystem, SoundsSystem],
     [
       MapRenderSystem,
       GridRenderSystem,
       SpriteRenderSystem,
       GraphicsRenderSystem,
-    ]
+    ],
   ],
   after: {
-    stages: [[LoadScenarioSystem]]
-  }
+    stages: [[LoadScenarioSystem]],
+  },
 };

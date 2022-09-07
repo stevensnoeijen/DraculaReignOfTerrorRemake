@@ -36,7 +36,7 @@ export class AnimationService {
     return this.modelsCache.get(modelName)!;
   }
 
-  private createAnimator(
+  public createAnimator(
     sprite: PIXI.AnimatedSprite,
     color: TeamColor,
     unit: UnitType

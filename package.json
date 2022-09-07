@@ -46,6 +46,7 @@
     "@vue/vue3-jest": "^28.0.1",
     "autoprefixer": "^10.4.8",
     "canvas": "^2.9.3",
+    "create-ts-index": "^1.14.0",
     "dotenv": "^16.0.1",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
