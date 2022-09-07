@@ -15,7 +15,7 @@ import { PixiApplicationInstance } from '../components/pixi/app/types';
 import { Engine } from '../game/Engine';
 import * as scenarios from '../game/scenarios/factory';
 
-import { getOptions } from '~/game/utils';
+import { getOptions } from '~/game/Options';
 
 const pixi = ref<PixiApplicationInstance>();
 let engine: Engine;

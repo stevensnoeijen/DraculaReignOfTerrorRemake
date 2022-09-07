@@ -1,5 +1,5 @@
 
-import { cellPositionToVector } from '../utils';
+import { cellPositionToVector } from '../utils/grid';
 import { Tree } from '../ai/behaviortree/Tree';
 import { Engine } from '../Engine';
 import { BehaviorTree } from '../components/ai/BehaviorTree';

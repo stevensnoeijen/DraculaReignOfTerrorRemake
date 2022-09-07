@@ -1,6 +1,6 @@
 
 import { Vector2 } from '../math/Vector2';
-import { toGridPosition } from '../utils';
+import { toGridPosition } from '../utils/grid';
 
 export class Transform {
   constructor(

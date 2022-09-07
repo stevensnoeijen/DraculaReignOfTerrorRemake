@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { default as generateEllerMaze } from 'generate-maze';
 
-import { Constants } from '../Constants';
+import { Constants } from '../constants';
 
 type Size = { width: number; height: number };
 

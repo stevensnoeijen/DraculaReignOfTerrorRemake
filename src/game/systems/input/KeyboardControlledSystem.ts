@@ -35,14 +35,14 @@ const handleMovement = (moveVelocity: MoveVelocity, transform: Transform) => {
 
 const handleAction = (selectable: Selectable) => {
   if (Input.isKeyDown('Escape'))
-    selectable.selected = false;
+    selectable.deselect();
 };
 
 
 export const KeyboardControlledSystem = createSystem({
   query: queryComponents({
     keyboardControlled: Read(KeyboardControlled),
-    selectable: Read(Selectable),
+    selectable: Write(Selectable),
     moveVelocity: Write(MoveVelocity),
     transform: Write(Transform),
   }),
@@ -51,10 +51,10 @@ export const KeyboardControlledSystem = createSystem({
   query
 }) => {
   query.execute(({ selectable, moveVelocity, transform }) => {
-    if (!selectable.selected) return;
+    if (!selectable.isSelected()) return;
 
     handleMovement(moveVelocity, transform);
-    handleAction(selectable);
+    handleAction(selectable as Selectable);
   });
 })
 .build();

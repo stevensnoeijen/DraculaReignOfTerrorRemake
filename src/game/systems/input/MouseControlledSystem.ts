@@ -4,9 +4,9 @@ import { astar } from '../../ai/navigation/astar';
 import { Input } from '../../Input';
 import { Selectable } from '../../components/input/Selectable';
 import { Transform } from '../../components/Transform';
-import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../utils';
+import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../utils/grid';
 import { ScenarioLoadedEvent } from '../../Events';
-import { getEntityAtPosition } from '../../utils/index';
+import { getEntityAtPosition } from '../../utils/entity';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 import { Controlled } from '../../components/input/Controlled';
@@ -49,7 +49,7 @@ export const MouseControlledSystem = createSystem({
   const entities = Array.from(query.iter()).map(e => e.entity);
 
   query.execute(({ entity, selectable, transform, movePath, follow, controlled }) => {
-    if (!selectable.selected) return;
+    if (!selectable.isSelected()) return;
 
     const clickedEntity = getEntityAtPosition(
       entities,

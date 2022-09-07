@@ -2,10 +2,10 @@ import { createSystem, ReadResource } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
 import { MAP_LAYER } from './layers';
-import { cellPositionToVector } from './../../utils';
 
 import { EventBus } from '~/game/EventBus';
 import { ScenarioLoadedEvent } from '~/game/Events';
+import { cellPositionToVector } from '~/game/utils/grid';
 
 let collsionMap: number[][] | null = null;
 const graphics = new PIXI.Graphics();

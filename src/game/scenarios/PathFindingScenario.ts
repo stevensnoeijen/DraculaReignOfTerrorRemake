@@ -1,6 +1,6 @@
 
 import { Engine } from '../Engine';
-import { cellPositionToVector } from '../utils';
+import { cellPositionToVector } from '../utils/grid';
 import { UNIT_SWORDSMEN } from '../data/constants';
 import { Team } from '../components/Team';
 

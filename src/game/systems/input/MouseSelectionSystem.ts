@@ -1,15 +1,15 @@
 import * as PIXI from 'pixi.js';
 import { createSystem, queryComponents, Read, ReadResource, ReadEntity, IEntity } from 'sim-ecs';
 
-import { EntityHelper } from '../../EntityHelper';
 import { Input } from '../../Input';
-import { getEntityAtPosition } from '../../utils/index';
+import { getEntityAtPosition } from '../../utils/entity';
 import { Selectable } from '../../components/input/Selectable';
-import { isOnTeam } from '../../utils/index';
 
 import { MouseSelection } from './MouseSelection';
 
 import { Team } from '~/game/components/Team';
+import { isEntityInsideContainer } from '~/game/utils/entity';
+import { isOnTeam } from '~/game/utils/components';
 
 const mouseSelection = new MouseSelection();
 
@@ -21,7 +21,7 @@ let deselectEntitiesTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const getSelected = (entities: IEntity[]): IEntity[] => {
   return entities.filter(
-    (entity) => entity.getComponent(Selectable)?.selected || false
+    (entity) => entity.getComponent(Selectable)?.isSelected() ?? false
   );
 };
 
@@ -36,7 +36,7 @@ const selectEntities = (entities: IEntity[]) => {
 const updateSelect = (entities: IEntity[]) => {
   mouseSelection.update();
   getSelected(entities)
-    .forEach(EntityHelper.deselect);
+    .forEach(entity => entity.getComponent(Selectable)?.deselect());
 };
 
 const endSelect = (entities: IEntity[]) => {
@@ -50,15 +50,15 @@ const selectEntitiesInsideSelectionRectangle = (entities: IEntity[]) => {
 
   // get entities inside selector
   entities.filter((entity) =>
-      EntityHelper.isObjectInsideContainer(entity, {
-        x: mouseSelection.startPosition!.x,
-        y: mouseSelection.startPosition!.y,
-        width,
-        height,
-      })
-    )
-    .filter(isOnTeam(Team.PLAYER))
-    .forEach((entity) => EntityHelper.select(entity));
+    isEntityInsideContainer(entity, {
+      x: mouseSelection.startPosition!.x,
+      y: mouseSelection.startPosition!.y,
+      width,
+      height,
+    })
+  )
+  .filter(isOnTeam(Team.PLAYER))
+  .forEach((entity) => entity.getComponent(Selectable)?.select());
 };
 const selectOneEntity = (entities: IEntity[]) => {
   // single unit select
@@ -68,13 +68,13 @@ const selectOneEntity = (entities: IEntity[]) => {
     Input.mousePosition.y
   );
   if (entity != null && isOnTeam(Team.PLAYER)(entity)) {
-    EntityHelper.select(entity);
+    entity.getComponent(Selectable)?.select();
   } else {
     if (!Input.isMouseDblClick()) {
       // deselect entities in .3 sec, or do double-click action
       deselectEntitiesTimeout = setTimeout(() => {
         getSelected(entities)
-          .forEach(EntityHelper.deselect);
+          .forEach(e => e.getComponent(Selectable)?.deselect());
       }, 300);
     }
     return;

@@ -1,9 +1,8 @@
 import { createSystem, queryComponents, Write, WriteEvents, ReadEntity } from 'sim-ecs';
 
-import { isAlive } from '../../utils/index';
-
 import { Target } from '~/game/components/ai/Target';
 import { Idled } from '~/game/events/Idled';
+import { isAlive } from '~/game/utils/components';
 
 export const TargetSystem = createSystem({
   idled: WriteEvents(Idled),

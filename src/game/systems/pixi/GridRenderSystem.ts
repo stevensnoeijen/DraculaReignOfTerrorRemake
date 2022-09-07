@@ -2,10 +2,11 @@ import { createSystem, ReadResource } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 import { DashLine } from 'pixi-dashed-line';
 
-import { Constants } from '../../Constants';
-import { Options } from '../../utils';
+import { Constants } from '../../constants';
 
 import { GRID_LAYER } from './layers';
+
+import { Options } from '~/game/Options';
 
 const graphics = new PIXI.Graphics();
 

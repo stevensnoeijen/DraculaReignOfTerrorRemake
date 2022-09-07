@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { BLACK } from '../../Colors';
+import { BLACK } from '../../colors';
 
 import { Input } from '~/game/Input';
 import { Vector2 } from '~/game/math/Vector2';

@@ -3,7 +3,7 @@ import { buildWorld, Entity, IWorld } from 'sim-ecs';
 import { nanoid } from 'nanoid';
 
 import { gameSchedule } from './states/gameSchedule';
-import { getOptions } from './utils';
+import { getOptions } from './Options';
 import { EventBus } from './EventBus';
 import { Events } from './Events';
 import { Scenario } from './scenarios/Scenario';

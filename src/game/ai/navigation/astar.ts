@@ -1,9 +1,7 @@
-import {
-  arrayIncludesByEquals,
-  filterEmpty,
-  toEqual,
-  Position,
-} from '../../utils';
+import { Position } from '../../utils/types';
+
+import { arrayIncludesByEquals, removeNullable } from '~/utils/array';
+import { toEqual } from '~/utils/predicate';
 
 export const isPositionEqual = (a: Position, b: Position): boolean => {
   return a.x === b.x && a.y === b.y;
@@ -124,7 +122,7 @@ export const generateAdjacentNodes = (
 
       return new Node(currentNode, position);
     })
-    .filter(filterEmpty) as Node[];
+    .filter(removeNullable) as Node[];
 };
 
 const MOVE_STRAIGHT_COST = 10;

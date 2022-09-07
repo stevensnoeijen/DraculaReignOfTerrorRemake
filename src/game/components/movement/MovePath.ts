@@ -1,5 +1,4 @@
-
-import { Position } from '../../utils';
+import { Position } from '../../utils/types';
 
 type Path = Position[];
 

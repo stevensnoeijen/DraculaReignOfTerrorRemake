@@ -1,18 +1,19 @@
 import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write, ReadOptional, WriteEvents } from 'sim-ecs';
 import { IEventWriter } from 'sim-ecs/dist/events';
 
-import { cellPositionToVector } from '../../utils';
 import { Vector2 } from '../../math/Vector2';
 import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 import { Controlled } from '../../components/input/Controlled';
 import { Moved } from '../../events/Moved';
-import { isAlive, isSameEntity } from '../../utils/index';
+import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
-import { MoveVelocity } from './../../components/movement/MoveVelocity';
-import { getCell, not, Position } from './../../utils';
-
+import { Position } from '~/game/utils/types';
 import { MovePath } from '~/game/components/movement/MovePath';
+import { isSameEntity } from '~/game/utils/entity';
+import { cellPositionToVector } from '~/game/utils/grid';
+import { not } from '~/utils/predicate';
+import { getCell, isAlive } from '~/game/utils/components';
 
 const canEntityMoveToCell = (
   colliders: IEntity[],

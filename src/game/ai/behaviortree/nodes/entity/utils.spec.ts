@@ -1,12 +1,12 @@
 import { buildWorld, IWorld } from 'sim-ecs';
 
-import { Transform } from '../../../../components/Transform';
-import { CreateRandomEntities } from '../../../../__tests__/utils';
 
-import { Vector2 } from './../../../../math/Vector2';
 import { constructCreateRandomEntities } from './../../../../__tests__/utils';
 import { getEntitiesInRange } from './utils';
 
+import { Vector2 } from '~/game/math/Vector2';
+import { CreateRandomEntities } from '~/game/__tests__/utils';
+import { Transform } from '~/game/components/Transform';
 import { Alive } from '~/game/components/Alive';
 import { Team } from '~/game/components/Team';
 
@@ -21,7 +21,7 @@ describe('getEntitiesInRange', () => {
 
   it('should success set target when there is an enemy within range', () => {
     const entity = world.buildEntity()
-      .with(new Team(1))
+      .with(Team.PLAYER)
       .with(new Alive(true))
       .with(new Transform(Vector2.ZERO))
       .build();

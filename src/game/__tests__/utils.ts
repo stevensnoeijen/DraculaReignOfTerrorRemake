@@ -1,6 +1,6 @@
 import { IEntity, IWorld } from 'sim-ecs';
 
-import { Position } from '../utils';
+import { Position } from '../utils/types';
 import { Vector2 } from '../math/Vector2';
 import { Team } from '../components/Team';
 import { Transform } from '../components/Transform';
@@ -12,7 +12,7 @@ export type CreateRandomEntities = (
   length?: number,
   minPosition?: Position,
   maxPosition?: Position,
-  team?: number
+  team?: Team
 ) => IEntity[];
 
 export const constructCreateRandomEntities = (
@@ -22,11 +22,11 @@ export const constructCreateRandomEntities = (
     length: number = 30,
     minPosition: Position = { x: 3, y: 3 },
     maxPosition: Position = { x: 100, y: 100 },
-    teamId: number = 2
+    team: Team = Team.CPU,
   ) => {
     return Array.from({ length: length }).map(() => {
       return world.buildEntity()
-        .with(new Team(teamId))
+        .with(team)
         .with(new Alive(true))
         .with(new Transform(
             new Vector2(

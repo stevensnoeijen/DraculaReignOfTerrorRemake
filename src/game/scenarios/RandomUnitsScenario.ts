@@ -1,7 +1,7 @@
 
-import { Constants } from '../Constants';
+import { Constants } from '../constants';
 import { Vector2 } from '../math/Vector2';
-import { toWorldPositionCellCenter } from '../utils';
+import { toWorldPositionCellCenter } from '../utils/grid';
 import { Engine } from '../Engine';
 import { UNIT_SWORDSMEN } from '../data/constants';
 

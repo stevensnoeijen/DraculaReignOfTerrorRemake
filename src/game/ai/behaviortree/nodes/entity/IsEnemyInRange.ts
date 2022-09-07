@@ -2,8 +2,8 @@ import { Class } from 'utility-types';
 import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
+import { Constants } from '../../../../constants';
 
-import { Constants } from './../../../../Constants';
 import { EntityNode } from './EntityNode';
 import { getEntitiesInRange } from './utils';
 

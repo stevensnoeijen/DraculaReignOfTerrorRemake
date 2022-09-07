@@ -1,11 +1,15 @@
 import { IEntity } from 'sim-ecs';
 
-import { Vector2 } from '../math/Vector2';
-import { Transform } from '../components/Transform';
-import { Comparator, falsePredicate, keepOrder } from '../utils';
+import { Vector2 } from '../../math/Vector2';
+import { Transform } from '../../components/Transform';
+import { Size } from '../../components/Size';
+import { Position } from '../types';
+import { Bounds } from '../../math/collision/Bounds';
+import { toGridPosition } from '../grid';
 
-
-import { Predicate } from '~/utils/types';
+import { keepOrder } from '~/utils/array';
+import { falsePredicate } from '~/utils/predicate';
+import { Comparator, Predicate } from '~/utils/types';
 
 export const isInRange = (
   targetEntity: IEntity,
@@ -54,4 +58,37 @@ export const byClosestDistance = (targetEntity: IEntity): Comparator<IEntity> =>
       targetTransform.distance(bTransform)
     );
   };
+};
+
+export const isPositionInsideEntity = (
+  entity: IEntity,
+  x: number,
+  y: number
+): boolean => {
+  const transform = entity.getComponent(Transform);
+  const size = entity.getComponent(Size);
+
+  if (!transform || !size) {
+    // position or/and size isnt set
+    return false;
+  }
+
+  const bounds = new Bounds(
+    transform.position,
+    new Vector2(size.width, size.height)
+  );
+  return bounds.contains(new Vector2(x, y));
+};
+
+export const randomRotation = () => {
+  const rotation = Math.random() * 360;
+
+  return rotation - rotation % 90;
+};
+
+export const getCell = (entity: IEntity): Position => {
+  const transform = entity.getComponent(Transform)!;
+  const { x, y } = toGridPosition(transform.position);
+
+  return { x, y };
 };

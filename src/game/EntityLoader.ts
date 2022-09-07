@@ -5,7 +5,7 @@ import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { Combat } from './components/ai/Combat';
 import { AnimationService } from './animation/AnimationService';
-import { Position, randomRotation } from './utils';
+import { Position } from './utils/types';
 import { Transform } from './components/Transform';
 import { Vector2 } from './math/Vector2';
 import { Team } from './components/Team';
@@ -15,7 +15,7 @@ import { Collider } from './components/Collider';
 import { Size } from './components/Size';
 import { MoveVelocity } from './components/movement/MoveVelocity';
 import { MovePositionDirect } from './components/movement/MovePositionDirect';
-import { Constants } from './Constants';
+import { Constants } from './constants';
 import { MovePath } from './components/movement/MovePath';
 import { Selectable } from './components/input/Selectable';
 import { Controlled } from './components/input/Controlled';
@@ -24,6 +24,7 @@ import { Follow } from './components/ai/Follow';
 import { Target } from './components/ai/Target';
 import { UnitState } from './components/UnitState';
 import { Unit } from './data/Unit';
+import { randomRotation } from './utils/components/transform';
 
 export interface IUnitProps {
   team: Team;

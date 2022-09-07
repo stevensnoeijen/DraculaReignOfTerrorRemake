@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { Graphics } from 'pixi.js';
-import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded, ReadResource } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
@@ -10,9 +10,9 @@ import { Combat } from '../../components/ai/Combat';
 import { GRAPHICS_LAYER } from './layers';
 import { getHealthColor } from './utils';
 
-import { Options } from '~/game/utils';
 import { Health } from '~/game/components/Health';
 import { Died } from '~/game/events/Died';
+import { Options } from '~/game/Options';
 
 const graphicsLayer = new PIXI.Container();
 
@@ -68,7 +68,7 @@ let showAllHealth: boolean;
 let showDebugAggro: boolean;
 
 export const GraphicsRenderSystem = createSystem({
-    options: WriteResource(Options),
+    options: ReadResource(Options),
     app: WriteResource(PIXI.Application),
 
     entityAdded: ReadEvents(EntityAdded),
@@ -115,10 +115,10 @@ export const GraphicsRenderSystem = createSystem({
         graphics.clear();
         graphics.position.set(transform.position.x, transform.position.y);
 
-        if (selectable.selected) {
+        if (selectable.isSelected()) {
           drawSelectionIndicators(graphics as PIXI.Graphics, size);
         }
-        if (health != null && (showAllHealth || selectable.selected)) {
+        if (health != null && (showAllHealth || selectable.isSelected())) {
           drawHealthBar(health as Health, graphics as PIXI.Graphics);
         }
 
