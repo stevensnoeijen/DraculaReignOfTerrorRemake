@@ -7,6 +7,7 @@ import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
 import { Combat } from '../../components/ai/Combat';
 
+import { GraphicsRender } from './../../components/render/GraphicsRender';
 import { GRAPHICS_LAYER } from './layers';
 import { getHealthColor } from './utils';
 
@@ -60,7 +61,6 @@ const drawAggroRadius = (
 ): void => {
 
   graphics.lineStyle(1, 0xff0000);
-
   graphics.drawCircle(0, 0, combat.aggroRange);
 };
 
@@ -76,7 +76,7 @@ export const GraphicsRenderSystem = createSystem({
     entityRemoved: ReadEvents(EntityRemoved),
 
     query: queryComponents({
-      graphics: Read(Graphics),
+      graphicsRender: Read(GraphicsRender),
       size: Read(Size),
       selectable: ReadOptional(Selectable),
       transform: Read(Transform),
@@ -84,7 +84,7 @@ export const GraphicsRenderSystem = createSystem({
       combat: ReadOptional(Combat),
     }),
   })
-  .withSetupFunction(({ options, app, query }) => {
+  .withSetupFunction(({ options, app }) => {
     showAllHealth = options.showallhealth !== undefined
       ? options.showallhealth[0] == 'true'
       : false;
@@ -99,40 +99,47 @@ export const GraphicsRenderSystem = createSystem({
     query
   }) => {
     entityAdded.execute(event => {
-      if (event.entity.hasComponent(PIXI.Graphics))
-        graphicsLayer.addChild(event.entity.getComponent(PIXI.Graphics)!);
+      if (event.entity.hasComponent(GraphicsRender))
+        graphicsLayer.addChild(
+          event.entity.getComponent(GraphicsRender)!.graphics
+        );
     });
     entityRemoved.execute(event => {
-      if (event.entity.hasComponent(PIXI.Graphics))
-        graphicsLayer.removeChild(event.entity.getComponent(PIXI.Graphics)!);
+      if (event.entity.hasComponent(GraphicsRender))
+        graphicsLayer.removeChild(
+          event.entity.getComponent(GraphicsRender)!.graphics
+        );
     });
 
     died.execute(event => {
-      if (event.entity.hasComponent(Graphics)) {
-        const graphics = event.entity.getComponent(Graphics)!;
+      if (event.entity.hasComponent(GraphicsRender)) {
+        const graphics = event.entity.getComponent(GraphicsRender)!.graphics;
         graphicsLayer.removeChild(graphics);
 
         event.entity.removeComponent(Graphics);
       }
     });
 
-    query.execute(({ graphics, size, selectable, transform, health, combat }) => {
+    query.execute(({ graphicsRender, size, selectable, transform, health, combat }) => {
       if (selectable != null && transform != null) {
-        graphics.clear();
-        graphics.position.set(transform.position.x, transform.position.y);
+        graphicsRender.graphics.clear();
+        graphicsRender.graphics.position.set(
+          transform.position.x,
+          transform.position.y
+        );
 
         if (selectable.isSelected()) {
-          drawSelectionIndicators(graphics as PIXI.Graphics, size);
+          drawSelectionIndicators(graphicsRender.graphics, size);
         }
         if (health != null && (showAllHealth || selectable.isSelected())) {
-          drawHealthBar(health as Health, graphics as PIXI.Graphics);
+          drawHealthBar(health as Health, graphicsRender.graphics);
         }
 
         if (showDebugAggro && combat != null) {
-          drawAggroRadius(combat, graphics as PIXI.Graphics);
+          drawAggroRadius(combat, graphicsRender.graphics);
         }
       } else {
-        graphics.clear();
+        graphicsRender.graphics.clear();
       }
     });
   })

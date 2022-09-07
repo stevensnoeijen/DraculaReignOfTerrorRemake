@@ -1,17 +1,19 @@
-import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded, EntityRemoved } from 'sim-ecs';
+import { createSystem, queryComponents, Read, WriteResource, ReadEvents, EntityAdded, EntityRemoved } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
 import { Transform } from '../../components/Transform';
 
 import { DEAD_LAYER, ALIVE_LAYER } from './layers';
 
+import { isAlive } from '~/game/utils/components';
 import { Alive } from '~/game/components/Alive';
 import { Died } from '~/game/events/Died';
+import { SpriteRender } from '~/game/components/render/SpriteRender';
 
 let aliveLayer: PIXI.Container;
 let deadLayer: PIXI.Container;
 
-const updatePosition = (sprite: PIXI.AnimatedSprite | PIXI.Sprite, transform: Transform) => {
+const updatePosition = (sprite: PIXI.Sprite, transform: Transform) => {
   sprite.position.set(
     transform.position.x,
     transform.position.y
@@ -26,8 +28,7 @@ export const SpriteRenderSystem = createSystem({
   died: ReadEvents(Died),
 
   query: queryComponents({
-    sprite: ReadOptional(PIXI.Sprite),
-    animatedSprite: ReadOptional(PIXI.AnimatedSprite),
+    spriteRender: Read(SpriteRender),
     transform: Read(Transform),
   }),
 })
@@ -42,22 +43,22 @@ export const SpriteRenderSystem = createSystem({
   query,
 }) => {
   entityAdded.execute(event => {
-    if (event.entity.hasComponent(PIXI.Sprite))
-      aliveLayer.addChild(event.entity.getComponent(PIXI.Sprite)!);
-
-    if (event.entity.hasComponent(PIXI.AnimatedSprite))
-      aliveLayer.addChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
+    if (event.entity.hasComponent(SpriteRender)) {
+      const sprite = event.entity.getComponent(SpriteRender)!.sprite;
+      if (isAlive(event.entity))
+        aliveLayer.addChild(sprite);
+      else
+        deadLayer.addChild(sprite);
+    }
   });
 
   entityRemoved.execute(event => {
-    if (event.entity.hasComponent(PIXI.Sprite)) {
-      aliveLayer.removeChild(event.entity.getComponent(PIXI.Sprite)!);
-      deadLayer.removeChild(event.entity.getComponent(PIXI.Sprite)!);
-    }
-
-    if (event.entity.hasComponent(PIXI.AnimatedSprite)) {
-        aliveLayer.removeChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
-        deadLayer.removeChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
+    if (event.entity.hasComponent(SpriteRender)) {
+      const sprite = event.entity.getComponent(SpriteRender)!.sprite;
+      if (isAlive(event.entity))
+        aliveLayer.removeChild(sprite);
+      else
+        deadLayer.removeChild(sprite);
     }
   });
 
@@ -76,10 +77,8 @@ export const SpriteRenderSystem = createSystem({
     }
   });
 
-  query.execute(({ sprite, animatedSprite, transform }) => {
-    if (sprite != null) updatePosition(sprite as PIXI.Sprite, transform);
-
-    if (animatedSprite != null) updatePosition(animatedSprite as PIXI.AnimatedSprite, transform);
+  query.execute(({ spriteRender, transform }) => {
+    updatePosition(spriteRender.sprite, transform);
   });
 })
 .build();

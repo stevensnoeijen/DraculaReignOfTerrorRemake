@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { IWorld } from 'sim-ecs';
 
+import { SpriteRender } from './components/render/SpriteRender';
 import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
@@ -27,6 +28,7 @@ import { UnitState } from './components/UnitState';
 import { Unit } from './data/Unit';
 import { randomRotation } from './utils/components/transform';
 import { UnitType } from './types';
+import { GraphicsRender } from './components/render/GraphicsRender';
 
 export interface IUnitProps {
   team: Team;
@@ -74,8 +76,8 @@ export class EntityLoader {
         points: data.healthPointsMax,
         maxPoints: data.healthPointsMax,
       }))
-      .with(new PIXI.Graphics())
-      .with(sprite)
+      .with(new GraphicsRender(new PIXI.Graphics()))
+      .with(new SpriteRender(sprite))
       .with(animations)
       .with(Collider)
       .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
