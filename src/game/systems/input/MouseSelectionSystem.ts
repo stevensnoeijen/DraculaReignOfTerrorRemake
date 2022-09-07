@@ -3,9 +3,9 @@ import { createSystem, queryComponents, Read, ReadResource, ReadEntity, IEntity 
 
 import { EntityHelper } from '../../EntityHelper';
 import { Input } from '../../Input';
-import { getEntityAtPosition } from '../utils';
+import { getEntityAtPosition } from '../../utils/index';
 import { Selectable } from '../../components/input/Selectable';
-import { isOnTeam } from '../utils/index';
+import { isOnTeam } from '../../utils/index';
 
 import { MouseSelection } from './MouseSelection';
 

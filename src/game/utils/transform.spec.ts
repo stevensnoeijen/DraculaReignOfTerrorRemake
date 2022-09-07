@@ -1,11 +1,11 @@
 import { IWorld, buildWorld } from 'sim-ecs';
 
-import { Vector2 } from '../../math/Vector2';
+import { Vector2 } from '../math/Vector2';
 import {
   constructCreateRandomEntities,
   CreateRandomEntities,
-} from '../../__tests__/utils';
-import { Transform } from '../../components/Transform';
+} from '../__tests__/utils';
+import { Transform } from '../components/Transform';
 
 import { byClosestDistance, isInRange } from './transform';
 

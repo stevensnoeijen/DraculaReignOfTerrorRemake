@@ -7,10 +7,10 @@ import { Transform } from '../../components/Transform';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 import { Controlled } from '../../components/input/Controlled';
 import { Moved } from '../../events/Moved';
+import { isAlive, isSameEntity } from '../../utils/index';
 
 import { MoveVelocity } from './../../components/movement/MoveVelocity';
 import { getCell, not, Position } from './../../utils';
-import { isAlive, isSameEntity } from './../utils/index';
 
 import { MovePath } from '~/game/components/movement/MovePath';
 

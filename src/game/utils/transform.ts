@@ -1,8 +1,8 @@
 import { IEntity } from 'sim-ecs';
 
-import { Vector2 } from '../../math/Vector2';
-import { Transform } from '../../components/Transform';
-import { Comparator, falsePredicate, keepOrder } from '../../utils';
+import { Vector2 } from '../math/Vector2';
+import { Transform } from '../components/Transform';
+import { Comparator, falsePredicate, keepOrder } from '../utils';
 
 
 import { Predicate } from '~/utils/types';

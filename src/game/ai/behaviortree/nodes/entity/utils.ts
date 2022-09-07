@@ -6,7 +6,7 @@ import {
   isInRange,
   isSameEntity,
   isAlive,
-} from '../../../../systems/utils/index';
+} from '../../../../utils/index';
 import { not } from '../../../../utils';
 
 import { Team } from '~/game/components/Team';

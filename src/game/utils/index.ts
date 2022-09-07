@@ -1,6 +1,6 @@
 import { IEntity } from 'sim-ecs';
 
-import { EntityHelper } from '../../EntityHelper';
+import { EntityHelper } from '../EntityHelper';
 
 import { Predicate } from '~/utils/types';
 import { Team } from '~/game/components/Team';

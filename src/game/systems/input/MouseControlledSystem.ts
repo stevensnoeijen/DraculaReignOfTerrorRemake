@@ -6,7 +6,7 @@ import { Selectable } from '../../components/input/Selectable';
 import { Transform } from '../../components/Transform';
 import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../utils';
 import { ScenarioLoadedEvent } from '../../Events';
-import { getEntityAtPosition } from '../utils';
+import { getEntityAtPosition } from '../../utils/index';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 import { Controlled } from '../../components/input/Controlled';

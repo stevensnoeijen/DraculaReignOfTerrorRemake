@@ -1,6 +1,6 @@
 import { createSystem, queryComponents, Write, WriteEvents, ReadEntity } from 'sim-ecs';
 
-import { isAlive } from './../utils/index';
+import { isAlive } from '../../utils/index';
 
 import { Target } from '~/game/components/ai/Target';
 import { Idled } from '~/game/events/Idled';
