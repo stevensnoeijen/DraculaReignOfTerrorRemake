@@ -25,7 +25,7 @@ describe('IsEnemyInRange', () => {
     it('should success set target when there is an enemy within range', () => {
       const entitiesInRange = [
         world.buildEntity()
-          .with(new Team(2))
+          .with(Team.CPU)
           .with(new Transform(new Vector2(0, 0)))
           .build(),
       ];
@@ -34,9 +34,9 @@ describe('IsEnemyInRange', () => {
       );
 
       const entity = world.buildEntity()
-        .with(new Team(1))
+        .with(Team.PLAYER)
         .with(new Transform(Vector2.ZERO))
-        .with(new Combat(100, 0, 0))
+        .with(new Combat(1, 0, 0))
         .build();
 
       const node = new IsEnemyInRange([], Combat, 'aggroRange');
@@ -49,7 +49,7 @@ describe('IsEnemyInRange', () => {
       expect(getEntitiesInRange).toBeCalledWith(
         expect.anything(),
         expect.anything(),
-        100
+        16
       );
     });
 

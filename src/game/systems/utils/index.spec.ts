@@ -11,25 +11,25 @@ describe('isOnTeam', () => {
   it('should return false if entity has no Team', () => {
     const entity = world.buildEntity()
       .build();
-    const predicate = isOnTeam(1);
+    const predicate = isOnTeam(Team.PLAYER);
 
     expect(predicate(entity)).toBe(false);
   });
 
   it('should return true if entity team is the same', () => {
     const entity = world.buildEntity()
-      .with(new Team(1))
+      .with(Team.PLAYER)
       .build();
-    const predicate = isOnTeam(1);
+    const predicate = isOnTeam(Team.PLAYER);
 
     expect(predicate(entity)).toBe(true);
   });
 
   it('should return false if entity team is different', () => {
     const entity = world.buildEntity()
-      .with(new Team(2))
+      .with(Team.CPU)
       .build();
-    const predicate = isOnTeam(1);
+    const predicate = isOnTeam(Team.PLAYER);
 
     expect(predicate(entity)).toBe(false);
   });
