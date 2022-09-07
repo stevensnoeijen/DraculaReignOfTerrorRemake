@@ -7,7 +7,7 @@ import {
   Node,
   generateAdjacentNodes,
   calculateDistanceCost,
-} from './pathfinding';
+} from './astar';
 
 describe('isPositionEqual', () => {
   it('should return false when values differ', () => {

@@ -9,7 +9,7 @@ import {
   convertPathfindingPathToPositions,
   not,
 } from './utils';
-import * as PathFinding from './ai/pathfinding';
+import * as PathFinding from './ai/navigation/astar';
 
 describe('getOptions', () => {
   it('should give empty object when location.hash is empty', () => {

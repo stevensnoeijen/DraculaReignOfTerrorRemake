@@ -1,6 +1,6 @@
 import { createSystem, queryComponents, Read, ReadResource, Write, WriteOptional, ReadEntity, WriteEvents } from 'sim-ecs';
 
-import { astar } from '../../ai/pathfinding';
+import { astar } from '../../ai/navigation/astar';
 import { Input } from '../../Input';
 import { Selectable } from '../../components/input/Selectable';
 import { Transform } from '../../components/Transform';

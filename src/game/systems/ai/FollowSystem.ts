@@ -1,6 +1,6 @@
 import { createSystem, queryComponents, Read, ReadResource, Write } from 'sim-ecs';
 
-import { astar } from '../../ai/pathfinding';
+import { astar } from '../../ai/navigation/astar';
 import { ScenarioLoadedEvent } from '../../Events';
 import { convertPathfindingPathToPositions } from '../../utils';
 import { Transform } from '../../components/Transform';

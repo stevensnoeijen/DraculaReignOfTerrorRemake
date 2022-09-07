@@ -3,7 +3,7 @@ import {
   filterEmpty,
   toEqual,
   Position,
-} from '../utils';
+} from '../../utils';
 
 export const isPositionEqual = (a: Position, b: Position): boolean => {
   return a.x === b.x && a.y === b.y;

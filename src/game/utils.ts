@@ -3,7 +3,7 @@ import { IEntity } from 'sim-ecs';
 import { Input } from './Input';
 import { Constants } from './Constants';
 import { Vector2 } from './math/Vector2';
-import * as PathFinding from './ai/pathfinding';
+import * as PathFinding from './ai/navigation/astar';
 import { Transform } from './components/Transform';
 
 import { Predicate } from '~/utils/types';
