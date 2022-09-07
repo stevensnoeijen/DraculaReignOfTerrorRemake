@@ -1,4 +1,4 @@
-import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded, EntityRemoved } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
 import { Transform } from '../../components/Transform';
@@ -20,7 +20,9 @@ const updatePosition = (sprite: PIXI.AnimatedSprite | PIXI.Sprite, transform: Tr
 
 export const SpriteRenderSystem = createSystem({
   app: WriteResource(PIXI.Application),
+
   entityAdded: ReadEvents(EntityAdded),
+  entityRemoved: ReadEvents(EntityRemoved),
   died: ReadEvents(Died),
 
   query: queryComponents({
@@ -35,6 +37,7 @@ export const SpriteRenderSystem = createSystem({
 })
 .withRunFunction(({
   entityAdded,
+  entityRemoved,
   died,
   query,
 }) => {
@@ -44,6 +47,18 @@ export const SpriteRenderSystem = createSystem({
 
     if (event.entity.hasComponent(PIXI.AnimatedSprite))
       aliveLayer.addChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
+  });
+
+  entityRemoved.execute(event => {
+    if (event.entity.hasComponent(PIXI.Sprite)) {
+      aliveLayer.removeChild(event.entity.getComponent(PIXI.Sprite)!);
+      deadLayer.removeChild(event.entity.getComponent(PIXI.Sprite)!);
+    }
+
+    if (event.entity.hasComponent(PIXI.AnimatedSprite)) {
+        aliveLayer.removeChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
+        deadLayer.removeChild(event.entity.getComponent(PIXI.AnimatedSprite)!);
+    }
   });
 
   died.execute(event => {

@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { Graphics } from 'pixi.js';
-import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded, ReadResource } from 'sim-ecs';
+import { createSystem, queryComponents, Read, ReadOptional, WriteResource, ReadEvents, EntityAdded, ReadResource, EntityRemoved } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
@@ -73,6 +73,7 @@ export const GraphicsRenderSystem = createSystem({
 
     entityAdded: ReadEvents(EntityAdded),
     died: ReadEvents(Died),
+    entityRemoved: ReadEvents(EntityRemoved),
 
     query: queryComponents({
       graphics: Read(Graphics),
@@ -83,7 +84,7 @@ export const GraphicsRenderSystem = createSystem({
       combat: ReadOptional(Combat),
     }),
   })
-  .withSetupFunction(({ options, app }) => {
+  .withSetupFunction(({ options, app, query }) => {
     showAllHealth = options.showallhealth !== undefined
       ? options.showallhealth[0] == 'true'
       : false;
@@ -93,12 +94,17 @@ export const GraphicsRenderSystem = createSystem({
   })
   .withRunFunction(({
     entityAdded,
+    entityRemoved,
     died,
     query
   }) => {
     entityAdded.execute(event => {
       if (event.entity.hasComponent(PIXI.Graphics))
         graphicsLayer.addChild(event.entity.getComponent(PIXI.Graphics)!);
+    });
+    entityRemoved.execute(event => {
+      if (event.entity.hasComponent(PIXI.Graphics))
+        graphicsLayer.removeChild(event.entity.getComponent(PIXI.Graphics)!);
     });
 
     died.execute(event => {
