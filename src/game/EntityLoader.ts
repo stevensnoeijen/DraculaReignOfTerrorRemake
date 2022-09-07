@@ -56,7 +56,7 @@ export class EntityLoader {
     sprite.animationSpeed = 0.25;
     sprite.play();
 
-    this.world.commands.buildEntity()
+    const builder = this.world.commands.buildEntity()
       .with(
         new Transform(
           new Vector2(props.position.x, props.position.y),
@@ -79,7 +79,6 @@ export class EntityLoader {
       .with(new MovePath([]))
       .with(new Selectable(false))
       .with(Controlled)
-      .with(MouseControlled)
       .with(Follow)
       .with(Target)
       .with(new Combat(
@@ -88,10 +87,14 @@ export class EntityLoader {
         data.combatAttackDamage
       ))
       .with(UnitState)
-      .with(this.soundService.createComponent(data))
-      .build();
+      .with(this.soundService.createComponent(data));
 
-      this.world.flushCommands();// TODO: optimise this
+    if (props.team.equals(Team.PLAYER))
+      builder.with(MouseControlled);
+
+    builder.build();
+
+    this.world.flushCommands();// TODO: optimise this
   }
 
   private getData(name: string): Unit {
