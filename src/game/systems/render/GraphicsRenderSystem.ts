@@ -6,8 +6,8 @@ import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
 import { Combat } from '../../components/ai/Combat';
+import { GraphicsRender } from '../../components/render/GraphicsRender';
 
-import { GraphicsRender } from './../../components/render/GraphicsRender';
 import { GRAPHICS_LAYER } from './layers';
 import { getHealthColor } from './utils';
 
