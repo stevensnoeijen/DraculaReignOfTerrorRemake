@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { IWorld } from 'sim-ecs';
 
+import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { Combat } from './components/ai/Combat';
@@ -25,6 +26,7 @@ import { Target } from './components/ai/Target';
 import { UnitState } from './components/UnitState';
 import { Unit } from './data/Unit';
 import { randomRotation } from './utils/components/transform';
+import { UnitType } from './types';
 
 export interface IUnitProps {
   team: Team;
@@ -37,20 +39,22 @@ export class EntityLoader {
     private readonly objects: ObjectsJson,
     private readonly animationService: AnimationService,
     private readonly soundService: SoundService,
-  ) {
-
-  }
+  ) {}
 
   public createUnit(name: string, props: IUnitProps): void {
     const data = this.getData(name);
 
     const sprite = new PIXI.AnimatedSprite([PIXI.Texture.EMPTY]);
-    const animator = this.animationService.createAnimator(
+    const animations = this.animationService.createComponent(
       sprite,
       props.team.color,
-      'swordsmen'
+      data.spriteModel as UnitType,
     );
-    sprite.textures = animator.model.getAnimation('idle', 'north').textures;
+    const rotation = randomRotation();
+    sprite.textures = animations.animator.model.getAnimation(
+      'idle',
+      rotationToDirection(rotation)
+    ).textures;
 
     sprite.anchor.set(0.5);
     sprite.position.set(props.position.x, props.position.y);
@@ -61,7 +65,7 @@ export class EntityLoader {
       .with(
         new Transform(
           new Vector2(props.position.x, props.position.y),
-          randomRotation()
+          rotation,
         )
       )
       .with(props.team)
@@ -72,7 +76,7 @@ export class EntityLoader {
       }))
       .with(new PIXI.Graphics())
       .with(sprite)
-      .with(animator)
+      .with(animations)
       .with(Collider)
       .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
       .with(new MoveVelocity(50))

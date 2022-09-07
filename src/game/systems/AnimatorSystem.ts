@@ -7,16 +7,17 @@ import { UnitState } from '../types';
 import { Transform } from '../components/Transform';
 import { rotationToDirection } from '../animation/load';
 
+import { Animations } from './../components/Animations';
 import { Animator } from './../animation/Animator';
 import { Died } from './../events/Died';
 
 export const setAnimation = (entity: IEntity, state: UnitState): void => {
-  if (!entity.hasComponent(Animator)) return;
+  if (!entity.hasComponent(Animations)) return;
 
   const transform = entity.getComponent(Transform);
   const direction = rotationToDirection(transform?.rotation ?? 0)!;
 
-  entity.getComponent(Animator)!.set(state, direction);
+  entity.getComponent(Animations)!.animator.set(state, direction);
 };
 
 export const AnimatorSystem = createSystem({
