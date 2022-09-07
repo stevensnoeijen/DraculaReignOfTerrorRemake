@@ -80,10 +80,10 @@ gulp.task(
 );
 
 gulp.task('index-components', () =>
-    run('cti ./src/game/components').exec()
+    run('cti ./src/game/components -i *.spec.ts').exec()
 );
 gulp.task('index-systems', () =>
-    run('cti ./src/game/systems').exec()
+    run('cti ./src/game/systems -i *.spec.ts').exec()
 );
 
 gulp.task('index',

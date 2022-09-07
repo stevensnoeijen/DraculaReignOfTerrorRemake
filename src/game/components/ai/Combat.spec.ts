@@ -4,8 +4,6 @@ import { Health } from '../Health';
 
 import { Combat } from './Combat';
 
-
-
 describe('Combat', () => {
   describe('attack', () => {
     const world = buildWorld().build();

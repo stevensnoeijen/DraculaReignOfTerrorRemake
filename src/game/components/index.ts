@@ -7,7 +7,6 @@ export * from './render';
 export * from './Alive';
 export * from './Animations';
 export * from './Collider';
-export * from './Health.spec';
 export * from './Health';
 export * from './Size';
 export * from './Sounds';
