@@ -32,10 +32,12 @@ export const gameSchedule: ISyncPointPrefab = {
     [MouseSelectionSystem],
     [AliveSystem],
     [HealthSystem],
-    [MoveVelocitySystem],
-    [MovePositionDirectSystem],
-    [MovePathSystem],
     [BehaviorTreeSystem, TargetSystem, FollowSystem, UnitStateSystem],
+    [
+      MovePathSystem,
+      MovePositionDirectSystem,
+      MoveVelocitySystem,
+    ],
     [AnimatorSystem, SoundsSystem],
     [
       MapRenderSystem,
