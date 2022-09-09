@@ -13,7 +13,7 @@ export const HealthSystem = createSystem({
 }) => {
   query.execute(({ health, alive }) => {
     if (health.points === 0) {
-      alive.alive = false;
+      alive.die();
     }
   });
 })

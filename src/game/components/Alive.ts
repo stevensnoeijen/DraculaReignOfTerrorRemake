@@ -1,5 +1,17 @@
 export class Alive {
   constructor(
-    public alive: boolean
+    private alive: boolean
   ) {}
+
+  public isAlive() {
+    return this.alive;
+  }
+
+  public isDead() {
+    return !this.alive;
+  }
+
+  public die() {
+    this.alive = false;
+  }
 }

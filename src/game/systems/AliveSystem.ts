@@ -15,7 +15,7 @@ export const AliveSystem = createSystem({
     query.execute((entity) => {
       const alive = entity.getComponent(Alive)!;
       const health = entity.getComponent(Health);
-      if (alive.alive || health == null) {
+      if (alive.isAlive() || health == null) {
         return;
       }
 

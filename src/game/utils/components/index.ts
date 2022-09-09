@@ -6,7 +6,7 @@ import { Team } from '~/game/components/Team';
 import { Predicate } from '~/utils/types';
 
 export const isAlive = (entity: IEntity) =>
-  entity.getComponent(Alive)?.alive ?? false;
+  entity.getComponent(Alive)?.isAlive() ?? false;
 
 export const isOnTeam = (team: Team): Predicate<IEntity> => {
   return (entity) => entity.getComponent(Team)?.equals(team) ?? false;

@@ -72,8 +72,7 @@ export const SensorySystem = createSystem({
     .map(eventReader => Array.from(eventReader.iter()))
     .flat();
   for(const entity of entities) {
-    if (!entity.alive.alive)
-      continue;
+    if (entity.alive.isDead()) continue;
 
     for(const event of aliveEvents) {
       processAliveEvent(entity.entity, entity.sensory as Sensory, event);
@@ -84,8 +83,7 @@ export const SensorySystem = createSystem({
     .map(eventReader => Array.from(eventReader.iter()))
     .flat();
   for(const entity of entities) {
-    if (!entity.alive.alive)
-      continue;
+    if (entity.alive.isDead()) continue;
 
     for(const event of deadEvents) {
       processDeadEvents(entity.entity, entity.sensory as Sensory, event);
