@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 
 import { gameSchedule } from './states/gameSchedule';
 import { getOptions } from './Options';
-import { EventBus, Events } from './EventBus';
 import { Scenario } from './scenarios/Scenario';
 import { GameState } from './states/GameState';
 import { ScenarioConstructor } from './scenarios/types';
@@ -22,7 +21,6 @@ export class Engine {
       .build();
     this.world.addResource(this);
     this.world.addResource(app);
-    this.world.addResource(new EventBus<Events>());// TODO: remove me when replaced with sim-ecs events
     this.world.addResource(getOptions());
 
     this.app.loader

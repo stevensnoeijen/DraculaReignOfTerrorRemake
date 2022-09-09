@@ -1,4 +1,4 @@
-import { createSystem, queryComponents, Read, ReadResource, Write, WriteOptional, ReadEntity, WriteEvents } from 'sim-ecs';
+import { createSystem, queryComponents, Read, Write, WriteOptional, ReadEntity, WriteEvents } from 'sim-ecs';
 
 import { astar } from '../../ai/navigation/astar';
 import { Input } from '../../Input';
@@ -10,15 +10,15 @@ import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 import { Controlled } from '../../components/input/Controlled';
 
-import { EventBus, ScenarioLoadedEvent } from '~/game/EventBus';
 import { MouseControlled } from '~/game/components/input/MouseControlled';
 import { Commanded } from '~/game/events/Commanded';
+import { worldEventBus } from '~/game/constants';
+import { ScenarioLoaded } from '~/game/events/ScenarioLoaded';
 
 let collsionMap: number[][] | null = null;
 
 export const MouseControlledSystem = createSystem({
   commanded: WriteEvents(Commanded),
-  eventBus: ReadResource(EventBus),
   query: queryComponents({
     entity: ReadEntity(),
     selectable: Read(Selectable),
@@ -29,9 +29,9 @@ export const MouseControlledSystem = createSystem({
     controlled: WriteOptional(Controlled),
   }),
 })
-.withSetupFunction(({ eventBus }) => {
-  eventBus.on<ScenarioLoadedEvent>('scenario:loaded', (event) => {
-    collsionMap = event.detail.scenario.collisionMap;
+.withSetupFunction(() => {
+  worldEventBus.subscribe(ScenarioLoaded, (event) => {
+    collsionMap = event.scenario.collisionMap;
   });
 })
 .withRunFunction(({

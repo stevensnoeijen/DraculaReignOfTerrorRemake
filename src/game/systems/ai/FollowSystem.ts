@@ -1,4 +1,4 @@
-import { createSystem, queryComponents, Read, ReadResource, Write } from 'sim-ecs';
+import { createSystem, queryComponents, Read, Write } from 'sim-ecs';
 
 import { astar } from '../../ai/navigation/astar';
 import { convertPathfindingPathToPositions } from '../../utils/grid';
@@ -7,13 +7,13 @@ import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 
 
-import { EventBus, ScenarioLoadedEvent } from '~/game/EventBus';
 import { Target } from '~/game/components/ai/Target';
+import { worldEventBus } from '~/game/constants';
+import { ScenarioLoaded } from '~/game/events/ScenarioLoaded';
 
 let collsionMap: number[][] | null = null;
 
 export const FollowSystem = createSystem({
-  eventBus: ReadResource(EventBus),
   query: queryComponents({
     follow: Read(Follow),
     target: Write(Target),
@@ -22,9 +22,9 @@ export const FollowSystem = createSystem({
     movePath: Write(MovePath),
   }),
 })
-.withSetupFunction(({ eventBus }) => {
-  eventBus.on<ScenarioLoadedEvent>('scenario:loaded', (event) => {
-    collsionMap = event.detail.scenario.collisionMap;
+.withSetupFunction(() => {
+  worldEventBus.subscribe(ScenarioLoaded, (event) => {
+    collsionMap = event.scenario.collisionMap;
   });
 })
 .withRunFunction(({

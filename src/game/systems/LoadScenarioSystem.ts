@@ -1,13 +1,15 @@
-import { Actions, createSystem, IWorld, ReadResource } from 'sim-ecs';
+import { Actions, createSystem, IWorld } from 'sim-ecs';
 import { Sound as PixiSound } from '@pixi/sound';
 
-import { EventBus } from '../EventBus';
 import { Engine } from '../Engine';
 import { AnimationService } from '../animation/AnimationService';
 import { AnimationModelsJson } from '../animation/api';
 import { ObjectsJson } from '../data/ObjectsJson';
 import { SoundService } from '../sounds/SoundService';
 import { EntityLoader } from '../EntityLoader';
+import { ScenarioLoaded } from '../events/ScenarioLoaded';
+
+import { worldEventBus } from './../constants';
 
 const getAnimationService = (engine: Engine) => {
   return new AnimationService(
@@ -37,10 +39,9 @@ const getEntityLoader = (world: IWorld, engine: Engine) => {
 };
 
 export const LoadScenarioSystem = createSystem({
-    eventBus: ReadResource(EventBus),
     actions: Actions,
   })
-  .withSetupFunction(({ eventBus, actions }) => {
+  .withSetupFunction(({ actions }) => {
     const engine = actions.getResource(Engine);
 
     if (engine.scenario == null) {
@@ -49,9 +50,6 @@ export const LoadScenarioSystem = createSystem({
 
     engine.scenario.load(getEntityLoader(engine.world, engine));
 
-    eventBus.emit('scenario:loaded', {
-      scenario: engine.scenario!
-    });
-
+    worldEventBus.publish(new ScenarioLoaded(engine.scenario!));
   })
   .build();

@@ -3,8 +3,9 @@ import * as PIXI from 'pixi.js';
 
 import { MAP_LAYER } from './layers';
 
-import { EventBus, ScenarioLoadedEvent } from '~/game/EventBus';
+import { ScenarioLoaded } from '~/game/events/ScenarioLoaded';
 import { cellPositionToVector } from '~/game/utils/grid';
+import { worldEventBus } from '~/game/constants';
 
 let collsionMap: number[][] | null = null;
 const graphics = new PIXI.Graphics();
@@ -31,12 +32,11 @@ const draw = () => {
 };
 
 export const MapRenderSystem = createSystem({
-  eventBus: ReadResource(EventBus),
   app: ReadResource(PIXI.Application),
 })
-.withSetupFunction(({ eventBus, app }) => {
-  eventBus.on<ScenarioLoadedEvent>('scenario:loaded', (event) => {
-    collsionMap = event.detail.scenario.collisionMap;
+.withSetupFunction(({ app }) => {
+  worldEventBus.subscribe(ScenarioLoaded, (event) => {
+    collsionMap = event.scenario.collisionMap;
   });
 
   app.stage.addChildAt(graphics, MAP_LAYER);
