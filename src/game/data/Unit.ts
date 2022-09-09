@@ -1,4 +1,3 @@
-import { $Keys } from 'utility-types';
 
 import { EditableProperty } from './decorator';
 import { GameObject } from './ObjectsJson';
@@ -65,11 +64,13 @@ export class Unit {
   soundDeadByCatapult!: string | null;
 
   public static fromJson(object: GameObject): Unit {
-    const unit = new Unit();
-    for(const property of object.properties) {
-      // @ts-ignore
-      unit[property.field as $Keys<Unit>] = property.value;
-    }
+    let unit = new Unit();
+    unit = Object.assign(unit, {
+      ...object.properties.reduce((prev, property) => ({
+        ...prev,
+        [property.field]: property.value,
+      }), {})
+    });
 
     return unit;
   }
