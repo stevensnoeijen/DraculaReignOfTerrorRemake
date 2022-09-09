@@ -1,3 +1,5 @@
+// created from 'create-ts-index'
+
 export * from './Always';
 export * from './Inverter';
 export * from './Parallel';

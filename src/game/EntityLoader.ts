@@ -21,6 +21,7 @@ import {
   UnitState,
   GraphicsRender,
   Sensory,
+  BehaviorTree,
 } from './components';
 import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
@@ -33,6 +34,8 @@ import { Unit } from './data/Unit';
 import { randomRotation } from './utils/components/transform';
 import { UnitType } from './types';
 import { Sensor } from './ai/sensor/Sensor';
+import { createSwordsmanTree } from './ai/behaviortree/trees';
+import { UNIT_SWORDSMEN } from './data/constants';
 
 export interface IUnitProps {
   team: Team;
@@ -67,8 +70,8 @@ export class EntityLoader {
     sprite.animationSpeed = 0.25;
     sprite.play();
 
-    const builder = this.world.commands
-      .buildEntity()
+    const builder = this.world
+    .buildEntity()
       .with(
         new Transform(new Vector2(props.position.x, props.position.y), rotation)
       )
@@ -96,7 +99,8 @@ export class EntityLoader {
         new Combat(
           data.combatAggroRange,
           data.combatAttackRange,
-          data.combatAttackDamage
+          data.combatAttackDamage,
+          data.combatAttackCooldown,
         )
       )
       .with(UnitState)
@@ -105,9 +109,10 @@ export class EntityLoader {
 
     if (props.team.equals(Team.PLAYER)) builder.with(MouseControlled);
 
-    builder.build();
+    const entity = builder.build();
 
-    this.world.flushCommands(); // TODO: optimise this
+    if (name === UNIT_SWORDSMEN)
+      entity.addComponent(new BehaviorTree(createSwordsmanTree(entity)));
   }
 
   private getData(name: string): Unit {

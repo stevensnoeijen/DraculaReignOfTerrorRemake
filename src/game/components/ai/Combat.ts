@@ -9,6 +9,7 @@ export class Combat {
     public readonly aggroRange: number,
     public readonly attackRange: number,
     public readonly attackDamage: number,
+    public readonly attackCooldown: number,
   ) { }
 
   attack(enemy: IEntity): void {

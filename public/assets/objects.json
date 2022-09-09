@@ -4,7 +4,7 @@
     "properties": [
       {
         "field": "healthPointsMax",
-        "value": 9
+        "value": 15
       },
       {
         "field": "combatAggroRange",
@@ -17,6 +17,10 @@
       {
         "field": "combatAttackDamage",
         "value": 3
+      },
+      {
+        "field": "combatAttackCooldown",
+        "value": 1000
       },
       {
         "field": "spriteModel",
@@ -78,7 +82,7 @@
     "properties": [
       {
         "field": "healthPointsMax",
-        "value": 6
+        "value": 10
       },
       {
         "field": "combatAggroRange",
@@ -91,6 +95,10 @@
       {
         "field": "combatAttackDamage",
         "value": 2
+      },
+      {
+        "field": "combatAttackCooldown",
+        "value": 1000
       },
       {
         "field": "spriteModel",
@@ -160,6 +168,10 @@
         "value": 8
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "knight"
       },
@@ -223,6 +235,10 @@
         "value": 0
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "juggernaut"
       },
@@ -276,6 +292,10 @@
         "value": 4
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "catapult"
       },
@@ -315,6 +335,10 @@
       {
         "field": "combatAttackDamage",
         "value": 6
+      },
+      {
+        "field": "combatAttackCooldown",
+        "value": 1000
       },
       {
         "field": "spriteModel",

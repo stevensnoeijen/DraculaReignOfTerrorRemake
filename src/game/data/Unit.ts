@@ -29,6 +29,12 @@ export class Unit {
   combatAttackDamage!: number;
 
   @EditableProperty({
+    type: Number,
+    nullable: false
+  })
+  combatAttackCooldown!: number;
+
+  @EditableProperty({
     type: String,
     nullable: false,
   })
