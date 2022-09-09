@@ -8,28 +8,31 @@ import { Bounds } from '../../math/collision/Bounds';
 import { toGridPosition } from '../grid';
 
 import { keepOrder } from '~/utils/array';
-import { falsePredicate } from '~/utils/predicate';
 import { Comparator, Predicate } from '~/utils/types';
 
 export const isInRange = (
   targetEntity: IEntity,
   maxRange: number
 ): Predicate<IEntity> => {
-  if (!targetEntity.hasComponent(Transform)) {
-    return falsePredicate;
-  }
-  const targetPosition = targetEntity.getComponent(Transform)!.position;
-
   return (entity) => {
-    if (!entity.hasComponent(Transform)) {
-      return false;
-    }
-    const transform = entity.getComponent(Transform)!;
-
     return (
-      Vector2.distance(targetPosition, transform.position) <= maxRange
+      distance(targetEntity, entity) <= maxRange
     );
   };
+};
+
+export const distance = (a: IEntity, b: IEntity): number => {
+  if (!a.hasComponent(Transform)) {
+    throw new Error('Entity a does not have Transform');
+  }
+  const aTransform = a.getComponent(Transform)!;
+
+  if (!b.hasComponent(Transform)) {
+    throw new Error('Entity b does not have Transform');
+  }
+  const bTransform = b.getComponent(Transform)!;
+
+  return Vector2.distance(aTransform.position, bTransform.position);
 };
 
 export const byClosestDistance = (targetEntity: IEntity): Comparator<IEntity> => {

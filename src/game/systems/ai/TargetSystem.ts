@@ -13,7 +13,7 @@ export const TargetSystem = createSystem({
   }),
 })
 .withRunFunction(({
-  idled: stoppedAttacking,
+  idled,
   query
 }) => {
   query.execute(({ entity, target }) => {
@@ -23,7 +23,7 @@ export const TargetSystem = createSystem({
 
     if (!isAlive(target.entity)) {
       target.entity = null;
-      stoppedAttacking.publish(new Idled(entity));
+      idled.publish(new Idled(entity));
     }
   });
 })

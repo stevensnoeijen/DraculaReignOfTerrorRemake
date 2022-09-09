@@ -1,11 +1,11 @@
-import { IEntity } from 'sim-ecs';
-
-import { Combat } from '../../../../components/ai/Combat';
 
 import { IsEnemyInRange } from './IsEnemyInRange';
 
+import { Combat } from '~/game/components/ai/Combat';
+
+
 export class IsEnemyInAggroRange extends IsEnemyInRange<Combat> {
-  constructor(entities: IEntity[]) {
-    super(entities, Combat, 'aggroRange');
+  constructor() {
+    super(Combat, 'aggroRange');
   }
 }

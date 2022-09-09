@@ -5,14 +5,12 @@ import { Input } from '../../Input';
 import { Selectable } from '../../components/input/Selectable';
 import { Transform } from '../../components/Transform';
 import { convertPathfindingPathToPositions, getMouseGridPosition } from '../../utils/grid';
-import { ScenarioLoadedEvent } from '../../Events';
 import { getEntityAtPosition } from '../../utils/entity';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 import { Controlled } from '../../components/input/Controlled';
 
-
-import { EventBus } from '~/game/EventBus';
+import { EventBus, ScenarioLoadedEvent } from '~/game/EventBus';
 import { MouseControlled } from '~/game/components/input/MouseControlled';
 import { Commanded } from '~/game/events/Commanded';
 

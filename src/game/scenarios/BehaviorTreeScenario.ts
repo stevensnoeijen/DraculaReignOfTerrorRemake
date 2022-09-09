@@ -53,28 +53,34 @@ export class BehaviorTreeScenario extends Scenario {
     });
 
      entityLoader.createUnit(UNIT_SWORDSMEN, {
-      position: cellPositionToVector(1, 3),
+      position: cellPositionToVector(3, 3),
       team: Team.CPU,
     });
 
     const entities = Array.from(this.engine.world.getEntities());
+    // @ts-ignore
+    window.entity = entities[0];
+    // @ts-ignore
+    window.enemy = entities[1];
 
     const tree = new Tree(
       new Selector([
         new Sequence([
           new Inverter(new HasTarget()),
-          new IsEnemyInAggroRange(entities),
+          new IsEnemyInAggroRange(),
           new SetTarget(),
         ]),
         new Sequence([
           new IsMoving(),
-          new Inverter(new IsEnemyInAggroRange(entities)),
+          new Selector([
+            new Inverter(new IsEnemyInAggroRange()),
+          ]),
           new UnsetTarget(),
         ]),
         new Selector([
           new Sequence([
             new Inverter(new IsMoving()),
-            new IsEnemyInAttackRange(entities),
+            new IsEnemyInAttackRange(),
             new Parallel([
               new Sequence([
                 new Inverter(new IsUnitState('attack')),

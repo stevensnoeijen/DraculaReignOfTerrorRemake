@@ -64,16 +64,12 @@ export const SpriteRenderSystem = createSystem({
 
   died.execute(event => {
     if (event.entity.hasComponent(Alive)) {
-      let sprite: PIXI.Sprite | null = null;
-      if (event.entity.hasComponent(PIXI.Sprite))
-        sprite = event.entity.getComponent(PIXI.Sprite)!;
-      if (event.entity.hasComponent(PIXI.AnimatedSprite))
-        sprite = event.entity.getComponent(PIXI.AnimatedSprite)!;
+      const sprite = event.entity.getComponent(SpriteRender)?.sprite;
 
       if (sprite == null) return;
 
-      aliveLayer.removeChild(sprite!);
-      deadLayer.addChild(sprite!);
+      aliveLayer.removeChild(sprite);
+      deadLayer.addChild(sprite);
     }
   });
 

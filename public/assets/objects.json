@@ -8,11 +8,11 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 3
+        "value": 48
       },
       {
         "field": "combatAttackRange",
-        "value": 1
+        "value": 23
       },
       {
         "field": "combatAttackDamage",
@@ -82,11 +82,11 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 4
+        "value": 64
       },
       {
         "field": "combatAttackRange",
-        "value": 6
+        "value": 64
       },
       {
         "field": "combatAttackDamage",
@@ -149,11 +149,11 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 6
+        "value": 96
       },
       {
         "field": "combatAttackRange",
-        "value": 1
+        "value": 16
       },
       {
         "field": "combatAttackDamage",
@@ -216,7 +216,7 @@
       },
       {
         "field": "combatAttackRange",
-        "value": 1
+        "value": 16
       },
       {
         "field": "combatAttackDamage",
@@ -265,11 +265,11 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 4
+        "value": 96
       },
       {
         "field": "combatAttackRange",
-        "value": 5
+        "value": 80
       },
       {
         "field": "combatAttackDamage",
@@ -306,11 +306,11 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 4
+        "value": 80
       },
       {
         "field": "combatAttackRange",
-        "value": 5
+        "value": 80
       },
       {
         "field": "combatAttackDamage",

@@ -1,14 +1,13 @@
 import { createSystem, queryComponents, Read, ReadResource, Write } from 'sim-ecs';
 
 import { astar } from '../../ai/navigation/astar';
-import { ScenarioLoadedEvent } from '../../Events';
 import { convertPathfindingPathToPositions } from '../../utils/grid';
 import { Transform } from '../../components/Transform';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 
 
-import { EventBus } from '~/game/EventBus';
+import { EventBus, ScenarioLoadedEvent } from '~/game/EventBus';
 import { Target } from '~/game/components/ai/Target';
 
 let collsionMap: number[][] | null = null;

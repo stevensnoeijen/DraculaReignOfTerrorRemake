@@ -3,8 +3,7 @@ import * as PIXI from 'pixi.js';
 
 import { MAP_LAYER } from './layers';
 
-import { EventBus } from '~/game/EventBus';
-import { ScenarioLoadedEvent } from '~/game/Events';
+import { EventBus, ScenarioLoadedEvent } from '~/game/EventBus';
 import { cellPositionToVector } from '~/game/utils/grid';
 
 let collsionMap: number[][] | null = null;

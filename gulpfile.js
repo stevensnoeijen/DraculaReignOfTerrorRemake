@@ -82,10 +82,13 @@ gulp.task(
 gulp.task('index-components', () =>
     run('cti ./src/game/components -i *.spec.ts').exec()
 );
+gulp.task('index-events', () =>
+    run('cti ./src/game/events -i *.spec.ts').exec()
+);
 gulp.task('index-systems', () =>
     run('cti ./src/game/systems -i *.spec.ts').exec()
 );
 
 gulp.task('index',
-  gulp.series('index-components', 'index-systems')
+  gulp.series('index-components', 'index-events', 'index-systems')
 );

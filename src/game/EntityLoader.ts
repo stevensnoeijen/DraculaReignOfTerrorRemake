@@ -20,6 +20,7 @@ import {
   Target,
   UnitState,
   GraphicsRender,
+  Sensory,
 } from './components';
 import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
@@ -31,6 +32,7 @@ import { Constants } from './constants';
 import { Unit } from './data/Unit';
 import { randomRotation } from './utils/components/transform';
 import { UnitType } from './types';
+import { Sensor } from './ai/sensor/Sensor';
 
 export interface IUnitProps {
   team: Team;
@@ -98,7 +100,8 @@ export class EntityLoader {
         )
       )
       .with(UnitState)
-      .with(this.soundService.createComponent(data));
+      .with(this.soundService.createComponent(data))
+      .with(new Sensory(new Sensor(data.combatAggroRange)));
 
     if (props.team.equals(Team.PLAYER)) builder.with(MouseControlled);
 

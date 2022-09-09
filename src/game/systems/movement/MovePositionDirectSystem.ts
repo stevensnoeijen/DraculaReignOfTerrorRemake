@@ -1,4 +1,3 @@
-
 import { createSystem, IEntity, queryComponents, Write, WriteEvents, ReadEntity, Read } from 'sim-ecs';
 import { IEventWriter } from 'sim-ecs/dist/events';
 

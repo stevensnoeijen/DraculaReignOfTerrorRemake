@@ -4,8 +4,7 @@ import { nanoid } from 'nanoid';
 
 import { gameSchedule } from './states/gameSchedule';
 import { getOptions } from './Options';
-import { EventBus } from './EventBus';
-import { Events } from './Events';
+import { EventBus, Events } from './EventBus';
 import { Scenario } from './scenarios/Scenario';
 import { GameState } from './states/GameState';
 import { ScenarioConstructor } from './scenarios/types';

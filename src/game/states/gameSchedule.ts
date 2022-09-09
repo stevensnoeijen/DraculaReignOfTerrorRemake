@@ -22,6 +22,7 @@ import {
   SoundsSystem,
   AnimatorSystem,
   LoadScenarioSystem,
+  SensorySystem,
 } from '../systems';
 
 export const gameSchedule: ISyncPointPrefab = {
@@ -32,7 +33,13 @@ export const gameSchedule: ISyncPointPrefab = {
     [MouseSelectionSystem],
     [AliveSystem],
     [HealthSystem],
-    [BehaviorTreeSystem, TargetSystem, FollowSystem, UnitStateSystem],
+    [
+      SensorySystem,
+      BehaviorTreeSystem,
+      TargetSystem,
+      FollowSystem,
+      UnitStateSystem
+    ],
     [
       MovePathSystem,
       MovePositionDirectSystem,

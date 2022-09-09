@@ -19,17 +19,17 @@ beforeEach(() => {
 });
 
 describe('isInRange', () => {
-  it('should filter everything when targetEntity has no TransformComponent', () => {
+  it('should throw error when targetEntity has no Transform', () => {
     const targetEntity = world.buildEntity().build();
 
     const filter = isInRange(targetEntity, 100);
 
-    const filtered = [...createRandomEntities()].filter(filter);
-
-    expect(filtered).toHaveLength(0);
+    expect(
+      () => [...createRandomEntities()].filter(filter)
+    ).toThrowError();
   });
 
-  it('should filter out entities that have no TransformComponent', () => {
+  it('should error if entities have no Transform', () => {
     const targetEntity = world.buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
@@ -41,9 +41,9 @@ describe('isInRange', () => {
 
     const filter = isInRange(targetEntity, 100);
 
-    const filtered = [...entitiesWithoutTransform].filter(filter);
-
-    expect(filtered).toHaveLength(0);
+    expect(
+      () => [...entitiesWithoutTransform].filter(filter)
+    ).toThrowError();
   });
 
   it('should filter out entities that are out of given range', () => {

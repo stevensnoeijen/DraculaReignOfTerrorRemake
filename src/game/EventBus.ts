@@ -1,3 +1,5 @@
+import { Scenario } from './scenarios/Scenario';
+
 type CustomEventListener<Detail> = (event: CustomEvent<Detail>) => void;
 
 /**
@@ -43,3 +45,9 @@ export class EventBus<DetailOptions> {
     return this.eventTarget.dispatchEvent(new CustomEvent(type, { detail }));
   }
 }
+
+export interface ScenarioLoadedEvent {
+  scenario: Scenario;
+}
+
+export type Events = ScenarioLoadedEvent;
