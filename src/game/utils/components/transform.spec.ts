@@ -9,7 +9,6 @@ import { Transform } from '../../components/Transform';
 
 import { byClosestDistance, isInRange } from './transform';
 
-
 let world: IWorld;
 let createRandomEntities: CreateRandomEntities;
 
@@ -24,13 +23,12 @@ describe('isInRange', () => {
 
     const filter = isInRange(targetEntity, 100);
 
-    expect(
-      () => [...createRandomEntities()].filter(filter)
-    ).toThrowError();
+    expect(() => [...createRandomEntities()].filter(filter)).toThrow();
   });
 
   it('should error if entities have no Transform', () => {
-    const targetEntity = world.buildEntity()
+    const targetEntity = world
+      .buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
 
@@ -41,13 +39,12 @@ describe('isInRange', () => {
 
     const filter = isInRange(targetEntity, 100);
 
-    expect(
-      () => [...entitiesWithoutTransform].filter(filter)
-    ).toThrowError();
+    expect(() => [...entitiesWithoutTransform].filter(filter)).toThrow();
   });
 
   it('should filter out entities that are out of given range', () => {
-    const targetEntity = world.buildEntity()
+    const targetEntity = world
+      .buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
     const inRangeEntities = createRandomEntities(
@@ -71,8 +68,7 @@ describe('isInRange', () => {
 
 describe('byClosestDistance', () => {
   it('should keep order sort when targetEntity has no TransformComponent', () => {
-    const targetEntity = world.buildEntity()
-      .build();
+    const targetEntity = world.buildEntity().build();
 
     const entities = createRandomEntities();
     const sorted = [...entities].sort(byClosestDistance(targetEntity));
@@ -81,7 +77,8 @@ describe('byClosestDistance', () => {
   });
 
   it('should sort entities without TransformComponent to the back', () => {
-    const targetEntity = world.buildEntity()
+    const targetEntity = world
+      .buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
 
@@ -97,13 +94,15 @@ describe('byClosestDistance', () => {
   });
 
   it('should sort entities by distance', () => {
-    const targetEntity = world.buildEntity()
+    const targetEntity = world
+      .buildEntity()
       .with(new Transform(Vector2.ZERO))
       .build();
 
-    const closestEntity = world.buildEntity()
-          .with(new Transform(Vector2.ZERO))
-          .build();
+    const closestEntity = world
+      .buildEntity()
+      .with(new Transform(Vector2.ZERO))
+      .build();
 
     const sorted = [...createRandomEntities(), closestEntity].sort(
       byClosestDistance(targetEntity)
