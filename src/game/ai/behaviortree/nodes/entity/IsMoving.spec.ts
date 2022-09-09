@@ -19,8 +19,10 @@ describe('IsMoving', () => {
       expect(setTarget.evaluate()).toBe(State.FAILURE);
     });
 
-    it("should return failure when entity's MovePositionDirect movePosition is null", () => {
-      const entity = world.buildEntity()
+    it(`should return failure when entity's
+      MovePositionDirect movePosition is null`, () => {
+      const entity = world
+        .buildEntity()
         .with(new MovePositionDirect(null))
         .build();
       const setTarget = new IsMoving();
@@ -29,8 +31,10 @@ describe('IsMoving', () => {
       expect(setTarget.evaluate()).toBe(State.FAILURE);
     });
 
-    it("should return success when entity's MovePositionDirect movePosition is null", () => {
-      const entity = world.buildEntity()
+    it(`should return success when entity's
+      MovePositionDirect movePosition is null`, () => {
+      const entity = world
+        .buildEntity()
         .with(new MovePositionDirect(new Vector2(1, 2)))
         .build();
       const setTarget = new IsMoving();

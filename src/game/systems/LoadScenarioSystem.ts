@@ -21,12 +21,11 @@ const getAnimationService = (engine: Engine) => {
 const getSoundService = (engine: Engine) => {
   const sounds = PixiSound.from({
     url: 'assets/sounds.mp3',
-    sprites: (engine.app.loader.resources['sounds'].data as audiosprite.Result).spritemap,
+    sprites: (engine.app.loader.resources['sounds'].data as audiosprite.Result)
+      .spritemap,
   });
 
-  return new SoundService(
-    sounds,
-  );
+  return new SoundService(sounds);
 };
 
 const getEntityLoader = (world: IWorld, engine: Engine) => {
@@ -34,13 +33,13 @@ const getEntityLoader = (world: IWorld, engine: Engine) => {
     world,
     engine.app.loader.resources['objects'].data as ObjectsJson,
     getAnimationService(engine),
-    getSoundService(engine),
+    getSoundService(engine)
   );
 };
 
 export const LoadScenarioSystem = createSystem({
-    actions: Actions,
-  })
+  actions: Actions,
+})
   .withSetupFunction(({ actions }) => {
     const engine = actions.getResource(Engine);
 

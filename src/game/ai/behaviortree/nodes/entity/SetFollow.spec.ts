@@ -7,18 +7,15 @@ import { SetFollow } from './SetFollow';
 
 import { Follow } from '~/game/components/ai/Follow';
 
-
 describe('SetFollow', () => {
   describe('evaluate', () => {
     const world = buildWorld().build();
 
     const createEntity = (target: IEntity | null = null) =>
-      world.buildEntity()
-        .with(new Target(target))
-        .with(Follow)
-        .build();
+      world.buildEntity().with(new Target(target)).with(Follow).build();
 
-    it('should fail when entity has no FollowComponent or TargetComponent', () => {
+    it(`should fail when entity has no
+      FollowComponent or TargetComponent`, () => {
       const entity = world.buildEntity().build();
 
       const follow = new SetFollow();
@@ -27,7 +24,8 @@ describe('SetFollow', () => {
       expect(follow.evaluate()).toBe(State.FAILURE);
     });
 
-    it('should success with setting FollowComponent when with TargetComponent', () => {
+    it(`should success with setting
+      FollowComponent when with TargetComponent`, () => {
       const target = createEntity();
       const entity = createEntity(target);
 

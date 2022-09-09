@@ -1,4 +1,13 @@
-import { createSystem, IEntity, queryComponents, Read, ReadEntity, Write, ReadOptional, WriteEvents } from 'sim-ecs';
+import {
+  createSystem,
+  IEntity,
+  queryComponents,
+  Read,
+  ReadEntity,
+  Write,
+  ReadOptional,
+  WriteEvents,
+} from 'sim-ecs';
 import { IEventWriter } from 'sim-ecs/dist/events';
 
 import { Vector2 } from '../../math/Vector2';
@@ -20,7 +29,8 @@ const canEntityMoveToCell = (
   entity: IEntity,
   cell: Position
 ): boolean => {
-  const collider = colliders.filter(not(isSameEntity(entity)))
+  const collider = colliders
+    .filter(not(isSameEntity(entity)))
     .filter(isAlive)
     .find((collider) => {
       const colliderCell = getCell(collider);
@@ -38,15 +48,14 @@ const updateMovePosition = (
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
   controlled: Controlled | null,
-  moved: IEventWriter<typeof Moved>,
+  moved: IEventWriter<typeof Moved>
 ) => {
   if (movePath.path.length == 0) {
     if (
       moveVelocity?.velocity != null &&
       Vector2.ZERO.equals(moveVelocity.velocity)
     ) {
-      if (controlled != null)
-      controlled.by = null;
+      if (controlled != null) controlled.by = null;
     }
 
     return;
@@ -59,13 +68,7 @@ const updateMovePosition = (
 
   const nextCell = movePath.path[0];
 
-  if (
-    !canEntityMoveToCell(
-      entities,
-      entity,
-      nextCell
-    )
-  ) {
+  if (!canEntityMoveToCell(entities, entity, nextCell)) {
     // cancel move
     return;
   }
@@ -76,11 +79,7 @@ const updateMovePosition = (
     nextCell.y
   );
   const transformComponent = entity.getComponent(Transform)!;
-  if (
-    !transformComponent.position.equals(
-      movePositionDirect.movePosition
-    )
-  ) {
+  if (!transformComponent.position.equals(movePositionDirect.movePosition)) {
     transformComponent.rotation = Vector2.angle(
       transformComponent.position,
       movePositionDirect.movePosition
@@ -102,20 +101,19 @@ export const MovePathSystem = createSystem({
     controlled: ReadOptional(Controlled),
   }),
 })
-.withRunFunction(({
-  moved,
-  query,
-}) => {
-  query.execute(({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
-    updateMovePosition(
-      Array.from(query.iter()).map(e => e.entity),
-      entity,
-      movePath,
-      moveVelocity,
-      movePositionDirect,
-      controlled ?? null,
-      moved,
+  .withRunFunction(({ moved, query }) => {
+    query.execute(
+      ({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
+        updateMovePosition(
+          Array.from(query.iter()).map((e) => e.entity),
+          entity,
+          movePath,
+          moveVelocity,
+          movePositionDirect,
+          controlled ?? null,
+          moved
+        );
+      }
     );
-  });
-})
-.build();
+  })
+  .build();

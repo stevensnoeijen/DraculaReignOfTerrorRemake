@@ -25,22 +25,25 @@ export class IsEnemyInRange<
     ] as unknown as number;
 
     const entitiesInRange = this.getEnemiesInRange(range);
-    if (entitiesInRange.length === 0)
-      return this.failure();
+    if (entitiesInRange.length === 0) return this.failure();
 
     this.parent!.setData('target', entitiesInRange[0]);
 
     return this.success();
   }
 
-  private getEnemiesInRange (range: number) {
+  private getEnemiesInRange(range: number) {
     const entity = this.getData('entity') as IEntity | null;
-    if (entity == null)
-      return [];
+    if (entity == null) return [];
 
-    return entity.getComponent(Sensory)?.sensor.modalities
-      .filter(modality => modality.range <= range)
-      .filter(modality => !isOnTeam(entity.getComponent(Team)!)(modality.entity))
-      .map(modality => modality.entity) ?? [];
+    return (
+      entity
+        .getComponent(Sensory)
+        ?.sensor.modalities.filter((modality) => modality.range <= range)
+        .filter(
+          (modality) => !isOnTeam(entity.getComponent(Team)!)(modality.entity)
+        )
+        .map((modality) => modality.entity) ?? []
+    );
   }
 }

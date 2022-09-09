@@ -15,9 +15,7 @@ export const isInRange = (
   maxRange: number
 ): Predicate<IEntity> => {
   return (entity) => {
-    return (
-      distance(targetEntity, entity) <= maxRange
-    );
+    return distance(targetEntity, entity) <= maxRange;
   };
 };
 
@@ -35,7 +33,9 @@ export const distance = (a: IEntity, b: IEntity): number => {
   return Vector2.distance(aTransform.position, bTransform.position);
 };
 
-export const byClosestDistance = (targetEntity: IEntity): Comparator<IEntity> => {
+export const byClosestDistance = (
+  targetEntity: IEntity
+): Comparator<IEntity> => {
   if (!targetEntity.hasComponent(Transform)) {
     return keepOrder;
   }
@@ -86,7 +86,7 @@ export const isPositionInsideEntity = (
 export const randomRotation = () => {
   const rotation = Math.random() * 360;
 
-  return rotation - rotation % 90;
+  return rotation - (rotation % 90);
 };
 
 export const getCell = (entity: IEntity): Position => {

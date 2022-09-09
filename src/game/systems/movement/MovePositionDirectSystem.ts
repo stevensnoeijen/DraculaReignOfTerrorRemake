@@ -1,4 +1,12 @@
-import { createSystem, IEntity, queryComponents, Write, WriteEvents, ReadEntity, Read } from 'sim-ecs';
+import {
+  createSystem,
+  IEntity,
+  queryComponents,
+  Write,
+  WriteEvents,
+  ReadEntity,
+  Read,
+} from 'sim-ecs';
 import { IEventWriter } from 'sim-ecs/dist/events';
 
 import { Transform } from '../../components/Transform';
@@ -9,7 +17,6 @@ import { MovePositionDirect } from '../../components/movement/MovePositionDirect
 import { MovePath } from './../../components/movement/MovePath';
 
 import { Idled } from '~/game/events/Idled';
-
 
 const moveByMoveVelocity = (
   entity: IEntity,
@@ -22,18 +29,14 @@ const moveByMoveVelocity = (
   if (movePositionDirect.movePosition == null) return;
 
   if (
-    Vector2.distance(
-      transform.position,
-      movePositionDirect.movePosition
-    ) < 1
+    Vector2.distance(transform.position, movePositionDirect.movePosition) < 1
   ) {
     transform.position = movePositionDirect.movePosition;
     // stop
     movePositionDirect.movePosition = null;
     moveVelocity.velocity = Vector2.ZERO;
 
-    if (movePath.path.length === 0)
-      idled.publish(new Idled(entity));
+    if (movePath.path.length === 0) idled.publish(new Idled(entity));
 
     return;
   }
@@ -55,12 +58,18 @@ export const MovePositionDirectSystem = createSystem({
     transform: Write(Transform),
   }),
 })
-.withRunFunction(({
-  idled,
-  query
-}) => {
-  query.execute(({ entity, movePositionDirect, moveVelocity, movePath, transform }) => {
-    moveByMoveVelocity(entity, movePositionDirect, moveVelocity, movePath, transform, idled);
-  });
-})
-.build();
+  .withRunFunction(({ idled, query }) => {
+    query.execute(
+      ({ entity, movePositionDirect, moveVelocity, movePath, transform }) => {
+        moveByMoveVelocity(
+          entity,
+          movePositionDirect,
+          moveVelocity,
+          movePath,
+          transform,
+          idled
+        );
+      }
+    );
+  })
+  .build();
