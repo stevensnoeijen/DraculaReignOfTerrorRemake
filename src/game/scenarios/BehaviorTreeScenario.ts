@@ -29,8 +29,8 @@ export class BehaviorTreeScenario extends Scenario {
     });
 
      entityLoader.createUnit(UNIT_SWORDSMEN, {
-      position: cellPositionToVector(3, 3),
-      team: Team.CPU,
+      position: cellPositionToVector(8, 8),
+      team: Team.PLAYER,
     });
   }
 }

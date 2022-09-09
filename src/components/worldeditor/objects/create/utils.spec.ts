@@ -24,7 +24,7 @@ describe('createEmptyObject', () => {
   it('should set all properties', () => {
     const object = createEmptyObject();
 
-    expect(object.properties).toHaveLength(9);
+    expect(object.properties).toHaveLength(10);
   });
 
   const testObjectProperties = (

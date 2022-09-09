@@ -8,8 +8,9 @@ import { Combat } from '../../../../components/ai/Combat';
 import { Team } from './../../../../components/Team';
 import { IsEnemyInRange } from './IsEnemyInRange';
 
-import { Sensor } from '~/game/components';
+import { Sensory } from '~/game/components';
 import { Modality } from '~/game/ai/sensor/Modality';
+import { Sensor } from '~/game/ai/sensor/Sensor';
 
 describe('IsEnemyInRange', () => {
   describe('evaluate', () => {
@@ -26,13 +27,17 @@ describe('IsEnemyInRange', () => {
           .with(new Transform(new Vector2(0, 0)))
           .build();
 
-      const sensor = new Sensor(48, [
-        new Modality(entityInRange, 16),
-      ]);
+      const sensor = new Sensory(
+        new Sensor(
+          48, [
+            new Modality(entityInRange, 16),
+          ]
+        )
+      );
       const entity = world.buildEntity()
         .with(Team.PLAYER)
         .with(new Transform(Vector2.ZERO))
-        .with(new Combat(16, 0, 0))
+        .with(new Combat(16, 0, 0, 0))
         .with(sensor)
         .build();
 
