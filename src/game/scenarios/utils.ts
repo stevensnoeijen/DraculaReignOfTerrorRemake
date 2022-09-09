@@ -1,14 +1,14 @@
 import * as PIXI from 'pixi.js';
 import { default as generateEllerMaze } from 'generate-maze';
 
-import { Constants } from '../constants';
+import { CELL_SIZE } from '../constants';
 
 type Size = { width: number; height: number };
 
 export const getGridSizeByScreen = (app: PIXI.Application): Size => {
   return {
-    width: Math.ceil(app.screen.width / Constants.CELL_SIZE),
-    height: Math.ceil(app.screen.height / Constants.CELL_SIZE),
+    width: Math.ceil(app.screen.width / CELL_SIZE),
+    height: Math.ceil(app.screen.height / CELL_SIZE),
   };
 };
 

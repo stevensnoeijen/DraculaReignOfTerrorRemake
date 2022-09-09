@@ -2,7 +2,7 @@ import { createSystem, ReadResource } from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 import { DashLine } from 'pixi-dashed-line';
 
-import { Constants } from '../../constants';
+import { CELL_SIZE } from '../../constants';
 
 import { GRID_LAYER } from './layers';
 
@@ -24,18 +24,18 @@ const draw = (app: PIXI.Application, options: Options) => {
   });
 
   for (
-    let height = Constants.CELL_SIZE;
+    let height = CELL_SIZE;
     height < app.screen.height;
-    height += Constants.CELL_SIZE
+    height += CELL_SIZE
   ) {
     // horizontal lines
     dash.moveTo(0, height).lineTo(app.screen.width, height);
   }
 
   for (
-    let width = Constants.CELL_SIZE;
+    let width = CELL_SIZE;
     width < app.screen.width;
-    width += Constants.CELL_SIZE
+    width += CELL_SIZE
   ) {
     // vertical lines
     dash.moveTo(width, 0).lineTo(width, app.screen.height);

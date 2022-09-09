@@ -29,7 +29,7 @@ import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
 import { Position } from './utils/types';
 import { Vector2 } from './math/Vector2';
-import { Constants } from './constants';
+import { CELL_SIZE } from './constants';
 import { Unit } from './data/Unit';
 import { randomRotation } from './utils/components/transform';
 import { UnitType } from './types';
@@ -87,7 +87,7 @@ export class EntityLoader {
       .with(new SpriteRender(sprite))
       .with(animations)
       .with(Collider)
-      .with(new Size(Constants.CELL_SIZE, Constants.CELL_SIZE))
+      .with(new Size(CELL_SIZE, CELL_SIZE))
       .with(new MoveVelocity(50))
       .with(MovePositionDirect)
       .with(new MovePath([]))

@@ -1,5 +1,5 @@
 
-import { Constants } from '../constants';
+import { CELL_SIZE } from '../constants';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils/grid';
 import { Engine } from '../Engine';
@@ -31,7 +31,7 @@ export class RandomUnitsScenario extends Scenario {
         new Vector2(
           Math.round(Math.random() * this.engine.app.screen.width),
           Math.round(Math.random() * this.engine.app.screen.height) +
-            Constants.CELL_SIZE / 2
+            CELL_SIZE / 2
         )
       );
 
