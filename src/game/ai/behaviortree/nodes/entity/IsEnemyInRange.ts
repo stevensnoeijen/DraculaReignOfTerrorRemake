@@ -5,7 +5,8 @@ import { State } from '../Node';
 
 import { EntityNode } from './EntityNode';
 
-import { Sensory } from '~/game/components';
+import { Sensory, Team } from '~/game/components';
+import { isOnTeam } from '~/game/utils/components';
 
 export class IsEnemyInRange<
   TComponent extends Object,
@@ -39,6 +40,7 @@ export class IsEnemyInRange<
 
     return entity.getComponent(Sensory)?.sensor.modalities
       .filter(modality => modality.range <= range)
+      .filter(modality => !isOnTeam(entity.getComponent(Team)!)(modality.entity))
       .map(modality => modality.entity) ?? [];
   }
 }
