@@ -1,4 +1,5 @@
 import { State } from '../Node';
+
 import { Always } from './Always';
 
 describe('Always', () => {

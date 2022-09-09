@@ -14,5 +14,5 @@ export const disableConsoleWarn = () => {
   return jest.spyOn(console, 'warn').mockImplementation(() => {});
 };
 
-export const returnTrue = (other: unknown) => true;
-export const returnFalse = (other: unknown) => false;
+export const returnTrue = () => true;
+export const returnFalse = () => false;
