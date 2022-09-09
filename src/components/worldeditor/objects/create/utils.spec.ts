@@ -1,6 +1,7 @@
-import { GameObject } from '../ObjectsJson';
-
 import { createEmptyObject, getDefaultValueByType } from './utils';
+
+import { GameObject } from '~/game/data/ObjectsJson';
+
 
 describe('getDefaultValueByType', () => {
   it.each([
@@ -47,8 +48,7 @@ describe('createEmptyObject', () => {
   ] as const;
   const STRING_PROPERTIES = ['spriteModel', 'soundDeadByCatapult'] as const;
   const STRING_ARRAY_PROPERTIES = [
-    'soundMove',
-    'soundAttackTarget',
+    'soundCommand',
     'soundAttackEffect',
     'soundDead',
   ] as const;

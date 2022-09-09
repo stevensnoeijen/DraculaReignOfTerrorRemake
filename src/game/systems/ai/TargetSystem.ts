@@ -1,33 +1,30 @@
-import { System, SystemQueries } from 'ecsy';
-import { Follow } from './../../ai/behaviortree/nodes/entity/Follow';
-import { TargetComponent } from './TargetComponent';
-import { FollowComponent } from './../movement/FollowComponent';
-import { AliveComponent } from './../alive/AliveComponent';
+import { createSystem, queryComponents, Write, WriteEvents, ReadEntity } from 'sim-ecs';
 
-export class TargetSystem extends System {
-  static queries: SystemQueries = {
-    entities: {
-      components: [TargetComponent],
-    },
-  };
+import { Target } from '~/game/components/ai/Target';
+import { Idled } from '~/game/events/Idled';
+import { isAlive } from '~/game/utils/components';
 
-  public execute(delta: number, time: number): void {
-    this.checkDead();
-  }
+export const TargetSystem = createSystem({
+  idled: WriteEvents(Idled),
 
-  private checkDead(): void {
-    for (const entity of this.queries.entities.results) {
-      const targetComponent = entity.getComponent(TargetComponent)!;
-      if (targetComponent.target === null) {
-        return;
-      }
-
-      const targetAliveComponent =
-        targetComponent.target.getComponent(AliveComponent);
-
-      if (targetAliveComponent !== null && !targetAliveComponent!.alive) {
-        entity.getMutableComponent(TargetComponent)!.target = null;
-      }
+  query: queryComponents({
+    entity: ReadEntity(),
+    target: Write(Target),
+  }),
+})
+.withRunFunction(({
+  idled,
+  query
+}) => {
+  query.execute(({ entity, target }) => {
+    if (target.entity === null) {
+      return;
     }
-  }
-}
+
+    if (!isAlive(target.entity)) {
+      target.entity = null;
+      idled.publish(new Idled(entity));
+    }
+  });
+})
+.build();

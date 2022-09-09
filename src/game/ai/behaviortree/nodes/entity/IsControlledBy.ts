@@ -1,23 +1,26 @@
-import { Entity } from 'ecsy';
+
+import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
-import { EntityNode } from './EntityNode';
 import {
   By,
-  ControlledComponent,
-} from '../../../../systems/ControlledComponent';
+  Controlled,
+} from '../../../../components/input/Controlled';
 
-export abstract class IsControlledBy extends EntityNode {
+import { EntityNode } from './EntityNode';
+
+
+export class IsControlledBy extends EntityNode {
   constructor(private readonly by: By) {
     super([]);
   }
 
-  protected evaluateByEntity(entity: Entity): State {
-    if (!entity.hasComponent(ControlledComponent)) {
+  protected evaluateByEntity(entity: IEntity): State {
+    if (!entity.hasComponent(Controlled)) {
       return this.failure();
     }
-    const controlledComponent = entity.getComponent(ControlledComponent)!;
-    if (controlledComponent.by === this.by) {
+    const controlled = entity.getComponent(Controlled)!;
+    if (controlled.by === this.by) {
       return this.success();
     }
 

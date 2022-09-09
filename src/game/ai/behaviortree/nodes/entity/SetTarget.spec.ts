@@ -1,16 +1,24 @@
-import { World } from 'ecsy';
+import { buildWorld, IEntity } from 'sim-ecs';
+
+
+import { Target } from '../../../../components/ai/Target';
+import { State } from '../Node';
 
 import { SetTarget } from './SetTarget';
-import { TargetComponent } from '../../../../systems/ai/TargetComponent';
-import { State } from '../Node';
+
 
 describe('SetTarget', () => {
   describe('evaluate', () => {
-    const world = new World().registerComponent(TargetComponent);
+    const world = buildWorld().build();
+
+    const createEntity = (target: IEntity | null = null) =>
+      world.buildEntity()
+        .with(new Target(target))
+        .build();
 
     it('should return failure when entity has no TargetComponent', () => {
-      const entity = world.createEntity();
-      const target = world.createEntity();
+      const entity = world.buildEntity().build();
+      const target = createEntity();
 
       const setTarget = new SetTarget();
       setTarget.setData('entity', entity);
@@ -20,25 +28,25 @@ describe('SetTarget', () => {
     });
 
     it('should return failure when no target is set', () => {
-      const entity = world.createEntity().addComponent(TargetComponent);
+      const entity = createEntity();
 
       const setTarget = new SetTarget();
       setTarget.setData('entity', entity);
 
       expect(setTarget.evaluate()).toBe(State.FAILURE);
-      expect(entity.getComponent(TargetComponent)!.target).toBeNull();
+      expect(entity.getComponent(Target)!.entity).toBeNull();
     });
 
     it("should set entity's TargetComponent and return success", () => {
-      const entity = world.createEntity().addComponent(TargetComponent);
-      const target = world.createEntity();
+      const entity = createEntity();
+      const target = createEntity();
 
       const setTarget = new SetTarget();
       setTarget.setData('entity', entity);
       setTarget.setData('target', target);
 
       expect(setTarget.evaluate()).toBe(State.SUCCESS);
-      expect(entity.getComponent(TargetComponent)!.target).toBe(target);
+      expect(entity.getComponent(Target)!.entity).toBe(target);
     });
   });
 });

@@ -1,10 +1,10 @@
-import { Entity } from 'ecsy';
 
-import { AttackComponent } from './../../../../systems/AttackComponent';
 import { IsEnemyInRange } from './IsEnemyInRange';
 
-export class IsEnemyInAttackRange extends IsEnemyInRange<AttackComponent> {
-  constructor(entities: Entity[]) {
-    super(entities, AttackComponent, 'attackRange');
+import { Combat } from '~/game/components/ai/Combat';
+
+export class IsEnemyInAttackRange extends IsEnemyInRange<Combat> {
+  constructor() {
+    super(Combat, 'attackRange');
   }
 }

@@ -1,12 +1,13 @@
-import { GameTime } from './../../../../GameTime';
 import { Node, State } from '../Node';
+
+import { GameTime } from './../../../../GameTime';
 
 type ElapsedCallback = () => void;
 
 type TimerProps = {
   delay: number;
   elapsedCallback?: ElapsedCallback | null;
-  children?: Node[];
+  execute: Node;
 };
 
 export class Timer extends Node {
@@ -15,7 +16,7 @@ export class Timer extends Node {
   private _countdownTimer: number;
 
   constructor(props: TimerProps) {
-    super(props.children);
+    super([props.execute]);
 
     this.delay = props.delay;
     this._countdownTimer = this.delay;

@@ -1,12 +1,11 @@
 import { Class } from 'utility-types';
 
-import { GameObject, PropertyValue } from './../ObjectsJson';
-
+import { GameObject, PropertyValue } from '~/game/data/ObjectsJson';
 import {
   EditablePropertyOptions,
   getEditableProperties,
-} from '~/game/objects/decorator';
-import { Unit } from '~/game/objects/Unit';
+} from '~/game/data/decorator';
+import { Unit } from '~/game/data/Unit';
 
 export const getDefaultValueByType = <T extends unknown>(type: T): T => {
   if (type === String) {

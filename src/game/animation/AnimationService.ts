@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { TeamColor, UnitType } from '../types';
+import { Animations } from '../components/Animations';
 
 import { createAnimationMap, createModelName } from './load';
 import { Animator } from './Animator';
@@ -41,5 +42,12 @@ export class AnimationService {
     unit: UnitType
   ): Animator {
     return new Animator(sprite, this.getModel(color, unit));
+  }
+
+  public createComponent(
+    sprite: PIXI.AnimatedSprite,
+    color: TeamColor,
+    unit: UnitType): Animations {
+    return new Animations(this.createAnimator(sprite, color, unit));
   }
 }

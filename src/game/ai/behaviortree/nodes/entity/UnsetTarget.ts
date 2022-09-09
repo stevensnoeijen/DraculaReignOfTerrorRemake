@@ -1,19 +1,22 @@
-import { Entity } from 'ecsy';
+
+import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
+import { Target } from '../../../../components/ai/Target';
+
 import { EntityNode } from './EntityNode';
-import { TargetComponent } from '../../../../systems/ai/TargetComponent';
+
 
 export class UnsetTarget extends EntityNode {
-  protected evaluateByEntity(entity: Entity): State {
-    if (!entity.hasComponent(TargetComponent)) {
+  protected evaluateByEntity(entity: IEntity): State {
+    if (!entity.hasComponent(Target)) {
       return this.failure();
     }
-    const targetComponent = entity.getMutableComponent(TargetComponent)!;
-    if (targetComponent.target == null) {
+    const targetComponent = entity.getComponent(Target)!;
+    if (targetComponent.entity == null) {
       return this.failure();
     }
-    targetComponent.target = null;
+    targetComponent.entity = null;
 
     return this.success();
   }

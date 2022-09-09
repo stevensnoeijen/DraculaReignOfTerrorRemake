@@ -1,17 +1,16 @@
-import { setEntityAnimation } from './../../../../systems/render/sprite/utils';
-import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
+import { Combat } from '../../../../components/ai/Combat';
+
 import { EntityNode } from './EntityNode';
-import { AttackComponent } from './../../../../systems/AttackComponent';
 
 export class Attack extends EntityNode {
-  protected evaluateByEntity(entity: Entity): State {
-    const attackComponent = entity.getComponent(AttackComponent)!;
-    const target = this.getData('target') as Entity;
+  protected evaluateByEntity(entity: IEntity): State {
+    const combat = entity.getComponent(Combat)!;
+    const target = this.getData('target') as IEntity;
 
-    setEntityAnimation(entity, 'attack');
-    attackComponent.attack(target);
+    combat.attack(target);
 
     return this.success();
   }

@@ -24,6 +24,12 @@ module.exports = {
       'warn',
       {
         'newlines-between': 'always',
+        'pathGroups': [
+          {
+            'pattern': '~/**',
+            'group': 'internal'
+          }
+        ]
       },
     ],
     'spaced-comment': ['warn', 'always'],

@@ -1,18 +1,17 @@
-import { Entity } from 'ecsy';
+import { IEntity } from 'sim-ecs';
 
-import { MovePositionDirectComponent } from '../../../../systems/movement/MovePositionDirectComponent';
+import { MovePositionDirect } from '../../../../components/movement/MovePositionDirect';
 import { State } from '../Node';
+
 import { EntityNode } from './EntityNode';
 
 export class IsMoving extends EntityNode {
-  protected evaluateByEntity(entity: Entity): State {
-    if (!entity.hasComponent(MovePositionDirectComponent)) {
+  protected evaluateByEntity(entity: IEntity): State {
+    if (!entity.hasComponent(MovePositionDirect)) {
       return this.failure();
     }
-    const movePositionDirectComponent = entity.getComponent(
-      MovePositionDirectComponent
-    )!;
-    if (movePositionDirectComponent.movePosition == null) {
+    const movePositionDirect = entity.getComponent(MovePositionDirect)!;
+    if (movePositionDirect.movePosition == null) {
       return this.failure();
     }
 

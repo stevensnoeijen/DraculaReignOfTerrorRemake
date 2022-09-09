@@ -1,22 +1,35 @@
-import { BehaviorTreeComponent } from './BehaviorTreeComponent';
-import { System, SystemQueries } from 'ecsy';
+import { createSystem, queryComponents, Write, WriteEvents } from 'sim-ecs';
 
-export class BehaviorTreeSystem extends System {
-  static queries: SystemQueries = {
-    entities: {
-      components: [BehaviorTreeComponent],
-    },
-  };
 
-  timePassed = 0;
-  triggerTime = 1000;
+import { BehaviorTree } from '../../components/ai/BehaviorTree';
 
-  public execute(delta: number, time: number): void {
-    this.timePassed += delta;
-    for (const entity of this.queries.entities.results) {
-      const behaviorTreeComponent = entity.getComponent(BehaviorTreeComponent)!;
 
-      behaviorTreeComponent.tree.update();
+import { UnitState } from '~/game/components/UnitState';
+import { EntityEvent } from '~/game/events/EntityEvent';
+
+export const BehaviorTreeSystem = createSystem({
+  events: WriteEvents(EntityEvent),
+
+  query: queryComponents({
+    behaviorTree: Write(BehaviorTree),
+    unitState: Write(UnitState),
+  }),
+})
+.withRunFunction(({
+  events,
+  query
+}) => {
+  query.execute(({ behaviorTree }) => {
+    behaviorTree.tree.update();
+
+    for(const event of behaviorTree.events) {
+       if (event instanceof EntityEvent) {
+        events.publish(event);
+        continue;
+      }
+      console.warn('Event not handled', event);
     }
-  }
-}
+    behaviorTree.clearEvents();
+  });
+})
+.build();

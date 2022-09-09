@@ -1,24 +1,28 @@
-import { Entity } from 'ecsy';
-import { TeamComponent } from '../../../../systems/TeamComponent';
+import { IEntity } from 'sim-ecs';
 
 import {
-  isOnTeam,
-  byClosestDistance,
-  isInRange,
   isSameEntity,
-  isAlive,
-} from '../../../../systems/utils/index';
-import { not } from '../../../../utils';
+} from '~/game/utils/entity';
+import { Team } from '~/game/components/Team';
+import { byClosestDistance, isInRange } from '~/game/utils/components';
+import { not } from '~/utils/predicate';
+import { isAlive, isOnTeam } from '~/game/utils/components';
 
 export const getEntitiesInRange = (
-  sourceEntity: Entity,
-  entities: Entity[],
+  sourceEntity: IEntity,
+  entities: IEntity[],
   range: number
-): Entity[] => {
+) => {
   return entities
     .filter(not(isSameEntity(sourceEntity)))
-    .filter(not(isOnTeam(sourceEntity.getComponent(TeamComponent)!.number)))
-    .filter(isAlive())
+    .filter(
+      not(
+        isOnTeam(
+          sourceEntity.getComponent(Team)!
+        )
+      )
+    )
+    .filter(isAlive)
     .filter(isInRange(sourceEntity, range))
     .sort(byClosestDistance(sourceEntity));
 };

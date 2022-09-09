@@ -1,86 +1,54 @@
-import { AttackComponent } from './../../../../systems/AttackComponent';
-import { World } from 'ecsy';
+import { IWorld, buildWorld } from 'sim-ecs';
 
-import { TransformComponent } from '../../../../systems/TransformComponent';
+import { Transform } from '../../../../components/Transform';
 import { Vector2 } from '../../../../math/Vector2';
 import { Node, State } from '../Node';
-import { TeamComponent } from '../../../../systems/TeamComponent';
-import { getEntitiesInRange } from './utils';
+import { Combat } from '../../../../components/ai/Combat';
+
+import { Team } from './../../../../components/Team';
 import { IsEnemyInRange } from './IsEnemyInRange';
 
-jest.mock('./utils');
+import { Sensory } from '~/game/components';
+import { Modality } from '~/game/ai/sensor/Modality';
+import { Sensor } from '~/game/ai/sensor/Sensor';
 
 describe('IsEnemyInRange', () => {
   describe('evaluate', () => {
-    let world: World;
+    let world: IWorld;
 
     beforeEach(() => {
-      world = new World()
-        .registerComponent(AttackComponent)
-        .registerComponent(TransformComponent)
-        .registerComponent(TeamComponent);
+      world = buildWorld().build();
 
-      (getEntitiesInRange as jest.MockedFunction<any>).mockClear();
     });
 
     it('should success set target when there is an enemy within range', () => {
-      const entitiesInRange = [
-        world
-          .createEntity()
-          .addComponent(TransformComponent, {
-            position: new Vector2(0, 0),
-          })
-          .addComponent(TeamComponent, {
-            number: 2,
-          }),
-      ];
-      (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue(
-        entitiesInRange
-      );
+      const entityInRange = world.buildEntity()
+          .with(Team.CPU)
+          .with(new Transform(new Vector2(0, 0)))
+          .build();
 
-      const entity = world
-        .createEntity()
-        .addComponent(AttackComponent, {
-          aggroRange: 100,
-        })
-        .addComponent(TransformComponent, {
-          position: new Vector2(0, 0),
-        })
-        .addComponent(TeamComponent, {
-          number: 1,
-        });
-      const node = new IsEnemyInRange([], AttackComponent, 'aggroRange');
+      const sensor = new Sensory(
+        new Sensor(
+          48, [
+            new Modality(entityInRange, 16),
+          ]
+        )
+      );
+      const entity = world.buildEntity()
+        .with(Team.PLAYER)
+        .with(new Transform(Vector2.ZERO))
+        .with(new Combat(16, 0, 0, 0))
+        .with(sensor)
+        .build();
+
+      const node = new IsEnemyInRange(Combat, 'aggroRange');
       const parent = new Node();
       parent.setData('entity', entity);
       parent.attach(node);
 
       expect(node.evaluate()).toBe(State.SUCCESS);
       expect(parent.getData('target')).not.toBeNull();
-      expect(getEntitiesInRange).toBeCalledWith(
-        expect.anything(),
-        expect.anything(),
-        100
-      );
     });
 
-    // it('should fail and not set target when there is no enemy within range', () => {
-    //     (getEntitiesInRange as jest.MockedFunction<any>).mockReturnValue([]);
-
-    //     const entity = world.createEntity()
-    //         .addComponent(TransformComponent, {
-    //             position: new Vector2(0, 0),
-    //         })
-    //         .addComponent(TeamComponent, {
-    //             number: 1
-    //         });
-
-    //     const node = new IsEnemyInRange([], 100);
-    //     const parent = new Node();
-    //     parent.setData('entity', entity);
-    //     parent.attach(node);
-
-    //     expect(node.evaluate()).toBe(State.FAILURE);
-    //     expect(parent.getData('target')).toBeNull();
-    // });
   });
 });

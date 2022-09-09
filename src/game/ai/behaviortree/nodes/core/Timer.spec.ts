@@ -1,13 +1,14 @@
-import { GameTime } from './../../../../GameTime';
 import { State } from '../Node';
+
+import { GameTime } from './../../../../GameTime';
 import { Always } from './Always';
 import { Timer } from './Timer';
 
 describe('Timer', () => {
-  const successChildren = [new Always(State.SUCCESS)];
+  const success = new Always(State.SUCCESS);
   const successProps = {
     delay: 1000,
-    children: successChildren,
+    execute: success,
   };
 
   describe('constructor', () => {
@@ -27,6 +28,7 @@ describe('Timer', () => {
     it('should set defaults', () => {
       const timer = new Timer({
         delay: 1000,
+        execute: success,
       });
 
       expect(timer.delay).toBe(1000);
@@ -78,16 +80,10 @@ describe('Timer', () => {
   });
 
   describe('evaluate', () => {
-    it('should return failure if it has no children', () => {
-      const timer = new Timer({
-        delay: 1000,
-      });
-
-      expect(timer.evaluate()).toEqual(State.FAILURE);
-    });
-
     it('should be running and time subtracted when called', () => {
-      const timer = new Timer(successProps);
+      const timer = new Timer({
+        ...successProps
+      });
       GameTime.delta = 100;
 
       expect(timer.evaluate()).toBe(State.RUNNING);
@@ -96,8 +92,7 @@ describe('Timer', () => {
 
     it('should evaluate first child when time is elapsed', () => {
       const timer = new Timer({
-        delay: 1000,
-        children: [new Always(State.SUCCESS), new Always(State.FAILURE)],
+        ...successProps
       });
       GameTime.delta = 1000;
 

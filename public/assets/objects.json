@@ -4,26 +4,30 @@
     "properties": [
       {
         "field": "healthPointsMax",
-        "value": 9
+        "value": 15
       },
       {
         "field": "combatAggroRange",
-        "value": 3
+        "value": 160
       },
       {
         "field": "combatAttackRange",
-        "value": 1
+        "value": 23
       },
       {
         "field": "combatAttackDamage",
         "value": 3
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "swordsmen"
       },
       {
-        "field": "soundMove",
+        "field": "soundCommand",
         "value": [
           "unit_move_1",
           "unit_move_10",
@@ -32,24 +36,6 @@
           "unit_move_12",
           "unit_move_2",
           "unit_move_3",
-          "unit_move_4",
-          "unit_move_5",
-          "unit_move_6",
-          "unit_move_7",
-          "unit_move_8",
-          "unit_move_9"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_1",
-          "unit_move_10",
-          "unit_move_11",
-          "unit_move_12",
-          "unit_move_13",
-          "unit_move_3",
-          "unit_move_2",
           "unit_move_4",
           "unit_move_5",
           "unit_move_6",
@@ -96,26 +82,30 @@
     "properties": [
       {
         "field": "healthPointsMax",
-        "value": 6
+        "value": 10
       },
       {
         "field": "combatAggroRange",
-        "value": 4
+        "value": 64
       },
       {
         "field": "combatAttackRange",
-        "value": 6
+        "value": 64
       },
       {
         "field": "combatAttackDamage",
         "value": 2
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "crossbowsoldier"
       },
       {
-        "field": "soundMove",
+        "field": "soundCommand",
         "value": [
           "unit_move_1",
           "unit_move_10",
@@ -128,34 +118,13 @@
           "unit_move_5",
           "unit_move_6",
           "unit_move_7",
-          "unit_move_8",
-          "unit_move_9"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_1",
-          "unit_move_10",
-          "unit_move_11",
-          "unit_move_12",
-          "unit_move_13",
-          "unit_move_2",
-          "unit_move_3",
-          "unit_move_4",
-          "unit_move_5",
-          "unit_move_7",
-          "unit_move_6",
           "unit_move_8",
           "unit_move_9"
         ]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "arrow_1",
-          "arrow_2"
-        ]
+        "value": ["arrow_1", "arrow_2"]
       },
       {
         "field": "soundDead",
@@ -188,22 +157,26 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 6
+        "value": 96
       },
       {
         "field": "combatAttackRange",
-        "value": 1
+        "value": 16
       },
       {
         "field": "combatAttackDamage",
         "value": 8
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "knight"
       },
       {
-        "field": "soundMove",
+        "field": "soundCommand",
         "value": [
           "unit_move_1",
           "unit_move_10",
@@ -222,24 +195,6 @@
         ]
       },
       {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_1",
-          "unit_move_10",
-          "unit_move_11",
-          "unit_move_12",
-          "unit_move_13",
-          "unit_move_2",
-          "unit_move_3",
-          "unit_move_4",
-          "unit_move_5",
-          "unit_move_6",
-          "unit_move_7",
-          "unit_move_8",
-          "unit_move_9"
-        ]
-      },
-      {
         "field": "soundAttackEffect",
         "value": [
           "swords_2",
@@ -252,9 +207,7 @@
       },
       {
         "field": "soundDead",
-        "value": [
-          "horse_1"
-        ]
+        "value": ["horse_1"]
       },
       {
         "field": "soundDeadByCatapult",
@@ -275,34 +228,27 @@
       },
       {
         "field": "combatAttackRange",
-        "value": 1
+        "value": 16
       },
       {
         "field": "combatAttackDamage",
         "value": 0
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "juggernaut"
       },
       {
-        "field": "soundMove",
-        "value": [
-          "unit_move_multiple"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": [
-          "unit_move_multiple",
-          "juggernaut_move"
-        ]
+        "field": "soundCommand",
+        "value": ["unit_move_multiple", "juggernaut_move"]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "juggernaut_attack"
-        ]
+        "value": ["juggernaut_attack"]
       },
       {
         "field": "soundDead",
@@ -335,42 +281,35 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 4
+        "value": 96
       },
       {
         "field": "combatAttackRange",
-        "value": 5
+        "value": 80
       },
       {
         "field": "combatAttackDamage",
         "value": 4
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "catapult"
       },
       {
-        "field": "soundMove",
-        "value": [
-          "catapult_move"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": []
+        "field": "soundCommand",
+        "value": ["catapult_move"]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "catapult_fire"
-        ]
+        "value": ["catapult_fire"]
       },
       {
         "field": "soundDead",
-        "value": [
-          "catapult_destroyed_1",
-          "catapult_destroyed_2"
-        ]
+        "value": ["catapult_destroyed_1", "catapult_destroyed_2"]
       },
       {
         "field": "soundDeadByCatapult",
@@ -387,42 +326,35 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 4
+        "value": 80
       },
       {
         "field": "combatAttackRange",
-        "value": 5
+        "value": 80
       },
       {
         "field": "combatAttackDamage",
         "value": 6
       },
       {
+        "field": "combatAttackCooldown",
+        "value": 1000
+      },
+      {
         "field": "spriteModel",
         "value": "cannon"
       },
       {
-        "field": "soundMove",
-        "value": [
-          "canon_move"
-        ]
-      },
-      {
-        "field": "soundAttackTarget",
-        "value": []
+        "field": "soundCommand",
+        "value": ["canon_move"]
       },
       {
         "field": "soundAttackEffect",
-        "value": [
-          "canon_fire_1",
-          "canon_fire_2"
-        ]
+        "value": ["canon_fire_1", "canon_fire_2"]
       },
       {
         "field": "soundDead",
-        "value": [
-          "canon_destroyed"
-        ]
+        "value": ["canon_destroyed"]
       },
       {
         "field": "soundDeadByCatapult",

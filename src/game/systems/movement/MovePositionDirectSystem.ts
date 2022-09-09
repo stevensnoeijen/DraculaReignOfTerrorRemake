@@ -1,96 +1,75 @@
-import { Entity, System } from 'ecsy';
+import {
+  createSystem,
+  IEntity,
+  queryComponents,
+  Write,
+  WriteEvents,
+  ReadEntity,
+  Read,
+} from 'sim-ecs';
+import { IEventWriter } from 'sim-ecs/dist/events';
 
-import { MovePositionDirectComponent } from './MovePositionDirectComponent';
-import { MoveTransformVelocityComponent } from './MoveTransformVelocityComponent';
-import { MoveVelocityComponent } from './MoveVelocityComponent';
-import { TransformComponent } from '../TransformComponent';
+import { Transform } from '../../components/Transform';
 import { Vector2 } from '../../math/Vector2';
+import { MoveVelocity } from '../../components/movement/MoveVelocity';
+import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
-export class MovePositionDirectSystem extends System {
-  public static queries = {
-    entities: {
-      components: [MovePositionDirectComponent],
-    },
-  };
+import { MovePath } from './../../components/movement/MovePath';
 
-  public execute(delta: number, time: number): void {
-    for (const entity of this.queries.entities.results) {
-      const movePositionDirectComponent = entity.getMutableComponent(
-        MovePositionDirectComponent
-      );
-      if (null == movePositionDirectComponent?.movePosition) {
-        continue;
-      }
-      const transformComponent = entity.getMutableComponent(TransformComponent);
-      if (!transformComponent) {
-        continue;
-      }
+import { Idled } from '~/game/events/Idled';
 
-      // TODO: remove this?
-      // this.moveByTransformVelocity(entity, transformComponent, movePositionDirectComponent);
-      this.moveByMoveVelocity(
-        entity,
-        transformComponent,
-        movePositionDirectComponent
-      );
-    }
+const moveByMoveVelocity = (
+  entity: IEntity,
+  movePositionDirect: MovePositionDirect,
+  moveVelocity: MoveVelocity,
+  movePath: Readonly<MovePath>,
+  transform: Transform,
+  idled: IEventWriter<typeof Idled>
+) => {
+  if (movePositionDirect.movePosition == null) return;
+
+  if (
+    Vector2.distance(transform.position, movePositionDirect.movePosition) < 1
+  ) {
+    transform.position = movePositionDirect.movePosition;
+    // stop
+    movePositionDirect.movePosition = null;
+    moveVelocity.velocity = Vector2.ZERO;
+
+    if (movePath.path.length === 0) idled.publish(new Idled(entity));
+
+    return;
   }
 
-  private moveByTransformVelocity(
-    entity: Entity,
-    transformComponent: TransformComponent,
-    movePositionDirectComponent: MovePositionDirectComponent
-  ): void {
-    const moveTransformVelocityComponent = entity.getMutableComponent(
-      MoveTransformVelocityComponent
+  moveVelocity.velocity = Vector2.subtracts(
+    movePositionDirect.movePosition!,
+    transform.position
+  ).normalized();
+};
+
+export const MovePositionDirectSystem = createSystem({
+  idled: WriteEvents(Idled),
+
+  query: queryComponents({
+    entity: ReadEntity(),
+    movePositionDirect: Write(MovePositionDirect),
+    moveVelocity: Write(MoveVelocity),
+    movePath: Read(MovePath),
+    transform: Write(Transform),
+  }),
+})
+  .withRunFunction(({ idled, query }) => {
+    query.execute(
+      ({ entity, movePositionDirect, moveVelocity, movePath, transform }) => {
+        moveByMoveVelocity(
+          entity,
+          movePositionDirect,
+          moveVelocity,
+          movePath,
+          transform,
+          idled
+        );
+      }
     );
-    if (moveTransformVelocityComponent) {
-      if (
-        Vector2.distance(
-          transformComponent.position,
-          movePositionDirectComponent.movePosition!
-        ) < 1
-      ) {
-        transformComponent.position = movePositionDirectComponent.movePosition!;
-        // stop
-        movePositionDirectComponent.movePosition = null;
-        moveTransformVelocityComponent.velocity = Vector2.ZERO;
-        return;
-      }
-
-      moveTransformVelocityComponent.velocity = Vector2.subtracts(
-        movePositionDirectComponent.movePosition!,
-        transformComponent.position
-      ).normalized();
-    }
-  }
-
-  private moveByMoveVelocity(
-    entity: Entity,
-    transformComponent: TransformComponent,
-    movePositionDirectComponent: MovePositionDirectComponent
-  ): void {
-    const moveVelocityComponent = entity.getMutableComponent(
-      MoveVelocityComponent
-    );
-    if (moveVelocityComponent) {
-      if (
-        Vector2.distance(
-          transformComponent.position,
-          movePositionDirectComponent.movePosition!
-        ) < 1
-      ) {
-        transformComponent.position = movePositionDirectComponent.movePosition!;
-        // stop
-        movePositionDirectComponent.movePosition = null;
-        moveVelocityComponent.velocity = Vector2.ZERO;
-        return;
-      }
-
-      moveVelocityComponent.velocity = Vector2.subtracts(
-        movePositionDirectComponent.movePosition!,
-        transformComponent.position
-      ).normalized();
-    }
-  }
-}
+  })
+  .build();

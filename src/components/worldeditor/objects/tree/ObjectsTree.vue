@@ -15,10 +15,11 @@ import { computed, h, watch } from 'vue';
 import { $ref } from 'vue/macros';
 import type { TreeOption } from 'naive-ui';
 
-import { GameObject } from '../ObjectsJson';
 import TreeDeleteButton from '../TreeDeleteButton.vue';
 
 import { createTreeOptions } from './utils';
+
+import { GameObject } from '~/game/data/ObjectsJson';
 
 const props = defineProps<{
   modelValue: GameObject[];
