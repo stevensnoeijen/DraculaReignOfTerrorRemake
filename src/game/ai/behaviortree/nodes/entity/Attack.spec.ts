@@ -13,7 +13,7 @@ describe('Attack', () => {
 
     it("should substracts entity's attackDamage from target health", () => {
       const entity = world.buildEntity()
-        .with(new Combat(0, 0, 10))
+        .with(new Combat(0, 0, 10, 0))
         .build();
       const target = world.buildEntity()
         .with(new Health({

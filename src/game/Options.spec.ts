@@ -1,4 +1,4 @@
-import { getOptions } from './options';
+import { getOptions } from './Options';
 
 describe('getOptions', () => {
   it('should give empty object when location.hash is empty', () => {

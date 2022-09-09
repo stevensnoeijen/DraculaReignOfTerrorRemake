@@ -15,7 +15,7 @@ describe('Combat', () => {
           maxPoints: 100,
         }))
       .build();
-      const combat = new Combat(0, 0, 10);
+      const combat = new Combat(0, 0, 10, 0);
 
       combat.attack(enemy);
 
