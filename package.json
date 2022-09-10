@@ -13,7 +13,7 @@
     "pack": "gulp pack"
   },
   "dependencies": {
-    "@pixi/assets": "^6.5.1",
+    "@pixi/assets": "^6.5.3",
     "@pixi/sound": "^4.3.0",
     "@vicons/utils": "^0.1.4",
     "generate-maze": "^1.1.0",
