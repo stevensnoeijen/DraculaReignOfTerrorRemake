@@ -9,6 +9,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # Not suggesting to upgrade this, because the feature is still in exerimental (jest does not support this by default).
+      # https://github.com/ai/nanoid/issues/365
+      - dependency-name: "nanoid"
+        versions: ["4.x"]
   - package-ecosystem: "npm"
     directory: "/server"
     schedule:
