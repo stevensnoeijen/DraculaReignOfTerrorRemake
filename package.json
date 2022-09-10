@@ -18,7 +18,7 @@
     "@vicons/utils": "^0.1.4",
     "generate-maze": "^1.1.0",
     "lodash": "^4.17.21",
-    "nanoid": "3.x.x",
+    "nanoid": "4.x.x",
     "pixi-dashed-line": "^1.4.2",
     "pixi-viewport": "^4.35.0",
     "pixi.js": "^6.5.1",
