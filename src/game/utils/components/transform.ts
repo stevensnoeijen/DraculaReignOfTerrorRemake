@@ -5,7 +5,7 @@ import { Transform } from '../../components/Transform';
 import { Size } from '../../components/Size';
 import { Position } from '../types';
 import { Bounds } from '../../math/collision/Bounds';
-import { toGridPosition } from '../grid';
+import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
 import { keepOrder } from '~/utils/array';
 import { Comparator, Predicate } from '~/utils/types';
@@ -89,9 +89,21 @@ export const randomRotation = () => {
   return rotation - (rotation % 90);
 };
 
-export const getCell = (entity: IEntity): Position => {
-  const transform = entity.getComponent(Transform)!;
-  const { x, y } = toGridPosition(transform.position);
+export const getOccupiedCells = (entity: IEntity): Position[] => {
+  const cells = [];
 
-  return { x, y };
+  if (entity.hasComponent(Transform)) {
+    const transform = entity.getComponent(Transform)!;
+    const { x, y } = transform.gridPosition;
+    cells.push({ x, y });
+  }
+  if (entity.hasComponent(MovePositionDirect)) {
+    const movePositionDirect = entity.getComponent(MovePositionDirect)!;
+    if (movePositionDirect.gridPosition != null) {
+      const { x, y } = movePositionDirect.gridPosition;
+      cells.push({ x, y });
+    }
+  }
+
+  return cells;
 };

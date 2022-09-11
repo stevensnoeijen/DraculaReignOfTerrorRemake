@@ -26,14 +26,12 @@ const moveByMoveVelocity = (
   transform: Transform,
   idled: IEventWriter<typeof Idled>
 ) => {
-  if (movePositionDirect.movePosition == null) return;
+  if (movePositionDirect.position == null) return;
 
-  if (
-    Vector2.distance(transform.position, movePositionDirect.movePosition) < 1
-  ) {
-    transform.position = movePositionDirect.movePosition;
+  if (Vector2.distance(transform.position, movePositionDirect.position) < 1) {
+    transform.position = movePositionDirect.position;
     // stop
-    movePositionDirect.movePosition = null;
+    movePositionDirect.position = null;
     moveVelocity.velocity = Vector2.ZERO;
 
     if (movePath.path.length === 0) idled.publish(new Idled(entity));
@@ -42,7 +40,7 @@ const moveByMoveVelocity = (
   }
 
   moveVelocity.velocity = Vector2.subtracts(
-    movePositionDirect.movePosition!,
+    movePositionDirect.position!,
     transform.position
   ).normalized();
 };

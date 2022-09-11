@@ -11,7 +11,7 @@ export class IsMoving extends EntityNode {
       return this.failure();
     }
     const movePositionDirect = entity.getComponent(MovePositionDirect)!;
-    if (movePositionDirect.movePosition == null) {
+    if (movePositionDirect.position == null) {
       return this.failure();
     }
 

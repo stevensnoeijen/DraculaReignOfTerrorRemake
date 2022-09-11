@@ -22,7 +22,7 @@ import { MovePath } from '~/game/components/movement/MovePath';
 import { isSameEntity } from '~/game/utils/entity';
 import { cellPositionToVector } from '~/game/utils/grid';
 import { not } from '~/utils/predicate';
-import { getCell, isAlive } from '~/game/utils/components';
+import { getOccupiedCells, isAlive } from '~/game/utils/components';
 
 const canEntityMoveToCell = (
   colliders: IEntity[],
@@ -33,9 +33,14 @@ const canEntityMoveToCell = (
     .filter(not(isSameEntity(entity)))
     .filter(isAlive)
     .find((collider) => {
-      const colliderCell = getCell(collider);
+      const occupiedCells = getOccupiedCells(collider);
 
-      return cell.x === colliderCell.x && cell.y === colliderCell.y;
+      return (
+        occupiedCells.find(
+          (occupiedCell) =>
+            cell.x === occupiedCell.x && cell.y === occupiedCell.y
+        ) != null
+      );
     });
 
   return collider == null;
@@ -61,7 +66,7 @@ const updateMovePosition = (
     return;
   }
 
-  if (movePositionDirect.movePosition != null) {
+  if (movePositionDirect.position != null) {
     // is currently moving
     return;
   }
@@ -74,15 +79,12 @@ const updateMovePosition = (
   }
   movePath.path.shift();
 
-  movePositionDirect.movePosition = cellPositionToVector(
-    nextCell.x,
-    nextCell.y
-  );
+  movePositionDirect.position = cellPositionToVector(nextCell.x, nextCell.y);
   const transformComponent = entity.getComponent(Transform)!;
-  if (!transformComponent.position.equals(movePositionDirect.movePosition)) {
+  if (!transformComponent.position.equals(movePositionDirect.position)) {
     transformComponent.rotation = Vector2.angle(
       transformComponent.position,
-      movePositionDirect.movePosition
+      movePositionDirect.position
     );
   }
 
