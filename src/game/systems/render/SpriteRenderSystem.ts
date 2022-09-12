@@ -1,4 +1,12 @@
-import { createSystem, queryComponents, Read, WriteResource, ReadEvents, EntityAdded, EntityRemoved } from 'sim-ecs';
+import {
+  createSystem,
+  queryComponents,
+  Read,
+  WriteResource,
+  ReadEvents,
+  EntityAdded,
+  EntityRemoved,
+} from 'sim-ecs';
 import * as PIXI from 'pixi.js';
 
 import { Transform } from '../../components/Transform';
@@ -14,10 +22,7 @@ let aliveLayer: PIXI.Container;
 let deadLayer: PIXI.Container;
 
 const updatePosition = (sprite: PIXI.Sprite, transform: Transform) => {
-  sprite.position.set(
-    transform.position.x,
-    transform.position.y
-  );
+  sprite.position.set(transform.position.x, transform.position.y);
 };
 
 export const SpriteRenderSystem = createSystem({
@@ -32,49 +37,40 @@ export const SpriteRenderSystem = createSystem({
     transform: Read(Transform),
   }),
 })
-.withSetupFunction(({ app }) => {
-  deadLayer = app.stage.addChildAt(new PIXI.Container(), DEAD_LAYER);
-  aliveLayer = app.stage.addChildAt(new PIXI.Container(), ALIVE_LAYER);
-})
-.withRunFunction(({
-  entityAdded,
-  entityRemoved,
-  died,
-  query,
-}) => {
-  entityAdded.execute(event => {
-    if (event.entity.hasComponent(SpriteRender)) {
-      const sprite = event.entity.getComponent(SpriteRender)!.sprite;
-      if (isAlive(event.entity))
-        aliveLayer.addChild(sprite);
-      else
-        deadLayer.addChild(sprite);
-    }
-  });
+  .withSetupFunction(({ app }) => {
+    deadLayer = app.stage.addChildAt(new PIXI.Container(), DEAD_LAYER);
+    aliveLayer = app.stage.addChildAt(new PIXI.Container(), ALIVE_LAYER);
+  })
+  .withRunFunction(({ entityAdded, entityRemoved, died, query }) => {
+    entityAdded.execute((event) => {
+      if (event.entity.hasComponent(SpriteRender)) {
+        const sprite = event.entity.getComponent(SpriteRender)!.sprite;
+        if (isAlive(event.entity)) aliveLayer.addChild(sprite);
+        else deadLayer.addChild(sprite);
+      }
+    });
 
-  entityRemoved.execute(event => {
-    if (event.entity.hasComponent(SpriteRender)) {
-      const sprite = event.entity.getComponent(SpriteRender)!.sprite;
-      if (isAlive(event.entity))
+    entityRemoved.execute((event) => {
+      if (event.entity.hasComponent(SpriteRender)) {
+        const sprite = event.entity.getComponent(SpriteRender)!.sprite;
+        if (isAlive(event.entity)) aliveLayer.removeChild(sprite);
+        else deadLayer.removeChild(sprite);
+      }
+    });
+
+    died.execute((event) => {
+      if (event.entity.hasComponent(Alive)) {
+        const sprite = event.entity.getComponent(SpriteRender)?.sprite;
+
+        if (sprite == null) return;
+
         aliveLayer.removeChild(sprite);
-      else
-        deadLayer.removeChild(sprite);
-    }
-  });
+        deadLayer.addChild(sprite);
+      }
+    });
 
-  died.execute(event => {
-    if (event.entity.hasComponent(Alive)) {
-      const sprite = event.entity.getComponent(SpriteRender)?.sprite;
-
-      if (sprite == null) return;
-
-      aliveLayer.removeChild(sprite);
-      deadLayer.addChild(sprite);
-    }
-  });
-
-  query.execute(({ spriteRender, transform }) => {
-    updatePosition(spriteRender.sprite, transform);
-  });
-})
-.build();
+    query.execute(({ spriteRender, transform }) => {
+      updatePosition(spriteRender.sprite, transform);
+    });
+  })
+  .build();

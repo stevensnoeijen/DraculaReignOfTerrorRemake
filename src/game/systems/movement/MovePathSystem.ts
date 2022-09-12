@@ -19,7 +19,7 @@ import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
 import { isCollider } from './../../utils/components/index';
 
-import { Position } from '~/game/utils/types';
+import { Position } from '~/game/math/types';
 import { MovePath } from '~/game/components/movement/MovePath';
 import { isSameEntity } from '~/game/utils/entity';
 import { cellPositionToVector } from '~/game/utils/grid';

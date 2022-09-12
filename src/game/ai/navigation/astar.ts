@@ -1,4 +1,4 @@
-import { Position } from '../../utils/types';
+import { Position } from '../../math/types';
 
 import { arrayIncludesByEquals, removeNullable } from '~/utils/array';
 import { toEqual } from '~/utils/predicate';

@@ -2,11 +2,11 @@ import { IEntity } from 'sim-ecs';
 
 import { Vector2 } from '../../math/Vector2';
 import { Transform } from '../../components/Transform';
-import { Size } from '../../components/Size';
-import { Position } from '../types';
+import { Position } from '../../math/types';
 import { Bounds } from '../../math/collision/Bounds';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
+import { Collision } from '~/game/components';
 import { keepOrder } from '~/utils/array';
 import { Comparator, Predicate } from '~/utils/types';
 
@@ -69,16 +69,16 @@ export const isPositionInsideEntity = (
   y: number
 ): boolean => {
   const transform = entity.getComponent(Transform);
-  const size = entity.getComponent(Size);
+  const collision = entity.getComponent(Collision);
 
-  if (!transform || !size) {
+  if (!transform || !collision) {
     // position or/and size isnt set
     return false;
   }
 
   const bounds = new Bounds(
     transform.position,
-    new Vector2(size.width, size.height)
+    new Vector2(collision.size.width, collision.size.height)
   );
   return bounds.contains(new Vector2(x, y));
 };

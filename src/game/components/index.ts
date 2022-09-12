@@ -8,7 +8,6 @@ export * from './Alive';
 export * from './Animations';
 export * from './Collision';
 export * from './Health';
-export * from './Size';
 export * from './Sounds';
 export * from './Team';
 export * from './Transform';

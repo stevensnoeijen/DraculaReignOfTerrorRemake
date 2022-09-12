@@ -9,7 +9,6 @@ import {
   Alive,
   Health,
   Collision,
-  Size,
   MoveVelocity,
   MovePositionDirect,
   MovePath,
@@ -27,7 +26,7 @@ import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
-import { Position } from './utils/types';
+import { Position } from './math/types';
 import { Vector2 } from './math/Vector2';
 import { CELL_SIZE } from './constants';
 import { Unit } from './data/Unit';
@@ -70,6 +69,11 @@ export class EntityLoader {
     sprite.animationSpeed = 0.25;
     sprite.play();
 
+    const size = {
+      width: CELL_SIZE,
+      height: CELL_SIZE,
+    };
+
     const builder = this.world
       .buildEntity()
       .with(
@@ -84,10 +88,9 @@ export class EntityLoader {
         })
       )
       .with(new GraphicsRender(new PIXI.Graphics()))
-      .with(new SpriteRender(sprite))
+      .with(new SpriteRender(sprite), size)
       .with(animations)
-      .with(Collision)
-      .with(new Size(CELL_SIZE, CELL_SIZE))
+      .with(new Collision(size))
       .with(new MoveVelocity(50))
       .with(MovePositionDirect)
       .with(new MovePath([]))
