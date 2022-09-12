@@ -14,7 +14,7 @@ import {
   Alive,
   Health,
   Selectable,
-  Collider,
+  Collision,
   Size,
   Controlled,
   Combat,
@@ -26,7 +26,7 @@ import {
 const DEAD_COMPONENTS = [
   Health,
   Selectable,
-  Collider,
+  Collision,
   Size,
   MoveVelocity,
   MovePath,

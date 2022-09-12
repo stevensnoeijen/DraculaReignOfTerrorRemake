@@ -6,7 +6,7 @@ export * from './movement';
 export * from './render';
 export * from './Alive';
 export * from './Animations';
-export * from './Collider';
+export * from './Collision';
 export * from './Health';
 export * from './Size';
 export * from './Sounds';

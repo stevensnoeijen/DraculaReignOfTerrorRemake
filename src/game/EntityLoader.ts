@@ -8,7 +8,7 @@ import {
   Team,
   Alive,
   Health,
-  Collider,
+  Collision,
   Size,
   MoveVelocity,
   MovePositionDirect,
@@ -86,7 +86,7 @@ export class EntityLoader {
       .with(new GraphicsRender(new PIXI.Graphics()))
       .with(new SpriteRender(sprite))
       .with(animations)
-      .with(Collider)
+      .with(Collision)
       .with(new Size(CELL_SIZE, CELL_SIZE))
       .with(new MoveVelocity(50))
       .with(MovePositionDirect)

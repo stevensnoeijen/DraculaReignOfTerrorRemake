@@ -4,7 +4,7 @@ import { isOnTeam, isAlive, isCollider } from './index';
 
 import { Team } from '~/game/components/Team';
 import { Alive } from '~/game/components/Alive';
-import { Collider } from '~/game/components';
+import { Collision } from '~/game/components';
 
 const world = buildWorld().build();
 
@@ -53,14 +53,14 @@ describe('isAlive', () => {
 
 describe('isCollider', () => {
   it(`should return false if entity does not
-    have the Collider component`, () => {
+    have the Collision component`, () => {
     const entity = world.buildEntity().build();
 
     expect(isCollider(entity)).toBe(false);
   });
 
-  it('should return true if entity has the Collider component', () => {
-    const entity = world.buildEntity().with(Collider).build();
+  it('should return true if entity has the Collision component', () => {
+    const entity = world.buildEntity().with(Collision).build();
 
     expect(isCollider(entity)).toBe(true);
   });
