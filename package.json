@@ -45,7 +45,7 @@
     "@vue/test-utils": "2.0.1",
     "@vue/vue3-jest": "^28.0.1",
     "autoprefixer": "^10.4.8",
-    "canvas": "^2.9.3",
+    "canvas": "^2.10.1",
     "create-ts-index": "^1.14.0",
     "dotenv": "^16.0.1",
     "eslint": "^8.23.0",
