@@ -2,7 +2,7 @@ import { IEntity } from 'sim-ecs';
 
 import { Vector2 } from '../../math/Vector2';
 import { Transform } from '../../components/Transform';
-import { Position } from '../../math/types';
+import { Point } from '../../math/types';
 import { Bounds } from '../../math/collision/Bounds';
 import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
@@ -89,7 +89,7 @@ export const randomRotation = () => {
   return rotation - (rotation % 90);
 };
 
-export const getOccupiedCells = (entity: IEntity): Position[] => {
+export const getOccupiedCells = (entity: IEntity): Point[] => {
   const cells = [];
 
   if (entity.hasComponent(Transform)) {

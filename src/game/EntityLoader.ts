@@ -26,7 +26,7 @@ import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
-import { Position } from './math/types';
+import { Point } from './math/types';
 import { Vector2 } from './math/Vector2';
 import { CELL_SIZE } from './constants';
 import { Unit } from './data/Unit';
@@ -38,7 +38,7 @@ import { UNIT_SWORDSMEN } from './data/constants';
 
 export interface IUnitProps {
   team: Team;
-  position: Position;
+  position: Point;
 }
 
 export class EntityLoader {

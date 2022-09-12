@@ -19,7 +19,7 @@ import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
 import { isCollider } from './../../utils/components/index';
 
-import { Position } from '~/game/math/types';
+import { Point } from '~/game/math/types';
 import { MovePath } from '~/game/components/movement/MovePath';
 import { isSameEntity } from '~/game/utils/entity';
 import { cellPositionToVector } from '~/game/utils/grid';
@@ -30,7 +30,7 @@ import { Collided } from '~/game/events/Collided';
 const canEntityMoveToCell = (
   colliders: IEntity[],
   entity: IEntity,
-  cell: Position
+  cell: Point
 ): boolean => {
   const collider = colliders
     .filter(not(isSameEntity(entity)))
