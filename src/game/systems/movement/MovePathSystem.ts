@@ -17,12 +17,15 @@ import { Controlled } from '../../components/input/Controlled';
 import { Moved } from '../../events/Moved';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
+import { isCollider } from './../../utils/components/index';
+
 import { Position } from '~/game/utils/types';
 import { MovePath } from '~/game/components/movement/MovePath';
 import { isSameEntity } from '~/game/utils/entity';
 import { cellPositionToVector } from '~/game/utils/grid';
 import { not } from '~/utils/predicate';
-import { getOccupiedCells, isAlive } from '~/game/utils/components';
+import { getOccupiedCells } from '~/game/utils/components';
+import { Collided } from '~/game/events/Collided';
 
 const canEntityMoveToCell = (
   colliders: IEntity[],
@@ -31,7 +34,7 @@ const canEntityMoveToCell = (
 ): boolean => {
   const collider = colliders
     .filter(not(isSameEntity(entity)))
-    .filter(isAlive)
+    .filter(isCollider)
     .find((collider) => {
       const occupiedCells = getOccupiedCells(collider);
 
@@ -53,7 +56,8 @@ const updateMovePosition = (
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
   controlled: Controlled | null,
-  moved: IEventWriter<typeof Moved>
+  moved: IEventWriter<typeof Moved>,
+  collided: IEventWriter<typeof Collided>
 ) => {
   if (movePath.path.length == 0) {
     if (
@@ -72,9 +76,10 @@ const updateMovePosition = (
   }
 
   const nextCell = movePath.path[0];
-
   if (!canEntityMoveToCell(entities, entity, nextCell)) {
     // cancel move
+    movePath.path = [];
+    collided.publish(new Collided(entity));
     return;
   }
   movePath.path.shift();
@@ -94,6 +99,7 @@ const updateMovePosition = (
 
 export const MovePathSystem = createSystem({
   moved: WriteEvents(Moved),
+  collided: WriteEvents(Collided),
 
   query: queryComponents({
     entity: ReadEntity(),
@@ -103,7 +109,7 @@ export const MovePathSystem = createSystem({
     controlled: ReadOptional(Controlled),
   }),
 })
-  .withRunFunction(({ moved, query }) => {
+  .withRunFunction(({ moved, collided, query }) => {
     query.execute(
       ({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
         updateMovePosition(
@@ -113,7 +119,8 @@ export const MovePathSystem = createSystem({
           moveVelocity,
           movePositionDirect,
           controlled ?? null,
-          moved
+          moved,
+          collided
         );
       }
     );

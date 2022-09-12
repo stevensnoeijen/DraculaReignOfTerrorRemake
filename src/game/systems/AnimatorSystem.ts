@@ -14,6 +14,8 @@ import { EntityEvent, Died, Attacked, Moved, Idled } from '../events';
 import { Animations } from '../components/Animations';
 import { Animator } from '../animation/Animator';
 
+import { Collided } from './../events/Collided';
+
 export const setAnimation = (entity: IEntity, state: UnitState): void => {
   if (!entity.hasComponent(Animations)) return;
 
@@ -28,16 +30,18 @@ export const AnimatorSystem = createSystem({
   moved: ReadEvents(Moved),
   attacked: ReadEvents(Attacked),
   died: ReadEvents(Died),
+  collided: ReadEvents(Collided),
 
   query: queryComponents({
     animator: Read(Animator),
   }),
 })
-  .withRunFunction(({ moved, idled, attacked, died }) => {
+  .withRunFunction(({ moved, idled, attacked, died, collided }) => {
     (
       [
         [moved, 'move'],
         [idled, 'idle'],
+        [collided, 'idle'],
         [attacked, 'attack'],
         [died, 'dead'],
       ] as [IEventReader<typeof EntityEvent>, UnitState][]

@@ -71,7 +71,7 @@ export class EntityLoader {
     sprite.play();
 
     const builder = this.world
-    .buildEntity()
+      .buildEntity()
       .with(
         new Transform(new Vector2(props.position.x, props.position.y), rotation)
       )
@@ -100,7 +100,7 @@ export class EntityLoader {
           data.combatAggroRange,
           data.combatAttackRange,
           data.combatAttackDamage,
-          data.combatAttackCooldown,
+          data.combatAttackCooldown
         )
       )
       .with(UnitState)

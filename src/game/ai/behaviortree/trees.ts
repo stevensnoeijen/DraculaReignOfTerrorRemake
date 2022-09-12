@@ -19,6 +19,8 @@ import { Tree } from './Tree';
 import { Attacked, Hit } from '~/game/events';
 import { Combat } from '~/game/components';
 
+const DEFAULT_ATTACK_DELAY = 1000;
+
 export const createSwordsmanTree = (entity: IEntity) => {
   const tree = new Tree(
     new Selector([
@@ -42,7 +44,9 @@ export const createSwordsmanTree = (entity: IEntity) => {
               new SendEvent(Attacked),
             ]),
             new Timer({
-              delay: entity.getComponent(Combat)?.attackCooldown ?? 1000,
+              delay:
+                entity.getComponent(Combat)?.attackCooldown ??
+                DEFAULT_ATTACK_DELAY,
               execute: new Sequence([new Attack(), new SendEvent(Hit)]),
             }),
           ]),
