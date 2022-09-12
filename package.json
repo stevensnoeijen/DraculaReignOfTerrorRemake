@@ -36,7 +36,7 @@
     "@types/audiosprite": "^0.7.0",
     "@types/jest": "^28.1.6",
     "@types/lodash": "^4.14.184",
-    "@types/node": "^18.0.6",
+    "@types/node": "^18.7.17",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "@vitejs/plugin-vue": "^3.0.3",
