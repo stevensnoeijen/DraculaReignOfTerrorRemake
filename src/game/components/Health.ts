@@ -12,12 +12,11 @@ export class Health {
     this.maxPoints = props.maxPoints;
   }
 
-  get points (): number {
+  get points(): number {
     return this._points;
   }
 
   takeHit(damage: number): void {
     this._points -= damage;
-    console.log('take hit');
   }
 }
