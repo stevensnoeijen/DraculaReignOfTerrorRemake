@@ -16,8 +16,7 @@ export class Engine {
 
   constructor(public readonly app: PIXI.Application) {
     this.world = buildWorld()
-      .withComponents(PIXI.Graphics, PIXI.Sprite, PIXI.AnimatedSprite)
-      .withStateScheduling(GameState, root => root.fromPrefab(gameSchedule))
+      .withStateScheduling(GameState, (root) => root.fromPrefab(gameSchedule))
       .build();
     this.world.addResource(this);
     this.world.addResource(app);
@@ -31,15 +30,14 @@ export class Engine {
   }
 
   public async run() {
-    this.app.loader
-      .load(() => {
-        this.world.run({
-          initialState: GameState,
-        });
+    this.app.loader.load(() => {
+      this.world.run({
+        initialState: GameState,
       });
+    });
   }
 
-  public get scenario () {
+  public get scenario() {
     return this._scenario;
   }
 
