@@ -29,8 +29,8 @@ export const FollowSystem = createSystem({
   .withRunFunction(({ query }) => {
     if (collsionMap === null) return;
 
-    query.execute(({ follow, transform, movePath }) => {
-      if (follow.entity == null || movePath.path.length !== 0) {
+    return query.execute(({ follow, transform, movePath }) => {
+      if (follow.entity == null) {
         return;
       }
 

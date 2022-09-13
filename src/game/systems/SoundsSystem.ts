@@ -1,60 +1,46 @@
-import {
-  createSystem,
-  IComponentsQuery,
-  queryComponents,
-  Read,
-  ReadEvents,
-} from 'sim-ecs';
+import { createSystem, ReadEvents } from 'sim-ecs';
 
 import { Attacked } from '../events/Attacked';
 import { Died } from '../events/Died';
 import { Sounds } from '../components/Sounds';
 import { Commanded } from '../events/Commanded';
 import { EntityEvent } from '../events/EntityEvent';
-import { Idled } from '../events/Idled';
-import { Moved } from '../events/Moved';
+import { Idled, Moved } from '../events';
+import { AttackStopped } from '../events/AttackedStopped';
 
 import { Action } from './../sounds/SoundController';
 
-const playSound = (
-  query: IComponentsQuery<{}>,
-  event: EntityEvent,
-  action: Action
-) => {
-  if (query.matchesEntity(event.entity)) {
-    event.entity.getComponent(Sounds)!.play(action);
-  }
+const playSound = (event: EntityEvent, action: Action) => {
+  event.entity.getComponent(Sounds)?.play(action);
 };
 
-const stopSound = (event: EntityEvent) =>
-  event.entity.getComponent(Sounds)!.stop();
+const stopSound = (event: EntityEvent, action: Action) =>
+  event.entity.getComponent(Sounds)?.stop(action);
 
 export const SoundsSystem = createSystem({
-  idled: ReadEvents(Idled),
   commanded: ReadEvents(Commanded),
   moved: ReadEvents(Moved),
   attacked: ReadEvents(Attacked),
+  attackStopped: ReadEvents(AttackStopped),
   died: ReadEvents(Died),
-
-  query: queryComponents({
-    sounds: Read(Sounds),
-  }),
+  idled: ReadEvents(Idled),
 })
-  .withRunFunction(({ idled, commanded, attacked, moved, died, query }) => {
-    idled.execute((event) => {
-      stopSound(event);
-    });
+  .withRunFunction(({ commanded, moved, attacked, attackStopped, died }) => {
     commanded.execute((event) => {
-      playSound(query, event, 'command');
+      playSound(event, 'command');
     });
     moved.execute((event) => {
-      stopSound(event);
+      stopSound(event, 'attackEffect');
     });
     attacked.execute((event) => {
-      playSound(query, event, 'attackEffect');
+      playSound(event, 'attackEffect');
+    });
+    attackStopped.execute((event) => {
+      stopSound(event, 'attackEffect');
     });
     died.execute((event) => {
-      playSound(query, event, 'dead');
+      stopSound(event, 'attackEffect');
+      playSound(event, 'dead');
     });
   })
   .build();

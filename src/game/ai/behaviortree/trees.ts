@@ -31,7 +31,7 @@ export const createSwordsmanTree = (entity: IEntity) => {
       ]),
       new Sequence([
         new IsMoving(),
-        new Selector([new Inverter(new IsEnemyInAggroRange())]),
+        new Inverter(new IsEnemyInAggroRange()),
         new UnsetTarget(),
       ]),
       new Selector([

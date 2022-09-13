@@ -5,15 +5,15 @@ import {
   Read,
   ReadEvents,
 } from 'sim-ecs';
-import { IEventReader } from 'sim-ecs/dist/events';
 
 import { UnitState } from '../types';
 import { Transform } from '../components/Transform';
 import { rotationToDirection } from '../animation/load';
-import { EntityEvent, Died, Attacked, Moved, Idled } from '../events';
+import { Died, Attacked, Moved, Idled } from '../events';
 import { Animations } from '../components/Animations';
 import { Animator } from '../animation/Animator';
 
+import { AttackStopped } from './../events/AttackedStopped';
 import { Collided } from './../events/Collided';
 
 export const setAnimation = (entity: IEntity, state: UnitState): void => {
@@ -29,6 +29,7 @@ export const AnimatorSystem = createSystem({
   idled: ReadEvents(Idled),
   moved: ReadEvents(Moved),
   attacked: ReadEvents(Attacked),
+  attackStopped: ReadEvents(AttackStopped),
   died: ReadEvents(Died),
   collided: ReadEvents(Collided),
 
@@ -36,19 +37,16 @@ export const AnimatorSystem = createSystem({
     animator: Read(Animator),
   }),
 })
-  .withRunFunction(({ moved, idled, attacked, died, collided }) => {
-    (
-      [
-        [moved, 'move'],
-        [idled, 'idle'],
-        [collided, 'idle'],
-        [attacked, 'attack'],
-        [died, 'dead'],
-      ] as [IEventReader<typeof EntityEvent>, UnitState][]
-    ).forEach(([eventReader, state]) => {
-      eventReader.execute((event) => {
-        setAnimation(event.entity, state);
-      });
-    });
-  })
+  .withRunFunction(
+    async ({ moved, idled, attacked, attackStopped, died, collided }) => {
+      await Promise.all([
+        moved.execute((event) => setAnimation(event.entity, 'move')),
+        idled.execute((event) => setAnimation(event.entity, 'idle')),
+        attackStopped.execute((event) => setAnimation(event.entity, 'idle')),
+        collided.execute((event) => setAnimation(event.entity, 'idle')),
+        attacked.execute((event) => setAnimation(event.entity, 'attack')),
+        died.execute((event) => setAnimation(event.entity, 'dead')),
+      ]);
+    }
+  )
   .build();

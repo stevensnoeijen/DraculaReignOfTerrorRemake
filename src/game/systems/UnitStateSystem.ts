@@ -13,8 +13,6 @@ import { UnitState as State } from '../types';
 import { Moved } from '../events/Moved';
 import { Died } from '../events/Died';
 
-import { Collided } from './../events/Collided';
-
 import { EntityEvent } from '~/game/events/EntityEvent';
 import { Attacked } from '~/game/events/Attacked';
 
@@ -27,17 +25,15 @@ export const UnitStateSystem = createSystem({
   moved: ReadEvents(Moved),
   attacked: ReadEvents(Attacked),
   died: ReadEvents(Died),
-  collided: ReadEvents(Collided),
 
   query: queryComponents({
     unitState: Write(UnitState),
   }),
 })
-  .withRunFunction(({ idled, moved, attacked, died, collided }) => {
+  .withRunFunction(({ idled, moved, attacked, died }) => {
     (
       [
         [idled, 'idle'],
-        [collided, 'idle'],
         [moved, 'move'],
         [attacked, 'attack'],
         [died, 'dead'],

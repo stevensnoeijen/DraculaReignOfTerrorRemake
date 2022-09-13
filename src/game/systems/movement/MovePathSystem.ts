@@ -60,12 +60,8 @@ const updateMovePosition = (
   collided: IEventWriter<typeof Collided>
 ) => {
   if (movePath.path.length == 0) {
-    if (
-      moveVelocity?.velocity != null &&
-      Vector2.ZERO.equals(moveVelocity.velocity)
-    ) {
-      if (controlled != null) controlled.by = null;
-    }
+    if (Vector2.ZERO.equals(moveVelocity.velocity) && controlled != null)
+      controlled.by = null;
 
     return;
   }
@@ -110,9 +106,9 @@ export const MovePathSystem = createSystem({
   }),
 })
   .withRunFunction(({ moved, collided, query }) => {
-    query.execute(
+    return query.execute(
       ({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
-        updateMovePosition(
+        return updateMovePosition(
           Array.from(query.iter()).map((e) => e.entity),
           entity,
           movePath,
