@@ -1,9 +1,10 @@
 import {
   createSystem,
   WriteEvents,
-  queryEntities,
-  With,
   Actions,
+  Read,
+  queryComponents,
+  ReadEntity,
 } from 'sim-ecs';
 
 import { Died } from '../events/Died';
@@ -40,12 +41,14 @@ const DEAD_COMPONENTS = [
 export const AliveSystem = createSystem({
   actions: Actions,
   died: WriteEvents(Died),
-  query: queryEntities(With(Alive), With(Health)),
+  query: queryComponents({
+    entity: ReadEntity(),
+    alive: Read(Alive),
+  }),
 })
   .withRunFunction(({ actions, died, query }) => {
-    query.execute((entity) => {
-      const alive = entity.getComponent(Alive)!;
-      if (alive.isAlive() || !entity.hasComponent(Health)) {
+    query.execute(({ entity, alive }) => {
+      if (alive.isAlive()) {
         return;
       }
 
