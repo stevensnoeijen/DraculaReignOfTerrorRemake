@@ -14,7 +14,7 @@ import { Moved } from '../events/Moved';
 import { Died } from '../events/Died';
 
 import { EntityEvent } from '~/game/events/EntityEvent';
-import { Attacked } from '~/game/events/Attacked';
+import { AttackStarted } from '~/game/events/AttackStarted';
 
 const setState = (entity: IEntity, state: State) => {
   entity.getComponent(UnitState)!.state = state;
@@ -23,19 +23,19 @@ const setState = (entity: IEntity, state: State) => {
 export const UnitStateSystem = createSystem({
   idled: ReadEvents(Idled),
   moved: ReadEvents(Moved),
-  attacked: ReadEvents(Attacked),
+  attackedStarted: ReadEvents(AttackStarted),
   died: ReadEvents(Died),
 
   query: queryComponents({
     unitState: Write(UnitState),
   }),
 })
-  .withRunFunction(({ idled, moved, attacked, died }) =>
+  .withRunFunction(({ idled, moved, attackedStarted, died }) =>
     (
       [
         [idled, 'idle'],
         [moved, 'move'],
-        [attacked, 'attack'],
+        [attackedStarted, 'attack'],
         [died, 'dead'],
       ] as [IEventReader<typeof EntityEvent>, State][]
     ).forEach(([eventReader, state]) =>

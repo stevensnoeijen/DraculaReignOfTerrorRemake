@@ -1,6 +1,6 @@
 import { createSystem, ReadEvents } from 'sim-ecs';
 
-import { Attacked } from '../events/Attacked';
+import { AttackStarted } from '../events/AttackStarted';
 import { Died } from '../events/Died';
 import { Sounds } from '../components/Sounds';
 import { Commanded } from '../events/Commanded';
@@ -20,27 +20,29 @@ const stopSound = (event: EntityEvent, action: Action) =>
 export const SoundsSystem = createSystem({
   commanded: ReadEvents(Commanded),
   moved: ReadEvents(Moved),
-  attacked: ReadEvents(Attacked),
+  attackedStarted: ReadEvents(AttackStarted),
   attackStopped: ReadEvents(AttackStopped),
   died: ReadEvents(Died),
   idled: ReadEvents(Idled),
 })
-  .withRunFunction(({ commanded, moved, attacked, attackStopped, died }) => {
-    commanded.execute((event) => {
-      playSound(event, 'command');
-    });
-    moved.execute((event) => {
-      stopSound(event, 'attackEffect');
-    });
-    attacked.execute((event) => {
-      playSound(event, 'attackEffect');
-    });
-    attackStopped.execute((event) => {
-      stopSound(event, 'attackEffect');
-    });
-    died.execute((event) => {
-      stopSound(event, 'attackEffect');
-      playSound(event, 'dead');
-    });
-  })
+  .withRunFunction(
+    ({ commanded, moved, attackedStarted, attackStopped, died }) => {
+      commanded.execute((event) => {
+        playSound(event, 'command');
+      });
+      moved.execute((event) => {
+        stopSound(event, 'attackEffect');
+      });
+      attackedStarted.execute((event) => {
+        playSound(event, 'attackEffect');
+      });
+      attackStopped.execute((event) => {
+        stopSound(event, 'attackEffect');
+      });
+      died.execute((event) => {
+        stopSound(event, 'attackEffect');
+        playSound(event, 'dead');
+      });
+    }
+  )
   .build();

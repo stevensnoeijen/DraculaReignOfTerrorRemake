@@ -16,7 +16,7 @@ import {
 } from './nodes/entity';
 import { Tree } from './Tree';
 
-import { Attacked, Hit } from '~/game/events';
+import { AttackStarted, Hit } from '~/game/events';
 import { Combat } from '~/game/components';
 
 const DEFAULT_ATTACK_DELAY = 1000;
@@ -41,7 +41,7 @@ export const createSwordsmanTree = (entity: IEntity) => {
           new Parallel([
             new Sequence([
               new Inverter(new IsUnitState('attack')),
-              new SendEvent(Attacked),
+              new SendEvent(AttackStarted),
             ]),
             new Timer({
               delay:

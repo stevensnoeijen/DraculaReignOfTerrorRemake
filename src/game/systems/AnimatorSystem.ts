@@ -9,7 +9,7 @@ import {
 import { UnitState } from '../types';
 import { Transform } from '../components/Transform';
 import { rotationToDirection } from '../animation/load';
-import { Died, Attacked, Moved, Idled } from '../events';
+import { Died, AttackStarted, Moved, Idled } from '../events';
 import { Animations } from '../components/Animations';
 import { Animator } from '../animation/Animator';
 import { AttackStopped } from '../events/AttackStopped';
@@ -28,7 +28,7 @@ export const setAnimation = (entity: IEntity, state: UnitState): void => {
 export const AnimatorSystem = createSystem({
   idled: ReadEvents(Idled),
   moved: ReadEvents(Moved),
-  attacked: ReadEvents(Attacked),
+  attackedStarted: ReadEvents(AttackStarted),
   attackStopped: ReadEvents(AttackStopped),
   died: ReadEvents(Died),
   collided: ReadEvents(Collided),
@@ -38,14 +38,23 @@ export const AnimatorSystem = createSystem({
   }),
 })
   .withRunFunction(
-    async ({ moved, idled, attacked, attackStopped, died, collided }) => {
+    async ({
+      moved,
+      idled,
+      attackedStarted,
+      attackStopped,
+      died,
+      collided,
+    }) => {
       await moved.execute((event) => setAnimation(event.entity, 'move'));
       await idled.execute((event) => setAnimation(event.entity, 'idle'));
       await attackStopped.execute((event) =>
         setAnimation(event.entity, 'idle')
       );
       await collided.execute((event) => setAnimation(event.entity, 'idle'));
-      await attacked.execute((event) => setAnimation(event.entity, 'attack'));
+      await attackedStarted.execute((event) =>
+        setAnimation(event.entity, 'attack')
+      );
       await died.execute((event) => setAnimation(event.entity, 'dead'));
     }
   )
