@@ -69,7 +69,8 @@ describe('isInRange', () => {
 });
 
 describe('byClosestDistance', () => {
-  it('should keep order sort when targetEntity has no TransformComponent', () => {
+  it(`should keep order sort
+    when targetEntity has no TransformComponent`, () => {
     const targetEntity = world.buildEntity().build();
 
     const entities = createRandomEntities();
@@ -115,13 +116,15 @@ describe('byClosestDistance', () => {
 });
 
 describe('getOccupiedCells', () => {
-  it('should return empty array when the entity has no Transform component', () => {
+  it(`should return empty array
+    when the entity has no Transform component`, () => {
     const entity = world.buildEntity().build();
 
     expect(getOccupiedCells(entity)).toHaveLength(0);
   });
 
-  it('should return transform location when the entity has Transform component', () => {
+  it(`should return transform location
+    when the entity has Transform component`, () => {
     const entity = world
       .buildEntity()
       .with(new Transform(new Vector2(1 * CELL_SIZE, 2 * CELL_SIZE)))
