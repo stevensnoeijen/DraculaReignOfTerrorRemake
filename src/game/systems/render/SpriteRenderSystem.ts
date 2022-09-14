@@ -42,35 +42,37 @@ export const SpriteRenderSystem = createSystem({
     aliveLayer = app.stage.addChildAt(new PIXI.Container(), ALIVE_LAYER);
   })
   .withRunFunction(({ entityAdded, entityRemoved, died, query }) => {
-    entityAdded.execute((event) => {
-      if (event.entity.hasComponent(SpriteRender)) {
-        const sprite = event.entity.getComponent(SpriteRender)!.sprite;
-        if (isAlive(event.entity)) aliveLayer.addChild(sprite);
-        else deadLayer.addChild(sprite);
-      }
-    });
+    return Promise.all([
+      entityAdded.execute((event) => {
+        if (event.entity.hasComponent(SpriteRender)) {
+          const sprite = event.entity.getComponent(SpriteRender)!.sprite;
+          if (isAlive(event.entity)) aliveLayer.addChild(sprite);
+          else deadLayer.addChild(sprite);
+        }
+      }),
 
-    entityRemoved.execute((event) => {
-      if (event.entity.hasComponent(SpriteRender)) {
-        const sprite = event.entity.getComponent(SpriteRender)!.sprite;
-        if (isAlive(event.entity)) aliveLayer.removeChild(sprite);
-        else deadLayer.removeChild(sprite);
-      }
-    });
+      entityRemoved.execute((event) => {
+        if (event.entity.hasComponent(SpriteRender)) {
+          const sprite = event.entity.getComponent(SpriteRender)!.sprite;
+          if (isAlive(event.entity)) aliveLayer.removeChild(sprite);
+          else deadLayer.removeChild(sprite);
+        }
+      }),
 
-    died.execute((event) => {
-      if (event.entity.hasComponent(Alive)) {
-        const sprite = event.entity.getComponent(SpriteRender)?.sprite;
+      died.execute((event) => {
+        if (event.entity.hasComponent(Alive)) {
+          const sprite = event.entity.getComponent(SpriteRender)?.sprite;
 
-        if (sprite == null) return;
+          if (sprite == null) return;
 
-        aliveLayer.removeChild(sprite);
-        deadLayer.addChild(sprite);
-      }
-    });
+          aliveLayer.removeChild(sprite);
+          deadLayer.addChild(sprite);
+        }
+      }),
 
-    query.execute(({ spriteRender, transform }) => {
-      updatePosition(spriteRender.sprite, transform);
-    });
+      query.execute(({ spriteRender, transform }) => {
+        updatePosition(spriteRender.sprite, transform);
+      }),
+    ]).then();
   })
   .build();

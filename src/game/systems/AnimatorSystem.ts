@@ -39,14 +39,14 @@ export const AnimatorSystem = createSystem({
 })
   .withRunFunction(
     async ({ moved, idled, attacked, attackStopped, died, collided }) => {
-      await Promise.all([
-        moved.execute((event) => setAnimation(event.entity, 'move')),
-        idled.execute((event) => setAnimation(event.entity, 'idle')),
-        attackStopped.execute((event) => setAnimation(event.entity, 'idle')),
-        collided.execute((event) => setAnimation(event.entity, 'idle')),
-        attacked.execute((event) => setAnimation(event.entity, 'attack')),
-        died.execute((event) => setAnimation(event.entity, 'dead')),
-      ]);
+      await moved.execute((event) => setAnimation(event.entity, 'move'));
+      await idled.execute((event) => setAnimation(event.entity, 'idle'));
+      await attackStopped.execute((event) =>
+        setAnimation(event.entity, 'idle')
+      );
+      await collided.execute((event) => setAnimation(event.entity, 'idle'));
+      await attacked.execute((event) => setAnimation(event.entity, 'attack'));
+      await died.execute((event) => setAnimation(event.entity, 'dead'));
     }
   )
   .build();

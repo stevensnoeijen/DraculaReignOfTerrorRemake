@@ -30,7 +30,7 @@ export const UnitStateSystem = createSystem({
     unitState: Write(UnitState),
   }),
 })
-  .withRunFunction(({ idled, moved, attacked, died }) => {
+  .withRunFunction(({ idled, moved, attacked, died }) =>
     (
       [
         [idled, 'idle'],
@@ -38,10 +38,8 @@ export const UnitStateSystem = createSystem({
         [attacked, 'attack'],
         [died, 'dead'],
       ] as [IEventReader<typeof EntityEvent>, State][]
-    ).forEach(([eventReader, state]) => {
-      eventReader.execute((event) => {
-        setState(event.entity, state);
-      });
-    });
-  })
+    ).forEach(([eventReader, state]) =>
+      eventReader.execute((event) => setState(event.entity, state))
+    )
+  )
   .build();

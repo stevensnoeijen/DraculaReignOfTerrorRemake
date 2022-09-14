@@ -17,7 +17,6 @@ const draw = () => {
 
   graphics.clear();
 
-
   graphics.beginFill(0x000000);
 
   collsionMap.forEach((row, y) => {
@@ -34,14 +33,14 @@ const draw = () => {
 export const MapRenderSystem = createSystem({
   app: ReadResource(PIXI.Application),
 })
-.withSetupFunction(({ app }) => {
-  worldEventBus.subscribe(ScenarioLoaded, (event) => {
-    collsionMap = event.scenario.collisionMap;
-  });
+  .withSetupFunction(({ app }) => {
+    worldEventBus.subscribe(ScenarioLoaded, (event) => {
+      collsionMap = event.scenario.collisionMap;
+    });
 
-  app.stage.addChildAt(graphics, MAP_LAYER);
-})
-.withRunFunction(() => {
-  draw();
-})
-.build();
+    app.stage.addChildAt(graphics, MAP_LAYER);
+  })
+  .withRunFunction(() => {
+    draw();
+  })
+  .build();

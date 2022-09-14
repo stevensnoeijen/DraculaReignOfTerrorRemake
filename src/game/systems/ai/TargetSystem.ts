@@ -20,7 +20,7 @@ export const TargetSystem = createSystem({
   }),
 })
   .withRunFunction(({ attackStopped, query }) => {
-    query.execute(({ entity, target }) => {
+    return query.execute(({ entity, target }) => {
       if (target.entity === null) {
         return;
       }

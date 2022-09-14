@@ -9,11 +9,11 @@ export const HealthSystem = createSystem({
     alive: Write(Alive),
   }),
 })
-  .withRunFunction(({ query }) => {
+  .withRunFunction(({ query }) =>
     query.execute(({ health, alive }) => {
       if (health.points === 0) {
         alive.die();
       }
-    });
-  })
+    })
+  )
   .build();

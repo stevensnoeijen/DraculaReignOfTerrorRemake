@@ -1,4 +1,3 @@
-
 import { CELL_SIZE } from '../constants';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils/grid';
@@ -26,7 +25,7 @@ export class RandomUnitsScenario extends Scenario {
   }
 
   public load(entityLoader: EntityLoader): void {
-    Array.from(Array(100)).forEach(() => {
+    Array.from(Array(50)).forEach(() => {
       const vector = toWorldPositionCellCenter(
         new Vector2(
           Math.round(Math.random() * this.engine.app.screen.width),
@@ -37,7 +36,7 @@ export class RandomUnitsScenario extends Scenario {
 
       entityLoader.createUnit(UNIT_SWORDSMEN, {
         position: vector,
-        team: getRandomValue([Team.PLAYER, Team.CPU])
+        team: getRandomValue([Team.PLAYER, Team.CPU]),
       });
     });
   }

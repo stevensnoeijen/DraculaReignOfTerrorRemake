@@ -43,7 +43,7 @@ export const AliveSystem = createSystem({
   query: queryEntities(With(Alive), With(Health)),
 })
   .withRunFunction(({ actions, died, query }) => {
-    query.execute((entity) => {
+    return query.execute((entity) => {
       const alive = entity.getComponent(Alive)!;
       if (alive.isAlive() || !entity.hasComponent(Health)) {
         return;
