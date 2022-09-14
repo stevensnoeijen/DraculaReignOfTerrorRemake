@@ -12,8 +12,8 @@ import { rotationToDirection } from '../animation/load';
 import { Died, Attacked, Moved, Idled } from '../events';
 import { Animations } from '../components/Animations';
 import { Animator } from '../animation/Animator';
+import { AttackStopped } from '../events/AttackStopped';
 
-import { AttackStopped } from './../events/AttackedStopped';
 import { Collided } from './../events/Collided';
 
 export const setAnimation = (entity: IEntity, state: UnitState): void => {

@@ -6,7 +6,7 @@ import {
   ReadEntity,
 } from 'sim-ecs';
 
-import { AttackStopped } from './../../events/AttackedStopped';
+import { AttackStopped } from '../../events/AttackStopped';
 
 import { Target } from '~/game/components/ai/Target';
 import { isAlive } from '~/game/utils/components';

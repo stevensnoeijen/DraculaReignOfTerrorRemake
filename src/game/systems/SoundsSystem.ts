@@ -6,7 +6,7 @@ import { Sounds } from '../components/Sounds';
 import { Commanded } from '../events/Commanded';
 import { EntityEvent } from '../events/EntityEvent';
 import { Idled, Moved } from '../events';
-import { AttackStopped } from '../events/AttackedStopped';
+import { AttackStopped } from '../events/AttackStopped';
 
 import { Action } from './../sounds/SoundController';
 
