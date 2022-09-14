@@ -1,55 +1,58 @@
 import { Sound as PixiSound } from '@pixi/sound';
 
-import { ArrayMinLength } from './../../utils/types';
-
-import { getRandomValue } from '~/utils/array';
+import { SoundInstance } from './SoundInstance';
 
 export type Action = 'command' | 'attackEffect' | 'dead' | 'deadByCatapult';
 
 const REPEATABLE_ACTION: Action = 'attackEffect';
+const UNSTOPPABLE_ACTION: Action = 'command';
 
 export class SoundController {
-  private currentlyPlayingAction: Action|null = null;
+  private actionToSoundInstanceSet: Map<Action, Set<SoundInstance>> = new Map();
 
   constructor(
     private readonly pixiSound: PixiSound,
-    private readonly translations: Map<Action, string[] | undefined>,
+    private readonly actionToSprites: Map<Action, string[] | undefined>
   ) {}
 
   public play(action: Action) {
-    if (this.currentlyPlayingAction != null)
-      this.stop();
-
-    const translations = this.translations.get(action);
-    if (translations == null || translations.length === 0)
-      return;
-
-    const alias = getRandomValue(translations as ArrayMinLength<string, 1>);
-    if (alias == undefined) return;
-
-    this.currentlyPlayingAction = action;
-    this.pixiSound.play(alias, this.callback(action));
+    const sound = new SoundInstance(
+      this.pixiSound,
+      this.getSprites(action),
+      action !== UNSTOPPABLE_ACTION,
+      action === REPEATABLE_ACTION
+    );
+    this.addActionToSoundInstanceSet(action, sound);
+    sound.play(() => this.removeActionToSoundInstanceSet(action, sound));
   }
 
-  public stop() {
-    if (this.isCurrentlyPlayingStoppable()) {
-      this.pixiSound.stop();
-      this.currentlyPlayingAction = null;
+  public stop(action: Action) {
+    const sounds = this.actionToSoundInstanceSet.get(action);
+    if (sounds != null) {
+      sounds.forEach((sound) => sound.stop());
+      sounds.clear();
     }
   }
 
-  private isCurrentlyPlayingStoppable() {
-    return this.currentlyPlayingAction !== 'command';
+  private getSprites(action: Action) {
+    return this.actionToSprites.get(action) ?? [];
   }
 
-  private callback (action: Action) {
-    return () => {
-      if (action === REPEATABLE_ACTION) {
-        this.play(action);
-        return;
-      }
+  private addActionToSoundInstanceSet(
+    action: Action,
+    soundInstance: SoundInstance
+  ) {
+    if (!this.actionToSoundInstanceSet.has(action))
+      this.actionToSoundInstanceSet.set(action, new Set());
 
-      this.currentlyPlayingAction = null;
-    };
+    this.actionToSoundInstanceSet.get(action)!.add(soundInstance);
+  }
+
+  private removeActionToSoundInstanceSet(
+    action: Action,
+    soundInstance: SoundInstance
+  ) {
+    if (this.actionToSoundInstanceSet.has(action))
+      this.actionToSoundInstanceSet.get(action)!.delete(soundInstance);
   }
 }

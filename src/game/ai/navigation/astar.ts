@@ -1,9 +1,9 @@
-import { Position } from '../../utils/types';
+import { Point } from '../../math/types';
 
 import { arrayIncludesByEquals, removeNullable } from '~/utils/array';
 import { toEqual } from '~/utils/predicate';
 
-export const isPositionEqual = (a: Position, b: Position): boolean => {
+export const isPositionEqual = (a: Point, b: Point): boolean => {
   return a.x === b.x && a.y === b.y;
 };
 
@@ -25,7 +25,7 @@ export class Node {
 
   constructor(
     public readonly parent: Node | null = null,
-    public readonly position: Position
+    public readonly position: Point
   ) {}
 
   public calculateF(): void {
@@ -74,7 +74,7 @@ export const createPathFromEndNode = (endNode: Node): Path => {
   return path;
 };
 
-const relativeAdjacentPositions: readonly Position[] = [
+const relativeAdjacentPositions: readonly Point[] = [
   { x: 0, y: -1 },
   { x: 0, y: 1 },
   { x: -1, y: 0 },
@@ -89,7 +89,7 @@ type Grid = number[][];
 
 export const isPositionInsideGrid = (
   grid: Readonly<Grid>,
-  position: Position
+  position: Point
 ): boolean => {
   return (
     position.y >= 0 &&
@@ -105,7 +105,7 @@ export const generateAdjacentNodes = (
 ): Node[] => {
   return relativeAdjacentPositions
     .map((relativeAdjacentPosition) => {
-      const position: Position = {
+      const position: Point = {
         x: currentNode.position.x + relativeAdjacentPosition.x,
         y: currentNode.position.y + relativeAdjacentPosition.y,
       };
@@ -139,7 +139,7 @@ export const calculateDistanceCost = (from: Node, to: Node): number => {
   );
 };
 
-export const astar = (grid: Grid, start: Position, end: Position): Path => {
+export const astar = (grid: Grid, start: Point, end: Point): Path => {
   const startNode = new Node(null, start);
   const endNode = new Node(null, end);
 

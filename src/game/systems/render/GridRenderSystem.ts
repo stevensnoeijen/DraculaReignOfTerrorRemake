@@ -32,20 +32,16 @@ const draw = (app: PIXI.Application, options: Options) => {
     dash.moveTo(0, height).lineTo(app.screen.width, height);
   }
 
-  for (
-    let width = CELL_SIZE;
-    width < app.screen.width;
-    width += CELL_SIZE
-  ) {
+  for (let width = CELL_SIZE; width < app.screen.width; width += CELL_SIZE) {
     // vertical lines
     dash.moveTo(width, 0).lineTo(width, app.screen.height);
   }
 };
 
 export const GridRenderSystem = createSystem({
-    app: ReadResource(PIXI.Application),
-    options: ReadResource(Options),
-  })
+  app: ReadResource(PIXI.Application),
+  options: ReadResource(Options),
+})
   .withSetupFunction(({ app, options }) => {
     window.onresize = () => draw(app, options);
 

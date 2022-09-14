@@ -1,6 +1,7 @@
 // created from 'create-ts-index'
 
-export * from './Attacked';
+export * from './AttackStarted';
+export * from './AttackStopped';
 export * from './Commanded';
 export * from './Died';
 export * from './EntityEvent';

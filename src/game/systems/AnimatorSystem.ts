@@ -5,14 +5,16 @@ import {
   Read,
   ReadEvents,
 } from 'sim-ecs';
-import { IEventReader } from 'sim-ecs/dist/events';
 
 import { UnitState } from '../types';
 import { Transform } from '../components/Transform';
 import { rotationToDirection } from '../animation/load';
-import { EntityEvent, Died, Attacked, Moved, Idled } from '../events';
+import { Died, AttackStarted, Moved, Idled } from '../events';
 import { Animations } from '../components/Animations';
 import { Animator } from '../animation/Animator';
+import { AttackStopped } from '../events/AttackStopped';
+
+import { Collided } from './../events/Collided';
 
 export const setAnimation = (entity: IEntity, state: UnitState): void => {
   if (!entity.hasComponent(Animations)) return;
@@ -26,25 +28,34 @@ export const setAnimation = (entity: IEntity, state: UnitState): void => {
 export const AnimatorSystem = createSystem({
   idled: ReadEvents(Idled),
   moved: ReadEvents(Moved),
-  attacked: ReadEvents(Attacked),
+  attackedStarted: ReadEvents(AttackStarted),
+  attackStopped: ReadEvents(AttackStopped),
   died: ReadEvents(Died),
+  collided: ReadEvents(Collided),
 
   query: queryComponents({
     animator: Read(Animator),
   }),
 })
-  .withRunFunction(({ moved, idled, attacked, died }) => {
-    (
-      [
-        [moved, 'move'],
-        [idled, 'idle'],
-        [attacked, 'attack'],
-        [died, 'dead'],
-      ] as [IEventReader<typeof EntityEvent>, UnitState][]
-    ).forEach(([eventReader, state]) => {
-      eventReader.execute((event) => {
-        setAnimation(event.entity, state);
-      });
-    });
-  })
+  .withRunFunction(
+    async ({
+      moved,
+      idled,
+      attackedStarted,
+      attackStopped,
+      died,
+      collided,
+    }) => {
+      await moved.execute((event) => setAnimation(event.entity, 'move'));
+      await idled.execute((event) => setAnimation(event.entity, 'idle'));
+      await attackStopped.execute((event) =>
+        setAnimation(event.entity, 'idle')
+      );
+      await collided.execute((event) => setAnimation(event.entity, 'idle'));
+      await attackedStarted.execute((event) =>
+        setAnimation(event.entity, 'attack')
+      );
+      await died.execute((event) => setAnimation(event.entity, 'dead'));
+    }
+  )
   .build();

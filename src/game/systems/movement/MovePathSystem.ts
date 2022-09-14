@@ -17,25 +17,33 @@ import { Controlled } from '../../components/input/Controlled';
 import { Moved } from '../../events/Moved';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
-import { Position } from '~/game/utils/types';
+import { isCollider } from './../../utils/components/index';
+
+import { Point } from '~/game/math/types';
 import { MovePath } from '~/game/components/movement/MovePath';
 import { isSameEntity } from '~/game/utils/entity';
 import { cellPositionToVector } from '~/game/utils/grid';
 import { not } from '~/utils/predicate';
-import { getCell, isAlive } from '~/game/utils/components';
+import { getOccupiedCells } from '~/game/utils/components';
+import { Collided } from '~/game/events/Collided';
 
 const canEntityMoveToCell = (
   colliders: IEntity[],
   entity: IEntity,
-  cell: Position
+  cell: Point
 ): boolean => {
   const collider = colliders
     .filter(not(isSameEntity(entity)))
-    .filter(isAlive)
+    .filter(isCollider)
     .find((collider) => {
-      const colliderCell = getCell(collider);
+      const occupiedCells = getOccupiedCells(collider);
 
-      return cell.x === colliderCell.x && cell.y === colliderCell.y;
+      return (
+        occupiedCells.find(
+          (occupiedCell) =>
+            cell.x === occupiedCell.x && cell.y === occupiedCell.y
+        ) != null
+      );
     });
 
   return collider == null;
@@ -48,41 +56,36 @@ const updateMovePosition = (
   moveVelocity: MoveVelocity,
   movePositionDirect: MovePositionDirect,
   controlled: Controlled | null,
-  moved: IEventWriter<typeof Moved>
+  moved: IEventWriter<typeof Moved>,
+  collided: IEventWriter<typeof Collided>
 ) => {
   if (movePath.path.length == 0) {
-    if (
-      moveVelocity?.velocity != null &&
-      Vector2.ZERO.equals(moveVelocity.velocity)
-    ) {
-      if (controlled != null) controlled.by = null;
-    }
+    if (Vector2.ZERO.equals(moveVelocity.velocity) && controlled != null)
+      controlled.by = null;
 
     return;
   }
 
-  if (movePositionDirect.movePosition != null) {
+  if (movePositionDirect.position != null) {
     // is currently moving
     return;
   }
 
   const nextCell = movePath.path[0];
-
   if (!canEntityMoveToCell(entities, entity, nextCell)) {
     // cancel move
+    movePath.path = [];
+    collided.publish(new Collided(entity));
     return;
   }
   movePath.path.shift();
 
-  movePositionDirect.movePosition = cellPositionToVector(
-    nextCell.x,
-    nextCell.y
-  );
+  movePositionDirect.position = cellPositionToVector(nextCell.x, nextCell.y);
   const transformComponent = entity.getComponent(Transform)!;
-  if (!transformComponent.position.equals(movePositionDirect.movePosition)) {
+  if (!transformComponent.position.equals(movePositionDirect.position)) {
     transformComponent.rotation = Vector2.angle(
       transformComponent.position,
-      movePositionDirect.movePosition
+      movePositionDirect.position
     );
   }
 
@@ -92,6 +95,7 @@ const updateMovePosition = (
 
 export const MovePathSystem = createSystem({
   moved: WriteEvents(Moved),
+  collided: WriteEvents(Collided),
 
   query: queryComponents({
     entity: ReadEntity(),
@@ -101,17 +105,18 @@ export const MovePathSystem = createSystem({
     controlled: ReadOptional(Controlled),
   }),
 })
-  .withRunFunction(({ moved, query }) => {
-    query.execute(
+  .withRunFunction(({ moved, collided, query }) => {
+    return query.execute(
       ({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
-        updateMovePosition(
+        return updateMovePosition(
           Array.from(query.iter()).map((e) => e.entity),
           entity,
           movePath,
           moveVelocity,
           movePositionDirect,
           controlled ?? null,
-          moved
+          moved,
+          collided
         );
       }
     );

@@ -2,11 +2,11 @@ import { IEntity } from 'sim-ecs';
 
 import { Vector2 } from '../../math/Vector2';
 import { Transform } from '../../components/Transform';
-import { Size } from '../../components/Size';
-import { Position } from '../types';
+import { Point } from '../../math/types';
 import { Bounds } from '../../math/collision/Bounds';
-import { toGridPosition } from '../grid';
+import { MovePositionDirect } from '../../components/movement/MovePositionDirect';
 
+import { Collision } from '~/game/components';
 import { keepOrder } from '~/utils/array';
 import { Comparator, Predicate } from '~/utils/types';
 
@@ -69,16 +69,16 @@ export const isPositionInsideEntity = (
   y: number
 ): boolean => {
   const transform = entity.getComponent(Transform);
-  const size = entity.getComponent(Size);
+  const collision = entity.getComponent(Collision);
 
-  if (!transform || !size) {
+  if (!transform || !collision) {
     // position or/and size isnt set
     return false;
   }
 
   const bounds = new Bounds(
     transform.position,
-    new Vector2(size.width, size.height)
+    new Vector2(collision.size.width, collision.size.height)
   );
   return bounds.contains(new Vector2(x, y));
 };
@@ -89,9 +89,21 @@ export const randomRotation = () => {
   return rotation - (rotation % 90);
 };
 
-export const getCell = (entity: IEntity): Position => {
-  const transform = entity.getComponent(Transform)!;
-  const { x, y } = toGridPosition(transform.position);
+export const getOccupiedCells = (entity: IEntity): Point[] => {
+  const cells = [];
 
-  return { x, y };
+  if (entity.hasComponent(Transform)) {
+    const transform = entity.getComponent(Transform)!;
+    const { x, y } = transform.gridPosition;
+    cells.push({ x, y });
+  }
+  if (entity.hasComponent(MovePositionDirect)) {
+    const movePositionDirect = entity.getComponent(MovePositionDirect)!;
+    if (movePositionDirect.gridPosition != null) {
+      const { x, y } = movePositionDirect.gridPosition;
+      cells.push({ x, y });
+    }
+  }
+
+  return cells;
 };

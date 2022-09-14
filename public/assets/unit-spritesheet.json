@@ -19584,7 +19584,7 @@
         "y": 0.5
       }
     },
-    "swordsmen.red.attack.south_0=10": {
+    "swordsmen.red.attack.south_10": {
       "frame": {
         "x": 1056,
         "y": 458,
@@ -32753,7 +32753,7 @@
       "swordsmen.red.attack.south_07",
       "swordsmen.red.attack.south_08",
       "swordsmen.red.attack.south_09",
-      null,
+      "swordsmen.red.attack.south_10",
       "swordsmen.red.attack.south_11",
       "swordsmen.red.attack.south_12"
     ],

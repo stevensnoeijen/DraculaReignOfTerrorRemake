@@ -1,9 +1,7 @@
-import { Position } from '../../utils/types';
+import { Point } from '../../math/types';
 
-type Path = Position[];
+type Path = Point[];
 
 export class MovePath {
-  constructor (
-    public path: Path = [],
-  ) {}
+  constructor(public path: Path = []) {}
 }

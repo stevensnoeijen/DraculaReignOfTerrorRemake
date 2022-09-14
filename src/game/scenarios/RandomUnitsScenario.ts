@@ -1,4 +1,3 @@
-
 import { CELL_SIZE } from '../constants';
 import { Vector2 } from '../math/Vector2';
 import { toWorldPositionCellCenter } from '../utils/grid';
@@ -11,6 +10,8 @@ import { Scenario } from './Scenario';
 
 import { Team } from '~/game/components/Team';
 import { getRandomValue } from '~/utils/array';
+
+const OFFSET = CELL_SIZE * 2;
 
 export class RandomUnitsScenario extends Scenario {
   private readonly _collisionMap: number[][];
@@ -26,18 +27,24 @@ export class RandomUnitsScenario extends Scenario {
   }
 
   public load(entityLoader: EntityLoader): void {
-    Array.from(Array(100)).forEach(() => {
+    Array.from(Array(50)).forEach(() => {
       const vector = toWorldPositionCellCenter(
         new Vector2(
-          Math.round(Math.random() * this.engine.app.screen.width),
-          Math.round(Math.random() * this.engine.app.screen.height) +
+          OFFSET +
+            Math.round(
+              Math.random() * (this.engine.app.screen.width - OFFSET * 2)
+            ),
+          OFFSET +
+            Math.round(
+              Math.random() * (this.engine.app.screen.height - OFFSET * 2)
+            ) +
             CELL_SIZE / 2
         )
       );
 
       entityLoader.createUnit(UNIT_SWORDSMEN, {
         position: vector,
-        team: getRandomValue([Team.PLAYER, Team.CPU])
+        team: getRandomValue([Team.PLAYER, Team.CPU]),
       });
     });
   }

@@ -1,5 +1,7 @@
 export class Vector2 {
-  public static ZERO: Vector2 = Object.seal(new Vector2(0, 0));
+  public static readonly ZERO: Readonly<Vector2> = Object.seal(
+    new Vector2(0, 0)
+  );
 
   public constructor(public x: number, public y: number) {}
 

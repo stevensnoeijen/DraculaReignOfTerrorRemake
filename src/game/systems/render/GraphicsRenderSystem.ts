@@ -13,7 +13,6 @@ import {
 } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
-import { Size } from '../../components/Size';
 import { Selectable } from '../../components/input/Selectable';
 import { Combat } from '../../components/ai/Combat';
 import { GraphicsRender } from '../../components/render/GraphicsRender';
@@ -21,6 +20,7 @@ import { GraphicsRender } from '../../components/render/GraphicsRender';
 import { GRAPHICS_LAYER } from './layers';
 import { getHealthColor } from './utils';
 
+import { SpriteRender } from '~/game/components/render/SpriteRender';
 import { Health } from '~/game/components/Health';
 import { Died } from '~/game/events/Died';
 import { Options } from '~/game/Options';
@@ -38,21 +38,24 @@ const drawHealthBar = (health: Health, graphics: PIXI.Graphics): void => {
   graphics.endFill();
 };
 
-const drawSelectionIndicators = (graphics: PIXI.Graphics, size: Size): void => {
+const drawSelectionIndicators = (
+  spriteRender: SpriteRender,
+  graphicsRender: GraphicsRender
+): void => {
   const offset = 4;
-  const left = -size.width / 2 - offset;
-  const top = -size.height / 2 - offset;
-  const right = size.width / 2 + offset;
+  const left = -(spriteRender.size?.width ?? 0) / 2 - offset;
+  const top = -(spriteRender.size?.height ?? 0) / 2 - offset;
+  const right = (spriteRender.size?.width ?? 0) / 2 + offset;
 
   // top left
-  graphics
+  graphicsRender.graphics
     .lineStyle(1, 0x000000)
     .moveTo(left, -6)
     .lineTo(left, top)
     .lineTo(left / 2, top);
 
   // top right
-  graphics
+  graphicsRender.graphics
     .lineStyle(1, 0x000000)
     .moveTo(right / 2, top)
     .lineTo(right, top)
@@ -76,8 +79,8 @@ export const GraphicsRenderSystem = createSystem({
   entityRemoved: ReadEvents(EntityRemoved),
 
   query: queryComponents({
+    spriteRender: Read(SpriteRender),
     graphicsRender: Read(GraphicsRender),
-    size: Read(Size),
     selectable: ReadOptional(Selectable),
     transform: Read(Transform),
     health: ReadOptional(Health),
@@ -117,7 +120,14 @@ export const GraphicsRenderSystem = createSystem({
     });
 
     query.execute(
-      ({ graphicsRender, size, selectable, transform, health, combat }) => {
+      ({
+        spriteRender,
+        graphicsRender,
+        selectable,
+        transform,
+        health,
+        combat,
+      }) => {
         if (selectable != null && transform != null) {
           graphicsRender.graphics.clear();
           graphicsRender.graphics.position.set(
@@ -126,7 +136,7 @@ export const GraphicsRenderSystem = createSystem({
           );
 
           if (selectable.isSelected()) {
-            drawSelectionIndicators(graphicsRender.graphics, size);
+            drawSelectionIndicators(spriteRender, graphicsRender);
           }
           if (health != null && (showAllHealth || selectable.isSelected())) {
             drawHealthBar(health as Health, graphicsRender.graphics);

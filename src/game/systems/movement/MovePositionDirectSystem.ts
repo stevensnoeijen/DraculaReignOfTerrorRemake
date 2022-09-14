@@ -26,14 +26,12 @@ const moveByMoveVelocity = (
   transform: Transform,
   idled: IEventWriter<typeof Idled>
 ) => {
-  if (movePositionDirect.movePosition == null) return;
+  if (movePositionDirect.position == null) return;
 
-  if (
-    Vector2.distance(transform.position, movePositionDirect.movePosition) < 1
-  ) {
-    transform.position = movePositionDirect.movePosition;
+  if (Vector2.distance(transform.position, movePositionDirect.position) < 1) {
+    transform.position = movePositionDirect.position;
     // stop
-    movePositionDirect.movePosition = null;
+    movePositionDirect.position = null;
     moveVelocity.velocity = Vector2.ZERO;
 
     if (movePath.path.length === 0) idled.publish(new Idled(entity));
@@ -41,10 +39,13 @@ const moveByMoveVelocity = (
     return;
   }
 
-  moveVelocity.velocity = Vector2.subtracts(
-    movePositionDirect.movePosition!,
-    transform.position
-  ).normalized();
+  moveVelocity.velocity = Vector2.multiplies(
+    Vector2.subtracts(
+      movePositionDirect.position!,
+      transform.position
+    ).normalized(),
+    moveVelocity.moveSpeed
+  );
 };
 
 export const MovePositionDirectSystem = createSystem({
@@ -59,9 +60,9 @@ export const MovePositionDirectSystem = createSystem({
   }),
 })
   .withRunFunction(({ idled, query }) => {
-    query.execute(
+    return query.execute(
       ({ entity, movePositionDirect, moveVelocity, movePath, transform }) => {
-        moveByMoveVelocity(
+        return moveByMoveVelocity(
           entity,
           movePositionDirect,
           moveVelocity,

@@ -8,8 +8,7 @@ import {
   Team,
   Alive,
   Health,
-  Collider,
-  Size,
+  Collision,
   MoveVelocity,
   MovePositionDirect,
   MovePath,
@@ -27,7 +26,7 @@ import { rotationToDirection } from './animation/load';
 import { ObjectsJson } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
-import { Position } from './utils/types';
+import { Point } from './math/types';
 import { Vector2 } from './math/Vector2';
 import { CELL_SIZE } from './constants';
 import { Unit } from './data/Unit';
@@ -39,7 +38,7 @@ import { UNIT_SWORDSMEN } from './data/constants';
 
 export interface IUnitProps {
   team: Team;
-  position: Position;
+  position: Point;
 }
 
 export class EntityLoader {
@@ -70,8 +69,13 @@ export class EntityLoader {
     sprite.animationSpeed = 0.25;
     sprite.play();
 
+    const size = {
+      width: CELL_SIZE,
+      height: CELL_SIZE,
+    };
+
     const builder = this.world
-    .buildEntity()
+      .buildEntity()
       .with(
         new Transform(new Vector2(props.position.x, props.position.y), rotation)
       )
@@ -84,11 +88,10 @@ export class EntityLoader {
         })
       )
       .with(new GraphicsRender(new PIXI.Graphics()))
-      .with(new SpriteRender(sprite))
+      .with(new SpriteRender(sprite), size)
       .with(animations)
-      .with(Collider)
-      .with(new Size(CELL_SIZE, CELL_SIZE))
-      .with(new MoveVelocity(50))
+      .with(new Collision(size))
+      .with(new MoveVelocity(8))
       .with(MovePositionDirect)
       .with(new MovePath([]))
       .with(new Selectable(false))
@@ -100,7 +103,7 @@ export class EntityLoader {
           data.combatAggroRange,
           data.combatAttackRange,
           data.combatAttackDamage,
-          data.combatAttackCooldown,
+          data.combatAttackCooldown
         )
       )
       .with(UnitState)

@@ -1,4 +1,3 @@
-
 import { Vector2 } from '../../math/Vector2';
 
 /**
@@ -6,13 +5,7 @@ import { Vector2 } from '../../math/Vector2';
  */
 export class MoveVelocity {
   constructor(
-    public moveSpeed: number = 100,
+    public moveSpeed: number,
     public velocity: Vector2 = Vector2.ZERO
-  ) {
-
-  }
-
-  public calculateMovement(delta: number): Vector2 {
-    return Vector2.multiplies(this.velocity, this.moveSpeed * (delta / 1000));
-  }
+  ) {}
 }

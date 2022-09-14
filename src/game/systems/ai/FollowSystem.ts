@@ -6,7 +6,6 @@ import { Transform } from '../../components/Transform';
 import { MovePath } from '../../components/movement/MovePath';
 import { Follow } from '../../components/ai/Follow';
 
-
 import { Target } from '~/game/components/ai/Target';
 import { worldEventBus } from '~/game/constants';
 import { ScenarioLoaded } from '~/game/events/ScenarioLoaded';
@@ -22,30 +21,28 @@ export const FollowSystem = createSystem({
     movePath: Write(MovePath),
   }),
 })
-.withSetupFunction(() => {
-  worldEventBus.subscribe(ScenarioLoaded, (event) => {
-    collsionMap = event.scenario.collisionMap;
-  });
-})
-.withRunFunction(({
-  query
-}) => {
-  if (collsionMap === null)
-    return;
+  .withSetupFunction(() => {
+    worldEventBus.subscribe(ScenarioLoaded, (event) => {
+      collsionMap = event.scenario.collisionMap;
+    });
+  })
+  .withRunFunction(({ query }) => {
+    if (collsionMap === null) return;
 
-  query.execute(({ follow, transform, movePath }) => {
-    if (follow.entity == null || movePath.path.length !== 0) {
-      return;
-    }
+    return query.execute(({ follow, transform, movePath }) => {
+      if (follow.entity == null) {
+        return;
+      }
 
-    const path = astar(
-      collsionMap!, transform.gridPosition,
-      follow.entity.getComponent(Transform)!.gridPosition,
-    );
+      const path = astar(
+        collsionMap!,
+        transform.gridPosition,
+        follow.entity.getComponent(Transform)!.gridPosition
+      );
 
-    movePath.path = convertPathfindingPathToPositions(
-      path.slice(1).slice(0, -1)
-    );
-  });
-})
-.build();
+      movePath.path = convertPathfindingPathToPositions(
+        path.slice(1).slice(0, -1)
+      );
+    });
+  })
+  .build();

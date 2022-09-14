@@ -7,7 +7,9 @@ import {
 } from '../../__tests__/utils';
 import { Transform } from '../../components/Transform';
 
-import { byClosestDistance, isInRange } from './transform';
+import { MovePositionDirect } from './../../components/movement/MovePositionDirect';
+import { CELL_SIZE } from './../../constants';
+import { byClosestDistance, isInRange, getOccupiedCells } from './transform';
 
 let world: IWorld;
 let createRandomEntities: CreateRandomEntities;
@@ -67,7 +69,8 @@ describe('isInRange', () => {
 });
 
 describe('byClosestDistance', () => {
-  it('should keep order sort when targetEntity has no TransformComponent', () => {
+  it(`should keep order sort
+    when targetEntity has no TransformComponent`, () => {
     const targetEntity = world.buildEntity().build();
 
     const entities = createRandomEntities();
@@ -109,5 +112,38 @@ describe('byClosestDistance', () => {
     );
 
     expect(sorted[0]).toBe(closestEntity);
+  });
+});
+
+describe('getOccupiedCells', () => {
+  it(`should return empty array
+    when the entity has no Transform component`, () => {
+    const entity = world.buildEntity().build();
+
+    expect(getOccupiedCells(entity)).toHaveLength(0);
+  });
+
+  it(`should return transform location
+    when the entity has Transform component`, () => {
+    const entity = world
+      .buildEntity()
+      .with(new Transform(new Vector2(1 * CELL_SIZE, 2 * CELL_SIZE)))
+      .build();
+
+    const cells = getOccupiedCells(entity);
+    expect(cells).toHaveLength(1);
+    expect(cells[0]).toEqual({ x: 1, y: 2 });
+  });
+
+  it('should return MovePositionDirect location if set', () => {
+    const entity = world
+      .buildEntity()
+      .with(new Transform(new Vector2(1 * CELL_SIZE, 2 * CELL_SIZE)))
+      .with(new MovePositionDirect(new Vector2(2 * CELL_SIZE, 2 * CELL_SIZE)))
+      .build();
+
+    const cells = getOccupiedCells(entity);
+    expect(cells).toHaveLength(2);
+    expect(cells[1]).toEqual({ x: 2, y: 2 });
   });
 });
