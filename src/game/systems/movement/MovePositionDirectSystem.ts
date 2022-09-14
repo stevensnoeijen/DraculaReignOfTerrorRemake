@@ -39,10 +39,13 @@ const moveByMoveVelocity = (
     return;
   }
 
-  moveVelocity.velocity = Vector2.subtracts(
-    movePositionDirect.position!,
-    transform.position
-  ).normalized();
+  moveVelocity.velocity = Vector2.multiplies(
+    Vector2.subtracts(
+      movePositionDirect.position!,
+      transform.position
+    ).normalized(),
+    moveVelocity.moveSpeed
+  );
 };
 
 export const MovePositionDirectSystem = createSystem({
@@ -57,9 +60,9 @@ export const MovePositionDirectSystem = createSystem({
   }),
 })
   .withRunFunction(({ idled, query }) => {
-    query.execute(
+    return query.execute(
       ({ entity, movePositionDirect, moveVelocity, movePath, transform }) => {
-        moveByMoveVelocity(
+        return moveByMoveVelocity(
           entity,
           movePositionDirect,
           moveVelocity,

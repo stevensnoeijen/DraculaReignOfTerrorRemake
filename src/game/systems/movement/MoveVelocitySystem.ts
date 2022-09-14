@@ -1,16 +1,20 @@
-
 import { createSystem, queryComponents, Read, Write } from 'sim-ecs';
 
 import { Transform } from '../../components/Transform';
 import { MoveVelocity } from '../../components/movement/MoveVelocity';
 
+import { GameTime } from './../../GameTime';
+
+import { Vector2 } from '~/game/math/Vector2';
+
 const updateTransform = (transform: Transform, moveVelocity: MoveVelocity) => {
-  if (moveVelocity.velocity == null) {
+  if (moveVelocity.velocity.equals(Vector2.ZERO)) {
     return;
   }
 
-  transform.position.x = transform.position.x + moveVelocity.velocity.x;
-  transform.position.y = transform.position.y + moveVelocity.velocity.y;
+  const frameRate = 1 / GameTime.delta;
+  transform.position.x += moveVelocity.velocity.x * frameRate;
+  transform.position.y += moveVelocity.velocity.y * frameRate;
 };
 
 export const MoveVelocitySystem = createSystem({
@@ -19,11 +23,9 @@ export const MoveVelocitySystem = createSystem({
     moveVelocity: Read(MoveVelocity),
   }),
 })
-.withRunFunction(({
-  query
-}) => {
-  query.execute(({ transform, moveVelocity }) => {
-    updateTransform(transform, moveVelocity);
-  });
-})
-.build();
+  .withRunFunction(({ query }) => {
+    return query.execute(({ transform, moveVelocity }) => {
+      return updateTransform(transform, moveVelocity);
+    });
+  })
+  .build();

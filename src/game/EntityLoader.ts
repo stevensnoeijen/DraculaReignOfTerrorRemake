@@ -91,7 +91,7 @@ export class EntityLoader {
       .with(new SpriteRender(sprite), size)
       .with(animations)
       .with(new Collision(size))
-      .with(new MoveVelocity(50))
+      .with(new MoveVelocity(8))
       .with(MovePositionDirect)
       .with(new MovePath([]))
       .with(new Selectable(false))
