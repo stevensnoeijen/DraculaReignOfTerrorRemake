@@ -26,7 +26,7 @@ export class Engine {
       .add('objects', 'assets/objects.json')
       .add('unit-spritesheet', 'assets/unit-spritesheet.json')
       .add('animation-models', 'assets/animation-models.json')
-      .add('sounds', '/assets/sounds.json');
+      .add('sounds', 'assets/sounds.json');
   }
 
   public async run() {
