@@ -23,6 +23,7 @@ import {
   AnimatorSystem,
   LoadScenarioSystem,
   SensorySystem,
+  CombatSystem,
 } from '../systems';
 
 export const gameSchedule: ISyncPointPrefab = {
@@ -38,13 +39,10 @@ export const gameSchedule: ISyncPointPrefab = {
       BehaviorTreeSystem,
       TargetSystem,
       FollowSystem,
-      UnitStateSystem
+      CombatSystem,
+      UnitStateSystem,
     ],
-    [
-      MovePathSystem,
-      MovePositionDirectSystem,
-      MoveVelocitySystem,
-    ],
+    [MovePathSystem, MovePositionDirectSystem, MoveVelocitySystem],
     [AnimatorSystem, SoundsSystem],
     [
       MapRenderSystem,
