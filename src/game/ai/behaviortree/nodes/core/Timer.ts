@@ -1,3 +1,4 @@
+import { IValue } from '../../values/IValue';
 import { Node, State } from '../Node';
 
 import { GameTime } from './../../../../GameTime';
@@ -5,18 +6,18 @@ import { GameTime } from './../../../../GameTime';
 type ElapsedCallback = () => void;
 
 type TimerProps = {
-  delay: number;
+  delay: IValue<number>;
   /**
    * Time already passed.
    * So that the timer is executed earlier as usual or later (negative value).
    */
-  passedTime?: number;
+  passedTime?: IValue<number>;
   elapsedCallback?: ElapsedCallback | null;
   execute: Node;
 };
 
 export class Timer extends Node {
-  public readonly delay: number;
+  public readonly delay: IValue<number>;
   public readonly elapsedCallback: ElapsedCallback | null;
   private _countdownTimer: number;
 
@@ -24,7 +25,7 @@ export class Timer extends Node {
     super([props.execute]);
 
     this.delay = props.delay;
-    this._countdownTimer = props.passedTime ?? this.delay;
+    this._countdownTimer = props.passedTime?.value ?? this.delay.value;
     this.elapsedCallback = props.elapsedCallback ?? null;
   }
 
@@ -37,7 +38,7 @@ export class Timer extends Node {
   }
 
   public reset(): void {
-    this._countdownTimer = this.delay;
+    this._countdownTimer = this.delay.value;
   }
 
   public evaluate(): State {

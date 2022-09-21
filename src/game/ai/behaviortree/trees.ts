@@ -16,6 +16,7 @@ import {
   SendEvent,
 } from './nodes/entity';
 import { Tree } from './Tree';
+import { Value } from './values/Value';
 
 import { AttackStarted, Hit } from '~/game/events';
 import { Combat } from '~/game/components';
@@ -46,8 +47,9 @@ const attackEnemyWhenInAttackRange = (entity: IEntity) =>
         new SendEvent(AttackStarted),
       ]),
       new Timer({
-        delay:
-          entity.getComponent(Combat)?.attackCooldown ?? DEFAULT_ATTACK_DELAY,
+        delay: Value.static(
+          entity.getComponent(Combat)?.attackCooldown ?? DEFAULT_ATTACK_DELAY
+        ),
         execute: new Sequence([new Attack(), new SendEvent(Hit)]),
       }),
     ]),
@@ -58,8 +60,8 @@ const setFollowWhenNotControlledByPlayer = () =>
 
 const wander = () =>
   new Timer({
-    delay: 5000,
-    passedTime: Math.random() * 5000 - 5000,
+    delay: Value.randomNumber(5000, 30000, true),
+    passedTime: Value.randomNumber(-5000, 0, true),
     execute: new Sequence([new MoveToRandomDirection()]),
   });
 
