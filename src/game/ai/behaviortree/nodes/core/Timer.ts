@@ -6,6 +6,11 @@ type ElapsedCallback = () => void;
 
 type TimerProps = {
   delay: number;
+  /**
+   * Time already passed.
+   * So that the timer is executed earlier as usual or later (negative value).
+   */
+  passedTime?: number;
   elapsedCallback?: ElapsedCallback | null;
   execute: Node;
 };
@@ -19,7 +24,7 @@ export class Timer extends Node {
     super([props.execute]);
 
     this.delay = props.delay;
-    this._countdownTimer = this.delay;
+    this._countdownTimer = props.passedTime ?? this.delay;
     this.elapsedCallback = props.elapsedCallback ?? null;
   }
 

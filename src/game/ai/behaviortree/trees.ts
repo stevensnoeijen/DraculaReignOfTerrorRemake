@@ -1,5 +1,6 @@
 import { IEntity } from 'sim-ecs';
 
+import { MoveToRandomDirection } from './nodes/entity/MoveToRandomDirection';
 import { IsControlledBy } from './nodes/entity/IsControlledBy';
 import { Selector, Timer, Inverter, Sequence, Parallel } from './nodes/core';
 import {
@@ -55,6 +56,13 @@ const attackEnemyWhenInAttackRange = (entity: IEntity) =>
 const setFollowWhenNotControlledByPlayer = () =>
   new Sequence([new Inverter(new IsControlledBy('player')), new SetFollow()]);
 
+const wander = () =>
+  new Timer({
+    delay: 5000,
+    passedTime: Math.random() * 5000 - 5000,
+    execute: new Sequence([new MoveToRandomDirection()]),
+  });
+
 export const createSwordsmanTree = (entity: IEntity) => {
   const tree = new Tree(
     new Selector([
@@ -62,6 +70,7 @@ export const createSwordsmanTree = (entity: IEntity) => {
       unsetTargetWhenMoving(),
       attackEnemyWhenInAttackRange(entity),
       setFollowWhenNotControlledByPlayer(),
+      wander(),
     ])
   );
   tree.root.setData('entity', entity);
