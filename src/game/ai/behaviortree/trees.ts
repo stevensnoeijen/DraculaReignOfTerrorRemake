@@ -21,41 +21,47 @@ import { Combat } from '~/game/components';
 
 const DEFAULT_ATTACK_DELAY = 1000;
 
+const targetEnemyInAggroRange = () =>
+  new Sequence([
+    new Inverter(new HasTarget()),
+    new IsEnemyInAggroRange(),
+    new SetTarget(),
+  ]);
+
+const unsetTargetWhenMoving = () =>
+  new Sequence([
+    new IsMoving(),
+    new Inverter(new IsEnemyInAggroRange()),
+    new UnsetTarget(),
+  ]);
+
+const attackEnemyWhenInAttackRange = (entity: IEntity) =>
+  new Sequence([
+    new Inverter(new IsMoving()),
+    new IsEnemyInAttackRange(),
+    new Parallel([
+      new Sequence([
+        new Inverter(new IsUnitState('attack')),
+        new SendEvent(AttackStarted),
+      ]),
+      new Timer({
+        delay:
+          entity.getComponent(Combat)?.attackCooldown ?? DEFAULT_ATTACK_DELAY,
+        execute: new Sequence([new Attack(), new SendEvent(Hit)]),
+      }),
+    ]),
+  ]);
+
+const setFollowWhenNotControlledByPlayer = () =>
+  new Sequence([new Inverter(new IsControlledBy('player')), new SetFollow()]);
+
 export const createSwordsmanTree = (entity: IEntity) => {
   const tree = new Tree(
     new Selector([
-      new Sequence([
-        new Inverter(new HasTarget()),
-        new IsEnemyInAggroRange(),
-        new SetTarget(),
-      ]),
-      new Sequence([
-        new IsMoving(),
-        new Inverter(new IsEnemyInAggroRange()),
-        new UnsetTarget(),
-      ]),
-      new Selector([
-        new Sequence([
-          new Inverter(new IsMoving()),
-          new IsEnemyInAttackRange(),
-          new Parallel([
-            new Sequence([
-              new Inverter(new IsUnitState('attack')),
-              new SendEvent(AttackStarted),
-            ]),
-            new Timer({
-              delay:
-                entity.getComponent(Combat)?.attackCooldown ??
-                DEFAULT_ATTACK_DELAY,
-              execute: new Sequence([new Attack(), new SendEvent(Hit)]),
-            }),
-          ]),
-        ]),
-        new Sequence([
-          new Inverter(new IsControlledBy('player')),
-          new SetFollow(),
-        ]),
-      ]),
+      targetEnemyInAggroRange(),
+      unsetTargetWhenMoving(),
+      attackEnemyWhenInAttackRange(entity),
+      setFollowWhenNotControlledByPlayer(),
     ])
   );
   tree.root.setData('entity', entity);
