@@ -1,3 +1,4 @@
+import { Value } from '../../values/Value';
 import { State } from '../Node';
 
 import { GameTime } from './../../../../GameTime';
@@ -7,7 +8,7 @@ import { Timer } from './Timer';
 describe('Timer', () => {
   const success = new Always(State.SUCCESS);
   const successProps = {
-    delay: 1000,
+    delay: Value.static(1000),
     execute: success,
   };
 
@@ -19,7 +20,7 @@ describe('Timer', () => {
         elapsedCallback,
       });
 
-      expect(timer.delay).toBe(1000);
+      expect(timer.delay.value).toBe(1000);
       expect(timer.countdownTimer).toBe(1000);
       expect(timer.elapsedCallback).toEqual(elapsedCallback);
       expect(timer.children).toHaveLength(1);
@@ -27,11 +28,11 @@ describe('Timer', () => {
 
     it('should set defaults', () => {
       const timer = new Timer({
-        delay: 1000,
+        delay: Value.static(1000),
         execute: success,
       });
 
-      expect(timer.delay).toBe(1000);
+      expect(timer.delay.value).toBe(1000);
       expect(timer.countdownTimer).toBe(1000);
       expect(timer.elapsedCallback).toBeNull();
     });
@@ -82,7 +83,7 @@ describe('Timer', () => {
   describe('evaluate', () => {
     it('should be running and time subtracted when called', () => {
       const timer = new Timer({
-        ...successProps
+        ...successProps,
       });
       GameTime.delta = 100;
 
@@ -92,7 +93,7 @@ describe('Timer', () => {
 
     it('should evaluate first child when time is elapsed', () => {
       const timer = new Timer({
-        ...successProps
+        ...successProps,
       });
       GameTime.delta = 1000;
 
@@ -109,7 +110,7 @@ describe('Timer', () => {
 
       timer.evaluate();
 
-      expect(elapsedCallback).toBeCalled();
+      expect(elapsedCallback).toHaveBeenCalled();
     });
 
     it('should set countdownTimer when evalated', () => {
