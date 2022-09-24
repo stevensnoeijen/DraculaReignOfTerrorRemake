@@ -59,11 +59,14 @@ const setFollowWhenNotControlledByPlayer = () =>
   new Sequence([new Inverter(new IsControlledBy('player')), new SetFollow()]);
 
 const wander = () =>
-  new Timer({
-    delay: Value.randomNumber(5000, 30000, true),
-    passedTime: Value.randomNumber(-5000, 0, true),
-    execute: new Sequence([new MoveToRandomDirection()]),
-  });
+  new Sequence([
+    new IsUnitState('idle'),
+    new Timer({
+      delay: Value.randomNumber(5000, 30000, true),
+      passedTime: Value.randomNumber(-5000, 0, true),
+      execute: new Sequence([new MoveToRandomDirection()]),
+    }),
+  ]);
 
 export const createSwordsmanTree = (entity: IEntity) => {
   const tree = new Tree(
