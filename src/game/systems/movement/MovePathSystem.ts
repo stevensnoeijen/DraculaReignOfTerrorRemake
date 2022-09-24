@@ -81,15 +81,15 @@ const updateMovePosition = (
   movePath.path.shift();
 
   movePositionDirect.position = cellPositionToVector(nextCell.x, nextCell.y);
-  const transformComponent = entity.getComponent(Transform)!;
-  if (!transformComponent.position.equals(movePositionDirect.position)) {
-    transformComponent.rotation = Vector2.angle(
-      transformComponent.position,
+  const transform = entity.getComponent(Transform)!;
+  if (!transform.position.equals(movePositionDirect.position)) {
+    transform.rotation = Vector2.angle(
+      transform.position,
       movePositionDirect.position
     );
   }
 
-  if (!transformComponent.position.equals(Vector2.ZERO))
+  if (!transform.position.equals(Vector2.ZERO))
     moved.publish(new Moved(entity));
 };
 

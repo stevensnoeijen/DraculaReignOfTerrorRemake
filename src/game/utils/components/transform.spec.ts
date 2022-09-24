@@ -70,7 +70,7 @@ describe('isInRange', () => {
 
 describe('byClosestDistance', () => {
   it(`should keep order sort
-    when targetEntity has no TransformComponent`, () => {
+    when targetEntity has no transform-component`, () => {
     const targetEntity = world.buildEntity().build();
 
     const entities = createRandomEntities();
@@ -79,7 +79,7 @@ describe('byClosestDistance', () => {
     expect(sorted).toEqual(entities);
   });
 
-  it('should sort entities without TransformComponent to the back', () => {
+  it('should sort entities without transform-component to the back', () => {
     const targetEntity = world
       .buildEntity()
       .with(new Transform(Vector2.ZERO))
