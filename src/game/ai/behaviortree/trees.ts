@@ -1,6 +1,6 @@
 import { IEntity } from 'sim-ecs';
 
-import { MoveToRandomDirection } from './nodes/entity/MoveToRandomDirection';
+import { RotateToRandomDirection } from './nodes/entity/RotateToRandomDirection';
 import { IsControlledBy } from './nodes/entity/IsControlledBy';
 import { Selector, Timer, Inverter, Sequence, Parallel } from './nodes/core';
 import {
@@ -17,6 +17,8 @@ import {
 } from './nodes/entity';
 import { Tree } from './Tree';
 import { Value } from './values/Value';
+import { RandomSelector } from './nodes/core/RandomSelector';
+import { MoveToRandomDirection } from './nodes/entity/MoveToRandomDirection';
 
 import { AttackStarted, Hit } from '~/game/events';
 import { Combat } from '~/game/components';
@@ -64,7 +66,10 @@ const wander = () =>
     new Timer({
       delay: Value.randomNumber(5000, 30000, true),
       passedTime: Value.randomNumber(-5000, 0, true),
-      execute: new Sequence([new MoveToRandomDirection()]),
+      execute: new RandomSelector([
+        new MoveToRandomDirection(),
+        new RotateToRandomDirection(),
+      ]),
     }),
   ]);
 

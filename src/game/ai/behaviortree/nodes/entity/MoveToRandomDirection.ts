@@ -24,7 +24,6 @@ export class MoveToRandomDirection extends EntityNode {
 
     if (transform == null || movePath == null) return this.failure();
 
-    // move to right
     movePath.path = [randomDirection(transform)];
 
     return this.success();
