@@ -1,22 +1,16 @@
-import { buildWorld, IEntity } from 'sim-ecs';
+import { buildWorld } from 'sim-ecs';
 
-
-import { Target } from '../../../../components/ai/Target';
 import { State } from '../Node';
 
 import { HasTarget } from './HasTarget';
-
 
 describe('HasTarget', () => {
   describe('evaluate', () => {
     const world = buildWorld().build();
 
-    const createEntity = (target: IEntity | null = null) =>
-      world.buildEntity()
-        .with(new Target(target))
-        .build();
+    const createEntity = () => world.buildEntity().build();
 
-    it('should return failure when entity has no TargetComponent', () => {
+    it('should return failure when entity has no target', () => {
       const entity = world.buildEntity().build();
 
       const hasTarget = new HasTarget();
@@ -25,8 +19,8 @@ describe('HasTarget', () => {
       expect(hasTarget.evaluate()).toBe(State.FAILURE);
     });
 
-    it('should return failure when entity has no target set in TargetComponent', () => {
-      const entity = createEntity(null);
+    it('should return failure when entity has no target', () => {
+      const entity = createEntity();
 
       const hasTarget = new HasTarget();
       hasTarget.setData('entity', entity);
@@ -34,11 +28,13 @@ describe('HasTarget', () => {
       expect(hasTarget.evaluate()).toBe(State.FAILURE);
     });
 
-    it('should return success when entity has target set in TargetComponent', () => {
-      const entity = createEntity(world.createEntity());
+    it('should return success when entity has target', () => {
+      const entity = createEntity();
+      const target = world.createEntity();
 
       const hasTarget = new HasTarget();
       hasTarget.setData('entity', entity);
+      hasTarget.setData('target', target);
 
       expect(hasTarget.evaluate()).toBe(State.SUCCESS);
     });
