@@ -1,9 +1,9 @@
 import { IValue } from '../../values/IValue';
 import { Node, State } from '../Node';
 
-import { GameTime } from './../../../../GameTime';
+import { Timer as DeltaTimer } from '~/game/utils/Timer';
 
-type ElapsedCallback = () => void;
+type OnElapsed = () => void;
 
 type TimerProps = {
   delay: IValue<number>;
@@ -11,55 +11,54 @@ type TimerProps = {
    * Time already passed.
    * So that the timer is executed earlier as usual or later (negative value).
    */
-  passedTime?: IValue<number>;
-  elapsedCallback?: ElapsedCallback | null;
+  elapsedTime?: IValue<number>;
+  onElapsed?: OnElapsed | null;
   execute: Node;
 };
 
 export class Timer extends Node {
-  public readonly delay: IValue<number>;
-  public readonly elapsedCallback: ElapsedCallback | null;
-  private _countdownTimer: number;
+  private _deltaTimer: DeltaTimer;
+  private delay: IValue<number>;
+  private onElapsed: OnElapsed | null;
 
   constructor(props: TimerProps) {
     super([props.execute]);
-
     this.delay = props.delay;
-    this._countdownTimer = props.passedTime?.value ?? this.delay.value;
-    this.elapsedCallback = props.elapsedCallback ?? null;
+    this.onElapsed = props.onElapsed ?? null;
+
+    this._deltaTimer = new DeltaTimer({
+      delay: props.delay.value,
+      elapsedTime: props.elapsedTime?.value,
+      onElapsed: props.onElapsed ?? null,
+    });
   }
 
-  public get countdownTimer() {
-    return this._countdownTimer;
-  }
-
-  public isElapsed(): boolean {
-    return this.countdownTimer <= 0;
-  }
-
-  public reset(): void {
-    this._countdownTimer = this.delay.value;
+  public get deltaTimer() {
+    return this._deltaTimer;
   }
 
   public evaluate(): State {
-    if (this.isElapsed()) {
-      this.reset();
-    }
+    this.deltaTimer.update();
 
     if (!this.hasChildren()) {
       return this.failure();
     }
-    this._countdownTimer -= GameTime.delta;
 
-    if (this.isElapsed()) {
+    if (this.deltaTimer.isElapsed()) {
       this.state = this.children[0].evaluate();
-      if (this.elapsedCallback) {
-        this.elapsedCallback();
-      }
+      this.reset();
 
       return this.state;
     } else {
       return this.running();
     }
+  }
+
+  private reset(): void {
+    this._deltaTimer = new DeltaTimer({
+      delay: this.delay.value,
+      elapsedTime: this.deltaTimer.expiredTime,
+      onElapsed: this.onElapsed,
+    });
   }
 }

@@ -65,7 +65,7 @@ const wander = () =>
     new IsUnitState('idle'),
     new Timer({
       delay: Value.randomNumber(5000, 30000, true),
-      passedTime: Value.randomNumber(-5000, 0, true),
+      elapsedTime: Value.randomNumber(0, 5000, true),
       execute: new RandomSelector([
         new MoveToRandomDirection(),
         new RotateToRandomDirection(),
