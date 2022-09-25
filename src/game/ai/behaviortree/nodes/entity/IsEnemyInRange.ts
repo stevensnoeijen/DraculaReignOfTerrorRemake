@@ -25,12 +25,9 @@ export class IsEnemyInRange<
     ] as unknown as number;
 
     const entitiesInRange = this.getEnemiesInRange(range);
-    if (entitiesInRange.length === 0) {
-      this.root.setData('enemy', null);
-      return this.failure();
-    }
+    if (entitiesInRange.length === 0) return this.failure();
 
-    this.root.setData('enemy', entitiesInRange[0]);
+    this.parent!.setData('target', entitiesInRange[0]);
 
     return this.success();
   }

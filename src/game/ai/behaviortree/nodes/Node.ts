@@ -64,15 +64,11 @@ export class Node {
   }
 
   public hasData(key: string): boolean {
-    return this.getData(key) != null;
+    return this.data.get(key) != null;
   }
 
   public hasChildren(): boolean {
     return this.children.length > 0;
-  }
-
-  public get root(): Node {
-    return this.parent?.root ?? this;
   }
 
   protected running(): State.RUNNING {

@@ -1,18 +1,23 @@
+
 import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
+import { Target } from '../../../../components/ai/Target';
 
 import { EntityNode } from './EntityNode';
 
+
 export class SetTarget extends EntityNode {
   protected evaluateByEntity(entity: IEntity): State {
-    const enemy = this.getData('enemy') as IEntity | null;
+    const targetEntity = this.getData('target') as IEntity | null;
 
-    if (enemy == null) {
+    if (targetEntity == null || !entity.hasComponent(Target)) {
       return this.failure();
     }
 
-    this.root.setData('target', enemy);
+    const targetComponent = entity.getComponent(Target)!;
+    targetComponent.entity = targetEntity;
+
     return this.success();
   }
 }
