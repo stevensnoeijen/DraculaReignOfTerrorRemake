@@ -21,7 +21,7 @@ describe('Combat', () => {
       const combat = new Combat(0, 0, 10, 0);
       combat.target = enemy;
 
-      combat.attack();
+      combat.update();
 
       expect(enemy.getComponent(Health)!.points).toEqual(90);
     });
