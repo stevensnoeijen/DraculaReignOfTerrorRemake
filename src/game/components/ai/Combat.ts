@@ -2,11 +2,11 @@ import { IEntity } from 'sim-ecs';
 
 import { Health } from '../Health';
 
-import { Timer } from '~/game/utils/Timer';
+import { Cooldown } from './../../utils/Cooldown';
 
 export class Combat {
   public target: IEntity | null = null;
-  public cooldown: Timer;
+  private readonly cooldown: Cooldown;
 
   constructor(
     public readonly aggroRange: number,
@@ -14,12 +14,18 @@ export class Combat {
     public readonly attackDamage: number,
     public readonly attackCooldown: number
   ) {
-    this.cooldown = new Timer({
-      delay: attackCooldown,
-    });
+    this.cooldown = new Cooldown(attackCooldown, () => this.attack());
   }
 
-  attack(): void {
+  public update() {
+    this.cooldown.update();
+  }
+
+  public reset() {
+    this.cooldown.reset();
+  }
+
+  private attack(): void {
     const enemyHealthComponent = this.target!.getComponent(Health)!;
     enemyHealthComponent.takeHit(this.attackDamage);
   }

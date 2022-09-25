@@ -43,7 +43,7 @@ describe('Timer', () => {
         ...successProps,
       });
 
-      timer.reset();
+      timer.restart();
 
       expect(timer.countdown).toBe(successProps.delay);
     });
@@ -55,7 +55,7 @@ describe('Timer', () => {
       GameTime.delta = 1100;
       timer.update();
 
-      timer.reset();
+      timer.restart();
 
       expect(timer.countdown).toBe(900);
     });

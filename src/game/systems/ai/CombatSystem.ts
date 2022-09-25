@@ -31,14 +31,11 @@ const doCombat = (combat: Combat) => {
   if (combat.target == null) return;
   if (!isAlive(combat.target)) {
     combat.target = null;
+    combat.reset();
     return;
   }
 
-  combat.cooldown.update();
-  if (combat.cooldown.isElapsed()) {
-    combat.attack();
-    combat.cooldown.reset();
-  }
+  combat.update();
 };
 
 export const CombatSystem = createSystem({
@@ -51,7 +48,7 @@ export const CombatSystem = createSystem({
   .withRunFunction(({ query }) => {
     return query.execute(({ target, transform, combat }) => {
       updateRotation(target, transform);
-      doCombat(combat);
+      doCombat(combat as Combat);
     });
   })
   .build();

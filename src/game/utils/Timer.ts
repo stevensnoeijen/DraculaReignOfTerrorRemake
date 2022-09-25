@@ -49,7 +49,17 @@ export class Timer {
     }
   }
 
-  public reset() {
+  /**
+   * By resetting {@link Timer#countdown} minus {@link Timer#expiredTime}
+   */
+  public restart() {
     this._countdown = this.delay - this.expiredTime;
+  }
+
+  /**
+   * Fully reset timer with full countdown.
+   */
+  public reset() {
+    this._countdown = this.delay;
   }
 }

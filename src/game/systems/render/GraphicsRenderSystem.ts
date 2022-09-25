@@ -151,7 +151,11 @@ export const GraphicsRenderSystem = createSystem({
           }
 
           if (showDebugAggro && combat != null) {
-            drawAggroRadius(combat, graphicsRender.graphics, team ?? null);
+            drawAggroRadius(
+              combat as Combat,
+              graphicsRender.graphics,
+              team ?? null
+            );
           }
         } else {
           graphicsRender.graphics.clear();
