@@ -5,12 +5,14 @@ import { Combat } from '../../../../components/ai/Combat';
 
 import { EntityNode } from './EntityNode';
 
+import { Target } from '~/game/components';
+
 export class Attack extends EntityNode {
   protected evaluateByEntity(entity: IEntity): State {
     const combat = entity.getComponent(Combat)!;
-    const target = this.getData('target') as IEntity;
+    const target = entity.getComponent(Target)!;
 
-    combat.attack(target);
+    combat.attack(target.entity!);
 
     return this.success();
   }

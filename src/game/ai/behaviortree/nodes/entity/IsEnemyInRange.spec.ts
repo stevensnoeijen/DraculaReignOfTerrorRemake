@@ -18,23 +18,20 @@ describe('IsEnemyInRange', () => {
 
     beforeEach(() => {
       world = buildWorld().build();
-
     });
 
     it('should success set target when there is an enemy within range', () => {
-      const entityInRange = world.buildEntity()
-          .with(Team.CPU)
-          .with(new Transform(new Vector2(0, 0)))
-          .build();
+      const entityInRange = world
+        .buildEntity()
+        .with(Team.CPU)
+        .with(new Transform(new Vector2(0, 0)))
+        .build();
 
       const sensor = new Sensory(
-        new Sensor(
-          48, [
-            new Modality(entityInRange, 16),
-          ]
-        )
+        new Sensor(48, [new Modality(entityInRange, 16)])
       );
-      const entity = world.buildEntity()
+      const entity = world
+        .buildEntity()
         .with(Team.PLAYER)
         .with(new Transform(Vector2.ZERO))
         .with(new Combat(16, 0, 0, 0))
@@ -47,8 +44,7 @@ describe('IsEnemyInRange', () => {
       parent.attach(node);
 
       expect(node.evaluate()).toBe(State.SUCCESS);
-      expect(parent.getData('target')).not.toBeNull();
+      expect(parent.getData('enemy')).not.toBeNull();
     });
-
   });
 });
