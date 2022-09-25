@@ -23,7 +23,7 @@ describe('Attack', () => {
       attack.setData('entity', entity);
 
       expect(attack.evaluate()).toBe(State.SUCCESS);
-      expect(entity.getComponent(Combat)!.attacking).toEqual(target);
+      expect(entity.getComponent(Combat)!.target).toEqual(target);
     });
 
     it('should fail if entity has no combat-component', () => {

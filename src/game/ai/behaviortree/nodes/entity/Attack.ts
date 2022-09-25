@@ -14,7 +14,7 @@ export class Attack extends EntityNode {
 
     if (combat == null || target?.entity == null) return this.failure();
 
-    combat.attacking = target.entity;
+    combat.target = target.entity;
 
     return this.success();
   }

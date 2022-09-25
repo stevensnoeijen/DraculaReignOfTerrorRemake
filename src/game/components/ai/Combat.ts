@@ -5,7 +5,7 @@ import { Health } from '../Health';
 import { Timer } from '~/game/utils/Timer';
 
 export class Combat {
-  public attacking: IEntity | null = null;
+  public target: IEntity | null = null;
   public cooldown: Timer;
 
   constructor(
@@ -20,7 +20,7 @@ export class Combat {
   }
 
   attack(): void {
-    const enemyHealthComponent = this.attacking!.getComponent(Health)!;
+    const enemyHealthComponent = this.target!.getComponent(Health)!;
     enemyHealthComponent.takeHit(this.attackDamage);
   }
 }

@@ -28,9 +28,9 @@ const updateRotation = (target: Target, transform: Transform) => {
 };
 
 const doCombat = (combat: Combat) => {
-  if (combat.attacking == null) return;
-  if (!isAlive(combat.attacking)) {
-    combat.attacking = null;
+  if (combat.target == null) return;
+  if (!isAlive(combat.target)) {
+    combat.target = null;
     return;
   }
 

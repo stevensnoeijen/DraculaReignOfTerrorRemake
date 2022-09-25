@@ -19,7 +19,7 @@ describe('Combat', () => {
         )
         .build();
       const combat = new Combat(0, 0, 10, 0);
-      combat.attacking = enemy;
+      combat.target = enemy;
 
       combat.attack();
 
