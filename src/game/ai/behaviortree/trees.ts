@@ -36,7 +36,7 @@ const unsetTargetWhenMoving = () =>
     new UnsetTarget(),
   ]);
 
-const attackEnemyWhenInAttackRange = (entity: IEntity) =>
+const attackEnemyWhenInAttackRange = () =>
   new Sequence([
     new Inverter(new IsMoving()),
     new IsEnemyInAttackRange(),
@@ -70,7 +70,7 @@ export const createSwordsmanTree = (entity: IEntity) => {
     new Selector([
       targetEnemyInAggroRange(),
       unsetTargetWhenMoving(),
-      attackEnemyWhenInAttackRange(entity),
+      attackEnemyWhenInAttackRange(),
       setFollowWhenNotControlledByPlayer(),
       wander(),
     ])

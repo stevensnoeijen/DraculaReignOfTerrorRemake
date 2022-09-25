@@ -48,7 +48,8 @@ describe('Timer', () => {
       expect(timer.countdown).toBe(successProps.delay);
     });
 
-    it('should set countdown to initial value - expiredTime when existing', () => {
+    it(`should set countdown to
+      initial value - expiredTime when existing`, () => {
       const timer = new Timer({
         ...successProps,
       });
