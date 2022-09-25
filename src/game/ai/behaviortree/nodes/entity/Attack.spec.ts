@@ -34,5 +34,36 @@ describe('Attack', () => {
       expect(attack.evaluate()).toBe(State.SUCCESS);
       expect(target.getComponent(Health)!.points).toEqual(90);
     });
+
+    it('should fail if entity has no combat-component', () => {
+      const entity = world.buildEntity().with(new Target()).build();
+
+      const attack = new Attack();
+      attack.setData('entity', entity);
+
+      expect(attack.evaluate()).toBe(State.FAILURE);
+    });
+
+    it('should fail if entity has no target-component', () => {
+      const entity = world.buildEntity().with(new Combat(0, 0, 10, 0)).build();
+
+      const attack = new Attack();
+      attack.setData('entity', entity);
+
+      expect(attack.evaluate()).toBe(State.FAILURE);
+    });
+
+    it('should fail if entity has no target', () => {
+      const entity = world
+        .buildEntity()
+        .with(new Combat(0, 0, 10, 0))
+        .with(new Target())
+        .build();
+
+      const attack = new Attack();
+      attack.setData('entity', entity);
+
+      expect(attack.evaluate()).toBe(State.FAILURE);
+    });
   });
 });

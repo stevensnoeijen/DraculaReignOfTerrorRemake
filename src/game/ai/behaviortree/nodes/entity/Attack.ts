@@ -9,10 +9,12 @@ import { Target } from '~/game/components';
 
 export class Attack extends EntityNode {
   protected evaluateByEntity(entity: IEntity): State {
-    const combat = entity.getComponent(Combat)!;
-    const target = entity.getComponent(Target)!;
+    const combat = entity.getComponent(Combat);
+    const target = entity.getComponent(Target);
 
-    combat.attack(target.entity!);
+    if (combat == null || target?.entity == null) return this.failure();
+
+    combat.attack(target.entity);
 
     return this.success();
   }
