@@ -3,6 +3,8 @@ import { default as generateEllerMaze } from 'generate-maze';
 
 import { CELL_SIZE } from '../constants';
 
+import { Grid } from './types';
+
 type Size = { width: number; height: number };
 
 export const getGridSizeByScreen = (app: PIXI.Application): Size => {
@@ -12,10 +14,20 @@ export const getGridSizeByScreen = (app: PIXI.Application): Size => {
   };
 };
 
-export const createEmptyGrid = (size: Size): number[][] => {
+export const createEmptyGrid = (size: Size): Grid => {
   return Array.from({ length: size.height }, () =>
     Array.from({ length: size.width }, () => 0)
   );
+};
+
+export const addSurroundingCollision = (grid: Grid) => {
+  grid[0] = grid[0].map(() => 1);
+  grid[grid.length - 1] = grid[grid.length - 1].map(() => 1);
+
+  for (const row of grid) {
+    row[0] = 1;
+    row[row.length - 1] = 1;
+  }
 };
 
 type MazeObject = {
@@ -27,7 +39,7 @@ type MazeObject = {
   right: boolean;
 };
 
-export const generateMaze = (size: Size): number[][] => {
+export const generateMaze = (size: Size): Grid => {
   const ellerMaze = generateEllerMaze(
     Math.floor(size.width / 2),
     Math.floor(size.height / 2),
@@ -38,7 +50,7 @@ export const generateMaze = (size: Size): number[][] => {
   return convertEllerMazeToGrid(ellerMaze);
 };
 
-const convertEllerMazeToGrid = (ellerMaze: MazeObject[][]): number[][] => {
+const convertEllerMazeToGrid = (ellerMaze: MazeObject[][]): Grid => {
   const map: number[][] = [];
   for (const row of ellerMaze) {
     map[row[0].y * 2] = [];

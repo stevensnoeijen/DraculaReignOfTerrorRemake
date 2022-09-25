@@ -6,13 +6,12 @@ import { Target } from '../../../../components/ai/Target';
 
 import { EntityNode } from './EntityNode';
 
-
 export class SetFollow extends EntityNode {
   protected evaluateByEntity(entity: IEntity): State {
-    const target = entity.getComponent(Target);
     const follow = entity.getComponent(Follow);
+    const target = entity.getComponent(Target);
 
-    if (target == null || follow == null) {
+    if (follow == null || target?.entity == null) {
       return this.failure();
     }
 

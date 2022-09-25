@@ -5,6 +5,5 @@ export * from './AttackStopped';
 export * from './Commanded';
 export * from './Died';
 export * from './EntityEvent';
-export * from './Hit';
 export * from './Idled';
 export * from './Moved';

@@ -4,7 +4,11 @@ import { UNIT_SWORDSMEN } from '../data/constants';
 import { Team } from '../components/Team';
 
 import { EntityLoader } from './../EntityLoader';
-import { createEmptyGrid, getGridSizeByScreen } from './utils';
+import {
+  createEmptyGrid,
+  getGridSizeByScreen,
+  addSurroundingCollision,
+} from './utils';
 import { Scenario } from './Scenario';
 
 export class BehaviorTreeScenario extends Scenario {
@@ -14,6 +18,7 @@ export class BehaviorTreeScenario extends Scenario {
     super(engine);
 
     this.map = createEmptyGrid(getGridSizeByScreen(engine.app));
+    addSurroundingCollision(this.map);
   }
 
   public get collisionMap(): number[][] {

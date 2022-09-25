@@ -24,6 +24,8 @@ import { SpriteRender } from '~/game/components/render/SpriteRender';
 import { Health } from '~/game/components/Health';
 import { Died } from '~/game/events/Died';
 import { Options } from '~/game/Options';
+import { Team } from '~/game/components';
+import { BLUE, RED } from '~/game/colors';
 
 const graphicsLayer = new PIXI.Container();
 
@@ -62,8 +64,12 @@ const drawSelectionIndicators = (
     .lineTo(right, -6);
 };
 
-const drawAggroRadius = (combat: Combat, graphics: PIXI.Graphics): void => {
-  graphics.lineStyle(1, 0xff0000);
+const drawAggroRadius = (
+  combat: Combat,
+  graphics: PIXI.Graphics,
+  team: Team | null
+): void => {
+  graphics.lineStyle(1, team?.color === 'red' ? RED : BLUE);
   graphics.drawCircle(0, 0, combat.aggroRange);
 };
 
@@ -85,6 +91,7 @@ export const GraphicsRenderSystem = createSystem({
     transform: Read(Transform),
     health: ReadOptional(Health),
     combat: ReadOptional(Combat),
+    team: ReadOptional(Team),
   }),
 })
   .withSetupFunction(({ options, app }) => {
@@ -127,6 +134,7 @@ export const GraphicsRenderSystem = createSystem({
         transform,
         health,
         combat,
+        team,
       }) => {
         if (selectable != null && transform != null) {
           graphicsRender.graphics.clear();
@@ -143,7 +151,11 @@ export const GraphicsRenderSystem = createSystem({
           }
 
           if (showDebugAggro && combat != null) {
-            drawAggroRadius(combat, graphicsRender.graphics);
+            drawAggroRadius(
+              combat as Combat,
+              graphicsRender.graphics,
+              team ?? null
+            );
           }
         } else {
           graphicsRender.graphics.clear();

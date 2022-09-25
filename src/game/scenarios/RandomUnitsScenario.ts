@@ -5,7 +5,11 @@ import { Engine } from '../Engine';
 import { UNIT_SWORDSMEN } from '../data/constants';
 
 import { EntityLoader } from './../EntityLoader';
-import { createEmptyGrid, getGridSizeByScreen } from './utils';
+import {
+  addSurroundingCollision,
+  createEmptyGrid,
+  getGridSizeByScreen,
+} from './utils';
 import { Scenario } from './Scenario';
 
 import { Team } from '~/game/components/Team';
@@ -20,6 +24,7 @@ export class RandomUnitsScenario extends Scenario {
     super(engine);
 
     this._collisionMap = createEmptyGrid(getGridSizeByScreen(engine.app));
+    addSurroundingCollision(this._collisionMap);
   }
 
   public get collisionMap(): number[][] {

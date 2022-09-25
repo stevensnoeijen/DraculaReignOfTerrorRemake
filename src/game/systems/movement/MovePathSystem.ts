@@ -26,12 +26,18 @@ import { cellPositionToVector } from '~/game/utils/grid';
 import { not } from '~/utils/predicate';
 import { getOccupiedCells } from '~/game/utils/components';
 import { Collided } from '~/game/events/Collided';
+import { Grid } from '~/game/scenarios/types';
+import { worldEventBus } from '~/game/constants';
+import { ScenarioLoaded } from '~/game/events/ScenarioLoaded';
 
 const canEntityMoveToCell = (
   colliders: IEntity[],
   entity: IEntity,
   cell: Point
 ): boolean => {
+  if (collsionMap == null) return false;
+  if (collsionMap[cell.y][cell.y] === 1) return false;
+
   const collider = colliders
     .filter(not(isSameEntity(entity)))
     .filter(isCollider)
@@ -81,17 +87,19 @@ const updateMovePosition = (
   movePath.path.shift();
 
   movePositionDirect.position = cellPositionToVector(nextCell.x, nextCell.y);
-  const transformComponent = entity.getComponent(Transform)!;
-  if (!transformComponent.position.equals(movePositionDirect.position)) {
-    transformComponent.rotation = Vector2.angle(
-      transformComponent.position,
+  const transform = entity.getComponent(Transform)!;
+  if (!transform.position.equals(movePositionDirect.position)) {
+    transform.rotation = Vector2.angle(
+      transform.position,
       movePositionDirect.position
     );
   }
 
-  if (!transformComponent.position.equals(Vector2.ZERO))
+  if (!transform.position.equals(Vector2.ZERO))
     moved.publish(new Moved(entity));
 };
+
+let collsionMap: Grid | null = null;
 
 export const MovePathSystem = createSystem({
   moved: WriteEvents(Moved),
@@ -105,6 +113,11 @@ export const MovePathSystem = createSystem({
     controlled: ReadOptional(Controlled),
   }),
 })
+  .withSetupFunction(() => {
+    worldEventBus.subscribe(ScenarioLoaded, (event) => {
+      collsionMap = event.scenario.collisionMap;
+    });
+  })
   .withRunFunction(({ moved, collided, query }) => {
     return query.execute(
       ({ movePath, moveVelocity, entity, movePositionDirect, controlled }) => {
