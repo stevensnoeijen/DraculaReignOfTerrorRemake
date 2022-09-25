@@ -48,4 +48,8 @@ export class Timer {
       }
     }
   }
+
+  public reset() {
+    this._countdown = this.delay - this.expiredTime;
+  }
 }

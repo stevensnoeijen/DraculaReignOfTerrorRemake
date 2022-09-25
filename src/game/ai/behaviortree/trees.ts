@@ -20,10 +20,7 @@ import { Value } from './values/Value';
 import { RandomSelector } from './nodes/core/RandomSelector';
 import { MoveToRandomDirection } from './nodes/entity/MoveToRandomDirection';
 
-import { AttackStarted, Hit } from '~/game/events';
-import { Combat } from '~/game/components';
-
-const DEFAULT_ATTACK_DELAY = 1000;
+import { AttackStarted } from '~/game/events';
 
 const targetEnemyInAggroRange = () =>
   new Sequence([
@@ -48,12 +45,7 @@ const attackEnemyWhenInAttackRange = (entity: IEntity) =>
         new Inverter(new IsUnitState('attack')),
         new SendEvent(AttackStarted),
       ]),
-      new Timer({
-        delay: Value.static(
-          entity.getComponent(Combat)?.attackCooldown ?? DEFAULT_ATTACK_DELAY
-        ),
-        execute: new Sequence([new Attack(), new SendEvent(Hit)]),
-      }),
+      new Attack(),
     ]),
   ]);
 

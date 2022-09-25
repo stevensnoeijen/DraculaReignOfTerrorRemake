@@ -9,18 +9,21 @@ describe('Combat', () => {
     const world = buildWorld().build();
 
     it('should take hit to enemy', () => {
-      const enemy = world.buildEntity()
-        .with(new Health({
-          points: 100,
-          maxPoints: 100,
-        }))
-      .build();
+      const enemy = world
+        .buildEntity()
+        .with(
+          new Health({
+            points: 100,
+            maxPoints: 100,
+          })
+        )
+        .build();
       const combat = new Combat(0, 0, 10, 0);
+      combat.attacking = enemy;
 
-      combat.attack(enemy);
+      combat.attack();
 
-      expect(enemy.getComponent(Health)!
-        .points).toEqual(90);
+      expect(enemy.getComponent(Health)!.points).toEqual(90);
     });
   });
 });

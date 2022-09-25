@@ -3,11 +3,11 @@ import { GameTime } from '../GameTime';
 import { Timer } from './Timer';
 
 describe('Timer', () => {
-  describe('isElapsed', () => {
-    const successProps = {
-      delay: 1000,
-    };
+  const successProps = {
+    delay: 1000,
+  };
 
+  describe('isElapsed', () => {
     it('should return false if time is higher than 0', () => {
       const timer = new Timer({
         ...successProps,
@@ -34,6 +34,30 @@ describe('Timer', () => {
       timer.update();
 
       expect(timer.isElapsed()).toBe(true);
+    });
+  });
+
+  describe('reset', () => {
+    it('should set countdown to initial value', () => {
+      const timer = new Timer({
+        ...successProps,
+      });
+
+      timer.reset();
+
+      expect(timer.countdown).toBe(successProps.delay);
+    });
+
+    it('should set countdown to initial value - expiredTime when existing', () => {
+      const timer = new Timer({
+        ...successProps,
+      });
+      GameTime.delta = 1100;
+      timer.update();
+
+      timer.reset();
+
+      expect(timer.countdown).toBe(900);
     });
   });
 });
