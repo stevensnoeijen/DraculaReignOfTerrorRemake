@@ -100,7 +100,7 @@ export class EntityLoader {
       .with(Target)
       .with(
         new Combat(
-          data.combatAggroRange,
+          data.combatAggroRange.max,
           data.combatAttackRange,
           data.combatAttackDamage,
           data.combatAttackCooldown
@@ -108,7 +108,7 @@ export class EntityLoader {
       )
       .with(UnitState)
       .with(this.soundService.createComponent(data))
-      .with(new Sensory(new Sensor(data.combatAggroRange)));
+      .with(new Sensory(new Sensor(data.combatAggroRange.max)));
 
     if (props.team.equals(Team.PLAYER)) builder.with(MouseControlled);
 

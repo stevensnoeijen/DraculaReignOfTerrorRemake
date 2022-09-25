@@ -1,3 +1,4 @@
+import { Range } from '../utils/Range';
 
 import { EditableProperty } from './decorator';
 import { GameObject } from './ObjectsJson';
@@ -10,10 +11,10 @@ export class Unit {
   healthPointsMax!: number;
 
   @EditableProperty({
-    type: Number,
+    type: Range,
     nullable: false,
   })
-  combatAggroRange!: number;
+  combatAggroRange!: Range;
 
   @EditableProperty({
     type: Number,
@@ -29,7 +30,7 @@ export class Unit {
 
   @EditableProperty({
     type: Number,
-    nullable: false
+    nullable: false,
   })
   combatAttackCooldown!: number;
 
@@ -66,10 +67,13 @@ export class Unit {
   public static fromJson(object: GameObject): Unit {
     let unit = new Unit();
     unit = Object.assign(unit, {
-      ...object.properties.reduce((prev, property) => ({
-        ...prev,
-        [property.field]: property.value,
-      }), {})
+      ...object.properties.reduce(
+        (prev, property) => ({
+          ...prev,
+          [property.field]: property.value,
+        }),
+        {}
+      ),
     });
 
     return unit;

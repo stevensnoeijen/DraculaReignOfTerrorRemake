@@ -2,18 +2,18 @@
   <n-input
     v-if="
       type === String &&
-        !(
-          modelValue.field.startsWith('sound') ||
-          modelValue.field === 'spriteModel'
-        )
+      !(
+        modelValue.field.startsWith('sound') ||
+        modelValue.field === 'spriteModel'
+      )
     "
     v-model:value="valueAsString"
   />
   <n-select
     v-if="
       (type === String || Array.isArray(type)) &&
-        (modelValue.field.startsWith('sound') ||
-          modelValue.field === 'spriteModel')
+      (modelValue.field.startsWith('sound') ||
+        modelValue.field === 'spriteModel')
     "
     v-model:value="valueAsStringArray"
     filterable
@@ -26,10 +26,10 @@
     v-model:value.boolean="valueAsBoolean"
   />
 
-  <n-input-number
-    v-else-if="type === Number"
-    v-model:value="valueAsNumber"
-  />
+  <n-input-number v-else-if="type === Number" v-model:value="valueAsNumber" />
+
+  <Range v-else-if="type === RangeType" v-model="valueAsRange" />
+
   <span v-else> Type not supported </span>
 </template>
 
@@ -47,8 +47,7 @@ import { getEditableProperty } from '~/game/data/decorator';
 import { Unit } from '~/game/data/Unit';
 import { Property, PropertyValue } from '~/game/data/ObjectsJson';
 import { getSpriteModelNames } from '~/game/animation/api';
-
-
+import { Range as RangeType } from '~/game/utils/Range';
 
 const props = defineProps<{
   modelValue: Property;
@@ -62,6 +61,7 @@ const valueAsString = ref('');
 const valueAsStringArray = ref<string[]>([]);
 const valueAsBoolean = ref(false);
 const valueAsNumber = ref(0);
+const valueAsRange = ref(new RangeType(0, 0));
 
 const getValue = (): PropertyValue => {
   if (type.value === String) {
@@ -76,19 +76,26 @@ const getValue = (): PropertyValue => {
   if (type.value === Number) {
     return valueAsNumber.value;
   }
+  if (type.value === RangeType) {
+    return valueAsRange.value;
+  }
 
   throw new Error('value not supported');
 };
 
-watch([
-  valueAsString,
-  valueAsStringArray,
-  valueAsBoolean,
-  valueAsNumber,
-], () => {
-  // eslint-disable-next-line vue/no-mutating-props
-  props.modelValue.value = getValue();
-});
+watch(
+  [
+    valueAsString,
+    valueAsStringArray,
+    valueAsBoolean,
+    valueAsNumber,
+    valueAsRange,
+  ],
+  () => {
+    // eslint-disable-next-line vue/no-mutating-props
+    props.modelValue.value = getValue();
+  }
+);
 
 const loadValues = () => {
   valueAsString.value = props.modelValue.value as string;

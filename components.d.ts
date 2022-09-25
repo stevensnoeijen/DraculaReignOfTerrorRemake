@@ -34,6 +34,7 @@ declare module '@vue/runtime-core' {
     PixiLoader: typeof import('./src/components/pixi/loader/PixiLoader.vue')['default']
     PixiTicker: typeof import('./src/components/pixi/ticker/PixiTicker.vue')['default']
     PixiViewport: typeof import('./src/components/pixi/viewport/PixiViewport.vue')['default']
+    Range: typeof import('./src/components/utils/Range.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SoundButton: typeof import('./src/components/worldeditor/sound/SoundButton.vue')['default']

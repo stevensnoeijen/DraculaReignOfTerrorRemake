@@ -8,7 +8,10 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 160
+        "value": {
+          "min": 0,
+          "max": 160
+        }
       },
       {
         "field": "combatAttackRange",
@@ -86,7 +89,10 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 64
+        "value": {
+          "min": 0,
+          "max": 64
+        }
       },
       {
         "field": "combatAttackRange",
@@ -157,7 +163,10 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 96
+        "value": {
+          "min": 0,
+          "max": 96
+        }
       },
       {
         "field": "combatAttackRange",
@@ -224,7 +233,10 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 0
+        "value": {
+          "min": 0,
+          "max": 0
+        }
       },
       {
         "field": "combatAttackRange",
@@ -281,7 +293,10 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 96
+        "value": {
+          "min": 0,
+          "max": 96
+        }
       },
       {
         "field": "combatAttackRange",
@@ -326,7 +341,10 @@
       },
       {
         "field": "combatAggroRange",
-        "value": 80
+        "value": {
+          "min": 0,
+          "max": 160
+        }
       },
       {
         "field": "combatAttackRange",
