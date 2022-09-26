@@ -32,13 +32,13 @@ export const createEmptyObject = (): GameObject => {
 
   return {
     name: '',
-    properties: Object.keys(editableProperties).map((key) => {
+    properties: Object.keys(editableProperties).reduce((prev, key) => {
       const options = editableProperties[key];
 
       return {
-        field: key,
-        value: getDefaultValue(options),
+        ...prev,
+        [key]: getDefaultValue(options),
       };
-    }),
+    }, {}),
   };
 };

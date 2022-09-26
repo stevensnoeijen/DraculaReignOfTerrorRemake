@@ -1,20 +1,19 @@
+import { Mutable } from 'utility-types';
+
 import { Range } from '../utils/Range';
 
-export type PropertyValue = string | boolean | number | string[] | Range;
-
-export type Property = {
-  field: string;
-  value: PropertyValue;
-};
-
-export type Component = {
-  type: string;
-  properties: Property[];
-};
+export type PropertyValue =
+  | string
+  | boolean
+  | number
+  | string[]
+  | Mutable<Range>;
 
 export type GameObject = {
   name: string;
-  properties: Property[];
+  properties: {
+    [key: string]: PropertyValue | undefined;
+  };
 };
 
 export const isObject = (entity: object): entity is GameObject => {

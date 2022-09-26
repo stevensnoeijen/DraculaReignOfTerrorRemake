@@ -66,15 +66,7 @@ export class Unit {
 
   public static fromJson(object: GameObject): Unit {
     let unit = new Unit();
-    unit = Object.assign(unit, {
-      ...object.properties.reduce(
-        (prev, property) => ({
-          ...prev,
-          [property.field]: property.value,
-        }),
-        {}
-      ),
-    });
+    unit = Object.assign(unit, object.properties);
 
     return unit;
   }

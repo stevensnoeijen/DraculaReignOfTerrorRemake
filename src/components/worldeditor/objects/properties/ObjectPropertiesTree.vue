@@ -14,10 +14,10 @@
 
 <script lang="ts" setup>
 import { NTag, TreeOption } from 'naive-ui';
-import { computed, h, onMounted, watch } from 'vue';
+import { computed, h } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { GameObject, Property } from '~/game/data/ObjectsJson';
+import { GameObject } from '~/game/data/ObjectsJson';
 import { ellipsize } from '~/utils';
 
 const props = defineProps<{
@@ -25,42 +25,39 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', property: Property): void;
+  (event: 'select', propertyName: string): void;
   (event: 'update:object', object: GameObject): void;
 }>();
 
 let data = computed(() => {
-  return props.object.properties.map(
-    (property): TreeOption => ({
-      label: property.field,
-      key: property.field,
+  return Object.keys(props.object.properties).map(
+    (name): TreeOption => ({
+      label: name,
+      key: name,
     })
   );
 });
 
-let selectedKeys = $ref<string[]>([props.object.properties[0].field]);
+let selectedKeys = $ref<string[]>([]);
 
-watch(
-  () => props.object.properties,
-  () => {
-    if (props.object.properties.length === 0) {
-      selectedKeys = [];
-    } else {
-      selectedKeys = [props.object.properties[0].field];
-    }
-  }
-);
+// watch(
+//   () => props.object.properties,
+//   () => {
+//     if (props.object.properties.length === 0) {
+//       selectedKeys = [];
+//     } else {
+//       selectedKeys = [firstKey(props.object.properties)];
+//     }
+//   }
+// );
 
 const handleTreeSelect = (option: TreeOption) => {
   if (typeof option.key !== 'string') {
     return;
   }
 
-  const property = props.object.properties.find(
-    (property) => property.field === option.key
-  )!;
-  selectedKeys = [property.field];
-  emits('select', property);
+  selectedKeys = [option.key];
+  emits('select', option.key);
 };
 
 const nodeProps = ({ option }: { option: TreeOption }) => {
@@ -73,18 +70,12 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (typeof option.key !== 'string') return;
 
   // property level
-  const property = props.object.properties.find(
-    (property) => property.field === option.key
-  )!;
-  return h(
-    NTag,
-    { round: true },
-    { default: () => `${ellipsize(property.value, 3)}` }
-  );
+  const value = props.object.properties[option.key]!;
+  return h(NTag, { round: true }, { default: () => `${ellipsize(value, 3)}` });
 };
 
-onMounted(() => {
-  if (data.value.length > 0) selectedKeys = [props.object.properties[0].field];
-  else selectedKeys = [];
-});
+// onMounted(() => {
+//   if (data.value.length > 0) selectedKeys = [firstKey(props.object.properties)];
+//   else selectedKeys = [];
+// });
 </script>
