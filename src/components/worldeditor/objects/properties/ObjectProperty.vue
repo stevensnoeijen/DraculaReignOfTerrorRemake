@@ -1,19 +1,14 @@
 <template>
   <n-input
     v-if="
-      type === String &&
-      !(
-        modelValue.field.startsWith('sound') ||
-        modelValue.field === 'spriteModel'
-      )
+      type === String && !(name.startsWith('sound') || name === 'spriteModel')
     "
     v-model:value="valueAsString"
   />
   <n-select
     v-if="
       (type === String || Array.isArray(type)) &&
-      (modelValue.field.startsWith('sound') ||
-        modelValue.field === 'spriteModel')
+      (name.startsWith('sound') || name === 'spriteModel')
     "
     v-model:value="valueAsStringArray"
     filterable
@@ -45,17 +40,20 @@ import { soundsToSelectOptions } from './utils';
 
 import { getEditableProperty } from '~/game/data/decorator';
 import { Unit } from '~/game/data/Unit';
-import { Property, PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/ObjectsJson';
 import { getSpriteModelNames } from '~/game/animation/api';
 import { Range as RangeType } from '~/game/utils/Range';
 
 const props = defineProps<{
-  modelValue: Property;
+  name: string;
+  value: PropertyValue;
 }>();
 
-const type = computed(
-  () => getEditableProperty(Unit, props.modelValue.field)?.type
-);
+const emits = defineEmits<{
+  (event: 'update:value', value: PropertyValue): void;
+}>();
+
+const type = computed(() => getEditableProperty(Unit, props.name)?.type);
 
 const valueAsString = ref('');
 const valueAsStringArray = ref<string[]>([]);
@@ -92,24 +90,23 @@ watch(
     valueAsRange,
   ],
   () => {
-    // eslint-disable-next-line vue/no-mutating-props
-    props.modelValue.value = getValue();
+    emits('update:value', getValue());
   }
 );
 
 const loadValues = () => {
-  valueAsString.value = props.modelValue.value as string;
-  valueAsStringArray.value = props.modelValue.value as string[];
-  valueAsBoolean.value = props.modelValue.value as boolean;
-  valueAsNumber.value = props.modelValue.value as number;
+  valueAsString.value = props.value as string;
+  valueAsStringArray.value = props.value as string[];
+  valueAsBoolean.value = props.value as boolean;
+  valueAsNumber.value = props.value as number;
 };
 
 let options: SelectOption[] = $ref([]);
 const loadOptions = async () => {
-  if (props.modelValue.field.includes('sound')) {
+  if (props.name.includes('sound')) {
     const sounds = await getSounds();
     options = soundsToSelectOptions(sounds);
-  } else if (props.modelValue.field === 'spriteModel') {
+  } else if (props.name === 'spriteModel') {
     const names = await getSpriteModelNames();
 
     options = stringsToSelectOptions(names);
