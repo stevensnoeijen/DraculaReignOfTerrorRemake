@@ -2,7 +2,6 @@ import { createEmptyObject, getDefaultValueByType } from './utils';
 
 import { GameObject } from '~/game/data/ObjectsJson';
 
-
 describe('getDefaultValueByType', () => {
   it.each([
     [String, ''],
@@ -16,7 +15,7 @@ describe('getDefaultValueByType', () => {
   );
 
   it('should create throw error when unknown type is given', () => {
-    expect(() => getDefaultValueByType(Date)).toThrowError();
+    expect(() => getDefaultValueByType(Date)).toThrow();
   });
 });
 
@@ -24,25 +23,21 @@ describe('createEmptyObject', () => {
   it('should set all properties', () => {
     const object = createEmptyObject();
 
-    expect(object.properties).toHaveLength(10);
+    expect(Object.keys(object.properties)).toHaveLength(10);
   });
 
   const testObjectProperties = (
     object: GameObject,
-    properties: readonly string[],
+    keys: readonly string[],
     expectedValue: unknown
   ) => {
-    properties.forEach((property) => {
-      expect(object.properties).toContainEqual({
-        field: property,
-        value: expectedValue,
-      });
+    keys.forEach((key) => {
+      expect(object.properties[key]).toEqual(expectedValue);
     });
   };
 
   const NUMBER_PROPERTIES = [
     'healthPointsMax',
-    'combatAggroRange',
     'combatAttackRange',
     'combatAttackDamage',
   ] as const;
@@ -52,6 +47,7 @@ describe('createEmptyObject', () => {
     'soundAttackEffect',
     'soundDead',
   ] as const;
+  const RANGE_PROPERTIES = ['combatAggroRange'] as const;
 
   // eslint-disable-next-line jest/expect-expect
   it('should set default values', () => {
@@ -60,5 +56,6 @@ describe('createEmptyObject', () => {
     testObjectProperties(object, NUMBER_PROPERTIES, 0);
     testObjectProperties(object, STRING_PROPERTIES, '');
     testObjectProperties(object, STRING_ARRAY_PROPERTIES, []);
+    testObjectProperties(object, RANGE_PROPERTIES, { min: 0, max: 0 });
   });
 });
