@@ -1,9 +1,9 @@
 <template>
-  <n-form :model="property" :rules="rules" label-placement="left">
-    <n-form-item :label="property.field" path="value">
+  <n-form :rules="rules" label-placement="left">
+    <n-form-item :label="name" path="value">
       <object-property
-        :name="property.field"
-        :value="property.value"
+        :name="name"
+        :value="value"
         @update:value="updateProperty"
       />
     </n-form-item>
@@ -12,10 +12,8 @@
 
 <script lang="ts" setup>
 import { FormRules } from 'naive-ui';
-import { onUpdated } from 'vue';
-import { $ref } from 'vue/macros';
 
-import { Property, PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/ObjectsJson';
 
 const rules: FormRules = {
   value: {
@@ -25,17 +23,16 @@ const rules: FormRules = {
   },
 };
 
-const props = defineProps<{
-  modelValue: Property;
+defineProps<{
+  name: string;
+  value: PropertyValue;
 }>();
 
-let property = $ref(props.modelValue);
-
-onUpdated(() => {
-  property = props.modelValue;
-});
+const emits = defineEmits<{
+  (event: 'update:value', value: PropertyValue): void;
+}>();
 
 const updateProperty = (value: PropertyValue) => {
-  property.value = value;
+  emits('update:value', value);
 };
 </script>
