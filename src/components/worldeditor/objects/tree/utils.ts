@@ -1,14 +1,15 @@
 import { TreeOption } from 'naive-ui';
 
-import { GameObject, isObject } from '~/game/data/ObjectsJson';
+import { isObject } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 import { removeNullable } from '~/utils/array';
 
 type LayeredObject<T> = Record<string, T> & { __key?: string };
 type LayeredObjects = LayeredObject<
-  GameObject | (Record<string, GameObject> & { __key?: string })
+  EntityDefinition | (Record<string, EntityDefinition> & { __key?: string })
 >;
 
-const getLayeredEntities = (entities: GameObject[]): LayeredObjects => {
+const getLayeredEntities = (entities: EntityDefinition[]): LayeredObjects => {
   const layered: LayeredObjects = {};
 
   for (const entity of entities) {
@@ -23,9 +24,9 @@ const getLayeredEntities = (entities: GameObject[]): LayeredObjects => {
           __key:
             (currentLayer.__key != null ? currentLayer.__key + '/' : '') +
             layer,
-        } as LayeredObject<GameObject>;
+        } as LayeredObject<EntityDefinition>;
       }
-      currentLayer = currentLayer[layer] as LayeredObject<GameObject>;
+      currentLayer = currentLayer[layer] as LayeredObject<EntityDefinition>;
     }
     currentLayer[entitySubname] = entity;
   }
@@ -58,6 +59,8 @@ const createChildren = (layeredEntities: LayeredObjects): TreeOption[] => {
   return options;
 };
 
-export const createTreeOptions = (entities: GameObject[]): TreeOption[] => {
+export const createTreeOptions = (
+  entities: EntityDefinition[]
+): TreeOption[] => {
   return createChildren(getLayeredEntities(entities));
 };

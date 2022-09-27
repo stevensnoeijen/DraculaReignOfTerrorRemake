@@ -2,6 +2,8 @@ import { Mutable } from 'utility-types';
 
 import { Range } from '../utils/Range';
 
+import { EntityDefinition } from './EntityDefinition';
+
 export type PropertyValue =
   | string
   | boolean
@@ -9,19 +11,8 @@ export type PropertyValue =
   | string[]
   | Mutable<Range>;
 
-export type GameObject = {
-  name: string;
-  properties: {
-    [key: string]: PropertyValue | undefined;
-  };
-};
-
-export type EntityDefinitions = {
-  definitions: GameObject[];
-};
-
-export const isObject = (entity: object): entity is GameObject => {
+export const isObject = (entity: object): entity is EntityDefinition => {
   return 'name' in entity;
 };
 
-export type ObjectsJson = GameObject[];
+export type ObjectsJson = EntityDefinition[];

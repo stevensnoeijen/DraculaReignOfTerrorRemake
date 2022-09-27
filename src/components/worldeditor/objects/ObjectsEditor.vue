@@ -80,17 +80,19 @@ import { isEmpty } from 'lodash';
 import * as api from './api';
 import { ObjectCreateInstance } from './create/types';
 
-import { GameObject, PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
+import { Unit } from '~/game/data/Unit';
 import { UnitType } from '~/game/types';
 import { firstKey } from '~/utils/object';
 
 const message = useMessage();
 
-let objects: GameObject[] = $ref([]);
-let selectedObject = $ref<GameObject | null>(null);
-let selectedPropertyName = $ref<string | null>(null);
+let objects: EntityDefinition[] = $ref([]);
+let selectedObject = $ref<EntityDefinition | null>(null);
+let selectedPropertyName = $ref<keyof Unit | null>(null);
 
-const handleSelectObject = (object: GameObject) => {
+const handleSelectObject = (object: EntityDefinition) => {
   selectedObject = object;
   selectedPropertyName = firstKey(selectedObject.properties);
 };
@@ -127,7 +129,7 @@ const handleValueUpdated = (value: PropertyValue) => {
   setValue(value);
 };
 
-const handleUpdateObject = (updatedObject: GameObject) => {
+const handleUpdateObject = (updatedObject: EntityDefinition) => {
   const object = objects.find((object) => object.name === updatedObject.name)!;
   object.properties = updatedObject.properties;
 };

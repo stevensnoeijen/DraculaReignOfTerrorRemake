@@ -1,4 +1,4 @@
-import { EntityDefinitions } from '~/game/data/ObjectsJson';
+import { EntityDefinitions } from '~/game/data/EntityDefinitions';
 
 const PATH = '/assets/entity-definitions.json';
 

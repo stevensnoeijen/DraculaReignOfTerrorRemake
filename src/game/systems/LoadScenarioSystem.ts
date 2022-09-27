@@ -7,7 +7,7 @@ import { AnimationModelsJson } from '../animation/api';
 import { SoundService } from '../sounds/SoundService';
 import { EntityLoader } from '../EntityLoader';
 import { ScenarioLoaded } from '../events/ScenarioLoaded';
-import { EntityDefinitions } from '../data/ObjectsJson';
+import { EntityDefinitions } from '../data/EntityDefinitions';
 import { Assets, worldEventBus } from '../constants';
 
 const getAnimationService = (engine: Engine) => {

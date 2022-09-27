@@ -1,6 +1,7 @@
 import { Class } from 'utility-types';
 
-import { GameObject, PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 import {
   EditablePropertyOptions,
   getEditableProperties,
@@ -27,7 +28,7 @@ const getDefaultValue = <T extends Class<PropertyValue>>(
     : getDefaultValueByType(options.type);
 };
 
-export const createEmptyObject = (): GameObject => {
+export const createEmptyObject = (): EntityDefinition => {
   const editableProperties = getEditableProperties(Unit)!;
 
   return {
@@ -39,6 +40,6 @@ export const createEmptyObject = (): GameObject => {
         ...prev,
         [key]: getDefaultValue(options),
       };
-    }, {}),
+    }, {}) as Unit,
   };
 };

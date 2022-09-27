@@ -1,7 +1,7 @@
 import { Range } from '../utils/Range';
 
 import { EditableProperty } from './decorator';
-import { GameObject } from './ObjectsJson';
+import { EntityDefinition } from './EntityDefinition';
 
 export class Unit {
   @EditableProperty({
@@ -64,7 +64,7 @@ export class Unit {
   })
   soundDeadByCatapult!: string | null;
 
-  public static fromJson(object: GameObject): Unit {
+  public static fromJson(object: EntityDefinition): Unit {
     let unit = new Unit();
     unit = Object.assign(unit, object.properties);
 

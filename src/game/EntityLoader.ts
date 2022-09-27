@@ -23,7 +23,7 @@ import {
   BehaviorTree,
 } from './components';
 import { rotationToDirection } from './animation/load';
-import { EntityDefinitions } from './data/ObjectsJson';
+import { EntityDefinitions } from './data/EntityDefinitions';
 import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
 import { Point } from './math/types';

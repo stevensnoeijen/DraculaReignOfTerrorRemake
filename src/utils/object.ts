@@ -15,5 +15,6 @@ export const isAnyPropertySet = (props: Record<string, unknown>) => {
 export const omitUndefined = (props: Record<string, unknown>) =>
   _.omitBy(props, _.isUndefined);
 
-export const firstKey = (object: Record<string, unknown>) =>
-  Object.keys(object)[0];
+export const firstKey = <Property extends string>(
+  object: Record<Property, unknown>
+) => Object.keys(object)[0];
