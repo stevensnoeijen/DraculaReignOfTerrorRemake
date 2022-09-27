@@ -16,7 +16,7 @@ export type GameObject = {
   };
 };
 
-export type GameObjects = {
+export type EntityDefinitions = {
   definitions: GameObject[];
 };
 

@@ -4,12 +4,11 @@ import { Sound as PixiSound } from '@pixi/sound';
 import { Engine } from '../Engine';
 import { AnimationService } from '../animation/AnimationService';
 import { AnimationModelsJson } from '../animation/api';
-import { ObjectsJson } from '../data/ObjectsJson';
 import { SoundService } from '../sounds/SoundService';
 import { EntityLoader } from '../EntityLoader';
 import { ScenarioLoaded } from '../events/ScenarioLoaded';
-
-import { worldEventBus } from './../constants';
+import { EntityDefinitions } from '../data/ObjectsJson';
+import { Assets, worldEventBus } from '../constants';
 
 const getAnimationService = (engine: Engine) => {
   return new AnimationService(
@@ -31,7 +30,8 @@ const getSoundService = (engine: Engine) => {
 const getEntityLoader = (world: IWorld, engine: Engine) => {
   return new EntityLoader(
     world,
-    engine.app.loader.resources['objects'].data as ObjectsJson,
+    engine.app.loader.resources[Assets.ENTITY_DEFINITIONS]
+      .data as EntityDefinitions,
     getAnimationService(engine),
     getSoundService(engine)
   );

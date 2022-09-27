@@ -23,7 +23,7 @@ import {
   BehaviorTree,
 } from './components';
 import { rotationToDirection } from './animation/load';
-import { ObjectsJson } from './data/ObjectsJson';
+import { EntityDefinitions } from './data/ObjectsJson';
 import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
 import { Point } from './math/types';
@@ -44,7 +44,7 @@ export interface IUnitProps {
 export class EntityLoader {
   constructor(
     private readonly world: IWorld,
-    private readonly objects: ObjectsJson,
+    private readonly entityDefinitions: EntityDefinitions,
     private readonly animationService: AnimationService,
     private readonly soundService: SoundService
   ) {}
@@ -119,7 +119,9 @@ export class EntityLoader {
   }
 
   private getData(name: string): Unit {
-    const object = this.objects.find((object) => object.name === name);
+    const object = this.entityDefinitions.definitions.find(
+      (object) => object.name === name
+    );
     if (object == null) throw new Error(`Unit with name ${name} not existend`);
 
     return Unit.fromJson(object);

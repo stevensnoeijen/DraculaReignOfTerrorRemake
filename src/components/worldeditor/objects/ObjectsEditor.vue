@@ -133,13 +133,14 @@ const handleUpdateObject = (updatedObject: GameObject) => {
 };
 
 const handleSave = async () => {
-  await api.saveObjects({ definitions: objects });
+  await api.saveEntityDefinitions({ definitions: objects });
   message.info('saved objects to server');
 };
 
 onMounted(async () => {
-  objects = (await api.getObjects()).definitions;
+  objects = (await api.getEntityDefinitions()).definitions;
   selectedObject = objects[0];
   selectedPropertyName = firstKey(selectedObject.properties);
 });
 </script>
+getEntityDefsaveEntityDfinitions

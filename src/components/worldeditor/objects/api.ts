@@ -1,13 +1,15 @@
-import { GameObjects } from '~/game/data/ObjectsJson';
+import { EntityDefinitions } from '~/game/data/ObjectsJson';
 
-export const getObjects = async (): Promise<GameObjects> => {
-  const res = await fetch('/assets/objects.json');
+const PATH = '/assets/entity-definitions.json';
+
+export const getEntityDefinitions = async (): Promise<EntityDefinitions> => {
+  const res = await fetch(PATH);
 
   return res.json();
 };
 
-export const saveObjects = async (entities: GameObjects) => {
-  await fetch('http://localhost:3000/assets/objects.json', {
+export const saveEntityDefinitions = async (entities: EntityDefinitions) => {
+  await fetch('http://localhost:3000' + PATH, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
