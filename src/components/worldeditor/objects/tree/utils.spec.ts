@@ -5,7 +5,7 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: 'test',
-        properties: [],
+        properties: {},
       },
     ]);
 
@@ -18,7 +18,7 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: 'layer/test',
-        properties: [],
+        properties: {},
       },
     ]);
 
@@ -35,7 +35,7 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: '1/2/3/4/5/test',
-        properties: [],
+        properties: {},
       },
     ]);
 
@@ -56,11 +56,11 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: '1/2/3/4/5/test',
-        properties: [],
+        properties: {},
       },
       {
         name: '1/2/test',
-        properties: [],
+        properties: {},
       },
     ]);
 

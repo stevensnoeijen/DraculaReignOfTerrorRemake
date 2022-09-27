@@ -37,7 +37,7 @@
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <object-property-editor
-            v-if="selectedPropertyName != null"
+            v-if="selectedPropertyName != null && value != null"
             :name="selectedPropertyName"
             :value="value"
             @update:value="handleValueUpdated"
