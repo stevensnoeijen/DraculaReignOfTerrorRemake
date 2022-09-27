@@ -1,227 +1,205 @@
-[
-  {
-    "name": "unit/swordsmen",
-    "properties": {
-      "healthPointsMax": 15,
-      "combatAggroRange": {
-        "min": 0,
-        "max": 160
-      },
-      "combatAttackRange": 23,
-      "combatAttackDamage": 3,
-      "combatAttackCooldown": 1000,
-      "spriteModel": "swordsmen",
-      "soundCommand": [
-        "unit_move_1",
-        "unit_move_10",
-        "unit_move_11",
-        "unit_move_13",
-        "unit_move_12",
-        "unit_move_2",
-        "unit_move_3",
-        "unit_move_4",
-        "unit_move_5",
-        "unit_move_6",
-        "unit_move_7",
-        "unit_move_8",
-        "unit_move_9"
-      ],
-      "soundAttackEffect": [
-        "swords_1",
-        "swords_2",
-        "swords_3",
-        "swords_4",
-        "swords_5",
-        "swords_6"
-      ],
-      "soundDead": [
-        "unit_die_1",
-        "unit_die_10",
-        "unit_die_11",
-        "unit_die_2",
-        "unit_die_3",
-        "unit_die_4",
-        "unit_die_5",
-        "unit_die_6",
-        "unit_die_7",
-        "unit_die_8",
-        "unit_die_9"
-      ],
-      "soundDeadByCatapult": "catapult_kill_unit"
+{
+  "definitions": [
+    {
+      "name": "unit/swordsmen",
+      "properties": {
+        "healthPointsMax": 15,
+        "combatAggroRange": {
+          "min": 0,
+          "max": 160
+        },
+        "combatAttackRange": 23,
+        "combatAttackDamage": 3,
+        "combatAttackCooldown": 1000,
+        "spriteModel": "swordsmen",
+        "soundCommand": [
+          "unit_move_1",
+          "unit_move_10",
+          "unit_move_11",
+          "unit_move_13",
+          "unit_move_12",
+          "unit_move_2",
+          "unit_move_3",
+          "unit_move_4",
+          "unit_move_5",
+          "unit_move_6",
+          "unit_move_7",
+          "unit_move_8",
+          "unit_move_9"
+        ],
+        "soundAttackEffect": [
+          "swords_1",
+          "swords_2",
+          "swords_3",
+          "swords_4",
+          "swords_5",
+          "swords_6"
+        ],
+        "soundDead": [
+          "unit_die_1",
+          "unit_die_10",
+          "unit_die_11",
+          "unit_die_2",
+          "unit_die_3",
+          "unit_die_4",
+          "unit_die_5",
+          "unit_die_6",
+          "unit_die_7",
+          "unit_die_8",
+          "unit_die_9"
+        ],
+        "soundDeadByCatapult": "catapult_kill_unit"
+      }
+    },
+    {
+      "name": "unit/crossbowsoldier",
+      "properties": {
+        "healthPointsMax": 10,
+        "combatAggroRange": {
+          "min": 0,
+          "max": 64
+        },
+        "combatAttackRange": 64,
+        "combatAttackDamage": 2,
+        "combatAttackCooldown": 1000,
+        "spriteModel": "crossbowsoldier",
+        "soundCommand": [
+          "unit_move_1",
+          "unit_move_10",
+          "unit_move_11",
+          "unit_move_12",
+          "unit_move_13",
+          "unit_move_2",
+          "unit_move_3",
+          "unit_move_4",
+          "unit_move_5",
+          "unit_move_6",
+          "unit_move_7",
+          "unit_move_8",
+          "unit_move_9"
+        ],
+        "soundAttackEffect": ["arrow_1", "arrow_2"],
+        "soundDead": [
+          "unit_die_1",
+          "unit_die_10",
+          "unit_die_11",
+          "unit_die_2",
+          "unit_die_3",
+          "unit_die_4",
+          "unit_die_5",
+          "unit_die_6",
+          "unit_die_7",
+          "unit_die_8",
+          "unit_die_9"
+        ],
+        "soundDeadByCatapult": "catapult_kill_unit"
+      }
+    },
+    {
+      "name": "unit/knight",
+      "properties": {
+        "healthPointsMax": 12,
+        "combatAggroRange": {
+          "min": 0,
+          "max": 96
+        },
+        "combatAttackRange": 16,
+        "combatAttackDamage": 8,
+        "combatAttackCooldown": 1000,
+        "spriteModel": "knight",
+        "soundCommand": [
+          "unit_move_1",
+          "unit_move_10",
+          "unit_move_11",
+          "unit_move_12",
+          "unit_move_13",
+          "unit_move_2",
+          "unit_move_3",
+          "unit_move_4",
+          "unit_move_5",
+          "unit_move_6",
+          "unit_move_7",
+          "unit_move_8",
+          "unit_move_9",
+          "horse_2"
+        ],
+        "soundAttackEffect": [
+          "swords_2",
+          "swords_3",
+          "swords_4",
+          "swords_5",
+          "swords_6",
+          "swords_1"
+        ],
+        "soundDead": ["horse_1"],
+        "soundDeadByCatapult": "catapult_kill_unit"
+      }
+    },
+    {
+      "name": "unit/juggernaut",
+      "properties": {
+        "healthPointsMax": 15,
+        "combatAggroRange": {
+          "min": 0,
+          "max": 0
+        },
+        "combatAttackRange": 16,
+        "combatAttackDamage": 0,
+        "combatAttackCooldown": 1000,
+        "spriteModel": "juggernaut",
+        "soundCommand": ["unit_move_multiple", "juggernaut_move"],
+        "soundAttackEffect": ["juggernaut_attack"],
+        "soundDead": [
+          "unit_die_1",
+          "unit_die_10",
+          "unit_die_11",
+          "unit_die_2",
+          "unit_die_3",
+          "unit_die_4",
+          "unit_die_5",
+          "unit_die_6",
+          "unit_die_7",
+          "unit_die_8",
+          "unit_die_9"
+        ],
+        "soundDeadByCatapult": "catapult_kill_unit"
+      }
+    },
+    {
+      "name": "unit/catapult",
+      "properties": {
+        "healthPointsMax": 21,
+        "combatAggroRange": {
+          "min": 0,
+          "max": 96
+        },
+        "combatAttackRange": 80,
+        "combatAttackDamage": 4,
+        "combatAttackCooldown": 1000,
+        "spriteModel": "catapult",
+        "soundCommand": ["catapult_move"],
+        "soundAttackEffect": ["catapult_fire"],
+        "soundDead": ["catapult_destroyed_1", "catapult_destroyed_2"],
+        "soundDeadByCatapult": "catapult_destroyed_2"
+      }
+    },
+    {
+      "name": "unit/cannon",
+      "properties": {
+        "healthPointsMax": 21,
+        "combatAggroRange": {
+          "min": 0,
+          "max": 160
+        },
+        "combatAttackRange": 80,
+        "combatAttackDamage": 6,
+        "combatAttackCooldown": 1000,
+        "spriteModel": "cannon",
+        "soundCommand": ["canon_move"],
+        "soundAttackEffect": ["canon_fire_1", "canon_fire_2"],
+        "soundDead": ["canon_destroyed"],
+        "soundDeadByCatapult": "canon_destroyed"
+      }
     }
-  },
-  {
-    "name": "unit/crossbowsoldier",
-    "properties": {
-      "healthPointsMax": 10,
-      "combatAggroRange": {
-        "min": 0,
-        "max": 64
-      },
-      "combatAttackRange": 64,
-      "combatAttackDamage": 2,
-      "combatAttackCooldown": 1000,
-      "spriteModel": "crossbowsoldier",
-      "soundCommand": [
-        "unit_move_1",
-        "unit_move_10",
-        "unit_move_11",
-        "unit_move_12",
-        "unit_move_13",
-        "unit_move_2",
-        "unit_move_3",
-        "unit_move_4",
-        "unit_move_5",
-        "unit_move_6",
-        "unit_move_7",
-        "unit_move_8",
-        "unit_move_9"
-      ],
-      "soundAttackEffect": [
-        "arrow_1",
-        "arrow_2"
-      ],
-      "soundDead": [
-        "unit_die_1",
-        "unit_die_10",
-        "unit_die_11",
-        "unit_die_2",
-        "unit_die_3",
-        "unit_die_4",
-        "unit_die_5",
-        "unit_die_6",
-        "unit_die_7",
-        "unit_die_8",
-        "unit_die_9"
-      ],
-      "soundDeadByCatapult": "catapult_kill_unit"
-    }
-  },
-  {
-    "name": "unit/knight",
-    "properties": {
-      "healthPointsMax": 12,
-      "combatAggroRange": {
-        "min": 0,
-        "max": 96
-      },
-      "combatAttackRange": 16,
-      "combatAttackDamage": 8,
-      "combatAttackCooldown": 1000,
-      "spriteModel": "knight",
-      "soundCommand": [
-        "unit_move_1",
-        "unit_move_10",
-        "unit_move_11",
-        "unit_move_12",
-        "unit_move_13",
-        "unit_move_2",
-        "unit_move_3",
-        "unit_move_4",
-        "unit_move_5",
-        "unit_move_6",
-        "unit_move_7",
-        "unit_move_8",
-        "unit_move_9",
-        "horse_2"
-      ],
-      "soundAttackEffect": [
-        "swords_2",
-        "swords_3",
-        "swords_4",
-        "swords_5",
-        "swords_6",
-        "swords_1"
-      ],
-      "soundDead": [
-        "horse_1"
-      ],
-      "soundDeadByCatapult": "catapult_kill_unit"
-    }
-  },
-  {
-    "name": "unit/juggernaut",
-    "properties": {
-      "healthPointsMax": 15,
-      "combatAggroRange": {
-        "min": 0,
-        "max": 0
-      },
-      "combatAttackRange": 16,
-      "combatAttackDamage": 0,
-      "combatAttackCooldown": 1000,
-      "spriteModel": "juggernaut",
-      "soundCommand": [
-        "unit_move_multiple",
-        "juggernaut_move"
-      ],
-      "soundAttackEffect": [
-        "juggernaut_attack"
-      ],
-      "soundDead": [
-        "unit_die_1",
-        "unit_die_10",
-        "unit_die_11",
-        "unit_die_2",
-        "unit_die_3",
-        "unit_die_4",
-        "unit_die_5",
-        "unit_die_6",
-        "unit_die_7",
-        "unit_die_8",
-        "unit_die_9"
-      ],
-      "soundDeadByCatapult": "catapult_kill_unit"
-    }
-  },
-  {
-    "name": "unit/catapult",
-    "properties": {
-      "healthPointsMax": 21,
-      "combatAggroRange": {
-        "min": 0,
-        "max": 96
-      },
-      "combatAttackRange": 80,
-      "combatAttackDamage": 4,
-      "combatAttackCooldown": 1000,
-      "spriteModel": "catapult",
-      "soundCommand": [
-        "catapult_move"
-      ],
-      "soundAttackEffect": [
-        "catapult_fire"
-      ],
-      "soundDead": [
-        "catapult_destroyed_1",
-        "catapult_destroyed_2"
-      ],
-      "soundDeadByCatapult": "catapult_destroyed_2"
-    }
-  },
-  {
-    "name": "unit/cannon",
-    "properties": {
-      "healthPointsMax": 21,
-      "combatAggroRange": {
-        "min": 0,
-        "max": 160
-      },
-      "combatAttackRange": 80,
-      "combatAttackDamage": 6,
-      "combatAttackCooldown": 1000,
-      "spriteModel": "cannon",
-      "soundCommand": [
-        "canon_move"
-      ],
-      "soundAttackEffect": [
-        "canon_fire_1",
-        "canon_fire_2"
-      ],
-      "soundDead": [
-        "canon_destroyed"
-      ],
-      "soundDeadByCatapult": "canon_destroyed"
-    }
-  }
-]
+  ]
+}

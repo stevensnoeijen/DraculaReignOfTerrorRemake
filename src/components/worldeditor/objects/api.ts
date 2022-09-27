@@ -1,12 +1,12 @@
-import { GameObject } from '~/game/data/ObjectsJson';
+import { GameObjects } from '~/game/data/ObjectsJson';
 
-export const getObjects = async (): Promise<GameObject[]> => {
+export const getObjects = async (): Promise<GameObjects> => {
   const res = await fetch('/assets/objects.json');
 
   return res.json();
 };
 
-export const saveObjects = async (entities: GameObject[]) => {
+export const saveObjects = async (entities: GameObjects) => {
   await fetch('http://localhost:3000/assets/objects.json', {
     method: 'POST',
     headers: {

@@ -16,6 +16,10 @@ export type GameObject = {
   };
 };
 
+export type GameObjects = {
+  definitions: GameObject[];
+};
+
 export const isObject = (entity: object): entity is GameObject => {
   return 'name' in entity;
 };
