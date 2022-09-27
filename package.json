@@ -23,6 +23,7 @@
     "pixi-viewport": "^4.35.0",
     "pixi.js": "^6.5.1",
     "sim-ecs": "^0.5.1",
+    "typedjson": "^1.8.0",
     "utility-types": "^3.10.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.5",

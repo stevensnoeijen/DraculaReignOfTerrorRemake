@@ -7,8 +7,8 @@ import { AnimationModelsJson } from '../animation/api';
 import { SoundService } from '../sounds/SoundService';
 import { EntityLoader } from '../EntityLoader';
 import { ScenarioLoaded } from '../events/ScenarioLoaded';
-import { EntityDefinitions } from '../data/EntityDefinitions';
 import { Assets, worldEventBus } from '../constants';
+import { serializer } from '../data/serializer';
 
 const getAnimationService = (engine: Engine) => {
   return new AnimationService(
@@ -30,8 +30,9 @@ const getSoundService = (engine: Engine) => {
 const getEntityLoader = (world: IWorld, engine: Engine) => {
   return new EntityLoader(
     world,
-    engine.app.loader.resources[Assets.ENTITY_DEFINITIONS]
-      .data as EntityDefinitions,
+    serializer.parse(
+      engine.app.loader.resources[Assets.ENTITY_DEFINITIONS].data
+    )!,
     getAnimationService(engine),
     getSoundService(engine)
   );

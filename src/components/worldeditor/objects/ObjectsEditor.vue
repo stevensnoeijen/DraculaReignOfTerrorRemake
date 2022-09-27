@@ -2,10 +2,13 @@
   <div class="flex flex-col">
     <h2 class="text-2xl font-bold">Objects Editor</h2>
     <div class="grow flex">
-      <div class="border-r-2 mr-2 pr-2 flex flex-col">
+      <div
+        v-if="entityDefinitions != null"
+        class="border-r-2 mr-2 pr-2 flex flex-col"
+      >
         <h3 class="text-l font-bold">Objects:</h3>
         <objects-tree
-          v-model="objects"
+          v-model="entityDefinitions.definitions"
           class="grow"
           :selected="selectedObject"
           @select="handleSelectObject"
@@ -81,6 +84,7 @@ import * as api from './api';
 import { ObjectCreateInstance } from './create/types';
 
 import { PropertyValue } from '~/game/data/ObjectsJson';
+import { EntityDefinitions } from '~/game/data/EntityDefinitions';
 import { EntityDefinition } from '~/game/data/EntityDefinition';
 import { Unit } from '~/game/data/Unit';
 import { UnitType } from '~/game/types';
@@ -88,7 +92,7 @@ import { firstKey } from '~/utils/object';
 
 const message = useMessage();
 
-let objects: EntityDefinition[] = $ref([]);
+let entityDefinitions: EntityDefinitions = $ref();
 let selectedObject = $ref<EntityDefinition | null>(null);
 let selectedPropertyName = $ref<keyof Unit | null>(null);
 
@@ -103,7 +107,7 @@ const handleObjectCreate = async () => {
   try {
     await objectCreateInstance.form.validate();
 
-    objects.push(objectCreateInstance.object);
+    entityDefinitions.definitions.push(objectCreateInstance.object);
     handleSelectObject(objectCreateInstance.object);
 
     return true;
@@ -130,18 +134,20 @@ const handleValueUpdated = (value: PropertyValue) => {
 };
 
 const handleUpdateObject = (updatedObject: EntityDefinition) => {
-  const object = objects.find((object) => object.name === updatedObject.name)!;
+  const object = entityDefinitions.definitions.find(
+    (object) => object.name === updatedObject.name
+  )!;
   object.properties = updatedObject.properties;
 };
 
 const handleSave = async () => {
-  await api.saveEntityDefinitions({ definitions: objects });
+  await api.saveEntityDefinitions(entityDefinitions);
   message.info('saved objects to server');
 };
 
 onMounted(async () => {
-  objects = (await api.getEntityDefinitions()).definitions;
-  selectedObject = objects[0];
+  entityDefinitions = await api.getEntityDefinitions();
+  selectedObject = entityDefinitions.definitions[0];
   selectedPropertyName = firstKey(selectedObject.properties);
 });
 </script>

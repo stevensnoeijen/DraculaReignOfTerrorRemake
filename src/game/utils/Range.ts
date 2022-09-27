@@ -1,5 +1,17 @@
+import { jsonMember, jsonObject } from 'typedjson';
+
+@jsonObject
 export class Range {
-  constructor(public readonly min: number, public readonly max: number) {}
+  @jsonMember(Number)
+  public readonly min: number;
+
+  @jsonMember(Number)
+  public readonly max: number;
+
+  constructor(min: number = 0, max: number = 0) {
+    this.min = min;
+    this.max = max;
+  }
 
   includes(value: number) {
     return value >= this.min && value <= this.max;
