@@ -17,16 +17,17 @@ import { NTag, TreeOption } from 'naive-ui';
 import { computed, h } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { GameObject } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
+import { Unit } from '~/game/data/Unit';
 import { ellipsize } from '~/utils';
 
 const props = defineProps<{
-  object: GameObject;
+  object: EntityDefinition;
 }>();
 
 const emits = defineEmits<{
   (event: 'select', propertyName: string): void;
-  (event: 'update:object', object: GameObject): void;
+  (event: 'update:object', object: EntityDefinition): void;
 }>();
 
 let data = computed(() => {
@@ -70,7 +71,7 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (typeof option.key !== 'string') return;
 
   // property level
-  const value = props.object.properties[option.key]!;
+  const value = props.object.properties[option.key as keyof Unit]!;
   return h(NTag, { round: true }, { default: () => `${ellipsize(value, 3)}` });
 };
 
