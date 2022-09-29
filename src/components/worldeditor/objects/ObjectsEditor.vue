@@ -36,34 +36,41 @@
           @select="handlePropertyNameSelected"
         />
       </div>
-      <div class="grow flex flex-col">
+
+      <div
+        v-if="selectedProperty.name != null && selectedProperty.value != null"
+        class="grow flex flex-col"
+      >
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <object-property-editor
-            v-if="selectedPropertyName != null && value != null"
-            :name="selectedPropertyName"
-            :value="value"
+            :name="selectedProperty.name"
+            :value="selectedProperty.value"
             @update:value="handleValueUpdated"
           />
         </div>
         <div class="grow">
           <h4 class="text-l font-bold">Preview</h4>
           <sprite-model-preview
-            v-if="selectedPropertyName === 'spriteModel' && !isEmpty(value)"
-            :unit="(value as UnitType)"
+            v-if="
+              selectedProperty.name === 'spriteModel' &&
+              !isEmpty(selectedProperty.value)
+            "
+            :unit="(selectedProperty.value as UnitType)"
           />
           <sound-preview
             v-if="
-              selectedPropertyName?.includes('sound') &&
-              typeof value === 'string'
+              selectedProperty.name.includes('sound') &&
+              typeof selectedProperty.value === 'string'
             "
-            v-model="value"
+            v-model="selectedProperty.value"
           />
           <sound-preview
             v-if="
-              selectedPropertyName?.includes('sound') && Array.isArray(value)
+              selectedProperty.name.includes('sound') &&
+              Array.isArray(selectedProperty.value)
             "
-            v-model="value"
+            v-model="selectedProperty.value"
           />
         </div>
       </div>
@@ -76,9 +83,10 @@
 
 <script lang="ts" setup>
 import { useMessage } from 'naive-ui';
-import { computed, onMounted } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { $ref } from 'vue/macros';
 import { isEmpty } from 'lodash';
+import { $Keys } from 'utility-types';
 
 import * as api from './api';
 import { ObjectCreateInstance } from './create/types';
@@ -90,15 +98,25 @@ import { Unit } from '~/game/data/Unit';
 import { UnitType } from '~/game/types';
 import { firstKey } from '~/utils/object';
 
+type Property =
+  | {
+      name: $Keys<Unit>;
+      value: PropertyValue;
+    }
+  | { name: null; value: null };
+
 const message = useMessage();
 
 let entityDefinitions: EntityDefinitions = $ref();
 let selectedObject = $ref<EntityDefinition | null>(null);
-let selectedPropertyName = $ref<keyof Unit | null>(null);
+let selectedProperty = reactive<Property>({
+  name: null,
+  value: null,
+});
 
 const handleSelectObject = (object: EntityDefinition) => {
   selectedObject = object;
-  selectedPropertyName = firstKey(selectedObject.properties);
+  selectedProperty.name = firstKey(selectedObject.properties) as $Keys<Unit>;
 };
 
 let showObjectCreateModal = $ref(false);
@@ -117,16 +135,18 @@ const handleObjectCreate = async () => {
 };
 
 const setValue = (value: PropertyValue) => {
-  if (selectedObject == null || selectedPropertyName == null) return;
-  if (selectedObject.properties[selectedPropertyName] == null) return;
+  if (selectedObject == null || selectedProperty.name == null) return;
+  if (selectedObject.properties[selectedProperty.name] == null) return;
 
-  selectedObject.properties[selectedPropertyName] = value;
+  selectedObject.properties[selectedProperty.name] = selectedProperty.value;
 };
 
-const value = computed(() => selectedObject?.properties[selectedPropertyName!]);
-
 const handlePropertyNameSelected = (propertyName: string) => {
-  selectedPropertyName = propertyName;
+  if (selectedObject == null)
+    throw new Error('No ' + EntityDefinition.name + ' selected');
+
+  selectedProperty.name = propertyName as $Keys<Unit>;
+  selectedProperty.value = selectedObject?.properties[selectedProperty.name];
 };
 
 const handleValueUpdated = (value: PropertyValue) => {
@@ -148,7 +168,8 @@ const handleSave = async () => {
 onMounted(async () => {
   entityDefinitions = await api.getEntityDefinitions();
   selectedObject = entityDefinitions.definitions[0];
-  selectedPropertyName = firstKey(selectedObject.properties);
+  selectedProperty.name = firstKey(selectedObject.properties) as $Keys<Unit>;
+  selectedProperty.value = selectedObject.properties[selectedProperty.name];
 });
 </script>
 getEntityDefsaveEntityDfinitions
