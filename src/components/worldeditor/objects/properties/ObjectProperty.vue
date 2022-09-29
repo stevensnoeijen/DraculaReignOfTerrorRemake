@@ -99,6 +99,7 @@ const loadValues = () => {
   valueAsStringArray.value = props.value as string[];
   valueAsBoolean.value = props.value as boolean;
   valueAsNumber.value = props.value as number;
+  valueAsRange.value = props.value as RangeType;
 };
 
 let options: SelectOption[] = $ref([]);
