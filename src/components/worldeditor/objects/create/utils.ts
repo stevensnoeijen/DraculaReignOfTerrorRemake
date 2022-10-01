@@ -28,7 +28,7 @@ const getDefaultValue = <T extends Class<PropertyValue>>(
     : getDefaultValueByType(options.type);
 };
 
-export const createEmptyObject = (): EntityDefinition => {
+export const createEmptyEntityDefinition = (): EntityDefinition => {
   const editableProperties = getEditableProperties(Unit)!;
 
   return {

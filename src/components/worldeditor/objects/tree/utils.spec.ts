@@ -1,11 +1,13 @@
 import { createTreeOptions } from './utils';
 
+import { Unit } from '~/game/data/Unit';
+
 describe('createTreeOptions', () => {
   it('should create root option', () => {
     const options = createTreeOptions([
       {
         name: 'test',
-        properties: {},
+        properties: {} as Unit,
       },
     ]);
 
@@ -18,7 +20,7 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: 'layer/test',
-        properties: {},
+        properties: {} as Unit,
       },
     ]);
 
@@ -35,7 +37,7 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: '1/2/3/4/5/test',
-        properties: {},
+        properties: {} as Unit,
       },
     ]);
 
@@ -56,11 +58,11 @@ describe('createTreeOptions', () => {
     const options = createTreeOptions([
       {
         name: '1/2/3/4/5/test',
-        properties: {},
+        properties: {} as Unit,
       },
       {
         name: '1/2/test',
-        properties: {},
+        properties: {} as Unit,
       },
     ]);
 

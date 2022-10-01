@@ -1,6 +1,6 @@
-import { createEmptyObject, getDefaultValueByType } from './utils';
+import { createEmptyEntityDefinition, getDefaultValueByType } from './utils';
 
-import GameObject from '~/game/data/EntityDefinition';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 
 describe('getDefaultValueByType', () => {
   it.each([
@@ -19,19 +19,20 @@ describe('getDefaultValueByType', () => {
   });
 });
 
-describe('createEmptyObject', () => {
+describe('createEmptyEntityDefinition', () => {
   it('should set all properties', () => {
-    const object = createEmptyObject();
+    const object = createEmptyEntityDefinition();
 
     expect(Object.keys(object.properties)).toHaveLength(10);
   });
 
   const testObjectProperties = (
-    object: GameObject,
+    object: EntityDefinition,
     keys: readonly string[],
     expectedValue: unknown
   ) => {
     keys.forEach((key) => {
+      // @ts-ignore
       expect(object.properties[key]).toEqual(expectedValue);
     });
   };
@@ -51,7 +52,7 @@ describe('createEmptyObject', () => {
 
   // eslint-disable-next-line jest/expect-expect
   it('should set default values', () => {
-    const object = createEmptyObject();
+    const object = createEmptyEntityDefinition();
 
     testObjectProperties(object, NUMBER_PROPERTIES, 0);
     testObjectProperties(object, STRING_PROPERTIES, '');

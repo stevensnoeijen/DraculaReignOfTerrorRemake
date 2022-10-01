@@ -19,16 +19,16 @@ import TreeDeleteButton from '../TreeDeleteButton.vue';
 
 import { createTreeOptions } from './utils';
 
-import { GameObject } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 
 const props = defineProps<{
-  modelValue: GameObject[];
-  selected: GameObject | null;
+  modelValue: EntityDefinition[];
+  selected: EntityDefinition | null;
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', object: GameObject): void;
-  (event: 'update:modelValue', modelValue: GameObject[]): void;
+  (event: 'select', entityDefinition: EntityDefinition): void;
+  (event: 'update:modelValue', entityDefinition: EntityDefinition[]): void;
 }>();
 
 const data = computed(() => {

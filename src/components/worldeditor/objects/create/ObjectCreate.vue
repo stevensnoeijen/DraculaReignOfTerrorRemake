@@ -11,11 +11,10 @@ import { FormInst, FormRules, NForm } from 'naive-ui';
 import { ref } from 'vue';
 import { $ref } from 'vue/macros';
 
-
 import { ObjectCreateInstance } from './types';
-import { createEmptyObject } from './utils';
+import { createEmptyEntityDefinition } from './utils';
 
-import { GameObject } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 
 const form = ref<FormInst>();
 
@@ -28,8 +27,7 @@ const rules: FormRules = {
   },
 };
 
-const object = $ref<GameObject>(createEmptyObject());
-
+const object = $ref<EntityDefinition>(createEmptyEntityDefinition());
 defineExpose<ObjectCreateInstance>({
   form: form as unknown as FormInst,
   object,
