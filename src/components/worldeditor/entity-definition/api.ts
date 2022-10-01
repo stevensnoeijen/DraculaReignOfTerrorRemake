@@ -1,7 +1,7 @@
 import { EntityDefinitions } from '~/game/data/EntityDefinitions';
 import { serializer } from '~/game/data/serializer';
 
-const PATH = '/assets/entity-definitions.json';
+const PATH = 'assets/entity-definitions.json';
 
 export const getEntityDefinitions = async (): Promise<EntityDefinitions> => {
   const res = await fetch(PATH);
