@@ -44,6 +44,7 @@
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <object-property-editor
+            :key="selectedObject?.name + '.' + selectedProperty?.name"
             :name="selectedProperty.name"
             :value="selectedProperty.value"
             @update:value="handleValueUpdated"
@@ -138,6 +139,8 @@ const setValue = (value: PropertyValue) => {
   if (selectedObject == null || selectedProperty.name == null) return;
   if (selectedObject.properties[selectedProperty.name] == null) return;
 
+  selectedProperty.value = value;
+  // @ts-ignore
   selectedObject.properties[selectedProperty.name] = selectedProperty.value;
 };
 

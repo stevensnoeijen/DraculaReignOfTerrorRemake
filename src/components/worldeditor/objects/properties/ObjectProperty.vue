@@ -1,37 +1,42 @@
 <template>
   <n-input
     v-if="
-      type === String && !(name.startsWith('sound') || name === 'spriteModel')
+      typeof value === 'string' &&
+      !(name.startsWith('sound') || name === 'spriteModel')
     "
-    v-model:value="valueAsString"
+    v-model:value="value"
   />
   <n-select
     v-if="
-      (type === String || Array.isArray(type)) &&
+      (typeof value === 'string' ||
+        (Array.isArray(value) && typeof value[0] === 'string')) &&
       (name.startsWith('sound') || name === 'spriteModel')
     "
-    v-model:value="valueAsStringArray"
+    v-show="options.length > 0"
+    v-model:value="value"
     filterable
     :multiple="Array.isArray(type)"
     :options="options"
   />
 
   <n-switch
-    v-else-if="type === Boolean"
-    v-model:value.boolean="valueAsBoolean"
+    v-else-if="typeof value === 'boolean'"
+    v-model:value.boolean="value"
   />
 
-  <n-input-number v-else-if="type === Number" v-model:value="valueAsNumber" />
+  <n-input-number v-else-if="typeof value === 'number'" v-model:value="value" />
 
-  <Range v-else-if="type === RangeType" v-model="valueAsRange" />
+  <range
+    v-else-if="value instanceof RangeType && type === RangeType"
+    v-model="value"
+  />
 
   <span v-else> Type not supported </span>
 </template>
 
 <script lang="ts" setup>
 import { SelectOption } from 'naive-ui';
-import { computed, onMounted, onUpdated, ref, watch } from 'vue';
-import { $ref } from 'vue/macros';
+import { computed, reactive, ref, watch } from 'vue';
 
 import { getSounds } from '../../sound/api';
 import { stringsToSelectOptions } from '../../../utils';
@@ -55,73 +60,23 @@ const emits = defineEmits<{
 
 const type = computed(() => getEditableProperty(Unit, props.name)?.type);
 
-const valueAsString = ref('');
-const valueAsStringArray = ref<string[]>([]);
-const valueAsBoolean = ref(false);
-const valueAsNumber = ref(0);
-const valueAsRange = ref(new RangeType(0, 0));
+const value = ref(props.value);
 
-const getValue = (): PropertyValue => {
-  if (type.value === String) {
-    return valueAsString.value;
-  }
-  if (Array.isArray(type.value)) {
-    return valueAsStringArray.value;
-  }
-  if (type.value === Boolean) {
-    return valueAsBoolean.value;
-  }
-  if (type.value === Number) {
-    return valueAsNumber.value;
-  }
-  if (type.value === RangeType) {
-    return valueAsRange.value;
-  }
+watch(value, () => {
+  emits('update:value', value.value!);
+});
 
-  throw new Error('value not supported');
-};
-
-watch(
-  [
-    valueAsString,
-    valueAsStringArray,
-    valueAsBoolean,
-    valueAsNumber,
-    valueAsRange,
-  ],
-  () => {
-    emits('update:value', getValue());
-  }
-);
-
-const loadValues = () => {
-  valueAsString.value = props.value as string;
-  valueAsStringArray.value = props.value as string[];
-  valueAsBoolean.value = props.value as boolean;
-  valueAsNumber.value = props.value as number;
-  valueAsRange.value = props.value as RangeType;
-};
-
-let options: SelectOption[] = $ref([]);
+const options: SelectOption[] = reactive([]);
 const loadOptions = async () => {
   if (props.name.includes('sound')) {
     const sounds = await getSounds();
-    options = soundsToSelectOptions(sounds);
+    options.push(...soundsToSelectOptions(sounds));
   } else if (props.name === 'spriteModel') {
     const names = await getSpriteModelNames();
 
-    options = stringsToSelectOptions(names);
-  } else {
-    options = [];
+    options.push(...stringsToSelectOptions(names));
   }
 };
 
-onMounted(async () => {
-  loadValues();
-  await loadOptions();
-});
-onUpdated(async () => {
-  loadValues();
-  await loadOptions();
-});
+await loadOptions();
 </script>
