@@ -52,7 +52,7 @@
         </div>
         <div class="grow">
           <h4 class="text-l font-bold">Preview</h4>
-          <sprite-model-preview
+          <animator-preview
             v-if="
               selectedProperty.name === 'spriteModel' &&
               !isEmpty(selectedProperty.value)

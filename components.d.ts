@@ -38,7 +38,6 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView'];
     SoundButton: typeof import('./src/components/worldeditor/sound/SoundButton.vue')['default'];
     SoundPreview: typeof import('./src/components/worldeditor/sound/SoundPreview.vue')['default'];
-    SpriteModelPreview: typeof import('./src/components/worldeditor/sprite/SpriteModelPreview.vue')['default'];
     TreeDeleteButton: typeof import('./src/components/worldeditor/objects/TreeDeleteButton.vue')['default'];
   }
 }
