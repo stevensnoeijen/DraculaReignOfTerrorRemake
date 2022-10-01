@@ -8,21 +8,22 @@
       >
         <h3 class="text-l font-bold">Entity Definitions:</h3>
         <entity-definition-tree
+          :key="selectedEntityDefinition.name"
           v-model="entityDefinitions.definitions"
           class="grow"
-          :selected="selectedObject"
-          @select="handleSelectObject"
+          :selected="selectedEntityDefinition"
+          @select="handleSelectEntityDefinition"
         />
-        <n-button @click="showObjectCreateModal = true">
+        <n-button @click="showCreatorModal = true">
           Add Entity-Definition
         </n-button>
         <n-modal
-          v-model:show="showObjectCreateModal"
+          v-model:show="showCreatorModal"
           preset="confirm"
           title="Create Entity-Definition"
           positive-text="Add"
           negative-text="Cancel"
-          @positive-click="() => handleObjectCreate()"
+          @positive-click="() => handleCreate()"
           @negative-click="() => {}"
         >
           <entity-definition-creator ref="creatorInstance" />
@@ -31,10 +32,9 @@
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Properties:</h3>
         <properties-tree
-          v-if="selectedObject != null"
+          v-if="selectedEntityDefinition != null"
           class="grow"
-          :object="selectedObject"
-          @update:object="(object) => handleUpdateObject(object)"
+          :properties="selectedEntityDefinition.properties"
           @select="handlePropertyNameSelected"
         />
       </div>
@@ -46,7 +46,7 @@
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
           <property-editor
-            :key="selectedObject?.name + '.' + selectedProperty?.name"
+            :key="selectedEntityDefinition?.name + '.' + selectedProperty?.name"
             :name="selectedProperty.name"
             :value="selectedProperty.value"
             @update:value="handleValueUpdated"
@@ -92,9 +92,9 @@ import { isEmpty } from 'lodash';
 import { $Keys } from 'utility-types';
 
 import * as api from './api';
-import { EntityDefinitionCreatorInstance } from './create/types';
+import { EntityDefinitionCreatorInstance } from './creator/types';
 
-import { PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/types';
 import { EntityDefinitions } from '~/game/data/EntityDefinitions';
 import { EntityDefinition } from '~/game/data/EntityDefinition';
 import { Unit } from '~/game/data/Unit';
@@ -111,25 +111,31 @@ type Property =
 const message = useMessage();
 
 let entityDefinitions: EntityDefinitions = $ref();
-let selectedObject = $ref<EntityDefinition | null>(null);
+let selectedEntityDefinition = $ref<EntityDefinition | null>(null);
 let selectedProperty = reactive<Property>({
   name: null,
   value: null,
 });
 
-const handleSelectObject = (object: EntityDefinition) => {
-  selectedObject = object;
-  selectedProperty.name = firstKey(selectedObject.properties) as $Keys<Unit>;
+const loadProperty = (propertyName: $Keys<Unit>) => {
+  selectedProperty.name = propertyName;
+  selectedProperty.value =
+    selectedEntityDefinition?.properties[selectedProperty.name];
 };
 
-let showObjectCreateModal = $ref(false);
+const handleSelectEntityDefinition = (entityDefinition: EntityDefinition) => {
+  selectedEntityDefinition = entityDefinition;
+  loadProperty(firstKey(selectedEntityDefinition.properties) as $Keys<Unit>);
+};
+
+let showCreatorModal = $ref(false);
 const creatorInstance = $ref<EntityDefinitionCreatorInstance>();
-const handleObjectCreate = async () => {
+const handleCreate = async () => {
   try {
     await creatorInstance.form.validate();
 
     entityDefinitions.definitions.push(creatorInstance.entityDefinition);
-    handleSelectObject(creatorInstance.entityDefinition);
+    handleSelectEntityDefinition(creatorInstance.entityDefinition);
 
     return true;
   } catch (error) {
@@ -138,43 +144,40 @@ const handleObjectCreate = async () => {
 };
 
 const setValue = (value: PropertyValue) => {
-  if (selectedObject == null || selectedProperty.name == null) return;
-  if (selectedObject.properties[selectedProperty.name] == null) return;
+  if (selectedEntityDefinition == null || selectedProperty.name == null) return;
+  if (selectedEntityDefinition.properties[selectedProperty.name] == null)
+    return;
 
   selectedProperty.value = value;
   // @ts-ignore
-  selectedObject.properties[selectedProperty.name] = selectedProperty.value;
+  selectedEntityDefinition.properties[selectedProperty.name] =
+    selectedProperty.value;
 };
 
 const handlePropertyNameSelected = (propertyName: string) => {
-  if (selectedObject == null)
+  if (selectedEntityDefinition == null)
     throw new Error('No ' + EntityDefinition.name + ' selected');
 
-  selectedProperty.name = propertyName as $Keys<Unit>;
-  selectedProperty.value = selectedObject?.properties[selectedProperty.name];
+  loadProperty(propertyName);
 };
 
 const handleValueUpdated = (value: PropertyValue) => {
   setValue(value);
 };
 
-const handleUpdateObject = (updatedObject: EntityDefinition) => {
-  const object = entityDefinitions.definitions.find(
-    (object) => object.name === updatedObject.name
-  )!;
-  object.properties = updatedObject.properties;
-};
-
 const handleSave = async () => {
   await api.saveEntityDefinitions(entityDefinitions);
-  message.info('saved objects to server');
+  message.info('saved entity-definitions to server');
 };
 
 onMounted(async () => {
   entityDefinitions = await api.getEntityDefinitions();
-  selectedObject = entityDefinitions.definitions[0];
-  selectedProperty.name = firstKey(selectedObject.properties) as $Keys<Unit>;
-  selectedProperty.value = selectedObject.properties[selectedProperty.name];
+  selectedEntityDefinition = entityDefinitions.definitions[0];
+  selectedProperty.name = firstKey(
+    selectedEntityDefinition.properties
+  ) as $Keys<Unit>;
+  selectedProperty.value =
+    selectedEntityDefinition.properties[selectedProperty.name];
 });
 </script>
 getEntityDefsaveEntityDfinitions

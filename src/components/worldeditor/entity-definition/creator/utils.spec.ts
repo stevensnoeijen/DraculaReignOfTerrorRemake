@@ -21,19 +21,19 @@ describe('getDefaultValueByType', () => {
 
 describe('createEmptyEntityDefinition', () => {
   it('should set all properties', () => {
-    const object = createEmptyEntityDefinition();
+    const entityDefinition = createEmptyEntityDefinition();
 
-    expect(Object.keys(object.properties)).toHaveLength(10);
+    expect(Object.keys(entityDefinition.properties)).toHaveLength(10);
   });
 
-  const testObjectProperties = (
-    object: EntityDefinition,
+  const testProperties = (
+    entityDefinition: EntityDefinition,
     keys: readonly string[],
     expectedValue: unknown
   ) => {
     keys.forEach((key) => {
       // @ts-ignore
-      expect(object.properties[key]).toEqual(expectedValue);
+      expect(entityDefinition.properties[key]).toEqual(expectedValue);
     });
   };
 
@@ -52,11 +52,11 @@ describe('createEmptyEntityDefinition', () => {
 
   // eslint-disable-next-line jest/expect-expect
   it('should set default values', () => {
-    const object = createEmptyEntityDefinition();
+    const entityDefinition = createEmptyEntityDefinition();
 
-    testObjectProperties(object, NUMBER_PROPERTIES, 0);
-    testObjectProperties(object, STRING_PROPERTIES, '');
-    testObjectProperties(object, STRING_ARRAY_PROPERTIES, []);
-    testObjectProperties(object, RANGE_PROPERTIES, { min: 0, max: 0 });
+    testProperties(entityDefinition, NUMBER_PROPERTIES, 0);
+    testProperties(entityDefinition, STRING_PROPERTIES, '');
+    testProperties(entityDefinition, STRING_ARRAY_PROPERTIES, []);
+    testProperties(entityDefinition, RANGE_PROPERTIES, { min: 0, max: 0 });
   });
 });

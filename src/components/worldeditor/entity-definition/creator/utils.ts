@@ -1,6 +1,6 @@
 import { Class } from 'utility-types';
 
-import { PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/types';
 import { EntityDefinition } from '~/game/data/EntityDefinition';
 import {
   EditablePropertyOptions,

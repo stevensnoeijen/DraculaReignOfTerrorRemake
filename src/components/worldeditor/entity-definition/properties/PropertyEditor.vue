@@ -52,7 +52,7 @@ import { soundsToSelectOptions } from './utils';
 import { stringsToSelectOptions } from '~/components/utils';
 import { getSpriteModelNames } from '~/game/animation/api';
 import { getEditableProperty } from '~/game/data/decorator';
-import { PropertyValue } from '~/game/data/ObjectsJson';
+import { PropertyValue } from '~/game/data/types';
 import { Unit } from '~/game/data/Unit';
 import { Range as RangeType } from '~/game/utils/Range';
 

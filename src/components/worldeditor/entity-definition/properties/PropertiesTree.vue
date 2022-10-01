@@ -17,21 +17,19 @@ import { NTag, TreeOption } from 'naive-ui';
 import { computed, h } from 'vue';
 import { $ref } from 'vue/macros';
 
-import { EntityDefinition } from '~/game/data/EntityDefinition';
 import { Unit } from '~/game/data/Unit';
 import { ellipsize } from '~/utils';
 
 const props = defineProps<{
-  object: EntityDefinition;
+  properties: Unit;
 }>();
 
 const emits = defineEmits<{
   (event: 'select', propertyName: string): void;
-  (event: 'update:object', object: EntityDefinition): void;
 }>();
 
 let data = computed(() => {
-  return Object.keys(props.object.properties).map(
+  return Object.keys(props.properties).map(
     (name): TreeOption => ({
       label: name,
       key: name,
@@ -40,17 +38,6 @@ let data = computed(() => {
 });
 
 let selectedKeys = $ref<string[]>([]);
-
-// watch(
-//   () => props.object.properties,
-//   () => {
-//     if (props.object.properties.length === 0) {
-//       selectedKeys = [];
-//     } else {
-//       selectedKeys = [firstKey(props.object.properties)];
-//     }
-//   }
-// );
 
 const handleTreeSelect = (option: TreeOption) => {
   if (typeof option.key !== 'string') {
@@ -71,12 +58,7 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (typeof option.key !== 'string') return;
 
   // property level
-  const value = props.object.properties[option.key as keyof Unit]!;
+  const value = props.properties[option.key as keyof Unit]!;
   return h(NTag, { round: true }, { default: () => `${ellipsize(value, 3)}` });
 };
-
-// onMounted(() => {
-//   if (data.value.length > 0) selectedKeys = [firstKey(props.object.properties)];
-//   else selectedKeys = [];
-// });
 </script>
