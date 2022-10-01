@@ -1,34 +1,36 @@
 <template>
   <div class="flex flex-col">
-    <h2 class="text-2xl font-bold">Objects Editor</h2>
+    <h2 class="text-2xl font-bold">Entity Definitions Editor</h2>
     <div class="grow flex">
       <div
         v-if="entityDefinitions != null"
         class="border-r-2 mr-2 pr-2 flex flex-col"
       >
-        <h3 class="text-l font-bold">Objects:</h3>
-        <objects-tree
+        <h3 class="text-l font-bold">Entity Definitions:</h3>
+        <entity-definition-tree
           v-model="entityDefinitions.definitions"
           class="grow"
           :selected="selectedObject"
           @select="handleSelectObject"
         />
-        <n-button @click="showObjectCreateModal = true"> Add Object </n-button>
+        <n-button @click="showObjectCreateModal = true">
+          Add Entity-Definition
+        </n-button>
         <n-modal
           v-model:show="showObjectCreateModal"
           preset="confirm"
-          title="Create Object"
+          title="Create Entity-Definition"
           positive-text="Add"
           negative-text="Cancel"
           @positive-click="() => handleObjectCreate()"
           @negative-click="() => {}"
         >
-          <object-create ref="objectCreateInstance" />
+          <entity-definition-creator ref="creatorInstance" />
         </n-modal>
       </div>
       <div class="border-r-2 mr-2 pr-2 flex flex-col">
         <h3 class="text-l font-bold">Properties:</h3>
-        <object-properties-tree
+        <properties-tree
           v-if="selectedObject != null"
           class="grow"
           :object="selectedObject"
@@ -43,7 +45,7 @@
       >
         <div class="border-b-2 mb-2">
           <h3 class="text-l font-bold">Property editor:</h3>
-          <object-property-editor
+          <property-editor
             :key="selectedObject?.name + '.' + selectedProperty?.name"
             :name="selectedProperty.name"
             :value="selectedProperty.value"
@@ -90,7 +92,7 @@ import { isEmpty } from 'lodash';
 import { $Keys } from 'utility-types';
 
 import * as api from './api';
-import { ObjectCreateInstance } from './create/types';
+import { EntityDefinitionCreatorInstance } from './create/types';
 
 import { PropertyValue } from '~/game/data/ObjectsJson';
 import { EntityDefinitions } from '~/game/data/EntityDefinitions';
@@ -121,13 +123,13 @@ const handleSelectObject = (object: EntityDefinition) => {
 };
 
 let showObjectCreateModal = $ref(false);
-const objectCreateInstance = $ref<ObjectCreateInstance>();
+const creatorInstance = $ref<EntityDefinitionCreatorInstance>();
 const handleObjectCreate = async () => {
   try {
-    await objectCreateInstance.form.validate();
+    await creatorInstance.form.validate();
 
-    entityDefinitions.definitions.push(objectCreateInstance.object);
-    handleSelectObject(objectCreateInstance.object);
+    entityDefinitions.definitions.push(creatorInstance.entityDefinition);
+    handleSelectObject(creatorInstance.entityDefinition);
 
     return true;
   } catch (error) {

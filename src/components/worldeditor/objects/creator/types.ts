@@ -2,7 +2,7 @@ import { FormInst } from 'naive-ui';
 
 import { EntityDefinition } from '~/game/data/EntityDefinition';
 
-export type ObjectCreateInstance = {
+export type EntityDefinitionCreatorInstance = {
   form: FormInst;
-  object: EntityDefinition;
+  entityDefinition: EntityDefinition;
 };
