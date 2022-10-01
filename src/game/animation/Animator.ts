@@ -4,8 +4,8 @@ import { MoveDirection, UnitState } from '../types';
 
 import { AnimationModel } from './AnimationModel';
 export class Animator {
-  private currentState: UnitState= 'idle';
-  private currentDirection: MoveDirection = 'north';
+  private currentState: UnitState | null = null;
+  private currentDirection: MoveDirection | null = null;
 
   constructor(
     public readonly sprite: AnimatedSprite,
@@ -22,7 +22,7 @@ export class Animator {
     }
   }
 
-  private isStateChanged (state: UnitState, direction: MoveDirection): boolean {
+  private isStateChanged(state: UnitState, direction: MoveDirection): boolean {
     return this.currentState !== state || this.currentDirection != direction;
   }
 }
