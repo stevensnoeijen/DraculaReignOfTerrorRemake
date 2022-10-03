@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { IWorld } from 'sim-ecs';
 
+import { CombatService } from './combat/CombatService';
 import {
   SpriteRender,
-  Combat,
   Transform,
   Team,
   Alive,
@@ -35,9 +35,6 @@ import { UnitType } from './types';
 import { Sensor } from './ai/sensor/Sensor';
 import { createSwordsmanTree } from './ai/behaviortree/trees';
 import { UNIT_SWORDSMEN } from './data/constants';
-import { Attack } from './combat/Attack';
-import { Aggro } from './combat/Aggro';
-import { CombatController } from './combat/CombatController';
 
 export interface IUnitProps {
   team: Team;
@@ -45,12 +42,16 @@ export interface IUnitProps {
 }
 
 export class EntityLoader {
+  private combatService: CombatService;
+
   constructor(
     private readonly world: IWorld,
     private readonly entityDefinitions: EntityDefinitions,
     private readonly animationService: AnimationService,
     private readonly soundService: SoundService
-  ) {}
+  ) {
+    this.combatService = new CombatService();
+  }
 
   public createUnit(name: string, props: IUnitProps): void {
     const data = this.getData(name);
@@ -101,18 +102,7 @@ export class EntityLoader {
       .with(Controlled)
       .with(Follow)
       .with(Target)
-      .with(
-        new Combat(
-          new CombatController({
-            aggro: new Aggro(data.combatAggroRange),
-            attack: new Attack({
-              range: data.combatAttackRange,
-              damage: data.combatAttackDamage,
-              cooldownTime: data.combatAttackCooldown,
-            }),
-          })
-        )
-      )
+      .with(this.combatService.createComponent(data))
       .with(UnitState)
       .with(this.soundService.createComponent(data))
       .with(new Sensory(new Sensor(data.combatAggroRange.max)));
