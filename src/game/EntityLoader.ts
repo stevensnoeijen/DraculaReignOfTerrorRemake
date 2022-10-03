@@ -35,6 +35,8 @@ import { UnitType } from './types';
 import { Sensor } from './ai/sensor/Sensor';
 import { createSwordsmanTree } from './ai/behaviortree/trees';
 import { UNIT_SWORDSMEN } from './data/constants';
+import { Attack } from './combat/Attack';
+import { Aggro } from './combat/Aggro';
 
 export interface IUnitProps {
   team: Team;
@@ -99,12 +101,14 @@ export class EntityLoader {
       .with(Follow)
       .with(Target)
       .with(
-        new Combat(
-          data.combatAggroRange,
-          data.combatAttackRange,
-          data.combatAttackDamage,
-          data.combatAttackCooldown
-        )
+        new Combat({
+          aggro: new Aggro(data.combatAggroRange),
+          attack: new Attack({
+            range: data.combatAttackRange,
+            damage: data.combatAttackDamage,
+            cooldownTime: data.combatAttackCooldown,
+          }),
+        })
       )
       .with(UnitState)
       .with(this.soundService.createComponent(data))

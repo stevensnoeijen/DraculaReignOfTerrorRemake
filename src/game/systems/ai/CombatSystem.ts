@@ -27,7 +27,7 @@ const updateRotation = (target: Target, transform: Transform) => {
   );
 };
 
-const doCombat = (combat: Combat) => {
+const updateCombat = (combat: Combat) => {
   if (combat.target == null) return;
   if (!isAlive(combat.target)) {
     combat.target = null;
@@ -48,7 +48,7 @@ export const CombatSystem = createSystem({
   .withRunFunction(({ query }) => {
     return query.execute(({ target, transform, combat }) => {
       updateRotation(target, transform);
-      doCombat(combat as Combat);
+      updateCombat(combat as Combat);
     });
   })
   .build();

@@ -1,20 +1,21 @@
-import { Class, PickByValueExact } from 'utility-types';
+import { Class, PickByValue } from 'utility-types';
 import { IEntity } from 'sim-ecs';
 
 import { State } from '../Node';
 
 import { EntityNode } from './EntityNode';
 
+import { isHasRange, HasRange } from '~/game/combat/HasRange';
 import { Sensory, Team } from '~/game/components';
 import { isOnTeam } from '~/game/utils/components';
 import { Range } from '~/game/utils/Range';
 
 export class IsEnemyInRange<
   TComponent extends Object,
-  TProperty extends keyof PickByValueExact<
+  TProperty extends keyof PickByValue<TComponent, HasRange> = keyof PickByValue<
     TComponent,
-    Range
-  > = keyof PickByValueExact<TComponent, Range>
+    HasRange
+  >
 > extends EntityNode {
   constructor(
     private readonly componentConstructor: Class<TComponent>,
@@ -24,15 +25,19 @@ export class IsEnemyInRange<
   }
 
   protected evaluateByEntity(entity: IEntity): State {
-    const range = entity.getComponent(this.componentConstructor)![
+    const component = entity.getComponent(this.componentConstructor)![
       this.componentProperty
     ];
-    if (!(range instanceof Range))
+    if (!isHasRange(component))
       throw new Error(
-        'Range object should be be of type Range but is ' + typeof range
+        `Property
+        ${this.componentProperty as string}
+        of class
+        ${this.componentConstructor.name}
+        should have range object but does not.`
       );
 
-    const entitiesInRange = this.getEnemiesInRange(range);
+    const entitiesInRange = this.getEnemiesInRange(component.range);
     if (entitiesInRange.length === 0) return this.failure();
 
     this.root.setData('enemy', entitiesInRange[0]);

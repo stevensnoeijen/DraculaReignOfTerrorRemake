@@ -1,38 +1,33 @@
 import { IEntity } from 'sim-ecs';
-import { random } from 'lodash';
 
-import { Health } from '../Health';
+import { Attack } from '~/game/combat/Attack';
+import { Aggro } from '~/game/combat/Aggro';
 
-import { Cooldown } from './../../utils/Cooldown';
-
-import { Range } from '~/game/utils/Range';
-
+type CombatProps = Pick<Combat, 'aggro' | 'attack'>;
 export class Combat {
-  public target: IEntity | null = null;
+  public readonly aggro: Aggro;
+  public readonly attack: Attack;
+  private _target: IEntity | null = null;
 
-  private readonly attackCooldown: Cooldown;
+  constructor(props: CombatProps) {
+    this.aggro = props.aggro;
+    this.attack = props.attack;
+    this.attack.combat = this;
+  }
 
-  constructor(
-    public readonly aggroRange: Range,
-    public readonly attackRange: Range,
-    public readonly attackDamage: Range,
-    public readonly attackCooldownTime: number
-  ) {
-    this.attackCooldown = new Cooldown(attackCooldownTime, () => this.attack());
+  public set target(value: IEntity | null) {
+    this._target = value;
+  }
+
+  public get target(): IEntity | null {
+    return this._target;
   }
 
   public update() {
-    this.attackCooldown.update();
+    this.attack.update();
   }
 
   public reset() {
-    this.attackCooldown.reset();
-  }
-
-  private attack(): void {
-    const enemyHealthComponent = this.target!.getComponent(Health)!;
-    enemyHealthComponent.takeHit(
-      random(this.attackDamage.min, this.attackDamage.max, false)
-    );
+    this.attack.reset();
   }
 }
