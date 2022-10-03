@@ -14,6 +14,7 @@
 
 <script lang="ts" setup>
 import { NTag, TreeOption } from 'naive-ui';
+import { $Keys } from 'utility-types';
 import { computed, h } from 'vue';
 import { $ref } from 'vue/macros';
 
@@ -25,7 +26,7 @@ const props = defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', propertyName: string): void;
+  (event: 'select', propertyName: $Keys<Unit>): void;
 }>();
 
 let data = computed(() => {
@@ -45,7 +46,7 @@ const handleTreeSelect = (option: TreeOption) => {
   }
 
   selectedKeys = [option.key];
-  emits('select', option.key);
+  emits('select', option.key as $Keys<Unit>);
 };
 
 const nodeProps = ({ option }: { option: TreeOption }) => {

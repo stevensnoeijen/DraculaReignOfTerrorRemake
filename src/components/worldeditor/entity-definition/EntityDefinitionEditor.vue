@@ -8,7 +8,7 @@
       >
         <h3 class="text-l font-bold">Entity Definitions:</h3>
         <entity-definition-tree
-          :key="selectedEntityDefinition.name"
+          :key="selectedEntityDefinition?.name"
           v-model="entityDefinitions.definitions"
           class="grow"
           :selected="selectedEntityDefinition"
@@ -120,7 +120,7 @@ let selectedProperty = reactive<Property>({
 const loadProperty = (propertyName: $Keys<Unit>) => {
   selectedProperty.name = propertyName;
   selectedProperty.value =
-    selectedEntityDefinition?.properties[selectedProperty.name];
+    selectedEntityDefinition?.properties[selectedProperty.name]!;
 };
 
 const handleSelectEntityDefinition = (entityDefinition: EntityDefinition) => {
@@ -154,7 +154,7 @@ const setValue = (value: PropertyValue) => {
     selectedProperty.value;
 };
 
-const handlePropertyNameSelected = (propertyName: string) => {
+const handlePropertyNameSelected = (propertyName: $Keys<Unit>) => {
   if (selectedEntityDefinition == null)
     throw new Error('No ' + EntityDefinition.name + ' selected');
 

@@ -1,14 +1,15 @@
 import { createTreeOptions } from './utils';
 
 import { Unit } from '~/game/data/Unit';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 
 describe('createTreeOptions', () => {
   it('should create root option', () => {
     const options = createTreeOptions([
-      {
+      new EntityDefinition({
         name: 'test',
         properties: {} as Unit,
-      },
+      }),
     ]);
 
     expect(options).toHaveLength(1);
@@ -18,10 +19,10 @@ describe('createTreeOptions', () => {
 
   it('should create option with children', () => {
     const options = createTreeOptions([
-      {
+      new EntityDefinition({
         name: 'layer/test',
         properties: {} as Unit,
-      },
+      }),
     ]);
 
     expect(options).toHaveLength(1);
@@ -35,10 +36,10 @@ describe('createTreeOptions', () => {
 
   it('should create multiple layered', () => {
     const options = createTreeOptions([
-      {
+      new EntityDefinition({
         name: '1/2/3/4/5/test',
         properties: {} as Unit,
-      },
+      }),
     ]);
 
     expect(options).toHaveLength(1);
@@ -56,14 +57,14 @@ describe('createTreeOptions', () => {
 
   it('should create multiple items in layers', () => {
     const options = createTreeOptions([
-      {
+      new EntityDefinition({
         name: '1/2/3/4/5/test',
         properties: {} as Unit,
-      },
-      {
+      }),
+      new EntityDefinition({
         name: '1/2/test',
         properties: {} as Unit,
-      },
+      }),
     ]);
 
     expect(
