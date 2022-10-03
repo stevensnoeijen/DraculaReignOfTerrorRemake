@@ -1,4 +1,5 @@
 import { IEntity } from 'sim-ecs';
+import { random } from 'lodash';
 
 import { Health } from '../Health';
 
@@ -8,27 +9,30 @@ import { Range } from '~/game/utils/Range';
 
 export class Combat {
   public target: IEntity | null = null;
-  private readonly cooldown: Cooldown;
+
+  private readonly attackCooldown: Cooldown;
 
   constructor(
     public readonly aggroRange: Range,
     public readonly attackRange: Range,
-    public readonly attackDamage: number,
-    public readonly attackCooldown: number
+    public readonly attackDamage: Range,
+    public readonly attackCooldownTime: number
   ) {
-    this.cooldown = new Cooldown(attackCooldown, () => this.attack());
+    this.attackCooldown = new Cooldown(attackCooldownTime, () => this.attack());
   }
 
   public update() {
-    this.cooldown.update();
+    this.attackCooldown.update();
   }
 
   public reset() {
-    this.cooldown.reset();
+    this.attackCooldown.reset();
   }
 
   private attack(): void {
     const enemyHealthComponent = this.target!.getComponent(Health)!;
-    enemyHealthComponent.takeHit(this.attackDamage);
+    enemyHealthComponent.takeHit(
+      random(this.attackDamage.min, this.attackDamage.max, false)
+    );
   }
 }

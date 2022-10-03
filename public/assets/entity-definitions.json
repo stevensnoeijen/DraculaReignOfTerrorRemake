@@ -12,7 +12,10 @@
           "min": 0,
           "max": 23
         },
-        "combatAttackDamage": 3,
+        "combatAttackDamage": {
+          "min": 2,
+          "max": 3
+        },
         "combatAttackCooldown": 1000,
         "spriteModel": "swordsmen",
         "soundCommand": [
@@ -66,7 +69,10 @@
           "min": 0,
           "max": 64
         },
-        "combatAttackDamage": 2,
+        "combatAttackDamage": {
+          "min": 1,
+          "max": 2
+        },
         "combatAttackCooldown": 1000,
         "spriteModel": "crossbowsoldier",
         "soundCommand": [
@@ -113,7 +119,10 @@
           "min": 0,
           "max": 16
         },
-        "combatAttackDamage": 8,
+        "combatAttackDamage": {
+          "min": 6,
+          "max": 8
+        },
         "combatAttackCooldown": 1000,
         "spriteModel": "knight",
         "soundCommand": [
@@ -156,7 +165,10 @@
           "min": 0,
           "max": 16
         },
-        "combatAttackDamage": 0,
+        "combatAttackDamage": {
+          "min": 0,
+          "max": 0
+        },
         "combatAttackCooldown": 1000,
         "spriteModel": "juggernaut",
         "soundCommand": ["unit_move_multiple", "juggernaut_move"],
@@ -189,7 +201,10 @@
           "min": 0,
           "max": 80
         },
-        "combatAttackDamage": 4,
+        "combatAttackDamage": {
+          "min": 4,
+          "max": 4
+        },
         "combatAttackCooldown": 1000,
         "spriteModel": "catapult",
         "soundCommand": ["catapult_move"],
@@ -210,7 +225,10 @@
           "min": 0,
           "max": 80
         },
-        "combatAttackDamage": 6,
+        "combatAttackDamage": {
+          "min": 6,
+          "max": 6
+        },
         "combatAttackCooldown": 1000,
         "spriteModel": "cannon",
         "soundCommand": ["canon_move"],
