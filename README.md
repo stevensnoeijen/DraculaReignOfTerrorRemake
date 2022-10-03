@@ -1,5 +1,7 @@
 # Dracula: Reign of Terror Remake
 
+[![Coverage Status](https://coveralls.io/repos/github/stevensnoeijen/drotr/badge.svg?branch=main)](https://coveralls.io/github/stevensnoeijen/drotr?branch=main)
+
 Dracula: Reign of Terror Remake is a remake of "Dracula: Reign of Terror" (a.k.a. Vlad Tepes Dracula) strategy game from 1997.
 
 This game is in development, but not every actively.
