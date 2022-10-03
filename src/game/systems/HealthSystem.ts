@@ -11,7 +11,7 @@ export const HealthSystem = createSystem({
 })
   .withRunFunction(({ query }) =>
     query.execute(({ health, alive }) => {
-      if (health.points === 0) {
+      if (health.points <= 0) {
         alive.die();
       }
     })
