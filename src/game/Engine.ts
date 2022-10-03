@@ -7,6 +7,7 @@ import { getOptions } from './Options';
 import { Scenario } from './scenarios/Scenario';
 import { GameState } from './states/GameState';
 import { ScenarioConstructor } from './scenarios/types';
+import { Assets } from './constants';
 
 Entity.uuidFn = nanoid;
 
@@ -23,7 +24,7 @@ export class Engine {
     this.world.addResource(getOptions());
 
     this.app.loader
-      .add('objects', 'assets/objects.json')
+      .add(Assets.ENTITY_DEFINITIONS)
       .add('unit-spritesheet', 'assets/unit-spritesheet.json')
       .add('animation-models', 'assets/animation-models.json')
       .add('sounds', 'assets/sounds.json');

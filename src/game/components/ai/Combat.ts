@@ -1,32 +1,33 @@
 import { IEntity } from 'sim-ecs';
 
-import { Health } from '../Health';
+import { CombatController } from '../../combat/CombatController';
 
-import { Cooldown } from './../../utils/Cooldown';
+import { Aggro } from '~/game/combat/Aggro';
+import { Attack } from '~/game/combat/Attack';
 
 export class Combat {
-  public target: IEntity | null = null;
-  private readonly cooldown: Cooldown;
+  constructor(private readonly controller: CombatController) {}
 
-  constructor(
-    public readonly aggroRange: number,
-    public readonly attackRange: number,
-    public readonly attackDamage: number,
-    public readonly attackCooldown: number
-  ) {
-    this.cooldown = new Cooldown(attackCooldown, () => this.attack());
+  get aggro(): Aggro {
+    return this.controller.aggro;
+  }
+  get attack(): Attack {
+    return this.controller.attack;
+  }
+
+  public set target(value: IEntity | null) {
+    this.controller.target = value;
+  }
+
+  public get target(): IEntity | null {
+    return this.controller.target;
   }
 
   public update() {
-    this.cooldown.update();
+    this.attack.update();
   }
 
   public reset() {
-    this.cooldown.reset();
-  }
-
-  private attack(): void {
-    const enemyHealthComponent = this.target!.getComponent(Health)!;
-    enemyHealthComponent.takeHit(this.attackDamage);
+    this.attack.reset();
   }
 }

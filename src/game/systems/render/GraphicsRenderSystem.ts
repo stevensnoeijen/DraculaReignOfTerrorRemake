@@ -70,7 +70,7 @@ const drawAggroRadius = (
   team: Team | null
 ): void => {
   graphics.lineStyle(1, team?.color === 'red' ? RED : BLUE);
-  graphics.drawCircle(0, 0, combat.aggroRange);
+  graphics.drawCircle(0, 0, combat.aggro.range.max);
 };
 
 let showAllHealth: boolean;

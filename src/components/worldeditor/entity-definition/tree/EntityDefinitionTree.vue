@@ -19,16 +19,16 @@ import TreeDeleteButton from '../TreeDeleteButton.vue';
 
 import { createTreeOptions } from './utils';
 
-import { GameObject } from '~/game/data/ObjectsJson';
+import { EntityDefinition } from '~/game/data/EntityDefinition';
 
 const props = defineProps<{
-  modelValue: GameObject[];
-  selected: GameObject | null;
+  modelValue: EntityDefinition[];
+  selected: EntityDefinition | null;
 }>();
 
 const emits = defineEmits<{
-  (event: 'select', object: GameObject): void;
-  (event: 'update:modelValue', modelValue: GameObject[]): void;
+  (event: 'select', entityDefinition: EntityDefinition): void;
+  (event: 'update:modelValue', entityDefinition: EntityDefinition[]): void;
 }>();
 
 const data = computed(() => {
@@ -46,20 +46,20 @@ watch(
 );
 
 const handleTreeSelect = (option: TreeOption) => {
-  let object = props.modelValue.find((object) => object.name === option.key);
-  if (object == null) {
+  let entityDefinition = props.modelValue.find((ed) => ed.name === option.key);
+  if (entityDefinition == null) {
     // try finding first thing in that layer
-    object = props.modelValue.find((object) =>
-      object.name.startsWith(option.key as string)
+    entityDefinition = props.modelValue.find((ed) =>
+      ed.name.startsWith(option.key as string)
     );
   }
-  if (object == null) {
+  if (entityDefinition == null) {
     return;
   }
 
-  selectedKeys = object.name;
+  selectedKeys = entityDefinition.name;
 
-  emits('select', object);
+  emits('select', entityDefinition);
 };
 
 const nodeProps = ({ option }: { option: TreeOption }) => {
@@ -68,9 +68,9 @@ const nodeProps = ({ option }: { option: TreeOption }) => {
   };
 };
 
-const deleteObject = (objectName: string) => {
+const remove = (name: string) => {
   emits('update:modelValue', [
-    ...props.modelValue.filter((object) => object.name !== objectName),
+    ...props.modelValue.filter((ed) => ed.name !== name),
   ]);
   emits('select', props.modelValue[0]);
 };
@@ -81,9 +81,9 @@ const renderSuffix = ({ option }: { option: TreeOption }) => {
   if (option.children == null) {
     // component level
     return h(TreeDeleteButton as any, {
-      'icon-title': "Delete object with all it's properties",
+      'icon-title': "Delete entity-definition with all it's properties",
       'icon-class': 'ml-6',
-      onClick: () => deleteObject(option.key as string),
+      onClick: () => remove(option.key as string),
     });
   }
 };

@@ -1,9 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { IWorld } from 'sim-ecs';
 
+import { CombatService } from './combat/CombatService';
 import {
   SpriteRender,
-  Combat,
   Transform,
   Team,
   Alive,
@@ -23,7 +23,7 @@ import {
   BehaviorTree,
 } from './components';
 import { rotationToDirection } from './animation/load';
-import { ObjectsJson } from './data/ObjectsJson';
+import { EntityDefinitions } from './data/EntityDefinitions';
 import { SoundService } from './sounds/SoundService';
 import { AnimationService } from './animation/AnimationService';
 import { Point } from './math/types';
@@ -42,12 +42,16 @@ export interface IUnitProps {
 }
 
 export class EntityLoader {
+  private combatService: CombatService;
+
   constructor(
     private readonly world: IWorld,
-    private readonly objects: ObjectsJson,
+    private readonly entityDefinitions: EntityDefinitions,
     private readonly animationService: AnimationService,
     private readonly soundService: SoundService
-  ) {}
+  ) {
+    this.combatService = new CombatService();
+  }
 
   public createUnit(name: string, props: IUnitProps): void {
     const data = this.getData(name);
@@ -98,17 +102,10 @@ export class EntityLoader {
       .with(Controlled)
       .with(Follow)
       .with(Target)
-      .with(
-        new Combat(
-          data.combatAggroRange,
-          data.combatAttackRange,
-          data.combatAttackDamage,
-          data.combatAttackCooldown
-        )
-      )
+      .with(this.combatService.createComponent(data))
       .with(UnitState)
       .with(this.soundService.createComponent(data))
-      .with(new Sensory(new Sensor(data.combatAggroRange)));
+      .with(new Sensory(new Sensor(data.combatAggroRange.max)));
 
     if (props.team.equals(Team.PLAYER)) builder.with(MouseControlled);
 
@@ -119,7 +116,9 @@ export class EntityLoader {
   }
 
   private getData(name: string): Unit {
-    const object = this.objects.find((object) => object.name === name);
+    const object = this.entityDefinitions.definitions.find(
+      (object) => object.name === name
+    );
     if (object == null) throw new Error(`Unit with name ${name} not existend`);
 
     return Unit.fromJson(object);

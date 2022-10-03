@@ -7,6 +7,6 @@ describe('IsEnemyInAttackRange', () => {
     const node = new IsEnemyInAttackRange();
 
     expect(node['componentConstructor']).toBe(Combat);
-    expect(node['componentProperty']).toBe('attackRange');
+    expect(node['componentProperty']).toBe('attack');
   });
 });
