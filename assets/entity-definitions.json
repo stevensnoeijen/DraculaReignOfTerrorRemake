@@ -237,10 +237,10 @@
         "combatAttackCooldown": 1000,
         "combatAttackHitChance": 0.8,
         "spriteModel": "cannon",
-        "soundCommand": ["canon_move"],
-        "soundAttackEffect": ["canon_fire_1", "canon_fire_2"],
-        "soundDead": ["canon_destroyed"],
-        "soundDeadByCatapult": "canon_destroyed"
+        "soundCommand": ["cannon_move"],
+        "soundAttackEffect": ["cannon_fire_1", "cannon_fire_2"],
+        "soundDead": ["cannon_destroyed"],
+        "soundDeadByCatapult": "cannon_destroyed"
       }
     }
   ]
