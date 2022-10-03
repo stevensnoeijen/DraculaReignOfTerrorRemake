@@ -144,14 +144,15 @@ const handleCreate = async () => {
 };
 
 const setValue = (value: PropertyValue) => {
-  if (selectedEntityDefinition == null || selectedProperty.name == null) return;
-  if (selectedEntityDefinition.properties[selectedProperty.name] == null)
+  if (
+    selectedProperty.name == null ||
+    selectedEntityDefinition?.properties[selectedProperty.name!] == null
+  )
     return;
 
-  selectedProperty.value = value;
-  // @ts-ignore
+  // cast as never, because selected property can not be validated
   selectedEntityDefinition.properties[selectedProperty.name] =
-    selectedProperty.value;
+    selectedProperty.value = value as never;
 };
 
 const handlePropertyNameSelected = (propertyName: $Keys<Unit>) => {

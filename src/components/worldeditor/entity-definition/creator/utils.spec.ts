@@ -1,6 +1,9 @@
+import { $Keys } from 'utility-types';
+
 import { createEmptyEntityDefinition, getDefaultValueByType } from './utils';
 
 import { EntityDefinition } from '~/game/data/EntityDefinition';
+import { Unit } from '~/game/data/Unit';
 
 describe('getDefaultValueByType', () => {
   it.each([
@@ -28,11 +31,10 @@ describe('createEmptyEntityDefinition', () => {
 
   const testProperties = (
     entityDefinition: EntityDefinition,
-    keys: readonly string[],
+    keys: readonly $Keys<Unit>[],
     expectedValue: unknown
   ) => {
     keys.forEach((key) => {
-      // @ts-ignore
       expect(entityDefinition.properties[key]).toEqual(expectedValue);
     });
   };
