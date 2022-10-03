@@ -39,18 +39,14 @@ describe('createEmptyEntityDefinition', () => {
     });
   };
 
-  const NUMBER_PROPERTIES = [
-    'healthPointsMax',
-    'combatAttackRange',
-    'combatAttackDamage',
-  ] as const;
+  const NUMBER_PROPERTIES = ['healthPointsMax', 'combatAttackDamage'] as const;
   const STRING_PROPERTIES = ['spriteModel', 'soundDeadByCatapult'] as const;
   const STRING_ARRAY_PROPERTIES = [
     'soundCommand',
     'soundAttackEffect',
     'soundDead',
   ] as const;
-  const RANGE_PROPERTIES = ['combatAggroRange'] as const;
+  const RANGE_PROPERTIES = ['combatAggroRange', 'combatAttackRange'] as const;
 
   // eslint-disable-next-line jest/expect-expect
   it('should set default values', () => {

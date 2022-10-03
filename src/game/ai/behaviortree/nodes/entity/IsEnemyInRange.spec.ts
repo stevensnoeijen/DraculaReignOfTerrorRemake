@@ -11,6 +11,7 @@ import { IsEnemyInRange } from './IsEnemyInRange';
 import { Sensory } from '~/game/components';
 import { Modality } from '~/game/ai/sensor/Modality';
 import { Sensor } from '~/game/ai/sensor/Sensor';
+import { Range } from '~/game/utils/Range';
 
 describe('IsEnemyInRange', () => {
   describe('evaluate', () => {
@@ -34,7 +35,7 @@ describe('IsEnemyInRange', () => {
         .buildEntity()
         .with(Team.PLAYER)
         .with(new Transform(Vector2.ZERO))
-        .with(new Combat(16, 0, 0, 0))
+        .with(new Combat(new Range(0, 16), Range.ZERO, 0, 0))
         .with(sensor)
         .build();
 

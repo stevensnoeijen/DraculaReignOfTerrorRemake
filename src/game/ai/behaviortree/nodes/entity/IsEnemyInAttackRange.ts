@@ -1,4 +1,3 @@
-
 import { IsEnemyInRange } from './IsEnemyInRange';
 
 import { Combat } from '~/game/components/ai/Combat';

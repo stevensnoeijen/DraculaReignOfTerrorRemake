@@ -100,7 +100,7 @@ export class EntityLoader {
       .with(Target)
       .with(
         new Combat(
-          data.combatAggroRange.max,
+          data.combatAggroRange,
           data.combatAttackRange,
           data.combatAttackDamage,
           data.combatAttackCooldown

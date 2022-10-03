@@ -24,11 +24,11 @@ export class Unit {
   combatAggroRange!: Range;
 
   @EditableProperty({
-    type: Number,
+    type: Range,
     nullable: false,
   })
-  @jsonMember(Number)
-  combatAttackRange!: number;
+  @jsonMember(Range)
+  combatAttackRange!: Range;
 
   @EditableProperty({
     type: Number,

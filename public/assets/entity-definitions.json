@@ -8,7 +8,10 @@
           "min": 0,
           "max": 160
         },
-        "combatAttackRange": 23,
+        "combatAttackRange": {
+          "min": 0,
+          "max": 23
+        },
         "combatAttackDamage": 3,
         "combatAttackCooldown": 1000,
         "spriteModel": "swordsmen",
@@ -59,7 +62,10 @@
           "min": 0,
           "max": 64
         },
-        "combatAttackRange": 64,
+        "combatAttackRange": {
+          "min": 0,
+          "max": 64
+        },
         "combatAttackDamage": 2,
         "combatAttackCooldown": 1000,
         "spriteModel": "crossbowsoldier",
@@ -103,7 +109,10 @@
           "min": 0,
           "max": 96
         },
-        "combatAttackRange": 16,
+        "combatAttackRange": {
+          "min": 0,
+          "max": 16
+        },
         "combatAttackDamage": 8,
         "combatAttackCooldown": 1000,
         "spriteModel": "knight",
@@ -143,7 +152,10 @@
           "min": 0,
           "max": 0
         },
-        "combatAttackRange": 16,
+        "combatAttackRange": {
+          "min": 0,
+          "max": 16
+        },
         "combatAttackDamage": 0,
         "combatAttackCooldown": 1000,
         "spriteModel": "juggernaut",
@@ -173,7 +185,10 @@
           "min": 0,
           "max": 96
         },
-        "combatAttackRange": 80,
+        "combatAttackRange": {
+          "min": 0,
+          "max": 80
+        },
         "combatAttackDamage": 4,
         "combatAttackCooldown": 1000,
         "spriteModel": "catapult",
@@ -191,7 +206,10 @@
           "min": 0,
           "max": 160
         },
-        "combatAttackRange": 80,
+        "combatAttackRange": {
+          "min": 0,
+          "max": 80
+        },
         "combatAttackDamage": 6,
         "combatAttackCooldown": 1000,
         "spriteModel": "cannon",

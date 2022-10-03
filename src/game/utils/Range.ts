@@ -2,6 +2,8 @@ import { jsonMember, jsonObject } from 'typedjson';
 
 @jsonObject
 export class Range {
+  public static readonly ZERO = new Range(0, 0);
+
   @jsonMember(Number)
   public readonly min: number;
 
