@@ -1,26 +1,26 @@
 import { IEntity } from 'sim-ecs';
 
-import { Attack } from '~/game/combat/Attack';
+import { CombatController } from '../../combat/CombatController';
+
 import { Aggro } from '~/game/combat/Aggro';
+import { Attack } from '~/game/combat/Attack';
 
-type CombatProps = Pick<Combat, 'aggro' | 'attack'>;
 export class Combat {
-  public readonly aggro: Aggro;
-  public readonly attack: Attack;
-  private _target: IEntity | null = null;
+  constructor(private readonly controller: CombatController) {}
 
-  constructor(props: CombatProps) {
-    this.aggro = props.aggro;
-    this.attack = props.attack;
-    this.attack.combat = this;
+  get aggro(): Aggro {
+    return this.controller.aggro;
+  }
+  get attack(): Attack {
+    return this.controller.attack;
   }
 
   public set target(value: IEntity | null) {
-    this._target = value;
+    this.controller.target = value;
   }
 
   public get target(): IEntity | null {
-    return this._target;
+    return this.controller.target;
   }
 
   public update() {

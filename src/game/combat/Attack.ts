@@ -1,9 +1,10 @@
 import { random } from 'lodash';
 
-import { Combat, Health } from '../components';
+import { Health } from '../components';
 import { Range } from '../utils/Range';
 
 import { Cooldown } from './../utils/Cooldown';
+import { CombatController } from './CombatController';
 import { HasRange } from './HasRange';
 
 type AttackProps = Pick<Attack, 'range' | 'damage'> & {
@@ -13,7 +14,7 @@ type AttackProps = Pick<Attack, 'range' | 'damage'> & {
 export class Attack implements HasRange {
   public readonly range: Range;
   public readonly damage: Range;
-  public combat: Combat | null = null;
+  public combat: CombatController | null = null;
 
   private readonly cooldown: Cooldown;
 
