@@ -14,22 +14,22 @@
       "end": 2.274331065759637,
       "loop": false
     },
-    "canon_destroyed": {
+    "cannon_destroyed": {
       "start": 4,
       "end": 6.97219954648526,
       "loop": false
     },
-    "canon_fire_1": {
+    "cannon_fire_1": {
       "start": 8,
       "end": 9.02172335600907,
       "loop": false
     },
-    "canon_fire_2": {
+    "cannon_fire_2": {
       "start": 11,
       "end": 12.43092970521542,
       "loop": false
     },
-    "canon_move": {
+    "cannon_move": {
       "start": 14,
       "end": 15.72408163265306,
       "loop": false
