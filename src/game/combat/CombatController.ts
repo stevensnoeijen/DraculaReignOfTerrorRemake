@@ -13,7 +13,7 @@ export class CombatController {
   constructor(props: CombatControllerProps) {
     this.aggro = props.aggro;
     this.attack = props.attack;
-    this.attack.combat = this;
+    this.attack.combatController = this;
   }
 
   public set target(value: IEntity | null) {

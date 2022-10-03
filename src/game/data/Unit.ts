@@ -45,6 +45,13 @@ export class Unit {
   combatAttackCooldown!: number;
 
   @EditableProperty({
+    type: Number,
+    nullable: false,
+  })
+  @jsonMember(Number)
+  combatAttackHitChance!: number;
+
+  @EditableProperty({
     type: String,
     nullable: false,
   })

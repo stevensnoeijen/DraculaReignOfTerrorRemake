@@ -16,6 +16,7 @@ export class CombatService {
       attack: new Attack({
         range: data.combatAttackRange,
         damage: data.combatAttackDamage,
+        hitChance: data.combatAttackHitChance,
         cooldownTime: data.combatAttackCooldown,
       }),
     });

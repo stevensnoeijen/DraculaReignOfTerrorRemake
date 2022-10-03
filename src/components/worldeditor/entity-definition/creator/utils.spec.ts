@@ -26,7 +26,7 @@ describe('createEmptyEntityDefinition', () => {
   it('should set all properties', () => {
     const entityDefinition = createEmptyEntityDefinition();
 
-    expect(Object.keys(entityDefinition.properties)).toHaveLength(10);
+    expect(Object.keys(entityDefinition.properties)).toHaveLength(11);
   });
 
   const testProperties = (
@@ -39,14 +39,21 @@ describe('createEmptyEntityDefinition', () => {
     });
   };
 
-  const NUMBER_PROPERTIES = ['healthPointsMax', 'combatAttackDamage'] as const;
+  const NUMBER_PROPERTIES = [
+    'healthPointsMax',
+    'combatAttackHitChance',
+  ] as const;
   const STRING_PROPERTIES = ['spriteModel', 'soundDeadByCatapult'] as const;
   const STRING_ARRAY_PROPERTIES = [
     'soundCommand',
     'soundAttackEffect',
     'soundDead',
   ] as const;
-  const RANGE_PROPERTIES = ['combatAggroRange', 'combatAttackRange'] as const;
+  const RANGE_PROPERTIES = [
+    'combatAggroRange',
+    'combatAttackRange',
+    'combatAttackDamage',
+  ] as const;
 
   // eslint-disable-next-line jest/expect-expect
   it('should set default values', () => {

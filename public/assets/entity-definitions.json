@@ -17,6 +17,7 @@
           "max": 3
         },
         "combatAttackCooldown": 1000,
+        "combatAttackHitChance": 0.8,
         "spriteModel": "swordsmen",
         "soundCommand": [
           "unit_move_1",
@@ -74,6 +75,7 @@
           "max": 2
         },
         "combatAttackCooldown": 1000,
+        "combatAttackHitChance": 0.8,
         "spriteModel": "crossbowsoldier",
         "soundCommand": [
           "unit_move_1",
@@ -124,6 +126,7 @@
           "max": 8
         },
         "combatAttackCooldown": 1000,
+        "combatAttackHitChance": 0.8,
         "spriteModel": "knight",
         "soundCommand": [
           "unit_move_1",
@@ -170,6 +173,7 @@
           "max": 0
         },
         "combatAttackCooldown": 1000,
+        "combatAttackHitChance": 1,
         "spriteModel": "juggernaut",
         "soundCommand": ["unit_move_multiple", "juggernaut_move"],
         "soundAttackEffect": ["juggernaut_attack"],
@@ -206,6 +210,7 @@
           "max": 4
         },
         "combatAttackCooldown": 1000,
+        "combatAttackHitChance": 0.8,
         "spriteModel": "catapult",
         "soundCommand": ["catapult_move"],
         "soundAttackEffect": ["catapult_fire"],
@@ -230,6 +235,7 @@
           "max": 6
         },
         "combatAttackCooldown": 1000,
+        "combatAttackHitChance": 0.8,
         "spriteModel": "cannon",
         "soundCommand": ["canon_move"],
         "soundAttackEffect": ["canon_fire_1", "canon_fire_2"],

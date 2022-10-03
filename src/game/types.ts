@@ -25,3 +25,9 @@ export type MoveDirection = typeof MOVE_DIRECTIONS[number];
 
 export const UNIT_STATES = ['idle', 'move', 'attack', 'dead'] as const;
 export type UnitState = typeof UNIT_STATES[number];
+
+/**
+ * Value should be between 0 - 1.
+ * Where 0 is 0%, and 1 is 100%.
+ */
+export type Percentage = number;
