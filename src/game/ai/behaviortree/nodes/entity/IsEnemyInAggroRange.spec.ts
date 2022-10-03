@@ -8,7 +8,7 @@ describe('IsEnemyInAggroRange', () => {
       const node = new IsEnemyInAggroRange();
 
       expect(node['componentConstructor']).toBe(Combat);
-      expect(node['componentProperty']).toBe('aggroRange');
+      expect(node['componentProperty']).toBe('aggro');
     });
   });
 });

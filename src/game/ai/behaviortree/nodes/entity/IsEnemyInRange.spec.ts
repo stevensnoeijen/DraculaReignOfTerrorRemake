@@ -12,6 +12,9 @@ import { Sensory } from '~/game/components';
 import { Modality } from '~/game/ai/sensor/Modality';
 import { Sensor } from '~/game/ai/sensor/Sensor';
 import { Range } from '~/game/utils/Range';
+import { CombatController } from '~/game/combat/CombatController';
+import { Aggro } from '~/game/combat/Aggro';
+import { Attack } from '~/game/combat/Attack';
 
 describe('IsEnemyInRange', () => {
   describe('evaluate', () => {
@@ -21,13 +24,19 @@ describe('IsEnemyInRange', () => {
       world = buildWorld().build();
     });
 
-    it('should success set target when there is an enemy within range', () => {
+    it('should set target when there is an enemy within range', () => {
       const entityInRange = world
         .buildEntity()
         .with(Team.CPU)
         .with(new Transform(new Vector2(0, 0)))
         .build();
 
+      const combat = new Combat(
+        new CombatController({
+          aggro: new Aggro(new Range(0, 16)),
+          attack: {} as Attack,
+        })
+      );
       const sensor = new Sensory(
         new Sensor(48, [new Modality(entityInRange, 16)])
       );
@@ -35,11 +44,11 @@ describe('IsEnemyInRange', () => {
         .buildEntity()
         .with(Team.PLAYER)
         .with(new Transform(Vector2.ZERO))
-        .with(new Combat(new Range(0, 16), Range.ZERO, 0, 0))
+        .with(combat)
         .with(sensor)
         .build();
 
-      const node = new IsEnemyInRange(Combat, 'aggroRange');
+      const node = new IsEnemyInRange(Combat, 'aggro');
       const parent = new Node();
       parent.setData('entity', entity);
       parent.attach(node);
