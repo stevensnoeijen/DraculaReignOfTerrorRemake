@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .ts,.vue src",
     "test": "jest",
+    "test:coveralls": "jest --coverage --coverageReporters=text-lcov",
     "pack": "gulp pack"
   },
   "dependencies": {

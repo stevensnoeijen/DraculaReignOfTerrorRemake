@@ -45,6 +45,9 @@ jobs:
           path: junit.xml
           reporter: jest-junit
 
+      - name: Test
+        run: npm run test:coveralls
+
       - name: Coveralls
         uses: coverallsapp/github-action@1.1.3
         with:
