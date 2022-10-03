@@ -11,7 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# test coverage
 junit.xml
+coverage/*
 
 # Editor directories and files
 .idea

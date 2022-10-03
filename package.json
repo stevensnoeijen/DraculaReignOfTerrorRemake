@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .ts,.vue src",
     "test": "jest",
+    "test-coverage": "jest --coverage",
     "pack": "gulp pack"
   },
   "dependencies": {
