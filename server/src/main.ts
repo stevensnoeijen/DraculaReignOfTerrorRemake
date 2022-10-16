@@ -6,20 +6,27 @@ import cors from 'cors';
 
 import { parseMap, createImage, filePath } from './map';
 
+const PORT = 3000;
+const DEFAULT_SIZE = 512;
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-const port = 3000;
 
 app.get('/mappreview.png', async (req, res) => {
   const name = req.query['name'] as string | null;
+  const size =
+    req.query['size'] != null
+      ? parseInt(req.query['size'] as string)
+      : DEFAULT_SIZE;
+
   if (name == null) return res.status(400).send();
 
   const path = filePath(name);
   if (!fs.existsSync(path)) return res.status(404).send();
 
   const buffer = fs.readFileSync(path);
-  const map = parseMap(buffer);
+  const map = parseMap(buffer, size);
   const image = createImage(map);
 
   const imageBuffer = await image.getBufferAsync('image/png');
@@ -35,6 +42,6 @@ app.post('/:file*', (req, res) => {
   res.status(202).send();
 });
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  return console.log(`Express is listening at http://localhost:${PORT}`);
 });
