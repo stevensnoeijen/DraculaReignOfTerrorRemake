@@ -7,7 +7,6 @@ import cors from 'cors';
 import { parseMap, createImage, filePath } from './map';
 
 const PORT = 3000;
-const DEFAULT_SIZE = 512;
 
 const app = express();
 app.use(cors());
@@ -15,10 +14,6 @@ app.use(bodyParser.json());
 
 app.get('/mappreview.png', async (req, res) => {
   const name = req.query['name'] as string | null;
-  const size =
-    req.query['size'] != null
-      ? parseInt(req.query['size'] as string)
-      : DEFAULT_SIZE;
 
   if (name == null) return res.status(400).send();
 
@@ -26,7 +21,7 @@ app.get('/mappreview.png', async (req, res) => {
   if (!fs.existsSync(path)) return res.status(404).send();
 
   const buffer = fs.readFileSync(path);
-  const map = parseMap(buffer, size);
+  const map = parseMap(buffer);
   const image = createImage(map);
 
   const imageBuffer = await image.getBufferAsync('image/png');

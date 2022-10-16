@@ -1,19 +1,22 @@
 import Jimp from 'jimp';
 
 type Map = number[][];
+const MAP_SIZE = 512;
 
 export const filePath = (name: string) =>
   `${__dirname}/../../raw/maps/${name.toUpperCase()}.MAP`;
 
-export const parseMap = (buffer: Buffer, size: number): Map => {
-  const map: number[][] = Array.from({ length: size }, () =>
-    Array.from({ length: size }, () => 0)
+export const parseMap = (buffer: Buffer): Map => {
+  const map: number[][] = Array.from({ length: 128 }, () =>
+    Array.from({ length: 128 }, () => 0)
   );
-  for (let offset = 0; offset < size * size * 0.5; offset++) {
+
+  for (let offset = 0; offset < MAP_SIZE * MAP_SIZE * 0.5; offset += 4) {
     const num = buffer.readUIntBE(offset, 1);
-    const x = Math.floor(offset / size);
-    const y = offset % size;
-    if (y % 4 == 0) map[y / 4][x] = num;
+    const x = Math.floor(offset / MAP_SIZE);
+    const y = offset % MAP_SIZE;
+
+    if (x < 128) map[y / 4][x] = num;
   }
 
   return map;
